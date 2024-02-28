@@ -36,3 +36,5 @@ var blog_data = {
         }
     ]
 }
+
+var blog_content = document.getElementById();
