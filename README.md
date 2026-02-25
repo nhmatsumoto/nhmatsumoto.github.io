@@ -2,7 +2,7 @@
 
 I am a Software Engineer and AI Researcher focused on autonomous agents and high-performance ecosystems.
 
-## 🚀 Featured Project: Ronaldinho Agent (OpenClaw Edition)
+## 🚀 Featured Project: Ronaldinho Agent
 
 **Ronaldinho Agent** is a phenomenal autonomous engineering ecosystem. It's designed to be model-agnostic, self-evolving, and extremely resilient, implementing the **OpenClaw** standard for L6 autonomy.
 
