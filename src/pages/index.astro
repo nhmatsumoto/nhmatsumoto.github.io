@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import Timeline from '../components/Timeline';
+import ProjectCard from '../components/ProjectCard';
+import '../styles/global.css';
+
+const posts = await getCollection('publicações');
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const projects = [
+  {
+    title: "Ronaldinho Agent",
+    description: "Personal R&D project focused on agent orchestration, tool execution and autonomous workflows.",
+    link: "https://github.com/nhmatsumoto/ronaldinho-agent",
+    tags: ["AI", "Orchestration", "TypeScript"]
+  },
+  {
+    title: "SplitCosts",
+    description: "Household finance management app focused on multi-tenant architecture, UX and performance.",
+    link: "#",
+    tags: [".NET", "React", "UX"]
+  }
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>nhmatsumoto | Personal Blog</title>
+  </head>
+  <body class="bg-gray-950 text-gray-100 selection:bg-primary-500/30">
+    <main class="max-w-4xl mx-auto px-6 py-20">
+      <header class="mb-20">
+        <h1 class="text-5xl font-bold bg-gradient-to-r from-primary-500 to-blue-400 bg-clip-text text-transparent mb-4">
+          Hiro Matsumoto
+        </h1>
+        <p class="text-xl text-gray-400 max-w-2xl">
+          Software Engineer building AI-driven systems, scalable architecture, and real-world products.
+        </p>
+      </header>
+
+      <section class="mb-24">
+        <h2 class="text-2xl font-semibold mb-10 flex items-center gap-3">
+          <span class="w-8 h-[2px] bg-primary-500"></span>
+          Professional Timeline
+        </h2>
+        <Timeline client:load />
+      </section>
+
+      <section class="mb-24">
+        <h2 class="text-2xl font-semibold mb-10 flex items-center gap-3">
+          <span class="w-8 h-[2px] bg-primary-500"></span>
+          Featured Projects
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {projects.map(project => (
+            <ProjectCard {...project} client:visible />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-10 flex items-center gap-3">
+          <span class="w-8 h-[2px] bg-primary-500"></span>
+          Recent Publications
+        </h2>
+        <div class="space-y-8">
+          {sortedPosts.map(post => (
+            <a href={`/publicações/${post.slug}`} class="block group">
+              <article class="p-6 rounded-2xl bg-gray-900/50 border border-gray-800 hover:border-primary-500/50 transition-all duration-300">
+                <time class="text-sm text-gray-500 mb-2 block">
+                  {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </time>
+                <h3 class="text-xl font-medium group-hover:text-primary-500 transition-colors">
+                  {post.data.title}
+                </h3>
+              </article>
+            </a>
+          ))}
+          {sortedPosts.length === 0 && (
+            <p class="text-gray-500 italic">No publications yet. Stay tuned!</p>
+          )}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
