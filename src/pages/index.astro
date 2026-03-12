@@ -4,7 +4,7 @@ import Timeline from '../components/Timeline';
 import ProjectCard from '../components/ProjectCard';
 import '../styles/global.css';
 
-const posts = await getCollection('publicações');
+const posts = await getCollection('publications');
 const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const projects = [
@@ -69,7 +69,7 @@ const projects = [
         </h2>
         <div class="space-y-8">
           {sortedPosts.map(post => (
-            <a href={`/publicações/${post.slug}`} class="block group">
+            <a href={`/publications/${post.slug}`} class="block group">
               <article class="p-6 rounded-2xl bg-gray-900/50 border border-gray-800 hover:border-primary-500/50 transition-all duration-300">
                 <time class="text-sm text-gray-500 mb-2 block">
                   {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
