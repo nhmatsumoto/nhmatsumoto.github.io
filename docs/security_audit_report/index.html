@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Security Audit Report | nhmatsumoto</title><link rel="stylesheet" href="/_astro/_astro_content.CA8xWtoB.css">
+<style>.prose h1{margin-top:3rem;margin-bottom:1.5rem;font-size:1.875rem;line-height:2.25rem;font-weight:700}.prose h2{margin-top:2.5rem;margin-bottom:1rem;font-size:1.5rem;line-height:2rem;font-weight:600}.prose h3{margin-top:2rem;margin-bottom:.75rem;font-size:1.25rem;line-height:1.75rem;font-weight:500}.prose p{margin-bottom:1.5rem;line-height:1.625;--tw-text-opacity: 1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.prose a{--tw-text-opacity: 1;color:rgb(14 165 233 / var(--tw-text-opacity, 1))}.prose a:hover{text-decoration-line:underline}.prose strong{font-weight:600;--tw-text-opacity: 1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.prose ul{margin-bottom:1.5rem;list-style-position:inside;list-style-type:disc}.prose ul>:not([hidden])~:not([hidden]){--tw-space-y-reverse: 0;margin-top:calc(.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem * var(--tw-space-y-reverse))}
+</style></head> <body class="bg-gray-950 text-gray-100"> <main class="max-w-3xl mx-auto px-6 py-20"> <nav class="mb-12"> <a href="/" class="text-primary-500 hover:text-primary-400 transition-colors flex items-center gap-2">
+← Voltar para a Home
+</a> </nav> <header class="mb-12"> <time class="text-gray-500 text-sm block mb-4"> 21 de fevereiro de 2026 </time> <h1 class="text-4xl font-bold mb-6">Security Audit Report</h1> <div class="flex gap-2"> <span class="px-3 py-1 rounded-full text-xs bg-gray-900 border border-gray-800 text-gray-400">
+#Security </span><span class="px-3 py-1 rounded-full text-xs bg-gray-900 border border-gray-800 text-gray-400">
+#Audit </span> </div> </header> <article class="prose prose-invert prose-primary max-w-none">  <h1 id="security-audit-report---pre-release-️">Security Audit Report - Pre-Release 🛡️</h1>
+<p><strong>Date</strong>: 2026-02-21<br>
+<strong>Status</strong>: ✅ COMPLETED (with fixes)</p>
+<h2 id="-audit-summary">🔍 Audit Summary</h2>
+<p>A comprehensive scan was performed to identify any exposure of API keys, sensitive credentials, or local machine identifiers before the public release of the Ronaldinho-Agent repository.</p>
+<h2 id="-findings--actions-taken">🚩 Findings &#x26; Actions Taken</h2>
+<h3 id="1-exposed-secrets-in-data-folders">1. Exposed Secrets in Data Folders</h3>
+<ul>
+<li><strong>Finding</strong>: Located <code>ronaldinho/data/secrets/telegram.json</code> containing an active Telegram Token.</li>
+<li><strong>Risk</strong>: High. Could allow unauthorized control of the linked bot.</li>
+<li><strong>Action</strong>: Modified <code>.gitignore</code> to include <code>ronaldinho/data/</code> and recursive <code>**/secrets/</code> patterns to prevent these files from ever being tracked in Git.</li>
+</ul>
+<h3 id="2-local-environment-identifiers">2. Local Environment Identifiers</h3>
+<ul>
+<li><strong>Finding</strong>: Scanned for local user paths (e.g., “Hiroyuki” or absolute paths like <code>C:\Users\</code>).</li>
+<li><strong>Result</strong>: No hardcoded local paths found in the codebase. Relative paths are used for cross-environment compatibility.</li>
+</ul>
+<h3 id="3-codebase-credentials">3. Codebase Credentials</h3>
+<ul>
+<li><strong>Finding</strong>: Scanned <code>GeminiStrategy.cs</code>, <code>Program.cs</code>, and <code>TelegramGateway.cs</code>.</li>
+<li><strong>Result</strong>: <strong>Clean</strong>. All sensitive values are pulled from <code>IConfiguration</code>, <code>.env</code>, or an encrypted <code>LocalKeyVault</code>.</li>
+</ul>
+<h3 id="4-development-passwords">4. Development Passwords</h3>
+<ul>
+<li><strong>Finding</strong>: <code>docker-compose.yml</code> and <code>scripts/setup_keycloak.sh</code> contain common development passwords (<code>password</code>, <code>admin</code>, <code>password123</code>).</li>
+<li><strong>Risk</strong>: Low (Documentation/Dev only).</li>
+<li><strong>Recommendation</strong>: For production, always use the <code>.env</code> override mechanism already supported by the stack.</li>
+</ul>
+<h2 id="-conclusion">✅ Conclusion</h2>
+<p>The repository is now safe for public release. The <code>.gitignore</code> has been hardened to protect local data and secrets from accidental commits.</p>  </article> </main></body></html>
