@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import Timeline from '../components/Timeline';
-import ProjectCard from '../components/ProjectCard';
+import Timeline from '../components/Timeline.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import '../styles/global.css';
 
 const posts = await getCollection('publications');
@@ -47,7 +47,7 @@ const projects = [
           <span class="w-8 h-[2px] bg-primary-500"></span>
           Professional Timeline
         </h2>
-        <Timeline client:load />
+        <Timeline />
       </section>
 
       <section class="mb-24">
@@ -57,7 +57,7 @@ const projects = [
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map(project => (
-            <ProjectCard {...project} client:visible />
+            <ProjectCard {...project} />
           ))}
         </div>
       </section>
