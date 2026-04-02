@@ -624,6 +624,19 @@ def render_inline(text: str) -> str:
 
     text_with_tokens = INLINE_CODE_RE.sub(stash_code, text)
     escaped = html.escape(text_with_tokens)
+    
+    # Image support: ![alt](url)
+    escaped = re.sub(
+        r"!\[([^\]]*)\]\(([^)]+)\)",
+        lambda match: (
+            f'<figure class="kg-image-card">'
+            f'<img src="{html.escape(html.unescape(match.group(2)), quote=True)}" alt="{html.escape(match.group(1), quote=True)}">'
+            f'{f"<figcaption>{html.escape(match.group(1))}</figcaption>" if match.group(1) else ""}'
+            f"</figure>"
+        ),
+        escaped,
+    )
+
     escaped = LINK_RE.sub(
         lambda match: (
             f'<a href="{html.escape(html.unescape(match.group(2)), quote=True)}">'
@@ -701,9 +714,12 @@ def render_markdown(text: str) -> str:
             if index < len(lines):
                 index += 1
 
-            class_attr = f' class="language-{html.escape(language)}"' if language else ""
-            code_block = html.escape("\n".join(code_lines))
-            parts.append(f"<pre><code{class_attr}>{code_block}</code></pre>")
+            if language == "mermaid":
+                parts.append(f'<div class="mermaid">{"".join(code_lines)}</div>')
+            else:
+                class_attr = f' class="language-{html.escape(language)}"' if language else ""
+                code_block = html.escape("\n".join(code_lines))
+                parts.append(f"<pre><code{class_attr}>{code_block}</code></pre>")
             continue
 
         heading = HEADING_RE.match(stripped)
@@ -896,10 +912,20 @@ def theme_css(system: dict[str, Any]) -> str:
     colors = system.get("design", {}).get("colors", {})
     typography = system.get("design", {}).get("typography", {})
     ux = system.get("ux", {})
-    accents = normalize_string_list(colors.get("accent", [])) or ["#00C2FF", "#7C5CFF"]
-    headings = normalize_string_list(typography.get("headings", [])) or ["Inter", "Satoshi"]
+    
+    # Light theme defaults
+    bg = "#ffffff"
+    surface = "#f8f9fa"
+    text = "#1a1a1a"
+    muted = "#666666"
+    accent = "#2563eb" # Royal blue
+    border = "rgba(0, 0, 0, 0.08)"
+
+    accents = normalize_string_list(colors.get("accent", [])) or [accent, "#7c3aed"]
+    headings = normalize_string_list(typography.get("headings", [])) or ["Inter", "system-ui"]
+    body_font = ["Lora", "Charter", "serif"]
     code_font = str(typography.get("code", "JetBrains Mono") or "JetBrains Mono")
-    reading_width = str(ux.get("reading_width", "680px") or "680px")
+    reading_width = str(ux.get("reading_width", "720px") or "720px")
 
     def font_stack(fonts: list[str], fallback: str) -> str:
         return ", ".join([f'"{font}"' for font in fonts] + [fallback])
@@ -907,20 +933,24 @@ def theme_css(system: dict[str, Any]) -> str:
     return f"""
     <style>
       :root {{
-        --bg: {colors.get("background", "#0B0F14")};
-        --surface: {colors.get("surface", "#121821")};
-        --surface-strong: #0f141c;
-        --surface-soft: #1a2330;
-        --border: rgba(157, 167, 179, 0.2);
+        --bg: {bg};
+        --surface: {surface};
+        --surface-strong: #f1f3f5;
+        --surface-soft: #ffffff;
+        --border: {border};
         --accent: {accents[0]};
         --accent-secondary: {accents[1] if len(accents) > 1 else accents[0]};
-        --accent-soft: rgba(0, 194, 255, 0.12);
-        --text: {colors.get("text_primary", "#E6EDF3")};
-        --muted: {colors.get("text_secondary", "#9DA7B3")};
-        --font-heading: {font_stack(headings, "system-ui, sans-serif")};
-        --font-ui: {font_stack(headings, "system-ui, sans-serif")};
-        --font-code: "{code_font}", "SFMono-Regular", "Consolas", monospace;
+        --accent-soft: rgba(37, 99, 235, 0.1);
+        --text: {text};
+        --muted: {muted};
+        --font-heading: {font_stack(headings, "sans-serif")};
+        --font-body: {font_stack(body_font, "serif")};
+        --font-ui: {font_stack(headings, "sans-serif")};
+        --font-code: "{code_font}", monospace;
         --reading-width: {reading_width};
+        --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
       }}
     </style>
     """

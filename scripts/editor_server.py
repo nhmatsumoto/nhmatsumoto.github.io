@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import mimetypes
+import os
+import re
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -12,6 +15,7 @@ from blog_engine import (
     build_site,
     default_locale,
     git_status,
+    load_blog_config,
     load_i18n,
     load_posts,
     load_site,
@@ -102,6 +106,36 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
                 message = str(payload.get("message", "") or "")
                 push = bool(payload.get("push", False))
                 self.send_json({"publish": publish_changes(message=message, push=push), "git": git_status()})
+                return
+
+            if parsed.path == "/api/upload":
+                filename = str(payload.get("filename", "image.png"))
+                content_base64 = str(payload.get("content", ""))
+                
+                # Basic validation
+                if not content_base64:
+                    self.send_error_json(HTTPStatus.BAD_REQUEST, "Conteúdo da imagem ausente.")
+                    return
+                
+                # Sanitize filename
+                filename = re.sub(r'[^a-zA-Z0-9._-]', '_', filename)
+                
+                # Save to assets/images/posts/
+                image_dir = ROOT / "assets" / "images" / "posts"
+                image_dir.mkdir(parents=True, exist_ok=True)
+                
+                image_path = image_dir / filename
+                
+                # Handle base64 data URL
+                if "," in content_base64:
+                    content_base64 = content_base64.split(",")[1]
+                
+                with open(image_path, "wb") as f:
+                    f.write(base64.b64decode(content_base64))
+                
+                # Build relative URL for markdown
+                rel_url = f"/assets/images/posts/{filename}"
+                self.send_json({"url": rel_url})
                 return
 
             self.send_error_json(HTTPStatus.NOT_FOUND, "Rota não encontrada.")

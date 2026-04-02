@@ -22,6 +22,21 @@
     ]
   },
   {
+    "title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
+    "url": "/publications/2026-04-03-0900-orquestrador-agentes-ddd/",
+    "kind": "post",
+    "summary": "Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.",
+    "keywords": [
+      "ddd",
+      "arquitetura",
+      "agentes-ia",
+      "inteligência-artificial",
+      "arquitetura",
+      "ddd",
+      "ai-agents"
+    ]
+  },
+  {
     "title": "DDD boundaries for agent systems",
     "url": "/publications/20260402-203000-ddd-boundaries-for-agent-systems/",
     "kind": "post",
@@ -32,6 +47,37 @@
       "ai",
       "architecture",
       "experiment"
+    ]
+  },
+  {
+    "title": "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)",
+    "url": "/publications/2026-04-03-1100-poc-minerando-logs/",
+    "kind": "post",
+    "summary": "Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável.",
+    "keywords": [
+      "ia",
+      "log-mining",
+      "privacidade",
+      "lgpd",
+      "embeddings",
+      "knowledge-mining",
+      "compliance",
+      "poc"
+    ]
+  },
+  {
+    "title": "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua",
+    "url": "/publications/2026-04-03-1000-neuroplasticidade-agentes/",
+    "kind": "post",
+    "summary": "Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada.",
+    "keywords": [
+      "ia",
+      "agentes",
+      "feedback",
+      "neuroplasticidade",
+      "agentes",
+      "evelução",
+      "feedback-loop"
     ]
   },
   {

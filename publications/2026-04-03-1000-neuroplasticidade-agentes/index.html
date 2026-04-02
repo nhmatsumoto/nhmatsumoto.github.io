@@ -9,9 +9,9 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Ronaldinho Architecture Overview | Hiro Matsumoto</title>
-    <meta name="description" content="Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.">
-    <link rel="canonical" href="https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/">
+    <title>“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua | Hiro Matsumoto</title>
+    <meta name="description" content="Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-03-1000-neuroplasticidade-agentes/">
     <link rel="stylesheet" href="/assets/styles.css">
     
     <style>
@@ -39,7 +39,7 @@
     
     
   </head>
-  <body class="page-document" data-has-math="false" data-default-locale="pt-BR">
+  <body class="page-post" data-has-math="false" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     <div class="site-shell">
       <header class="site-header">
@@ -52,7 +52,7 @@
       
       <div class="nav-links" role="navigation">
         <ul class="nav-links-list">
-          <li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" aria-current="page" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" data-i18n="nav.about">sobre</a></li>
+          <li><a href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" data-i18n="nav.about">sobre</a></li>
         </ul>
       </div>
 
@@ -72,42 +72,51 @@
       </header>
       <main class="site-main" id="content">
         
-    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/documents/" data-i18n="nav.documents">documentos</a></li><li><span aria-current="page">Ronaldinho Architecture Overview</span></li></ol></nav>
+    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua</span></li></ol></nav>
     <section class="page-grid">
-      <article class="document-shell prose">
+      <article class="post-shell prose">
         <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
-          <h1>Ronaldinho Architecture Overview</h1>
-          <p class="post-summary">Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.</p>
+          <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+          <h1>“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua</h1>
+          <p class="post-summary">Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada.</p>
+          <div class="post-meta">
+            <time datetime="2026-04-03T22:00:00+09:00" data-localize-date="long">3 de abril de 2026</time>
+            <span data-reading-time="1">1 min de leitura</span>
+          </div>
+          <div class="post-actions">
+            <a class="subtle-button" href="/publications/" data-i18n="pages.post.back">Voltar para publicações</a>
+            <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
+          </div>
         </header>
-        <hr>
-<p>title: Visão Geral da Arquitetura description: Como o cérebro do Ronaldinho funciona.</p>
-<hr>
-<h1>A Estrutura OpenClaw Pro 🏗️</h1>
-<p>O Ronaldinho Agent não é monolítico. Ele é uma orquestração de microsserviços e camadas de inteligência que garantem autonomia nível L6.</p>
-<h3>O Diagrama de Fluxo</h3>
-<div class="mermaid">graph TD    User([Usuário]) --> |Telegram| Bridge[Neural Bridge]    User --> |Browser| Dashboard[OpenClaw Dashboard]    subgraph "Camada de Inteligência"        Bridge <--> Core[Neural Core - FastAPI]        Dashboard <--> Core        Core --> Skills[Engine de Habilidades]        Core --> Memory[Memory Store]    end    subgraph "Execução Autónoma"        Core --> Lane[Execution Lane]        Core --> Tools[Terminal/File Tools]    end</div>
-<h3>Componentes Chave</h3>
-<h4>1. Neural Core (Sessão Central)</h4>
-<p>O cérebro do sistema. Desenvolvido em FastAPI, ele gerencia as requisições, faz a compressão de contexto e decide qual Persona deve entrar em campo.</p>
-<h4>2. Execution Lanes</h4>
-<p>Um conceito chave inspirado no OpenClaw. Cada usuário tem uma &quot;Lane&quot; (faixa) de execução. Isso garante que o Ronaldinho não tente editar o mesmo arquivo em duas tarefas diferentes ao mesmo tempo, evitando conflitos de IO.</p>
-<h4>3. Provedor Agnóstico</h4>
-<p>O Core não depende de apenas um modelo. Ele utiliza um sistema de <strong>Fallback em Cascata</strong>:</p>
-<ol><li>Tenta API Principal (ex: Gemini Flash).</li><li>Se falhar por cota, tenta Fallbacks (OpenAI, Anthropic).</li><li>Se falhar, ativa o <strong>Ghost Mode</strong> (Navegador).</li><li>Como última instância, encaminha para a <strong>Antigravity Bridge</strong>.</li></ol>
-<h4>4. Skills Engine</h4>
-<p>As habilidades saem de <code>.agent/skills/</code>. Cada skill é um módulo Python independente que o agente pode importar e usar para expandir suas capacidades sem precisar reiniciar o sistema.</p>
+        <p>Quando alguém pede que um sistema “aprenda com correções repetidas”, o requisito real costuma ser: capturar feedback, transformá-lo em regra operacional e impedir regressões. Este post propõe um desenho de <strong>neuroplasticidade</strong> para sistemas de agentes.</p>
+<h2>O problema da memória em agentes</h2>
+<p>Na prática, sistemas de agentes falham por três motivos: (1) não lembram decisões anteriores, (2) lembram “qualquer coisa” sem curadoria, ou (3) incorporam feedback sem avaliação e pioram outras tarefas.</p>
+<p>A abordagem <strong>ReAct</strong> descreve um padrão em que o modelo intercala raciocínio e ações, melhorando rastreabilidade e correção ao consultar fontes externas em vez de “inventar” resposta.</p>
+<h2>Mecanismos de Neuroplasticidade</h2>
+<p>Aqui, “neuroplasticidade” é uma metáfora útil para três mecanismos concretos:</p>
+<ol><li><strong>Memória declarativa curada</strong>: um repositório versionado de decisões (glossário, preferências de estilo, restrições).</li><li><strong>Memória episódica com retenção mínima</strong>: logs de execução e justificativas para depurar e auditar.</li><li><strong>Ciclo de avaliação e anti-regressão</strong>: a cada correção relevante, cria-se um teste para garantir que a falha não volte.</li></ol>
+<div class="mermaid">flowchart LR  A[Saída do agente] --> B[Revisão humana / feedback]  B --> C{Classificar feedback}  C -->|Correção factual| D[Atualizar base de conhecimento]  C -->|Correção de formato| E[Atualizar esquema/regras]  C -->|Correção de política| F[Atualizar guardrails]  D --> G[Suíte de testes de comportamento]  E --> G  F --> G  G --> H[Deploy de regras/memória]  H --> A</div>
+<h2>Implementação Prática</h2>
+<ol><li><strong>Categorias de feedback</strong>: classifique se a correção é factual, de formato, de segurança ou de escopo.</li><li><strong>Ciclo de artefatos</strong>: converta feedback em regras concretas no sistema (ex: novo termo no glossário).</li><li><strong>Tool calling para ações verificáveis</strong>: use function calling para realizar tarefas tangíveis e mensuráveis.</li></ol>
+<h2>Conclusão</h2>
+<p>Implementar &quot;neuroplasticidade&quot; não é deixar a IA livre para aprender qualquer coisa, mas sim criar um <strong>sistema de governança</strong> que captura o aprendizado humano e o transforma em diretrizes operacionais robustas para o agente.</p>
       </article>
       
     <aside class="sidebar-panel">
-      <h2 data-i18n="pages.document.meta">Metadados do documento</h2>
-      <p class="doc-version">v0.1</p>
-      <p class="doc-category">agents</p>
-      <p class="mini-flag" data-i18n="common.agent_generated">gerado por agente</p>
-      <ul class="tag-list"><li>agents</li><li>architecture</li><li>runtime</li></ul>
+      <h2 data-i18n="pages.post.metadata">Metadados</h2>
+      <ul class="metric-list"><li><time datetime="2026-04-03T22:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+      <ul class="badge-list"><li class="badge">agentes</li><li class="badge">evelução</li><li class="badge">feedback-loop</li></ul>
+      <ul class="tag-list"><li>ia</li><li>agentes</li><li>feedback</li><li>neuroplasticidade</li></ul>
+      
     </aside>
     
     </section>
+    
+    <nav class="post-pager" aria-label="Navegação da publicação" data-i18n-aria-label="pages.post.navigation">
+      <a class="pager-link" href="/publications/2026-04-03-1100-poc-minerando-logs/">← PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)</a>
+      <a class="pager-link" href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/">GIS pipelines with event-driven services →</a>
+    </nav>
+    
     
       </main>
       

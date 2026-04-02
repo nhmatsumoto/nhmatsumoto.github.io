@@ -9,9 +9,9 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Ronaldinho Architecture Overview | Hiro Matsumoto</title>
-    <meta name="description" content="Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.">
-    <link rel="canonical" href="https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/">
+    <title>PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD) | Hiro Matsumoto</title>
+    <meta name="description" content="Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-03-1100-poc-minerando-logs/">
     <link rel="stylesheet" href="/assets/styles.css">
     
     <style>
@@ -39,7 +39,7 @@
     
     
   </head>
-  <body class="page-document" data-has-math="false" data-default-locale="pt-BR">
+  <body class="page-post" data-has-math="false" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     <div class="site-shell">
       <header class="site-header">
@@ -52,7 +52,7 @@
       
       <div class="nav-links" role="navigation">
         <ul class="nav-links-list">
-          <li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" aria-current="page" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" data-i18n="nav.about">sobre</a></li>
+          <li><a href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" data-i18n="nav.about">sobre</a></li>
         </ul>
       </div>
 
@@ -72,42 +72,50 @@
       </header>
       <main class="site-main" id="content">
         
-    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/documents/" data-i18n="nav.documents">documentos</a></li><li><span aria-current="page">Ronaldinho Architecture Overview</span></li></ol></nav>
+    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)</span></li></ol></nav>
     <section class="page-grid">
-      <article class="document-shell prose">
+      <article class="post-shell prose">
         <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
-          <h1>Ronaldinho Architecture Overview</h1>
-          <p class="post-summary">Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.</p>
+          <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+          <h1>PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)</h1>
+          <p class="post-summary">Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável.</p>
+          <div class="post-meta">
+            <time datetime="2026-04-03T23:00:00+09:00" data-localize-date="long">3 de abril de 2026</time>
+            <span data-reading-time="1">1 min de leitura</span>
+          </div>
+          <div class="post-actions">
+            <a class="subtle-button" href="/publications/" data-i18n="pages.post.back">Voltar para publicações</a>
+            <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
+          </div>
         </header>
-        <hr>
-<p>title: Visão Geral da Arquitetura description: Como o cérebro do Ronaldinho funciona.</p>
-<hr>
-<h1>A Estrutura OpenClaw Pro 🏗️</h1>
-<p>O Ronaldinho Agent não é monolítico. Ele é uma orquestração de microsserviços e camadas de inteligência que garantem autonomia nível L6.</p>
-<h3>O Diagrama de Fluxo</h3>
-<div class="mermaid">graph TD    User([Usuário]) --> |Telegram| Bridge[Neural Bridge]    User --> |Browser| Dashboard[OpenClaw Dashboard]    subgraph "Camada de Inteligência"        Bridge <--> Core[Neural Core - FastAPI]        Dashboard <--> Core        Core --> Skills[Engine de Habilidades]        Core --> Memory[Memory Store]    end    subgraph "Execução Autónoma"        Core --> Lane[Execution Lane]        Core --> Tools[Terminal/File Tools]    end</div>
-<h3>Componentes Chave</h3>
-<h4>1. Neural Core (Sessão Central)</h4>
-<p>O cérebro do sistema. Desenvolvido em FastAPI, ele gerencia as requisições, faz a compressão de contexto e decide qual Persona deve entrar em campo.</p>
-<h4>2. Execution Lanes</h4>
-<p>Um conceito chave inspirado no OpenClaw. Cada usuário tem uma &quot;Lane&quot; (faixa) de execução. Isso garante que o Ronaldinho não tente editar o mesmo arquivo em duas tarefas diferentes ao mesmo tempo, evitando conflitos de IO.</p>
-<h4>3. Provedor Agnóstico</h4>
-<p>O Core não depende de apenas um modelo. Ele utiliza um sistema de <strong>Fallback em Cascata</strong>:</p>
-<ol><li>Tenta API Principal (ex: Gemini Flash).</li><li>Se falhar por cota, tenta Fallbacks (OpenAI, Anthropic).</li><li>Se falhar, ativa o <strong>Ghost Mode</strong> (Navegador).</li><li>Como última instância, encaminha para a <strong>Antigravity Bridge</strong>.</li></ol>
-<h4>4. Skills Engine</h4>
-<p>As habilidades saem de <code>.agent/skills/</code>. Cada skill é um módulo Python independente que o agente pode importar e usar para expandir suas capacidades sem precisar reiniciar o sistema.</p>
+        <p>Transformar conversas em conteúdo publicável é uma automação tentadora, mas exige método: extração, clusterização por temas, rastreabilidade de fontes e revisão humana. Este post descreve uma PoC que processa logs de chat e identifica conceitos/PoCs.</p>
+<h2>Contexto e motivação</h2>
+<p>Conversas técnicas acumulam decisões, argumentos, pequenas PoCs e “microaprendizados” que raramente viram documentação. Embeddings são um mecanismo consagrado para medir similaridade textual e permitir clusterização e busca semântica em grandes volumes de texto.</p>
+<p>O risco: logs podem conter dados pessoais, segredos ou identificadores. A LGPD regula tratamento de dados pessoais e requer medidas de segurança e boas práticas proporcionais.</p>
+<h2>Pipeline: Do Log ao Post</h2>
+<p>A PoC propõe um pipeline com três trilhas paralelas: editorial, rastreabilidade e privacidade.</p>
+<div class="mermaid">sequenceDiagram  participant U as Usuário  participant I as Ingestão  participant R as Redação/Anonimização  participant E as Indexação (Embeddings)  participant C as Clusterização por tema  participant G as Gerador de posts  participant V as Revisão humana  participant P as Publicação  U->>I: Exporta logs (JSON/HTML/texto)  I->>R: Normaliza + remove PII/segredos  R->>E: Cria embeddings por trecho  E->>C: Agrupa por similaridade  C->>G: Extrai itens (conceitos/PoCs) + estrutura  G->>V: Entrega rascunhos com fontes/assunções  V->>P: Aprova e publica</div>
+<h2>Passos de implementação</h2>
+<ol><li><strong>Ingestão e segmentação</strong>: parse do export do chat (normalmente JSON/HTML) e quebra em mensagens/trechos.</li><li><strong>Redação (Privacy by Design)</strong>: aplicar filtros (regex + detectores) para tokens sensíveis antes da indexação.</li><li><strong>Embeddings e Clusterização</strong>: gerar embedding por trecho e agrupar por similaridade.</li><li><strong>Geração Estruturada</strong>: para cada cluster, extrair o conceito e os trade-offs debatidos.</li><li><strong>Rastreabilidade de Fontes</strong>: anexar, a cada afirmação factual, a referência documental.</li></ol>
+<h2>Conclusão</h2>
+<p>Essa abordagem permite que o conhecimento gerado em sessões de brainstorming não se perca, transformando-se em <strong>ativos digitais estruturados</strong> e respeitando os limites da privacidade e conformidade de dados.</p>
       </article>
       
     <aside class="sidebar-panel">
-      <h2 data-i18n="pages.document.meta">Metadados do documento</h2>
-      <p class="doc-version">v0.1</p>
-      <p class="doc-category">agents</p>
-      <p class="mini-flag" data-i18n="common.agent_generated">gerado por agente</p>
-      <ul class="tag-list"><li>agents</li><li>architecture</li><li>runtime</li></ul>
+      <h2 data-i18n="pages.post.metadata">Metadados</h2>
+      <ul class="metric-list"><li><time datetime="2026-04-03T23:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+      <ul class="badge-list"><li class="badge">knowledge-mining</li><li class="badge">compliance</li><li class="badge">poc</li></ul>
+      <ul class="tag-list"><li>ia</li><li>log-mining</li><li>privacidade</li><li>lgpd</li><li>embeddings</li></ul>
+      
     </aside>
     
     </section>
+    
+    <nav class="post-pager" aria-label="Navegação da publicação" data-i18n-aria-label="pages.post.navigation">
+      <a class="pager-link" href="/publications/20260402-203000-ddd-boundaries-for-agent-systems/">← DDD boundaries for agent systems</a>
+      <a class="pager-link" href="/publications/2026-04-03-1000-neuroplasticidade-agentes/">“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua →</a>
+    </nav>
+    
     
       </main>
       

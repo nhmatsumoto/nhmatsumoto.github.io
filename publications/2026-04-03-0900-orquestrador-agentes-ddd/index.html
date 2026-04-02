@@ -9,9 +9,9 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Ronaldinho Architecture Overview | Hiro Matsumoto</title>
-    <meta name="description" content="Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.">
-    <link rel="canonical" href="https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/">
+    <title>Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua | Hiro Matsumoto</title>
+    <meta name="description" content="Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-03-0900-orquestrador-agentes-ddd/">
     <link rel="stylesheet" href="/assets/styles.css">
     
     <style>
@@ -39,7 +39,7 @@
     
     
   </head>
-  <body class="page-document" data-has-math="false" data-default-locale="pt-BR">
+  <body class="page-post" data-has-math="false" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     <div class="site-shell">
       <header class="site-header">
@@ -52,7 +52,7 @@
       
       <div class="nav-links" role="navigation">
         <ul class="nav-links-list">
-          <li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" aria-current="page" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" data-i18n="nav.about">sobre</a></li>
+          <li><a href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" data-i18n="nav.about">sobre</a></li>
         </ul>
       </div>
 
@@ -72,42 +72,65 @@
       </header>
       <main class="site-main" id="content">
         
-    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/documents/" data-i18n="nav.documents">documentos</a></li><li><span aria-current="page">Ronaldinho Architecture Overview</span></li></ol></nav>
+    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua</span></li></ol></nav>
     <section class="page-grid">
-      <article class="document-shell prose">
+      <article class="post-shell prose">
         <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
-          <h1>Ronaldinho Architecture Overview</h1>
-          <p class="post-summary">Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.</p>
+          <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+          <h1>Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua</h1>
+          <p class="post-summary">Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.</p>
+          <div class="post-meta">
+            <time datetime="2026-04-03T21:00:00+09:00" data-localize-date="long">3 de abril de 2026</time>
+            <span data-reading-time="1">1 min de leitura</span>
+          </div>
+          <div class="post-actions">
+            <a class="subtle-button" href="/publications/" data-i18n="pages.post.back">Voltar para publicações</a>
+            <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
+          </div>
         </header>
-        <hr>
-<p>title: Visão Geral da Arquitetura description: Como o cérebro do Ronaldinho funciona.</p>
-<hr>
-<h1>A Estrutura OpenClaw Pro 🏗️</h1>
-<p>O Ronaldinho Agent não é monolítico. Ele é uma orquestração de microsserviços e camadas de inteligência que garantem autonomia nível L6.</p>
-<h3>O Diagrama de Fluxo</h3>
-<div class="mermaid">graph TD    User([Usuário]) --> |Telegram| Bridge[Neural Bridge]    User --> |Browser| Dashboard[OpenClaw Dashboard]    subgraph "Camada de Inteligência"        Bridge <--> Core[Neural Core - FastAPI]        Dashboard <--> Core        Core --> Skills[Engine de Habilidades]        Core --> Memory[Memory Store]    end    subgraph "Execução Autónoma"        Core --> Lane[Execution Lane]        Core --> Tools[Terminal/File Tools]    end</div>
-<h3>Componentes Chave</h3>
-<h4>1. Neural Core (Sessão Central)</h4>
-<p>O cérebro do sistema. Desenvolvido em FastAPI, ele gerencia as requisições, faz a compressão de contexto e decide qual Persona deve entrar em campo.</p>
-<h4>2. Execution Lanes</h4>
-<p>Um conceito chave inspirado no OpenClaw. Cada usuário tem uma &quot;Lane&quot; (faixa) de execução. Isso garante que o Ronaldinho não tente editar o mesmo arquivo em duas tarefas diferentes ao mesmo tempo, evitando conflitos de IO.</p>
-<h4>3. Provedor Agnóstico</h4>
-<p>O Core não depende de apenas um modelo. Ele utiliza um sistema de <strong>Fallback em Cascata</strong>:</p>
-<ol><li>Tenta API Principal (ex: Gemini Flash).</li><li>Se falhar por cota, tenta Fallbacks (OpenAI, Anthropic).</li><li>Se falhar, ativa o <strong>Ghost Mode</strong> (Navegador).</li><li>Como última instância, encaminha para a <strong>Antigravity Bridge</strong>.</li></ol>
-<h4>4. Skills Engine</h4>
-<p>As habilidades saem de <code>.agent/skills/</code>. Cada skill é um módulo Python independente que o agente pode importar e usar para expandir suas capacidades sem precisar reiniciar o sistema.</p>
+        <p>Traduzir requisitos em “texto livre” para uma <strong>Linguagem Ubíqua</strong> consistente é um dos gargalos mais caros em produtos com domínio complexo. Este post descreve uma arquitetura de orquestração de agentes que converte linguagem natural em artefatos de DDD (glossário, comandos/eventos, invariantes e limites de contexto) e distribui tarefas para agentes especializados.</p>
+<h2>Contexto e motivação</h2>
+<p>Documentação, código e conversas frequentemente usam termos diferentes para o mesmo conceito (“cliente”, “comprador”, “titular”, “account”), criando ambiguidade e bugs semânticos. Em DDD, a Linguagem Ubíqua é justamente a prática de construir um idioma comum e rigoroso entre pessoas de negócio e desenvolvedores, baseado no modelo de domínio.</p>
+<p>Além disso, DDD trata problemas por domínios e delimita áreas independentes como <em>Bounded Contexts</em> — muitas vezes alinháveis a serviços/microserviços na prática de arquitetura moderna.</p>
+<h2>A Arquitetura do Orquestrador</h2>
+<p>A ideia é um <strong>orquestrador</strong> que recebe uma solicitação em linguagem natural e produz dois resultados acoplados:</p>
+<ol><li><strong>Artefatos de linguagem e domínio</strong>: glossário do contexto, sinônimos proibidos, definições canônicas, comandos/eventos e regras/invariantes.</li><li><strong>Plano de execução multiagente</strong>: tarefas para agentes especializados (modelagem, API, persistência, testes, segurança), com retorno estruturado e rastreável.</li></ol>
+<div class="mermaid">flowchart TD  A[Entrada em linguagem natural] --> B[Detecção de intenção e contexto]  B --> C[Tradutor DDD: Linguagem Ubíqua]  C --> D{Roteador de tarefas}  D --> E[Agente: Modelagem de domínio]  D --> F[Agente: Implementação/API]  D --> G[Agente: Testes e invariantes]  D --> H[Agente: Segurança e privacidade]  E --> I[Memória de feedback e decisões]  F --> I  G --> I  H --> I  I --> C</div>
+<h2>Passos de implementação</h2>
+<p>A forma mais robusta de manter rastreabilidade é exigir <strong>saídas estruturadas</strong>. Em APIs modernas de LLMs, isso costuma ser feito com JSON Schema.</p>
+<p>1) <strong>Defina o contrato do “Tradutor DDD”</strong> (JSON Schema). Ele deve retornar: <code>boundedContext</code>, <code>glossario</code>, <code>entidades</code>, <code>comandos</code>, <code>eventos</code>, <code>regras</code> e <code>termosProibidos</code>.</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;required&quot;: [&quot;boundedContext&quot;, &quot;glossario&quot;, &quot;eventos&quot;, &quot;regras&quot;],
+  &quot;properties&quot;: {
+    &quot;boundedContext&quot;: { &quot;type&quot;: &quot;string&quot; },
+    &quot;glossario&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: { &quot;type&quot;: &quot;object&quot;, &quot;required&quot;: [&quot;termo&quot;, &quot;definicao&quot;], &quot;properties&quot;: { ... } }
+    },
+    ...
+  }
+}</code></pre>
+<p>2) <strong>Roteie para agentes especializados</strong>: cada agente consome a Linguagem Ubíqua e retorna uma entrega. 3) <strong>Imponha consistência na modelagem</strong>: entidades e agregados devem preservar invariantes e expor métodos expressivos na linguagem do domínio.</p>
+<h2>Conclusão</h2>
+<p>Essa arquitetura não apenas automatiza a tradução de requisitos, mas garante que a <strong>Linguagem Ubíqua</strong> seja o fio condutor de toda a engenharia, reduzindo drasticamente o retrabalho e as falhas de comunicação.</p>
       </article>
       
     <aside class="sidebar-panel">
-      <h2 data-i18n="pages.document.meta">Metadados do documento</h2>
-      <p class="doc-version">v0.1</p>
-      <p class="doc-category">agents</p>
-      <p class="mini-flag" data-i18n="common.agent_generated">gerado por agente</p>
-      <ul class="tag-list"><li>agents</li><li>architecture</li><li>runtime</li></ul>
+      <h2 data-i18n="pages.post.metadata">Metadados</h2>
+      <ul class="metric-list"><li><time datetime="2026-04-03T21:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+      <ul class="badge-list"><li class="badge">arquitetura</li><li class="badge">ddd</li><li class="badge">ai-agents</li></ul>
+      <ul class="tag-list"><li>ddd</li><li>arquitetura</li><li>agentes-ia</li><li>inteligência-artificial</li></ul>
+      
     </aside>
     
     </section>
+    
+    <nav class="post-pager" aria-label="Navegação da publicação" data-i18n-aria-label="pages.post.navigation">
+      <span class="pager-link pager-link-disabled" data-i18n="pages.post.newer_empty">Nenhum texto mais novo</span>
+      <a class="pager-link" href="/publications/20260402-203000-ddd-boundaries-for-agent-systems/">DDD boundaries for agent systems →</a>
+    </nav>
+    
     
       </main>
       

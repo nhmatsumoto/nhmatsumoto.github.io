@@ -231,7 +231,65 @@ const previewPost = async () => {
     body: JSON.stringify(post),
   });
   preview.innerHTML = payload.html;
+  
+  // Re-render Mermaid diagrams if present
+  if (window.mermaid) {
+    try {
+      mermaid.init(undefined, ".mermaid");
+    } catch (e) {
+      console.error("Mermaid error:", e);
+    }
+  }
+  
   setNotice("Preview atualizado.");
+};
+
+const uploadImage = async (file) => {
+  const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    reader.onload = async (e) => {
+      try {
+        const payload = await fetchJson("/api/upload", {
+          method: "POST",
+          body: JSON.stringify({
+            filename: file.name,
+            content: e.target.result,
+          }),
+        });
+        resolve(payload.url);
+      } catch (err) {
+        reject(err);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+const handleImageDrop = async (event) => {
+  event.preventDefault();
+  const files = event.dataTransfer.files;
+  if (!files.length) return;
+
+  const textarea = postForm.elements.namedItem("body");
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+
+  setNotice("Subindo imagem...");
+
+  for (const file of files) {
+    if (!file.type.startsWith("image/")) continue;
+    try {
+      const url = await uploadImage(file);
+      const markdown = `![${file.name}](${url})`;
+      const currentText = textarea.value;
+      textarea.value = currentText.substring(0, start) + markdown + currentText.substring(end);
+      textarea.selectionStart = textarea.selectionEnd = start + markdown.length;
+    } catch (err) {
+      setNotice(`Erro no upload: ${err.message}`, "error");
+    }
+  }
+  setNotice("Imagem carregada.", "success");
+  previewPost();
 };
 
 const buildSite = async () => {
@@ -333,6 +391,16 @@ searchPosts.addEventListener("input", (event) => {
 postSlugInput.addEventListener("input", () => {
   state.slugTouched = postSlugInput.value.trim().length > 0;
 });
+
+const bodyTextarea = postForm.elements.namedItem("body");
+bodyTextarea.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  bodyTextarea.classList.add("dragover");
+});
+bodyTextarea.addEventListener("dragleave", () => {
+  bodyTextarea.classList.remove("dragover");
+});
+bodyTextarea.addEventListener("drop", handleImageDrop);
 
 postTitleInput.addEventListener("input", () => {
   if (state.slugTouched) {
