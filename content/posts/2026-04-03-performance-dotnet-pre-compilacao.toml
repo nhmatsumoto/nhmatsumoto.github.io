@@ -1,0 +1,48 @@
+id = "2026-04-03-1400"
+slug = "performance-dotnet-pre-compilacao"
+title = "Performance em .NET: O impacto da Pré-compilação (JIT vs AOT)"
+summary = "Uma análise técnica sobre como o runtime do .NET gerencia a execução de código e como o Native AOT muda o jogo para microserviços."
+published_at = "2026-04-03T11:00:00+09:00"
+updated_at = "2026-04-03T11:00:00+09:00"
+status = "published"
+tags = ["dotnet", "performance", "aot", "jit", "csharp"]
+badges = ["performance", "backend", "runtime"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+No ecossistema .NET, a forma como seu código é transformado em instruções de máquina define a escalabilidade da sua aplicação. O duelo entre Just-In-Time (JIT) e Ahead-Of-Time (AOT) é central para entender o custo de infraestrutura.
+
+## JIT: A Flexibilidade do Runtime
+
+Por padrão, o .NET utiliza a compilação JIT. O código C# vira IL (Intermediate Language) e, em tempo de execução, o runtime o converte para código nativo.
+
+*   **Vantagem**: Otimização baseada no hardware real onde o código está rodando (PGO - Profile Guided Optimization).
+*   **Desvantagem**: "Cold start" mais lento e maior consumo de memória inicial.
+
+## Native AOT: O Futuro dos Microserviços
+
+Com o .NET 7/8+, o Native AOT permite compilar tudo diretamente para binário nativo antes da execução.
+
+```mermaid
+graph LR
+  A[Código C#] --> B[Compilador Roslyn]
+  B --> C[IL - Intermediate Language]
+  C -->|Native AOT| D[Binário Nativo]
+  C -->|JIT| E[Runtime .NET]
+  E --> F[Código em Memória]
+  D --> G[Execução Instantânea]
+```
+
+### Por que usar AOT?
+
+1.  **Tempo de Inicialização**: Praticamente zero. Essencial para Serverless (AWS Lambda, Azure Functions).
+2.  **Footprint de Memória**: Redução drástica, pois não há necessidade de carregar o compilador JIT e estruturas de metadados pesadas.
+3.  **Segurança**: Menos superfície de ataque (sem IL para fazer reverse engineering).
+
+## Conclusão
+
+Escolher entre JIT e AOT depende do seu cenário. Se você tem um monólito de longa duração, o JIT/PGO pode oferecer melhor performance de pico. Se você escala centenas de containers pequenos, o AOT é o seu melhor aliado.
+"""

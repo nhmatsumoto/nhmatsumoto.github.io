@@ -1,0 +1,45 @@
+id = "2026-04-03-2900"
+slug = "redes-neurais-do-zero-python"
+title = "Redes Neurais do Zero: A Matemática do Perceptron ao Deep Learning"
+summary = "Uma visão clara sobre como transformar matemática em inteligência usando Python e NumPy para construir uma rede neural simples do zero."
+published_at = "2026-04-03T23:55:00+09:00"
+updated_at = "2026-04-03T23:55:00+09:00"
+status = "published"
+tags = ["ia", "python", "redes-neurais", "deep-learning", "algoritmos"]
+badges = ["ai-foundations", "math", "coding"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = true
+
+body = """
+Redes Neurais parecem mágica, mas no fundo, elas são apenas **Álgebra Linear** e **Cálculo**. Construir uma do zero com Python e NumPy é o melhor exercício para entender como a IA realmente aprende.
+
+## O Bloco de Construção: O Perceptron
+
+Um neurônio artificial recebe entradas, multiplica por pesos e adiciona um "viés" (bias). O resultado passa por uma **Função de Ativação** (como Sigmoid ou ReLU).
+
+```mermaid
+graph LR
+  X1[Entrada 1] -->|Peso 1| S[Soma Ponderada + Bias]
+  X2[Entrada 2] -->|Peso 2| S
+  S --> A[Função de Ativação]
+  A --> Y[Saída]
+```
+
+### O Treinamento: Backpropagation e Gradient Descent
+
+A rede aprende comparando sua saída com o valor correto. O erro é então jogado de volta (**Backpropagation**) usando a regra da cadeia do cálculo para ajustar os pesos.
+
+1.  **Forward Pass**: Calcula a saída.
+2.  **Loss Function**: Mede o erro.
+3.  **Backward Pass**: Ajusta os pesos para diminuir o erro no futuro (**Gradient Descent**).
+
+## Por Que Python?
+
+O Python se tornou a língua franca da IA devido à biblioteca **NumPy**, que permite realizar operações com matrizes de forma extremamente eficiente, e aos frameworks modernos como **PyTorch** e **TensorFlow**.
+
+## Conclusão
+
+Entender a base matemática nos permite não apenas usar as bibliotecas de IA, mas também **otimizá-las**, depurá-las e criar arquiteturas inovadoras que resolvem problemas reais.
+"""

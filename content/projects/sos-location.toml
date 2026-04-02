@@ -1,0 +1,36 @@
+slug = "sos-location"
+name = "SOS Location"
+headline = "Open-source platform for monitoring, mapping, and coordinating natural disaster response."
+summary = "Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real."
+status = "production"
+stack = ["TypeScript", "Node.js", "GIS", "Event-Driven"]
+badges = ["social-good", "gis", "open-source"]
+repo_url = "https://github.com/nhmatsumoto/sos_location"
+code_url = "https://github.com/nhmatsumoto/sos_location"
+docs_url = "/publications/20260401-184500-gis-pipelines-with-event-driven-services/"
+featured = true
+order = 2
+diagram_preview = """
+ingest -> normalize -> geocode
+   |         |          |
+events -> risk map -> ops view
+"""
+overview = """
+SOS Location é uma iniciativa de resposta humanitária focada no uso de tecnologia geoespacial para acelerar a tomada de decisão em cenários de crise. O projeto organiza camadas de dados complexas em uma interface operacional simples.
+"""
+problem_solution = """
+Em desastres, a fragmentação da informação custa vidas. A solução centraliza feeds de clima, áreas de risco e recursos disponíveis, utilizando processamento assíncrono para manter a atualização constante sem sobrecarregar o sistema.
+"""
+architecture = """
+Baseado em pipelines de eventos, o sistema separa a ingestão de dados (sensores, APIs externas) do processamento geoespacial e da camada de visualização em tempo real (WebSockets/Leaflet).
+"""
+adr = [
+  "Uso de GeoJSON como padrão de intercâmbio de dados.",
+  "Arquitetura orientada a eventos para garantir escalabilidade em picos de uso.",
+  "Isolamento de serviços de geolocalização para resiliência operacional.",
+]
+roadmap = [
+  "Integração com imagens de satélite para análise de inundação.",
+  "Expansão do modelo de predição de risco usando machine learning.",
+  "Suporte a offline-first para equipes de campo.",
+]

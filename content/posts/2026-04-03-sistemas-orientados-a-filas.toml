@@ -1,0 +1,46 @@
+id = "2026-04-03-1600"
+slug = "sistemas-orientados-a-filas"
+title = "Resiliência e Escala: Sistemas orientados a Filas de Mensageria"
+summary = "Por que desacoplar sistemas com filas (RabbitMQ, Azure Service Bus) é o segredo para arquiteturas distribuídas inquebráveis."
+published_at = "2026-04-03T13:00:00+09:00"
+updated_at = "2026-04-03T13:00:00+09:00"
+status = "published"
+tags = ["arquitetura", "distribuido", "filas", "mensageria", "rabbitmq"]
+badges = ["resilience", "scalability", "cloud-native"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+Sistemas síncronos (HTTP/REST) são simples, mas frágeis. Se o serviço B cai, o serviço A também falha. As **Filas de Mensageria** resolvem isso ao introduzir um intermediário (Message Broker) que garante que o trabalho será feito, mesmo que não seja agora.
+
+## O Broker como "Amortecedor"
+
+Imagine um serviço de processamento de vídeos. Receber milhares de uploads simultâneos via HTTP causaria um estouro de memória. Com filas, o upload apenas coloca a tarefa no "fim da linha" e o processador a consome no seu próprio ritmo.
+
+```mermaid
+graph LR
+  P[Produtor - API] -->|Envia Mensagem| B((Message Broker))
+  B -->|Fila de Tarefas| C1[Consumidor 1]
+  B -->|Fila de Tarefas| C2[Consumidor 2]
+  C1 --> D[(Banco de Dados)]
+  C2 --> D
+```
+
+### Padrões Essenciais de Filas
+
+1.  **Idempotência**: O consumidor deve ser capaz de processar a mesma mensagem duas vezes sem efeitos colaterais (ex: verificar se o boleto já foi pago antes de processar).
+2.  **Dead Letter Queue (DLQ)**: Mensagens que falham N vezes vão para uma fila separada para auditoria manual, evitando que o erro trave todo o sistema.
+3.  **Acknowledge (ACK)**: O broker só remove a mensagem da fila quando o consumidor confirma que terminou o processamento com sucesso.
+
+## Ferramentas de Mensageria
+
+*   **RabbitMQ**: O clássico. Perfeito para roteamento complexo e sistemas robustos.
+*   **Azure Service Bus**: Ideal para ecossistemas na cloud com suporte nativo a transações e sessões.
+*   **Kafka**: Para streaming de dados massivos e altíssimo throughput, onde a ordem e a persistência histórica importam.
+
+## Conclusão
+
+Filas são a base de qualquer sistema escalável moderno. Elas transformam uma arquitetura frágil em um sistema distribuído resiliente, capaz de absorver picos de carga e falhas temporárias sem perder dados.
+"""

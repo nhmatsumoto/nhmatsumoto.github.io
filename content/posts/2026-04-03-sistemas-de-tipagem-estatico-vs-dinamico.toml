@@ -1,0 +1,48 @@
+id = "2026-04-03-2200"
+slug = "sistemas-de-tipagem-estatico-vs-dinamico"
+title = "A Luta dos Tipos: Estático vs Dinâmico"
+summary = "Por que o TypeScript é o 'super-poder' do JS e como a tipagem forte em C# e Rust protege o seu código de erros bobos em runtime."
+published_at = "2026-04-03T19:00:00+09:00"
+updated_at = "2026-04-03T19:00:00+09:00"
+status = "published"
+tags = ["tipagem", "computacao", "typescript", "csharp", "rust"]
+badges = ["computer-science", "safety", "foundations"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+O sistema de tipagem de uma linguagem é a sua primeira linha de defesa. O debate entre Tipagem Estática (C#, Java, Rust) e Tipagem Dinâmica (Python, JavaScript original) é, no fundo, um debate sobre **quando você quer descobrir seus erros**.
+
+## Tipagem Dinâmica: O Foco na Agilidade
+
+Linguagens dinâmicas não exigem definições de tipo. Variáveis podem mudar de "forma" a qualquer momento.
+
+*   **Vantagem**: Menos código, refatoração rápida em protótipos.
+*   **Desvantagem**: Erros invisíveis que só explodem quando o usuário final clica no botão (runtime errors).
+
+## Tipagem Estática: O Compilador como Mentor
+
+Estática significa que o tipo é resolvido em tempo de compilação. Se você tentar somar um `int` com um `string`, o código nem compila.
+
+```mermaid
+graph LR
+  C[Código] --> T[Validação de Tipos]
+  T -->|Erro!| D[Corrija Antes de Rodar]
+  T -->|OK| E[Execução Segura]
+  style T fill:#f9f,stroke:#333
+```
+
+### O Meio-termo: TypeScript e Gradual Typing
+
+O TypeScript trouxe o melhor dos dois mundos para a web. Ele oferece uma camada de tipagem opcional sobre o JavaScript. Se você tipar tudo corretamente, o editor de código se torna "vidente", prevendo o que cada variável contém através de autocomplete e IntelliSense.
+
+### Duck Typing: "Se nada como um pato..."
+
+Presente em Python e Go, o Duck Typing foca no **comportamento**. Não importa o que o objeto **é**, mas sim o que ele **consegue fazer** (métodos e propriedades).
+
+## Conclusão
+
+Tipagem forte é autoportante documental. Em sistemas complexos (SplitCosts, SOS Location), a tipagem estática é o que garante que uma mudança no banco de dados não quebre o frontend sem que você perceba.
+"""

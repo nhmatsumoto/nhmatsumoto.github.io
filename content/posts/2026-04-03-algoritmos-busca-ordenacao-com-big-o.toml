@@ -1,0 +1,48 @@
+id = "2026-04-03-2000"
+slug = "algoritmos-busca-ordenacao-com-big-o"
+title = "Algoritmos e Big O: Entendendo a Eficiência do Código"
+summary = "Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade."
+published_at = "2026-04-03T17:00:00+09:00"
+updated_at = "2026-04-03T17:00:00+09:00"
+status = "published"
+tags = ["algoritmos", "computacao", "big-o", "performance"]
+badges = ["computer-science", "efficiency", "foundations"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = true
+
+body = """
+Escrever código que funciona é o primeiro passo. Escrever código que escala é o segundo. A notação **Big O** é a linguagem que usamos para descrever quão rápido um algoritmo cresce à medida que os dados aumentam.
+
+## O Que é Notação Big O?
+
+O Big O foca no **pior cenário**. Ele ignora constantes e foca na curva de crescimento.
+
+*   **O(1)** - Constante: O tempo não muda (ex: acessar um item em um array pelo índice).
+*   **O(log n)** - Logarítmico: A eficiência máxima (ex: Busca Binária).
+*   **O(n)** - Linear: O tempo cresce proporcionalmente aos dados (ex: percorrer uma lista).
+*   **O(n log n)** - Linearitmo: O padrão para ordenação eficiente (ex: Merge Sort, Quick Sort).
+*   **O(n^2)** - Quadrático: O perigo dos loops aninhados.
+
+```mermaid
+graph TD
+    A[O(1) - Excelente] --> B[O(log n) - Muito Bom]
+    B --> C[O(n) - Justo]
+    C --> D[O(n log n) - Razoável]
+    D --> E[O(n^2) - Ruim]
+    E --> F[O(2^n) - Horrível]
+```
+
+### Busca Binária: A Mágica do Logaritmo
+
+Imagine procurar um nome em uma lista telefônica de 1 milhão de páginas. Uma busca linear (página por página) levaria até 1 milhão de passos. Uma **Busca Binária** (dividindo ao meio) levaria apenas **20 passos**.
+
+### Por que se Importar?
+
+Em sistemas com poucos dados, qualquer algoritmo serve. Mas em sistemas de produção com milhões de registros, a diferença entre O(n) e O(n^2) é a diferença entre uma resposta instantânea e um servidor travado.
+
+## Conclusão
+
+Entender complexidade de algoritmos transforma você de um "escritor de código" em um "engenheiro de software". Antes de cada loop, pergunte-se: "Qual é o Big O disso?".
+"""

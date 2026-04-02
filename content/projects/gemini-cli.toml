@@ -1,0 +1,33 @@
+slug = "gemini-cli"
+name = "Gemini CLI"
+headline = "An open-source AI agent that brings the power of Gemini directly into your terminal."
+summary = "Agente de IA via CLI para automação de tarefas, geração de código e interação rica no terminal."
+status = "production"
+stack = ["Go", "Gemini API", "CLI Architecture"]
+badges = ["ai", "terminal", "automation"]
+repo_url = "https://github.com/nhmatsumoto/gemini-cli"
+code_url = "https://github.com/nhmatsumoto/gemini-cli"
+featured = false
+order = 3
+diagram_preview = """
+cli -> planner -> tools
+  |        |        |
+agent  <- models <- i/o
+"""
+overview = """
+Gemini CLI é a materialização da inteligência de agentes no ambiente de trabalho natural do desenvolvedor: o terminal. Ele permite interagir com arquivos, executar comandos e planejar mudanças complexas.
+"""
+problem_solution = """
+Muitas vezes, a fricção entre pensar e escrever código ocorre na troca de janelas. O Gemini CLI reduz esse gap, permitindo que a IA entenda o contexto local e atue diretamente nos arquivos do projeto.
+"""
+architecture = """
+O design privilegia a modularidade dos prompts e a extensibilidade das ferramentas. O sistema de 'skills' permite que o agente aprenda novas tarefas sem alterar o core do runtime.
+"""
+adr = [
+  "Uso de modelos multimodais para suporte a screenshots no futuro.",
+  "Implementação de streaming para feedback imediato no terminal.",
+]
+roadmap = [
+  "Suporte a subagentes paralelos.",
+  "Sistema de memória contextual de longo prazo.",
+]

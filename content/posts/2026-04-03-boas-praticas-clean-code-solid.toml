@@ -1,0 +1,51 @@
+id = "2026-04-03-1800"
+slug = "boas-praticas-clean-code-solid"
+title = "Clean Code e SOLID: Onde mora a excelência no código?"
+summary = "Uma análise equilibrada sobre como o Clean Code e os princípios SOLID ajudam a criar sistemas sustentáveis sem cair no excesso de abstração."
+published_at = "2026-04-03T15:00:00+09:00"
+updated_at = "2026-04-03T15:00:00+09:00"
+status = "published"
+tags = ["engenharia", "clean-code", "solid", "arquitetura", "boivas-praticas"]
+badges = ["maintenance", "readability", "quality"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+Escrever código que o computador entende é fácil. Escrever código que humanos entendem e conseguem manter é o verdadeiro desafio da engenharia de software. O **Clean Code** e os princípios **SOLID** são os roteiros para essa excelência.
+
+## Clean Code: Código para Humanos
+
+O Clean Code propõe que o código deve ser intuitivo, como uma boa leitura. Algumas regras de ouro:
+
+*   **Nomes Significativos**: `GetActiveUsers()` é muito melhor que `GetU()`.
+*   **Funções Pequenas**: Uma função deve fazer apenas uma coisa e fazê-la bem.
+*   **Comentários Mínimos**: O código deve ser tão claro que dispense comentários, exceto para justificar decisões de design complexas.
+
+## SOLID: Estrutura para Mudança
+
+Enquanto o Clean Code foca na legibilidade, o SOLID foca na **estratégia de mudança**.
+
+1.  **S (Single Responsibility)**: Uma classe deve ter apenas uma razão para mudar.
+2.  **O (Open/Closed)**: Aberto para extensão, fechado para modificação. Use polimorfismo em vez de IFs gigantes.
+3.  **L (Liskov Substitution)**: Subclasses devem ser substituíveis por suas classes base sem quebrar o sistema.
+4.  **I (Interface Segregation)**: Interfaces específicas são melhores que uma interface genérica e pesada.
+5.  **D (Dependency Inversion)**: Dependa de abstrações, não de implementações concretas (Injeção de Dependência).
+
+```mermaid
+graph TD
+  A[Código Frágil] -->|Refatoração SOLID| B[Código Flexível]
+  B --> C[Facilidade de Teste]
+  C --> D[Manutenibilidade a Longo Prazo]
+  D --> E[Agilidade de Negócio]
+```
+
+## O Perigo do Excesso
+
+Cuidado com a "Over-engineering". Abstrair tudo antes de precisar pode tornar o sistema irreconhecível. Aplique o SOLID onde a mudança é provável, não em cada linha de código.
+
+## Conclusão
+
+Excelência técnica não é sobre perfeição acadêmica, mas sobre **sustentabilidade operacional**. Código limpo é código que sobrevive ao tempo e permite que a empresa evolua sem medo de que 'tocar em algo que funcione' quebre todo o sistema.
+"""

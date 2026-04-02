@@ -1,0 +1,53 @@
+id = "2026-04-03-1900"
+slug = "design-patterns-gang-of-four-moderno"
+title = "Design Patterns: O Clássico (GoF) em contexto moderno"
+summary = "Uma releitura dos padrões de projeto clássicos (Strategy, Factory, Observer) aplicado a arquiteturas modernas de microsserviços e frontends reativos."
+published_at = "2026-04-03T16:00:00+09:00"
+updated_at = "2026-04-03T16:00:00+09:00"
+status = "published"
+tags = ["padroes-de-projeto", "gof", "arquitetura", "engenharia"]
+badges = ["patterns", "design", "professional"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+Os Padrões de Projeto do "Gang of Four" (GoF) são a linguagem universal da orientação a objetos. Embora tenham sido catalogados em 1994, sua essência permanece vital para resolver problemas recorrentes de design de software.
+
+## Strategy: Troca de Comportamento Dinâmica
+
+O **Strategy** permite que você mude o algoritmo de uma operação em tempo de execução. Em sistemas modernos, ele é a base de gateways de pagamento ou estratégias de frete.
+
+```mermaid
+classDiagram
+    context --> strategy
+    strategy <|-- StrategyA
+    strategy <|-- StrategyB
+    class context {
+        +execute()
+    }
+    class strategy {
+        <<interface>>
+        +doWork()
+    }
+```
+
+## Observer e a Reatividade Moderna
+
+O **Observer** é o pai de tudo o que conhecemos como reatividade hoje (RxJS, State Management). Um objeto mantém uma lista de dependentes e os notifica automaticamente de qualquer mudança de estado.
+
+## Factory e a Injeção de Dependência
+
+Embora hoje usemos contêineres de DI (Dependency Injection), o conceito do **Factory** ainda é crucial para instanciar objetos complexos cujas classes exatas podem variar dependendo do contexto.
+
+### Por que aprender os Clássicos?
+
+1.  **Vocabulário**: Falar "usa um Strategy ali" economiza minutos de explicação técnica.
+2.  **Manutenibilidade**: Padrões bem aplicados tornam o código previsível para outros desenvolvedores.
+3.  **Flexibilidade**: Você desenha sistemas que suportam mudanças de requisitos sem reescritas massivas.
+
+## Conclusão
+
+Design Patterns não são dogmas, são **ferramentas**. Saber quando usá-los é o que diferencia o programador que "monta telas" do engenheiro que "projeta sistemas".
+"""

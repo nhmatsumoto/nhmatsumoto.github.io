@@ -1,0 +1,44 @@
+id = "2026-04-03-2500"
+slug = "computacao-quantica-qbits-vs-bits"
+title = "Computação Quântica: O Poder Além dos Bits"
+summary = "Uma visão clara sobre os Qubits, superposição e como o poder quântico pode resolver problemas impossíveis para computadores clássicos."
+published_at = "2026-04-03T22:00:00+09:00"
+updated_at = "2026-04-03T22:00:00+09:00"
+status = "published"
+tags = ["quantica", "computacao", "bits-vs-qubits", "tecnologia"]
+badges = ["quantum-computing", "future", "hi-tech"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = true
+
+body = """
+Enquanto os computadores clássicos processam informações em **Bits** (0 ou 1), a **Computação Quântica** usa **Qubits**. Essa simples diferença muda tudo o que sabemos sobre velocidade de processamento.
+
+## O Que é um Qubit?
+
+O Qubit pode ser 0, 1 ou uma **Superposição** de ambos. Isso significa que, enquanto um computador comum tenta um caminho de cada vez em um labirinto, o computador quântico tenta **todos os caminhos simultaneamente**.
+
+```mermaid
+graph LR
+  B[Bit Clássico] -->|Estado| B1[0 OU 1]
+  Q[Qubit Quântico] -->|Estado| Q1[0 E 1 Simultaneamente]
+  Q1 -->|Processamento| Q2[Explosão Exponencial]
+```
+
+### Por que o Poder é Exponencial?
+
+Para cada bit clássico que você adiciona, a capacidade dobra linearmente. Com qubits, a capacidade aumenta exponencialmente.
+
+-   300 Qubits podem representar mais valores do que o número de átomos no universo observável.
+
+## Aplicações que Mudarão o Mundo
+
+1.  **Criptografia**: O algoritmo de Shor pode quebrar chaves RSA em minutos.
+2.  **Criação de Materiais**: Simular moléculas complexas para novos remédios ou baterias eficientes.
+3.  **Otimização de IA**: Treinar modelos gigantes em segundos em vez de meses.
+
+## Conclusão
+
+Estamos na "infância" da computação quântica. Hoje, ela é cara e instável (precisa de temperaturas próximas ao zero absoluto). Mas quando estabilizarmos essa tecnologia, o que chamamos de "Supercomputador" hoje parecerá uma calculadora de bolso amanhã.
+"""

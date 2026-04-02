@@ -1,0 +1,52 @@
+id = "2026-04-03-1500"
+slug = "dapper-vs-efcore-performance"
+title = "SQL vs Dapper: Onde mora a performance real no .NET?"
+summary = "Uma exploração sobre como o Dapper se mantém como o Micro-ORM de escolha para desenvolvedores que precisam de controle total e performance máxima em SQL."
+published_at = "2026-04-03T12:00:00+09:00"
+updated_at = "2026-04-03T12:00:00+09:00"
+status = "published"
+tags = ["dotnet", "sql", "dapper", "performance", "backend"]
+badges = ["performance", "sql", "orm"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+O Entity Framework Core é fantástico para produtividade, mas quando cada milissegundo conta, o **Dapper** entra em cena. Ele não é um ORM completo, mas sim um mapeador de objetos leve que abraça o SQL bruto.
+
+## O Custo da Abstração
+
+O mapeamento de dados do SQL para objetos C# costuma ser o gargalo. O EF Core faz muito trabalho pesado: rastreamento de mudanças (Change Tracking), geração dinâmica de SQL e gerenciamento de relacionamentos complexos.
+
+O Dapper ignora a maioria dessas funcionalidades em troca de velocidade bruta.
+
+```mermaid
+sequenceDiagram
+  participant App as Aplicação .NET
+  participant Dapper as Dapper (Micro-ORM)
+  participant SQL as Banco de Dados
+  
+  App->>Dapper: Query<T>(sql, params)
+  Dapper->>SQL: Envia SQL puro
+  SQL-->>Dapper: Retorna DataReader
+  Dapper-->>App: Mapeamento em Massa (Emit)
+```
+
+### Por que Dapper?
+
+1.  **Velocidade**: Praticamente a mesma velocidade de usar `System.Data.SqlClient` manualmente.
+2.  **Controle Total**: Você escreve o SQL. Sem surpresas com queries geradas automaticamente que podem ser ineficientes.
+3.  **Simplicidade**: Uma API minimalista que estende `IDbConnection`.
+
+## Quando NÃO usar Dapper?
+
+Se o seu sistema é um CRUD simples com centenas de tabelas e pouca carga, o EF Core pode ser mais produtivo. O Dapper brilha em:
+-   **Relatórios e Dashboards**: Onde as queries são complexas e otimizadas.
+-   **APIs de Alta Performance**: Onde o throughput é o principal KPI.
+-   **Sistemas com DBAs**: Onde o SQL é mantido por especialistas em banco de dados.
+
+## Conclusão
+
+No Antigravity, seguimos o mantra: "Escolha a ferramenta certa para o trabalho". Muitas vezes, isso significa usar EF Core para escritas simples e Dapper para leituras rápidas e complexas (Padrão CQRS).
+"""

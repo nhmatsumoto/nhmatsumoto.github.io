@@ -1,0 +1,43 @@
+id = "2026-04-03-1700"
+slug = "tdd-ciclo-vermelho-verde-refactor"
+title = "TDD na Prática: O Ciclo Vermelho, Verde e Refactor"
+summary = "Por que escrever testes antes do código não é apenas sobre qualidade, mas sobre como desenhar APIs melhores e mais intuitivas."
+published_at = "2026-04-03T14:00:00+09:00"
+updated_at = "2026-04-03T14:00:00+09:00"
+status = "published"
+tags = ["qualidade", "tdd", "testes", "engenharia"]
+badges = ["testing", "clean-code", "craftsmanship"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+Muitos desenvolvedores veem o Test-Driven Development (TDD) como um fardo que atrasa a entrega. Na realidade, o TDD é uma ferramenta de **design de software**. Ao escrever o teste primeiro, você se coloca no lugar de quem consome o seu código.
+
+## O Ciclo Sagrado
+
+O TDD se baseia em uma iteração rápida de três passos:
+
+1.  **Vermelho (Red)**: Escreva um teste que falha. Ele define o que o código deve fazer, sem que a implementação exista.
+2.  **Verde (Green)**: Escreva a menor quantidade de código possível para fazer o teste passar. Não se preocupe com a elegância agora.
+3.  **Refatorar (Refactor)**: Agora que o teste passa e você tem uma rede de segurança, limpe o código, remova duplicidades e melhore o design.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Red: Escreve teste que falha
+    Red --> Green: Implementação mínima
+    Green --> Refactor: Melhora o design
+    Refactor --> Red: Próximo requisito
+```
+
+### Os Benefícios do TDD
+
+*   **Design Emergente**: Você cria apenas o que é necessário. Interfaces ficam mais limpas e focadas.
+*   **Coragem para Mudar**: Com uma suíte de testes robusta, refatorar código legado deixa de ser um pesadelo.
+*   **Documentação Viva**: Os testes são o melhor exemplo de como usar a sua aplicação.
+
+## Conclusão
+
+TDD não é sobre testar após o fato; é sobre **guiar o desenvolvimento**. É a diferença entre construir uma ponte e esperar que ela aguente o peso, ou projetá-la com cálculos precisos de carga desde o primeiro tijolo.
+"""

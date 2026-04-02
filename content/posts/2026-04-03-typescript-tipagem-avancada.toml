@@ -1,0 +1,55 @@
+id = "2026-04-03-2700"
+slug = "typescript-tipagem-avancada"
+title = "TypeScript Além do Básico: Tipagem Avançada e Genéricos"
+summary = "Explorando os recursos mais poderosos do TypeScript: Mapped Types, Conditional Types e como criar APIs 100% type-safe."
+published_at = "2026-04-03T23:30:00+09:00"
+updated_at = "2026-04-03T23:30:00+09:00"
+status = "published"
+tags = ["typescript", "javascript", "tipagem", "desenvolvimento-web"]
+badges = ["advanced", "frontend", "type-safety"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+O TypeScript não é apenas um "JSON com tipos". Suas funcionalidades mais avançadas permitem que você transforme a tipagem em uma verdadeira **linguagem de programação** que valida a lógica do seu código antes mesmo dele rodar.
+
+## Genéricos (Generics): Flexibilidade com Segurança
+
+Genéricos permitem criar componentes que funcionam com vários tipos, mantendo a integridade.
+
+```typescript
+function identity<T>(arg: T): T {
+  return arg;
+}
+```
+
+## Conditional Types: O "IF" dos Tipos
+
+Imagine um tipo que muda baseando-se em outro:
+
+```typescript
+type IsString<T> = T extends string ? "sim" : "não";
+```
+
+## Mapped Types: Transformando Objetos
+
+Você pode criar novos tipos baseados em propriedades de tipos existentes. Útil para criar versões `Readonly` ou `Partial` de interfaces complexas.
+
+```mermaid
+graph LR
+  A[Interface Original] --> B[Mapped Type]
+  B --> C[Interface Somente Leitura]
+  B --> D[Interface Opcional]
+  style B fill:#f9f,stroke:#333
+```
+
+### Infer e Template Literal Types
+
+Com o `infer`, você pode extrair tipos de dentro de outros tipos (ex: pegar o tipo de retorno de uma função). E com **Template Literal Types**, você pode até validar strings complexas como rotas de uma API.
+
+## Conclusão
+
+Dominar a tipagem avançada do TypeScript é o que diferencia um desenvolvedor que apenas "usa TS" de um arquiteto frontend que constrói bibliotecas robustas e seguras. Use o poder do compilador a seu favor para eliminar os erros de runtime de uma vez por todas.
+"""
