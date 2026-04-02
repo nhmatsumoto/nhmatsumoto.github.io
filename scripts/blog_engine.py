@@ -10,6 +10,7 @@ import unicodedata
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "blog.toml"
@@ -508,7 +509,7 @@ def render_post_card(post: dict[str, Any]) -> str:
           <p class="post-card-meta">
             <time datetime="{html.escape(post['published_at'])}">{format_short_date(post['published_dt'])}</time>
           </p>
-          <h3><a href="{html.escape(post['url'])}">{html.escape(post['title'])}</a></h3>
+          <h3><a href="{html.escape(post['resolved_url'])}">{html.escape(post['title'])}</a></h3>
         </header>
         <p>{html.escape(post['summary'])}</p>
         {render_tag_list(post['tags'])}
@@ -519,7 +520,11 @@ def render_post_card(post: dict[str, Any]) -> str:
 
 def render_site_nav(site: dict[str, str]) -> str:
     docs_path = ROOT / "docs" / "architecture" / "index.html"
-    docs_link = '<li><a href="/docs/architecture/index.html">Documentação</a></li>' if docs_path.exists() else ""
+    docs_link = (
+        f'<li><a href="{site_href(site, "/docs/architecture/index.html")}">Documentação</a></li>'
+        if docs_path.exists()
+        else ""
+    )
     github_link = (
         f'<li><a href="{html.escape(site["github_url"], quote=True)}" rel="noopener noreferrer" target="_blank">GitHub</a></li>'
         if site["github_url"]
@@ -532,10 +537,10 @@ def render_site_nav(site: dict[str, str]) -> str:
     )
     return f"""
     <nav class="site-nav" aria-label="Principal">
-      <a class="site-mark" href="/">{html.escape(site['title'])}</a>
+      <a class="site-mark" href="{site_href(site, "/")}">{html.escape(site['title'])}</a>
       <ul>
-        <li><a href="/">Início</a></li>
-        <li><a href="/publications/">Publicações</a></li>
+        <li><a href="{site_href(site, "/")}">Início</a></li>
+        <li><a href="{site_href(site, "/publications/")}">Publicações</a></li>
         {docs_link}
         {github_link}
         {linkedin_link}
@@ -557,7 +562,24 @@ def canonical_url(site: dict[str, str], path: str) -> str:
     base_url = site["base_url"].rstrip("/")
     if not base_url:
         return path
-    return f"{base_url}{path}"
+    return f"{base_url}/{path.lstrip('/')}"
+
+
+def site_path_prefix(site: dict[str, str]) -> str:
+    base_url = site.get("base_url", "").strip()
+    if not base_url:
+        return ""
+    parsed = urlsplit(base_url)
+    path = parsed.path.rstrip("/")
+    return path if path != "/" else ""
+
+
+def site_href(site: dict[str, str], path: str) -> str:
+    prefix = site_path_prefix(site)
+    clean_path = path if path.startswith("/") else f"/{path}"
+    if not prefix:
+        return clean_path
+    return f"{prefix}{clean_path}"
 
 
 def render_layout(
@@ -588,7 +610,7 @@ def render_layout(
     <title>{html.escape(page_title)}</title>
     <meta name="description" content="{html.escape(page_description, quote=True)}">
     <link rel="canonical" href="{html.escape(canonical_url(site, canonical_path), quote=True)}">
-    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="{site_href(site, "/assets/styles.css")}">
     {math_meta}
   </head>
   <body class="{html.escape(body_class, quote=True)}" data-has-math="{str(has_math).lower()}">
@@ -604,7 +626,7 @@ def render_layout(
       </main>
       {render_footer(site)}
     </div>
-    <script src="/assets/blog.js" defer></script>
+    <script src="{site_href(site, "/assets/blog.js")}" defer></script>
   </body>
 </html>
 """
@@ -636,7 +658,7 @@ def render_home_page(site: dict[str, str], posts: list[dict[str, Any]]) -> str:
         <ol class="post-list">
           {post_cards}
         </ol>
-        <p class="section-link"><a href="/publications/">Ver arquivo completo</a></p>
+        <p class="section-link"><a href="{site_href(site, "/publications/")}">Ver arquivo completo</a></p>
       </section>
 
       <aside class="content-panel content-panel-aside" aria-labelledby="about-title">
@@ -697,12 +719,12 @@ def render_archive_page(site: dict[str, str], posts: list[dict[str, Any]]) -> st
 
 def render_post_navigation(previous_post: dict[str, Any] | None, next_post: dict[str, Any] | None) -> str:
     previous_link = (
-        f'<a class="pager-link" href="{html.escape(previous_post["url"])}">← {html.escape(previous_post["title"])}</a>'
+        f'<a class="pager-link" href="{html.escape(previous_post["resolved_url"])}">← {html.escape(previous_post["title"])}</a>'
         if previous_post
         else '<span class="pager-link pager-link-disabled">Sem texto mais novo</span>'
     )
     next_link = (
-        f'<a class="pager-link" href="{html.escape(next_post["url"])}">{html.escape(next_post["title"])} →</a>'
+        f'<a class="pager-link" href="{html.escape(next_post["resolved_url"])}">{html.escape(next_post["title"])} →</a>'
         if next_post
         else '<span class="pager-link pager-link-disabled">Sem texto anterior</span>'
     )
@@ -732,7 +754,7 @@ def render_post_page(
         </div>
         {render_tag_list(post['tags'])}
         <div class="post-actions">
-          <a class="subtle-button" href="/publications/">Voltar ao arquivo</a>
+          <a class="subtle-button" href="{site_href(site, "/publications/")}">Voltar ao arquivo</a>
           <button class="subtle-button" type="button" data-copy-link>Copiar link</button>
         </div>
       </header>
@@ -774,6 +796,8 @@ def build_site() -> dict[str, Any]:
     config = load_blog_config()
     site = load_site()
     posts = load_posts(include_drafts=False)
+    for post in posts:
+        post["resolved_url"] = site_href(site, post["url"])
 
     publications_dir = ROOT / config["build"]["publications_dir"]
     home_path = ROOT / config["build"]["home_file"]

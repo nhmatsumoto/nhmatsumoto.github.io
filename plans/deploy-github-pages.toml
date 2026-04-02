@@ -1,0 +1,24 @@
+[request]
+name = "deploy-github-pages"
+status = "in_progress"
+summary = "Preparar o blog para GitHub Pages em repositório de projeto, ajustar base path, gerar HTML final, commitar e publicar no remoto."
+
+[[steps]]
+name = "ajustar-base-url"
+status = "in_progress"
+details = "Como o repositório é nhmatsumoto/nhmatsumoto, o site precisa funcionar sob /nhmatsumoto/."
+
+[[steps]]
+name = "rebuild"
+status = "pending"
+details = "Regenerar index e publicações com paths compatíveis com GitHub Pages."
+
+[[steps]]
+name = "commit"
+status = "pending"
+details = "Commits locais devem refletir apenas as mudanças do deploy."
+
+[[steps]]
+name = "push"
+status = "pending"
+details = "Enviar o branch master para o remoto origin."

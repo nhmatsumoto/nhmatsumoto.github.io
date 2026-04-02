@@ -1,79 +1,84 @@
-# Hi there 👋 I'm Hiro (nhmatsumoto)
+# Blog Estático em TOML
 
-Software Engineer focused on building real-world products, AI-driven systems, and scalable software architecture.
+Blog pessoal publicado por GitHub Pages com:
 
-I work mainly with .NET, TypeScript and modern web stacks, exploring autonomous agents and distributed systems as personal projects.
+- HTML semântico no destino final
+- CSS e JavaScript manuais
+- conteúdo persistido em `.toml`
+- editor localhost para escrever, visualizar, buildar e commitar
 
----
+## Estrutura
 
-## 🚀 Featured Project: Ronaldinho Agent
+- `blog.toml`: configuração do build e do suporte a AsciiMath
+- `content/site.toml`: metadados do blog
+- `content/posts/*.toml`: posts versionados
+- `assets/`: CSS e JavaScript do site público
+- `editor/`: interface web do editor local
+- `scripts/build.py`: gerador estático
+- `scripts/editor_server.py`: servidor localhost do editor
+- `plans/blog-mvp.toml`: plano da feature em TOML
 
-**Ronaldinho Agent** is a personal R&D project focused on agent orchestration, tool execution and autonomous workflows.
+## Fluxo de publicação
 
-The goal is to explore practical patterns for multi-agent systems, modular architectures and developer productivity.
+1. Editar `content/site.toml` e `content/posts/*.toml` diretamente ou usar o editor local.
+2. Rodar o build estático.
+3. Revisar o HTML gerado em `index.html` e `publications/`.
+4. Fazer `git commit` e `git push`.
+5. O GitHub Pages reflete a atualização após o push.
 
-- **Agent Orchestration**: multi-agent workflows, memory snapshots and tool pipelines  
-- **Model Integration**: model-agnostic approach (OpenAI, Gemini and others)  
-- **Architecture Experiments**: modular runtime, execution lanes, context persistence  
-- **Developer Focus**: designed as a playground for testing agentic patterns in real scenarios  
+## Comandos
 
-[⚽ Check the Repository](https://github.com/nhmatsumoto/ronaldinho-agent)
+```bash
+python3 scripts/build.py
+python3 scripts/editor_server.py
+```
 
----
+O editor local sobe por padrão em `http://127.0.0.1:4173/`.
 
-## 🧠 Technical Focus
+## Formato dos posts
 
-### Backend
-- .NET / ASP.NET Core  
-- REST, GraphQL  
-- EF Core, SQL Server, PostgreSQL  
-- Domain-driven and modular architectures  
+```toml
+id = "20260403-221500"
+slug = "meu-post"
+title = "Meu post"
+summary = "Resumo curto."
+published_at = "2026-04-03T22:15:00+09:00"
+updated_at = "2026-04-03T22:15:00+09:00"
+status = "published"
+tags = ["tecnologia", "vida"]
+has_asciimath = true
 
-### Frontend
-- React + TypeScript  
-- Zustand  
-- TailwindCSS  
-- Responsive and product-oriented UI  
+body = """
+# Título
 
-### AI / Agent Systems (personal exploration)
-- Agent orchestration patterns  
-- Tool-based workflows  
-- LLM integrations  
-- Experimental multi-agent architecture  
+Texto do post.
+"""
+```
 
-### Dev & Architecture
-- API design  
-- System design and solution architecture  
-- Automation and developer tooling  
-- Docker and local distributed environments  
+O diretório público de cada publicação é gerado a partir de `id + slug`, por exemplo:
 
----
+```text
+publications/20260403-221500-meu-post/index.html
+```
 
-## 🧩 Selected Projects
+## Markdown e AsciiMath
 
-### Ronaldinho Agent
-Agent orchestration playground focused on autonomy, modularity and developer productivity.
+O renderizador local suporta o necessário para um blog simples:
 
-### SplitCosts
-Household finance management app focused on multi-tenant architecture, UX and performance.
+- títulos
+- parágrafos
+- listas
+- links
+- blockquote
+- blocos de código com ``` 
 
-### SaaS Experiments
-Concepts around workflow, attendance and business management platforms (ex: KintaiFlow).
+Para AsciiMath:
 
----
+- inline: `%%x^2 + y^2%%`
+- bloco: `%%%sum_(i=1)^n i%%%`
 
-## 🎯 What I Care About
-- Building useful products, not only demos  
-- Architecture clarity and maintainability  
-- Performance and developer experience  
-- Applying AI pragmatically inside real software  
+## Observações
 
----
-
-## 📬 Reach me
-- LinkedIn: https://www.linkedin.com/in/nhmatsumoto/  
-- GitHub: https://github.com/nhmatsumoto  
-
----
-
-*Independent developer exploring architecture, SaaS and agent systems.*
+- `publications/` é diretório gerado; o build recria seu conteúdo.
+- o editor local faz preview usando o mesmo motor do build.
+- o botão de publicar faz build antes de executar `git commit`.
