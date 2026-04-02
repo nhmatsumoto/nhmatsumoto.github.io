@@ -1012,39 +1012,47 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
 
     link_fragments: list[str] = []
     for item in nav_items:
-        current_attr = ' aria-current="page"' if item == active_nav else ""
+        is_active = item == active_nav
+        active_cls = "text-accent bg-accent/5 font-semibold" if is_active else "text-muted hover:text-accent hover:bg-black/[0.02]"
         label = translate(i18n, locale, f"nav.{item}", item)
         link_fragments.append(
-            f'<li><a href="{nav_url(site, item)}"{current_attr} data-i18n="{html.escape(f"nav.{item}", quote=True)}">{html.escape(label)}</a></li>'
+            f'<li><a href="{nav_url(site, item)}" class="px-4 py-2 rounded-full transition-all duration-200 {active_cls}" data-i18n="{html.escape(f"nav.{item}", quote=True)}">{html.escape(label)}</a></li>'
         )
     links = "".join(link_fragments)
     nav_aria = translate(i18n, locale, "accessibility.primary_navigation", "Primary navigation")
-    mark_current = ' aria-current="page"' if not active_nav else ""
-    tagline_html = f'<p class="nav-tagline">{html.escape(tagline)}</p>' if tagline else ""
-
+    
     return f"""
-    <nav class="site-nav" aria-label="{html.escape(nav_aria, quote=True)}" data-i18n-aria-label="accessibility.primary_navigation">
-      <div class="nav-brand">
-        <a class="site-mark" href="{site_href(site, "/")}"{mark_current}>{html.escape(site["title"])}</a>
-        {tagline_html}
-      </div>
-      
-      <div class="nav-links" role="navigation">
-        <ul class="nav-links-list">
-          {links}
-        </ul>
-      </div>
+    <nav class="sticky top-6 z-[200] mx-auto w-full max-w-[1000px] px-6 pointer-events-none" aria-label="{html.escape(nav_aria, quote=True)}" data-i18n-aria-label="accessibility.primary_navigation">
+      <div class="bg-white/80 backdrop-blur-xl border border-black/5 rounded-full px-4 py-2 flex items-center justify-between shadow-lg shadow-black/5 pointer-events-auto transition-transform active:scale-[0.98]">
+        
+        <div class="flex items-center gap-4">
+          <a class="text-slate-900 font-bold tracking-tight hover:text-accent transition-colors" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
+          <span class="hidden md:block w-px h-4 bg-slate-200"></span>
+          <p class="hidden lg:block text-xs text-muted font-medium max-w-[240px] truncate">{html.escape(tagline)}</p>
+        </div>
+        
+        <div class="hidden md:block" role="navigation">
+          <ul class="flex items-center gap-1 list-none m-0 p-0">
+            {links}
+          </ul>
+        </div>
 
-      <button class="nav-search-btn" type="button" data-open-palette aria-label="{html.escape(search_label, quote=True)}" data-i18n-aria-label="nav.search">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <span class="search-shortcut">⌘K</span>
-      </button>
+        <div class="flex items-center gap-2">
+          <button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-slate-400 hover:text-accent hover:bg-white hover:border-accent/20 transition-all text-xs" type="button" data-open-palette aria-label="{html.escape(search_label, quote=True)}" data-i18n-aria-label="nav.search">
+            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline-block font-mono opacity-60">⌘K</span>
+          </button>
 
-      <div class="site-nav-actions">
-        <button class="locale-cycle-btn" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "trocar idioma"), quote=True)}" data-i18n-aria-label="nav.language_action">
-          <span class="locale-current">{html.escape(locale.split('-')[0].upper())}</span>
-        </button>
-        <a class="cta-link" href="{html.escape(cta_url, quote=True)}" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">{html.escape(cta_label)}</a>
+          <div class="flex items-center gap-1 pl-2 border-l border-slate-100">
+            <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors text-xs font-bold text-slate-600" type="button" data-locale-toggle>
+              <span class="locale-current">{html.escape(locale.split('-')[0].upper())}</span>
+            </button>
+            <a class="hidden sm:flex items-center gap-2 px-4 py-1.5 bg-slate-900 text-white rounded-full text-xs font-semibold hover:bg-accent transition-all hover:shadow-md active:scale-95" href="{html.escape(cta_url, quote=True)}" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">
+              {html.escape(cta_label)}
+              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </nav>
     """
@@ -1174,10 +1182,10 @@ def render_layout(
   </head>
   <body class="{html.escape(body_class, quote=True)}" data-has-math="{str(has_math).lower()}" data-default-locale="{html.escape(locale, quote=True)}">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">{html.escape(translate(i18n, locale, "accessibility.skip_to_content", "Ir para o conteúdo"))}</a>
+    
+    {render_site_nav(site, system, active_nav, i18n, locale)}
+
     <div class="site-shell">
-      <header class="site-header">
-        {render_site_nav(site, system, active_nav, i18n, locale)}
-      </header>
       <main class="site-main" id="content">
         {content}
       </main>

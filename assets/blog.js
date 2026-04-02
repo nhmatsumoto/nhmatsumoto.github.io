@@ -495,45 +495,6 @@ const initCommandPalette = (localization) => {
   });
 };
 
-const initScrollEffects = () => {
-  const header = document.querySelector(".site-header");
-  const nav = document.querySelector(".site-nav");
-  if (!header || !nav) {
-    return;
-  }
-
-  // Clone nav for sidebar to avoid layout thrashing during transition
-  const sidebarNav = nav.cloneNode(true);
-  sidebarNav.classList.remove("site-nav");
-  sidebarNav.classList.add("site-nav--scrolled");
-  document.body.appendChild(sidebarNav);
-
-  // Re-init components for the cloned nav
-  const localization = createLocalization();
-  if (localization) {
-    initLocaleToggle(sidebarNav);
-    initCommandPalette(sidebarNav);
-  }
-
-  const handleScroll = () => {
-    const scrolled = window.scrollY > 150;
-    if (scrolled) {
-      header.classList.add("site-header--scrolled");
-      nav.style.opacity = "0";
-      nav.style.pointerEvents = "none";
-      sidebarNav.classList.add("is-visible");
-    } else {
-      header.classList.remove("site-header--scrolled");
-      nav.style.opacity = "1";
-      nav.style.pointerEvents = "auto";
-      sidebarNav.classList.remove("is-visible");
-    }
-  };
-
-  window.addEventListener("scroll", handleScroll, { passive: true });
-  handleScroll();
-};
-
 document.addEventListener("DOMContentLoaded", () => {
   const localization = createLocalization();
   localization?.applyTranslations();
@@ -543,5 +504,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initLocaleToggle(localization);
   initCommandPalette(localization);
   loadAsciiMath();
-  initScrollEffects();
 });
