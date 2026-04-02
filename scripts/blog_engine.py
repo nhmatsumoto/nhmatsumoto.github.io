@@ -1027,7 +1027,7 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         
         <div class="flex items-center gap-4">
           <div class="profile-avatar" aria-label="Perfil de Hiro Matsumoto">
-            <span data-asciimath="%%\n /\\_/\\\\\n( o.o )\n > ^ <\n%%">/\\_/\\\n( o.o )\n > ^ <</span>
+            <span data-asciimath="%%\n   ___\n  /   \\\\\n |  o o |\n  \\  ^ /\n   ||||\n   ----\n%%">   ___\n  /   \\\\\n |  o o |\n  \\  ^ /\n   ||||\n   ----</span>
           </div>
           <div>
             <a class="text-slate-900 font-bold tracking-tight hover:text-accent transition-colors" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
