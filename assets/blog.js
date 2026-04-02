@@ -228,6 +228,13 @@ const createLocalization = () => {
     if (persist) {
       window.localStorage.setItem(storageKey, resolved);
     }
+    
+    // Update cycle button text
+    const cycleBtn = document.querySelector(".locale-cycle-btn .locale-current");
+    if (cycleBtn) {
+      cycleBtn.textContent = resolved.split("-")[0].upper();
+    }
+
     applyTranslations();
     window.dispatchEvent(new CustomEvent("site:localechange", { detail: { locale: resolved } }));
   };
@@ -266,9 +273,15 @@ const initLocaleToggle = (localization) => {
     }
     const current = localization.getLocale();
     const idx = locales.indexOf(current);
-    const next =
-      locales[(idx + 1) % locales.length] || locales[0];
+    const next = locales[(idx + 1) % locales.length] || locales[0];
+    
     localization.setLocale(next);
+    
+    // Add a small rotation effect on click
+    button.style.transform = "rotate(360deg)";
+    setTimeout(() => {
+      button.style.transform = "";
+    }, 400);
   });
 };
 

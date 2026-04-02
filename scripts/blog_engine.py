@@ -981,17 +981,22 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         <a class="site-mark" href="{site_href(site, "/")}"{mark_current}>{html.escape(site["title"])}</a>
         {tagline_html}
       </div>
+      
       <div class="nav-links" role="navigation">
         <ul class="nav-links-list">
           {links}
         </ul>
       </div>
+
+      <button class="nav-search-btn" type="button" data-open-palette aria-label="{html.escape(search_label, quote=True)}" data-i18n-aria-label="nav.search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span class="search-shortcut">⌘K</span>
+      </button>
+
       <div class="site-nav-actions">
-        <button class="palette-trigger" type="button" data-open-palette><span data-i18n="nav.search">{html.escape(search_label)}</span> <span>Ctrl/⌘ K</span></button>
-        <div class="locale-group">
-          <button class="locale-toggle" type="button" data-locale-toggle>{html.escape(translate(i18n, locale, "nav.language_action", "trocar idioma"))}</button>
-          {render_locale_switcher(i18n, locale)}
-        </div>
+        <button class="locale-cycle-btn" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "trocar idioma"), quote=True)}" data-i18n-aria-label="nav.language_action">
+          <span class="locale-current">{html.escape(locale.split('-')[0].upper())}</span>
+        </button>
         <a class="cta-link" href="{html.escape(cta_url, quote=True)}" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">{html.escape(cta_label)}</a>
       </div>
     </nav>
