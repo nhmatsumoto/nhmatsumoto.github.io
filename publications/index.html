@@ -161,92 +161,138 @@
       </header>
       
         <div class="section-controls">
-          <div class="pill-row"><span class="pill">dotnet</span><span class="pill">ddd</span><span class="pill">ai</span><span class="pill">gis</span></div>
+          <div class="category-nav">
+            <a href="#tecnologia" class="category-chip">tecnologia</a>
+            <a href="#programacao" class="category-chip">programação</a>
+            <a href="#ciencia" class="category-chip">ciência</a>
+            <a href="#meio-ambiente" class="category-chip">meio ambiente</a>
+            <a href="#projetos" class="category-chip">projetos</a>
+          </div>
+          <div class="pill-row hidden"><span class="pill">dotnet</span><span class="pill">ddd</span><span class="pill">ai</span><span class="pill">gis</span></div>
           <div class="view-switch" data-post-view data-default-view="list">
             <button type="button" data-view-option="list" data-i18n="view.list">lista</button><button type="button" data-view-option="grid" data-i18n="view.grid">grade</button>
           </div>
         </div>
         
-      <ol class="resource-list post-collection" data-post-collection data-view="list">
-        <li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">arquitetura</li><li class="badge">ddd</li><li class="badge">ai-agents</li></ul>
-        </div>
-        <h3><a href="/publications/2026-04-03-0900-orquestrador-agentes-ddd/">Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua</a></h3>
-        <p class="card-summary">Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-02T21:00:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>ddd</li><li>arquitetura</li><li>agentes-ia</li><li>inteligência-artificial</li></ul>
-        
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">architecture</li><li class="badge">experiment</li></ul>
-        </div>
-        <h3><a href="/publications/20260402-203000-ddd-boundaries-for-agent-systems/">DDD boundaries for agent systems</a></h3>
-        <p class="card-summary">Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-02T20:30:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>dotnet</li><li>ddd</li><li>ai</li></ul>
-        <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer" data-i18n="actions.code">código</a></li></ul>
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">knowledge-mining</li><li class="badge">compliance</li><li class="badge">poc</li></ul>
-        </div>
-        <h3><a href="/publications/2026-04-03-1100-poc-minerando-logs/">PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)</a></h3>
-        <p class="card-summary">Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-02T23:00:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>ia</li><li>log-mining</li><li>privacidade</li><li>lgpd</li><li>embeddings</li></ul>
-        
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">agentes</li><li class="badge">evelução</li><li class="badge">feedback-loop</li></ul>
-        </div>
-        <h3><a href="/publications/2026-04-03-1000-neuroplasticidade-agentes/">“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua</a></h3>
-        <p class="card-summary">Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-02T22:00:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>ia</li><li>agentes</li><li>feedback</li><li>neuroplasticidade</li></ul>
-        
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">production</li></ul>
-        </div>
-        <h3><a href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/">GIS pipelines with event-driven services</a></h3>
-        <p class="card-summary">Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="short">01 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>gis</li><li>dotnet</li><li>architecture</li></ul>
-        
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">architecture</li></ul>
-        </div>
-        <h3><a href="/publications/20260312-090000-primeiro-post/">Bem-vindo ao meu novo blog</a></h3>
-        <p class="card-summary">O ponto de partida de um blog estático simples, versionado por Git e editado localmente.</p>
-        <ul class="metric-list"><li><time datetime="2026-03-12T09:00:00+09:00" data-localize-date="short">12 mar 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>pessoal</li><li>anuncio</li></ul>
-        <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts" target="_blank" rel="noopener noreferrer" data-i18n="actions.code">código</a></li></ul>
-      </article>
-    </li>
-      </ol>
+      <div id="tecnologia" class="category-section">
+        <h3 class="category-title">tecnologia & ia</h3>
+        <ol class="resource-list post-collection" data-post-collection data-view="list">
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list"><li class="badge">arquitetura</li><li class="badge">ddd</li><li class="badge">ai-agents</li></ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-0900-orquestrador-agentes-ddd/">Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua</a></h3>
+              <p class="card-summary">Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.</p>
+              <ul class="metric-list"><li><time datetime="2026-04-02T21:00:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+              <ul class="tag-list"><li>ddd</li><li>arquitetura</li><li>agentes-ia</li></ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list"><li class="badge">agentes</li><li class="badge">feedback-loop</li></ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-1000-neuroplasticidade-agentes/">“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua</a></h3>
+              <p class="card-summary">Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada.</p>
+              <ul class="metric-list"><li><time datetime="2026-04-02T22:00:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+              <ul class="tag-list"><li>ia</li><li>agentes</li><li>feedback</li></ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list"><li class="badge">architecture</li><li class="badge">github-sync</li></ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-tech-analysis-mermaid-editor/">Arquitetura: Mermaid Live Editor</a></h3>
+              <p class="card-summary">Uma análise profunda sobre a engenharia de renderização em tempo real e persistência de estado via URL no editor de diagramas.</p>
+              <ul class="metric-list"><li><time datetime="2026-04-03T07:00:00+09:00" data-localize-date="short">03 abr 2026</time></li><li><span data-reading-time="3">3 min de leitura</span></li></ul>
+              <ul class="tag-list"><li>react</li><li>mermaid</li><li>arquitetura</li></ul>
+            </article>
+          </li>
+        </ol>
+      </div>
+
+      <div id="programacao" class="category-section">
+        <h3 class="category-title">engenharia & programação</h3>
+        <ol class="resource-list post-collection" data-post-collection data-view="list">
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list"><li class="badge">architecture</li><li class="badge">experiment</li></ul>
+              </div>
+              <h3><a href="/publications/20260402-203000-ddd-boundaries-for-agent-systems/">DDD boundaries for agent systems</a></h3>
+              <p class="card-summary">Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.</p>
+              <ul class="metric-list"><li><time datetime="2026-04-02T20:30:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+              <ul class="tag-list"><li>dotnet</li><li>ddd</li><li>ai</li></ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list"><li class="badge">compliance</li><li class="badge">poc</li></ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-1100-poc-minerando-logs/">PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)</a></h3>
+              <p class="card-summary">Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável.</p>
+              <ul class="metric-list"><li><time datetime="2026-04-02T23:00:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+              <ul class="tag-list"><li>ia</li><li>log-mining</li><li>privacidade</li></ul>
+            </article>
+          </li>
+        </ol>
+      </div>
+
+      <div id="ciencia" class="category-section">
+        <h3 class="category-title">ciência & física</h3>
+        <ol class="resource-list post-collection" data-post-collection data-view="list">
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list"><li class="badge">pesquisa</li><li class="badge">física-quântica</li></ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/">Introdução Intuitiva à Física Quântica: do Colapso da Onda ao Entrelaçamento</a></h3>
+              <p class="card-summary">Um guia visual e conceitual sobre os pilares da mecânica quântica, simplificando a complexidade matemática para foco na estratégia de fenômenos.</p>
+              <ul class="metric-list"><li><time datetime="2026-04-03T00:00:00+09:00" data-localize-date="short">03 abr 2026</time></li><li><span data-reading-time="5">5 min de leitura</span></li></ul>
+              <ul class="tag-list"><li>física</li><li>quântica</li><li>ciência</li></ul>
+            </article>
+          </li>
+        </ol>
+      </div>
+
+      <div id="projetos" class="category-section">
+        <h3 class="category-title">projetos & labs</h3>
+        <ol class="resource-list post-collection" data-post-collection data-view="list">
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list"><li class="badge">production</li></ul>
+              </div>
+              <h3><a href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/">GIS pipelines with event-driven services</a></h3>
+              <p class="card-summary">Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.</p>
+              <ul class="metric-list"><li><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="short">01 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+              <ul class="tag-list"><li>gis</li><li>dotnet</li><li>architecture</li></ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list"><li class="badge">announcement</li></ul>
+              </div>
+              <h3><a href="/publications/20260312-090000-primeiro-post/">Bem-vindo ao meu novo blog</a></h3>
+              <p class="card-summary">O ponto de partida de um blog estático simples, versionado por Git e editado localmente.</p>
+              <ul class="metric-list"><li><time datetime="2026-03-12T09:00:00+09:00" data-localize-date="short">12 mar 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+              <ul class="tag-list"><li>pessoal</li><li>anuncio</li></ul>
+            </article>
+          </li>
+        </ol>
+      </div>
     </section>
     
     

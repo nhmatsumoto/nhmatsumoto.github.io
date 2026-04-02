@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Introdução Intuitiva à Física Quântica | Hiro Matsumoto</title>
+    <link rel="stylesheet" href="/assets/styles.css?v=1775169888">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF' } });
+        lucide.createIcons();
+      });
+    </script>
+    <style>
+      :root {
+        --reading-width: 840px;
+        --accent: #00C2FF;
+      }
+    </style>
+  </head>
+  <body class="page-post">
+    <header class="fixed top-0 left-0 right-0 z-[250] bg-white border-b border-slate-100 flex items-center justify-center h-12 px-6">
+      <div class="w-full max-w-[1000px] flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs">HM</div>
+          <a class="text-slate-900 font-bold" href="/">Hiro Matsumoto</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="site-shell" style="margin-top: 5rem;">
+      <main class="site-main">
+        <article class="post-shell prose mx-auto">
+          <header class="post-header text-center mb-12">
+            <p class="section-kicker">ciência & física</p>
+            <h1 class="text-4xl font-extrabold tracking-tight">Introdução Intuitiva à Física Quântica</h1>
+            <p class="text-xl text-slate-500 mt-4">Do Colapso da Função de Onda ao Entrelaçamento: uma jornada visual.</p>
+          </header>
+
+          <section class="post-content">
+            <p>A física quântica é frequentemente descrita como "estranha" ou "impossível de entender". No entanto, se abandonarmos a intuição clássica de objetos como "bolinhas de gude" e passarmos a enxergá-los como <strong>ondas de probabilidade</strong>, as peças começam a se encaixar.</p>
+
+            <div class="tech-card border-l-4 border-accent bg-slate-50 p-6 my-8 rounded-r-xl">
+              <h4 class="font-bold text-accent mb-2">Conceito Chave: Superposição</h4>
+              <p class="text-sm m-0">Um sistema quântico não está em um estado "A" ou "B", mas em uma combinação linear de ambos até que uma medição seja realizada.</p>
+            </div>
+
+            <h2>O Experimento da Dupla Fenda</h2>
+            <p>Este é o coração da mecânica quântica. Se dispararmos elétrons contra duas fendas, eles não se comportam como partículas (criando duas pilhas), mas como ondas (criando um padrão de interferência).</p>
+
+            <div class="mermaid py-8">
+            graph LR
+              Source[Fonte de Elétrons] --> Fendas{Dupla Fenda}
+              Fendas --> P1[Caminho A]
+              Fendas --> P2[Caminho B]
+              P1 & P2 --> Screen[Tela de Detecção]
+              Screen --> Result(Padrão de Interferência)
+              style Result fill:#00C2FF,color:#fff
+            </div>
+
+            <h2>O Colapso da Função de Onda</h2>
+            <p>O ato de <strong>observar</strong> (interagir com o sistema) força o elétron a "escolher" uma posição. A onda de probabilidade se torna um ponto definido.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-10">
+              <div class="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                <h5 class="font-bold border-b pb-2 mb-4">Antes da Medição</h5>
+                <div class="h-24 bg-gradient-to-r from-blue-100 via-purple-100 to-blue-100 rounded-full animate-pulse flex items-center justify-center">
+                  <span class="text-xs font-mono text-slate-400">Nuvem de Probabilidade</span>
+                </div>
+              </div>
+              <div class="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                <h5 class="font-bold border-b pb-2 mb-4">Após a Medição</h5>
+                <div class="h-24 flex items-center justify-center">
+                  <div class="w-4 h-4 bg-accent rounded-full ring-8 ring-accent/20"></div>
+                </div>
+              </div>
+            </div>
+
+            <h2>Entrelaçamento: "Ação Fantasmagórica"</h2>
+            <p>Duas partículas podem se tornar tão conectadas que o estado de uma determina instantaneamente o estado da outra, não importa a distância entre elas.</p>
+
+            <div class="mermaid py-8">
+            sequenceDiagram
+              participant P1 as Partícula A
+              participant P2 as Partícula B
+              Note over P1, P2: Estado Entrelaçado (Superposição)
+              Note right of P1: Medição realizada em A
+              P1->>P2: Colapso Instantâneo
+              Note over P1, P2: Estados definidos (opostos)
+            </div>
+
+            <p>Este fenômeno é a base da <strong>Computação Quântica</strong> e do teletransporte de informação.</p>
+          </section>
+
+          <footer class="post-footer-metadata mt-20 p-8 bg-slate-50 rounded-3xl border border-slate-100">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <h3 class="font-bold text-slate-900 mb-2">Metadados</h3>
+                <p class="text-sm text-slate-500">Publicado em 3 de Abril, 2026</p>
+                <p class="text-sm text-slate-500">Tempo de leitura: 5 min</p>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-900 mb-2">Tags</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 bg-white border rounded-full text-xs">física</span>
+                  <span class="px-3 py-1 bg-white border rounded-full text-xs">quântica</span>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-900 mb-2">Ações</h3>
+                <a href="/publications/" class="text-sm text-accent font-bold">← Voltar para Posts</a>
+              </div>
+            </div>
+          </footer>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>
