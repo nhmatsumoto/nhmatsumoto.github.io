@@ -1,0 +1,31 @@
+id = "2026-04-03-1100-alan-turing"
+slug = "alan-turing-computacao-enigma"
+title = "Alan Turing: O Código Enigma e o Nascimento da IA"
+summary = "Uma homenagem ao pai da computação moderna, desde a quebra do Enigma à fundação teórica da Inteligência Artificial."
+published_at = "2026-04-03T11:00:00+09:00"
+updated_at = "2026-04-03T11:00:00+09:00"
+status = "published"
+tags = ["história", "turing", "ia", "computação", "criptografia"]
+badges = ["pioneiro", "ia", "segunda-guerra"]
+repo_url = ""
+code_url = ""
+featured = true
+has_asciimath = false
+
+body = """
+Alan Turing não apenas desenhou o futuro, ele o **codificou**. Sua vida é o ponto de encontro entre a matemática pura, a guerra mundial e a filosofia.
+
+## Bletchley Park e a Bomba de Turing
+Enquanto a Alemanha usava a **Máquina Enigma** para rotas marítimas, Turing liderava o "Hut 8". Ele não tentou adivinhar chaves; ele criou a **Bomba de Turing**, um dispositivo eletromecânico que automatizava a busca por contradições lógicas, encurtando a 2ª Guerra em pelo menos dois anos.
+
+## A Máquina Universal de Turing
+Antes da guerra, Turing provou que uma máquina simples (com fita infinita) poderia calcular qualquer coisa que fosse computável. Essa é a base de **todos** os computadores modernos: o conceito de que o hardware é um receptáculo para o software.
+
+## O Teste de Turing e a IA
+Turing perguntou: *"As máquinas podem pensar?"*. Ao propor o Jogo da Imitação, ele mudou o foco da "consciência" para o **comportamento**. Se não pudermos distinguir uma máquina de um humano, para todos os efeitos práticos, a máquina demonstra inteligência.
+
+> "Aqueles que podem imaginar qualquer coisa, podem criar o impossível." — Alan Turing
+
+## Um Herói Incompreendido
+O legado de Turing foi manchado pela perseguição pessoal e trágica no Reino Unido, mas sua redenção tecnológica é o ar que respiramos hoje. Sem Turing, a computação seria apenas uma calculadora mecânica, não a ferramenta cognitiva que é hoje.
+"""

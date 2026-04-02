@@ -1,0 +1,32 @@
+id = "2026-04-03-1000-historia-bill-gates"
+slug = "bill-gates-microsoft-historia"
+title = "Bill Gates e a Microsoft: Do Desktop à Ubiquidade"
+summary = "Uma análise sobre a visão de Gates de 'um computador em cada mesa' e como a Microsoft moldou a indústria do software moderno."
+published_at = "2026-04-03T10:00:00+09:00"
+updated_at = "2026-04-03T10:00:00+09:00"
+status = "published"
+tags = ["história", "microsoft", "biografia", "software"]
+badges = ["história", "estratégia", "microsoft"]
+repo_url = ""
+code_url = ""
+featured = true
+has_asciimath = false
+
+body = """
+A história de Bill Gates não é apenas sobre código, mas sobre **estratégia de ecossistema**. Enquanto outros focavam no hardware, Gates percebeu que o software era o verdadeiro motor da escalabilidade.
+
+## A Visão de 1975
+O "sonho" de Gates e Paul Allen era audacioso: um computador em cada mesa e em cada casa. Na época, computadores eram máquinas gigantescas e inacessíveis.
+
+## O Marco do MS-DOS
+O contrato com a IBM foi o ponto de inflexão. Gates não vendeu o MS-DOS; ele o **licenciou**. Isso permitiu que a Microsoft mantivesse o controle do software enquanto o hardware da IBM se tornava o padrão da indústria, criando o mercado de "clones" que consolidou o PC.
+
+## Lições de Engenharia e Negócio
+1. **Padrões Abertos vs Fechados**: Ao permitir que outros fabricantes usassem seu SO, Gates criou o maior efeito de rede da história.
+2. **Iteração Rápida**: O Windows não nasceu perfeito, mas dominou pela onipresença e pela compatibilidade reversa — um valor central da Microsoft até hoje.
+
+> "O sucesso é um péssimo professor. Ele seduz pessoas inteligentes a pensarem que não podem perder." — Bill Gates
+
+## Legado Intelectual
+Bill Gates representa a transição do hobby de garagem para a corporação que define a infraestrutura do mundo. Sua transição para a filantropia com a Fundação Gates mostra como o raciocínio sistêmico pode ser aplicado a problemas globais como saúde e energia.
+"""

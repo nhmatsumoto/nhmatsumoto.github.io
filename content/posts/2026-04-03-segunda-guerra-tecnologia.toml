@@ -1,0 +1,29 @@
+id = "2026-04-03-1300-segunda-guerra"
+slug = "segunda-guerra-mundial-tecnologia"
+title = "Segunda Guerra Mundial: O Motor da Inovação Tecnológica"
+summary = "Uma análise sobre como o maior conflito da história forçou o nascimento do radar, computadores digitais e motores a jato."
+published_at = "2026-04-03T13:00:00+09:00"
+updated_at = "2026-04-03T13:00:00+09:00"
+status = "published"
+tags = ["história", "tecnologia", "guerra", "inovação"]
+badges = ["história", "contexto", "engenharia"]
+repo_url = ""
+code_url = ""
+featured = true
+has_asciimath = false
+
+body = """
+A Segunda Guerra Mundial foi um laboratório de escala global. A necessidade de sobrevivência e superioridade tática comprimiu décadas de evolução em cinco anos.
+
+## Radar e a Batalha da Grã-Bretanha
+O **Radar (RAdio Detection And Ranging)** mudou a defesa aérea. Ao enviar ondas de rádio e detectar ecos, os Aliados puderam ver "além do horizonte", permitindo interceptações precisas contra a Luftwaffe.
+
+## Colossus: O Primeiro Computador Digital
+Embora Bletchley Park seja famoso por Alan Turing, foi **Tommy Flowers** quem construiu o Colossus, o primeiro computador eletrônico, digital e programável, projetado especificamente para quebrar o código *Lorenz* usado pelo comando alemão.
+
+## Motores a Jato e Rocketry
+Enquanto a Alemanha desenvolvia a **V-2** (o avô de todos os foguetes espaciais) e o Messerschmitt Me 262 (primeiro jato de combate), o resto do mundo percebia que as hélices haviam atingido seu limite físico.
+
+## O Legado do Conflito
+Muito do que tomamos como garantido hoje — microchips, GPS (evolução do LORAN), antibióticos e viagens aéreas em massa — tem raízes diretas nos laboratórios de guerra. A tecnologia avançou na velocidade do desespero.
+"""

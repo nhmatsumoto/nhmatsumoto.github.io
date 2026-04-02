@@ -1,0 +1,31 @@
+id = "2026-04-03-1200-richard-feynman"
+slug = "richard-feynman-prazer-descobrir"
+title = "Richard Feynman: O Prazer de Descobrir e o Pensamento Quântico"
+summary = "Uma homenagem ao gênio que ensinou o mundo a pensar a partir dos primeiros princípios, da física de partículas à nanotecnologia."
+published_at = "2026-04-03T12:00:00+09:00"
+updated_at = "2026-04-03T12:00:00+09:00"
+status = "published"
+tags = ["história", "feynman", "física", "ciência", "biografia"]
+badges = ["nobel", "física", "pensamento"]
+repo_url = ""
+code_url = ""
+featured = true
+has_asciimath = false
+
+body = """
+Richard Feynman não era apenas um físico; ele era um **explorador**. Conhecido por sua recusa em aceitar respostas prontas, ele revolucionou a eletrodinâmica quântica (QED) e ensinou gerações a "não se enganar".
+
+## A Técnica Feynman: Aprender Ensinando
+Se você não consegue explicar um conceito complexo para uma criança de 6 anos, você não o entende de verdade. Esse é o cerne do pensamento de Feynman: a clareza sobre a obscuridade.
+
+## Feynman e o Projeto Manhattan
+Ainda jovem, ele foi recrutado para Los Alamos. Lá, não apenas ajudou no cálculo de massas críticas, mas tornou-se famoso por sua habilidade em abrir cofres de segurança — uma metáfora para sua mente que amava decifrar sistemas.
+
+## Nanotecnologia: 'There's Plenty of Room at the Bottom'
+Em 1959, Feynman previu que poderíamos manipular átomos individualmente. Esse discurso foi a certidão de nascimento da nanotecnologia, provando que sua imaginação estava décadas à frente de seu tempo.
+
+> "A primeira regra é que você não deve se enganar — e você é a pessoa mais fácil de enganar." — Richard Feynman
+
+## O Legado do Diagrama de Feynman
+Ele substituiu equações integrais complexas por desenhos simples (diagramas). Na física, ele transformou o abstrato em algo visual e intuitivo, uma filosofia que este blog (Technical Knowledge OS) busca honrar em cada postagem técnica.
+"""

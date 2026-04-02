@@ -1,0 +1,36 @@
+id = "2026-04-03-1500-daniel-kahneman"
+slug = "daniel-kahneman-raciocinio-economico"
+title = "Daniel Kahneman: Rápido e Devagar - A Economia Comportamental"
+summary = "Uma homenagem ao psicólogo que ganhou o Nobel de Economia ao provar que o ser humano não é tão racional quanto gosta de acreditar."
+published_at = "2026-04-03T15:00:00+09:00"
+updated_at = "2026-04-03T15:00:00+09:00"
+status = "published"
+tags = ["história", "kahneman", "psicologia", "tomada-de-decisão", " Nobel"]
+badges = ["nobel", "pensamento", "psicologia"]
+repo_url = ""
+code_url = ""
+featured = true
+has_asciimath = false
+
+body = """
+Daniel Kahneman, junto com Amos Tversky, desafiou o dogma do *Homo Economicus*. Sua obra prova que nossa mente é mestre em tomar atalhos, muitas vezes ao custo da lógica pura.
+
+## Sistema 1 e Sistema 2
+A arquitetura da mente humana, segundo Kahneman, divide-se em dois modos de processamento:
+1.  **Sistema 1 (Rápido)**: Automático, intuitivo, emocional e subconsciente. É o que nos faz desviar de um carro sem pensar.
+2.  **Sistema 2 (Devagar)**: Deliberativo, logico, calculista e consciente. É o que usamos para resolver `17 x 24`.
+
+## Vieses Cognitivos e Heurísticas
+Kahneman identificou dezenas de "bugs" no nosso software mental:
+*   **Aversão à Perda**: A dor de perder $100 é duas vezes maior que o prazer de ganhar $100.
+*   **Viés de Ancoragem**: Nossa tendência de depender demais da primeira informação oferecida ao tomar decisões.
+*   **Falácia do Custo Irrecuperável**: Continuar investindo em um projeto que já falhou apenas porque "já gastamos muito dinheiro nele".
+
+## A Teoria da Perspectiva (Prospect Theory)
+Essa foi a base do seu Nobel. Ela explica como as pessoas decidem entre alternativas que envolvem risco e incerteza, demonstrando que a utilidade de um ganho ou perda depende do ponto de referência, e não apenas do valor final.
+
+> "Nada na vida é tão importante quanto você acha que é enquanto está pensando nisso." — Daniel Kahneman
+
+## Invariantes no Design de Sistemas
+Este trabalho é fundamental para quem desenha **agentes de IA** e sistemas complexos. Entender os vieses humanos ajuda a projetar interfaces que mitigam erros e algoritmos que não herdam nossos próprios defeitos de processamento.
+"""

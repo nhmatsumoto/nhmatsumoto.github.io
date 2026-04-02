@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+    <title>Clássica vs Quântica: A Mudança de Paradigma | Hiro Matsumoto</title>
+    <meta name="description" content="Um comparativo profundo entre bits e qubits, portas lógicas e a natureza da computação clássica versus quântica.">
+    <link rel="stylesheet" href="/assets/styles.css?v=1775171410">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { accent: 'hsl(221, 83%, 53%)', surface: 'hsl(220, 15%, 98%)' },
+            fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Lora', 'serif'], mono: ['JetBrains Mono', 'monospace'] }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF' } });
+        lucide.createIcons();
+      });
+    </script>
+    <style>
+      :root { --accent: #00C2FF; --reading-width: 840px; }
+    </style>
+  </head>
+  <body class="page-post">
+    <header class="fixed top-0 left-0 right-0 z-[250] bg-white border-b border-slate-100 flex items-center justify-center h-12 px-6">
+      <div class="w-full max-w-[1000px] flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs">HM</div>
+          <a class="text-slate-900 font-bold" href="/">Hiro Matsumoto</a>
+        </div>
+      </div>
+    </header>
+    <nav class="sticky top-16 z-[200] mx-auto w-full max-w-[1000px] px-6">
+      <div class="bg-white/80 backdrop-blur-xl border border-black/5 rounded-full px-6 py-2 flex items-center justify-between shadow-lg">
+        <ul class="flex gap-4 list-none m-0 p-0 text-sm font-medium">
+          <li><a href="/" class="text-muted hover:text-accent">início</a></li>
+          <li><a href="/publications/" class="text-accent">publicações</a></li>
+          <li><a href="/about/" class="text-muted hover:text-accent">sobre</a></li>
+        </ul>
+      </div>
+    </nav>
+    <main class="site-main site-shell mt-12" id="content">
+      <article class="post-shell prose mx-auto max-w-[840px] px-6 py-12">
+        <header class="post-header mb-12 border-l-4 border-indigo-600 pl-8">
+          <p class="uppercase tracking-widest text-[10px] font-bold text-indigo-600 mb-2">teoria e prática</p>
+          <h1 class="text-4xl font-bold tracking-tight text-slate-900 mb-4">Clássica vs Quântica: A Transição do Bit</h1>
+          <p class="text-lg text-slate-600 leading-relaxed">De transistores que barram elétrons a átomos que exploram universos paralelos de probabilidade. O que realmente muda?</p>
+        </header>
+        <section class="post-content">
+          <p>A computação clássica não vai morrer, ela será complementada. Se computadores clássicos são ótimos para lógica sequencial e bancos de dados, os quânticos são os mestres da simulação da própria natureza.</p>
+          
+          <h2>1. Bit vs Qubit (A Tabela de Diferenças)</h2>
+          <div class="overflow-x-auto my-8">
+            <table class="min-w-full text-sm border-collapse">
+              <thead>
+                <tr class="bg-slate-100">
+                  <th class="p-3 text-left border">Característica</th>
+                  <th class="p-3 text-left border">Clássica (Bit)</th>
+                  <th class="p-3 text-left border">Quântica (Qubit)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="p-3 border font-bold">Estado</td>
+                  <td class="p-3 border">0 ou 1</td>
+                  <td class="p-3 border">Superposição (\(\alpha|0\rangle + \beta|1\rangle\))</td>
+                </tr>
+                <tr>
+                  <td class="p-3 border font-bold">Natureza</td>
+                  <td class="p-3 border">Binária e Determinística</td>
+                  <td class="p-3 border">Probabilística e Complexa</td>
+                </tr>
+                <tr>
+                  <td class="p-3 border font-bold">Processamento</td>
+                  <td class="p-3 border">Sequencial (1 por vez)</td>
+                  <td class="p-3 border">Paralelismo de Interferência</td>
+                </tr>
+                <tr>
+                  <td class="p-3 border font-bold">Armazenamento</td>
+                  <td class="p-3 border">Tensão Elétrica</td>
+                  <td class="p-3 border">Spin de Elétrons / Fótons</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>2. Portas Lógicas Clássicas vs Quânticas</h2>
+          <p>Enquanto portas como **AND** e **OR** destroem informação (são irreversíveis), as portas quânticas (**Hadamard, CNOT, Pauli-X**) devem ser **reversíveis** e unitárias.</p>
+
+          <div class="tech-card border-l-4 border-indigo-600 bg-slate-50 p-6 my-8 rounded-r-xl">
+            <p class="text-lg">
+              Operador Unitário: \(U^\dagger U = I\)
+            </p>
+            <p class="text-xs text-slate-500 mt-2">
+              Isso garante que a informação nunca é perdida, apenas transformada no espaço do Qubit.
+            </p>
+          </div>
+
+          <h2>3. O Problema da Complexidade: P vs BQP</h2>
+          <p>Problemas que computadores clássicos levam bilhões de anos (como fatorar grandes números no RSA), computadores quânticos podem resolver em polinômio de tempo usando o **Algoritmo de Shor**.</p>
+
+          <div class="mermaid py-8 bg-slate-50 rounded-2xl border border-slate-100 p-8 my-8">
+          graph TD
+            subgraph "Computação Clássica"
+              A1[P - Problemas Polinomiais]
+              A2[NP - Verificação Polinomial]
+            end
+            
+            subgraph "Computação Quântica"
+              B1[BQP - Quantum Polinomial]
+            end
+            
+            A1 --- B1
+            B1 --- A2
+          </div>
+
+          <h2>Conclusão</h2>
+          <p>O futuro é **híbrido**. Teremos CPUs clássicas gerenciando a interface e GPUs tratando a lógica gráfica, enquanto "QPUs" quânticas serão acessadas via nuvem para resolver problemas de química molecular, criptografia e otimização massiva.</p>
+        </section>
+        <footer class="post-footer-metadata mt-16 pt-8 border-t border-slate-100">
+           <div class="flex flex-wrap gap-4">
+              <span class="badge bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-xs">computação</span>
+              <span class="badge bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs">quantum</span>
+              <span class="badge bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs">fundamentos</span>
+           </div>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>

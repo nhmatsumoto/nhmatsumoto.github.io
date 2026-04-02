@@ -1,0 +1,34 @@
+id = "2026-04-03-1400-projeto-manhattan"
+slug = "projeto-manhattan-bomba-atomica"
+title = "Projeto Manhattan: A Ciência da Bomba"
+summary = "Uma análise sobre o maior esforço científico-militar da história, de Einstein e Oppenheimer aos testes de Trinity."
+published_at = "2026-04-03T14:00:00+09:00"
+updated_at = "2026-04-03T14:00:00+09:00"
+status = "published"
+tags = ["história", "física", "guerra", "projeto-manhattan"]
+badges = ["física", "história", "nuclear"]
+repo_url = ""
+code_url = ""
+featured = true
+has_asciimath = false
+
+body = """
+O Projeto Manhattan não foi apenas a criação de uma arma; foi o nascimento do **Big Science** — projetos de pesquisa massivos, ultra-financiados e multidisciplinares.
+
+## A Carta de Einstein-Szilárd
+Tudo começou com um aviso. Leo Szilárd convenceu Albert Einstein a alertar o presidente Roosevelt de que a Alemanha nazista poderia estar desenvolvendo bombas de fissão de urânio.
+
+## Los Alamos: O Local Secreto
+Sob a direção científica de **Robert Oppenheimer** e a liderança militar do General Leslie Groves, uma cidade inteira foi construída no deserto do Novo México para abrigar as mentes mais brilhantes do planeta.
+
+## Massa Crítica e Fissão
+O desafio era separar o Isótopo **U-235** do mais comum **U-238**, ou criar o novo elemento **Plutônio-239**. O processo exigiu a construção de complexos gigantescos em Oak Ridge e Hanford, consumindo 1% de toda a eletricidade dos EUA na época.
+
+## Trinity e o Legado Ético
+O teste de Trinity provou que a teoria estava correta. Mas, como Oppenheimer citaria mais tarde, o mundo nunca mais seria o mesmo. O Projeto Manhattan deu início à Era Atômica e à Guerra Fria, mudando para sempre o equilíbrio de poder global.
+
+> "Agora eu me tornei a Morte, a destruidora de mundos." — Robert Oppenheimer (citando o Bhagavad Gita)
+
+## Do Caos à Energia
+Hoje, a tecnologia que criou a bomba sustenta a energia nuclear — uma das fontes de energia mais densas e limpas que temos, provando que a ciência é uma ferramenta cujo valor é definido por como decidimos usá-la.
+"""

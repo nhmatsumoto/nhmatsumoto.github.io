@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+    <title>Paradigmas: Programação Estruturada vs Orientada a Objetos | Hiro Matsumoto</title>
+    <meta name="description" content="Uma análise profunda sobre a evolução do pensamento procedural para o modelo de objetos, com exemplos de acoplamento e coesão.">
+    <link rel="stylesheet" href="/assets/styles.css?v=1775171410">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { accent: 'hsl(221, 83%, 53%)', surface: 'hsl(220, 15%, 98%)' },
+            fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Lora', 'serif'], mono: ['JetBrains Mono', 'monospace'] }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF' } });
+        lucide.createIcons();
+      });
+    </script>
+    <style>
+      :root { --accent: #00C2FF; --reading-width: 840px; }
+    </style>
+  </head>
+  <body class="page-post">
+    <header class="fixed top-0 left-0 right-0 z-[250] bg-white border-b border-slate-100 flex items-center justify-center h-12 px-6">
+      <div class="w-full max-w-[1000px] flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs">HM</div>
+          <a class="text-slate-900 font-bold" href="/">Hiro Matsumoto</a>
+        </div>
+      </div>
+    </header>
+    <nav class="sticky top-16 z-[200] mx-auto w-full max-w-[1000px] px-6">
+      <div class="bg-white/80 backdrop-blur-xl border border-black/5 rounded-full px-6 py-2 flex items-center justify-between shadow-lg">
+        <ul class="flex gap-4 list-none m-0 p-0 text-sm font-medium">
+          <li><a href="/" class="text-muted hover:text-accent">início</a></li>
+          <li><a href="/publications/" class="text-accent">publicações</a></li>
+          <li><a href="/about/" class="text-muted hover:text-accent">sobre</a></li>
+        </ul>
+      </div>
+    </nav>
+    <main class="site-main site-shell mt-12" id="content">
+      <article class="post-shell prose mx-auto max-w-[840px] px-6 py-12">
+        <header class="post-header mb-12">
+          <p class="uppercase tracking-widest text-[10px] font-bold text-accent mb-2">fundamentos de computação</p>
+          <h1 class="text-4xl font-bold tracking-tight text-slate-900 mb-4">Paradigmas: Programação Estruturada vs Orientada a Objetos</h1>
+          <p class="text-lg text-slate-600 leading-relaxed">Uma análise profunda sobre a evolução do pensamento procedural para o modelo de objetos, com exemplos de acoplamento e coesão.</p>
+        </header>
+        <section class="post-content">
+          <p>A escolha de um paradigma não é apenas sobre sintaxe, mas sobre como organizamos a <strong>complexidade</strong>. Enquanto a programação estruturada foca no fluxo de execução (procedimentos), a POO foca na interação entre entidades (objetos).</p>
+          
+          <h2>1. Programação Estruturada: O Fluxo Procedural</h2>
+          <p>Baseada no Teorema da Programação Estruturada, qualquer programa pode ser escrito usando apenas três estruturas: <strong>sequência, decisão e iteração</strong>. Aqui, os dados são passivos e as funções são os agentes de transformação.</p>
+
+          <div class="mermaid py-8 bg-slate-50 rounded-2xl border border-slate-100 p-8 my-8">
+          graph TD
+            START[Início] --> IN[Ler Dados]
+            IN --> PROC[Processar Dados]
+            PROC --> DEC{Validação}
+            DEC -->|OK| OUT[Gerar Saída]
+            DEC -->|Erro| ERR[Tratar Erro]
+            ERR --> IN
+          </div>
+
+          <h2>2. Programação Orientada a Objetos: Responsabilidade Distribuída</h2>
+          <p>Na POO, mudamos o foco para <strong>quem</strong> realiza a ação. Os dados e as funções (métodos) são encapsulados em Objetos. Os quatro pilares fundamentais são: <strong>Abstração, Encapsulamento, Herança e Polimorfismo</strong>.</p>
+
+          <div class="mermaid py-8">
+          classDiagram
+            class Veiculo {
+              +string Placa
+              +Mover()
+            }
+            class Carro {
+              +int Portas
+              +Mover()
+            }
+            Veiculo <|-- Carro
+          </div>
+
+          <h2>Métricas de Qualidade: O Cálculo de Acoplamento</h2>
+          <p>A qualidade de um sistema pode ser medida matematicamente pela Instabilidade (\(I\)) de um componente, baseada em seu acoplamento aferente (\(Ca\)) e eferente (\(Ce\)):</p>
+
+          <div class="tech-card border-l-4 border-accent bg-slate-50 p-6 my-8 rounded-r-xl">
+            <p class="text-lg">
+              $$I = \frac{Ce}{Ca + Ce}$$
+            </p>
+            <p class="text-xs text-slate-500 mt-2">
+              Onde \(I=0\) representa um componente maximamente estável e \(I=1\) um componente maximamente instável.
+            </p>
+          </div>
+
+          <h3>Exemplo Comparativo (TypeScript)</h3>
+          
+          <pre><code class="language-typescript">// Abordagem Estruturada
+function calcularArea(raio: number): number {
+    return Math.PI * raio * raio;
+}
+
+// Abordagem POO
+class Circulo {
+    constructor(private raio: number) {}
+    
+    public getArea(): number {
+        return Math.PI * this.raio * this.raio;
+    }
+}</code></pre>
+
+          <h2>Conclusão</h2>
+          <p>Sistemas modernos raramente são puristas. O uso de **Programação Funcional** dentro de classes de **POO** é o padrão ouro para gerenciar estado e testabilidade de forma simultânea.</p>
+        </section>
+        <footer class="post-footer-metadata mt-16 pt-8 border-t border-slate-100">
+           <div class="flex flex-wrap gap-4">
+              <span class="badge bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs">programação</span>
+              <span class="badge bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs">arquitetura</span>
+           </div>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>

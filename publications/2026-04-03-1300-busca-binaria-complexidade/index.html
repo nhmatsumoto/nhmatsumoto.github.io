@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+    <title>Busca Binária: Dividir para Conquistar com Eficiência Logarítmica | Hiro Matsumoto</title>
+    <meta name="description" content="Explicação matemática e algorítmica da busca binária, provando sua complexidade O(log n) e implementando-a com segurança.">
+    <link rel="stylesheet" href="/assets/styles.css?v=1775171410">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { accent: 'hsl(221, 83%, 53%)', surface: 'hsl(220, 15%, 98%)' },
+            fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Lora', 'serif'], mono: ['JetBrains Mono', 'monospace'] }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF' } });
+        lucide.createIcons();
+      });
+    </script>
+    <style>
+      :root { --accent: #00C2FF; --reading-width: 840px; }
+    </style>
+  </head>
+  <body class="page-post">
+    <header class="fixed top-0 left-0 right-0 z-[250] bg-white border-b border-slate-100 flex items-center justify-center h-12 px-6">
+      <div class="w-full max-w-[1000px] flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs">HM</div>
+          <a class="text-slate-900 font-bold" href="/">Hiro Matsumoto</a>
+        </div>
+      </div>
+    </header>
+    <nav class="sticky top-16 z-[200] mx-auto w-full max-w-[1000px] px-6">
+      <div class="bg-white/80 backdrop-blur-xl border border-black/5 rounded-full px-6 py-2 flex items-center justify-between shadow-lg">
+        <ul class="flex gap-4 list-none m-0 p-0 text-sm font-medium">
+          <li><a href="/" class="text-muted hover:text-accent">início</a></li>
+          <li><a href="/publications/" class="text-accent">publicações</a></li>
+          <li><a href="/about/" class="text-muted hover:text-accent">sobre</a></li>
+        </ul>
+      </div>
+    </nav>
+    <main class="site-main site-shell mt-12" id="content">
+      <article class="post-shell prose mx-auto max-w-[840px] px-6 py-12">
+        <header class="post-header mb-12">
+          <p class="uppercase tracking-widest text-[10px] font-bold text-accent mb-2">algoritmos e estrutura de dados</p>
+          <h1 class="text-4xl font-bold tracking-tight text-slate-900 mb-4">Busca Binária: Dividir para Conquistar</h1>
+          <p class="text-lg text-slate-600 leading-relaxed">Explicação matemática e algorítmica da busca binária, provando sua complexidade O(log n) e implementando-a com segurança.</p>
+        </header>
+        <section class="post-content">
+          <p>A Busca Binária é um dos algoritmos mais elegantes da computação. Ela resolve o problema de encontrar um elemento em uma **lista ordenada**, reduzindo o espaço de busca pela metade em cada iteração.</p>
+          
+          <h2>1. O Conceito Visual</h2>
+          <p>Imagine que você está procurando um nome em um dicionário. Você abre no meio, vê se o nome está antes ou depois, e descarta metade do livro. Isso é busca binária.</p>
+
+          <div class="mermaid py-8 bg-slate-100 rounded-2xl p-8 my-8">
+          graph TD
+            ROOT["Procurar 42 em [10, 20, 30, 42, 55, 60, 70]"] --> MID["Chute: Meio (42)"]
+            MID --> SUCCESS["Sucesso! (Encontrado no meio)"]
+            
+            ROOT2["Procurar 12 em [10, 20, 30, 42, 55, 60, 70]"] --> MID2["Chute: Meio (42)"]
+            MID2 --> LEFT["12 < 42: Procurar na Esquerda [10, 20, 30]"]
+            LEFT --> MID3["Chute: Meio (20)"]
+            MID3 --> LEFT2["12 < 20: Procurar na Esquerda [10]"]
+          </div>
+
+          <h2>2. Prova de Complexidade \(O(\log n)\)</h2>
+          <p>A cada passo, dividimos o tamanho da entrada por 2. Se temos \(n\) elementos, o número de passos \(k\) para chegar a uma lista de tamanho 1 é:</p>
+
+          <div class="tech-card border-l-4 border-accent bg-slate-50 p-6 my-8 rounded-r-xl">
+            <p class="text-lg">
+              $$\frac{n}{2^k} = 1 \implies n = 2^k \implies k = \log_2 n$$
+            </p>
+          </div>
+
+          <h3>O Perigo do Overflow (Padrão de Engenharia)</h3>
+          <p>Muitos implementam o cálculo do meio como `(low + high) / 2`. Isso em linguagens como C++ ou Java pode causar overflow se a soma exceder o limite do inteiro. A forma segura é:</p>
+
+          <pre><code class="language-typescript">function binarySearch(arr: number[], target: number): number {
+    let low = 0;
+    let high = arr.length - 1;
+
+    while (low <= high) {
+        // Previne overflow e garante performance
+        const mid = low + Math.floor((high - low) / 2);
+        
+        if (arr[mid] === target) return mid;
+        if (arr[mid] < target) low = mid + 1;
+        else high = mid - 1;
+    }
+    return -1;
+}</code></pre>
+
+          <h2>Conclusão</h2>
+          <p>A busca binária transforma um problema linear de 1 bilhão de registros em apenas **30 iterações**. Esse ganho logarítmico é o que permite escalas massivas em sistemas de busca e indexação.</p>
+        </section>
+        <footer class="post-footer-metadata mt-16 pt-8 border-t border-slate-100">
+           <div class="flex flex-wrap gap-4">
+              <span class="badge bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs">algoritmos</span>
+              <span class="badge bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs">computação</span>
+           </div>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>
