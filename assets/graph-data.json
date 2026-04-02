@@ -85,5 +85,16 @@
       "url": "/documents/technical-knowledge-os/"
     }
   ],
-  "links": []
+  "links": [
+    { "source": "orquestrador-agentes-ddd", "target": "ddd-boundaries-for-agent-systems" },
+    { "source": "orquestrador-agentes-ddd", "target": "ronaldinho-agent" },
+    { "source": "ddd-boundaries-for-agent-systems", "target": "ronaldinho-agent" },
+    { "source": "neuroplasticidade-agentes", "target": "ronaldinho-agent" },
+    { "source": "neuroplasticidade-agentes", "target": "adr-versioned-memory" },
+    { "source": "poc-minerando-logs", "target": "technical-knowledge-os" },
+    { "source": "ronaldinho-agent", "target": "ronaldinho-architecture-overview" },
+    { "source": "ronaldinho-agent", "target": "agent-integration-surface" },
+    { "source": "gis-pipelines-with-event-driven-services", "target": "gis-incident-lab" },
+    { "source": "technical-knowledge-os", "target": "system-architecture" }
+  ]
 }
