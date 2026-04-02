@@ -1,0 +1,45 @@
+id = "2026-04-05-0900"
+slug = "sos-location-business-rules"
+title = "SOS Location: Regras de negócio, contratos e operação"
+summary = "Catálogo completo das regras de negócio que sustentam o SOS Location."
+published_at = "2026-04-05T09:00:00+09:00"
+updated_at = "2026-04-05T09:00:00+09:00"
+status = "published"
+tags = ["gis", "operations", "sos"]
+badges = ["production", "domain"]
+repo_url = "https://github.com/nhmatsumoto/sos_location"
+code_url = "https://github.com/nhmatsumoto/sos_location"
+project_url = "/projects/sos-location/"
+featured = false
+has_asciimath = false
+
+body = """
+# Regras de negócio do SOS Location
+
+O **SOS Location** organiza dados geoespaciais para reduzir o tempo de resposta em crises. As regras de negócio são estruturalmente simples, mas precisam ser rigorosas para evitar decisões equivocadas.
+
+## 1. Contratos de dados
+
+- **Instituições parceiras** enviam feeds assinados que contêm: `event_id`, `type`, `severity`, `geojson`, `timestamp`, `source`.
+- **Eventos críticos** (severidade >= 7) sempre geram uma projeção de riscos em menos de 120 segundos.
+- **Atualização de status** governa recursos humanos: cada recurso humano só responde a um evento por vez (estado `locked`).
+- **GeoJSON canonicalizado**: antes do armazenamento, o polígono é simplificado para 6 decimais e validado com `ogr2ogr`.
+
+## 2. Regras de fluxo
+
+1. Recebemos eventos via message queue (Kafka/Redis Streams).
+2. Validamos esquema e padronizamos `severity`.
+3. Se `severity >= 7` criamos `incident` em `SOS.Data.Incidents`.
+4. Disparamos microserviço de **mapas operacionais** caso `incident.type` pertença ao catálogo `critical_types`.
+5. Cada atualização solicita recalculadora de visibilidade (`LineOfSightService`) para as camadas `watchpoints`.
+
+## 3. Governança operacional
+
+- **Deploy** via pipeline `sos_location/deploy` que exige smoke test `maps/smoke`.
+- **Monitoramento** centralizado em Grafana, alertas no Slack `#sos-alerts`.
+- **Auditoria** grava cada mutação em `event history` com `actor`, `reason` e `trace_id`.
+
+## 4. Link com o projeto
+
+O projeto [SOS Location](/projects/sos-location/) coloca essas regras em prática; os posts desta série documentam fluxo, stack e exemplos que tocam essas regras.
+"""

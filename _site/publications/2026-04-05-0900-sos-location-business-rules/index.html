@@ -9,9 +9,9 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>SOS Location | nhmatsumoto-blog-engine</title>
-    <meta name="description" content="Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real.">
-    <link rel="canonical" href="https://nhmatsumoto.github.io/projects/sos-location/">
+    <title>SOS Location: Regras de negócio, contratos e operação | nhmatsumoto-blog-engine</title>
+    <meta name="description" content="Catálogo completo das regras de negócio que sustentam o SOS Location.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-05-0900-sos-location-business-rules/">
     <link rel="stylesheet" href="/assets/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -71,7 +71,7 @@
     
     
   </head>
-  <body class="page-project" data-has-math="false" data-default-locale="pt-BR">
+  <body class="page-post" data-has-math="false" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     
     
@@ -86,7 +86,7 @@
         
         <div class="hidden md:block" role="navigation">
           <ul class="flex items-center gap-1 list-none m-0 p-0">
-            <li><a href="/publications/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" class="px-4 py-2 rounded-full transition-all duration-200 text-accent bg-accent/5 font-semibold" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.about">sobre</a></li>
+            <li><a href="/publications/" class="px-4 py-2 rounded-full transition-all duration-200 text-accent bg-accent/5 font-semibold" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.about">sobre</a></li>
           </ul>
         </div>
 
@@ -113,56 +113,52 @@
     <div class="site-shell">
       <main class="site-main" id="content">
         
-    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">SOS Location</span></li></ol></nav>
-    <section class="page-grid">
-      <article class="project-shell prose">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
-          <h1>SOS Location</h1>
-          <p class="post-summary">Open-source platform for monitoring, mapping, and coordinating natural disaster response.</p>
-          <ul class="badge-list"><li class="badge">social-good</li><li class="badge">gis</li><li class="badge">open-source</li></ul>
-        </header>
-
-        <section>
-          <h2 data-i18n="pages.project.overview">Visão geral</h2>
-          <p>SOS Location é uma iniciativa de resposta humanitária focada no uso de tecnologia geoespacial para acelerar a tomada de decisão em cenários de crise. O projeto organiza camadas de dados complexas em uma interface operacional simples.</p>
-        </section>
-        <section>
-          <h2 data-i18n="pages.project.problem_solution">Problema e solução</h2>
-          <p>Em desastres, a fragmentação da informação custa vidas. A solução centraliza feeds de clima, áreas de risco e recursos disponíveis, utilizando processamento assíncrono para manter a atualização constante sem sobrecarregar o sistema.</p>
-        </section>
-        <section>
-          <h2 data-i18n="pages.project.architecture">Arquitetura</h2>
-          <p>Baseado em pipelines de eventos, o sistema separa a ingestão de dados (sensores, APIs externas) do processamento geoespacial e da camada de visualização em tempo real (WebSockets/Leaflet).</p>
-          <pre class="diagram-preview large"><code>ingest -&gt; normalize -&gt; geocode
-   |         |          |
-events -&gt; risk map -&gt; ops view</code></pre>
-        </section>
-        <section>
-          <h2 data-i18n="pages.project.stack">Stack</h2>
-          <ul class="stack-list"><li>TypeScript</li><li>Node.js</li><li>GIS</li><li>Event-Driven</li></ul>
-          <p data-i18n="common.content_in_preparation">Conteúdo em preparação.</p>
-        </section>
-        <section>
-          <h2 data-i18n="pages.project.adr">ADRs</h2>
-          <ul><li>Uso de GeoJSON como padrão de intercâmbio de dados.</li><li>Arquitetura orientada a eventos para garantir escalabilidade em picos de uso.</li><li>Isolamento de serviços de geolocalização para resiliência operacional.</li></ul>
-        </section>
-        <section>
-          <h2 data-i18n="pages.project.roadmap">Roadmap</h2>
-          <ul><li>Integração com imagens de satélite para análise de inundação.</li><li>Expansão do modelo de predição de risco usando machine learning.</li><li>Suporte a offline-first para equipes de campo.</li><li>Publicações SOS Location: regras de negócio, fluxo e stack técnico.</li></ul>
-        </section>
-      </article>
-      
+    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">SOS Location: Regras de negócio, contratos e operação</span></li></ol></nav>
+        <section class="page-grid">
+          <article class="post-shell prose">
+            <header class="post-header">
+              <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+              <h1>SOS Location: Regras de negócio, contratos e operação</h1>
+              <p class="post-summary">Catálogo completo das regras de negócio que sustentam o SOS Location.</p>
+              <div class="post-meta">
+                <time datetime="2026-04-05T09:00:00+09:00" data-localize-date="long">5 de abril de 2026</time>
+                <span data-reading-time="1">1 min de leitura</span>
+              </div>
+              <div class="post-actions">
+                <a class="subtle-button" href="/publications/" data-i18n="pages.post.back">Voltar para publicações</a>
+                <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
+              </div>
+            </header>
+            <h1>Regras de negócio do SOS Location</h1>
+<p>O <strong>SOS Location</strong> organiza dados geoespaciais para reduzir o tempo de resposta em crises. As regras de negócio são estruturalmente simples, mas precisam ser rigorosas para evitar decisões equivocadas.</p>
+<h2>1. Contratos de dados</h2>
+<ul><li><strong>Instituições parceiras</strong> enviam feeds assinados que contêm: <code>event_id</code>, <code>type</code>, <code>severity</code>, <code>geojson</code>, <code>timestamp</code>, <code>source</code>.</li><li><strong>Eventos críticos</strong> (severidade &gt;= 7) sempre geram uma projeção de riscos em menos de 120 segundos.</li><li><strong>Atualização de status</strong> governa recursos humanos: cada recurso humano só responde a um evento por vez (estado <code>locked</code>).</li><li><strong>GeoJSON canonicalizado</strong>: antes do armazenamento, o polígono é simplificado para 6 decimais e validado com <code>ogr2ogr</code>.</li></ul>
+<h2>2. Regras de fluxo</h2>
+<ol><li>Recebemos eventos via message queue (Kafka/Redis Streams).</li><li>Validamos esquema e padronizamos <code>severity</code>.</li><li>Se <code>severity &gt;= 7</code> criamos <code>incident</code> em <code>SOS.Data.Incidents</code>.</li><li>Disparamos microserviço de <strong>mapas operacionais</strong> caso <code>incident.type</code> pertença ao catálogo <code>critical_types</code>.</li><li>Cada atualização solicita recalculadora de visibilidade (<code>LineOfSightService</code>) para as camadas <code>watchpoints</code>.</li></ol>
+<h2>3. Governança operacional</h2>
+<ul><li><strong>Deploy</strong> via pipeline <code>sos_location/deploy</code> que exige smoke test <code>maps/smoke</code>.</li><li><strong>Monitoramento</strong> centralizado em Grafana, alertas no Slack <code>#sos-alerts</code>.</li><li><strong>Auditoria</strong> grava cada mutação em <code>event history</code> com <code>actor</code>, <code>reason</code> e <code>trace_id</code>.</li></ul>
+<h2>4. Link com o projeto</h2>
+<p>O projeto <a href="/projects/sos-location/">SOS Location</a> coloca essas regras em prática; os posts desta série documentam fluxo, stack e exemplos que tocam essas regras.</p>
+            <footer class="post-author">
+              <p><strong>Autor:</strong> Hiro Matsumoto</p>
+            </footer>
+          </article>
+          
     <aside class="sidebar-panel">
-      <h2 data-i18n="pages.project.status">Status</h2>
-      <p><span class="status-chip status-production" data-status-key="status.production">produção</span></p>
-      <h3 data-i18n="pages.project.stack">Stack</h3>
-      <ul class="stack-list"><li>TypeScript</li><li>Node.js</li><li>GIS</li><li>Event-Driven</li></ul>
-      <h3 data-i18n="pages.project.actions">Ações</h3>
-      <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener noreferrer" data-i18n="actions.view_code">ver código</a></li><li><a href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/" data-i18n="actions.open_docs">abrir docs</a></li><li><a href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li></ul>
+      <h2 data-i18n="pages.post.metadata">Metadados</h2>
+      <ul class="metric-list"><li><time datetime="2026-04-05T09:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
+      <ul class="badge-list"><li class="badge">production</li><li class="badge">domain</li></ul>
+      <ul class="tag-list"><li>gis</li><li>operations</li><li>sos</li></ul>
+      <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li><li><a href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener noreferrer" data-i18n="actions.code">código</a></li></ul>
     </aside>
     
-    </section>
+        </section>
+    
+    <nav class="post-pager" aria-label="Navegação da publicação" data-i18n-aria-label="pages.post.navigation">
+      <a class="pager-link" href="/publications/2026-04-05-1000-sos-location-flow-architecture/">← SOS Location: Fluxos, arquitetura e diagramas</a>
+      <a class="pager-link" href="/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/">IA Inspirada pela Física: Entropia e Energia nas Redes Neurais →</a>
+    </nav>
+    
     
       </main>
       

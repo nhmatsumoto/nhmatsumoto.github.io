@@ -308,6 +308,45 @@
     ]
   },
   {
+    "title": "SOS Location: Tecnologias, ferramentas e exemplos",
+    "url": "/publications/2026-04-05-1100-sos-location-stack/",
+    "kind": "post",
+    "summary": "Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location.",
+    "keywords": [
+      "gis",
+      "techstack",
+      "sos",
+      "stack",
+      "tools"
+    ]
+  },
+  {
+    "title": "SOS Location: Fluxos, arquitetura e diagramas",
+    "url": "/publications/2026-04-05-1000-sos-location-flow-architecture/",
+    "kind": "post",
+    "summary": "Descrição dos pipelines do SOS Location, diagramas e exemplos de código.",
+    "keywords": [
+      "gis",
+      "architecture",
+      "sos",
+      "engineering",
+      "diagram"
+    ]
+  },
+  {
+    "title": "SOS Location: Regras de negócio, contratos e operação",
+    "url": "/publications/2026-04-05-0900-sos-location-business-rules/",
+    "kind": "post",
+    "summary": "Catálogo completo das regras de negócio que sustentam o SOS Location.",
+    "keywords": [
+      "gis",
+      "operations",
+      "sos",
+      "production",
+      "domain"
+    ]
+  },
+  {
     "title": "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
     "url": "/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/",
     "kind": "post",

@@ -115,6 +115,24 @@
       "url": "/publications/20260402-203000-ddd-boundaries-for-agent-systems/"
     },
     {
+      "id": "sos-location-stack",
+      "title": "SOS Location: Tecnologias, ferramentas e exemplos",
+      "kind": "post",
+      "url": "/publications/2026-04-05-1100-sos-location-stack/"
+    },
+    {
+      "id": "sos-location-flow-architecture",
+      "title": "SOS Location: Fluxos, arquitetura e diagramas",
+      "kind": "post",
+      "url": "/publications/2026-04-05-1000-sos-location-flow-architecture/"
+    },
+    {
+      "id": "sos-location-business-rules",
+      "title": "SOS Location: Regras de negócio, contratos e operação",
+      "kind": "post",
+      "url": "/publications/2026-04-05-0900-sos-location-business-rules/"
+    },
+    {
       "id": "ia-inspirada-pela-fisica-redes-neurais",
       "title": "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
       "kind": "post",

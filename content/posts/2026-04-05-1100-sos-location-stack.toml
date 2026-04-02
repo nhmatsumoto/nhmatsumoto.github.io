@@ -1,0 +1,60 @@
+id = "2026-04-05-1100"
+slug = "sos-location-stack"
+title = "SOS Location: Tecnologias, ferramentas e exemplos"
+summary = "Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location."
+published_at = "2026-04-05T11:00:00+09:00"
+updated_at = "2026-04-05T11:00:00+09:00"
+status = "published"
+tags = ["gis", "techstack", "sos"]
+badges = ["stack", "tools"]
+repo_url = "https://github.com/nhmatsumoto/sos_location"
+code_url = "https://github.com/nhmatsumoto/sos_location"
+project_url = "/projects/sos-location/"
+featured = false
+has_asciimath = false
+
+body = """
+# Stack, conceitos e ferramentas do SOS Location
+
+## Tecnologias usadas
+
+- **TypeScript & Node.js** na ingestão e no núcleo de normalização.
+- **.NET 8** com ASP.NET Core para APIs de borda, execução de pipelines e orquestração.
+- **PostgreSQL + PostGIS** para armazenamento espacial com índices `GIST`.
+- **Kafka + Redis Streams** como backbone dos eventos.
+- **React + Leaflet + D3** para o dashboard e o mapa operacional.
+- **Grafana + Loki + Tempo** para observabilidade.
+- **OpenTelemetry** para tracing distribuído.
+
+## Conceitos fundamentais
+
+1. **Segurança de contexto**: cada diagnóstico carrega um `trust_level` e só libera dados sensíveis após o agente ser autenticado.
+2. **Mapa operacional ativo**: o front-end consome camadas `tiles` + `vector layers` e aplica `levels` de criticidade.
+3. **Conversação com agentes**: subagentes (via `ronaldinho-agent`) consultam `event history` antes de alterar estados.
+
+## Exemplos de código
+
+```csharp
+[HttpGet("incidents")]
+public IActionResult GetIncidents(string region)
+{
+    var incidents = _repository.Fetch(region, DateTime.UtcNow.AddHours(-2));
+    return Ok(incidents);
+}
+```
+
+```ts
+const watchResource = async (resourceId: string) => {
+  const data = await fetch(`/api/resources/${resourceId}`);
+  renderOnMap(data);
+};
+```
+
+## Diagramas e mapas mentais
+
+Para cada novo requisito criamos um mini-diagrama com Mermaid e o versionamos como documento; este post funciona como índice técnico dentro do projeto [SOS Location](/projects/sos-location/).
+
+## Conexão com o projeto
+
+Todos os documentos e publicações desta série estão linkados pelo campo `project_url` e comentam os conceitos listados no roadmap do projeto [SOS Location](/projects/sos-location/).
+"""

@@ -1,0 +1,56 @@
+id = "2026-04-05-1000"
+slug = "sos-location-flow-architecture"
+title = "SOS Location: Fluxos, arquitetura e diagramas"
+summary = "Descrição dos pipelines do SOS Location, diagramas e exemplos de código."
+published_at = "2026-04-05T10:00:00+09:00"
+updated_at = "2026-04-05T10:00:00+09:00"
+status = "published"
+tags = ["gis", "architecture", "sos"]
+badges = ["engineering", "diagram"]
+repo_url = "https://github.com/nhmatsumoto/sos_location"
+code_url = "https://github.com/nhmatsumoto/sos_location"
+project_url = "/projects/sos-location/"
+featured = false
+has_asciimath = false
+
+body = """
+# Arquitetura e fluxo do SOS Location
+
+O pipeline do SOS Location conecta ingestão, enriquecimento e visualização. Abaixo está o diagrama de fluxo principal:
+
+```mermaid
+flowchart LR
+    Sources -->|Kafka| Ingest[Ingestão]
+    Ingest -->|Normalize| Processor[Normalizador]
+    Processor -->|Event Store| Repository[(PostgreSQL)]
+    Processor --> Visualizer[Visualização (GIS)]
+    Visualizer -->|API| Frontend[Dashboard SOS]
+    Repository -->|API| Ops[Operational Map (WebSocket)]
+```
+
+## Componentes principais
+
+- **Ingestão**: serviços em TypeScript conectam com APIs externas e escrevem no tópico `sos-events`.
+- **Normalizer**: executado em Node.js e .NET (via gRPC) para aplicar regras de normalização (geometria, contexto, cluster).
+- **Repository**: PostgreSQL + PostGIS; índices `GIST` em `location`, `incident_type`.
+- **Visualização**: front-end React/Leaflet consome WebSockets para atualizar camadas de risco.
+
+## Exemplo de código
+
+```ts
+const enqueueEvent = (event: IncomingEvent) => {
+  const normalized = normalize(event);
+  kafkaProducer.send({ topic: "sos-events", messages: [{ value: JSON.stringify(normalized) }] });
+};
+```
+
+## Observações operacionais
+
+- Cada evento crítico dispara `notifyOps` se `normalized.region` estiver no mapa `coverageZones`.
+- O `LineOfSightService` recalcula visibilidade de recursos ao vivo a cada reconciliação.
+- O fluxo é monitorado com tracing distribuído (OpenTelemetry) para garantir latência abaixo de 2 segundos.
+
+## Link com o projeto
+
+O post anterior lista as regras de negócio que justificam cada nó do fluxo; este detalha os mecanismos e diagramas do projeto [SOS Location](/projects/sos-location/).
+"""

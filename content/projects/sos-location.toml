@@ -33,4 +33,5 @@ roadmap = [
   "Integração com imagens de satélite para análise de inundação.",
   "Expansão do modelo de predição de risco usando machine learning.",
   "Suporte a offline-first para equipes de campo.",
+  "Publicações SOS Location: regras de negócio, fluxo e stack técnico.",
 ]
