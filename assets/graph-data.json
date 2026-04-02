@@ -1,0 +1,89 @@
+{
+  "nodes": [
+    {
+      "id": "orquestrador-agentes-ddd",
+      "title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0900-orquestrador-agentes-ddd/"
+    },
+    {
+      "id": "ddd-boundaries-for-agent-systems",
+      "title": "DDD boundaries for agent systems",
+      "kind": "post",
+      "url": "/publications/20260402-203000-ddd-boundaries-for-agent-systems/"
+    },
+    {
+      "id": "poc-minerando-logs",
+      "title": "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1100-poc-minerando-logs/"
+    },
+    {
+      "id": "neuroplasticidade-agentes",
+      "title": "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1000-neuroplasticidade-agentes/"
+    },
+    {
+      "id": "gis-pipelines-with-event-driven-services",
+      "title": "GIS pipelines with event-driven services",
+      "kind": "post",
+      "url": "/publications/20260401-184500-gis-pipelines-with-event-driven-services/"
+    },
+    {
+      "id": "primeiro-post",
+      "title": "Bem-vindo ao meu novo blog",
+      "kind": "post",
+      "url": "/publications/20260312-090000-primeiro-post/"
+    },
+    {
+      "id": "ronaldinho-agent",
+      "title": "Ronaldinho Agent",
+      "kind": "project",
+      "url": "/projects/ronaldinho-agent/"
+    },
+    {
+      "id": "splitcosts",
+      "title": "SplitCosts",
+      "kind": "project",
+      "url": "/projects/splitcosts/"
+    },
+    {
+      "id": "gis-incident-lab",
+      "title": "GIS Incident Lab",
+      "kind": "project",
+      "url": "/projects/gis-incident-lab/"
+    },
+    {
+      "id": "adr-versioned-memory",
+      "title": "ADR 003 - Versioned Memory",
+      "kind": "document",
+      "url": "/documents/adr-versioned-memory/"
+    },
+    {
+      "id": "ronaldinho-architecture-overview",
+      "title": "Ronaldinho Architecture Overview",
+      "kind": "document",
+      "url": "/documents/ronaldinho-architecture-overview/"
+    },
+    {
+      "id": "agent-integration-surface",
+      "title": "Agent Integration Surface",
+      "kind": "document",
+      "url": "/documents/agent-integration-surface/"
+    },
+    {
+      "id": "system-architecture",
+      "title": "System Architecture",
+      "kind": "document",
+      "url": "/documents/system-architecture/"
+    },
+    {
+      "id": "technical-knowledge-os",
+      "title": "Technical Knowledge OS",
+      "kind": "document",
+      "url": "/documents/technical-knowledge-os/"
+    }
+  ],
+  "links": []
+}

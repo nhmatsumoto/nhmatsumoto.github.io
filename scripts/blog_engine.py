@@ -135,6 +135,7 @@ INLINE_CODE_RE = re.compile(r"`([^`]+)`")
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 STRONG_RE = re.compile(r"\*\*(.+?)\*\*")
 EMPHASIS_RE = re.compile(r"(?<!\*)\*(?!\s)(.+?)(?<!\s)\*(?!\*)")
+WIKILINK_RE = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
 
 MONTHS_PT = [
     "janeiro",
@@ -644,13 +645,24 @@ def render_inline(text: str) -> str:
         ),
         escaped,
     )
-    escaped = STRONG_RE.sub(r"<strong>\1</strong>", escaped)
-    escaped = EMPHASIS_RE.sub(r"<em>\1</em>", escaped)
-
+    text = STRONG_RE.sub(r"<strong>\1</strong>", escaped)
+    text = EMPHASIS_RE.sub(r"<em>\1</em>", text)
+    
+    # Wikilinks [[slug|label]] or [[slug]]
+    def repl_wikilink(m: re.Match) -> str:
+        target = m.group(1).strip()
+        label = m.group(2).strip() if m.group(2) else target
+        # Simplified: assumes internal links are relative to site root
+        # In a real engine, we'd need to resolve the type (post/project/doc)
+        # For now, we use a generic resolver pattern or assume publications
+        return f'<a href="/publications/{target}/" class="wikilink">[[{label}]]</a>'
+        
+    text = WIKILINK_RE.sub(repl_wikilink, text)
+    
     for token, replacement in placeholders.items():
-        escaped = escaped.replace(token, replacement)
+        text = text.replace(token, replacement)
 
-    return escaped
+    return text
 
 
 def collect_list(lines: list[str], start_index: int, ordered: bool) -> tuple[str, int]:
@@ -1130,6 +1142,33 @@ def render_layout(
     <meta name="description" content="{html.escape(page_description, quote=True)}">
     <link rel="canonical" href="{html.escape(canonical_url(site, canonical_path), quote=True)}">
     <link rel="stylesheet" href="{site_href(site, '/assets/styles.css')}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {{
+        theme: {{
+          extend: {{
+            colors: {{
+              accent: 'hsl(221, 83%, 53%)',
+              surface: 'hsl(220, 15%, 98%)',
+            }},
+            fontFamily: {{
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              serif: ['Lora', 'serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            }}
+          }}
+        }}
+      }}
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {{
+        mermaid.initialize({{ startOnLoad: true, theme: 'neutral' }});
+        lucide.createIcons();
+      }});
+    </script>
     {theme_css(system)}
     {math_meta}
   </head>
@@ -1147,6 +1186,7 @@ def render_layout(
     {render_palette(site, i18n, locale)}
     <script id="site-i18n" type="application/json">{i18n_payload}</script>
     <script src="{site_href(site, '/assets/blog.js')}" defer></script>
+    <script src="{site_href(site, '/assets/graphview.js')}" defer></script>
   </body>
 </html>
 """
@@ -1464,6 +1504,25 @@ def render_home_page(
     content = f"""
     {render_hero(site, system, posts, projects, i18n, locale)}
     {render_posts_section(system, posts, i18n, locale, limit=int(config['posts_on_home']))}
+    <section class="section-panel" style="margin-top: 4rem;">
+      <div class="section-header">
+        <h2 class="flex items-center gap-2">
+          <i data-lucide="network" class="w-6 h-6 text-accent"></i>
+          Knowledge Graph
+        </h2>
+        <p class="text-muted text-sm">Visualização semântica das conexões entre arquitetura, agentes e experimentos.</p>
+      </div>
+      <div data-knowledge-graph class="w-full h-[400px] bg-surface rounded-3xl border border-border mt-6 overflow-hidden relative">
+        <div class="absolute top-4 right-4 flex gap-2">
+          <span class="px-2 py-1 bg-white/80 backdrop-blur text-[10px] rounded border border-border flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-accent"></span> Projeto
+          </span>
+          <span class="px-2 py-1 bg-white/80 backdrop-blur text-[10px] rounded border border-border flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-slate-800"></span> Post/Doc
+          </span>
+        </div>
+      </div>
+    </section>
     {render_projects_section(projects, i18n, locale, limit=int(config['projects_on_home']))}
     {render_documents_section(system, documents, i18n, locale, limit=int(config['documents_on_home']))}
     {render_about_teaser(system, i18n, locale)}
@@ -1984,6 +2043,7 @@ def build_site() -> dict[str, Any]:
     project_index_path = ROOT / config["project_index_file"]
     documents_index_path = ROOT / config["documents_index_file"]
     about_path = ROOT / config["about_file"]
+    graph_data_path = ROOT / "assets/graph-data.json"
     search_index_path = ROOT / config["search_index_file"]
     i18n_asset_path = ROOT / config["i18n_asset_file"]
 
@@ -2018,6 +2078,34 @@ def build_site() -> dict[str, Any]:
         destination = documents_dir / document["slug"] / "index.html"
         write_text(destination, render_document_page(site, system, document, i18n, locale))
         generated_paths.append(str(destination.relative_to(ROOT)))
+
+    # Generate Knowledge Graph Data (Zettelkasten)
+    graph_nodes = []
+    graph_links = []
+    node_map = {}
+
+    all_resources = [
+        *[(p, "post") for p in posts],
+        *[(p, "project") for p in projects],
+        *[(p, "document") for p in documents]
+    ]
+
+    for res, kind in all_resources:
+        slug = res.get("slug")
+        title = res.get("title") or res.get("name") or slug
+        node_map[slug] = {"id": slug, "title": title, "kind": kind, "url": res.get("resolved_url")}
+        graph_nodes.append(node_map[slug])
+
+    for res, kind in all_resources:
+        body = res.get("body", "") or res.get("overview", "") or ""
+        links = WIKILINK_RE.findall(body)
+        for target_slug, _ in links:
+            target_slug = target_slug.strip()
+            if target_slug in node_map:
+                graph_links.append({"source": res.get("slug"), "target": target_slug})
+
+    write_json(graph_data_path, {"nodes": graph_nodes, "links": graph_links})
+    generated_paths.append(str(graph_data_path.relative_to(ROOT)))
 
     search_index = build_search_index(site, posts, projects, documents, i18n, locale)
     write_json(search_index_path, search_index)
