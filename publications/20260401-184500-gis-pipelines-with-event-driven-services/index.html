@@ -37,6 +37,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF', edgeLabelBackground: '#ffffff', tertiaryColor: '#f8fafc' } });
@@ -165,7 +168,44 @@
 <p>Sistemas geoespaciais costumam acumular parsing, transformação, regras de negócio, projeção de coordenadas e relatórios operacionais em um mesmo serviço. Isso funciona por pouco tempo.</p>
 <h2>Pipeline melhor que endpoint gigante</h2>
 <p>Uma abordagem mais sustentável é separar o fluxo em etapas:</p>
-<ul><li>ingestão de dados;</li><li>normalização e validação;</li><li>enriquecimento e geocoding;</li><li>projeção para leitura operacional;</li><li>entrega para dashboard, API ou alerta.</li></ul>
+<div class="mermaid py-8 bg-slate-50 rounded-2xl border border-slate-100 p-8 my-8">
+graph LR
+  IN[Ingestão: Webhook/S3] --> VAL[Validação: Topologia/Esquema]
+  VAL --> PROC[Processamento: Agregação/Projeção]
+  PROC --> PUB[Publicação: Event Bus]
+  PUB --> READ["Leitura: PostGIS/Elastic"]
+  PUB --> ALRT[Alertas: Geofencing]
+  
+  style READ fill:#f8fafc,stroke:#00C2FF
+</div>
+
+<h2>Métricas de Performance Geoespacial</h2>
+<p>A eficiência de processamento é medida pelo throughput de geometrias complexas por segundo (\(G_{ps}\)):</p>
+
+<div class="tech-card border-l-4 border-accent bg-slate-50 p-6 my-8 rounded-r-xl">
+  <p class="text-lg">
+    $$G_{ps} = \frac{\sum_{i=1}^{n} V_i}{T_{proc}}$$
+  </p>
+  <ul class="text-xs list-none p-0 m-0 text-slate-500 mt-4">
+    <li><strong>V_i</strong>: Número de vértices da geometria \(i\)</li>
+    <li><strong>T_{proc}</strong>: Tempo total de processamento em segundos</li>
+  </ul>
+</div>
+
+<h2>Exemplo de Service Task (C#)</h2>
+<p>Aqui, um exemplo de como tratar um evento de ingestão de forma resiliente usando .NET:</p>
+
+<pre><code class="language-csharp">public async Task Handle(GeoIngestionEvent @event)
+{
+    // 1. Validar topologia (NetTopologySuite)
+    if (!@event.Geometry.IsValid) throw new InvalidTopologyException();
+
+    // 2. Projetar coordenadas (ProjNet/DotSpatial)
+    var projected = _coordinateService.Transform(@event.Geometry, 4326, 3857);
+
+    // 3. Persistir para leitura operacional
+    await _repository.UpsertAsync(new FeatureRecord(projected, @event.Metadata));
+}</code></pre>
 <h2>Por que isso importa</h2>
 <p>Com esse desenho, cada etapa tem semântica própria e falhas mais legíveis. O dashboard não precisa entender o processamento bruto, e a camada de leitura pode responder rápido mesmo quando a ingestão está pesada.</p>
 <h2>O que eu procuro preservar</h2>

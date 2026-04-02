@@ -37,6 +37,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF', edgeLabelBackground: '#ffffff', tertiaryColor: '#f8fafc' } });
@@ -167,9 +170,76 @@
 <p>O risco: logs podem conter dados pessoais, segredos ou identificadores. A LGPD regula tratamento de dados pessoais e requer medidas de segurança e boas práticas proporcionais.</p>
 <h2>Pipeline: Do Log ao Post</h2>
 <p>A PoC propõe um pipeline com três trilhas paralelas: editorial, rastreabilidade e privacidade.</p>
-<div class="mermaid">sequenceDiagram  participant U as Usuário  participant I as Ingestão  participant R as Redação/Anonimização  participant E as Indexação (Embeddings)  participant C as Clusterização por tema  participant G as Gerador de posts  participant V as Revisão humana  participant P as Publicação  U->>I: "Exporta logs (JSON/HTML/texto)"  I->>R: "Normaliza + remove PII/segredos"  R->>E: "Cria embeddings por trecho"  E->>C: "Agrupa por similaridade"  C->>G: "Extrai itens (conceitos/PoCs) + estrutura"  G->>V: "Entrega rascunhos com fontes/assunções"  V->>P: Aprova e publica</div>
+<div class="mermaid py-8 bg-slate-50 rounded-2xl border border-slate-100 p-8 my-8">
+sequenceDiagram
+  participant U as Usuário
+  participant I as Ingestão
+  participant R as Redação/Anonimização
+  participant E as Indexação (Embeddings)
+  participant C as Clusterização por tema
+  participant G as Gerador de posts
+  participant V as Revisão humana
+  participant P as Publicação
+  U->>I: "Exporta logs (JSON/HTML/texto)"
+  I->>R: "Normaliza + remove PII/segredos"
+  R->>E: "Cria embeddings por trecho"
+  E->>C: "Agrupa por similaridade"
+  C->>G: "Extrai itens (conceitos/PoCs) + estrutura"
+  G->>V: "Entrega rascunhos com fontes/assunções"
+  V->>P: Aprova e publica
+</div>
+
+<h3>Métrica de Anonimização (K-Anonymity)</h3>
+<p>Para garantir a conformidade com a LGPD, a PoC utiliza o conceito de <em>k-anonimato</em>, onde cada registro deve ser indistinguível de pelo menos \(k-1\) outros registros:</p>
+
+<div class="tech-card border-l-4 border-accent bg-slate-50 p-6 my-8 rounded-r-xl">
+  <p class="text-lg">
+    $$P(\text{re-id}) \leq \frac{1}{k}$$
+  </p>
+  <p class="text-xs text-slate-500 mt-2">
+    Garantimos que a probabilidade de re-identificação de um usuário em um log minerado seja inversamente proporcional ao tamanho do cluster \(k\).
+  </p>
+</div>
+
+<h2>Transformação de Dados (Exemplo Real)</h2>
+<p>Abaixo, a comparação entre um log bruto e sua versão anonimizada pronta para indexação semântica:</p>
+
+<div class="overflow-x-auto my-8">
+  <table class="min-w-full text-sm border-collapse">
+    <thead>
+      <tr class="bg-slate-100">
+        <th class="p-3 text-left border">Tipo</th>
+        <th class="p-3 text-left border">Log Bruto (Original)</th>
+        <th class="p-3 text-left border">Log Refinado (PII Removed)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="p-3 border font-bold">Conversa</td>
+        <td class="p-3 border">"Hiro, veja o erro na API do cliente Souza & Co."</td>
+        <td class="p-3 border">"[USER], veja o erro na [ORG_API] do [CLIENT_ID]"</td>
+      </tr>
+      <tr>
+        <td class="p-3 border font-bold">Código</td>
+        <td class="p-3 border"><code>apiKey: "sh-123-abc-987"</code></td>
+        <td class="p-3 border"><code>apiKey: "[SECRET_MASKED]"</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <h2>Passos de implementação</h2>
-<ol><li><strong>Ingestão e segmentação</strong>: parse do export do chat (normalmente JSON/HTML) e quebra em mensagens/trechos.</li><li><strong>Redação (Privacy by Design)</strong>: aplicar filtros (regex + detectores) para tokens sensíveis antes da indexação.</li><li><strong>Embeddings e Clusterização</strong>: gerar embedding por trecho e agrupar por similaridade.</li><li><strong>Geração Estruturada</strong>: para cada cluster, extrair o conceito e os trade-offs debatidos.</li><li><strong>Rastreabilidade de Fontes</strong>: anexar, a cada afirmação factual, a referência documental.</li></ol>
+<ol><li><strong>Ingestão e segmentação</strong>: parse do export do chat (normalmente JSON/HTML) e quebra em mensagens/trechos.</li><li><strong>Redação (Privacy by Design)</strong>: aplicar filtros (regex + detectores) para tokens sensíveis antes da indexação.</li><li><strong>Embeddings e Clusterização</strong>: gerar embedding por trecho e agrupar por similaridade.</li></ol>
+
+<h3>Algoritmo de Hashing de Identidade</h3>
+<p>Para manter a correlação de mensagens do mesmo autor sem expor sua identidade:</p>
+
+<pre><code class="language-typescript">function anonymizeUser(userId: string, salt: string): string {
+  // SHA-256 com salt persistente por sessão
+  return crypto.createHmac('sha256', salt)
+               .update(userId)
+               .digest('hex')
+               .substring(0, 12);
+}</code></pre>
 <h2>Conclusão</h2>
 <p>Essa abordagem permite que o conhecimento gerado em sessões de brainstorming não se perca, transformando-se em <strong>ativos digitais estruturados</strong> e respeitando os limites da privacidade e conformidade de dados.</p>
         </section>

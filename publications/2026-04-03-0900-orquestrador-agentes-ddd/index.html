@@ -37,6 +37,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF', edgeLabelBackground: '#ffffff', tertiaryColor: '#f8fafc' } });
@@ -168,20 +171,87 @@
 <h2>A Arquitetura do Orquestrador</h2>
 <p>A ideia é um <strong>orquestrador</strong> que recebe uma solicitação em linguagem natural e produz dois resultados acoplados:</p>
 <ol><li><strong>Artefatos de linguagem e domínio</strong>: glossário do contexto, sinônimos proibidos, definições canônicas, comandos/eventos e regras/invariantes.</li><li><strong>Plano de execução multiagente</strong>: tarefas para agentes especializados (modelagem, API, persistência, testes, segurança), com retorno estruturado e rastreável.</li></ol>
-<div class="mermaid">flowchart TD  A[Entrada em linguagem natural] --> B[Detecção de intenção e contexto]  B --> C["Tradutor DDD: Linguagem Ubíqua"]  C --> D{Roteador de tarefas}  D --> E["Agente: Modelagem de domínio"]  D --> F["Agente: Implementação/API"]  D --> G["Agente: Testes e invariantes"]  D --> H["Agente: Segurança e privacidade"]  E --> I[Memória de feedback e decisões]  F --> I  G --> I  H --> I  I --> C</div>
+<div class="mermaid py-8 bg-slate-50 rounded-2xl border border-slate-100 p-8 my-8">
+flowchart TD
+  A[Entrada em linguagem natural] --> B[Detecção de intenção e contexto]
+  B --> C["Tradutor DDD: Linguagem Ubíqua"]
+  C --> D{Roteador de tarefas}
+  D --> E["Agente: Modelagem de domínio"]
+  D --> F["Agente: Implementação/API"]
+  D --> G["Agente: Testes e invariantes"]
+  D --> H["Agente: Segurança e privacidade"]
+  E --> I[Memória de feedback e decisões]
+  F --> I
+  G --> I
+  H --> I
+  I --> C
+</div>
+
+<h3>Fluxo de Processamento de Requisito</h3>
+<p>Para garantir que o modelo de domínio seja preservado, o orquestrador segue um fluxo rigoroso de validação semântica:</p>
+
+<div class="mermaid py-8">
+sequenceDiagram
+  participant U as Usuário/Product Owner
+  participant O as OrchestratorAgent
+  participant K as KnowledgeMemory
+  participant D as DomainAgent
+  
+  U->>O: "Preciso de um sistema de checkout"
+  O->>K: Recuperar contexto anterior
+  K-->>O: { términos_existentes: ["Pedido", "Item"] }
+  O->>O: Normalizar: "Checkout" -> "Finalização de Pedido"
+  O->>D: Gerar Comandos e Eventos
+  D-->>O: OrderPlaced, PayOrder
+  O->>U: Apresentar Glossário e Modelo
+</div>
+
+<h2>Métricas de Precisão Semântica</h2>
+<p>A confiança na tradução para a Linguagem Ubíqua é calculada através de uma função de peso ponderada entre a similaridade de cosseno (embeddings) e o histórico de correções do usuário:</p>
+
+<div class="tech-card border-l-4 border-accent bg-slate-50 p-6 my-8 rounded-r-xl">
+  <p class="text-lg">
+    $$C(p) = \frac{\sum_{i=1}^{n} (w_s \cdot S_i + w_h \cdot H_i)}{\sum w}$$
+  </p>
+  <ul class="text-xs list-none p-0 m-0 text-slate-500 mt-4">
+    <li><strong>S_i</strong>: Similaridade semântica (0 a 1)</li>
+    <li><strong>H_i</strong>: Heurística de aceitação histórica</li>
+    <li><strong>w</strong>: Pesos de influência ajustáveis</li>
+  </ul>
+</div>
 <h2>Passos de implementação</h2>
 <p>A forma mais robusta de manter rastreabilidade é exigir <strong>saídas estruturadas</strong>. Em APIs modernas de LLMs, isso costuma ser feito com JSON Schema.</p>
 <p>1) <strong>Defina o contrato do “Tradutor DDD”</strong> (JSON Schema). Ele deve retornar: <code>boundedContext</code>, <code>glossario</code>, <code>entidades</code>, <code>comandos</code>, <code>eventos</code>, <code>regras</code> e <code>termosProibidos</code>.</p>
 <pre><code class="language-json">{
-  &quot;type&quot;: &quot;object&quot;,
-  &quot;required&quot;: [&quot;boundedContext&quot;, &quot;glossario&quot;, &quot;eventos&quot;, &quot;regras&quot;],
-  &quot;properties&quot;: {
-    &quot;boundedContext&quot;: { &quot;type&quot;: &quot;string&quot; },
-    &quot;glossario&quot;: {
-      &quot;type&quot;: &quot;array&quot;,
-      &quot;items&quot;: { &quot;type&quot;: &quot;object&quot;, &quot;required&quot;: [&quot;termo&quot;, &quot;definicao&quot;], &quot;properties&quot;: { ... } }
+  "type": "object",
+  "required": ["boundedContext", "glossario", "eventos", "regras"],
+  "properties": {
+    "boundedContext": { "type": "string" },
+    "glossario": {
+      "type": "array",
+      "items": { "type": "object", "required": ["termo", "definicao"], "properties": { ... } }
     },
     ...
+  }
+}</code></pre>
+
+<h3>Exemplo de Orquestrador (TypeScript)</h3>
+<p>Abaixo, um exemplo simplificado de como o Orquestrador gerencia o ciclo de vida da requisição:</p>
+
+<pre><code class="language-typescript">interface DomainRequirement {
+  prompt: string;
+  context: string;
+}
+
+class Orchestrator {
+  async process(req: DomainRequirement) {
+    const terminology = await this.translator.normalize(req.prompt);
+    const plan = await this.planner.create(terminology);
+    
+    // Execução paralela com guardrails de DDD
+    return await Promise.all(
+      plan.tasks.map(task => this.executeWithSafety(task))
+    );
   }
 }</code></pre>
 <p>2) <strong>Roteie para agentes especializados</strong>: cada agente consome a Linguagem Ubíqua e retorna uma entrega. 3) <strong>Imponha consistência na modelagem</strong>: entidades e agregados devem preservar invariantes e expor métodos expressivos na linguagem do domínio.</p>
