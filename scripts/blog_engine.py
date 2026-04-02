@@ -940,17 +940,17 @@ def theme_css(system: dict[str, Any]) -> str:
         --border: {border};
         --accent: {accents[0]};
         --accent-secondary: {accents[1] if len(accents) > 1 else accents[0]};
-        --accent-soft: rgba(37, 99, 235, 0.1);
+        --accent-soft: rgba(37, 99, 235, 0.08);
         --text: {text};
         --muted: {muted};
-        --font-heading: {font_stack(headings, "sans-serif")};
-        --font-body: {font_stack(body_font, "serif")};
-        --font-ui: {font_stack(headings, "sans-serif")};
-        --font-code: "{code_font}", monospace;
+        --font-heading: "Inter", system-ui, sans-serif;
+        --font-body: "Lora", serif;
+        --font-ui: "Inter", system-ui, sans-serif;
+        --font-code: "JetBrains Mono", monospace;
         --reading-width: {reading_width};
         --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
         --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
       }}
     </style>
     """

@@ -9,9 +9,9 @@
   --accent-soft: rgba(37, 99, 235, 0.08);
   --text: #1a1a1a;
   --muted: #666666;
-  --font-heading: "Inter", "system-ui", sans-serif;
-  --font-body: "Lora", "Charter", "serif";
-  --font-ui: "Inter", "system-ui", sans-serif;
+  --font-heading: "Inter", system-ui, sans-serif;
+  --font-body: "Lora", serif;
+  --font-ui: "Inter", system-ui, sans-serif;
   --font-code: "JetBrains Mono", monospace;
   --reading-width: 720px;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
@@ -162,6 +162,7 @@ pre {
   font-size: 1.25rem;
   background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
