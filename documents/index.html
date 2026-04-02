@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Documents | Hiro Matsumoto</title>
+    <meta name="description" content="System documents and architecture notes.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/documents/">
+    <link rel="stylesheet" href="/assets/styles.css">
+    
+    <style>
+      :root {
+        --bg: #0B0F14;
+        --surface: #121821;
+        --surface-strong: #0f141c;
+        --surface-soft: #1a2330;
+        --border: rgba(157, 167, 179, 0.2);
+        --accent: #00C2FF;
+        --accent-secondary: #7C5CFF;
+        --accent-soft: rgba(0, 194, 255, 0.12);
+        --text: #E6EDF3;
+        --muted: #9DA7B3;
+        --font-heading: "Inter", "Satoshi", system-ui, sans-serif;
+        --font-ui: "Inter", "Satoshi", system-ui, sans-serif;
+        --font-code: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        --reading-width: 680px;
+      }
+    </style>
+    
+    
+  </head>
+  <body class="page-documents" data-has-math="false">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        
+    <nav class="site-nav" aria-label="Primary">
+      <a class="site-mark" href="/">Hiro Matsumoto</a>
+      <ul class="site-nav-links">
+        <li><a href="/publications/">posts</a></li><li><a href="/projects/">projects</a></li><li><a href="/documents/" aria-current="page">documents</a></li><li><a href="/about/">about</a></li>
+      </ul>
+      <div class="site-nav-actions">
+        <button class="palette-trigger" type="button" data-open-palette>command palette <span>Ctrl/⌘ K</span></button>
+        <a class="cta-link" href="https://www.linkedin.com/in/nhmatsumoto/" rel="noopener noreferrer" target="_blank">open work / contact</a>
+      </div>
+    </nav>
+    
+      </header>
+      <main class="site-main" id="content">
+        
+    <section class="page-heading">
+      <p class="section-kicker">documents</p>
+      <h1>Docs system</h1>
+      <p>Documents are grouped by domain, architecture, agents and APIs. The goal is to keep decisions discoverable.</p>
+    </section>
+    
+    <section class="section-panel" aria-labelledby="documents-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">documents</p>
+          <h2 id="documents-title">Documentation system</h2>
+        </div>
+        <p class="section-copy">Markdown-backed notes organized by domain, architecture, agents and APIs, with version markers and agent-generated tags.</p>
+      </header>
+      <section class="document-group">
+                  <header class="document-group-head">
+                    <h3>domain</h3>
+                  </header>
+                  <ol class="resource-list document-collection">
+                    <li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">domain</p>
+          <p class="card-version">v1</p>
+        </div>
+        <h3><a href="/documents/technical-knowledge-os/">Technical Knowledge OS</a></h3>
+        <p class="card-summary">A definição operacional do blog como sistema vivo de documentação técnica.</p>
+        <div class="document-flags">
+          
+        </div>
+        <ul class="tag-list"><li>domain</li><li>knowledge</li></ul>
+      </article>
+    </li>
+                  </ol>
+                </section>
+<section class="document-group">
+                  <header class="document-group-head">
+                    <h3>architecture</h3>
+                  </header>
+                  <ol class="resource-list document-collection">
+                    <li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">architecture</p>
+          <p class="card-version">v1</p>
+        </div>
+        <h3><a href="/documents/system-architecture/">System Architecture</a></h3>
+        <p class="card-summary">Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.</p>
+        <div class="document-flags">
+          
+        </div>
+        <ul class="tag-list"><li>architecture</li><li>system</li></ul>
+      </article>
+    </li>
+                  </ol>
+                </section>
+<section class="document-group">
+                  <header class="document-group-head">
+                    <h3>agents</h3>
+                  </header>
+                  <ol class="resource-list document-collection">
+                    <li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">agents</p>
+          <p class="card-version">ADR 003</p>
+        </div>
+        <h3><a href="/documents/adr-versioned-memory/">ADR 003 - Versioned Memory</a></h3>
+        <p class="card-summary">Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.</p>
+        <div class="document-flags">
+          <span class="mini-flag">agent-generated</span>
+        </div>
+        <ul class="tag-list"><li>agents</li><li>adr</li><li>memory</li></ul>
+      </article>
+    </li>
+<li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">agents</p>
+          <p class="card-version">v0.1</p>
+        </div>
+        <h3><a href="/documents/ronaldinho-architecture-overview/">Ronaldinho Architecture Overview</a></h3>
+        <p class="card-summary">Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.</p>
+        <div class="document-flags">
+          <span class="mini-flag">agent-generated</span>
+        </div>
+        <ul class="tag-list"><li>agents</li><li>architecture</li><li>runtime</li></ul>
+      </article>
+    </li>
+                  </ol>
+                </section>
+<section class="document-group">
+                  <header class="document-group-head">
+                    <h3>apis</h3>
+                  </header>
+                  <ol class="resource-list document-collection">
+                    <li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">apis</p>
+          <p class="card-version">v1</p>
+        </div>
+        <h3><a href="/documents/agent-integration-surface/">Agent Integration Surface</a></h3>
+        <p class="card-summary">Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes.</p>
+        <div class="document-flags">
+          <span class="mini-flag">agent-generated</span>
+        </div>
+        <ul class="tag-list"><li>apis</li><li>agents</li><li>integration</li></ul>
+      </article>
+    </li>
+                  </ol>
+                </section>
+    </section>
+    
+    
+      </main>
+      
+    <footer class="site-footer">
+      <div>
+        <p class="footer-label">technical knowledge OS</p>
+        <p>Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
+      </div>
+      <div class="footer-meta">
+        <ul class="footer-pills"><li>clarity</li><li>depth</li><li>no distraction</li></ul>
+        <ul class="footer-pills"><li>engineering docs</li><li>light dashboards</li><li>structured README</li></ul>
+      </div>
+    </footer>
+    
+    </div>
+    
+    <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
+      <div class="palette-backdrop" data-close-palette></div>
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="palette-head">
+          <input class="palette-input" type="search" placeholder="Search posts, projects and documents" data-palette-input>
+          <button class="palette-close" type="button" data-close-palette>Close</button>
+        </div>
+        <p class="palette-hint">Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.</p>
+        <ul class="palette-results" data-palette-results></ul>
+      </div>
+    </div>
+    
+    <script src="/assets/blog.js" defer></script>
+  </body>
+</html>

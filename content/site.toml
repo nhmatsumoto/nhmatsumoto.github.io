@@ -1,18 +1,20 @@
 title = "Hiro Matsumoto"
-headline = "Vida prática, software e tecnologia sem verniz."
-description = "Blog pessoal publicado via GitHub Pages com HTML semântico, conteúdo em TOML e um editor local simples."
+headline = "technical knowledge OS for scalable systems and autonomous agents."
+description = "Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva."
 language = "pt-BR"
 author = "Hiro Matsumoto"
 base_url = "https://nhmatsumoto.github.io"
 github_url = "https://github.com/nhmatsumoto"
 linkedin_url = "https://www.linkedin.com/in/nhmatsumoto/"
-home_title = "Anotações sobre estilo de vida, software e tecnologia."
+home_title = "building scalable systems and autonomous agents"
 home_intro = """
-Este espaço foi desenhado para ser direto: conteúdo em TOML, HTML semântico no destino final e um fluxo de publicação controlado por commit.
+Este espaço agora funciona como um sistema vivo de documentação técnica: posts, projetos, ADRs e notas operacionais compartilhando a mesma superfície.
 
-Escrevo aqui para registrar ideias técnicas, notas de arquitetura, decisões práticas e observações sobre a rotina de construir software.
+O objetivo é clareza com profundidade. Tudo continua simples no deploy, mas a experiência passa a refletir o tipo de software que construo: sistemas distribuídos, agentes, GIS e arquitetura orientada a domínio.
 """
 about = """
-Sou engenheiro de software e uso este blog como um caderno público de trabalho. A proposta é simples: escrever com clareza, publicar com Git e manter a estrutura pequena o suficiente para durar.
+Sou engenheiro de software e trato este espaço como um caderno operacional: menos marketing, mais contexto técnico. O blog deixou de ser apenas uma coleção de posts e passou a funcionar como uma camada de documentação viva sobre projetos, decisões de arquitetura e experimentos de produto.
+
+Quando uma ideia amadurece, ela vira projeto. Quando uma decisão precisa durar, ela vira documento. Quando um aprendizado merece ser compartilhado, ele vira publicação.
 """
-footer_note = "Publicado com HTML semântico, TOML e um gerador local sem dependências externas."
+footer_note = "Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas."

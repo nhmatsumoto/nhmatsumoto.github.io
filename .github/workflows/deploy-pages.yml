@@ -38,6 +38,9 @@ jobs:
         run: |
           mkdir -p _site
           cp -R assets _site/assets
+          cp -R about _site/about
+          cp -R documents _site/documents
+          cp -R projects _site/projects
           cp -R publications _site/publications
           cp -R docs _site/docs
           cp index.html _site/index.html

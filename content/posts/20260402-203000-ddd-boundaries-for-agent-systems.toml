@@ -1,0 +1,43 @@
+id = "20260402-203000"
+slug = "ddd-boundaries-for-agent-systems"
+title = "DDD boundaries for agent systems"
+summary = "Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes."
+published_at = "2026-04-02T20:30:00+09:00"
+updated_at = "2026-04-02T20:30:00+09:00"
+status = "published"
+tags = ["dotnet", "ddd", "ai"]
+badges = ["architecture", "experiment"]
+repo_url = "https://github.com/nhmatsumoto/ronaldinho-agent"
+code_url = "https://github.com/nhmatsumoto/ronaldinho-agent"
+featured = true
+has_asciimath = false
+
+body = """
+# Separando domínio de orquestração em sistemas com agentes
+
+Quando um projeto começa a misturar prompt, decisão de negócio, execução de tool e persistência no mesmo fluxo, a velocidade inicial costuma enganar. O custo aparece depois: pouca previsibilidade, testes frágeis e dificuldade para mudar o comportamento do sistema sem quebrar tudo.
+
+## Uma fronteira útil
+
+Eu tenho tratado esses sistemas em três camadas explícitas:
+
+- **domínio**: regras, linguagem ubíqua, contratos e estado significativo;
+- **orquestração**: composição de passos, seleção de tools e roteamento;
+- **infraestrutura**: modelos, filas, banco, storage e conectores externos.
+
+## O que muda na prática
+
+Separar essas fronteiras ajuda em três pontos:
+
+1. O domínio volta a ser testável sem depender de modelo.
+2. A camada de orquestração pode evoluir sem reescrever regras.
+3. O runtime deixa de ser o lugar onde decisões de negócio ficam escondidas.
+
+## Heurística simples
+
+Se uma decisão precisa sobreviver à troca de provider, ela provavelmente pertence ao domínio ou à política de aplicação, não ao prompt.
+
+## O que estou documentando agora
+
+Esse raciocínio está guiando a estrutura do Ronaldinho Agent e também a forma como passei a organizar este blog: menos páginas isoladas, mais documentação conectada.
+"""

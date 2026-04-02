@@ -1,0 +1,93 @@
+[blog]
+concept = "technical knowledge OS"
+style = "minimalist engineering notebook"
+focus = ["clarity", "depth", "no distraction"]
+
+[identity]
+feeling = ["focus", "precision", "technical depth"]
+references = ["engineering docs", "light dashboards", "structured README"]
+
+[layout.header]
+type = "fixed"
+logo = "text"
+nav = ["posts", "projects", "documents", "about"]
+cta = "open work / contact"
+search = "command palette"
+
+[layout.hero]
+headline = "building scalable systems and autonomous agents"
+stack = ["c#", ".net", "distributed systems", "ai agents", "gis"]
+highlights = ["main project", "recent article"]
+
+[layout.posts]
+view = ["list", "grid"]
+content = ["title", "tags", "reading time", "summary"]
+tags = ["dotnet", "ddd", "ai", "gis"]
+badges = ["architecture", "experiment", "production"]
+links = ["repo", "code"]
+
+[layout.projects]
+type = "core section"
+content = ["name", "stack", "status"]
+status = ["research", "in_progress", "production"]
+actions = ["view_architecture", "view_code", "open_docs"]
+features = ["architecture_docs", "diagram_preview"]
+
+[layout.documents]
+type = "docs system"
+navigation = ["domain", "architecture", "agents", "apis"]
+content = ["markdown", "diagrams", "code"]
+features = ["versioning", "agent_generated_tag"]
+
+[layout.project_page]
+sections = ["overview", "problem_solution", "architecture", "stack", "adr", "roadmap"]
+
+[design.colors]
+background = "#0B0F14"
+surface = "#121821"
+accent = ["#00C2FF", "#7C5CFF"]
+text_primary = "#E6EDF3"
+text_secondary = "#9DA7B3"
+
+[design.typography]
+headings = ["Inter", "Satoshi"]
+code = "JetBrains Mono"
+
+[design.components]
+core = ["card", "tag", "badge", "code_block", "divider", "sidebar"]
+
+[ux]
+reading_width = "680px"
+priorities = ["readability", "speed", "depth"]
+navigation = ["search", "shortcuts"]
+content_focus = ["diagrams", "code", "architecture_decisions"]
+
+[architecture.frontend]
+framework = ["Next.js", "Vite + React"]
+state = "Zustand"
+styling = "TailwindCSS"
+content = "MDX"
+search = ["Lunr", "FlexSearch"]
+deploy = ["Vercel", "Cloudflare"]
+
+[structure]
+pattern = "DDD-like"
+tree = [
+  "/blog/posts",
+  "/blog/projects",
+  "/blog/docs",
+  "/blog/components",
+  "/blog/domain",
+  "/blog/application",
+  "/blog/infra",
+]
+
+[key_idea]
+definition = "a living technical documentation system"
+
+[next_steps]
+options = [
+  "generate react + tailwind template",
+  "create mdx structure",
+  "integrate with agent system",
+]

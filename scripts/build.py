@@ -5,7 +5,12 @@ from blog_engine import build_site
 
 def main() -> None:
     result = build_site()
-    print(f"Build concluído: {result['published_posts']} post(s) publicado(s).")
+    print(
+        "Build concluído: "
+        f"{result['published_posts']} post(s), "
+        f"{result['published_projects']} projeto(s), "
+        f"{result['published_documents']} documento(s)."
+    )
     for path in result["generated_files"]:
         print(f"- {path}")
 

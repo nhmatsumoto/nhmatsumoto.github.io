@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import tomllib
 import unicodedata
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -17,11 +18,22 @@ CONFIG_PATH = ROOT / "blog.toml"
 
 DEFAULT_BUILD_CONFIG = {
     "site_file": "content/site.toml",
+    "system_file": "content/system.toml",
     "posts_dir": "content/posts",
+    "projects_dir": "content/projects",
+    "documents_dir": "content/documents",
     "publications_dir": "publications",
+    "projects_output_dir": "projects",
+    "documents_output_dir": "documents",
     "home_file": "index.html",
     "archive_file": "publications/index.html",
+    "project_index_file": "projects/index.html",
+    "documents_index_file": "documents/index.html",
+    "about_file": "about/index.html",
+    "search_index_file": "assets/search-index.json",
     "posts_on_home": 6,
+    "projects_on_home": 3,
+    "documents_on_home": 4,
 }
 
 DEFAULT_MATH_CONFIG = {
@@ -70,19 +82,27 @@ POST_FIELD_ORDER = [
     "updated_at",
     "status",
     "tags",
+    "badges",
+    "repo_url",
+    "code_url",
+    "featured",
     "has_asciimath",
     "body",
 ]
 
 MANAGED_GIT_PATHS = [
+    ".github",
     ".gitignore",
     "README.md",
+    "about",
     "assets",
     "blog.toml",
     "content",
+    "documents",
     "editor",
     "index.html",
     "plans",
+    "projects",
     "publications",
     "scripts",
 ]
@@ -125,6 +145,12 @@ MONTHS_SHORT_PT = [
     "dez",
 ]
 
+STATUS_LABELS = {
+    "research": "research",
+    "in_progress": "in progress",
+    "production": "production",
+}
+
 
 def now_local() -> datetime:
     return datetime.now().astimezone()
@@ -142,6 +168,14 @@ def load_blog_config() -> dict[str, dict[str, Any]]:
     return {"build": build, "math": math}
 
 
+def normalize_string_list(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    if isinstance(value, str):
+        return [item.strip() for item in value.split(",") if item.strip()]
+    return []
+
+
 def normalise_site(raw: dict[str, Any]) -> dict[str, str]:
     site = DEFAULT_SITE | raw
     return {key: str(site.get(key, "") or "") for key in SITE_FIELD_ORDER}
@@ -153,9 +187,22 @@ def load_site() -> dict[str, str]:
     return normalise_site(load_toml(site_path))
 
 
+def load_system() -> dict[str, Any]:
+    config = load_blog_config()
+    system_path = ROOT / config["build"]["system_file"]
+    if not system_path.exists():
+        return {}
+    return load_toml(system_path)
+
+
 def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
+
+
+def write_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def parse_datetime(value: str | None) -> datetime:
@@ -171,6 +218,15 @@ def parse_datetime(value: str | None) -> datetime:
     if parsed.tzinfo is None:
         return parsed.replace(tzinfo=now_local().tzinfo)
     return parsed
+
+
+def parse_int(value: Any, default: int = 0) -> int:
+    if isinstance(value, int):
+        return value
+    try:
+        return int(str(value).strip())
+    except (TypeError, ValueError):
+        return default
 
 
 def format_long_date(value: datetime) -> str:
@@ -190,30 +246,48 @@ def slugify(value: str) -> str:
     normalized = unicodedata.normalize("NFKD", value)
     ascii_only = normalized.encode("ascii", "ignore").decode("ascii")
     slug = re.sub(r"[^a-zA-Z0-9]+", "-", ascii_only.lower()).strip("-")
-    return slug or "post"
+    return slug or "item"
+
+
+def plain_text_from_markdown(text: str) -> str:
+    plain = text
+    plain = re.sub(r"```.*?```", " ", plain, flags=re.DOTALL)
+    plain = re.sub(r"`([^`]+)`", r"\1", plain)
+    plain = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", plain)
+    plain = re.sub(r"[#>*_\-\[\]]", " ", plain)
+    plain = re.sub(r"\s+", " ", plain)
+    return plain.strip()
 
 
 def summarize_body(body: str, limit: int = 180) -> str:
-    plain = re.sub(r"[#>`*_~-]", "", body)
-    plain = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", plain)
-    plain = " ".join(segment.strip() for segment in plain.splitlines() if segment.strip())
+    plain = plain_text_from_markdown(body)
     if len(plain) <= limit:
         return plain
     return plain[: limit - 1].rstrip() + "…"
 
 
-def normalize_tags(raw_tags: Any) -> list[str]:
-    if isinstance(raw_tags, list):
-        return [str(tag).strip() for tag in raw_tags if str(tag).strip()]
-    if isinstance(raw_tags, str):
-        return [tag.strip() for tag in raw_tags.split(",") if tag.strip()]
-    return []
+def reading_time_minutes(text: str) -> int:
+    words = len(plain_text_from_markdown(text).split())
+    return max(1, round(words / 220)) if words else 1
 
 
 def find_post_file(post_id: str) -> Path | None:
     posts_dir = ROOT / load_blog_config()["build"]["posts_dir"]
     matches = sorted(posts_dir.glob(f"{post_id}-*.toml"))
     return matches[0] if matches else None
+
+
+def resolve_url(site: dict[str, str], url: str) -> str:
+    clean_url = str(url or "").strip()
+    if not clean_url:
+        return ""
+    if clean_url.startswith(("http://", "https://", "mailto:", "#")):
+        return clean_url
+    return site_href(site, clean_url if clean_url.startswith("/") else f"/{clean_url}")
+
+
+def resolve_optional_url(site: dict[str, str], url: str) -> str:
+    return resolve_url(site, url) if str(url or "").strip() else ""
 
 
 def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
@@ -225,7 +299,8 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
     body = str(raw.get("body", "") or "")
     summary = str(raw.get("summary", "") or "").strip() or summarize_body(body)
     status = str(raw.get("status", "") or "draft").strip().lower()
-    tags = normalize_tags(raw.get("tags", []))
+    tags = normalize_string_list(raw.get("tags", []))
+    badges = normalize_string_list(raw.get("badges", []))
     has_asciimath = bool(raw.get("has_asciimath", False))
     output_dir_name = f"{post_id}-{slug}"
     config = load_blog_config()
@@ -240,29 +315,79 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
         "updated_at": updated_dt.isoformat(timespec="seconds"),
         "status": status,
         "tags": tags,
+        "badges": badges,
+        "repo_url": str(raw.get("repo_url", "") or "").strip(),
+        "code_url": str(raw.get("code_url", "") or "").strip(),
+        "featured": bool(raw.get("featured", False)),
         "has_asciimath": has_asciimath
         or config["math"]["inline_delimiter"] in body
         or config["math"]["block_delimiter"] in body,
         "body": body.rstrip() + "\n" if body.strip() else "",
         "published_dt": published_dt,
         "updated_dt": updated_dt,
+        "reading_time": reading_time_minutes(body),
         "source_path": source_path,
         "output_dir_name": output_dir_name,
         "url": f"/{publications_dir}/{output_dir_name}/",
     }
 
 
-def post_to_api(post: dict[str, Any]) -> dict[str, Any]:
+def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
+    name = str(raw.get("name", "") or "").strip() or "Untitled Project"
+    slug = slugify(str(raw.get("slug", "") or "").strip() or name)
+    status = str(raw.get("status", "") or "research").strip().lower()
+    if status not in STATUS_LABELS:
+        status = "research"
+
     return {
-        key: value
-        for key, value in post.items()
-        if key
-        not in {
-            "published_dt",
-            "updated_dt",
-            "source_path",
-            "output_dir_name",
-        }
+        "slug": slug,
+        "name": name,
+        "headline": str(raw.get("headline", "") or "").strip(),
+        "summary": str(raw.get("summary", "") or "").strip(),
+        "status": status,
+        "status_label": STATUS_LABELS[status],
+        "stack": normalize_string_list(raw.get("stack", [])),
+        "badges": normalize_string_list(raw.get("badges", [])),
+        "repo_url": str(raw.get("repo_url", "") or "").strip(),
+        "code_url": str(raw.get("code_url", "") or "").strip(),
+        "docs_url": str(raw.get("docs_url", "") or "").strip(),
+        "architecture_url": str(raw.get("architecture_url", "") or "").strip(),
+        "featured": bool(raw.get("featured", False)),
+        "order": parse_int(raw.get("order", 999)),
+        "diagram_preview": str(raw.get("diagram_preview", "") or "").rstrip(),
+        "overview": str(raw.get("overview", "") or "").strip(),
+        "problem_solution": str(raw.get("problem_solution", "") or "").strip(),
+        "architecture": str(raw.get("architecture", "") or "").strip(),
+        "stack_notes": str(raw.get("stack_notes", "") or "").strip(),
+        "adr": normalize_string_list(raw.get("adr", [])),
+        "roadmap": normalize_string_list(raw.get("roadmap", [])),
+        "source_path": source_path,
+        "url": f"/projects/{slug}/",
+    }
+
+
+def normalise_document(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
+    slug = slugify(str(raw.get("slug", "") or "").strip() or str(raw.get("title", "") or "document"))
+    source_relative = str(raw.get("source_path", "") or "").strip()
+    body = str(raw.get("body", "") or "")
+    if source_relative:
+        source_file = ROOT / source_relative
+        if source_file.exists():
+            body = source_file.read_text(encoding="utf-8")
+
+    category = str(raw.get("category", "") or "architecture").strip().lower()
+    return {
+        "slug": slug,
+        "title": str(raw.get("title", "") or "").strip() or "Untitled Document",
+        "summary": str(raw.get("summary", "") or "").strip() or summarize_body(body),
+        "category": category,
+        "version": str(raw.get("version", "") or "").strip() or "v1",
+        "tags": normalize_string_list(raw.get("tags", [])),
+        "agent_generated_tag": bool(raw.get("agent_generated_tag", False)),
+        "order": parse_int(raw.get("order", 999)),
+        "body": body.rstrip() + "\n" if body.strip() else "",
+        "source_path": source_path,
+        "url": f"/documents/{slug}/",
     }
 
 
@@ -276,8 +401,29 @@ def load_posts(include_drafts: bool = True) -> list[dict[str, Any]]:
         if include_drafts or post["status"] == "published":
             posts.append(post)
 
-    posts.sort(key=lambda item: (item["published_dt"], item["id"]), reverse=True)
+    posts.sort(
+        key=lambda item: (item["featured"], item["published_dt"], item["id"]),
+        reverse=True,
+    )
     return posts
+
+
+def load_projects() -> list[dict[str, Any]]:
+    projects_dir = ROOT / load_blog_config()["build"]["projects_dir"]
+    projects_dir.mkdir(parents=True, exist_ok=True)
+
+    projects = [normalise_project(load_toml(path), source_path=path) for path in sorted(projects_dir.glob("*.toml"))]
+    projects.sort(key=lambda item: (not item["featured"], item["order"], item["name"].lower()))
+    return projects
+
+
+def load_documents() -> list[dict[str, Any]]:
+    documents_dir = ROOT / load_blog_config()["build"]["documents_dir"]
+    documents_dir.mkdir(parents=True, exist_ok=True)
+
+    documents = [normalise_document(load_toml(path), source_path=path) for path in sorted(documents_dir.glob("*.toml"))]
+    documents.sort(key=lambda item: (item["category"], item["order"], item["title"].lower()))
+    return documents
 
 
 def toml_quote(value: str) -> str:
@@ -290,6 +436,8 @@ def toml_quote(value: str) -> str:
 def toml_value(value: Any) -> str:
     if isinstance(value, bool):
         return "true" if value else "false"
+    if isinstance(value, int):
+        return str(value)
     if isinstance(value, list):
         items = ", ".join(json.dumps(str(item), ensure_ascii=False) for item in value)
         return f"[{items}]"
@@ -302,7 +450,7 @@ def render_toml_document(data: dict[str, Any], field_order: list[str]) -> str:
         if key not in data:
             continue
         lines.append(f"{key} = {toml_value(data[key])}")
-        if key == "has_asciimath":
+        if key in {"featured", "has_asciimath"}:
             lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
@@ -329,19 +477,28 @@ def save_post(post_data: dict[str, Any]) -> dict[str, Any]:
     existing = find_post_file(post["id"])
     write_text(
         destination,
-        render_toml_document(
-            {
-                key: post[key]
-                for key in POST_FIELD_ORDER
-            },
-            POST_FIELD_ORDER,
-        ),
+        render_toml_document({key: post[key] for key in POST_FIELD_ORDER}, POST_FIELD_ORDER),
     )
 
     if existing and existing != destination and existing.exists():
         existing.unlink()
 
     return normalise_post(load_toml(destination), source_path=destination)
+
+
+def post_to_api(post: dict[str, Any]) -> dict[str, Any]:
+    return {
+        key: value
+        for key, value in post.items()
+        if key
+        not in {
+            "published_dt",
+            "updated_dt",
+            "source_path",
+            "output_dir_name",
+            "resolved_url",
+        }
+    }
 
 
 def is_special_block_start(stripped: str) -> bool:
@@ -424,8 +581,7 @@ def render_markdown(text: str) -> str:
     index = 0
 
     while index < len(lines):
-        line = lines[index]
-        stripped = line.strip()
+        stripped = lines[index].strip()
 
         if not stripped:
             index += 1
@@ -451,8 +607,7 @@ def render_markdown(text: str) -> str:
         heading = HEADING_RE.match(stripped)
         if heading:
             level = len(heading.group(1))
-            content = render_inline(heading.group("content"))
-            parts.append(f"<h{level}>{content}</h{level}>")
+            parts.append(f"<h{level}>{render_inline(heading.group('content'))}</h{level}>")
             index += 1
             continue
 
@@ -466,8 +621,7 @@ def render_markdown(text: str) -> str:
             while index < len(lines) and lines[index].strip().startswith(">"):
                 quote_lines.append(lines[index].strip()[1:].lstrip())
                 index += 1
-            inner = render_markdown("\n".join(quote_lines))
-            parts.append(f"<blockquote>{inner}</blockquote>")
+            parts.append(f"<blockquote>{render_markdown(chr(10).join(quote_lines))}</blockquote>")
             continue
 
         if UNORDERED_LIST_RE.match(stripped):
@@ -494,68 +648,63 @@ def render_markdown(text: str) -> str:
     return "\n".join(parts)
 
 
-def render_tag_list(tags: list[str]) -> str:
+def render_markdown_or_empty(text: str) -> str:
+    return render_markdown(text) if text.strip() else "<p>Conteúdo em preparação.</p>"
+
+
+def render_tag_list(tags: list[str], class_name: str = "tag-list") -> str:
     if not tags:
         return ""
     items = "".join(f"<li>{html.escape(tag)}</li>" for tag in tags)
-    return f'<ul class="tag-list">{items}</ul>'
+    return f'<ul class="{class_name}">{items}</ul>'
 
 
-def render_post_card(post: dict[str, Any]) -> str:
-    return f"""
-    <li class="post-list-item">
-      <article class="post-card">
-        <header class="post-card-header">
-          <p class="post-card-meta">
-            <time datetime="{html.escape(post['published_at'])}">{format_short_date(post['published_dt'])}</time>
-          </p>
-          <h3><a href="{html.escape(post['resolved_url'])}">{html.escape(post['title'])}</a></h3>
-        </header>
-        <p>{html.escape(post['summary'])}</p>
-        {render_tag_list(post['tags'])}
-      </article>
-    </li>
-    """.strip()
+def render_badge_list(items: list[str]) -> str:
+    if not items:
+        return ""
+    badges = "".join(f'<li class="badge">{html.escape(item)}</li>' for item in items)
+    return f'<ul class="badge-list">{badges}</ul>'
 
 
-def render_site_nav(site: dict[str, str]) -> str:
-    docs_path = ROOT / "docs" / "architecture" / "index.html"
-    docs_link = (
-        f'<li><a href="{site_href(site, "/docs/architecture/index.html")}">Documentação</a></li>'
-        if docs_path.exists()
-        else ""
-    )
-    github_link = (
-        f'<li><a href="{html.escape(site["github_url"], quote=True)}" rel="noopener noreferrer" target="_blank">GitHub</a></li>'
-        if site["github_url"]
-        else ""
-    )
-    linkedin_link = (
-        f'<li><a href="{html.escape(site["linkedin_url"], quote=True)}" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>'
-        if site["linkedin_url"]
-        else ""
-    )
-    return f"""
-    <nav class="site-nav" aria-label="Principal">
-      <a class="site-mark" href="{site_href(site, "/")}">{html.escape(site['title'])}</a>
-      <ul>
-        <li><a href="{site_href(site, "/")}">Início</a></li>
-        <li><a href="{site_href(site, "/publications/")}">Publicações</a></li>
-        {docs_link}
-        {github_link}
-        {linkedin_link}
-      </ul>
-    </nav>
-    """
+def render_stack_list(items: list[str]) -> str:
+    if not items:
+        return ""
+    chips = "".join(f"<li>{html.escape(item)}</li>" for item in items)
+    return f'<ul class="stack-list">{chips}</ul>'
 
 
-def render_footer(site: dict[str, str]) -> str:
-    note = html.escape(site["footer_note"]) if site["footer_note"] else "Publicado localmente e versionado por Git."
-    return f"""
-    <footer class="site-footer">
-      <p>{note}</p>
-    </footer>
-    """
+def render_status_badge(status: str) -> str:
+    label = STATUS_LABELS.get(status, status)
+    return f'<span class="status-chip status-{html.escape(status)}">{html.escape(label)}</span>'
+
+
+def render_action_links(links: list[tuple[str, str]]) -> str:
+    active = [(label, url) for label, url in links if url]
+    if not active:
+        return ""
+    fragments: list[str] = []
+    for label, url in active:
+        attrs = ' target="_blank" rel="noopener noreferrer"' if url.startswith("http") else ""
+        fragments.append(
+            f'<li><a href="{html.escape(url, quote=True)}"{attrs}>{html.escape(label)}</a></li>'
+        )
+    items = "".join(fragments)
+    return f'<ul class="action-list">{items}</ul>'
+
+
+def render_metric_list(items: list[str]) -> str:
+    metrics = [item for item in items if item]
+    if not metrics:
+        return ""
+    content = "".join(f"<li>{html.escape(item)}</li>" for item in metrics)
+    return f'<ul class="metric-list">{content}</ul>'
+
+
+def docs_by_category(documents: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for document in documents:
+        grouped[document["category"]].append(document)
+    return dict(grouped)
 
 
 def canonical_url(site: dict[str, str], path: str) -> str:
@@ -582,15 +731,127 @@ def site_href(site: dict[str, str], path: str) -> str:
     return f"{prefix}{clean_path}"
 
 
+def theme_css(system: dict[str, Any]) -> str:
+    colors = system.get("design", {}).get("colors", {})
+    typography = system.get("design", {}).get("typography", {})
+    ux = system.get("ux", {})
+    accents = normalize_string_list(colors.get("accent", [])) or ["#00C2FF", "#7C5CFF"]
+    headings = normalize_string_list(typography.get("headings", [])) or ["Inter", "Satoshi"]
+    code_font = str(typography.get("code", "JetBrains Mono") or "JetBrains Mono")
+    reading_width = str(ux.get("reading_width", "680px") or "680px")
+
+    def font_stack(fonts: list[str], fallback: str) -> str:
+        return ", ".join([f'"{font}"' for font in fonts] + [fallback])
+
+    return f"""
+    <style>
+      :root {{
+        --bg: {colors.get("background", "#0B0F14")};
+        --surface: {colors.get("surface", "#121821")};
+        --surface-strong: #0f141c;
+        --surface-soft: #1a2330;
+        --border: rgba(157, 167, 179, 0.2);
+        --accent: {accents[0]};
+        --accent-secondary: {accents[1] if len(accents) > 1 else accents[0]};
+        --accent-soft: rgba(0, 194, 255, 0.12);
+        --text: {colors.get("text_primary", "#E6EDF3")};
+        --muted: {colors.get("text_secondary", "#9DA7B3")};
+        --font-heading: {font_stack(headings, "system-ui, sans-serif")};
+        --font-ui: {font_stack(headings, "system-ui, sans-serif")};
+        --font-code: "{code_font}", "SFMono-Regular", "Consolas", monospace;
+        --reading-width: {reading_width};
+      }}
+    </style>
+    """
+
+
+def nav_url(site: dict[str, str], item: str) -> str:
+    mapping = {
+        "posts": "/publications/",
+        "projects": "/projects/",
+        "documents": "/documents/",
+        "about": "/about/",
+    }
+    return site_href(site, mapping.get(item, "/"))
+
+
+def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: str) -> str:
+    header = system.get("layout", {}).get("header", {})
+    nav_items = normalize_string_list(header.get("nav", [])) or ["posts", "projects", "documents", "about"]
+    cta_label = str(header.get("cta", "open work / contact") or "open work / contact")
+    search_label = str(header.get("search", "command palette") or "command palette")
+    cta_url = site.get("linkedin_url") or site.get("github_url") or "#"
+
+    link_fragments: list[str] = []
+    for item in nav_items:
+        current_attr = ' aria-current="page"' if item == active_nav else ""
+        link_fragments.append(
+            f'<li><a href="{nav_url(site, item)}"{current_attr}>{html.escape(item)}</a></li>'
+        )
+    links = "".join(link_fragments)
+
+    return f"""
+    <nav class="site-nav" aria-label="Primary">
+      <a class="site-mark" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
+      <ul class="site-nav-links">
+        {links}
+      </ul>
+      <div class="site-nav-actions">
+        <button class="palette-trigger" type="button" data-open-palette>{html.escape(search_label)} <span>Ctrl/⌘ K</span></button>
+        <a class="cta-link" href="{html.escape(cta_url, quote=True)}" rel="noopener noreferrer" target="_blank">{html.escape(cta_label)}</a>
+      </div>
+    </nav>
+    """
+
+
+def render_footer(site: dict[str, str], system: dict[str, Any]) -> str:
+    blog = system.get("blog", {})
+    identity = system.get("identity", {})
+    footer_note = site["footer_note"] or "Publicado localmente e versionado por Git."
+    focus = render_tag_list(normalize_string_list(blog.get("focus", [])), "footer-pills")
+    references = render_tag_list(normalize_string_list(identity.get("references", [])), "footer-pills")
+
+    return f"""
+    <footer class="site-footer">
+      <div>
+        <p class="footer-label">{html.escape(str(blog.get("concept", "technical notebook") or "technical notebook"))}</p>
+        <p>{html.escape(footer_note)}</p>
+      </div>
+      <div class="footer-meta">
+        {focus}
+        {references}
+      </div>
+    </footer>
+    """
+
+
+def render_palette(site: dict[str, str]) -> str:
+    return f"""
+    <div class="palette-shell" hidden data-command-palette data-search-index="{site_href(site, '/assets/search-index.json')}">
+      <div class="palette-backdrop" data-close-palette></div>
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="palette-head">
+          <input class="palette-input" type="search" placeholder="Search posts, projects and documents" data-palette-input>
+          <button class="palette-close" type="button" data-close-palette>Close</button>
+        </div>
+        <p class="palette-hint">Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.</p>
+        <ul class="palette-results" data-palette-results></ul>
+      </div>
+    </div>
+    """
+
+
 def render_layout(
     *,
     page_title: str,
     page_description: str,
     site: dict[str, str],
+    system: dict[str, Any],
     body_class: str,
     canonical_path: str,
     has_math: bool,
     content: str,
+    active_nav: str,
 ) -> str:
     config = load_blog_config()
     math = config["math"]
@@ -610,110 +871,419 @@ def render_layout(
     <title>{html.escape(page_title)}</title>
     <meta name="description" content="{html.escape(page_description, quote=True)}">
     <link rel="canonical" href="{html.escape(canonical_url(site, canonical_path), quote=True)}">
-    <link rel="stylesheet" href="{site_href(site, "/assets/styles.css")}">
+    <link rel="stylesheet" href="{site_href(site, '/assets/styles.css')}">
+    {theme_css(system)}
     {math_meta}
   </head>
   <body class="{html.escape(body_class, quote=True)}" data-has-math="{str(has_math).lower()}">
+    <a class="skip-link" href="#content">Skip to content</a>
     <div class="site-shell">
       <header class="site-header">
-        {render_site_nav(site)}
-        <div class="hero">
-          <p class="eyebrow">{html.escape(site['headline'])}</p>
-        </div>
+        {render_site_nav(site, system, active_nav)}
       </header>
-      <main class="site-main">
+      <main class="site-main" id="content">
         {content}
       </main>
-      {render_footer(site)}
+      {render_footer(site, system)}
     </div>
-    <script src="{site_href(site, "/assets/blog.js")}" defer></script>
+    {render_palette(site)}
+    <script src="{site_href(site, '/assets/blog.js')}" defer></script>
   </body>
 </html>
 """
 
 
-def render_home_page(site: dict[str, str], posts: list[dict[str, Any]]) -> str:
-    featured_posts = posts[: int(load_blog_config()["build"]["posts_on_home"])]
-    post_cards = "\n".join(render_post_card(post) for post in featured_posts)
-    if not post_cards:
-        post_cards = '<li class="post-list-item"><p class="empty-state">Nenhuma publicação publicada ainda.</p></li>'
-
-    content = f"""
-    <section class="home-hero">
-      <div>
-        <p class="section-kicker">Blog</p>
-        <h1>{html.escape(site['home_title'])}</h1>
-      </div>
-      <div class="home-copy prose">
-        {render_markdown(site['home_intro'])}
-      </div>
-    </section>
-
-    <section class="home-grid">
-      <section class="content-panel" aria-labelledby="recent-posts-title">
-        <header class="section-header">
-          <p class="section-kicker">Publicações</p>
-          <h2 id="recent-posts-title">Últimos textos</h2>
-        </header>
-        <ol class="post-list">
-          {post_cards}
-        </ol>
-        <p class="section-link"><a href="{site_href(site, "/publications/")}">Ver arquivo completo</a></p>
-      </section>
-
-      <aside class="content-panel content-panel-aside" aria-labelledby="about-title">
-        <header class="section-header">
-          <p class="section-kicker">Autor</p>
-          <h2 id="about-title">Por que este blog existe</h2>
-        </header>
-        <div class="prose">
-          {render_markdown(site['about'])}
+def render_post_card(post: dict[str, Any]) -> str:
+    actions = render_action_links(
+        [
+            ("repo", post.get("resolved_repo_url", "")),
+            ("code", post.get("resolved_code_url", "")),
+        ]
+    )
+    metrics = render_metric_list(
+        [
+            format_short_date(post["published_dt"]),
+            f"{post['reading_time']} min read",
+        ]
+    )
+    return f"""
+    <li>
+      <article class="resource-card post-card">
+        <div class="card-headline">
+          <p class="card-type">post</p>
+          {render_badge_list(post["badges"])}
         </div>
-      </aside>
+        <h3><a href="{html.escape(post['resolved_url'])}">{html.escape(post['title'])}</a></h3>
+        <p class="card-summary">{html.escape(post['summary'])}</p>
+        {metrics}
+        {render_tag_list(post["tags"])}
+        {actions}
+      </article>
+    </li>
+    """.strip()
+
+
+def render_project_card(project: dict[str, Any]) -> str:
+    actions = render_action_links(
+        [
+            ("view architecture", project.get("resolved_architecture_url", "")),
+            ("view code", project.get("resolved_code_url", "")),
+            ("open docs", project.get("resolved_docs_url", "")),
+        ]
+    )
+    preview = (
+        f'<pre class="diagram-preview"><code>{html.escape(project["diagram_preview"])}</code></pre>'
+        if project["diagram_preview"]
+        else ""
+    )
+    return f"""
+    <li>
+      <article class="resource-card project-card">
+        <div class="card-headline">
+          <p class="card-type">project</p>
+          <div class="card-state">{render_status_badge(project["status"])}</div>
+        </div>
+        <h3><a href="{html.escape(project['resolved_url'])}">{html.escape(project['name'])}</a></h3>
+        <p class="card-summary">{html.escape(project['summary'])}</p>
+        {render_stack_list(project["stack"])}
+        {render_badge_list(project["badges"])}
+        {preview}
+        {actions}
+      </article>
+    </li>
+    """.strip()
+
+
+def render_document_card(document: dict[str, Any]) -> str:
+    agent_tag = '<span class="mini-flag">agent-generated</span>' if document["agent_generated_tag"] else ""
+    return f"""
+    <li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">{html.escape(document['category'])}</p>
+          <p class="card-version">{html.escape(document['version'])}</p>
+        </div>
+        <h3><a href="{html.escape(document['resolved_url'])}">{html.escape(document['title'])}</a></h3>
+        <p class="card-summary">{html.escape(document['summary'])}</p>
+        <div class="document-flags">
+          {agent_tag}
+        </div>
+        {render_tag_list(document["tags"])}
+      </article>
+    </li>
+    """.strip()
+
+
+def render_hero(
+    site: dict[str, str],
+    system: dict[str, Any],
+    posts: list[dict[str, Any]],
+    projects: list[dict[str, Any]],
+) -> str:
+    blog = system.get("blog", {})
+    hero = system.get("layout", {}).get("hero", {})
+    identity = system.get("identity", {})
+    headline = str(hero.get("headline", site["home_title"]) or site["home_title"])
+    hero_stack = normalize_string_list(hero.get("stack", []))
+    concept = str(blog.get("concept", "technical notebook") or "technical notebook")
+    style = str(blog.get("style", "minimalist engineering notebook") or "minimalist engineering notebook")
+    feelings = normalize_string_list(identity.get("feeling", []))
+
+    main_project = next((project for project in projects if project["featured"]), projects[0] if projects else None)
+    recent_article = posts[0] if posts else None
+
+    highlight_cards: list[str] = []
+    if main_project:
+        highlight_cards.append(
+            f"""
+            <article class="highlight-card">
+              <p class="card-type">main project</p>
+              <h2><a href="{html.escape(main_project['resolved_url'])}">{html.escape(main_project['name'])}</a></h2>
+              <p>{html.escape(main_project['summary'])}</p>
+            </article>
+            """.strip()
+        )
+    if recent_article:
+        highlight_cards.append(
+            f"""
+            <article class="highlight-card">
+              <p class="card-type">recent article</p>
+              <h2><a href="{html.escape(recent_article['resolved_url'])}">{html.escape(recent_article['title'])}</a></h2>
+              <p>{html.escape(recent_article['summary'])}</p>
+            </article>
+            """.strip()
+        )
+
+    return f"""
+    <section class="hero-panel">
+      <div class="hero-copy">
+        <p class="eyebrow">{html.escape(concept)}</p>
+        <h1>{html.escape(headline)}</h1>
+        <p class="hero-intro">{html.escape(site['description'])}</p>
+        <div class="hero-meta">
+          <span>{html.escape(style)}</span>
+          {''.join(f'<span>{html.escape(item)}</span>' for item in feelings)}
+        </div>
+        {render_stack_list(hero_stack)}
+      </div>
+      <div class="hero-highlights">
+        {''.join(highlight_cards)}
+      </div>
     </section>
     """
 
-    return render_layout(
-        page_title=f"{site['title']} | Blog",
-        page_description=site["description"],
-        site=site,
-        body_class="page-home",
-        canonical_path="/",
-        has_math=False,
-        content=content,
-    )
 
-
-def render_archive_page(site: dict[str, str], posts: list[dict[str, Any]]) -> str:
-    items = "\n".join(render_post_card(post) for post in posts)
-    if not items:
-        items = '<li class="post-list-item"><p class="empty-state">Nenhuma publicação encontrada.</p></li>'
-
-    content = f"""
-    <section class="page-heading">
-      <p class="section-kicker">Arquivo</p>
-      <h1>Todas as publicações</h1>
-      <p>Os posts publicados são gerados a partir de arquivos TOML versionados no repositório.</p>
-    </section>
-
-    <section class="content-panel" aria-labelledby="archive-title">
+def render_posts_section(system: dict[str, Any], posts: list[dict[str, Any]], *, limit: int | None = None, compact: bool = False) -> str:
+    layout_posts = system.get("layout", {}).get("posts", {})
+    view_options = normalize_string_list(layout_posts.get("view", [])) or ["list", "grid"]
+    tag_filters = normalize_string_list(layout_posts.get("tags", []))
+    items = posts[:limit] if limit is not None else posts
+    cards = "\n".join(render_post_card(post) for post in items) if items else "<li><p class=\"empty-state\">No posts published yet.</p></li>"
+    controls = ""
+    if not compact:
+        controls = f"""
+        <div class="section-controls">
+          <div class="pill-row">{''.join(f'<span class="pill">{html.escape(tag)}</span>' for tag in tag_filters)}</div>
+          <div class="view-switch" data-post-view data-default-view="{html.escape(view_options[0])}">
+            {''.join(f'<button type="button" data-view-option="{html.escape(option)}">{html.escape(option)}</button>' for option in view_options)}
+          </div>
+        </div>
+        """
+    return f"""
+    <section class="section-panel" aria-labelledby="posts-title">
       <header class="section-header">
-        <h2 id="archive-title">Arquivo completo</h2>
+        <div>
+          <p class="section-kicker">posts</p>
+          <h2 id="posts-title">Recent writing</h2>
+        </div>
+        <p class="section-copy">Posts with reading time, tags, badges and direct links to repositories where it makes sense.</p>
       </header>
-      <ol class="post-list">
-        {items}
+      {controls}
+      <ol class="resource-list post-collection" data-post-collection>
+        {cards}
       </ol>
     </section>
     """
 
+
+def render_projects_section(projects: list[dict[str, Any]], *, limit: int | None = None) -> str:
+    items = projects[:limit] if limit is not None else projects
+    cards = "\n".join(render_project_card(project) for project in items) if items else "<li><p class=\"empty-state\">No projects available.</p></li>"
+    return f"""
+    <section class="section-panel" aria-labelledby="projects-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">projects</p>
+          <h2 id="projects-title">Core systems</h2>
+        </div>
+        <p class="section-copy">Projects are treated as long-lived assets: architecture, stack, status, roadmap and supporting documents.</p>
+      </header>
+      <ol class="resource-list project-collection">
+        {cards}
+      </ol>
+    </section>
+    """
+
+
+def render_documents_section(system: dict[str, Any], documents: list[dict[str, Any]], *, limit: int | None = None, grouped: bool = False) -> str:
+    layout_docs = system.get("layout", {}).get("documents", {})
+    categories = normalize_string_list(layout_docs.get("navigation", []))
+    items = documents[:limit] if limit is not None else documents
+
+    if grouped:
+        groups = docs_by_category(documents)
+        blocks = []
+        for category in categories or sorted(groups):
+            docs_in_category = groups.get(category, [])
+            if not docs_in_category:
+                continue
+            cards = "\n".join(render_document_card(document) for document in docs_in_category)
+            blocks.append(
+                f"""
+                <section class="document-group">
+                  <header class="document-group-head">
+                    <h3>{html.escape(category)}</h3>
+                  </header>
+                  <ol class="resource-list document-collection">
+                    {cards}
+                  </ol>
+                </section>
+                """.strip()
+            )
+        content = "\n".join(blocks) if blocks else "<p class=\"empty-state\">No documents indexed yet.</p>"
+    else:
+        cards = "\n".join(render_document_card(document) for document in items)
+        empty_state = '<li><p class="empty-state">No documents indexed yet.</p></li>'
+        content = f'<ol class="resource-list document-collection">{cards or empty_state}</ol>'
+
+    return f"""
+    <section class="section-panel" aria-labelledby="documents-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">documents</p>
+          <h2 id="documents-title">Documentation system</h2>
+        </div>
+        <p class="section-copy">Markdown-backed notes organized by domain, architecture, agents and APIs, with version markers and agent-generated tags.</p>
+      </header>
+      {content}
+    </section>
+    """
+
+
+def render_about_teaser(system: dict[str, Any]) -> str:
+    key_idea = system.get("key_idea", {})
+    structure = system.get("structure", {})
+    next_steps = system.get("next_steps", {})
+    tree = normalize_string_list(structure.get("tree", []))
+    options = normalize_string_list(next_steps.get("options", []))
+    return f"""
+    <section class="section-panel about-teaser" aria-labelledby="about-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">about</p>
+          <h2 id="about-title">{html.escape(str(key_idea.get('definition', 'living technical documentation system') or 'living technical documentation system'))}</h2>
+        </div>
+        <p class="section-copy">The site is organized more like a structured codebase than a personal landing page.</p>
+      </header>
+      <div class="about-grid">
+        <pre class="tree-block"><code>{html.escape(chr(10).join(tree))}</code></pre>
+        <ul class="next-step-list">{''.join(f'<li>{html.escape(item)}</li>' for item in options)}</ul>
+      </div>
+    </section>
+    """
+
+
+def render_home_page(
+    site: dict[str, str],
+    system: dict[str, Any],
+    posts: list[dict[str, Any]],
+    projects: list[dict[str, Any]],
+    documents: list[dict[str, Any]],
+) -> str:
+    config = load_blog_config()["build"]
+    content = f"""
+    {render_hero(site, system, posts, projects)}
+    {render_posts_section(system, posts, limit=int(config['posts_on_home']))}
+    {render_projects_section(projects, limit=int(config['projects_on_home']))}
+    {render_documents_section(system, documents, limit=int(config['documents_on_home']))}
+    {render_about_teaser(system)}
+    """
     return render_layout(
-        page_title=f"Publicações | {site['title']}",
+        page_title=f"{site['title']} | Technical Knowledge OS",
+        page_description=site["description"],
+        site=site,
+        system=system,
+        body_class="page-home",
+        canonical_path="/",
+        has_math=False,
+        content=content,
+        active_nav="",
+    )
+
+
+def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: list[dict[str, Any]]) -> str:
+    content = f"""
+    <section class="page-heading">
+      <p class="section-kicker">posts</p>
+      <h1>All publications</h1>
+      <p>Writing stream for architecture notes, experiments, domain modeling and operating heuristics.</p>
+    </section>
+    {render_posts_section(system, posts, compact=True)}
+    """
+    return render_layout(
+        page_title=f"Posts | {site['title']}",
         page_description="Arquivo completo das publicações do blog.",
         site=site,
+        system=system,
         body_class="page-archive",
         canonical_path="/publications/",
         has_math=False,
         content=content,
+        active_nav="posts",
+    )
+
+
+def render_projects_index_page(site: dict[str, str], system: dict[str, Any], projects: list[dict[str, Any]]) -> str:
+    content = f"""
+    <section class="page-heading">
+      <p class="section-kicker">projects</p>
+      <h1>Core section</h1>
+      <p>Projects are presented as systems: problem, solution, architecture, stack, ADRs and roadmap.</p>
+    </section>
+    {render_projects_section(projects)}
+    """
+    return render_layout(
+        page_title=f"Projects | {site['title']}",
+        page_description="Core projects and technical work.",
+        site=site,
+        system=system,
+        body_class="page-projects",
+        canonical_path="/projects/",
+        has_math=False,
+        content=content,
+        active_nav="projects",
+    )
+
+
+def render_documents_index_page(site: dict[str, str], system: dict[str, Any], documents: list[dict[str, Any]]) -> str:
+    content = f"""
+    <section class="page-heading">
+      <p class="section-kicker">documents</p>
+      <h1>Docs system</h1>
+      <p>Documents are grouped by domain, architecture, agents and APIs. The goal is to keep decisions discoverable.</p>
+    </section>
+    {render_documents_section(system, documents, grouped=True)}
+    """
+    return render_layout(
+        page_title=f"Documents | {site['title']}",
+        page_description="System documents and architecture notes.",
+        site=site,
+        system=system,
+        body_class="page-documents",
+        canonical_path="/documents/",
+        has_math=False,
+        content=content,
+        active_nav="documents",
+    )
+
+
+def render_about_page(site: dict[str, str], system: dict[str, Any]) -> str:
+    structure = system.get("structure", {})
+    next_steps = system.get("next_steps", {})
+    architecture = system.get("architecture", {}).get("frontend", {})
+    content = f"""
+    <section class="page-heading">
+      <p class="section-kicker">about</p>
+      <h1>Minimalist engineering notebook</h1>
+      <p>{html.escape(site['headline'])}</p>
+    </section>
+
+    <section class="page-grid">
+      <article class="section-panel prose">
+        <h2>Operating model</h2>
+        {render_markdown_or_empty(site['about'])}
+      </article>
+
+      <aside class="section-panel sidebar-panel">
+        <h2>Structure</h2>
+        <pre class="tree-block"><code>{html.escape(chr(10).join(normalize_string_list(structure.get('tree', []))))}</code></pre>
+        <h3>Next steps</h3>
+        <ul class="next-step-list">{''.join(f'<li>{html.escape(item)}</li>' for item in normalize_string_list(next_steps.get('options', [])))}</ul>
+        <h3>Future frontend options</h3>
+        {render_stack_list(normalize_string_list(architecture.get('framework', [])))}
+      </aside>
+    </section>
+    """
+    return render_layout(
+        page_title=f"About | {site['title']}",
+        page_description=site["description"],
+        site=site,
+        system=system,
+        body_class="page-about",
+        canonical_path="/about/",
+        has_math=False,
+        content=content,
+        active_nav="about",
     )
 
 
@@ -721,15 +1291,15 @@ def render_post_navigation(previous_post: dict[str, Any] | None, next_post: dict
     previous_link = (
         f'<a class="pager-link" href="{html.escape(previous_post["resolved_url"])}">← {html.escape(previous_post["title"])}</a>'
         if previous_post
-        else '<span class="pager-link pager-link-disabled">Sem texto mais novo</span>'
+        else '<span class="pager-link pager-link-disabled">No newer text</span>'
     )
     next_link = (
         f'<a class="pager-link" href="{html.escape(next_post["resolved_url"])}">{html.escape(next_post["title"])} →</a>'
         if next_post
-        else '<span class="pager-link pager-link-disabled">Sem texto anterior</span>'
+        else '<span class="pager-link pager-link-disabled">No older text</span>'
     )
     return f"""
-    <nav class="post-pager" aria-label="Navegação entre posts">
+    <nav class="post-pager" aria-label="Post navigation">
       {previous_link}
       {next_link}
     </nav>
@@ -738,99 +1308,331 @@ def render_post_navigation(previous_post: dict[str, Any] | None, next_post: dict
 
 def render_post_page(
     site: dict[str, str],
+    system: dict[str, Any],
     post: dict[str, Any],
     previous_post: dict[str, Any] | None,
     next_post: dict[str, Any] | None,
 ) -> str:
+    sidebar = f"""
+    <aside class="sidebar-panel">
+      <h2>Metadata</h2>
+      {render_metric_list([format_long_date(post["published_dt"]), f"{post['reading_time']} min read"])}
+      {render_badge_list(post['badges'])}
+      {render_tag_list(post['tags'])}
+      {render_action_links([('repo', post.get('resolved_repo_url', '')), ('code', post.get('resolved_code_url', ''))])}
+    </aside>
+    """
     content = f"""
-    <article class="post-shell">
-      <header class="post-header">
-        <p class="section-kicker">Publicação</p>
-        <h1>{html.escape(post['title'])}</h1>
-        <p class="post-summary">{html.escape(post['summary'])}</p>
-        <div class="post-meta">
-          <time datetime="{html.escape(post['published_at'])}">{format_long_date(post['published_dt'])}</time>
-          <span>Atualizado em {format_short_date(post['updated_dt'])}</span>
-        </div>
-        {render_tag_list(post['tags'])}
-        <div class="post-actions">
-          <a class="subtle-button" href="{site_href(site, "/publications/")}">Voltar ao arquivo</a>
-          <button class="subtle-button" type="button" data-copy-link>Copiar link</button>
-        </div>
-      </header>
-
-      <div class="post-body prose">
+    <section class="page-grid">
+      <article class="post-shell prose">
+        <header class="post-header">
+          <p class="section-kicker">post</p>
+          <h1>{html.escape(post['title'])}</h1>
+          <p class="post-summary">{html.escape(post['summary'])}</p>
+          <div class="post-meta">
+            <time datetime="{html.escape(post['published_at'])}">{format_long_date(post['published_dt'])}</time>
+            <span>{post['reading_time']} min read</span>
+          </div>
+          <div class="post-actions">
+            <a class="subtle-button" href="{site_href(site, '/publications/')}">Back to posts</a>
+            <button class="subtle-button" type="button" data-copy-link>Copy link</button>
+          </div>
+        </header>
         {render_markdown(post['body'])}
-      </div>
-    </article>
+      </article>
+      {sidebar}
+    </section>
     {render_post_navigation(previous_post, next_post)}
     """
-
     return render_layout(
         page_title=f"{post['title']} | {site['title']}",
         page_description=post["summary"],
         site=site,
+        system=system,
         body_class="page-post",
         canonical_path=post["url"],
         has_math=post["has_asciimath"],
         content=content,
+        active_nav="posts",
+    )
+
+
+def render_project_page(site: dict[str, str], system: dict[str, Any], project: dict[str, Any]) -> str:
+    adr_list = "".join(f"<li>{html.escape(item)}</li>" for item in project["adr"]) or "<li>ADR list in progress.</li>"
+    roadmap_list = "".join(f"<li>{html.escape(item)}</li>" for item in project["roadmap"]) or "<li>Roadmap in progress.</li>"
+    preview = (
+        f'<pre class="diagram-preview large"><code>{html.escape(project["diagram_preview"])}</code></pre>'
+        if project["diagram_preview"]
+        else ""
+    )
+    sidebar = f"""
+    <aside class="sidebar-panel">
+      <h2>Status</h2>
+      <p>{render_status_badge(project['status'])}</p>
+      <h3>Stack</h3>
+      {render_stack_list(project['stack'])}
+      <h3>Actions</h3>
+      {render_action_links([('view architecture', project.get('resolved_architecture_url', '')), ('view code', project.get('resolved_code_url', '')), ('open docs', project.get('resolved_docs_url', '')), ('repo', project.get('resolved_repo_url', ''))])}
+    </aside>
+    """
+    content = f"""
+    <section class="page-grid">
+      <article class="project-shell prose">
+        <header class="post-header">
+          <p class="section-kicker">project</p>
+          <h1>{html.escape(project['name'])}</h1>
+          <p class="post-summary">{html.escape(project['headline'] or project['summary'])}</p>
+          {render_badge_list(project['badges'])}
+        </header>
+
+        <section>
+          <h2>Overview</h2>
+          {render_markdown_or_empty(project['overview'])}
+        </section>
+        <section>
+          <h2>Problem solution</h2>
+          {render_markdown_or_empty(project['problem_solution'])}
+        </section>
+        <section>
+          <h2>Architecture</h2>
+          {render_markdown_or_empty(project['architecture'])}
+          {preview}
+        </section>
+        <section>
+          <h2>Stack</h2>
+          {render_stack_list(project['stack'])}
+          {render_markdown_or_empty(project['stack_notes'])}
+        </section>
+        <section>
+          <h2>ADR</h2>
+          <ul>{adr_list}</ul>
+        </section>
+        <section>
+          <h2>Roadmap</h2>
+          <ul>{roadmap_list}</ul>
+        </section>
+      </article>
+      {sidebar}
+    </section>
+    """
+    return render_layout(
+        page_title=f"{project['name']} | {site['title']}",
+        page_description=project["summary"],
+        site=site,
+        system=system,
+        body_class="page-project",
+        canonical_path=project["url"],
+        has_math=False,
+        content=content,
+        active_nav="projects",
+    )
+
+
+def render_document_page(site: dict[str, str], system: dict[str, Any], document: dict[str, Any]) -> str:
+    sidebar = f"""
+    <aside class="sidebar-panel">
+      <h2>Document meta</h2>
+      <p class="doc-version">{html.escape(document['version'])}</p>
+      <p class="doc-category">{html.escape(document['category'])}</p>
+      {'<p class="mini-flag">agent-generated</p>' if document['agent_generated_tag'] else ''}
+      {render_tag_list(document['tags'])}
+    </aside>
+    """
+    content = f"""
+    <section class="page-grid">
+      <article class="document-shell prose">
+        <header class="post-header">
+          <p class="section-kicker">document</p>
+          <h1>{html.escape(document['title'])}</h1>
+          <p class="post-summary">{html.escape(document['summary'])}</p>
+        </header>
+        {render_markdown_or_empty(document['body'])}
+      </article>
+      {sidebar}
+    </section>
+    """
+    return render_layout(
+        page_title=f"{document['title']} | {site['title']}",
+        page_description=document["summary"],
+        site=site,
+        system=system,
+        body_class="page-document",
+        canonical_path=document["url"],
+        has_math=False,
+        content=content,
+        active_nav="documents",
     )
 
 
 def render_post_preview(post: dict[str, Any]) -> str:
     return f"""
-    <article class="post-shell preview-shell">
+    <article class="post-shell preview-shell prose">
       <header class="post-header">
-        <p class="section-kicker">Preview</p>
+        <p class="section-kicker">preview</p>
         <h1>{html.escape(post['title'])}</h1>
         <p class="post-summary">{html.escape(post['summary'])}</p>
+        <div class="post-meta">
+          <span>{post['reading_time']} min read</span>
+        </div>
+        {render_badge_list(post['badges'])}
+        {render_tag_list(post['tags'])}
       </header>
-      <div class="post-body prose">
-        {render_markdown(post['body'])}
-      </div>
+      {render_markdown(post['body'])}
     </article>
     """.strip()
 
 
-def build_site() -> dict[str, Any]:
-    config = load_blog_config()
-    site = load_site()
-    posts = load_posts(include_drafts=False)
+def build_search_index(
+    site: dict[str, str],
+    posts: list[dict[str, Any]],
+    projects: list[dict[str, Any]],
+    documents: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    items: list[dict[str, Any]] = [
+        {
+            "title": site["title"],
+            "url": site_href(site, "/"),
+            "kind": "home",
+            "summary": site["description"],
+            "keywords": ["home", "blog", "technical knowledge os"],
+        },
+        {
+            "title": "About",
+            "url": site_href(site, "/about/"),
+            "kind": "about",
+            "summary": summarize_body(site["about"]),
+            "keywords": ["about", "structure", "next steps"],
+        },
+    ]
+
     for post in posts:
-        post["resolved_url"] = site_href(site, post["url"])
+        items.append(
+            {
+                "title": post["title"],
+                "url": post["resolved_url"],
+                "kind": "post",
+                "summary": post["summary"],
+                "keywords": post["tags"] + post["badges"],
+            }
+        )
 
-    publications_dir = ROOT / config["build"]["publications_dir"]
-    home_path = ROOT / config["build"]["home_file"]
-    archive_path = ROOT / config["build"]["archive_file"]
+    for project in projects:
+        items.append(
+            {
+                "title": project["name"],
+                "url": project["resolved_url"],
+                "kind": "project",
+                "summary": project["summary"],
+                "keywords": project["stack"] + project["badges"] + [project["status"]],
+            }
+        )
 
-    publications_dir.mkdir(parents=True, exist_ok=True)
-    for child in publications_dir.iterdir():
+    for document in documents:
+        items.append(
+            {
+                "title": document["title"],
+                "url": document["resolved_url"],
+                "kind": "document",
+                "summary": document["summary"],
+                "keywords": document["tags"] + [document["category"], document["version"]],
+            }
+        )
+
+    return items
+
+
+def clean_output_directory(path: Path) -> None:
+    path.mkdir(parents=True, exist_ok=True)
+    for child in path.iterdir():
         if child.is_dir():
             shutil.rmtree(child)
         else:
             child.unlink()
 
+
+def build_site() -> dict[str, Any]:
+    config = load_blog_config()["build"]
+    site = load_site()
+    system = load_system()
+    posts = load_posts(include_drafts=False)
+    projects = load_projects()
+    documents = load_documents()
+
+    for post in posts:
+        post["resolved_url"] = site_href(site, post["url"])
+        post["resolved_repo_url"] = resolve_optional_url(site, post["repo_url"])
+        post["resolved_code_url"] = resolve_optional_url(site, post["code_url"])
+
+    for project in projects:
+        project["resolved_url"] = site_href(site, project["url"])
+        project["resolved_repo_url"] = resolve_optional_url(site, project["repo_url"])
+        project["resolved_code_url"] = resolve_optional_url(site, project["code_url"] or project["repo_url"])
+        project["resolved_docs_url"] = resolve_optional_url(site, project["docs_url"])
+        project["resolved_architecture_url"] = resolve_optional_url(site, project["architecture_url"])
+
+    for document in documents:
+        document["resolved_url"] = site_href(site, document["url"])
+
+    publications_dir = ROOT / config["publications_dir"]
+    projects_dir = ROOT / config["projects_output_dir"]
+    documents_dir = ROOT / config["documents_output_dir"]
+    about_dir = ROOT / Path(config["about_file"]).parent
+
+    clean_output_directory(publications_dir)
+    clean_output_directory(projects_dir)
+    clean_output_directory(documents_dir)
+    clean_output_directory(about_dir)
+
     generated_paths: list[str] = []
 
-    home_html = render_home_page(site, posts)
-    write_text(home_path, home_html)
+    home_path = ROOT / config["home_file"]
+    archive_path = ROOT / config["archive_file"]
+    project_index_path = ROOT / config["project_index_file"]
+    documents_index_path = ROOT / config["documents_index_file"]
+    about_path = ROOT / config["about_file"]
+    search_index_path = ROOT / config["search_index_file"]
+
+    write_text(home_path, render_home_page(site, system, posts, projects, documents))
     generated_paths.append(str(home_path.relative_to(ROOT)))
 
-    archive_html = render_archive_page(site, posts)
-    write_text(archive_path, archive_html)
+    write_text(archive_path, render_archive_page(site, system, posts))
     generated_paths.append(str(archive_path.relative_to(ROOT)))
+
+    write_text(project_index_path, render_projects_index_page(site, system, projects))
+    generated_paths.append(str(project_index_path.relative_to(ROOT)))
+
+    write_text(documents_index_path, render_documents_index_page(site, system, documents))
+    generated_paths.append(str(documents_index_path.relative_to(ROOT)))
+
+    write_text(about_path, render_about_page(site, system))
+    generated_paths.append(str(about_path.relative_to(ROOT)))
 
     for index, post in enumerate(posts):
         previous_post = posts[index - 1] if index > 0 else None
         next_post = posts[index + 1] if index + 1 < len(posts) else None
         destination = publications_dir / post["output_dir_name"] / "index.html"
-        html_content = render_post_page(site, post, previous_post, next_post)
-        write_text(destination, html_content)
+        write_text(destination, render_post_page(site, system, post, previous_post, next_post))
         generated_paths.append(str(destination.relative_to(ROOT)))
+
+    for project in projects:
+        destination = projects_dir / project["slug"] / "index.html"
+        write_text(destination, render_project_page(site, system, project))
+        generated_paths.append(str(destination.relative_to(ROOT)))
+
+    for document in documents:
+        destination = documents_dir / document["slug"] / "index.html"
+        write_text(destination, render_document_page(site, system, document))
+        generated_paths.append(str(destination.relative_to(ROOT)))
+
+    search_index = build_search_index(site, posts, projects, documents)
+    write_json(search_index_path, search_index)
+    generated_paths.append(str(search_index_path.relative_to(ROOT)))
 
     return {
         "generated_files": generated_paths,
         "published_posts": len(posts),
+        "published_projects": len(projects),
+        "published_documents": len(documents),
         "updated_at": now_local().isoformat(timespec="seconds"),
     }
 

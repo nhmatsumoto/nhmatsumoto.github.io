@@ -122,6 +122,10 @@ const resetPostForm = () => {
     published_at: "",
     updated_at: "",
     tags: [],
+    badges: [],
+    repo_url: "",
+    code_url: "",
+    featured: false,
     has_asciimath: false,
     body: "",
   };
@@ -144,15 +148,24 @@ const fillPostForm = (post) => {
       element.value = (post.tags || []).join(", ");
       continue;
     }
+    if (element.name === "badges") {
+      element.value = (post.badges || []).join(", ");
+      continue;
+    }
     element.value = post[element.name] ?? "";
   }
 };
 
-const readPostForm = () => ({
-  ...formToObject(postForm),
-  has_asciimath: postForm.elements.namedItem("has_asciimath").checked,
-  tags: formToObject(postForm).tags,
-});
+const readPostForm = () => {
+  const base = formToObject(postForm);
+  return {
+    ...base,
+    has_asciimath: postForm.elements.namedItem("has_asciimath").checked,
+    featured: postForm.elements.namedItem("featured").checked,
+    tags: base.tags,
+    badges: base.badges,
+  };
+};
 
 const openPost = async (id) => {
   const post = await fetchJson(`/api/post?id=${encodeURIComponent(id)}`);

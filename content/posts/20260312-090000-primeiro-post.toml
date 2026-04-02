@@ -6,24 +6,29 @@ published_at = "2026-03-12T09:00:00+09:00"
 updated_at = "2026-04-03T00:00:00+09:00"
 status = "published"
 tags = ["pessoal", "anuncio"]
+badges = ["architecture"]
+repo_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io"
+code_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts"
+featured = false
 has_asciimath = false
 
 body = """
 # Olá, mundo!
 
-Este é o primeiro post do novo formato do blog. A proposta é manter tudo simples: conteúdo versionado, HTML final legível e uma ferramenta local pequena o bastante para ser entendida rapidamente.
+Este é o primeiro post do novo formato do blog. A proposta continua simples no runtime, mas agora a superfície do site passa a ser organizada como um notebook técnico: posts, projetos, documentos e decisões vivendo lado a lado.
 
 ## O que muda neste projeto
 
 - O conteúdo passa a viver em arquivos TOML.
 - O site público é gerado como HTML estático.
-- O fluxo de publicação acontece por `git commit` e `git push`.
+- O fluxo de publicação acontece por `git commit`, `git push` e deploy automático no GitHub Pages.
+- O blog passa a refletir melhor arquitetura, projetos e documentação técnica.
 
 ## O que esperar daqui
 
 1. Notas sobre arquitetura e produto.
-2. Publicações sobre tecnologia aplicada.
-3. Alguns registros sobre rotina, trabalho e estilo de vida.
+2. Publicações sobre agentes, .NET, DDD, GIS e sistemas distribuídos.
+3. Documentação viva dos projetos que importam.
 
 Este espaço existe para durar com baixa manutenção.
 """

@@ -1,10 +1,21 @@
 [build]
 site_file = "content/site.toml"
+system_file = "content/system.toml"
 posts_dir = "content/posts"
+projects_dir = "content/projects"
+documents_dir = "content/documents"
 publications_dir = "publications"
+projects_output_dir = "projects"
+documents_output_dir = "documents"
 home_file = "index.html"
 archive_file = "publications/index.html"
+project_index_file = "projects/index.html"
+documents_index_file = "documents/index.html"
+about_file = "about/index.html"
+search_index_file = "assets/search-index.json"
 posts_on_home = 6
+projects_on_home = 3
+documents_on_home = 4
 
 [math]
 enabled = true

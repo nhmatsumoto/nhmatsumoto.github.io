@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bem-vindo ao meu novo blog | Hiro Matsumoto</title>
-    <meta name="description" content="O ponto de partida de um blog estático simples, versionado por Git e editado localmente.">
-    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/20260312-090000-primeiro-post/">
+    <title>DDD boundaries for agent systems | Hiro Matsumoto</title>
+    <meta name="description" content="Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/20260402-203000-ddd-boundaries-for-agent-systems/">
     <link rel="stylesheet" href="/assets/styles.css">
     
     <style>
@@ -52,10 +52,10 @@
       <article class="post-shell prose">
         <header class="post-header">
           <p class="section-kicker">post</p>
-          <h1>Bem-vindo ao meu novo blog</h1>
-          <p class="post-summary">O ponto de partida de um blog estático simples, versionado por Git e editado localmente.</p>
+          <h1>DDD boundaries for agent systems</h1>
+          <p class="post-summary">Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.</p>
           <div class="post-meta">
-            <time datetime="2026-03-12T09:00:00+09:00">12 de março de 2026</time>
+            <time datetime="2026-04-02T20:30:00+09:00">2 de abril de 2026</time>
             <span>1 min read</span>
           </div>
           <div class="post-actions">
@@ -63,28 +63,33 @@
             <button class="subtle-button" type="button" data-copy-link>Copy link</button>
           </div>
         </header>
-        <h1>Olá, mundo!</h1>
-<p>Este é o primeiro post do novo formato do blog. A proposta continua simples no runtime, mas agora a superfície do site passa a ser organizada como um notebook técnico: posts, projetos, documentos e decisões vivendo lado a lado.</p>
-<h2>O que muda neste projeto</h2>
-<ul><li>O conteúdo passa a viver em arquivos TOML.</li><li>O site público é gerado como HTML estático.</li><li>O fluxo de publicação acontece por <code>git commit</code>, <code>git push</code> e deploy automático no GitHub Pages.</li><li>O blog passa a refletir melhor arquitetura, projetos e documentação técnica.</li></ul>
-<h2>O que esperar daqui</h2>
-<ol><li>Notas sobre arquitetura e produto.</li><li>Publicações sobre agentes, .NET, DDD, GIS e sistemas distribuídos.</li><li>Documentação viva dos projetos que importam.</li></ol>
-<p>Este espaço existe para durar com baixa manutenção.</p>
+        <h1>Separando domínio de orquestração em sistemas com agentes</h1>
+<p>Quando um projeto começa a misturar prompt, decisão de negócio, execução de tool e persistência no mesmo fluxo, a velocidade inicial costuma enganar. O custo aparece depois: pouca previsibilidade, testes frágeis e dificuldade para mudar o comportamento do sistema sem quebrar tudo.</p>
+<h2>Uma fronteira útil</h2>
+<p>Eu tenho tratado esses sistemas em três camadas explícitas:</p>
+<ul><li><strong>domínio</strong>: regras, linguagem ubíqua, contratos e estado significativo;</li><li><strong>orquestração</strong>: composição de passos, seleção de tools e roteamento;</li><li><strong>infraestrutura</strong>: modelos, filas, banco, storage e conectores externos.</li></ul>
+<h2>O que muda na prática</h2>
+<p>Separar essas fronteiras ajuda em três pontos:</p>
+<ol><li>O domínio volta a ser testável sem depender de modelo.</li><li>A camada de orquestração pode evoluir sem reescrever regras.</li><li>O runtime deixa de ser o lugar onde decisões de negócio ficam escondidas.</li></ol>
+<h2>Heurística simples</h2>
+<p>Se uma decisão precisa sobreviver à troca de provider, ela provavelmente pertence ao domínio ou à política de aplicação, não ao prompt.</p>
+<h2>O que estou documentando agora</h2>
+<p>Esse raciocínio está guiando a estrutura do Ronaldinho Agent e também a forma como passei a organizar este blog: menos páginas isoladas, mais documentação conectada.</p>
       </article>
       
     <aside class="sidebar-panel">
       <h2>Metadata</h2>
-      <ul class="metric-list"><li>12 de março de 2026</li><li>1 min read</li></ul>
-      <ul class="badge-list"><li class="badge">architecture</li></ul>
-      <ul class="tag-list"><li>pessoal</li><li>anuncio</li></ul>
-      <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer">repo</a></li><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts" target="_blank" rel="noopener noreferrer">code</a></li></ul>
+      <ul class="metric-list"><li>2 de abril de 2026</li><li>1 min read</li></ul>
+      <ul class="badge-list"><li class="badge">architecture</li><li class="badge">experiment</li></ul>
+      <ul class="tag-list"><li>dotnet</li><li>ddd</li><li>ai</li></ul>
+      <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer">repo</a></li><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer">code</a></li></ul>
     </aside>
     
     </section>
     
     <nav class="post-pager" aria-label="Post navigation">
-      <a class="pager-link" href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/">← GIS pipelines with event-driven services</a>
-      <span class="pager-link pager-link-disabled">No older text</span>
+      <span class="pager-link pager-link-disabled">No newer text</span>
+      <a class="pager-link" href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/">GIS pipelines with event-driven services →</a>
     </nav>
     
     

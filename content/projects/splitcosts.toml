@@ -1,0 +1,38 @@
+slug = "splitcosts"
+name = "SplitCosts"
+headline = "Expense sharing focused on clarity, tenancy boundaries and operational simplicity."
+summary = "Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional."
+status = "in_progress"
+stack = [".NET", "React", "PostgreSQL", "multi-tenant architecture"]
+badges = ["production", "architecture"]
+repo_url = ""
+code_url = ""
+docs_url = "/documents/system-architecture/"
+architecture_url = "/documents/system-architecture/"
+featured = false
+order = 2
+diagram_preview = """
+api -> domain -> projections
+ |       |          |
+ui <-- tenancy --> db
+"""
+overview = """
+SplitCosts nasceu para resolver um problema simples sem cair em uma solução rasa: compartilhar despesas com contexto, histórico e separação clara entre grupos e usuários.
+"""
+problem_solution = """
+O desafio não era apenas registrar gastos. Era manter legibilidade do domínio, evitar acoplamento entre tenants e sustentar evolução de produto sem reescrever a base a cada ajuste de regra.
+"""
+architecture = """
+A solução segue uma linha mais pragmática: fronteiras explícitas no domínio, projeções simples para leitura e um backend pensado para crescer por contexto, não por páginas.
+"""
+stack_notes = """
+Mesmo sendo um produto mais tradicional, ele reforça os mesmos princípios que aparecem nos projetos com agentes: contratos claros, linguagem ubíqua e separação entre escrita e leitura.
+"""
+adr = [
+  "Separar contexto de tenancy das regras de compartilhamento.",
+  "Usar projeções simples para telas operacionais e relatórios rápidos.",
+]
+roadmap = [
+  "Fechar modelo de recorrência e conciliação.",
+  "Aprimorar visibilidade de auditoria para alterações críticas.",
+]

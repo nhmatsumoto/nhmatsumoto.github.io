@@ -1,0 +1,38 @@
+slug = "gis-incident-lab"
+name = "GIS Incident Lab"
+headline = "Operational mapping for incident response, risk analysis and spatial pipelines."
+summary = "Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta."
+status = "production"
+stack = ["Python", ".NET", "GIS", "event-driven services"]
+badges = ["production"]
+repo_url = ""
+code_url = ""
+docs_url = "/documents/agent-integration-surface/"
+architecture_url = "/documents/system-architecture/"
+featured = false
+order = 3
+diagram_preview = """
+ingest -> normalize -> geocode
+   |         |          |
+events -> risk map -> ops view
+"""
+overview = """
+Este laboratório consolida uma linha de trabalho com GIS orientada a operação. O foco não é só mapa: é como transformar dado espacial em leitura acionável.
+"""
+problem_solution = """
+Dados espaciais costumam chegar incompletos, ruidosos e caros de processar. A solução adotada é tratar cada etapa como parte de um pipeline assíncrono, com contratos explícitos entre ingestão, transformação e leitura.
+"""
+architecture = """
+O desenho privilegia rastreabilidade e projeções operacionais. Serviços de ingestão e enriquecimento escrevem eventos; a camada de leitura consolida visualizações e sinais para equipes de resposta.
+"""
+stack_notes = """
+GIS aqui é tratado como parte do produto, não como apêndice visual. Isso muda completamente a forma de modelar contratos, latência aceitável e observabilidade.
+"""
+adr = [
+  "Separar geoprocessamento bruto da camada de leitura operacional.",
+  "Modelar eventos de risco como fatos de domínio, não apenas logs técnicos.",
+]
+roadmap = [
+  "Adicionar previews de diagrama por fluxo geoespacial.",
+  "Documentar contratos de ingestão em maior detalhe.",
+]

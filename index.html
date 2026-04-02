@@ -3,85 +3,313 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hiro Matsumoto | Blog</title>
-    <meta name="description" content="Blog pessoal publicado via GitHub Pages com HTML semântico, conteúdo em TOML e um editor local simples.">
+    <title>Hiro Matsumoto | Technical Knowledge OS</title>
+    <meta name="description" content="Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/">
     <link rel="stylesheet" href="/assets/styles.css">
     
+    <style>
+      :root {
+        --bg: #0B0F14;
+        --surface: #121821;
+        --surface-strong: #0f141c;
+        --surface-soft: #1a2330;
+        --border: rgba(157, 167, 179, 0.2);
+        --accent: #00C2FF;
+        --accent-secondary: #7C5CFF;
+        --accent-soft: rgba(0, 194, 255, 0.12);
+        --text: #E6EDF3;
+        --muted: #9DA7B3;
+        --font-heading: "Inter", "Satoshi", system-ui, sans-serif;
+        --font-ui: "Inter", "Satoshi", system-ui, sans-serif;
+        --font-code: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        --reading-width: 680px;
+      }
+    </style>
+    
+    
   </head>
   <body class="page-home" data-has-math="false">
+    <a class="skip-link" href="#content">Skip to content</a>
     <div class="site-shell">
       <header class="site-header">
         
-    <nav class="site-nav" aria-label="Principal">
+    <nav class="site-nav" aria-label="Primary">
       <a class="site-mark" href="/">Hiro Matsumoto</a>
-      <ul>
-        <li><a href="/">Início</a></li>
-        <li><a href="/publications/">Publicações</a></li>
-        <li><a href="/docs/architecture/index.html">Documentação</a></li>
-        <li><a href="https://github.com/nhmatsumoto" rel="noopener noreferrer" target="_blank">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/nhmatsumoto/" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+      <ul class="site-nav-links">
+        <li><a href="/publications/">posts</a></li><li><a href="/projects/">projects</a></li><li><a href="/documents/">documents</a></li><li><a href="/about/">about</a></li>
       </ul>
+      <div class="site-nav-actions">
+        <button class="palette-trigger" type="button" data-open-palette>command palette <span>Ctrl/⌘ K</span></button>
+        <a class="cta-link" href="https://www.linkedin.com/in/nhmatsumoto/" rel="noopener noreferrer" target="_blank">open work / contact</a>
+      </div>
     </nav>
     
-        <div class="hero">
-          <p class="eyebrow">Vida prática, software e tecnologia sem verniz.</p>
-        </div>
       </header>
-      <main class="site-main">
+      <main class="site-main" id="content">
         
-    <section class="home-hero">
-      <div>
-        <p class="section-kicker">Blog</p>
-        <h1>Anotações sobre estilo de vida, software e tecnologia.</h1>
+    
+    <section class="hero-panel">
+      <div class="hero-copy">
+        <p class="eyebrow">technical knowledge OS</p>
+        <h1>building scalable systems and autonomous agents</h1>
+        <p class="hero-intro">Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva.</p>
+        <div class="hero-meta">
+          <span>minimalist engineering notebook</span>
+          <span>focus</span><span>precision</span><span>technical depth</span>
+        </div>
+        <ul class="stack-list"><li>c#</li><li>.net</li><li>distributed systems</li><li>ai agents</li><li>gis</li></ul>
       </div>
-      <div class="home-copy prose">
-        <p>Este espaço foi desenhado para ser direto: conteúdo em TOML, HTML semântico no destino final e um fluxo de publicação controlado por commit.</p>
-<p>Escrevo aqui para registrar ideias técnicas, notas de arquitetura, decisões práticas e observações sobre a rotina de construir software.</p>
+      <div class="hero-highlights">
+        <article class="highlight-card">
+              <p class="card-type">main project</p>
+              <h2><a href="/projects/ronaldinho-agent/">Ronaldinho Agent</a></h2>
+              <p>Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e runtime modular.</p>
+            </article><article class="highlight-card">
+              <p class="card-type">recent article</p>
+              <h2><a href="/publications/20260402-203000-ddd-boundaries-for-agent-systems/">DDD boundaries for agent systems</a></h2>
+              <p>Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.</p>
+            </article>
       </div>
     </section>
-
-    <section class="home-grid">
-      <section class="content-panel" aria-labelledby="recent-posts-title">
-        <header class="section-header">
-          <p class="section-kicker">Publicações</p>
-          <h2 id="recent-posts-title">Últimos textos</h2>
-        </header>
-        <ol class="post-list">
-          <li class="post-list-item">
-      <article class="post-card">
-        <header class="post-card-header">
-          <p class="post-card-meta">
-            <time datetime="2026-03-12T09:00:00+09:00">12 mar 2026</time>
-          </p>
-          <h3><a href="/publications/20260312-090000-primeiro-post/">Bem-vindo ao meu novo blog</a></h3>
-        </header>
-        <p>O ponto de partida de um blog estático simples, versionado por Git e editado localmente.</p>
-        <ul class="tag-list"><li>pessoal</li><li>anuncio</li></ul>
+    
+    
+    <section class="section-panel" aria-labelledby="posts-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">posts</p>
+          <h2 id="posts-title">Recent writing</h2>
+        </div>
+        <p class="section-copy">Posts with reading time, tags, badges and direct links to repositories where it makes sense.</p>
+      </header>
+      
+        <div class="section-controls">
+          <div class="pill-row"><span class="pill">dotnet</span><span class="pill">ddd</span><span class="pill">ai</span><span class="pill">gis</span></div>
+          <div class="view-switch" data-post-view data-default-view="list">
+            <button type="button" data-view-option="list">list</button><button type="button" data-view-option="grid">grid</button>
+          </div>
+        </div>
+        
+      <ol class="resource-list post-collection" data-post-collection>
+        <li>
+      <article class="resource-card post-card">
+        <div class="card-headline">
+          <p class="card-type">post</p>
+          <ul class="badge-list"><li class="badge">architecture</li><li class="badge">experiment</li></ul>
+        </div>
+        <h3><a href="/publications/20260402-203000-ddd-boundaries-for-agent-systems/">DDD boundaries for agent systems</a></h3>
+        <p class="card-summary">Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.</p>
+        <ul class="metric-list"><li>02 abr 2026</li><li>1 min read</li></ul>
+        <ul class="tag-list"><li>dotnet</li><li>ddd</li><li>ai</li></ul>
+        <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer">repo</a></li><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer">code</a></li></ul>
       </article>
     </li>
-        </ol>
-        <p class="section-link"><a href="/publications/">Ver arquivo completo</a></p>
-      </section>
-
-      <aside class="content-panel content-panel-aside" aria-labelledby="about-title">
-        <header class="section-header">
-          <p class="section-kicker">Autor</p>
-          <h2 id="about-title">Por que este blog existe</h2>
-        </header>
-        <div class="prose">
-          <p>Sou engenheiro de software e uso este blog como um caderno público de trabalho. A proposta é simples: escrever com clareza, publicar com Git e manter a estrutura pequena o suficiente para durar.</p>
+<li>
+      <article class="resource-card post-card">
+        <div class="card-headline">
+          <p class="card-type">post</p>
+          <ul class="badge-list"><li class="badge">production</li></ul>
         </div>
-      </aside>
+        <h3><a href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/">GIS pipelines with event-driven services</a></h3>
+        <p class="card-summary">Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.</p>
+        <ul class="metric-list"><li>01 abr 2026</li><li>1 min read</li></ul>
+        <ul class="tag-list"><li>gis</li><li>dotnet</li><li>architecture</li></ul>
+        
+      </article>
+    </li>
+<li>
+      <article class="resource-card post-card">
+        <div class="card-headline">
+          <p class="card-type">post</p>
+          <ul class="badge-list"><li class="badge">architecture</li></ul>
+        </div>
+        <h3><a href="/publications/20260312-090000-primeiro-post/">Bem-vindo ao meu novo blog</a></h3>
+        <p class="card-summary">O ponto de partida de um blog estático simples, versionado por Git e editado localmente.</p>
+        <ul class="metric-list"><li>12 mar 2026</li><li>1 min read</li></ul>
+        <ul class="tag-list"><li>pessoal</li><li>anuncio</li></ul>
+        <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer">repo</a></li><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts" target="_blank" rel="noopener noreferrer">code</a></li></ul>
+      </article>
+    </li>
+      </ol>
     </section>
+    
+    
+    <section class="section-panel" aria-labelledby="projects-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">projects</p>
+          <h2 id="projects-title">Core systems</h2>
+        </div>
+        <p class="section-copy">Projects are treated as long-lived assets: architecture, stack, status, roadmap and supporting documents.</p>
+      </header>
+      <ol class="resource-list project-collection">
+        <li>
+      <article class="resource-card project-card">
+        <div class="card-headline">
+          <p class="card-type">project</p>
+          <div class="card-state"><span class="status-chip status-research">research</span></div>
+        </div>
+        <h3><a href="/projects/ronaldinho-agent/">Ronaldinho Agent</a></h3>
+        <p class="card-summary">Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e runtime modular.</p>
+        <ul class="stack-list"><li>TypeScript</li><li>OpenAI</li><li>tool orchestration</li><li>memory snapshots</li></ul>
+        <ul class="badge-list"><li class="badge">architecture</li><li class="badge">experiment</li></ul>
+        <pre class="diagram-preview"><code>runtime -&gt; planner -&gt; tools
+   |         |         |
+memory &lt;--- state ---&gt; logs</code></pre>
+        <ul class="action-list"><li><a href="/documents/adr-versioned-memory/">view architecture</a></li><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer">view code</a></li><li><a href="/documents/ronaldinho-architecture-overview/">open docs</a></li></ul>
+      </article>
+    </li>
+<li>
+      <article class="resource-card project-card">
+        <div class="card-headline">
+          <p class="card-type">project</p>
+          <div class="card-state"><span class="status-chip status-in_progress">in progress</span></div>
+        </div>
+        <h3><a href="/projects/splitcosts/">SplitCosts</a></h3>
+        <p class="card-summary">Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional.</p>
+        <ul class="stack-list"><li>.NET</li><li>React</li><li>PostgreSQL</li><li>multi-tenant architecture</li></ul>
+        <ul class="badge-list"><li class="badge">production</li><li class="badge">architecture</li></ul>
+        <pre class="diagram-preview"><code>api -&gt; domain -&gt; projections
+ |       |          |
+ui &lt;-- tenancy --&gt; db</code></pre>
+        <ul class="action-list"><li><a href="/documents/system-architecture/">view architecture</a></li><li><a href="/documents/system-architecture/">open docs</a></li></ul>
+      </article>
+    </li>
+<li>
+      <article class="resource-card project-card">
+        <div class="card-headline">
+          <p class="card-type">project</p>
+          <div class="card-state"><span class="status-chip status-production">production</span></div>
+        </div>
+        <h3><a href="/projects/gis-incident-lab/">GIS Incident Lab</a></h3>
+        <p class="card-summary">Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta.</p>
+        <ul class="stack-list"><li>Python</li><li>.NET</li><li>GIS</li><li>event-driven services</li></ul>
+        <ul class="badge-list"><li class="badge">production</li></ul>
+        <pre class="diagram-preview"><code>ingest -&gt; normalize -&gt; geocode
+   |         |          |
+events -&gt; risk map -&gt; ops view</code></pre>
+        <ul class="action-list"><li><a href="/documents/system-architecture/">view architecture</a></li><li><a href="/documents/agent-integration-surface/">open docs</a></li></ul>
+      </article>
+    </li>
+      </ol>
+    </section>
+    
+    
+    <section class="section-panel" aria-labelledby="documents-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">documents</p>
+          <h2 id="documents-title">Documentation system</h2>
+        </div>
+        <p class="section-copy">Markdown-backed notes organized by domain, architecture, agents and APIs, with version markers and agent-generated tags.</p>
+      </header>
+      <ol class="resource-list document-collection"><li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">agents</p>
+          <p class="card-version">ADR 003</p>
+        </div>
+        <h3><a href="/documents/adr-versioned-memory/">ADR 003 - Versioned Memory</a></h3>
+        <p class="card-summary">Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.</p>
+        <div class="document-flags">
+          <span class="mini-flag">agent-generated</span>
+        </div>
+        <ul class="tag-list"><li>agents</li><li>adr</li><li>memory</li></ul>
+      </article>
+    </li>
+<li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">agents</p>
+          <p class="card-version">v0.1</p>
+        </div>
+        <h3><a href="/documents/ronaldinho-architecture-overview/">Ronaldinho Architecture Overview</a></h3>
+        <p class="card-summary">Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.</p>
+        <div class="document-flags">
+          <span class="mini-flag">agent-generated</span>
+        </div>
+        <ul class="tag-list"><li>agents</li><li>architecture</li><li>runtime</li></ul>
+      </article>
+    </li>
+<li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">apis</p>
+          <p class="card-version">v1</p>
+        </div>
+        <h3><a href="/documents/agent-integration-surface/">Agent Integration Surface</a></h3>
+        <p class="card-summary">Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes.</p>
+        <div class="document-flags">
+          <span class="mini-flag">agent-generated</span>
+        </div>
+        <ul class="tag-list"><li>apis</li><li>agents</li><li>integration</li></ul>
+      </article>
+    </li>
+<li>
+      <article class="resource-card document-card">
+        <div class="card-headline">
+          <p class="card-type">architecture</p>
+          <p class="card-version">v1</p>
+        </div>
+        <h3><a href="/documents/system-architecture/">System Architecture</a></h3>
+        <p class="card-summary">Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.</p>
+        <div class="document-flags">
+          
+        </div>
+        <ul class="tag-list"><li>architecture</li><li>system</li></ul>
+      </article>
+    </li></ol>
+    </section>
+    
+    
+    <section class="section-panel about-teaser" aria-labelledby="about-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">about</p>
+          <h2 id="about-title">a living technical documentation system</h2>
+        </div>
+        <p class="section-copy">The site is organized more like a structured codebase than a personal landing page.</p>
+      </header>
+      <div class="about-grid">
+        <pre class="tree-block"><code>/blog/posts
+/blog/projects
+/blog/docs
+/blog/components
+/blog/domain
+/blog/application
+/blog/infra</code></pre>
+        <ul class="next-step-list"><li>generate react + tailwind template</li><li>create mdx structure</li><li>integrate with agent system</li></ul>
+      </div>
+    </section>
+    
     
       </main>
       
     <footer class="site-footer">
-      <p>Publicado com HTML semântico, TOML e um gerador local sem dependências externas.</p>
+      <div>
+        <p class="footer-label">technical knowledge OS</p>
+        <p>Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
+      </div>
+      <div class="footer-meta">
+        <ul class="footer-pills"><li>clarity</li><li>depth</li><li>no distraction</li></ul>
+        <ul class="footer-pills"><li>engineering docs</li><li>light dashboards</li><li>structured README</li></ul>
+      </div>
     </footer>
     
     </div>
+    
+    <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
+      <div class="palette-backdrop" data-close-palette></div>
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="palette-head">
+          <input class="palette-input" type="search" placeholder="Search posts, projects and documents" data-palette-input>
+          <button class="palette-close" type="button" data-close-palette>Close</button>
+        </div>
+        <p class="palette-hint">Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.</p>
+        <ul class="palette-results" data-palette-results></ul>
+      </div>
+    </div>
+    
     <script src="/assets/blog.js" defer></script>
   </body>
 </html>

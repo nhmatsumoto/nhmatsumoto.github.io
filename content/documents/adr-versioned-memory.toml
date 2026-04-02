@@ -1,0 +1,9 @@
+slug = "adr-versioned-memory"
+title = "ADR 003 - Versioned Memory"
+summary = "Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes."
+category = "agents"
+version = "ADR 003"
+tags = ["agents", "adr", "memory"]
+agent_generated_tag = true
+order = 3
+source_path = "docs/adr/003-versioned-memory.md"

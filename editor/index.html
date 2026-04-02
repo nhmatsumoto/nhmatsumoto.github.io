@@ -154,6 +154,22 @@
                   <span>Tags</span>
                   <input name="tags" type="text" placeholder="tecnologia, vida, arquitetura">
                 </label>
+                <label class="field field-span-2">
+                  <span>Badges</span>
+                  <input name="badges" type="text" placeholder="architecture, experiment, production">
+                </label>
+                <label class="field">
+                  <span>Repo URL</span>
+                  <input name="repo_url" type="url" placeholder="https://github.com/...">
+                </label>
+                <label class="field">
+                  <span>Code URL</span>
+                  <input name="code_url" type="url" placeholder="https://github.com/.../tree/...">
+                </label>
+                <label class="checkbox checkbox-wide">
+                  <input name="featured" type="checkbox">
+                  <span>destacar este post na home</span>
+                </label>
                 <label class="checkbox checkbox-wide">
                   <input name="has_asciimath" type="checkbox">
                   <span>este post usa AsciiMath</span>
@@ -166,6 +182,7 @@
               <div class="help-box">
                 <p>Markdown suportado: títulos, listas, links, blockquote, código cercado por <code>```</code>.</p>
                 <p>AsciiMath: use <code>%%formula%%</code> em linha e <code>%%%formula%%%</code> em bloco.</p>
+                <p>Badges e links aparecem nos cards públicos e nas páginas individuais.</p>
               </div>
             </details>
           </section>

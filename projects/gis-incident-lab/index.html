@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GIS Incident Lab | Hiro Matsumoto</title>
+    <meta name="description" content="Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/projects/gis-incident-lab/">
+    <link rel="stylesheet" href="/assets/styles.css">
+    
+    <style>
+      :root {
+        --bg: #0B0F14;
+        --surface: #121821;
+        --surface-strong: #0f141c;
+        --surface-soft: #1a2330;
+        --border: rgba(157, 167, 179, 0.2);
+        --accent: #00C2FF;
+        --accent-secondary: #7C5CFF;
+        --accent-soft: rgba(0, 194, 255, 0.12);
+        --text: #E6EDF3;
+        --muted: #9DA7B3;
+        --font-heading: "Inter", "Satoshi", system-ui, sans-serif;
+        --font-ui: "Inter", "Satoshi", system-ui, sans-serif;
+        --font-code: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        --reading-width: 680px;
+      }
+    </style>
+    
+    
+  </head>
+  <body class="page-project" data-has-math="false">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        
+    <nav class="site-nav" aria-label="Primary">
+      <a class="site-mark" href="/">Hiro Matsumoto</a>
+      <ul class="site-nav-links">
+        <li><a href="/publications/">posts</a></li><li><a href="/projects/" aria-current="page">projects</a></li><li><a href="/documents/">documents</a></li><li><a href="/about/">about</a></li>
+      </ul>
+      <div class="site-nav-actions">
+        <button class="palette-trigger" type="button" data-open-palette>command palette <span>Ctrl/⌘ K</span></button>
+        <a class="cta-link" href="https://www.linkedin.com/in/nhmatsumoto/" rel="noopener noreferrer" target="_blank">open work / contact</a>
+      </div>
+    </nav>
+    
+      </header>
+      <main class="site-main" id="content">
+        
+    <section class="page-grid">
+      <article class="project-shell prose">
+        <header class="post-header">
+          <p class="section-kicker">project</p>
+          <h1>GIS Incident Lab</h1>
+          <p class="post-summary">Operational mapping for incident response, risk analysis and spatial pipelines.</p>
+          <ul class="badge-list"><li class="badge">production</li></ul>
+        </header>
+
+        <section>
+          <h2>Overview</h2>
+          <p>Este laboratório consolida uma linha de trabalho com GIS orientada a operação. O foco não é só mapa: é como transformar dado espacial em leitura acionável.</p>
+        </section>
+        <section>
+          <h2>Problem solution</h2>
+          <p>Dados espaciais costumam chegar incompletos, ruidosos e caros de processar. A solução adotada é tratar cada etapa como parte de um pipeline assíncrono, com contratos explícitos entre ingestão, transformação e leitura.</p>
+        </section>
+        <section>
+          <h2>Architecture</h2>
+          <p>O desenho privilegia rastreabilidade e projeções operacionais. Serviços de ingestão e enriquecimento escrevem eventos; a camada de leitura consolida visualizações e sinais para equipes de resposta.</p>
+          <pre class="diagram-preview large"><code>ingest -&gt; normalize -&gt; geocode
+   |         |          |
+events -&gt; risk map -&gt; ops view</code></pre>
+        </section>
+        <section>
+          <h2>Stack</h2>
+          <ul class="stack-list"><li>Python</li><li>.NET</li><li>GIS</li><li>event-driven services</li></ul>
+          <p>GIS aqui é tratado como parte do produto, não como apêndice visual. Isso muda completamente a forma de modelar contratos, latência aceitável e observabilidade.</p>
+        </section>
+        <section>
+          <h2>ADR</h2>
+          <ul><li>Separar geoprocessamento bruto da camada de leitura operacional.</li><li>Modelar eventos de risco como fatos de domínio, não apenas logs técnicos.</li></ul>
+        </section>
+        <section>
+          <h2>Roadmap</h2>
+          <ul><li>Adicionar previews de diagrama por fluxo geoespacial.</li><li>Documentar contratos de ingestão em maior detalhe.</li></ul>
+        </section>
+      </article>
+      
+    <aside class="sidebar-panel">
+      <h2>Status</h2>
+      <p><span class="status-chip status-production">production</span></p>
+      <h3>Stack</h3>
+      <ul class="stack-list"><li>Python</li><li>.NET</li><li>GIS</li><li>event-driven services</li></ul>
+      <h3>Actions</h3>
+      <ul class="action-list"><li><a href="/documents/system-architecture/">view architecture</a></li><li><a href="/documents/agent-integration-surface/">open docs</a></li></ul>
+    </aside>
+    
+    </section>
+    
+      </main>
+      
+    <footer class="site-footer">
+      <div>
+        <p class="footer-label">technical knowledge OS</p>
+        <p>Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
+      </div>
+      <div class="footer-meta">
+        <ul class="footer-pills"><li>clarity</li><li>depth</li><li>no distraction</li></ul>
+        <ul class="footer-pills"><li>engineering docs</li><li>light dashboards</li><li>structured README</li></ul>
+      </div>
+    </footer>
+    
+    </div>
+    
+    <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
+      <div class="palette-backdrop" data-close-palette></div>
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="palette-head">
+          <input class="palette-input" type="search" placeholder="Search posts, projects and documents" data-palette-input>
+          <button class="palette-close" type="button" data-close-palette>Close</button>
+        </div>
+        <p class="palette-hint">Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.</p>
+        <ul class="palette-results" data-palette-results></ul>
+      </div>
+    </div>
+    
+    <script src="/assets/blog.js" defer></script>
+  </body>
+</html>

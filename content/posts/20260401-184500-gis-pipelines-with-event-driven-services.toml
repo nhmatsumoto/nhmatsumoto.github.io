@@ -1,0 +1,41 @@
+id = "20260401-184500"
+slug = "gis-pipelines-with-event-driven-services"
+title = "GIS pipelines with event-driven services"
+summary = "Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental."
+published_at = "2026-04-01T18:45:00+09:00"
+updated_at = "2026-04-01T18:45:00+09:00"
+status = "published"
+tags = ["gis", "dotnet", "architecture"]
+badges = ["production"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+# GIS não precisa virar um sistema opaco
+
+Sistemas geoespaciais costumam acumular parsing, transformação, regras de negócio, projeção de coordenadas e relatórios operacionais em um mesmo serviço. Isso funciona por pouco tempo.
+
+## Pipeline melhor que endpoint gigante
+
+Uma abordagem mais sustentável é separar o fluxo em etapas:
+
+- ingestão de dados;
+- normalização e validação;
+- enriquecimento e geocoding;
+- projeção para leitura operacional;
+- entrega para dashboard, API ou alerta.
+
+## Por que isso importa
+
+Com esse desenho, cada etapa tem semântica própria e falhas mais legíveis. O dashboard não precisa entender o processamento bruto, e a camada de leitura pode responder rápido mesmo quando a ingestão está pesada.
+
+## O que eu procuro preservar
+
+- rastreabilidade do dado;
+- contratos estáveis para consumo;
+- clareza entre cálculo espacial e regra de negócio.
+
+Essa mesma lógica de separar escrita, leitura e decisão acaba aparecendo em quase todos os sistemas que escalam bem.
+"""

@@ -1,0 +1,167 @@
+[
+  {
+    "title": "Hiro Matsumoto",
+    "url": "/",
+    "kind": "home",
+    "summary": "Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva.",
+    "keywords": [
+      "home",
+      "blog",
+      "technical knowledge os"
+    ]
+  },
+  {
+    "title": "About",
+    "url": "/about/",
+    "kind": "about",
+    "summary": "Sou engenheiro de software e trato este espaço como um caderno operacional: menos marketing, mais contexto técnico. O blog deixou de ser apenas uma coleção de posts e passou a fun…",
+    "keywords": [
+      "about",
+      "structure",
+      "next steps"
+    ]
+  },
+  {
+    "title": "DDD boundaries for agent systems",
+    "url": "/publications/20260402-203000-ddd-boundaries-for-agent-systems/",
+    "kind": "post",
+    "summary": "Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.",
+    "keywords": [
+      "dotnet",
+      "ddd",
+      "ai",
+      "architecture",
+      "experiment"
+    ]
+  },
+  {
+    "title": "GIS pipelines with event-driven services",
+    "url": "/publications/20260401-184500-gis-pipelines-with-event-driven-services/",
+    "kind": "post",
+    "summary": "Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.",
+    "keywords": [
+      "gis",
+      "dotnet",
+      "architecture",
+      "production"
+    ]
+  },
+  {
+    "title": "Bem-vindo ao meu novo blog",
+    "url": "/publications/20260312-090000-primeiro-post/",
+    "kind": "post",
+    "summary": "O ponto de partida de um blog estático simples, versionado por Git e editado localmente.",
+    "keywords": [
+      "pessoal",
+      "anuncio",
+      "architecture"
+    ]
+  },
+  {
+    "title": "Ronaldinho Agent",
+    "url": "/projects/ronaldinho-agent/",
+    "kind": "project",
+    "summary": "Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e runtime modular.",
+    "keywords": [
+      "TypeScript",
+      "OpenAI",
+      "tool orchestration",
+      "memory snapshots",
+      "architecture",
+      "experiment",
+      "research"
+    ]
+  },
+  {
+    "title": "SplitCosts",
+    "url": "/projects/splitcosts/",
+    "kind": "project",
+    "summary": "Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional.",
+    "keywords": [
+      ".NET",
+      "React",
+      "PostgreSQL",
+      "multi-tenant architecture",
+      "production",
+      "architecture",
+      "in_progress"
+    ]
+  },
+  {
+    "title": "GIS Incident Lab",
+    "url": "/projects/gis-incident-lab/",
+    "kind": "project",
+    "summary": "Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta.",
+    "keywords": [
+      "Python",
+      ".NET",
+      "GIS",
+      "event-driven services",
+      "production",
+      "production"
+    ]
+  },
+  {
+    "title": "ADR 003 - Versioned Memory",
+    "url": "/documents/adr-versioned-memory/",
+    "kind": "document",
+    "summary": "Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.",
+    "keywords": [
+      "agents",
+      "adr",
+      "memory",
+      "agents",
+      "ADR 003"
+    ]
+  },
+  {
+    "title": "Ronaldinho Architecture Overview",
+    "url": "/documents/ronaldinho-architecture-overview/",
+    "kind": "document",
+    "summary": "Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.",
+    "keywords": [
+      "agents",
+      "architecture",
+      "runtime",
+      "agents",
+      "v0.1"
+    ]
+  },
+  {
+    "title": "Agent Integration Surface",
+    "url": "/documents/agent-integration-surface/",
+    "kind": "document",
+    "summary": "Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes.",
+    "keywords": [
+      "apis",
+      "agents",
+      "integration",
+      "apis",
+      "v1"
+    ]
+  },
+  {
+    "title": "System Architecture",
+    "url": "/documents/system-architecture/",
+    "kind": "document",
+    "summary": "Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.",
+    "keywords": [
+      "architecture",
+      "system",
+      "architecture",
+      "v1"
+    ]
+  },
+  {
+    "title": "Technical Knowledge OS",
+    "url": "/documents/technical-knowledge-os/",
+    "kind": "document",
+    "summary": "A definição operacional do blog como sistema vivo de documentação técnica.",
+    "keywords": [
+      "domain",
+      "knowledge",
+      "domain",
+      "v1"
+    ]
+  }
+]
