@@ -19,6 +19,7 @@ CONFIG_PATH = ROOT / "blog.toml"
 DEFAULT_BUILD_CONFIG = {
     "site_file": "content/site.toml",
     "system_file": "content/system.toml",
+    "i18n_file": "content/i18n.toml",
     "posts_dir": "content/posts",
     "projects_dir": "content/projects",
     "documents_dir": "content/documents",
@@ -31,6 +32,7 @@ DEFAULT_BUILD_CONFIG = {
     "documents_index_file": "documents/index.html",
     "about_file": "about/index.html",
     "search_index_file": "assets/search-index.json",
+    "i18n_asset_file": "assets/i18n.json",
     "posts_on_home": 6,
     "projects_on_home": 3,
     "documents_on_home": 4,
@@ -56,6 +58,25 @@ DEFAULT_SITE = {
     "home_intro": "",
     "about": "",
     "footer_note": "",
+}
+
+DEFAULT_I18N = {
+    "default_locale": "pt-BR",
+    "supported_locales": ["pt-BR", "pt-PT", "ja-JP"],
+    "language_names": {
+        "pt-BR": "Português (Brasil)",
+        "pt-PT": "Português",
+        "ja-JP": "日本語",
+    },
+    "aliases": {
+        "pt": "pt-PT",
+        "pt-br": "pt-BR",
+        "pt-pt": "pt-PT",
+        "ja": "ja-JP",
+        "ja-jp": "ja-JP",
+    },
+    "timezones": {},
+    "strings": {},
 }
 
 SITE_FIELD_ORDER = [
@@ -195,6 +216,38 @@ def load_system() -> dict[str, Any]:
     return load_toml(system_path)
 
 
+def load_i18n() -> dict[str, Any]:
+    config = load_blog_config()
+    i18n_path = ROOT / config["build"]["i18n_file"]
+    if not i18n_path.exists():
+        return DEFAULT_I18N.copy()
+
+    raw = load_toml(i18n_path)
+    supported_locales = normalize_string_list(raw.get("supported_locales", [])) or list(DEFAULT_I18N["supported_locales"])
+    default_locale = str(raw.get("default_locale", "") or DEFAULT_I18N["default_locale"])
+    if default_locale not in supported_locales:
+        supported_locales.insert(0, default_locale)
+
+    language_names = {
+        str(key): str(value)
+        for key, value in (DEFAULT_I18N["language_names"] | raw.get("language_names", {})).items()
+    }
+    aliases = {
+        str(key).strip().lower(): str(value).strip()
+        for key, value in (DEFAULT_I18N["aliases"] | raw.get("aliases", {})).items()
+    }
+    timezones = {str(key): str(value) for key, value in raw.get("timezones", {}).items()}
+
+    return {
+        "default_locale": default_locale,
+        "supported_locales": supported_locales,
+        "language_names": language_names,
+        "aliases": aliases,
+        "timezones": timezones,
+        "strings": raw.get("strings", {}),
+    }
+
+
 def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
@@ -229,12 +282,61 @@ def parse_int(value: Any, default: int = 0) -> int:
         return default
 
 
+def default_locale(site: dict[str, str], i18n: dict[str, Any]) -> str:
+    language = str(site.get("language", "") or "").strip()
+    supported = i18n.get("supported_locales", [])
+    if language and language in supported:
+        return language
+    configured_default = str(i18n.get("default_locale", "") or "").strip()
+    if configured_default in supported:
+        return configured_default
+    return supported[0] if supported else DEFAULT_I18N["default_locale"]
+
+
+def translate(i18n: dict[str, Any], locale: str, key: str, fallback: str = "") -> str:
+    if not key:
+        return fallback
+
+    path = [part for part in key.split(".") if part]
+
+    def lookup(target_locale: str) -> str | None:
+        node: Any = i18n.get("strings", {}).get(target_locale, {})
+        for part in path:
+            if not isinstance(node, dict) or part not in node:
+                return None
+            node = node[part]
+        return str(node) if node is not None else None
+
+    resolved = lookup(locale)
+    if resolved is not None:
+        return resolved
+
+    configured_default = str(i18n.get("default_locale", "") or DEFAULT_I18N["default_locale"])
+    resolved = lookup(configured_default)
+    if resolved is not None:
+        return resolved
+
+    return fallback
+
+
 def format_long_date(value: datetime) -> str:
     return f"{value.day} de {MONTHS_PT[value.month - 1]} de {value.year}"
 
 
 def format_short_date(value: datetime) -> str:
     return f"{value.day:02d} {MONTHS_SHORT_PT[value.month - 1]} {value.year}"
+
+
+def format_long_date_for_locale(value: datetime, locale: str) -> str:
+    if locale == "ja-JP":
+        return f"{value.year}年{value.month}月{value.day}日"
+    return format_long_date(value)
+
+
+def format_short_date_for_locale(value: datetime, locale: str) -> str:
+    if locale == "ja-JP":
+        return f"{value.year}/{value.month:02d}/{value.day:02d}"
+    return format_short_date(value)
 
 
 def make_post_id(dt: datetime | None = None) -> str:
@@ -648,8 +750,34 @@ def render_markdown(text: str) -> str:
     return "\n".join(parts)
 
 
-def render_markdown_or_empty(text: str) -> str:
-    return render_markdown(text) if text.strip() else "<p>Conteúdo em preparação.</p>"
+def render_markdown_or_empty(text: str, i18n: dict[str, Any], locale: str) -> str:
+    if text.strip():
+        return render_markdown(text)
+    return f'<p data-i18n="common.content_in_preparation">{html.escape(translate(i18n, locale, "common.content_in_preparation", "Conteúdo em preparação."))}</p>'
+
+
+def render_i18n_text(tag: str, key: str, text: str, attrs: str = "") -> str:
+    return f'<{tag} data-i18n="{html.escape(key, quote=True)}"{attrs}>{html.escape(text)}</{tag}>'
+
+
+def render_localized_date(value: datetime, locale: str, style: str = "long") -> str:
+    if style == "short":
+        label = format_short_date_for_locale(value, locale)
+    else:
+        label = format_long_date_for_locale(value, locale)
+    return (
+        f'<time datetime="{html.escape(value.isoformat(timespec="seconds"), quote=True)}" '
+        f'data-localize-date="{html.escape(style, quote=True)}">{html.escape(label)}</time>'
+    )
+
+
+def reading_time_label(minutes: int, i18n: dict[str, Any], locale: str) -> str:
+    template = translate(i18n, locale, "templates.reading_time", "{minutes} min read")
+    return template.replace("{minutes}", str(minutes))
+
+
+def render_reading_time(minutes: int, i18n: dict[str, Any], locale: str) -> str:
+    return f'<span data-reading-time="{minutes}">{html.escape(reading_time_label(minutes, i18n, locale))}</span>'
 
 
 def render_tag_list(tags: list[str], class_name: str = "tag-list") -> str:
@@ -673,31 +801,64 @@ def render_stack_list(items: list[str]) -> str:
     return f'<ul class="stack-list">{chips}</ul>'
 
 
-def render_status_badge(status: str) -> str:
-    label = STATUS_LABELS.get(status, status)
-    return f'<span class="status-chip status-{html.escape(status)}">{html.escape(label)}</span>'
+def render_status_badge(status: str, i18n: dict[str, Any], locale: str) -> str:
+    fallback = STATUS_LABELS.get(status, status.replace("_", " "))
+    label = translate(i18n, locale, f"status.{status}", fallback)
+    return f'<span class="status-chip status-{html.escape(status)}" data-status-key="{html.escape(f"status.{status}", quote=True)}">{html.escape(label)}</span>'
 
 
-def render_action_links(links: list[tuple[str, str]]) -> str:
+def render_action_links(links: list[tuple[str, str]], i18n: dict[str, Any], locale: str) -> str:
     active = [(label, url) for label, url in links if url]
     if not active:
         return ""
     fragments: list[str] = []
-    for label, url in active:
+    for label_key, url in active:
         attrs = ' target="_blank" rel="noopener noreferrer"' if url.startswith("http") else ""
+        fallback = label_key.rsplit(".", 1)[-1].replace("_", " ")
+        label = translate(i18n, locale, label_key, fallback)
         fragments.append(
-            f'<li><a href="{html.escape(url, quote=True)}"{attrs}>{html.escape(label)}</a></li>'
+            f'<li><a href="{html.escape(url, quote=True)}"{attrs} data-i18n="{html.escape(label_key, quote=True)}">{html.escape(label)}</a></li>'
         )
     items = "".join(fragments)
     return f'<ul class="action-list">{items}</ul>'
 
 
-def render_metric_list(items: list[str]) -> str:
+def render_metric_list(items: list[str], *, escape_items: bool = True) -> str:
     metrics = [item for item in items if item]
     if not metrics:
         return ""
-    content = "".join(f"<li>{html.escape(item)}</li>" for item in metrics)
+    if escape_items:
+        content = "".join(f"<li>{html.escape(item)}</li>" for item in metrics)
+    else:
+        content = "".join(f"<li>{item}</li>" for item in metrics)
     return f'<ul class="metric-list">{content}</ul>'
+
+
+def render_breadcrumbs(items: list[dict[str, str]], i18n: dict[str, Any], locale: str) -> str:
+    if not items:
+        return ""
+
+    crumbs: list[str] = []
+    for item in items:
+        label = item.get("label", "")
+        key = item.get("key", "")
+        attr = f' data-i18n="{html.escape(key, quote=True)}"' if key else ""
+        if item.get("url"):
+            crumbs.append(
+                f'<li><a href="{html.escape(item["url"], quote=True)}"{attr}>{html.escape(label)}</a></li>'
+            )
+        else:
+            crumbs.append(
+                f'<li><span aria-current="page"{attr}>{html.escape(label)}</span></li>'
+            )
+
+    aria_label = translate(i18n, locale, "accessibility.breadcrumbs", "Breadcrumbs")
+    return (
+        f'<nav class="breadcrumbs" aria-label="{html.escape(aria_label, quote=True)}" '
+        f'data-i18n-aria-label="accessibility.breadcrumbs">'
+        f'<ol class="breadcrumb-list">{"".join(crumbs)}</ol>'
+        f"</nav>"
+    )
 
 
 def docs_by_category(documents: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
@@ -775,30 +936,53 @@ def nav_url(site: dict[str, str], item: str) -> str:
     return site_href(site, mapping.get(item, "/"))
 
 
-def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: str) -> str:
+def render_locale_switcher(i18n: dict[str, Any], locale: str) -> str:
+    supported = i18n.get("supported_locales", [])
+    language_names = i18n.get("language_names", {})
+    options = "".join(
+        f'<option value="{html.escape(code, quote=True)}"{" selected" if code == locale else ""}>'
+        f"{html.escape(language_names.get(code, code))}</option>"
+        for code in supported
+    )
+    label = translate(i18n, locale, "accessibility.language_switcher", "Selecionar idioma")
+    return f"""
+    <label class="locale-switcher">
+      <span class="visually-hidden" data-i18n="accessibility.language_switcher">{html.escape(label)}</span>
+      <select class="locale-select" data-locale-switcher aria-label="{html.escape(label, quote=True)}" data-i18n-aria-label="accessibility.language_switcher">
+        {options}
+      </select>
+    </label>
+    """
+
+
+def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: str, i18n: dict[str, Any], locale: str) -> str:
     header = system.get("layout", {}).get("header", {})
     nav_items = normalize_string_list(header.get("nav", [])) or ["posts", "projects", "documents", "about"]
-    cta_label = str(header.get("cta", "open work / contact") or "open work / contact")
-    search_label = str(header.get("search", "command palette") or "command palette")
+    cta_label = translate(i18n, locale, "nav.cta", str(header.get("cta", "open work / contact") or "open work / contact"))
+    search_label = translate(i18n, locale, "nav.search", str(header.get("search", "command palette") or "command palette"))
     cta_url = site.get("linkedin_url") or site.get("github_url") or "#"
 
     link_fragments: list[str] = []
     for item in nav_items:
         current_attr = ' aria-current="page"' if item == active_nav else ""
+        label = translate(i18n, locale, f"nav.{item}", item)
         link_fragments.append(
-            f'<li><a href="{nav_url(site, item)}"{current_attr}>{html.escape(item)}</a></li>'
+            f'<li><a href="{nav_url(site, item)}"{current_attr} data-i18n="{html.escape(f"nav.{item}", quote=True)}">{html.escape(label)}</a></li>'
         )
     links = "".join(link_fragments)
+    nav_aria = translate(i18n, locale, "accessibility.primary_navigation", "Primary navigation")
+    mark_current = ' aria-current="page"' if not active_nav else ""
 
     return f"""
-    <nav class="site-nav" aria-label="Primary">
-      <a class="site-mark" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
+    <nav class="site-nav" aria-label="{html.escape(nav_aria, quote=True)}" data-i18n-aria-label="accessibility.primary_navigation">
+      <a class="site-mark" href="{site_href(site, "/")}"{mark_current}>{html.escape(site["title"])}</a>
       <ul class="site-nav-links">
         {links}
       </ul>
       <div class="site-nav-actions">
-        <button class="palette-trigger" type="button" data-open-palette>{html.escape(search_label)} <span>Ctrl/⌘ K</span></button>
-        <a class="cta-link" href="{html.escape(cta_url, quote=True)}" rel="noopener noreferrer" target="_blank">{html.escape(cta_label)}</a>
+        <button class="palette-trigger" type="button" data-open-palette><span data-i18n="nav.search">{html.escape(search_label)}</span> <span>Ctrl/⌘ K</span></button>
+        {render_locale_switcher(i18n, locale)}
+        <a class="cta-link" href="{html.escape(cta_url, quote=True)}" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">{html.escape(cta_label)}</a>
       </div>
     </nav>
     """
@@ -825,16 +1009,20 @@ def render_footer(site: dict[str, str], system: dict[str, Any]) -> str:
     """
 
 
-def render_palette(site: dict[str, str]) -> str:
+def render_palette(site: dict[str, str], i18n: dict[str, Any], locale: str) -> str:
+    aria_label = translate(i18n, locale, "accessibility.command_palette", "Command palette")
+    placeholder = translate(i18n, locale, "palette.placeholder", "Search posts, projects and documents")
+    close_label = translate(i18n, locale, "palette.close", "Close")
+    hint = translate(i18n, locale, "palette.hint", "Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.")
     return f"""
     <div class="palette-shell" hidden data-command-palette data-search-index="{site_href(site, '/assets/search-index.json')}">
       <div class="palette-backdrop" data-close-palette></div>
-      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="{html.escape(aria_label, quote=True)}" data-i18n-aria-label="accessibility.command_palette">
         <div class="palette-head">
-          <input class="palette-input" type="search" placeholder="Search posts, projects and documents" data-palette-input>
-          <button class="palette-close" type="button" data-close-palette>Close</button>
+          <input class="palette-input" type="search" placeholder="{html.escape(placeholder, quote=True)}" data-palette-input data-i18n-placeholder="palette.placeholder">
+          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">{html.escape(close_label)}</button>
         </div>
-        <p class="palette-hint">Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.</p>
+        <p class="palette-hint" data-i18n="palette.hint">{html.escape(hint)}</p>
         <ul class="palette-results" data-palette-results></ul>
       </div>
     </div>
@@ -852,6 +1040,8 @@ def render_layout(
     has_math: bool,
     content: str,
     active_nav: str,
+    i18n: dict[str, Any],
+    locale: str,
 ) -> str:
     config = load_blog_config()
     math = config["math"]
@@ -863,8 +1053,20 @@ def render_layout(
     <meta name="x-asciimath-script" content="{html.escape(math['script_url'], quote=True)}">
     """
 
+    i18n_payload = json.dumps(
+        {
+            "defaultLocale": str(i18n.get("default_locale", locale) or locale),
+            "supportedLocales": i18n.get("supported_locales", []),
+            "languageNames": i18n.get("language_names", {}),
+            "aliases": i18n.get("aliases", {}),
+            "timezones": i18n.get("timezones", {}),
+            "strings": i18n.get("strings", {}),
+        },
+        ensure_ascii=False,
+    ).replace("<", "\\u003c")
+
     return f"""<!DOCTYPE html>
-<html lang="{html.escape(site['language'], quote=True)}">
+<html lang="{html.escape(locale, quote=True)}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -875,42 +1077,46 @@ def render_layout(
     {theme_css(system)}
     {math_meta}
   </head>
-  <body class="{html.escape(body_class, quote=True)}" data-has-math="{str(has_math).lower()}">
-    <a class="skip-link" href="#content">Skip to content</a>
+  <body class="{html.escape(body_class, quote=True)}" data-has-math="{str(has_math).lower()}" data-default-locale="{html.escape(locale, quote=True)}">
+    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">{html.escape(translate(i18n, locale, "accessibility.skip_to_content", "Ir para o conteúdo"))}</a>
     <div class="site-shell">
       <header class="site-header">
-        {render_site_nav(site, system, active_nav)}
+        {render_site_nav(site, system, active_nav, i18n, locale)}
       </header>
       <main class="site-main" id="content">
         {content}
       </main>
       {render_footer(site, system)}
     </div>
-    {render_palette(site)}
+    {render_palette(site, i18n, locale)}
+    <script id="site-i18n" type="application/json">{i18n_payload}</script>
     <script src="{site_href(site, '/assets/blog.js')}" defer></script>
   </body>
 </html>
 """
 
 
-def render_post_card(post: dict[str, Any]) -> str:
+def render_post_card(post: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     actions = render_action_links(
         [
-            ("repo", post.get("resolved_repo_url", "")),
-            ("code", post.get("resolved_code_url", "")),
-        ]
+            ("actions.repo", post.get("resolved_repo_url", "")),
+            ("actions.code", post.get("resolved_code_url", "")),
+        ],
+        i18n,
+        locale,
     )
     metrics = render_metric_list(
         [
-            format_short_date(post["published_dt"]),
-            f"{post['reading_time']} min read",
-        ]
+            render_localized_date(post["published_dt"], locale, "short"),
+            render_reading_time(post["reading_time"], i18n, locale),
+        ],
+        escape_items=False,
     )
     return f"""
     <li>
       <article class="resource-card post-card">
         <div class="card-headline">
-          <p class="card-type">post</p>
+          <p class="card-type" data-i18n="kinds.post">{html.escape(translate(i18n, locale, "kinds.post", "post"))}</p>
           {render_badge_list(post["badges"])}
         </div>
         <h3><a href="{html.escape(post['resolved_url'])}">{html.escape(post['title'])}</a></h3>
@@ -923,13 +1129,15 @@ def render_post_card(post: dict[str, Any]) -> str:
     """.strip()
 
 
-def render_project_card(project: dict[str, Any]) -> str:
+def render_project_card(project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     actions = render_action_links(
         [
-            ("view architecture", project.get("resolved_architecture_url", "")),
-            ("view code", project.get("resolved_code_url", "")),
-            ("open docs", project.get("resolved_docs_url", "")),
-        ]
+            ("actions.view_architecture", project.get("resolved_architecture_url", "")),
+            ("actions.view_code", project.get("resolved_code_url", "")),
+            ("actions.open_docs", project.get("resolved_docs_url", "")),
+        ],
+        i18n,
+        locale,
     )
     preview = (
         f'<pre class="diagram-preview"><code>{html.escape(project["diagram_preview"])}</code></pre>'
@@ -940,8 +1148,8 @@ def render_project_card(project: dict[str, Any]) -> str:
     <li>
       <article class="resource-card project-card">
         <div class="card-headline">
-          <p class="card-type">project</p>
-          <div class="card-state">{render_status_badge(project["status"])}</div>
+          <p class="card-type" data-i18n="kinds.project">{html.escape(translate(i18n, locale, "kinds.project", "project"))}</p>
+          <div class="card-state">{render_status_badge(project["status"], i18n, locale)}</div>
         </div>
         <h3><a href="{html.escape(project['resolved_url'])}">{html.escape(project['name'])}</a></h3>
         <p class="card-summary">{html.escape(project['summary'])}</p>
@@ -954,8 +1162,12 @@ def render_project_card(project: dict[str, Any]) -> str:
     """.strip()
 
 
-def render_document_card(document: dict[str, Any]) -> str:
-    agent_tag = '<span class="mini-flag">agent-generated</span>' if document["agent_generated_tag"] else ""
+def render_document_card(document: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+    agent_tag = (
+        f'<span class="mini-flag" data-i18n="common.agent_generated">{html.escape(translate(i18n, locale, "common.agent_generated", "agent-generated"))}</span>'
+        if document["agent_generated_tag"]
+        else ""
+    )
     return f"""
     <li>
       <article class="resource-card document-card">
@@ -979,6 +1191,8 @@ def render_hero(
     system: dict[str, Any],
     posts: list[dict[str, Any]],
     projects: list[dict[str, Any]],
+    i18n: dict[str, Any],
+    locale: str,
 ) -> str:
     blog = system.get("blog", {})
     hero = system.get("layout", {}).get("hero", {})
@@ -997,7 +1211,7 @@ def render_hero(
         highlight_cards.append(
             f"""
             <article class="highlight-card">
-              <p class="card-type">main project</p>
+              <p class="card-type" data-i18n="home.highlight_main_project">{html.escape(translate(i18n, locale, "home.highlight_main_project", "main project"))}</p>
               <h2><a href="{html.escape(main_project['resolved_url'])}">{html.escape(main_project['name'])}</a></h2>
               <p>{html.escape(main_project['summary'])}</p>
             </article>
@@ -1007,7 +1221,7 @@ def render_hero(
         highlight_cards.append(
             f"""
             <article class="highlight-card">
-              <p class="card-type">recent article</p>
+              <p class="card-type" data-i18n="home.highlight_recent_article">{html.escape(translate(i18n, locale, "home.highlight_recent_article", "recent article"))}</p>
               <h2><a href="{html.escape(recent_article['resolved_url'])}">{html.escape(recent_article['title'])}</a></h2>
               <p>{html.escape(recent_article['summary'])}</p>
             </article>
@@ -1033,19 +1247,33 @@ def render_hero(
     """
 
 
-def render_posts_section(system: dict[str, Any], posts: list[dict[str, Any]], *, limit: int | None = None, compact: bool = False) -> str:
+def render_posts_section(
+    system: dict[str, Any],
+    posts: list[dict[str, Any]],
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    limit: int | None = None,
+    show_controls: bool = True,
+) -> str:
     layout_posts = system.get("layout", {}).get("posts", {})
     view_options = normalize_string_list(layout_posts.get("view", [])) or ["list", "grid"]
     tag_filters = normalize_string_list(layout_posts.get("tags", []))
     items = posts[:limit] if limit is not None else posts
-    cards = "\n".join(render_post_card(post) for post in items) if items else "<li><p class=\"empty-state\">No posts published yet.</p></li>"
+    default_view = view_options[0]
+    empty_posts = translate(i18n, locale, "empty.posts", "No posts published yet.")
+    cards = (
+        "\n".join(render_post_card(post, i18n, locale) for post in items)
+        if items
+        else f'<li><p class="empty-state" data-i18n="empty.posts">{html.escape(empty_posts)}</p></li>'
+    )
     controls = ""
-    if not compact:
+    if show_controls:
         controls = f"""
         <div class="section-controls">
           <div class="pill-row">{''.join(f'<span class="pill">{html.escape(tag)}</span>' for tag in tag_filters)}</div>
-          <div class="view-switch" data-post-view data-default-view="{html.escape(view_options[0])}">
-            {''.join(f'<button type="button" data-view-option="{html.escape(option)}">{html.escape(option)}</button>' for option in view_options)}
+          <div class="view-switch" data-post-view data-default-view="{html.escape(default_view)}">
+            {''.join(f'<button type="button" data-view-option="{html.escape(option)}" data-i18n="{html.escape(f"view.{option}", quote=True)}">{html.escape(translate(i18n, locale, f"view.{option}", option))}</button>' for option in view_options)}
           </div>
         </div>
         """
@@ -1053,30 +1281,35 @@ def render_posts_section(system: dict[str, Any], posts: list[dict[str, Any]], *,
     <section class="section-panel" aria-labelledby="posts-title">
       <header class="section-header">
         <div>
-          <p class="section-kicker">posts</p>
-          <h2 id="posts-title">Recent writing</h2>
+          <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
+          <h2 id="posts-title" data-i18n="sections.posts_title">{html.escape(translate(i18n, locale, "sections.posts_title", "Recent writing"))}</h2>
         </div>
-        <p class="section-copy">Posts with reading time, tags, badges and direct links to repositories where it makes sense.</p>
+        <p class="section-copy" data-i18n="sections.posts_copy">{html.escape(translate(i18n, locale, "sections.posts_copy", "Posts with reading time, tags, badges and direct links to repositories where it makes sense."))}</p>
       </header>
       {controls}
-      <ol class="resource-list post-collection" data-post-collection>
+      <ol class="resource-list post-collection" data-post-collection data-view="{html.escape(default_view)}">
         {cards}
       </ol>
     </section>
     """
 
 
-def render_projects_section(projects: list[dict[str, Any]], *, limit: int | None = None) -> str:
+def render_projects_section(projects: list[dict[str, Any]], i18n: dict[str, Any], locale: str, *, limit: int | None = None) -> str:
     items = projects[:limit] if limit is not None else projects
-    cards = "\n".join(render_project_card(project) for project in items) if items else "<li><p class=\"empty-state\">No projects available.</p></li>"
+    empty_projects = translate(i18n, locale, "empty.projects", "No projects available.")
+    cards = (
+        "\n".join(render_project_card(project, i18n, locale) for project in items)
+        if items
+        else f'<li><p class="empty-state" data-i18n="empty.projects">{html.escape(empty_projects)}</p></li>'
+    )
     return f"""
     <section class="section-panel" aria-labelledby="projects-title">
       <header class="section-header">
         <div>
-          <p class="section-kicker">projects</p>
-          <h2 id="projects-title">Core systems</h2>
+          <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
+          <h2 id="projects-title" data-i18n="sections.projects_title">{html.escape(translate(i18n, locale, "sections.projects_title", "Core systems"))}</h2>
         </div>
-        <p class="section-copy">Projects are treated as long-lived assets: architecture, stack, status, roadmap and supporting documents.</p>
+        <p class="section-copy" data-i18n="sections.projects_copy">{html.escape(translate(i18n, locale, "sections.projects_copy", "Projects are treated as long-lived assets: architecture, stack, status, roadmap and supporting documents."))}</p>
       </header>
       <ol class="resource-list project-collection">
         {cards}
@@ -1085,7 +1318,15 @@ def render_projects_section(projects: list[dict[str, Any]], *, limit: int | None
     """
 
 
-def render_documents_section(system: dict[str, Any], documents: list[dict[str, Any]], *, limit: int | None = None, grouped: bool = False) -> str:
+def render_documents_section(
+    system: dict[str, Any],
+    documents: list[dict[str, Any]],
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    limit: int | None = None,
+    grouped: bool = False,
+) -> str:
     layout_docs = system.get("layout", {}).get("documents", {})
     categories = normalize_string_list(layout_docs.get("navigation", []))
     items = documents[:limit] if limit is not None else documents
@@ -1097,7 +1338,7 @@ def render_documents_section(system: dict[str, Any], documents: list[dict[str, A
             docs_in_category = groups.get(category, [])
             if not docs_in_category:
                 continue
-            cards = "\n".join(render_document_card(document) for document in docs_in_category)
+            cards = "\n".join(render_document_card(document, i18n, locale) for document in docs_in_category)
             blocks.append(
                 f"""
                 <section class="document-group">
@@ -1110,27 +1351,28 @@ def render_documents_section(system: dict[str, Any], documents: list[dict[str, A
                 </section>
                 """.strip()
             )
-        content = "\n".join(blocks) if blocks else "<p class=\"empty-state\">No documents indexed yet.</p>"
+        empty_documents = translate(i18n, locale, "empty.documents", "No documents indexed yet.")
+        content = "\n".join(blocks) if blocks else f'<p class="empty-state" data-i18n="empty.documents">{html.escape(empty_documents)}</p>'
     else:
-        cards = "\n".join(render_document_card(document) for document in items)
-        empty_state = '<li><p class="empty-state">No documents indexed yet.</p></li>'
+        cards = "\n".join(render_document_card(document, i18n, locale) for document in items)
+        empty_state = f'<li><p class="empty-state" data-i18n="empty.documents">{html.escape(translate(i18n, locale, "empty.documents", "No documents indexed yet."))}</p></li>'
         content = f'<ol class="resource-list document-collection">{cards or empty_state}</ol>'
 
     return f"""
     <section class="section-panel" aria-labelledby="documents-title">
       <header class="section-header">
         <div>
-          <p class="section-kicker">documents</p>
-          <h2 id="documents-title">Documentation system</h2>
+          <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
+          <h2 id="documents-title" data-i18n="sections.documents_title">{html.escape(translate(i18n, locale, "sections.documents_title", "Documentation system"))}</h2>
         </div>
-        <p class="section-copy">Markdown-backed notes organized by domain, architecture, agents and APIs, with version markers and agent-generated tags.</p>
+        <p class="section-copy" data-i18n="sections.documents_copy">{html.escape(translate(i18n, locale, "sections.documents_copy", "Markdown-backed notes organized by domain, architecture, agents and APIs, with version markers and agent-generated tags."))}</p>
       </header>
       {content}
     </section>
     """
 
 
-def render_about_teaser(system: dict[str, Any]) -> str:
+def render_about_teaser(system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     key_idea = system.get("key_idea", {})
     structure = system.get("structure", {})
     next_steps = system.get("next_steps", {})
@@ -1140,10 +1382,10 @@ def render_about_teaser(system: dict[str, Any]) -> str:
     <section class="section-panel about-teaser" aria-labelledby="about-title">
       <header class="section-header">
         <div>
-          <p class="section-kicker">about</p>
+          <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
           <h2 id="about-title">{html.escape(str(key_idea.get('definition', 'living technical documentation system') or 'living technical documentation system'))}</h2>
         </div>
-        <p class="section-copy">The site is organized more like a structured codebase than a personal landing page.</p>
+        <p class="section-copy" data-i18n="sections.about_copy">{html.escape(translate(i18n, locale, "sections.about_copy", "The site is organized more like a structured codebase than a personal landing page."))}</p>
       </header>
       <div class="about-grid">
         <pre class="tree-block"><code>{html.escape(chr(10).join(tree))}</code></pre>
@@ -1159,14 +1401,16 @@ def render_home_page(
     posts: list[dict[str, Any]],
     projects: list[dict[str, Any]],
     documents: list[dict[str, Any]],
+    i18n: dict[str, Any],
+    locale: str,
 ) -> str:
     config = load_blog_config()["build"]
     content = f"""
-    {render_hero(site, system, posts, projects)}
-    {render_posts_section(system, posts, limit=int(config['posts_on_home']))}
-    {render_projects_section(projects, limit=int(config['projects_on_home']))}
-    {render_documents_section(system, documents, limit=int(config['documents_on_home']))}
-    {render_about_teaser(system)}
+    {render_hero(site, system, posts, projects, i18n, locale)}
+    {render_posts_section(system, posts, i18n, locale, limit=int(config['posts_on_home']))}
+    {render_projects_section(projects, i18n, locale, limit=int(config['projects_on_home']))}
+    {render_documents_section(system, documents, i18n, locale, limit=int(config['documents_on_home']))}
+    {render_about_teaser(system, i18n, locale)}
     """
     return render_layout(
         page_title=f"{site['title']} | Technical Knowledge OS",
@@ -1178,17 +1422,28 @@ def render_home_page(
         has_math=False,
         content=content,
         active_nav="",
+        i18n=i18n,
+        locale=locale,
     )
 
 
-def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: list[dict[str, Any]]) -> str:
+def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    breadcrumbs = render_breadcrumbs(
+        [
+            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
+            {"label": translate(i18n, locale, "nav.posts", "posts"), "url": "", "key": "nav.posts"},
+        ],
+        i18n,
+        locale,
+    )
     content = f"""
+    {breadcrumbs}
     <section class="page-heading">
-      <p class="section-kicker">posts</p>
-      <h1>All publications</h1>
-      <p>Writing stream for architecture notes, experiments, domain modeling and operating heuristics.</p>
+      <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
+      <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "All publications"))}</h1>
+      <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Writing stream for architecture notes, experiments, domain modeling and operating heuristics."))}</p>
     </section>
-    {render_posts_section(system, posts, compact=True)}
+    {render_posts_section(system, posts, i18n, locale, show_controls=True)}
     """
     return render_layout(
         page_title=f"Posts | {site['title']}",
@@ -1200,17 +1455,28 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
         has_math=False,
         content=content,
         active_nav="posts",
+        i18n=i18n,
+        locale=locale,
     )
 
 
-def render_projects_index_page(site: dict[str, str], system: dict[str, Any], projects: list[dict[str, Any]]) -> str:
+def render_projects_index_page(site: dict[str, str], system: dict[str, Any], projects: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    breadcrumbs = render_breadcrumbs(
+        [
+            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
+            {"label": translate(i18n, locale, "nav.projects", "projects"), "url": "", "key": "nav.projects"},
+        ],
+        i18n,
+        locale,
+    )
     content = f"""
+    {breadcrumbs}
     <section class="page-heading">
-      <p class="section-kicker">projects</p>
-      <h1>Core section</h1>
-      <p>Projects are presented as systems: problem, solution, architecture, stack, ADRs and roadmap.</p>
+      <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
+      <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Core section"))}</h1>
+      <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projects are presented as systems: problem, solution, architecture, stack, ADRs and roadmap."))}</p>
     </section>
-    {render_projects_section(projects)}
+    {render_projects_section(projects, i18n, locale)}
     """
     return render_layout(
         page_title=f"Projects | {site['title']}",
@@ -1222,17 +1488,28 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pro
         has_math=False,
         content=content,
         active_nav="projects",
+        i18n=i18n,
+        locale=locale,
     )
 
 
-def render_documents_index_page(site: dict[str, str], system: dict[str, Any], documents: list[dict[str, Any]]) -> str:
+def render_documents_index_page(site: dict[str, str], system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    breadcrumbs = render_breadcrumbs(
+        [
+            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
+            {"label": translate(i18n, locale, "nav.documents", "documents"), "url": "", "key": "nav.documents"},
+        ],
+        i18n,
+        locale,
+    )
     content = f"""
+    {breadcrumbs}
     <section class="page-heading">
-      <p class="section-kicker">documents</p>
-      <h1>Docs system</h1>
-      <p>Documents are grouped by domain, architecture, agents and APIs. The goal is to keep decisions discoverable.</p>
+      <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
+      <h1 data-i18n="pages.documents.title">{html.escape(translate(i18n, locale, "pages.documents.title", "Docs system"))}</h1>
+      <p data-i18n="pages.documents.description">{html.escape(translate(i18n, locale, "pages.documents.description", "Documents are grouped by domain, architecture, agents and APIs. The goal is to keep decisions discoverable."))}</p>
     </section>
-    {render_documents_section(system, documents, grouped=True)}
+    {render_documents_section(system, documents, i18n, locale, grouped=True)}
     """
     return render_layout(
         page_title=f"Documents | {site['title']}",
@@ -1244,32 +1521,43 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
         has_math=False,
         content=content,
         active_nav="documents",
+        i18n=i18n,
+        locale=locale,
     )
 
 
-def render_about_page(site: dict[str, str], system: dict[str, Any]) -> str:
+def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     structure = system.get("structure", {})
     next_steps = system.get("next_steps", {})
     architecture = system.get("architecture", {}).get("frontend", {})
+    breadcrumbs = render_breadcrumbs(
+        [
+            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
+            {"label": translate(i18n, locale, "nav.about", "about"), "url": "", "key": "nav.about"},
+        ],
+        i18n,
+        locale,
+    )
     content = f"""
+    {breadcrumbs}
     <section class="page-heading">
-      <p class="section-kicker">about</p>
-      <h1>Minimalist engineering notebook</h1>
+      <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
+      <h1 data-i18n="pages.about.title">{html.escape(translate(i18n, locale, "pages.about.title", "Minimalist engineering notebook"))}</h1>
       <p>{html.escape(site['headline'])}</p>
     </section>
 
     <section class="page-grid">
       <article class="section-panel prose">
-        <h2>Operating model</h2>
-        {render_markdown_or_empty(site['about'])}
+        <h2 data-i18n="pages.about.operating_model">{html.escape(translate(i18n, locale, "pages.about.operating_model", "Operating model"))}</h2>
+        {render_markdown_or_empty(site['about'], i18n, locale)}
       </article>
 
       <aside class="section-panel sidebar-panel">
-        <h2>Structure</h2>
+        <h2 data-i18n="pages.about.structure">{html.escape(translate(i18n, locale, "pages.about.structure", "Structure"))}</h2>
         <pre class="tree-block"><code>{html.escape(chr(10).join(normalize_string_list(structure.get('tree', []))))}</code></pre>
-        <h3>Next steps</h3>
+        <h3 data-i18n="pages.about.next_steps">{html.escape(translate(i18n, locale, "pages.about.next_steps", "Next steps"))}</h3>
         <ul class="next-step-list">{''.join(f'<li>{html.escape(item)}</li>' for item in normalize_string_list(next_steps.get('options', [])))}</ul>
-        <h3>Future frontend options</h3>
+        <h3 data-i18n="pages.about.future_frontend">{html.escape(translate(i18n, locale, "pages.about.future_frontend", "Future frontend options"))}</h3>
         {render_stack_list(normalize_string_list(architecture.get('framework', [])))}
       </aside>
     </section>
@@ -1284,22 +1572,29 @@ def render_about_page(site: dict[str, str], system: dict[str, Any]) -> str:
         has_math=False,
         content=content,
         active_nav="about",
+        i18n=i18n,
+        locale=locale,
     )
 
 
-def render_post_navigation(previous_post: dict[str, Any] | None, next_post: dict[str, Any] | None) -> str:
+def render_post_navigation(
+    previous_post: dict[str, Any] | None,
+    next_post: dict[str, Any] | None,
+    i18n: dict[str, Any],
+    locale: str,
+) -> str:
     previous_link = (
         f'<a class="pager-link" href="{html.escape(previous_post["resolved_url"])}">← {html.escape(previous_post["title"])}</a>'
         if previous_post
-        else '<span class="pager-link pager-link-disabled">No newer text</span>'
+        else f'<span class="pager-link pager-link-disabled" data-i18n="pages.post.newer_empty">{html.escape(translate(i18n, locale, "pages.post.newer_empty", "No newer text"))}</span>'
     )
     next_link = (
         f'<a class="pager-link" href="{html.escape(next_post["resolved_url"])}">{html.escape(next_post["title"])} →</a>'
         if next_post
-        else '<span class="pager-link pager-link-disabled">No older text</span>'
+        else f'<span class="pager-link pager-link-disabled" data-i18n="pages.post.older_empty">{html.escape(translate(i18n, locale, "pages.post.older_empty", "No older text"))}</span>'
     )
     return f"""
-    <nav class="post-pager" aria-label="Post navigation">
+    <nav class="post-pager" aria-label="{html.escape(translate(i18n, locale, 'pages.post.navigation', 'Post navigation'), quote=True)}" data-i18n-aria-label="pages.post.navigation">
       {previous_link}
       {next_link}
     </nav>
@@ -1312,37 +1607,49 @@ def render_post_page(
     post: dict[str, Any],
     previous_post: dict[str, Any] | None,
     next_post: dict[str, Any] | None,
+    i18n: dict[str, Any],
+    locale: str,
 ) -> str:
+    breadcrumbs = render_breadcrumbs(
+        [
+            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
+            {"label": translate(i18n, locale, "nav.posts", "posts"), "url": site_href(site, "/publications/"), "key": "nav.posts"},
+            {"label": post["title"], "url": ""},
+        ],
+        i18n,
+        locale,
+    )
     sidebar = f"""
     <aside class="sidebar-panel">
-      <h2>Metadata</h2>
-      {render_metric_list([format_long_date(post["published_dt"]), f"{post['reading_time']} min read"])}
+      <h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2>
+      {render_metric_list([render_localized_date(post["published_dt"], locale, "long"), render_reading_time(post["reading_time"], i18n, locale)], escape_items=False)}
       {render_badge_list(post['badges'])}
       {render_tag_list(post['tags'])}
-      {render_action_links([('repo', post.get('resolved_repo_url', '')), ('code', post.get('resolved_code_url', ''))])}
+      {render_action_links([('actions.repo', post.get('resolved_repo_url', '')), ('actions.code', post.get('resolved_code_url', ''))], i18n, locale)}
     </aside>
     """
     content = f"""
+    {breadcrumbs}
     <section class="page-grid">
       <article class="post-shell prose">
         <header class="post-header">
-          <p class="section-kicker">post</p>
+          <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
           <h1>{html.escape(post['title'])}</h1>
           <p class="post-summary">{html.escape(post['summary'])}</p>
           <div class="post-meta">
-            <time datetime="{html.escape(post['published_at'])}">{format_long_date(post['published_dt'])}</time>
-            <span>{post['reading_time']} min read</span>
+            {render_localized_date(post['published_dt'], locale, 'long')}
+            {render_reading_time(post['reading_time'], i18n, locale)}
           </div>
           <div class="post-actions">
-            <a class="subtle-button" href="{site_href(site, '/publications/')}">Back to posts</a>
-            <button class="subtle-button" type="button" data-copy-link>Copy link</button>
+            <a class="subtle-button" href="{site_href(site, '/publications/')}" data-i18n="pages.post.back">{html.escape(translate(i18n, locale, "pages.post.back", "Back to posts"))}</a>
+            <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">{html.escape(translate(i18n, locale, "pages.post.copy_link", "Copy link"))}</button>
           </div>
         </header>
         {render_markdown(post['body'])}
       </article>
       {sidebar}
     </section>
-    {render_post_navigation(previous_post, next_post)}
+    {render_post_navigation(previous_post, next_post, i18n, locale)}
     """
     return render_layout(
         page_title=f"{post['title']} | {site['title']}",
@@ -1354,10 +1661,12 @@ def render_post_page(
         has_math=post["has_asciimath"],
         content=content,
         active_nav="posts",
+        i18n=i18n,
+        locale=locale,
     )
 
 
-def render_project_page(site: dict[str, str], system: dict[str, Any], project: dict[str, Any]) -> str:
+def render_project_page(site: dict[str, str], system: dict[str, Any], project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     adr_list = "".join(f"<li>{html.escape(item)}</li>" for item in project["adr"]) or "<li>ADR list in progress.</li>"
     roadmap_list = "".join(f"<li>{html.escape(item)}</li>" for item in project["roadmap"]) or "<li>Roadmap in progress.</li>"
     preview = (
@@ -1365,50 +1674,60 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
         if project["diagram_preview"]
         else ""
     )
+    breadcrumbs = render_breadcrumbs(
+        [
+            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
+            {"label": translate(i18n, locale, "nav.projects", "projects"), "url": site_href(site, "/projects/"), "key": "nav.projects"},
+            {"label": project["name"], "url": ""},
+        ],
+        i18n,
+        locale,
+    )
     sidebar = f"""
     <aside class="sidebar-panel">
-      <h2>Status</h2>
-      <p>{render_status_badge(project['status'])}</p>
-      <h3>Stack</h3>
+      <h2 data-i18n="pages.project.status">{html.escape(translate(i18n, locale, "pages.project.status", "Status"))}</h2>
+      <p>{render_status_badge(project['status'], i18n, locale)}</p>
+      <h3 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h3>
       {render_stack_list(project['stack'])}
-      <h3>Actions</h3>
-      {render_action_links([('view architecture', project.get('resolved_architecture_url', '')), ('view code', project.get('resolved_code_url', '')), ('open docs', project.get('resolved_docs_url', '')), ('repo', project.get('resolved_repo_url', ''))])}
+      <h3 data-i18n="pages.project.actions">{html.escape(translate(i18n, locale, "pages.project.actions", "Actions"))}</h3>
+      {render_action_links([('actions.view_architecture', project.get('resolved_architecture_url', '')), ('actions.view_code', project.get('resolved_code_url', '')), ('actions.open_docs', project.get('resolved_docs_url', '')), ('actions.repo', project.get('resolved_repo_url', ''))], i18n, locale)}
     </aside>
     """
     content = f"""
+    {breadcrumbs}
     <section class="page-grid">
       <article class="project-shell prose">
         <header class="post-header">
-          <p class="section-kicker">project</p>
+          <p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p>
           <h1>{html.escape(project['name'])}</h1>
           <p class="post-summary">{html.escape(project['headline'] or project['summary'])}</p>
           {render_badge_list(project['badges'])}
         </header>
 
         <section>
-          <h2>Overview</h2>
-          {render_markdown_or_empty(project['overview'])}
+          <h2 data-i18n="pages.project.overview">{html.escape(translate(i18n, locale, "pages.project.overview", "Overview"))}</h2>
+          {render_markdown_or_empty(project['overview'], i18n, locale)}
         </section>
         <section>
-          <h2>Problem solution</h2>
-          {render_markdown_or_empty(project['problem_solution'])}
+          <h2 data-i18n="pages.project.problem_solution">{html.escape(translate(i18n, locale, "pages.project.problem_solution", "Problem solution"))}</h2>
+          {render_markdown_or_empty(project['problem_solution'], i18n, locale)}
         </section>
         <section>
-          <h2>Architecture</h2>
-          {render_markdown_or_empty(project['architecture'])}
+          <h2 data-i18n="pages.project.architecture">{html.escape(translate(i18n, locale, "pages.project.architecture", "Architecture"))}</h2>
+          {render_markdown_or_empty(project['architecture'], i18n, locale)}
           {preview}
         </section>
         <section>
-          <h2>Stack</h2>
+          <h2 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h2>
           {render_stack_list(project['stack'])}
-          {render_markdown_or_empty(project['stack_notes'])}
+          {render_markdown_or_empty(project['stack_notes'], i18n, locale)}
         </section>
         <section>
-          <h2>ADR</h2>
+          <h2 data-i18n="pages.project.adr">{html.escape(translate(i18n, locale, "pages.project.adr", "ADR"))}</h2>
           <ul>{adr_list}</ul>
         </section>
         <section>
-          <h2>Roadmap</h2>
+          <h2 data-i18n="pages.project.roadmap">{html.escape(translate(i18n, locale, "pages.project.roadmap", "Roadmap"))}</h2>
           <ul>{roadmap_list}</ul>
         </section>
       </article>
@@ -1425,28 +1744,40 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
         has_math=False,
         content=content,
         active_nav="projects",
+        i18n=i18n,
+        locale=locale,
     )
 
 
-def render_document_page(site: dict[str, str], system: dict[str, Any], document: dict[str, Any]) -> str:
+def render_document_page(site: dict[str, str], system: dict[str, Any], document: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+    breadcrumbs = render_breadcrumbs(
+        [
+            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
+            {"label": translate(i18n, locale, "nav.documents", "documents"), "url": site_href(site, "/documents/"), "key": "nav.documents"},
+            {"label": document["title"], "url": ""},
+        ],
+        i18n,
+        locale,
+    )
     sidebar = f"""
     <aside class="sidebar-panel">
-      <h2>Document meta</h2>
+      <h2 data-i18n="pages.document.meta">{html.escape(translate(i18n, locale, "pages.document.meta", "Document meta"))}</h2>
       <p class="doc-version">{html.escape(document['version'])}</p>
       <p class="doc-category">{html.escape(document['category'])}</p>
-      {'<p class="mini-flag">agent-generated</p>' if document['agent_generated_tag'] else ''}
+      {f'<p class="mini-flag" data-i18n="common.agent_generated">{html.escape(translate(i18n, locale, "common.agent_generated", "agent-generated"))}</p>' if document['agent_generated_tag'] else ''}
       {render_tag_list(document['tags'])}
     </aside>
     """
     content = f"""
+    {breadcrumbs}
     <section class="page-grid">
       <article class="document-shell prose">
         <header class="post-header">
-          <p class="section-kicker">document</p>
+          <p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p>
           <h1>{html.escape(document['title'])}</h1>
           <p class="post-summary">{html.escape(document['summary'])}</p>
         </header>
-        {render_markdown_or_empty(document['body'])}
+        {render_markdown_or_empty(document['body'], i18n, locale)}
       </article>
       {sidebar}
     </section>
@@ -1461,18 +1792,20 @@ def render_document_page(site: dict[str, str], system: dict[str, Any], document:
         has_math=False,
         content=content,
         active_nav="documents",
+        i18n=i18n,
+        locale=locale,
     )
 
 
-def render_post_preview(post: dict[str, Any]) -> str:
+def render_post_preview(post: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     return f"""
     <article class="post-shell preview-shell prose">
       <header class="post-header">
-        <p class="section-kicker">preview</p>
+        <p class="section-kicker" data-i18n="common.preview">{html.escape(translate(i18n, locale, "common.preview", "preview"))}</p>
         <h1>{html.escape(post['title'])}</h1>
         <p class="post-summary">{html.escape(post['summary'])}</p>
         <div class="post-meta">
-          <span>{post['reading_time']} min read</span>
+          {render_reading_time(post['reading_time'], i18n, locale)}
         </div>
         {render_badge_list(post['badges'])}
         {render_tag_list(post['tags'])}
@@ -1487,6 +1820,8 @@ def build_search_index(
     posts: list[dict[str, Any]],
     projects: list[dict[str, Any]],
     documents: list[dict[str, Any]],
+    i18n: dict[str, Any],
+    locale: str,
 ) -> list[dict[str, Any]]:
     items: list[dict[str, Any]] = [
         {
@@ -1497,7 +1832,7 @@ def build_search_index(
             "keywords": ["home", "blog", "technical knowledge os"],
         },
         {
-            "title": "About",
+            "title": translate(i18n, locale, "nav.about", "About").title(),
             "url": site_href(site, "/about/"),
             "kind": "about",
             "summary": summarize_body(site["about"]),
@@ -1554,6 +1889,9 @@ def build_site() -> dict[str, Any]:
     config = load_blog_config()["build"]
     site = load_site()
     system = load_system()
+    i18n = load_i18n()
+    locale = default_locale(site, i18n)
+    site["language"] = locale
     posts = load_posts(include_drafts=False)
     projects = load_projects()
     documents = load_documents()
@@ -1591,42 +1929,53 @@ def build_site() -> dict[str, Any]:
     documents_index_path = ROOT / config["documents_index_file"]
     about_path = ROOT / config["about_file"]
     search_index_path = ROOT / config["search_index_file"]
+    i18n_asset_path = ROOT / config["i18n_asset_file"]
 
-    write_text(home_path, render_home_page(site, system, posts, projects, documents))
+    write_text(home_path, render_home_page(site, system, posts, projects, documents, i18n, locale))
     generated_paths.append(str(home_path.relative_to(ROOT)))
 
-    write_text(archive_path, render_archive_page(site, system, posts))
+    write_text(archive_path, render_archive_page(site, system, posts, i18n, locale))
     generated_paths.append(str(archive_path.relative_to(ROOT)))
 
-    write_text(project_index_path, render_projects_index_page(site, system, projects))
+    write_text(project_index_path, render_projects_index_page(site, system, projects, i18n, locale))
     generated_paths.append(str(project_index_path.relative_to(ROOT)))
 
-    write_text(documents_index_path, render_documents_index_page(site, system, documents))
+    write_text(documents_index_path, render_documents_index_page(site, system, documents, i18n, locale))
     generated_paths.append(str(documents_index_path.relative_to(ROOT)))
 
-    write_text(about_path, render_about_page(site, system))
+    write_text(about_path, render_about_page(site, system, i18n, locale))
     generated_paths.append(str(about_path.relative_to(ROOT)))
 
     for index, post in enumerate(posts):
         previous_post = posts[index - 1] if index > 0 else None
         next_post = posts[index + 1] if index + 1 < len(posts) else None
         destination = publications_dir / post["output_dir_name"] / "index.html"
-        write_text(destination, render_post_page(site, system, post, previous_post, next_post))
+        write_text(destination, render_post_page(site, system, post, previous_post, next_post, i18n, locale))
         generated_paths.append(str(destination.relative_to(ROOT)))
 
     for project in projects:
         destination = projects_dir / project["slug"] / "index.html"
-        write_text(destination, render_project_page(site, system, project))
+        write_text(destination, render_project_page(site, system, project, i18n, locale))
         generated_paths.append(str(destination.relative_to(ROOT)))
 
     for document in documents:
         destination = documents_dir / document["slug"] / "index.html"
-        write_text(destination, render_document_page(site, system, document))
+        write_text(destination, render_document_page(site, system, document, i18n, locale))
         generated_paths.append(str(destination.relative_to(ROOT)))
 
-    search_index = build_search_index(site, posts, projects, documents)
+    search_index = build_search_index(site, posts, projects, documents, i18n, locale)
     write_json(search_index_path, search_index)
     generated_paths.append(str(search_index_path.relative_to(ROOT)))
+
+    write_json(i18n_asset_path, {
+        "defaultLocale": i18n.get("default_locale", locale),
+        "supportedLocales": i18n.get("supported_locales", []),
+        "languageNames": i18n.get("language_names", {}),
+        "aliases": i18n.get("aliases", {}),
+        "timezones": i18n.get("timezones", {}),
+        "strings": i18n.get("strings", {}),
+    })
+    generated_paths.append(str(i18n_asset_path.relative_to(ROOT)))
 
     return {
         "generated_files": generated_paths,

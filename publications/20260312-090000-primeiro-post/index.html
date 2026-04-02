@@ -29,38 +29,47 @@
     
     
   </head>
-  <body class="page-post" data-has-math="false">
-    <a class="skip-link" href="#content">Skip to content</a>
+  <body class="page-post" data-has-math="false" data-default-locale="pt-BR">
+    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     <div class="site-shell">
       <header class="site-header">
         
-    <nav class="site-nav" aria-label="Primary">
+    <nav class="site-nav" aria-label="Navegação principal" data-i18n-aria-label="accessibility.primary_navigation">
       <a class="site-mark" href="/">Hiro Matsumoto</a>
       <ul class="site-nav-links">
-        <li><a href="/publications/" aria-current="page">posts</a></li><li><a href="/projects/">projects</a></li><li><a href="/documents/">documents</a></li><li><a href="/about/">about</a></li>
+        <li><a href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" data-i18n="nav.about">sobre</a></li>
       </ul>
       <div class="site-nav-actions">
-        <button class="palette-trigger" type="button" data-open-palette>command palette <span>Ctrl/⌘ K</span></button>
-        <a class="cta-link" href="https://www.linkedin.com/in/nhmatsumoto/" rel="noopener noreferrer" target="_blank">open work / contact</a>
+        <button class="palette-trigger" type="button" data-open-palette><span data-i18n="nav.search">palette de comandos</span> <span>Ctrl/⌘ K</span></button>
+        
+    <label class="locale-switcher">
+      <span class="visually-hidden" data-i18n="accessibility.language_switcher">Selecionar idioma</span>
+      <select class="locale-select" data-locale-switcher aria-label="Selecionar idioma" data-i18n-aria-label="accessibility.language_switcher">
+        <option value="pt-BR" selected>Português (Brasil)</option><option value="pt-PT">Português</option><option value="ja-JP">日本語</option>
+      </select>
+    </label>
+    
+        <a class="cta-link" href="https://www.linkedin.com/in/nhmatsumoto/" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">trabalho aberto / contato</a>
       </div>
     </nav>
     
       </header>
       <main class="site-main" id="content">
         
+    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Bem-vindo ao meu novo blog</span></li></ol></nav>
     <section class="page-grid">
       <article class="post-shell prose">
         <header class="post-header">
-          <p class="section-kicker">post</p>
+          <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
           <h1>Bem-vindo ao meu novo blog</h1>
           <p class="post-summary">O ponto de partida de um blog estático simples, versionado por Git e editado localmente.</p>
           <div class="post-meta">
-            <time datetime="2026-03-12T09:00:00+09:00">12 de março de 2026</time>
-            <span>1 min read</span>
+            <time datetime="2026-03-12T09:00:00+09:00" data-localize-date="long">12 de março de 2026</time>
+            <span data-reading-time="1">1 min de leitura</span>
           </div>
           <div class="post-actions">
-            <a class="subtle-button" href="/publications/">Back to posts</a>
-            <button class="subtle-button" type="button" data-copy-link>Copy link</button>
+            <a class="subtle-button" href="/publications/" data-i18n="pages.post.back">Voltar para publicações</a>
+            <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
           </div>
         </header>
         <h1>Olá, mundo!</h1>
@@ -73,18 +82,18 @@
       </article>
       
     <aside class="sidebar-panel">
-      <h2>Metadata</h2>
-      <ul class="metric-list"><li>12 de março de 2026</li><li>1 min read</li></ul>
+      <h2 data-i18n="pages.post.metadata">Metadados</h2>
+      <ul class="metric-list"><li><time datetime="2026-03-12T09:00:00+09:00" data-localize-date="long">12 de março de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
       <ul class="badge-list"><li class="badge">architecture</li></ul>
       <ul class="tag-list"><li>pessoal</li><li>anuncio</li></ul>
-      <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer">repo</a></li><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts" target="_blank" rel="noopener noreferrer">code</a></li></ul>
+      <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts" target="_blank" rel="noopener noreferrer" data-i18n="actions.code">código</a></li></ul>
     </aside>
     
     </section>
     
-    <nav class="post-pager" aria-label="Post navigation">
+    <nav class="post-pager" aria-label="Navegação da publicação" data-i18n-aria-label="pages.post.navigation">
       <a class="pager-link" href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/">← GIS pipelines with event-driven services</a>
-      <span class="pager-link pager-link-disabled">No older text</span>
+      <span class="pager-link pager-link-disabled" data-i18n="pages.post.older_empty">Nenhum texto mais antigo</span>
     </nav>
     
     
@@ -105,16 +114,17 @@
     
     <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
       <div class="palette-backdrop" data-close-palette></div>
-      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
         <div class="palette-head">
-          <input class="palette-input" type="search" placeholder="Search posts, projects and documents" data-palette-input>
-          <button class="palette-close" type="button" data-close-palette>Close</button>
+          <input class="palette-input" type="search" placeholder="Buscar publicações, projetos e documentos" data-palette-input data-i18n-placeholder="palette.placeholder">
+          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">Fechar</button>
         </div>
-        <p class="palette-hint">Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.</p>
+        <p class="palette-hint" data-i18n="palette.hint">Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.</p>
         <ul class="palette-results" data-palette-results></ul>
       </div>
     </div>
     
+    <script id="site-i18n" type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "pt-PT", "ja-JP"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語"}, "aliases": {"pt": "pt-PT", "pt-br": "pt-BR", "pt-pt": "pt-PT", "ja": "ja-JP", "ja-jp": "ja-JP"}, "timezones": {"Asia/Tokyo": "ja-JP", "America/Sao_Paulo": "pt-BR", "America/Fortaleza": "pt-BR", "America/Manaus": "pt-BR", "Europe/Lisbon": "pt-PT"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "palette de comandos", "cta": "trabalho aberto / contato", "language": "idioma"}, "palette": {"placeholder": "Buscar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal."}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Seção central", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda."}, "actions": {"repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço"}, "status": {"research": "pesquisa", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grade"}}, "pt-PT": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Paleta de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "paleta de comandos", "cta": "trabalho aberto / contacto", "language": "idioma"}, "palette": {"placeholder": "Pesquisar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, etiquetas, badges e ligações diretas para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, estado, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site está organizado mais como uma base de código do que como uma landing page pessoal."}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experiências, modelação de domínio e heurísticas operacionais."}, "projects": {"title": "Secção central", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar às publicações", "copy_link": "Copiar ligação", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais recente", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Estado", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "pré-visualização", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Ainda não existem publicações publicadas.", "projects": "Nenhum projeto disponível.", "documents": "Ainda não existem documentos indexados."}, "actions": {"repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Ligação copiada", "copy_from_address": "Copie a partir da barra de endereço"}, "status": {"research": "investigação", "in_progress": "em progresso", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grelha"}}, "ja-JP": {"accessibility": {"skip_to_content": "本文へ移動", "primary_navigation": "メインナビゲーション", "breadcrumbs": "現在地", "language_switcher": "言語を選択", "command_palette": "コマンドパレット"}, "nav": {"home": "ホーム", "posts": "記事", "projects": "プロジェクト", "documents": "ドキュメント", "about": "概要", "search": "コマンドパレット", "cta": "仕事の相談 / 連絡", "language": "言語"}, "palette": {"placeholder": "記事、プロジェクト、ドキュメントを検索", "close": "閉じる", "hint": "Ctrl/⌘ K で開き、Enter で先頭結果を開き、Esc で閉じます。", "empty": "一致する結果がありません。"}, "home": {"highlight_main_project": "メインプロジェクト", "highlight_recent_article": "最新記事"}, "sections": {"posts_title": "最近の投稿", "posts_copy": "読了時間、タグ、バッジ、必要に応じたリポジトリへの直接リンクを含む投稿一覧です。", "projects_title": "主要システム", "projects_copy": "プロジェクトを長期資産として整理し、アーキテクチャ、スタック、状態、ロードマップ、関連ドキュメントをまとめています。", "documents_title": "ドキュメントシステム", "documents_copy": "ドメイン、アーキテクチャ、エージェント、API ごとに整理された markdown ベースのノートです。", "about_copy": "このサイトは個人用ランディングページというより、構造化されたコードベースのように整理されています。"}, "pages": {"archive": {"title": "すべての公開記事", "description": "アーキテクチャ、実験、ドメイン設計、運用上の知見をまとめた執筆一覧です。"}, "projects": {"title": "コアセクション", "description": "各プロジェクトを、課題、解決策、アーキテクチャ、スタック、ADR、ロードマップの単位で整理しています。"}, "documents": {"title": "ドキュメントシステム", "description": "意思決定を追跡しやすくするため、ドメイン、アーキテクチャ、エージェント、API ごとに文書を整理しています。"}, "about": {"title": "ミニマルなエンジニアリングノート", "operating_model": "運用モデル", "structure": "構成", "next_steps": "次のステップ", "future_frontend": "将来のフロントエンド案"}, "post": {"kicker": "記事", "metadata": "メタデータ", "back": "記事一覧へ戻る", "copy_link": "リンクをコピー", "navigation": "記事ナビゲーション", "newer_empty": "これより新しい記事はありません", "older_empty": "これより古い記事はありません"}, "project": {"kicker": "プロジェクト", "status": "状態", "stack": "スタック", "actions": "アクション", "overview": "概要", "problem_solution": "課題と解決策", "architecture": "アーキテクチャ", "adr": "ADR", "roadmap": "ロードマップ"}, "document": {"kicker": "ドキュメント", "meta": "ドキュメント情報", "version": "バージョン", "category": "カテゴリ"}}, "common": {"preview": "プレビュー", "content_in_preparation": "内容を準備中です。", "agent_generated": "エージェント生成"}, "empty": {"posts": "まだ公開済みの記事はありません。", "projects": "利用可能なプロジェクトはありません。", "documents": "まだ索引化されたドキュメントはありません。"}, "actions": {"repo": "repo", "code": "コード", "view_architecture": "構成を見る", "view_code": "コードを見る", "open_docs": "ドキュメントを開く", "link_copied": "リンクをコピーしました", "copy_from_address": "アドレスバーからコピーしてください"}, "status": {"research": "調査", "in_progress": "進行中", "production": "本番"}, "kinds": {"home": "ホーム", "about": "概要", "post": "記事", "project": "プロジェクト", "document": "ドキュメント"}, "templates": {"reading_time": "読了 {minutes} 分"}, "view": {"list": "一覧", "grid": "グリッド"}}}}</script>
     <script src="/assets/blog.js" defer></script>
   </body>
 </html>

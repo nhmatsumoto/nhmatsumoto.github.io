@@ -10,7 +10,9 @@ from urllib.parse import parse_qs, urlparse
 
 from blog_engine import (
     build_site,
+    default_locale,
     git_status,
+    load_i18n,
     load_posts,
     load_site,
     normalise_post,
@@ -87,7 +89,9 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
 
             if parsed.path == "/api/post/preview":
                 preview_post = normalise_post(payload)
-                self.send_json({"html": render_post_preview(preview_post)})
+                site = load_site()
+                i18n = load_i18n()
+                self.send_json({"html": render_post_preview(preview_post, i18n, default_locale(site, i18n))})
                 return
 
             if parsed.path == "/api/build":

@@ -1,0 +1,24 @@
+[feature]
+name = "skip-link-visibility-fix"
+status = "done"
+summary = "Corrigir a visibilidade indevida do skip-link no layout público sem remover o recurso de acessibilidade."
+
+[[steps]]
+name = "registrar-problema"
+status = "done"
+details = "Confirmar que o elemento visível é o skip-link gerado no layout base."
+
+[[steps]]
+name = "corrigir-estilo"
+status = "done"
+details = "Substituir a ocultação frágil baseada em top negativo por uma estratégia fixa com transform, opacidade e foco explícito."
+
+[[steps]]
+name = "alinhar-idioma"
+status = "done"
+details = "Ajustar o texto do skip-link para português, coerente com o idioma do site."
+
+[[steps]]
+name = "regerar-html"
+status = "done"
+details = "Executar o build para refletir a correção nas páginas estáticas geradas."

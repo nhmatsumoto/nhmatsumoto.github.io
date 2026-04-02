@@ -1,6 +1,7 @@
 [build]
 site_file = "content/site.toml"
 system_file = "content/system.toml"
+i18n_file = "content/i18n.toml"
 posts_dir = "content/posts"
 projects_dir = "content/projects"
 documents_dir = "content/documents"
@@ -13,6 +14,7 @@ project_index_file = "projects/index.html"
 documents_index_file = "documents/index.html"
 about_file = "about/index.html"
 search_index_file = "assets/search-index.json"
+i18n_asset_file = "assets/i18n.json"
 posts_on_home = 6
 projects_on_home = 3
 documents_on_home = 4

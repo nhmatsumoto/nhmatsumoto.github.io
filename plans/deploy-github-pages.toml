@@ -22,3 +22,10 @@ details = "Commits locais devem refletir apenas as mudanças do deploy."
 name = "push"
 status = "done"
 details = "Enviar o branch master para o remoto origin."
+
+[[deployments]]
+name = "navigation-localization-rollout"
+status = "done"
+summary = "Publicar as melhorias de navegação, breadcrumbs, correção do layout de publicações, skip-link e suporte de interface para pt-BR, pt-PT e ja-JP."
+branch = "master"
+target = "github-pages"
