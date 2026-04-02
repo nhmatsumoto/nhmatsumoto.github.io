@@ -1,48 +1,45 @@
-id = "2026-04-03-1400"
+id = "2026-04-03-0850-performance-dotnet"
 slug = "performance-dotnet-pre-compilacao"
-title = "Performance em .NET: O impacto da Pré-compilação (JIT vs AOT)"
-summary = "Uma análise técnica sobre como o runtime do .NET gerencia a execução de código e como o Native AOT muda o jogo para microserviços."
-published_at = "2026-04-03T11:00:00+09:00"
-updated_at = "2026-04-03T11:00:00+09:00"
+title = "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória"
+summary = "Uma análise profunda sobre o runtime do .NET, focando em Garbage Collector (GC), Just-In-Time compilation e Native AOT para microsserviços."
+published_at = "2026-04-03T08:50:00+09:00"
+updated_at = "2026-04-03T08:50:00+09:00"
 status = "published"
-tags = ["dotnet", "performance", "aot", "jit", "csharp"]
-badges = ["performance", "backend", "runtime"]
+tags = ["dotnet", "performance", "runtime", "gc"]
+badges = ["performance", "dotnet", "infra"]
 repo_url = ""
 code_url = ""
-featured = false
+featured = true
 has_asciimath = false
 
 body = """
-No ecossistema .NET, a forma como seu código é transformado em instruções de máquina define a escalabilidade da sua aplicação. O duelo entre Just-In-Time (JIT) e Ahead-Of-Time (AOT) é central para entender o custo de infraestrutura.
+O .NET moderno não é mais o framework lento de 15 anos atrás. Com o .NET 8 e 9, a Microsoft entregou uma plataforma que rivaliza com C++ e Rust em muitos cenários de latência.
 
-## JIT: A Flexibilidade do Runtime
+## O Garbage Collector (GC)
+O GC é geracional (0, 1, 2) e funciona de maneira otimizada para requisições de curta duração (web apps). O maior inimigo da performance é o **LOH (Large Object Heap)**.
 
-Por padrão, o .NET utiliza a compilação JIT. O código C# vira IL (Intermediate Language) e, em tempo de execução, o runtime o converte para código nativo.
+## JIT vs Native AOT:
+*   **JIT (Just-In-Time)**: Compila o IL para código de máquina na hora da execução. Excelente para otimizações de longo prazo via PGO (Profile-Guided Optimization).
+*   **Native AOT (Ahead-Of-Time)**: Compila tudo antes da execução. Gera executáveis menores, com "cold start" quase instantâneo e menor consumo de memória por instância.
 
-*   **Vantagem**: Otimização baseada no hardware real onde o código está rodando (PGO - Profile Guided Optimization).
-*   **Desvantagem**: "Cold start" mais lento e maior consumo de memória inicial.
+### A Taxa de Alocação (\(A\))
+A eficiência (\(E\)) do sistema é inversamente proporcional à pressão sobre o GC (\(P\)), que por sua vez é função da taxa de alocação (\(A\)):
+$$E \\propto \\frac{1}{P(A)}$$
 
-## Native AOT: O Futuro dos Microserviços
-
-Com o .NET 7/8+, o Native AOT permite compilar tudo diretamente para binário nativo antes da execução.
+## Técnicas de Performance:
+*   **Span e ReadOnlySpan**: Trabalhe com janelas de memória sem alocar cópias.
+*   **ArrayPool**: Reutilize buffers para evitar fragmentação da LOH.
+*   **ValueTask**: Reduza alocações no heap para operações assíncronas frequentes.
 
 ```mermaid
 graph LR
-  A[Código C#] --> B[Compilador Roslyn]
-  B --> C[IL - Intermediate Language]
-  C -->|Native AOT| D[Binário Nativo]
-  C -->|JIT| E[Runtime .NET]
-  E --> F[Código em Memória]
-  D --> G[Execução Instantânea]
+    A[C# Code] --> B[IL Compiler]
+    B --> C[DLL / EXE]
+    C --> D{Deployment Type}
+    D -- Standard --> E[JIT Engine]
+    D -- AOT --> F[Native Binary]
+    E & F --> G[Machine Code]
 ```
 
-### Por que usar AOT?
-
-1.  **Tempo de Inicialização**: Praticamente zero. Essencial para Serverless (AWS Lambda, Azure Functions).
-2.  **Footprint de Memória**: Redução drástica, pois não há necessidade de carregar o compilador JIT e estruturas de metadados pesadas.
-3.  **Segurança**: Menos superfície de ataque (sem IL para fazer reverse engineering).
-
-## Conclusão
-
-Escolher entre JIT e AOT depende do seu cenário. Se você tem um monólito de longa duração, o JIT/PGO pode oferecer melhor performance de pico. Se você escala centenas de containers pequenos, o AOT é o seu melhor aliado.
+> **Heurística Operacional**: Se o seu serviço leva mais de 500ms para subir no Kubernetes, você deveria considerar Native AOT ou revisar as injeções de dependência pesadas no `Startup`.
 """

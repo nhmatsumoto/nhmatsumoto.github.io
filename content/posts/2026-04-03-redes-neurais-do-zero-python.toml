@@ -1,45 +1,59 @@
-id = "2026-04-03-2900"
+id = "2026-04-03-0900-redes-neurais"
 slug = "redes-neurais-do-zero-python"
-title = "Redes Neurais do Zero: A Matemática do Perceptron ao Deep Learning"
-summary = "Uma visão clara sobre como transformar matemática em inteligência usando Python e NumPy para construir uma rede neural simples do zero."
-published_at = "2026-04-03T23:55:00+09:00"
-updated_at = "2026-04-03T23:55:00+09:00"
+title = "Redes Neurais do Zero: Implementação Matemática em Python"
+summary = "Uma jornada do neurônio de McCulloch-Pitts ao Backpropagation, implementando uma rede neural densa usando apenas NumPy."
+published_at = "2026-04-03T09:00:00+09:00"
+updated_at = "2026-04-03T09:00:00+09:00"
 status = "published"
-tags = ["ia", "python", "redes-neurais", "deep-learning", "algoritmos"]
-badges = ["ai-foundations", "math", "coding"]
+tags = ["ia", "matemática", "python", "machine-learning"]
+badges = ["ia", "ciência", "deep-learning"]
 repo_url = ""
 code_url = ""
-featured = false
-has_asciimath = true
+featured = true
+has_asciimath = false
 
 body = """
-Redes Neurais parecem mágica, mas no fundo, elas são apenas **Álgebra Linear** e **Cálculo**. Construir uma do zero com Python e NumPy é o melhor exercício para entender como a IA realmente aprende.
+Entender redes neurais através de bibliotecas como PyTorch ou TensorFlow é útil, mas entender a **matemática fundamental** por trás de um neurônio é o que separa o "usuário" do "engenheiro de IA".
 
-## O Bloco de Construção: O Perceptron
+## O Neurônio Artificial
+Um neurônio é uma função matemática que recebe entradas (\(x\)), aplica pesos (\(w\)), soma-os com um viés (\(b\)) e passa o resultado por uma função de ativação (\(f\)):
+$$y = f(\\sum_{i=1}^n w_i x_i + b)$$
 
-Um neurônio artificial recebe entradas, multiplica por pesos e adiciona um "viés" (bias). O resultado passa por uma **Função de Ativação** (como Sigmoid ou ReLU).
+## O Ciclo da Aprendizagem:
+1.  **Forward Propagation**: Os dados fluem da entrada para a saída.
+2.  **Loss Function**: Calculamos o erro (ex: *Mean Squared Error*).
+3.  **Backpropagation**: Usamos a **Regra da Cadeia** do Cálculo para descobrir como cada peso contribuiu para o erro.
+4.  **Gradient Descent**: Ajustamos os pesos na direção oposta ao gradiente.
+
+### O Gradiente do Erro (\(\\nabla E\))
+A atualização dos pesos (\(w\)) com uma taxa de aprendizado (\(\\eta\)) é:
+$$w_{new} = w_{old} - \\eta \\cdot \\nabla E$$
+
+## Implementação Conceitual (Python/NumPy):
+
+```python
+import numpy as np
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+# Ativação do neurônio
+inputs = np.array([0.5, 0.3])
+weights = np.array([0.4, 0.7])
+bias = -0.1
+
+output = sigmoid(np.dot(inputs, weights) + bias)
+print(f"Predição: {output}")
+```
 
 ```mermaid
 graph LR
-  X1[Entrada 1] -->|Peso 1| S[Soma Ponderada + Bias]
-  X2[Entrada 2] -->|Peso 2| S
-  S --> A[Função de Ativação]
-  A --> Y[Saída]
+    X1((X1)) --> W1[W1]
+    X2((X2)) --> W2[W2]
+    W1 & W2 --> SUM[Σ + bias]
+    SUM --> ACT[Sigmoid]
+    ACT --> OUT((Saída))
 ```
 
-### O Treinamento: Backpropagation e Gradient Descent
-
-A rede aprende comparando sua saída com o valor correto. O erro é então jogado de volta (**Backpropagation**) usando a regra da cadeia do cálculo para ajustar os pesos.
-
-1.  **Forward Pass**: Calcula a saída.
-2.  **Loss Function**: Mede o erro.
-3.  **Backward Pass**: Ajusta os pesos para diminuir o erro no futuro (**Gradient Descent**).
-
-## Por Que Python?
-
-O Python se tornou a língua franca da IA devido à biblioteca **NumPy**, que permite realizar operações com matrizes de forma extremamente eficiente, e aos frameworks modernos como **PyTorch** e **TensorFlow**.
-
-## Conclusão
-
-Entender a base matemática nos permite não apenas usar as bibliotecas de IA, mas também **otimizá-las**, depurá-las e criar arquiteturas inovadoras que resolvem problemas reais.
+> **Heurística Operacional**: Se o seu gradiente está "explodindo" (valores infinitos), revise a inicialização dos pesos e considere usar normalização de lote (Batch Norm).
 """

@@ -1,48 +1,45 @@
-id = "2026-04-03-2200"
+id = "2026-04-03-0910-sistemas-de-tipagem"
 slug = "sistemas-de-tipagem-estatico-vs-dinamico"
-title = "A Luta dos Tipos: Estático vs Dinâmico"
-summary = "Por que o TypeScript é o 'super-poder' do JS e como a tipagem forte em C# e Rust protege o seu código de erros bobos em runtime."
-published_at = "2026-04-03T19:00:00+09:00"
-updated_at = "2026-04-03T19:00:00+09:00"
+title = "Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos"
+summary = "Uma análise sobre a segurança de tempo de compilação versus a agilidade de tempo de execução, explorando tipagem forte, fraca e duck typing."
+published_at = "2026-04-03T09:10:00+09:00"
+updated_at = "2026-04-03T09:10:00+09:00"
 status = "published"
-tags = ["tipagem", "computacao", "typescript", "csharp", "rust"]
-badges = ["computer-science", "safety", "foundations"]
+tags = ["teoria-da-computação", "linguagens", "tipagem", "engenharia"]
+badges = ["ciência", "fundamentos", "linguagens"]
 repo_url = ""
 code_url = ""
-featured = false
+featured = true
 has_asciimath = false
 
 body = """
-O sistema de tipagem de uma linguagem é a sua primeira linha de defesa. O debate entre Tipagem Estática (C#, Java, Rust) e Tipagem Dinâmica (Python, JavaScript original) é, no fundo, um debate sobre **quando você quer descobrir seus erros**.
+A tipagem não é apenas uma restrição; é uma ferramenta de **comunicação entre o programador e o compilador**. A escolha do sistema de tipagem define a robustez e a velocidade de iteração de um projeto.
 
-## Tipagem Dinâmica: O Foco na Agilidade
+## Tipagem Estática (C#, Java, Rust, Go)
+Os tipos são verificados em tempo de compilação (\(compile-time\)). Isso elimina uma classe inteira de erros de "tipo incompatível" antes mesmo do software rodar.
 
-Linguagens dinâmicas não exigem definições de tipo. Variáveis podem mudar de "forma" a qualquer momento.
+## Tipagem Dinâmica (Python, JavaScript, Ruby)
+Os tipos são verificados em tempo de execução (\(runtime\)). Isso permite uma prototipagem extremamente rápida e flexível, mas exige uma cobertura de testes unitários muito mais rigorosa.
 
-*   **Vantagem**: Menos código, refatoração rápida em protótipos.
-*   **Desvantagem**: Erros invisíveis que só explodem quando o usuário final clica no botão (runtime errors).
-
-## Tipagem Estática: O Compilador como Mentor
-
-Estática significa que o tipo é resolvido em tempo de compilação. Se você tentar somar um `int` com um `string`, o código nem compila.
+### A Matriz de Tipagem (\(T\))
+Podemos classificar as linguagens em quatro quadrantes de acordo com a força e o momento da verificação:
 
 ```mermaid
-graph LR
-  C[Código] --> T[Validação de Tipos]
-  T -->|Erro!| D[Corrija Antes de Rodar]
-  T -->|OK| E[Execução Segura]
-  style T fill:#f9f,stroke:#333
+graph TD
+    A[Sistemas de Tipagem] --> B[Estático]
+    A --> C[Dinâmico]
+    B --> D[Forte (Rust, C#)]
+    B --> E[Fraca (C++)]
+    C --> F[Forte (Python, Ruby)]
+    C --> G[Fraca (JavaScript, PHP)]
 ```
 
-### O Meio-termo: TypeScript e Gradual Typing
+### O Custo da Incerteza (\(U\))
+A incerteza (\(U\)) de um sistema cresce com a ausência de tipos estáticos (\(S\)) e a falta de testes (\(T\)):
+$$U \\propto \\frac{1}{S \\cdot T}$$
 
-O TypeScript trouxe o melhor dos dois mundos para a web. Ele oferece uma camada de tipagem opcional sobre o JavaScript. Se você tipar tudo corretamente, o editor de código se torna "vidente", prevendo o que cada variável contém através de autocomplete e IntelliSense.
+## Evolução Moderna: Tipagem Progressiva
+Linguagens como **TypeScript** e **Python (com mypy)** permitem que você adicione tipos gradualmente em sistemas dinâmicos, unindo o melhor dos dois mundos.
 
-### Duck Typing: "Se nada como um pato..."
-
-Presente em Python e Go, o Duck Typing foca no **comportamento**. Não importa o que o objeto **é**, mas sim o que ele **consegue fazer** (métodos e propriedades).
-
-## Conclusão
-
-Tipagem forte é autoportante documental. Em sistemas complexos (SplitCosts, SOS Location), a tipagem estática é o que garante que uma mudança no banco de dados não quebre o frontend sem que você perceba.
+> **Heurística Operacional**: Para sistemas de missão crítica ou grandes equipes, a tipagem estática e forte não é opcional; é a única forma de garantir a sanidade do domínio em larga escala.
 """

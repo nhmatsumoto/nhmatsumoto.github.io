@@ -1,52 +1,42 @@
-id = "2026-04-03-1500"
+id = "2026-04-03-0800-dapper-vs-efcore"
 slug = "dapper-vs-efcore-performance"
-title = "SQL vs Dapper: Onde mora a performance real no .NET?"
-summary = "Uma exploração sobre como o Dapper se mantém como o Micro-ORM de escolha para desenvolvedores que precisam de controle total e performance máxima em SQL."
-published_at = "2026-04-03T12:00:00+09:00"
-updated_at = "2026-04-03T12:00:00+09:00"
+title = "Dapper vs EF Core: Quando a Performance Supera a Abstração"
+summary = "Uma análise comparativa sobre ORMs no ecossistema .NET, focando em ciclos de vida de objetos, rastreamento e overhead de consulta."
+published_at = "2026-04-03T08:00:00+09:00"
+updated_at = "2026-04-03T08:00:00+09:00"
 status = "published"
-tags = ["dotnet", "sql", "dapper", "performance", "backend"]
-badges = ["performance", "sql", "orm"]
+tags = ["dotnet", "performance", "orm", "banco-de-dados"]
+badges = ["performance", "dotnet", "arquitetura"]
 repo_url = ""
 code_url = ""
-featured = false
+featured = true
 has_asciimath = false
 
 body = """
-O Entity Framework Core é fantástico para produtividade, mas quando cada milissegundo conta, o **Dapper** entra em cena. Ele não é um ORM completo, mas sim um mapeador de objetos leve que abraça o SQL bruto.
+No ecossistema .NET, a escolha entre **Entity Framework Core (EF Core)** e **Dapper** é frequentemente reduzida a "facilidade vs velocidade", mas a realidade arquitetural é mais profunda.
 
-## O Custo da Abstração
+## EF Core: A Abstração de Domínio
+O EF Core é um ORM completo que gerencia o estado das entidades (Change Tracking). Ele é ideal para operações de escrita complexas onde a integridade do grafo de objetos é fundamental.
 
-O mapeamento de dados do SQL para objetos C# costuma ser o gargalo. O EF Core faz muito trabalho pesado: rastreamento de mudanças (Change Tracking), geração dinâmica de SQL e gerenciamento de relacionamentos complexos.
+## Dapper: O Micro-ORM de Alta Performance
+Dapper não tenta ser um gestor de estado. Ele é um mapeador de objetos que estende `IDbConnection`, focado em transformar resultados de SQL puro em POCOs da forma mais rápida possível.
 
-O Dapper ignora a maioria dessas funcionalidades em troca de velocidade bruta.
+### Comparativo de Overhead (\(T\))
+Podemos modelar o tempo total de execução (\(T\)) como:
+$$T_{total} = T_{sql} + T_{mapping} + T_{tracking}$$
+
+No Dapper, \(T_{tracking} \\approx 0\), o que o torna imbatível para operações de leitura intensiva.
+
+## Quando usar qual?
 
 ```mermaid
-sequenceDiagram
-  participant App as Aplicação .NET
-  participant Dapper as Dapper (Micro-ORM)
-  participant SQL as Banco de Dados
-  
-  App->>Dapper: Query<T>(sql, params)
-  Dapper->>SQL: Envia SQL puro
-  SQL-->>Dapper: Retorna DataReader
-  Dapper-->>App: Mapeamento em Massa (Emit)
+graph TD
+    A[Nova Funcionalidade] --> B{Complexidade de Escrita?}
+    B -- Alta --> C[EF Core]
+    B -- Baixa --> D{Volume de Leitura?}
+    D -- Crítico --> E[Dapper]
+    D -- Padrão --> C
 ```
 
-### Por que Dapper?
-
-1.  **Velocidade**: Praticamente a mesma velocidade de usar `System.Data.SqlClient` manualmente.
-2.  **Controle Total**: Você escreve o SQL. Sem surpresas com queries geradas automaticamente que podem ser ineficientes.
-3.  **Simplicidade**: Uma API minimalista que estende `IDbConnection`.
-
-## Quando NÃO usar Dapper?
-
-Se o seu sistema é um CRUD simples com centenas de tabelas e pouca carga, o EF Core pode ser mais produtivo. O Dapper brilha em:
--   **Relatórios e Dashboards**: Onde as queries são complexas e otimizadas.
--   **APIs de Alta Performance**: Onde o throughput é o principal KPI.
--   **Sistemas com DBAs**: Onde o SQL é mantido por especialistas em banco de dados.
-
-## Conclusão
-
-No Antigravity, seguimos o mantra: "Escolha a ferramenta certa para o trabalho". Muitas vezes, isso significa usar EF Core para escritas simples e Dapper para leituras rápidas e complexas (Padrão CQRS).
+> **Heurística Operacional**: Use EF Core para comandos (escrita) e Dapper para consultas (leitura) em uma arquitetura de estilo **CQRS**.
 """

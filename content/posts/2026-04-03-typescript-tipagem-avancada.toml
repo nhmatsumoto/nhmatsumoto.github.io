@@ -1,55 +1,49 @@
-id = "2026-04-03-2700"
+id = "2026-04-03-0930-typescript-avancado"
 slug = "typescript-tipagem-avancada"
-title = "TypeScript Além do Básico: Tipagem Avançada e Genéricos"
-summary = "Explorando os recursos mais poderosos do TypeScript: Mapped Types, Conditional Types e como criar APIs 100% type-safe."
-published_at = "2026-04-03T23:30:00+09:00"
-updated_at = "2026-04-03T23:30:00+09:00"
+title = "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos"
+summary = "Uma análise profunda sobre o sistema de tipos Turing-complete do TypeScript, explorando tipos condicionais, inferência e utilitários de transformação."
+published_at = "2026-04-03T09:30:00+09:00"
+updated_at = "2026-04-03T09:30:00+09:00"
 status = "published"
-tags = ["typescript", "javascript", "tipagem", "desenvolvimento-web"]
-badges = ["advanced", "frontend", "type-safety"]
+tags = ["typescript", "javascript", "tipagem", "frontend"]
+badges = ["avançado", "web", "arquitetura"]
 repo_url = ""
 code_url = ""
-featured = false
+featured = true
 has_asciimath = false
 
 body = """
-O TypeScript não é apenas um "JSON com tipos". Suas funcionalidades mais avançadas permitem que você transforme a tipagem em uma verdadeira **linguagem de programação** que valida a lógica do seu código antes mesmo dele rodar.
+O TypeScript não é apenas "JS com tipos". O sistema de tipos do TS é **Turing-complete**, o que significa que podemos realizar computações complexas apenas em tempo de compilação.
 
-## Genéricos (Generics): Flexibilidade com Segurança
-
-Genéricos permitem criar componentes que funcionam com vários tipos, mantendo a integridade.
-
+## Tipos Condicionais e `infer`
+Tipos condicionais permitem que você defina lógica de seleção de tipos:
 ```typescript
-function identity<T>(arg: T): T {
-  return arg;
-}
+type IsString<T> = T extends string ? true : false;
+type Result = IsString<"hello">; // true
 ```
+O uso de `infer` permite extrair partes de tipos complexos, como o tipo de retorno de uma função ou o tipo de uma Promise.
 
-## Conditional Types: O "IF" dos Tipos
+## Mapeamento de Tipos (\(Mapped Types\))
+Transforme um tipo existente em um novo tipo iterando sobre suas propriedades. Útil para criar utilitários como `ReadOnly`, `Partial` ou prefixar chaves de um objeto.
 
-Imagine um tipo que muda baseando-se em outro:
+### A Complexidade do Tipo (\(C\))
+Podemos medir a complexidade de um tipo (\(C\)) como o número de transformações e inferências necessárias para o compilador resolvê-lo:
+$$C = \\sum_{i=1}^n T_i + I_i$$
 
-```typescript
-type IsString<T> = T extends string ? "sim" : "não";
-```
+Se \(C\) for muito alto, o IntelliSense ficará lento e o tempo de compilação aumentará.
 
-## Mapped Types: Transformando Objetos
-
-Você pode criar novos tipos baseados em propriedades de tipos existentes. Útil para criar versões `Readonly` ou `Partial` de interfaces complexas.
+## Utilitários de Tipo Customizados:
+*   **Template Literal Types**: Combine strings e crie tipos ultra-específicos para rotas ou eventos.
+*   **Discriminated Unions**: O padrão ouro para lidar com estados de UI de forma segura.
 
 ```mermaid
-graph LR
-  A[Interface Original] --> B[Mapped Type]
-  B --> C[Interface Somente Leitura]
-  B --> D[Interface Opcional]
-  style B fill:#f9f,stroke:#333
+graph TD
+    A[Base Types] --> B[Generics]
+    B --> C[Conditional Types]
+    C --> D[Mapped Types]
+    D --> E[Template Literals]
+    E --> F[Type Programming]
 ```
 
-### Infer e Template Literal Types
-
-Com o `infer`, você pode extrair tipos de dentro de outros tipos (ex: pegar o tipo de retorno de uma função). E com **Template Literal Types**, você pode até validar strings complexas como rotas de uma API.
-
-## Conclusão
-
-Dominar a tipagem avançada do TypeScript é o que diferencia um desenvolvedor que apenas "usa TS" de um arquiteto frontend que constrói bibliotecas robustas e seguras. Use o poder do compilador a seu favor para eliminar os erros de runtime de uma vez por todas.
+> **Heurística Operacional**: Se você estiver usando `any` para resolver um problema de tipagem complexo, você não está resolvendo o problema; você está escondendo o bug. Use `unknown` e *type guards* se a tipagem for realmente dinâmica.
 """
