@@ -232,12 +232,13 @@ const createLocalization = () => {
     window.dispatchEvent(new CustomEvent("site:localechange", { detail: { locale: resolved } }));
   };
 
-  return {
-    applyTranslations,
-    setLocale,
-    translate,
-    getLocale: () => currentLocale,
-  };
+    return {
+        applyTranslations,
+        setLocale,
+        translate,
+        getLocale: () => currentLocale,
+        getSupportedLocales: () => supportedLocales.slice(),
+    };
 };
 
 const initLocaleSwitcher = (localization) => {
@@ -250,6 +251,25 @@ const initLocaleSwitcher = (localization) => {
       localization.setLocale(event.currentTarget.value);
     });
   }
+};
+
+const initLocaleToggle = (localization) => {
+  const button = document.querySelector("[data-locale-toggle]");
+  if (!localization || !button) {
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    const locales = localization.getSupportedLocales();
+    if (!locales.length) {
+      return;
+    }
+    const current = localization.getLocale();
+    const idx = locales.indexOf(current);
+    const next =
+      locales[(idx + 1) % locales.length] || locales[0];
+    localization.setLocale(next);
+  });
 };
 
 const enhanceCopyLink = (localization) => {
@@ -468,6 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initLocaleSwitcher(localization);
   enhanceCopyLink(localization);
   initPostViewSwitchers();
+  initLocaleToggle(localization);
   initCommandPalette(localization);
   loadAsciiMath();
 });

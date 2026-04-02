@@ -36,6 +36,7 @@ about = "sobre"
 search = "palette de comandos"
 cta = "trabalho aberto / contato"
 language = "idioma"
+language_action = "trocar idioma"
 
 [strings."pt-BR".palette]
 placeholder = "Buscar publicações, projetos e documentos"
@@ -155,6 +156,7 @@ about = "sobre"
 search = "paleta de comandos"
 cta = "trabalho aberto / contacto"
 language = "idioma"
+language_action = "trocar idioma"
 
 [strings."pt-PT".palette]
 placeholder = "Pesquisar publicações, projetos e documentos"
@@ -274,6 +276,7 @@ about = "概要"
 search = "コマンドパレット"
 cta = "仕事の相談 / 連絡"
 language = "言語"
+language_action = "言語を切り替える"
 
 [strings."ja-JP".palette]
 placeholder = "記事、プロジェクト、ドキュメントを検索"

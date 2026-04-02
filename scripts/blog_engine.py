@@ -979,8 +979,9 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
       <ul class="site-nav-links">
         {links}
       </ul>
-      <div class="site-nav-actions">
+        <div class="site-nav-actions">
         <button class="palette-trigger" type="button" data-open-palette><span data-i18n="nav.search">{html.escape(search_label)}</span> <span>Ctrl/⌘ K</span></button>
+        <button class="locale-toggle" type="button" data-locale-toggle>{html.escape(translate(i18n, locale, "nav.language_action", "trocar idioma"))}</button>
         {render_locale_switcher(i18n, locale)}
         <a class="cta-link" href="{html.escape(cta_url, quote=True)}" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">{html.escape(cta_label)}</a>
       </div>

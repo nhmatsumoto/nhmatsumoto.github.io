@@ -187,6 +187,7 @@ pre {
 }
 
 .palette-trigger,
+.locale-toggle,
 .cta-link,
 .subtle-button,
 .locale-select,
@@ -215,6 +216,10 @@ pre {
 .palette-trigger span:last-child {
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+.locale-toggle {
+  min-width: 9rem;
 }
 
 .cta-link {
