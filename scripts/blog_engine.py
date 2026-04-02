@@ -961,6 +961,7 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     cta_label = translate(i18n, locale, "nav.cta", str(header.get("cta", "open work / contact") or "open work / contact"))
     search_label = translate(i18n, locale, "nav.search", str(header.get("search", "command palette") or "command palette"))
     cta_url = site.get("linkedin_url") or site.get("github_url") or "#"
+    tagline = str(site.get("headline", "") or "").strip()
 
     link_fragments: list[str] = []
     for item in nav_items:
@@ -972,17 +973,25 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     links = "".join(link_fragments)
     nav_aria = translate(i18n, locale, "accessibility.primary_navigation", "Primary navigation")
     mark_current = ' aria-current="page"' if not active_nav else ""
+    tagline_html = f'<p class="nav-tagline">{html.escape(tagline)}</p>' if tagline else ""
 
     return f"""
     <nav class="site-nav" aria-label="{html.escape(nav_aria, quote=True)}" data-i18n-aria-label="accessibility.primary_navigation">
-      <a class="site-mark" href="{site_href(site, "/")}"{mark_current}>{html.escape(site["title"])}</a>
-      <ul class="site-nav-links">
-        {links}
-      </ul>
-        <div class="site-nav-actions">
+      <div class="nav-brand">
+        <a class="site-mark" href="{site_href(site, "/")}"{mark_current}>{html.escape(site["title"])}</a>
+        {tagline_html}
+      </div>
+      <div class="nav-links" role="navigation">
+        <ul class="nav-links-list">
+          {links}
+        </ul>
+      </div>
+      <div class="site-nav-actions">
         <button class="palette-trigger" type="button" data-open-palette><span data-i18n="nav.search">{html.escape(search_label)}</span> <span>Ctrl/⌘ K</span></button>
-        <button class="locale-toggle" type="button" data-locale-toggle>{html.escape(translate(i18n, locale, "nav.language_action", "trocar idioma"))}</button>
-        {render_locale_switcher(i18n, locale)}
+        <div class="locale-group">
+          <button class="locale-toggle" type="button" data-locale-toggle>{html.escape(translate(i18n, locale, "nav.language_action", "trocar idioma"))}</button>
+          {render_locale_switcher(i18n, locale)}
+        </div>
         <a class="cta-link" href="{html.escape(cta_url, quote=True)}" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">{html.escape(cta_label)}</a>
       </div>
     </nav>
