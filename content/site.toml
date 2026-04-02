@@ -1,4 +1,4 @@
-title = "Hiro Matsumoto"
+title = "nhmatsumoto-blog-engine"
 headline = "technical knowledge OS for scalable systems and autonomous agents."
 description = "Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva."
 language = "pt-BR"
@@ -17,4 +17,4 @@ Sou engenheiro de software e trato este espaço como um caderno operacional: men
 
 Quando uma ideia amadurece, ela vira projeto. Quando uma decisão precisa durar, ela vira documento. Quando um aprendizado merece ser compartilhado, ele vira publicação.
 """
-footer_note = "Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas."
+footer_note = "nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas."

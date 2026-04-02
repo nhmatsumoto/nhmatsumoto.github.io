@@ -1499,6 +1499,36 @@ def render_about_teaser(system: dict[str, Any], i18n: dict[str, Any], locale: st
     """
 
 
+def render_brain_map_section(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+    links = [
+        ("nav.projects", site_href(site, "/projects/")),
+        ("nav.posts", site_href(site, "/publications/")),
+        ("nav.documents", site_href(site, "/documents/")),
+        ("nav.about", site_href(site, "/about/")),
+    ]
+    link_rows = "".join(
+        f'<a class="brain-map-link" href="{html.escape(url, quote=True)}" data-i18n="{html.escape(key, quote=True)}">{html.escape(translate(i18n, locale, key, key.split(".")[-1]))}</a>'
+        for key, url in links
+    )
+    return f"""
+    <section class="section-panel brain-map-panel" aria-labelledby="brain-map-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker" data-i18n="nav.graph">{html.escape(translate(i18n, locale, "nav.graph", "Mapa cerebral"))}</p>
+          <h2 id="brain-map-title" data-i18n="sections.brain_map_title">{html.escape(translate(i18n, locale, "sections.brain_map_title", "Mapa cerebral vivo"))}</h2>
+        </div>
+        <p data-i18n="sections.brain_map_copy">{html.escape(translate(i18n, locale, "sections.brain_map_copy", "Use este mapa para navegar, ver conexões entre pensamentos e explorar os fluxos que formam o meu cérebro técnico."))}</p>
+      </header>
+      <div class="brain-map-shell">
+        <div class="brain-map-links" aria-label="Mapa cerebral">
+          {link_rows}
+        </div>
+        <div class="brain-map-canvas" data-knowledge-graph data-brain-map data-full-screen="false"></div>
+      </div>
+    </section>
+    """
+
+
 def render_home_page(
     site: dict[str, str],
     system: dict[str, Any],
@@ -1512,25 +1542,7 @@ def render_home_page(
     content = f"""
     {render_hero(site, system, posts, projects, i18n, locale)}
     {render_posts_section(system, posts, i18n, locale, limit=int(config['posts_on_home']))}
-    <section class="section-panel" style="margin-top: 4rem;">
-      <div class="section-header">
-        <h2 class="flex items-center gap-2">
-          <i data-lucide="network" class="w-6 h-6 text-accent"></i>
-          Knowledge Graph
-        </h2>
-        <p class="text-muted text-sm">Visualização semântica das conexões entre arquitetura, agentes e experimentos.</p>
-      </div>
-      <div data-knowledge-graph class="w-full h-[400px] bg-surface rounded-3xl border border-border mt-6 overflow-hidden relative">
-        <div class="absolute top-4 right-4 flex gap-2">
-          <span class="px-2 py-1 bg-white/80 backdrop-blur text-[10px] rounded border border-border flex items-center gap-1">
-            <span class="w-2 h-2 rounded-full bg-accent"></span> Projeto
-          </span>
-          <span class="px-2 py-1 bg-white/80 backdrop-blur text-[10px] rounded border border-border flex items-center gap-1">
-            <span class="w-2 h-2 rounded-full bg-slate-800"></span> Post/Doc
-          </span>
-        </div>
-      </div>
-    </section>
+    {render_brain_map_section(site, system, i18n, locale)}
     {render_projects_section(projects, i18n, locale, limit=int(config['projects_on_home']))}
     {render_documents_section(system, documents, i18n, locale, limit=int(config['documents_on_home']))}
     {render_about_teaser(system, i18n, locale)}
@@ -1753,25 +1765,28 @@ def render_post_page(
     """
     content = f"""
     {breadcrumbs}
-    <section class="page-grid">
-      <article class="post-shell prose">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
-          <h1>{html.escape(post['title'])}</h1>
-          <p class="post-summary">{html.escape(post['summary'])}</p>
-          <div class="post-meta">
-            {render_localized_date(post['published_dt'], locale, 'long')}
-            {render_reading_time(post['reading_time'], i18n, locale)}
-          </div>
-          <div class="post-actions">
-            <a class="subtle-button" href="{site_href(site, '/publications/')}" data-i18n="pages.post.back">{html.escape(translate(i18n, locale, "pages.post.back", "Back to posts"))}</a>
-            <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">{html.escape(translate(i18n, locale, "pages.post.copy_link", "Copy link"))}</button>
-          </div>
-        </header>
-        {render_markdown(post['body'])}
-      </article>
-      {sidebar}
-    </section>
+        <section class="page-grid">
+          <article class="post-shell prose">
+            <header class="post-header">
+              <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
+              <h1>{html.escape(post['title'])}</h1>
+              <p class="post-summary">{html.escape(post['summary'])}</p>
+              <div class="post-meta">
+                {render_localized_date(post['published_dt'], locale, 'long')}
+                {render_reading_time(post['reading_time'], i18n, locale)}
+              </div>
+              <div class="post-actions">
+                <a class="subtle-button" href="{site_href(site, '/publications/')}" data-i18n="pages.post.back">{html.escape(translate(i18n, locale, "pages.post.back", "Back to posts"))}</a>
+                <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">{html.escape(translate(i18n, locale, "pages.post.copy_link", "Copy link"))}</button>
+              </div>
+            </header>
+            {render_markdown(post['body'])}
+            <footer class="post-author">
+              <p><strong>Autor:</strong> {html.escape(str(site.get('author') or 'Hiro Matsumoto'))}</p>
+            </footer>
+          </article>
+          {sidebar}
+        </section>
     {render_post_navigation(previous_post, next_post, i18n, locale)}
     """
     return render_layout(

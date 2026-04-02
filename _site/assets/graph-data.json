@@ -181,16 +181,16 @@
       "url": "/publications/20260312-090000-primeiro-post/"
     },
     {
-      "id": "ronaldinho-agent",
-      "title": "Ronaldinho Agent",
-      "kind": "project",
-      "url": "/projects/ronaldinho-agent/"
-    },
-    {
       "id": "sos-location",
       "title": "SOS Location",
       "kind": "project",
       "url": "/projects/sos-location/"
+    },
+    {
+      "id": "ronaldinho-agent",
+      "title": "Ronaldinho Agent",
+      "kind": "project",
+      "url": "/projects/ronaldinho-agent/"
     },
     {
       "id": "splitcosts",

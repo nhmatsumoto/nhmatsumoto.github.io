@@ -1,6 +1,11 @@
-# Technical Knowledge OS
+# nhmatsumoto-blog-engine
 
-Site pessoal publicado em GitHub Pages com a proposta de funcionar como um notebook técnico vivo:
+`nhmatsumoto-blog-engine` é um Technical Knowledge OS publicado em GitHub Pages; o objetivo é funcionar como um notebook técnico vivo e um mapa cerebral navegável.
+
+- posts
+- projetos
+- documentos
+- páginas estáticas geradas a partir de TOML e Markdown
 
 - posts
 - projetos
@@ -9,7 +14,7 @@ Site pessoal publicado em GitHub Pages com a proposta de funcionar como um noteb
 
 ## Direção atual
 
-O site segue um modelo de **minimalist engineering notebook**:
+O site segue um modelo de **minimalist engineering notebook** com um SOS Location fixado como projeto principal e um mapa cerebral que mapeia os pensamentos publicados:
 
 - foco em clareza, profundidade e ausência de distração
 - navegação fixa com `posts`, `projects`, `documents` e `about`
@@ -103,6 +108,7 @@ source_path = "docs/architecture.md"
 ## Recursos implementados
 
 - command palette com índice gerado em `assets/search-index.json`
+- mapa cerebral vivo (section “Mapa cerebral vivo”) que replica as conexões do meu cérebro técnico
 - páginas dedicadas para posts, projetos, documentos e about
 - cards de projeto com status, stack, diagrama e ações
 - documents indexado por categoria: `domain`, `architecture`, `agents`, `apis`

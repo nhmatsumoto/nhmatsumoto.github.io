@@ -1,6 +1,6 @@
 [
   {
-    "title": "Hiro Matsumoto",
+    "title": "nhmatsumoto-blog-engine",
     "url": "/",
     "kind": "home",
     "summary": "Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva.",
@@ -470,21 +470,6 @@
     ]
   },
   {
-    "title": "Ronaldinho Agent",
-    "url": "/projects/ronaldinho-agent/",
-    "kind": "project",
-    "summary": "Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e runtime modular.",
-    "keywords": [
-      "TypeScript",
-      "OpenAI",
-      "tool orchestration",
-      "memory snapshots",
-      "architecture",
-      "experiment",
-      "research"
-    ]
-  },
-  {
     "title": "SOS Location",
     "url": "/projects/sos-location/",
     "kind": "project",
@@ -498,6 +483,21 @@
       "gis",
       "open-source",
       "production"
+    ]
+  },
+  {
+    "title": "Ronaldinho Agent",
+    "url": "/projects/ronaldinho-agent/",
+    "kind": "project",
+    "summary": "Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e runtime modular.",
+    "keywords": [
+      "TypeScript",
+      "OpenAI",
+      "tool orchestration",
+      "memory snapshots",
+      "architecture",
+      "experiment",
+      "research"
     ]
   },
   {

@@ -31,6 +31,7 @@ documents = "documentos"
 about = "sobre"
 search = "palette de comandos"
 cta = "trabalho aberto / contato"
+graph = "mapa cerebral"
 language = "idioma"
 language_action = "trocar idioma"
 
@@ -52,6 +53,8 @@ projects_copy = "Projetos tratados como ativos de longo prazo: arquitetura, stac
 documents_title = "Sistema de documentação"
 documents_copy = "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente."
 about_copy = "O site é organizado mais como uma base de código do que como uma landing page pessoal."
+brain_map_title = "Mapa cerebral vivo"
+brain_map_copy = "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos."
 
 [strings."pt-BR".pages.archive]
 title = "Todas as publicações"
@@ -151,6 +154,7 @@ documents = "documents"
 about = "about"
 search = "command palette"
 cta = "open work / contact"
+graph = "brain map"
 language = "language"
 language_action = "switch language"
 
@@ -172,6 +176,8 @@ projects_copy = "Projects managed as long-term assets: architecture, stack, stat
 documents_title = "Documentation system"
 documents_copy = "Markdown notes organized by domain, architecture, agents and APIs, with versioning and agent-generated markers."
 about_copy = "The site is organized more like a codebase than a personal landing page."
+brain_map_title = "Living brain map"
+brain_map_copy = "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain."
 
 [strings."en-US".pages.archive]
 title = "All posts"

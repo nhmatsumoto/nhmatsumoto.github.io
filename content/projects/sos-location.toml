@@ -9,7 +9,7 @@ repo_url = "https://github.com/nhmatsumoto/sos_location"
 code_url = "https://github.com/nhmatsumoto/sos_location"
 docs_url = "/publications/20260401-184500-gis-pipelines-with-event-driven-services/"
 featured = true
-order = 2
+order = 0
 diagram_preview = """
 ingest -> normalize -> geocode
    |         |          |
