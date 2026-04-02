@@ -21,11 +21,11 @@ O EF Core é um ORM completo que gerencia o estado das entidades (Change Trackin
 ## Dapper: O Micro-ORM de Alta Performance
 Dapper não tenta ser um gestor de estado. Ele é um mapeador de objetos que estende `IDbConnection`, focado em transformar resultados de SQL puro em POCOs da forma mais rápida possível.
 
-### Comparativo de Overhead (\(T\))
-Podemos modelar o tempo total de execução (\(T\)) como:
+### Comparativo de Overhead (\\(T\\))
+Podemos modelar o tempo total de execução (\\(T\\)) como:
 $$T_{total} = T_{sql} + T_{mapping} + T_{tracking}$$
 
-No Dapper, \(T_{tracking} \\approx 0\), o que o torna imbatível para operações de leitura intensiva.
+No Dapper, \\(T_{tracking} \\\\approx 0\\), o que o torna imbatível para operações de leitura intensiva.
 
 ## Quando usar qual?
 

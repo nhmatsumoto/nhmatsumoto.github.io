@@ -34,18 +34,6 @@ jobs:
       - name: Build site
         run: python3 scripts/build.py
 
-      - name: Assemble Pages artifact
-        run: |
-          mkdir -p _site
-          cp -R assets _site/assets
-          cp -R about _site/about
-          cp -R documents _site/documents
-          cp -R projects _site/projects
-          cp -R publications _site/publications
-          cp -R docs _site/docs
-          cp index.html _site/index.html
-          touch _site/.nojekyll
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

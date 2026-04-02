@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>SplitCosts | Hiro Matsumoto</title>
+    <meta name="description" content="Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/projects/splitcosts/">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              accent: 'hsl(221, 83%, 53%)',
+              surface: 'hsl(220, 15%, 98%)',
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              serif: ['Lora', 'serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+        lucide.createIcons();
+      });
+    </script>
+    
+    <style>
+      :root {
+        --h: 220;
+        --bg: hsl(var(--h), 20%, 99%);
+        --surface: hsl(var(--h), 15%, 98%);
+        --surface-strong: hsl(var(--h), 12%, 94%);
+        --surface-soft: #ffffff;
+        --border: hsla(var(--h), 10%, 10%, 0.05);
+        --accent: #00C2FF;
+        --accent-secondary: #7C5CFF;
+        --accent-soft: hsla(221, 83%, 53%, 0.06);
+        --text: hsl(var(--h), 25%, 15%);
+        --muted: hsl(var(--h), 8%, 45%);
+        --font-heading: "Inter", system-ui, sans-serif;
+        --font-body: "Lora", serif;
+        --font-ui: "Inter", system-ui, sans-serif;
+        --font-code: "JetBrains Mono", monospace;
+        --reading-width: 680px;
+        --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+        --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05), 0 2px 10px -2px rgba(0,0,0,0.03);
+        --shadow-lg: 0 30px 60px -12px rgba(0,0,0,0.08), 0 18px 36px -18px rgba(0,0,0,0.03);
+        --radius: 24px;
+      }
+      html {
+        font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+      }
+    </style>
+    
+    
+  </head>
+  <body class="page-project" data-has-math="false" data-default-locale="pt-BR">
+    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
+    
+    
+    <nav class="sticky top-6 z-[200] mx-auto w-full max-w-[1000px] px-6 pointer-events-none" aria-label="Navegação principal" data-i18n-aria-label="accessibility.primary_navigation">
+      <div class="bg-white/80 backdrop-blur-xl border border-black/5 rounded-full px-4 py-2 flex items-center justify-between shadow-lg shadow-black/5 pointer-events-auto transition-transform active:scale-[0.98]">
+        
+        <div class="flex items-center gap-4">
+          <a class="text-slate-900 font-bold tracking-tight hover:text-accent transition-colors" href="/">Hiro Matsumoto</a>
+          <span class="hidden md:block w-px h-4 bg-slate-200"></span>
+          <p class="hidden lg:block text-xs text-muted font-medium max-w-[240px] truncate">technical knowledge OS for scalable systems and autonomous agents.</p>
+        </div>
+        
+        <div class="hidden md:block" role="navigation">
+          <ul class="flex items-center gap-1 list-none m-0 p-0">
+            <li><a href="/publications/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" class="px-4 py-2 rounded-full transition-all duration-200 text-accent bg-accent/5 font-semibold" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.about">sobre</a></li>
+          </ul>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-slate-400 hover:text-accent hover:bg-white hover:border-accent/20 transition-all text-xs" type="button" data-open-palette aria-label="palette de comandos" data-i18n-aria-label="nav.search">
+            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline-block font-mono opacity-60">⌘K</span>
+          </button>
+
+          <div class="flex items-center gap-1 pl-2 border-l border-slate-100">
+            <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors text-xs font-bold text-slate-600" type="button" data-locale-toggle>
+              <span class="locale-current">PT</span>
+            </button>
+            <a class="hidden sm:flex items-center gap-2 px-4 py-1.5 bg-slate-900 text-white rounded-full text-xs font-semibold hover:bg-accent transition-all hover:shadow-md active:scale-95" href="https://www.linkedin.com/in/nhmatsumoto/" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">
+              trabalho aberto / contato
+              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+
+    <div class="site-shell">
+      <main class="site-main" id="content">
+        
+    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">SplitCosts</span></li></ol></nav>
+    <section class="page-grid">
+      <article class="project-shell prose">
+        <header class="post-header">
+          <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+          <h1>SplitCosts</h1>
+          <p class="post-summary">Expense sharing focused on clarity, tenancy boundaries and operational simplicity.</p>
+          <ul class="badge-list"><li class="badge">production</li><li class="badge">architecture</li></ul>
+        </header>
+
+        <section>
+          <h2 data-i18n="pages.project.overview">Visão geral</h2>
+          <p>SplitCosts nasceu para resolver um problema simples sem cair em uma solução rasa: compartilhar despesas com contexto, histórico e separação clara entre grupos e usuários.</p>
+        </section>
+        <section>
+          <h2 data-i18n="pages.project.problem_solution">Problema e solução</h2>
+          <p>O desafio não era apenas registrar gastos. Era manter legibilidade do domínio, evitar acoplamento entre tenants e sustentar evolução de produto sem reescrever a base a cada ajuste de regra.</p>
+        </section>
+        <section>
+          <h2 data-i18n="pages.project.architecture">Arquitetura</h2>
+          <p>A solução segue uma linha mais pragmática: fronteiras explícitas no domínio, projeções simples para leitura e um backend pensado para crescer por contexto, não por páginas.</p>
+          <pre class="diagram-preview large"><code>api -&gt; domain -&gt; projections
+ |       |          |
+ui &lt;-- tenancy --&gt; db</code></pre>
+        </section>
+        <section>
+          <h2 data-i18n="pages.project.stack">Stack</h2>
+          <ul class="stack-list"><li>.NET</li><li>React</li><li>PostgreSQL</li><li>multi-tenant architecture</li></ul>
+          <p>Mesmo sendo um produto mais tradicional, ele reforça os mesmos princípios que aparecem nos projetos com agentes: contratos claros, linguagem ubíqua e separação entre escrita e leitura.</p>
+        </section>
+        <section>
+          <h2 data-i18n="pages.project.adr">ADRs</h2>
+          <ul><li>Separar contexto de tenancy das regras de compartilhamento.</li><li>Usar projeções simples para telas operacionais e relatórios rápidos.</li></ul>
+        </section>
+        <section>
+          <h2 data-i18n="pages.project.roadmap">Roadmap</h2>
+          <ul><li>Fechar modelo de recorrência e conciliação.</li><li>Aprimorar visibilidade de auditoria para alterações críticas.</li></ul>
+        </section>
+      </article>
+      
+    <aside class="sidebar-panel">
+      <h2 data-i18n="pages.project.status">Status</h2>
+      <p><span class="status-chip status-in_progress" data-status-key="status.in_progress">em andamento</span></p>
+      <h3 data-i18n="pages.project.stack">Stack</h3>
+      <ul class="stack-list"><li>.NET</li><li>React</li><li>PostgreSQL</li><li>multi-tenant architecture</li></ul>
+      <h3 data-i18n="pages.project.actions">Ações</h3>
+      <ul class="action-list"><li><a href="/documents/system-architecture/" data-i18n="actions.view_architecture">ver arquitetura</a></li><li><a href="/documents/system-architecture/" data-i18n="actions.open_docs">abrir docs</a></li></ul>
+    </aside>
+    
+    </section>
+    
+      </main>
+      
+    <footer class="site-footer">
+      <div>
+        <p class="footer-label">technical knowledge OS</p>
+        <p>Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
+      </div>
+      <div class="footer-meta">
+        <ul class="footer-pills"><li>clarity</li><li>depth</li><li>no distraction</li></ul>
+        <ul class="footer-pills"><li>engineering docs</li><li>light dashboards</li><li>structured README</li></ul>
+      </div>
+    </footer>
+    
+    </div>
+    
+    <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
+      <div class="palette-backdrop" data-close-palette></div>
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
+        <div class="palette-head">
+          <input class="palette-input" type="search" placeholder="Buscar publicações, projetos e documentos" data-palette-input data-i18n-placeholder="palette.placeholder">
+          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">Fechar</button>
+        </div>
+        <p class="palette-hint" data-i18n="palette.hint">Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.</p>
+        <ul class="palette-results" data-palette-results></ul>
+      </div>
+    </div>
+    
+    <script id="site-i18n" type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "pt-PT", "ja-JP"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語"}, "aliases": {"pt": "pt-PT", "pt-br": "pt-BR", "pt-pt": "pt-PT", "ja": "ja-JP", "ja-jp": "ja-JP"}, "timezones": {"Asia/Tokyo": "ja-JP", "America/Sao_Paulo": "pt-BR", "America/Fortaleza": "pt-BR", "America/Manaus": "pt-BR", "Europe/Lisbon": "pt-PT"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "palette de comandos", "cta": "trabalho aberto / contato", "language": "idioma", "language_action": "trocar idioma"}, "palette": {"placeholder": "Buscar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal."}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Seção central", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda."}, "actions": {"repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço"}, "status": {"research": "pesquisa", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grade"}}, "pt-PT": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Paleta de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "paleta de comandos", "cta": "trabalho aberto / contacto", "language": "idioma", "language_action": "trocar idioma"}, "palette": {"placeholder": "Pesquisar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, etiquetas, badges e ligações diretas para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, estado, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site está organizado mais como uma base de código do que como uma landing page pessoal."}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experiências, modelação de domínio e heurísticas operacionais."}, "projects": {"title": "Secção central", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar às publicações", "copy_link": "Copiar ligação", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais recente", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Estado", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "pré-visualização", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Ainda não existem publicações publicadas.", "projects": "Nenhum projeto disponível.", "documents": "Ainda não existem documentos indexados."}, "actions": {"repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Ligação copiada", "copy_from_address": "Copie a partir da barra de endereço"}, "status": {"research": "investigação", "in_progress": "em progresso", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grelha"}}, "ja-JP": {"accessibility": {"skip_to_content": "本文へ移動", "primary_navigation": "メインナビゲーション", "breadcrumbs": "現在地", "language_switcher": "言語を選択", "command_palette": "コマンドパレット"}, "nav": {"home": "ホーム", "posts": "記事", "projects": "プロジェクト", "documents": "ドキュメント", "about": "概要", "search": "コマンドパレット", "cta": "仕事の相談 / 連絡", "language": "言語", "language_action": "言語を切り替える"}, "palette": {"placeholder": "記事、プロジェクト、ドキュメントを検索", "close": "閉じる", "hint": "Ctrl/⌘ K で開き、Enter で先頭結果を開き、Esc で閉じます。", "empty": "一致する結果がありません。"}, "home": {"highlight_main_project": "メインプロジェクト", "highlight_recent_article": "最新記事"}, "sections": {"posts_title": "最近の投稿", "posts_copy": "読了時間、タグ、バッジ、必要に応じたリポジトリへの直接リンクを含む投稿一覧です。", "projects_title": "主要システム", "projects_copy": "プロジェクトを長期資産として整理し、アーキテクチャ、スタック、状態、ロードマップ、関連ドキュメントをまとめています。", "documents_title": "ドキュメントシステム", "documents_copy": "ドメイン、アーキテクチャ、エージェント、API ごとに整理された markdown ベースのノートです。", "about_copy": "このサイトは個人用ランディングページというより、構造化されたコードベースのように整理されています。"}, "pages": {"archive": {"title": "すべての公開記事", "description": "アーキテクチャ、実験、ドメイン設計、運用上の知見をまとめた執筆一覧です。"}, "projects": {"title": "コアセクション", "description": "各プロジェクトを、課題、解決策、アーキテクチャ、スタック、ADR、ロードマップの単位で整理しています。"}, "documents": {"title": "ドキュメントシステム", "description": "意思決定を追跡しやすくするため、ドメイン、アーキテクチャ、エージェント、API ごとに文書を整理しています。"}, "about": {"title": "ミニマルなエンジニアリングノート", "operating_model": "運用モデル", "structure": "構成", "next_steps": "次のステップ", "future_frontend": "将来のフロントエンド案"}, "post": {"kicker": "記事", "metadata": "メタデータ", "back": "記事一覧へ戻る", "copy_link": "リンクをコピー", "navigation": "記事ナビゲーション", "newer_empty": "これより新しい記事はありません", "older_empty": "これより古い記事はありません"}, "project": {"kicker": "プロジェクト", "status": "状態", "stack": "スタック", "actions": "アクション", "overview": "概要", "problem_solution": "課題と解決策", "architecture": "アーキテクチャ", "adr": "ADR", "roadmap": "ロードマップ"}, "document": {"kicker": "ドキュメント", "meta": "ドキュメント情報", "version": "バージョン", "category": "カテゴリ"}}, "common": {"preview": "プレビュー", "content_in_preparation": "内容を準備中です。", "agent_generated": "エージェント生成"}, "empty": {"posts": "まだ公開済みの記事はありません。", "projects": "利用可能なプロジェクトはありません。", "documents": "まだ索引化されたドキュメントはありません。"}, "actions": {"repo": "repo", "code": "コード", "view_architecture": "構成を見る", "view_code": "コードを見る", "open_docs": "ドキュメントを開く", "link_copied": "リンクをコピーしました", "copy_from_address": "アドレスバーからコピーしてください"}, "status": {"research": "調査", "in_progress": "進行中", "production": "本番"}, "kinds": {"home": "ホーム", "about": "概要", "post": "記事", "project": "プロジェクト", "document": "ドキュメント"}, "templates": {"reading_time": "読了 {minutes} 分"}, "view": {"list": "一覧", "grid": "グリッド"}}}}</script>
+    <script src="/assets/blog.js" defer></script>
+    <script src="/assets/graphview.js" defer></script>
+  </body>
+</html>

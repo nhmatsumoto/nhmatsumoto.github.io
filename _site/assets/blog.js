@@ -1,0 +1,507 @@
+const parseJsonScript = (id) => {
+  const node = document.getElementById(id);
+  if (!node) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(node.textContent || "{}");
+  } catch {
+    return null;
+  }
+};
+
+const resolvePath = (target, path) => {
+  if (!target || !path) {
+    return undefined;
+  }
+
+  return path.split(".").reduce((current, part) => {
+    if (current && typeof current === "object" && part in current) {
+      return current[part];
+    }
+    return undefined;
+  }, target);
+};
+
+const formatTemplate = (template, values) => {
+  return Object.entries(values).reduce((result, [key, value]) => {
+    return result.replaceAll(`{${key}}`, String(value));
+  }, template);
+};
+
+const createLocalization = () => {
+  const config = parseJsonScript("site-i18n");
+  if (!config) {
+    return null;
+  }
+
+  const supportedLocales = Array.isArray(config.supportedLocales) ? config.supportedLocales : [];
+  const aliases = config.aliases ?? {};
+  const strings = config.strings ?? {};
+  const defaultLocale = config.defaultLocale ?? document.body.dataset.defaultLocale ?? "pt-BR";
+  const storageKey = "site-locale";
+
+  const resolveLocale = (candidate) => {
+    if (!candidate) {
+      return null;
+    }
+
+    const raw = String(candidate).trim();
+    if (!raw) {
+      return null;
+    }
+
+    if (supportedLocales.includes(raw)) {
+      return raw;
+    }
+
+    const lowered = raw.toLowerCase();
+    const aliased = aliases[lowered];
+    if (aliased && supportedLocales.includes(aliased)) {
+      return aliased;
+    }
+
+    const base = lowered.split("-")[0];
+    const baseAlias = aliases[base];
+    if (baseAlias && supportedLocales.includes(baseAlias)) {
+      return baseAlias;
+    }
+
+    const supportedMatch = supportedLocales.find((locale) => locale.toLowerCase() === lowered);
+    if (supportedMatch) {
+      return supportedMatch;
+    }
+
+    return null;
+  };
+
+  const detectLocale = () => {
+    const stored = resolveLocale(window.localStorage.getItem(storageKey));
+    if (stored) {
+      return stored;
+    }
+
+    const browserLocales = Array.isArray(navigator.languages) && navigator.languages.length
+      ? navigator.languages
+      : [navigator.language].filter(Boolean);
+
+    for (const browserLocale of browserLocales) {
+      const resolved = resolveLocale(browserLocale);
+      if (resolved) {
+        return resolved;
+      }
+    }
+
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const timezoneLocale = timezone ? resolveLocale(config.timezones?.[timezone]) : null;
+    if (timezoneLocale) {
+      return timezoneLocale;
+    }
+
+    return resolveLocale(defaultLocale) ?? "pt-BR";
+  };
+
+  let currentLocale = detectLocale();
+
+  const translate = (key, fallback = "") => {
+    const primary = resolvePath(strings[currentLocale], key);
+    if (typeof primary === "string") {
+      return primary;
+    }
+
+    const secondary = resolvePath(strings[defaultLocale], key);
+    if (typeof secondary === "string") {
+      return secondary;
+    }
+
+    return fallback;
+  };
+
+  const localizeDates = () => {
+    const locale = currentLocale;
+    const shortFormatter = new Intl.DateTimeFormat(locale, {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+    const longFormatter = new Intl.DateTimeFormat(locale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+
+    for (const element of document.querySelectorAll("[data-localize-date]")) {
+      const iso = element.getAttribute("datetime");
+      if (!iso) {
+        continue;
+      }
+
+      const date = new Date(iso);
+      if (Number.isNaN(date.valueOf())) {
+        continue;
+      }
+
+      const style = element.dataset.localizeDate ?? "long";
+      element.textContent = style === "short" ? shortFormatter.format(date) : longFormatter.format(date);
+    }
+  };
+
+  const localizeReadingTimes = () => {
+    const template = translate("templates.reading_time", "{minutes} min read");
+    for (const element of document.querySelectorAll("[data-reading-time]")) {
+      const minutes = Number(element.dataset.readingTime ?? "0");
+      element.textContent = formatTemplate(template, { minutes: Number.isFinite(minutes) ? minutes : 0 });
+    }
+  };
+
+  const localizeStatuses = () => {
+    for (const element of document.querySelectorAll("[data-status-key]")) {
+      const key = element.dataset.statusKey;
+      if (!key) {
+        continue;
+      }
+
+      const fallback = element.dataset.i18nFallback || element.textContent || "";
+      if (!element.dataset.i18nFallback) {
+        element.dataset.i18nFallback = fallback;
+      }
+      element.textContent = translate(key, fallback);
+    }
+  };
+
+  const applyTranslations = () => {
+    document.documentElement.lang = currentLocale;
+    document.body.dataset.locale = currentLocale;
+
+    for (const element of document.querySelectorAll("[data-i18n]")) {
+      const key = element.dataset.i18n;
+      if (!key) {
+        continue;
+      }
+
+      if (!element.dataset.i18nFallback) {
+        element.dataset.i18nFallback = element.textContent || "";
+      }
+
+      element.textContent = translate(key, element.dataset.i18nFallback);
+    }
+
+    for (const element of document.querySelectorAll("[data-i18n-placeholder]")) {
+      const key = element.dataset.i18nPlaceholder;
+      if (!key) {
+        continue;
+      }
+
+      if (!element.dataset.i18nPlaceholderFallback) {
+        element.dataset.i18nPlaceholderFallback = element.getAttribute("placeholder") || "";
+      }
+
+      element.setAttribute("placeholder", translate(key, element.dataset.i18nPlaceholderFallback));
+    }
+
+    for (const element of document.querySelectorAll("[data-i18n-aria-label]")) {
+      const key = element.dataset.i18nAriaLabel;
+      if (!key) {
+        continue;
+      }
+
+      if (!element.dataset.i18nAriaFallback) {
+        element.dataset.i18nAriaFallback = element.getAttribute("aria-label") || "";
+      }
+
+      element.setAttribute("aria-label", translate(key, element.dataset.i18nAriaFallback));
+    }
+
+    for (const select of document.querySelectorAll("[data-locale-switcher]")) {
+      select.value = currentLocale;
+    }
+
+    localizeDates();
+    localizeReadingTimes();
+    localizeStatuses();
+  };
+
+  const setLocale = (locale, persist = true) => {
+    const resolved = resolveLocale(locale) ?? resolveLocale(defaultLocale) ?? "pt-BR";
+    currentLocale = resolved;
+    if (persist) {
+      window.localStorage.setItem(storageKey, resolved);
+    }
+    
+    // Update cycle button text
+    const cycleBtn = document.querySelector(".locale-cycle-btn .locale-current");
+    if (cycleBtn) {
+      cycleBtn.textContent = resolved.split("-")[0].upper();
+    }
+
+    applyTranslations();
+    window.dispatchEvent(new CustomEvent("site:localechange", { detail: { locale: resolved } }));
+  };
+
+    return {
+        applyTranslations,
+        setLocale,
+        translate,
+        getLocale: () => currentLocale,
+        getSupportedLocales: () => supportedLocales.slice(),
+    };
+};
+
+const initLocaleSwitcher = (localization) => {
+  if (!localization) {
+    return;
+  }
+
+  for (const select of document.querySelectorAll("[data-locale-switcher]")) {
+    select.addEventListener("change", (event) => {
+      localization.setLocale(event.currentTarget.value);
+    });
+  }
+};
+
+const initLocaleToggle = (localization) => {
+  const button = document.querySelector("[data-locale-toggle]");
+  if (!localization || !button) {
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    const locales = localization.getSupportedLocales();
+    if (!locales.length) {
+      return;
+    }
+    const current = localization.getLocale();
+    const idx = locales.indexOf(current);
+    const next = locales[(idx + 1) % locales.length] || locales[0];
+    
+    localization.setLocale(next);
+    
+    // Add a small rotation effect on click
+    button.style.transform = "rotate(360deg)";
+    setTimeout(() => {
+      button.style.transform = "";
+    }, 400);
+  });
+};
+
+const enhanceCopyLink = (localization) => {
+  const buttons = document.querySelectorAll("[data-copy-link]");
+  for (const button of buttons) {
+    const fallbackLabel = button.textContent || "";
+    const reset = () => {
+      const key = button.dataset.i18n;
+      if (localization && key) {
+        button.textContent = localization.translate(key, fallbackLabel);
+        return;
+      }
+      button.textContent = fallbackLabel;
+    };
+
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        button.textContent = localization?.translate("actions.link_copied", "Link copied") ?? "Link copied";
+        window.setTimeout(reset, 1600);
+      } catch {
+        button.textContent = localization?.translate("actions.copy_from_address", "Copy from address bar") ?? "Copy from address bar";
+        window.setTimeout(reset, 1800);
+      }
+    });
+  }
+};
+
+const loadAsciiMath = () => {
+  if (document.body.dataset.hasMath !== "true") {
+    return;
+  }
+
+  const scriptUrl = document.querySelector('meta[name="x-asciimath-script"]')?.content;
+  const inlineDelimiter = document.querySelector('meta[name="x-asciimath-inline"]')?.content ?? "%%";
+  const blockDelimiter = document.querySelector('meta[name="x-asciimath-block"]')?.content ?? "%%%";
+
+  if (!scriptUrl) {
+    return;
+  }
+
+  window.MathJax = {
+    loader: {
+      load: ["input/asciimath", "output/chtml"],
+    },
+    asciimath: {
+      delimiters: [
+        [inlineDelimiter, inlineDelimiter],
+        [blockDelimiter, blockDelimiter],
+      ],
+    },
+    startup: {
+      typeset: true,
+    },
+  };
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = scriptUrl;
+  document.head.append(script);
+};
+
+const initPostViewSwitchers = () => {
+  const switchers = document.querySelectorAll("[data-post-view]");
+  for (const switcher of switchers) {
+    const collection = switcher.closest(".section-panel")?.querySelector("[data-post-collection]");
+    if (!collection) {
+      continue;
+    }
+
+    const defaultView = switcher.dataset.defaultView ?? collection.dataset.view ?? "list";
+    collection.dataset.view = defaultView;
+
+    const buttons = switcher.querySelectorAll("[data-view-option]");
+    const sync = (view) => {
+      collection.dataset.view = view;
+      for (const button of buttons) {
+        button.dataset.active = String(button.dataset.viewOption === view);
+      }
+    };
+
+    sync(defaultView);
+
+    for (const button of buttons) {
+      button.addEventListener("click", () => {
+        sync(button.dataset.viewOption ?? defaultView);
+      });
+    }
+  }
+};
+
+const initCommandPalette = (localization) => {
+  const shell = document.querySelector("[data-command-palette]");
+  if (!shell) {
+    return;
+  }
+
+  const openButtons = document.querySelectorAll("[data-open-palette]");
+  const closeButtons = document.querySelectorAll("[data-close-palette]");
+  const input = shell.querySelector("[data-palette-input]");
+  const results = shell.querySelector("[data-palette-results]");
+  const indexUrl = shell.dataset.searchIndex;
+
+  let loaded = false;
+  let items = [];
+
+  const loadIndex = async () => {
+    if (loaded || !indexUrl) {
+      return items;
+    }
+
+    const response = await fetch(indexUrl, { cache: "no-store" });
+    items = response.ok ? await response.json() : [];
+    loaded = true;
+    return items;
+  };
+
+  const renderResults = async (query = "") => {
+    const searchItems = await loadIndex();
+    const normalizedQuery = query.trim().toLowerCase();
+
+    let filtered = searchItems;
+    if (normalizedQuery) {
+      filtered = searchItems.filter((item) => {
+        const haystack = [item.title, item.summary, ...(item.keywords ?? [])].join(" ").toLowerCase();
+        return haystack.includes(normalizedQuery);
+      });
+    }
+
+    results.innerHTML = "";
+
+    if (!filtered.length) {
+      const empty = document.createElement("li");
+      empty.className = "palette-empty";
+      empty.textContent = localization?.translate("palette.empty", "No matching result.") ?? "No matching result.";
+      results.append(empty);
+      return;
+    }
+
+    for (const item of filtered.slice(0, 8)) {
+      const row = document.createElement("li");
+      const link = document.createElement("a");
+      link.className = "palette-result";
+      link.href = item.url;
+      const kind = localization?.translate(`kinds.${item.kind}`, item.kind) ?? item.kind;
+      link.innerHTML = `
+        <strong>${item.title}</strong>
+        <span>${kind}</span>
+        <small>${item.summary}</small>
+      `;
+      row.append(link);
+      results.append(row);
+    }
+  };
+
+  const openPalette = async () => {
+    shell.hidden = false;
+    document.body.dataset.paletteOpen = "true";
+    await renderResults(input.value);
+    input.focus();
+    input.select();
+  };
+
+  const closePalette = () => {
+    shell.hidden = true;
+    document.body.dataset.paletteOpen = "false";
+  };
+
+  for (const button of openButtons) {
+    button.addEventListener("click", openPalette);
+  }
+
+  for (const button of closeButtons) {
+    button.addEventListener("click", closePalette);
+  }
+
+  input.addEventListener("input", () => {
+    renderResults(input.value);
+  });
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      const firstResult = results.querySelector("a");
+      if (firstResult) {
+        window.location.href = firstResult.href;
+      }
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const shortcutPressed = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k";
+    if (shortcutPressed) {
+      event.preventDefault();
+      if (shell.hidden) {
+        openPalette();
+      } else {
+        closePalette();
+      }
+    }
+
+    if (event.key === "Escape" && !shell.hidden) {
+      closePalette();
+    }
+  });
+
+  window.addEventListener("site:localechange", () => {
+    if (!shell.hidden) {
+      renderResults(input.value);
+    }
+  });
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const localization = createLocalization();
+  localization?.applyTranslations();
+  initLocaleSwitcher(localization);
+  enhanceCopyLink(localization);
+  initPostViewSwitchers();
+  initLocaleToggle(localization);
+  initCommandPalette(localization);
+  loadAsciiMath();
+});

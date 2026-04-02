@@ -23,14 +23,14 @@ type Result = IsString<"hello">; // true
 ```
 O uso de `infer` permite extrair partes de tipos complexos, como o tipo de retorno de uma função ou o tipo de uma Promise.
 
-## Mapeamento de Tipos (\(Mapped Types\))
+## Mapeamento de Tipos (\\(Mapped Types\\))
 Transforme um tipo existente em um novo tipo iterando sobre suas propriedades. Útil para criar utilitários como `ReadOnly`, `Partial` ou prefixar chaves de um objeto.
 
-### A Complexidade do Tipo (\(C\))
-Podemos medir a complexidade de um tipo (\(C\)) como o número de transformações e inferências necessárias para o compilador resolvê-lo:
-$$C = \\sum_{i=1}^n T_i + I_i$$
+### A Complexidade do Tipo (\\(C\\))
+Podemos medir a complexidade de um tipo (\\(C\\)) como o número de transformações e inferências necessárias para o compilador resolvê-lo:
+$$C = \\\\\\\\sum_{i=1}^n T_i + I_i$$
 
-Se \(C\) for muito alto, o IntelliSense ficará lento e o tempo de compilação aumentará.
+Se \\(C\\) for muito alto, o IntelliSense ficará lento e o tempo de compilação aumentará.
 
 ## Utilitários de Tipo Customizados:
 *   **Template Literal Types**: Combine strings e crie tipos ultra-específicos para rotas ou eventos.

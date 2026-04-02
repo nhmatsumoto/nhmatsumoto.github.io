@@ -1,0 +1,245 @@
+{
+  "nodes": [
+    {
+      "id": "daniel-kahneman-raciocinio-economico",
+      "title": "Daniel Kahneman: Rápido e Devagar - A Economia Comportamental",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/"
+    },
+    {
+      "id": "projeto-manhattan-bomba-atomica",
+      "title": "Projeto Manhattan: A Ciência da Bomba",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/"
+    },
+    {
+      "id": "segunda-guerra-mundial-tecnologia",
+      "title": "Segunda Guerra Mundial: O Motor da Inovação Tecnológica",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/"
+    },
+    {
+      "id": "richard-feynman-prazer-descobrir",
+      "title": "Richard Feynman: O Prazer de Descobrir e o Pensamento Quântico",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/"
+    },
+    {
+      "id": "alan-turing-computacao-enigma",
+      "title": "Alan Turing: O Código Enigma e o Nascimento da IA",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/"
+    },
+    {
+      "id": "bill-gates-microsoft-historia",
+      "title": "Bill Gates e a Microsoft: Do Desktop à Ubiquidade",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/"
+    },
+    {
+      "id": "typescript-tipagem-avancada",
+      "title": "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/"
+    },
+    {
+      "id": "tdd-ciclo-vermelho-verde-refactor",
+      "title": "TDD: O Ciclo Red-Green-Refactor como Proteção de Domínio",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/"
+    },
+    {
+      "id": "sistemas-de-tipagem-estatico-vs-dinamico",
+      "title": "Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/"
+    },
+    {
+      "id": "fluxo-pensamento-agentes",
+      "title": "A anatomia do pensamento em agentes: transformando intenção em execução",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1200-fluxo-pensamento-agentes/"
+    },
+    {
+      "id": "redes-neurais-do-zero-python",
+      "title": "Redes Neurais do Zero: Implementação Matemática em Python",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/"
+    },
+    {
+      "id": "performance-dotnet-pre-compilacao",
+      "title": "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/"
+    },
+    {
+      "id": "flutter-arquitetura-dart",
+      "title": "Flutter & Dart: Arquitetura de Estados e Performance Mobile",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/"
+    },
+    {
+      "id": "engenharia-cognitive-agentes-ia",
+      "title": "Engenharia Cognitiva: Como Agentes de IA 'Pensam'",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/"
+    },
+    {
+      "id": "design-patterns-gang-of-four-moderno",
+      "title": "Design Patterns: O que ainda é Relevante no C# Moderno?",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/"
+    },
+    {
+      "id": "boas-praticas-clean-code-solid",
+      "title": "Clean Code & SOLID: O Custo da Dívida Técnica",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/"
+    },
+    {
+      "id": "dapper-vs-efcore-performance",
+      "title": "Dapper vs EF Core: Quando a Performance Supera a Abstração",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/"
+    },
+    {
+      "id": "orquestrador-agentes-ddd",
+      "title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
+      "kind": "post",
+      "url": "/publications/2026-04-03-0900-orquestrador-agentes-ddd/"
+    },
+    {
+      "id": "ddd-boundaries-for-agent-systems",
+      "title": "DDD boundaries for agent systems",
+      "kind": "post",
+      "url": "/publications/20260402-203000-ddd-boundaries-for-agent-systems/"
+    },
+    {
+      "id": "ia-inspirada-pela-fisica-redes-neurais",
+      "title": "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
+      "kind": "post",
+      "url": "/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/"
+    },
+    {
+      "id": "computacao-quantica-qbits-vs-bits",
+      "title": "Computação Quântica: O Poder Além dos Bits",
+      "kind": "post",
+      "url": "/publications/2026-04-03-2500-computacao-quantica-qbits-vs-bits/"
+    },
+    {
+      "id": "introducao-intuitiva-fisica-quantica",
+      "title": "O Universo Quântico: Além da Lógica Clássica",
+      "kind": "post",
+      "url": "/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/"
+    },
+    {
+      "id": "simulacao-fisica-particulas-monte-carlo",
+      "title": "Simulação de Partículas: O poder dos Métodos de Monte Carlo",
+      "kind": "post",
+      "url": "/publications/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/"
+    },
+    {
+      "id": "estruturas-de-dados-pilha-fila-arvores",
+      "title": "Excelência em Dados: Pilhas, Filas e Árvores",
+      "kind": "post",
+      "url": "/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/"
+    },
+    {
+      "id": "algoritmos-busca-ordenacao-com-big-o",
+      "title": "Algoritmos e Big O: Entendendo a Eficiência do Código",
+      "kind": "post",
+      "url": "/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/"
+    },
+    {
+      "id": "sistemas-orientados-a-filas",
+      "title": "Resiliência e Escala: Sistemas orientados a Filas de Mensageria",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1600-sistemas-orientados-a-filas/"
+    },
+    {
+      "id": "poc-minerando-logs",
+      "title": "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1100-poc-minerando-logs/"
+    },
+    {
+      "id": "neuroplasticidade-agentes",
+      "title": "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua",
+      "kind": "post",
+      "url": "/publications/2026-04-03-1000-neuroplasticidade-agentes/"
+    },
+    {
+      "id": "gis-pipelines-with-event-driven-services",
+      "title": "GIS pipelines with event-driven services",
+      "kind": "post",
+      "url": "/publications/20260401-184500-gis-pipelines-with-event-driven-services/"
+    },
+    {
+      "id": "primeiro-post",
+      "title": "Bem-vindo ao meu novo blog",
+      "kind": "post",
+      "url": "/publications/20260312-090000-primeiro-post/"
+    },
+    {
+      "id": "ronaldinho-agent",
+      "title": "Ronaldinho Agent",
+      "kind": "project",
+      "url": "/projects/ronaldinho-agent/"
+    },
+    {
+      "id": "sos-location",
+      "title": "SOS Location",
+      "kind": "project",
+      "url": "/projects/sos-location/"
+    },
+    {
+      "id": "splitcosts",
+      "title": "SplitCosts",
+      "kind": "project",
+      "url": "/projects/splitcosts/"
+    },
+    {
+      "id": "gemini-cli",
+      "title": "Gemini CLI",
+      "kind": "project",
+      "url": "/projects/gemini-cli/"
+    },
+    {
+      "id": "gis-incident-lab",
+      "title": "GIS Incident Lab",
+      "kind": "project",
+      "url": "/projects/gis-incident-lab/"
+    },
+    {
+      "id": "adr-versioned-memory",
+      "title": "ADR 003 - Versioned Memory",
+      "kind": "document",
+      "url": "/documents/adr-versioned-memory/"
+    },
+    {
+      "id": "ronaldinho-architecture-overview",
+      "title": "Ronaldinho Architecture Overview",
+      "kind": "document",
+      "url": "/documents/ronaldinho-architecture-overview/"
+    },
+    {
+      "id": "agent-integration-surface",
+      "title": "Agent Integration Surface",
+      "kind": "document",
+      "url": "/documents/agent-integration-surface/"
+    },
+    {
+      "id": "system-architecture",
+      "title": "System Architecture",
+      "kind": "document",
+      "url": "/documents/system-architecture/"
+    },
+    {
+      "id": "technical-knowledge-os",
+      "title": "Technical Knowledge OS",
+      "kind": "document",
+      "url": "/documents/technical-knowledge-os/"
+    }
+  ],
+  "links": []
+}

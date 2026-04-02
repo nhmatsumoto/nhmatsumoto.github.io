@@ -16,8 +16,8 @@ body = """
 Entender redes neurais através de bibliotecas como PyTorch ou TensorFlow é útil, mas entender a **matemática fundamental** por trás de um neurônio é o que separa o "usuário" do "engenheiro de IA".
 
 ## O Neurônio Artificial
-Um neurônio é uma função matemática que recebe entradas (\(x\)), aplica pesos (\(w\)), soma-os com um viés (\(b\)) e passa o resultado por uma função de ativação (\(f\)):
-$$y = f(\\sum_{i=1}^n w_i x_i + b)$$
+Um neurônio é uma função matemática que recebe entradas (\\(x\\)), aplica pesos (\\(w\\)), soma-os com um viés (\\(b\\)) e passa o resultado por uma função de ativação (\\(f\\)):
+$$y = f(\\\\\\\\sum_{i=1}^n w_i x_i + b)$$
 
 ## O Ciclo da Aprendizagem:
 1.  **Forward Propagation**: Os dados fluem da entrada para a saída.
@@ -25,9 +25,9 @@ $$y = f(\\sum_{i=1}^n w_i x_i + b)$$
 3.  **Backpropagation**: Usamos a **Regra da Cadeia** do Cálculo para descobrir como cada peso contribuiu para o erro.
 4.  **Gradient Descent**: Ajustamos os pesos na direção oposta ao gradiente.
 
-### O Gradiente do Erro (\(\\nabla E\))
-A atualização dos pesos (\(w\)) com uma taxa de aprendizado (\(\\eta\)) é:
-$$w_{new} = w_{old} - \\eta \\cdot \\nabla E$$
+### O Gradiente do Erro (\\(\\\\\\\\nabla E\\))
+A atualização dos pesos (\\(w\\)) com uma taxa de aprendizado (\\(\\\\\\\\eta\\)) é:
+$$w_{new} = w_{old} - \\\\\\\\eta \\\\\\\\cdot \\\\\\\\nabla E$$
 
 ## Implementação Conceitual (Python/NumPy):
 

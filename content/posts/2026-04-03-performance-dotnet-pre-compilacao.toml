@@ -22,9 +22,9 @@ O GC é geracional (0, 1, 2) e funciona de maneira otimizada para requisições 
 *   **JIT (Just-In-Time)**: Compila o IL para código de máquina na hora da execução. Excelente para otimizações de longo prazo via PGO (Profile-Guided Optimization).
 *   **Native AOT (Ahead-Of-Time)**: Compila tudo antes da execução. Gera executáveis menores, com "cold start" quase instantâneo e menor consumo de memória por instância.
 
-### A Taxa de Alocação (\(A\))
-A eficiência (\(E\)) do sistema é inversamente proporcional à pressão sobre o GC (\(P\)), que por sua vez é função da taxa de alocação (\(A\)):
-$$E \\propto \\frac{1}{P(A)}$$
+### A Taxa de Alocação (\\(A\\))
+A eficiência (\\(E\\)) do sistema é inversamente proporcional à pressão sobre o GC (\\(P\\)), que por sua vez é função da taxa de alocação (\\(A\\)):
+$$E \\\\\\\\propto \\\\\\\\frac{1}{P(A)}$$
 
 ## Técnicas de Performance:
 *   **Span e ReadOnlySpan**: Trabalhe com janelas de memória sem alocar cópias.

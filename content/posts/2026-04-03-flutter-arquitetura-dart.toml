@@ -16,14 +16,14 @@ body = """
 Flutter não é apenas um "wrapper" de UI; é um motor de renderização completo escrito em C++ que utiliza Dart como sua linguagem de orquestração de alto nível.
 
 ## O Motor: Skia e Impeller
-Enquanto outras tecnologias dependem de pontes (\(bridges\)) para o SO, o Flutter desenha cada pixel na tela (\(painting\)). Isso garante 60 ou 120 FPS constantes, desde que a árvore de widgets seja eficiente.
+Enquanto outras tecnologias dependem de pontes (\\(bridges\\)) para o SO, o Flutter desenha cada pixel na tela (\\(painting\\)). Isso garante 60 ou 120 FPS constantes, desde que a árvore de widgets seja eficiente.
 
 ## Gestão de Estado: O Coração da App
-A escolha do gestor de estado (Provider, Riverpod, Bloc, GetX) define como os dados fluem e como a UI reage (\(reactive UI\)).
+A escolha do gestor de estado (Provider, Riverpod, Bloc, GetX) define como os dados fluem e como a UI reage (\\(reactive UI\\)).
 
-### A Árvore de Reconciliação (\(W\))
-Podemos pensar na eficiência (\(E\)) do Flutter como função da imutabilidade (\(I\)) e da profundidade da árvore (\(D\)):
-$$E \\propto \\frac{I}{D}$$
+### A Árvore de Reconciliação (\\(W\\))
+Podemos pensar na eficiência (\\(E\\)) do Flutter como função da imutabilidade (\\(I\\)) e da profundidade da árvore (\\(D\\)):
+$$E \\\\\\\\propto \\\\\\\\frac{I}{D}$$
 
 ## Boas Práticas:
 *   **const Widgets**: Use widgets constantes para evitar reconstruções desnecessárias.

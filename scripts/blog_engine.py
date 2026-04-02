@@ -2008,7 +2008,7 @@ def clean_output_directory(path: Path) -> None:
             child.unlink()
 
 
-def build_site() -> dict[str, Any]:
+def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     config = load_blog_config()["build"]
     site = load_site()
     system = load_system()
@@ -2018,6 +2018,9 @@ def build_site() -> dict[str, Any]:
     posts = load_posts(include_drafts=False)
     projects = load_projects()
     documents = load_documents()
+
+    # Se output_dir for definido, redirecionamos as saídas para dentro de _site
+    target_root = output_dir if output_dir else ROOT
 
     for post in posts:
         post["resolved_url"] = site_href(site, post["url"])
@@ -2034,10 +2037,10 @@ def build_site() -> dict[str, Any]:
     for document in documents:
         document["resolved_url"] = site_href(site, document["url"])
 
-    publications_dir = ROOT / config["publications_dir"]
-    projects_dir = ROOT / config["projects_output_dir"]
-    documents_dir = ROOT / config["documents_output_dir"]
-    about_dir = ROOT / Path(config["about_file"]).parent
+    publications_dir = target_root / config["publications_dir"]
+    projects_dir = target_root / config["projects_output_dir"]
+    documents_dir = target_root / config["documents_output_dir"]
+    about_dir = target_root / Path(config["about_file"]).parent
 
     clean_output_directory(publications_dir)
     clean_output_directory(projects_dir)
@@ -2046,46 +2049,46 @@ def build_site() -> dict[str, Any]:
 
     generated_paths: list[str] = []
 
-    home_path = ROOT / config["home_file"]
-    archive_path = ROOT / config["archive_file"]
-    project_index_path = ROOT / config["project_index_file"]
-    documents_index_path = ROOT / config["documents_index_file"]
-    about_path = ROOT / config["about_file"]
-    graph_data_path = ROOT / "assets/graph-data.json"
-    search_index_path = ROOT / config["search_index_file"]
-    i18n_asset_path = ROOT / config["i18n_asset_file"]
+    home_path = target_root / config["home_file"]
+    archive_path = target_root / config["archive_file"]
+    project_index_path = target_root / config["project_index_file"]
+    documents_index_path = target_root / config["documents_index_file"]
+    about_path = target_root / config["about_file"]
+    graph_data_path = target_root / "assets/graph-data.json"
+    search_index_path = target_root / config["search_index_file"]
+    i18n_asset_path = target_root / config["i18n_asset_file"]
 
     write_text(home_path, render_home_page(site, system, posts, projects, documents, i18n, locale))
-    generated_paths.append(str(home_path.relative_to(ROOT)))
+    generated_paths.append(str(home_path.relative_to(target_root)))
 
     write_text(archive_path, render_archive_page(site, system, posts, i18n, locale))
-    generated_paths.append(str(archive_path.relative_to(ROOT)))
+    generated_paths.append(str(archive_path.relative_to(target_root)))
 
     write_text(project_index_path, render_projects_index_page(site, system, projects, i18n, locale))
-    generated_paths.append(str(project_index_path.relative_to(ROOT)))
+    generated_paths.append(str(project_index_path.relative_to(target_root)))
 
     write_text(documents_index_path, render_documents_index_page(site, system, documents, i18n, locale))
-    generated_paths.append(str(documents_index_path.relative_to(ROOT)))
+    generated_paths.append(str(documents_index_path.relative_to(target_root)))
 
     write_text(about_path, render_about_page(site, system, i18n, locale))
-    generated_paths.append(str(about_path.relative_to(ROOT)))
+    generated_paths.append(str(about_path.relative_to(target_root)))
 
     for index, post in enumerate(posts):
         previous_post = posts[index - 1] if index > 0 else None
         next_post = posts[index + 1] if index + 1 < len(posts) else None
         destination = publications_dir / post["output_dir_name"] / "index.html"
         write_text(destination, render_post_page(site, system, post, previous_post, next_post, i18n, locale))
-        generated_paths.append(str(destination.relative_to(ROOT)))
+        generated_paths.append(str(destination.relative_to(target_root)))
 
     for project in projects:
         destination = projects_dir / project["slug"] / "index.html"
         write_text(destination, render_project_page(site, system, project, i18n, locale))
-        generated_paths.append(str(destination.relative_to(ROOT)))
+        generated_paths.append(str(destination.relative_to(target_root)))
 
     for document in documents:
         destination = documents_dir / document["slug"] / "index.html"
         write_text(destination, render_document_page(site, system, document, i18n, locale))
-        generated_paths.append(str(destination.relative_to(ROOT)))
+        generated_paths.append(str(destination.relative_to(target_root)))
 
     # Generate Knowledge Graph Data (Zettelkasten)
     graph_nodes = []
@@ -2113,11 +2116,11 @@ def build_site() -> dict[str, Any]:
                 graph_links.append({"source": res.get("slug"), "target": target_slug})
 
     write_json(graph_data_path, {"nodes": graph_nodes, "links": graph_links})
-    generated_paths.append(str(graph_data_path.relative_to(ROOT)))
+    generated_paths.append(str(graph_data_path.relative_to(target_root)))
 
     search_index = build_search_index(site, posts, projects, documents, i18n, locale)
     write_json(search_index_path, search_index)
-    generated_paths.append(str(search_index_path.relative_to(ROOT)))
+    generated_paths.append(str(search_index_path.relative_to(target_root)))
 
     write_json(i18n_asset_path, {
         "defaultLocale": i18n.get("default_locale", locale),
@@ -2127,7 +2130,7 @@ def build_site() -> dict[str, Any]:
         "timezones": i18n.get("timezones", {}),
         "strings": i18n.get("strings", {}),
     })
-    generated_paths.append(str(i18n_asset_path.relative_to(ROOT)))
+    generated_paths.append(str(i18n_asset_path.relative_to(target_root)))
 
     return {
         "generated_files": generated_paths,

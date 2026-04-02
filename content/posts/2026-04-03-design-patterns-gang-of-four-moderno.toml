@@ -25,9 +25,9 @@ Os **Design Patterns** (GoF) foram escritos em uma era de C++ e Smalltalk primit
 *   **Iterator**: `IEnumerable` e `yield return` embutiram isso diretamente no `foreach`.
 *   **Visitor**: Substituído pela superioridade do **Pattern Matching** moderno.
 
-### Exemplo: Pattern Matching vs Visitor (\(S\))
+### Exemplo: Pattern Matching vs Visitor (\\(S\\))
 
-A satisfação semântica (\(S\)) em C# moderno é muito maior com padrões funcionais:
+A satisfação semântica (\\(S\\)) em C# moderno é muito maior com padrões funcionais:
 
 ```csharp
 // Pattern Matching (Modo Moderno)
