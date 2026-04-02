@@ -68,7 +68,21 @@ A forma mais robusta de manter rastreabilidade é exigir **saídas estruturadas*
 2) **Roteie para agentes especializados**: cada agente consome a Linguagem Ubíqua e retorna uma entrega.
 3) **Imponha consistência na modelagem**: entidades e agregados devem preservar invariantes e expor métodos expressivos na linguagem do domínio.
 
+## O Ciclo de Vida de um Contexto Delimitado
+
+Em sistemas multiagente, o **Bounded Context** não é apenas uma divisória lógica no código; é o ambiente de execução de um subagente especializado. O ciclo de vida desse contexto segue três fases críticas:
+
+1.  **Descoberta e Isolamento**: O orquestrador identifica quais domínios são afetados por uma mudança e isola as ferramentas e o histórico necessários para o agente desse domínio.
+2.  **Sincronização Semântica**: Antes de qualquer escrita, o agente deve validar se o termo que planeja usar (ex: `OrderAmount`) já existe no glossário ou se conflita com um termo de outro contexto (ex: `TransactionTotal` em Financeiro).
+3.  **Consolidação de Invariantes**: O agente de domínio garante que as regras de negócio em nível de aplicação (ex: "um pedido não pode ter valor negativo") sejam respeitadas em cada comando gerado.
+
+## Resolução de Conflitos e Linguagem Ubíqua
+
+Quando dois agentes propõem nomes diferentes para o mesmo conceito, o Orquestrador atua como um **Mediador de Domínio**. Ele utiliza uma base de conhecimento centralizada (Memória Curada) para forçar a convergência. 
+
+*   **Exemplo**: Se o agente de API propõe `userId` e o agente de Domínio propõe `CustomerIdentifier`, o Orquestrador consulta o glossário canônico do projeto e impõe o termo definido na Linguagem Ubíqua acordada com o humano.
+
 ## Conclusão
 
-Essa arquitetura não apenas automatiza a tradução de requisitos, mas garante que a **Linguagem Ubíqua** seja o fio condutor de toda a engenharia, reduzindo drasticamente o retrabalho e as falhas de comunicação.
+Essa arquitetura não apenas automatiza a tradução de requisitos, mas garante que a **Linguagem Ubíqua** seja o fio condutor de toda a engenharia, reduzindo drasticamente o retrabalho e as falhas de comunicação entre humanos e máquinas.
 """

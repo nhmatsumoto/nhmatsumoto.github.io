@@ -1,0 +1,54 @@
+id = "2026-04-03-1200"
+slug = "fluxo-pensamento-agentes"
+title = "A anatomia do pensamento em agentes: transformando intenção em execução"
+summary = "Uma análise sobre como o 'Chain of Thought' e a estruturação de planos permitem que agentes de IA resolvam tarefas complexas com precisão."
+published_at = "2026-04-03T09:00:00+09:00"
+updated_at = "2026-04-03T09:00:00+09:00"
+status = "published"
+tags = ["ia", "agentes", "chain-of-thought", "metacognicao"]
+badges = ["reasoning", "agentic-workflows", "engineering"]
+repo_url = ""
+code_url = ""
+featured = true
+has_asciimath = false
+
+body = """
+Resolver um problema complexo não é apenas gerar texto; é sobre **decomposição, validação e execução**. Em sistemas de agentes, o fluxo de pensamento (Chain of Thought) é o que separa uma resposta genérica de uma solução de engenharia robusta.
+
+## O Ciclo Cognitivo
+
+Diferente de um chat comum, um agente operacional segue um ciclo rigoroso para garantir que cada passo seja fundamentado na realidade do projeto.
+
+1.  **Percepção**: Leitura do estado atual (arquivos, logs, memória).
+2.  **Classificação**: Identificar se é uma nova funcionalidade, um bug ou uma dúvida técnica.
+3.  **Modelagem**: Aplicar os princípios do domínio (DDD) para garantir consistência.
+4.  **Planejamento**: Gerar uma lista de passos atômicos e verificáveis.
+5.  **Execução**: Agir através de ferramentas (tool calling).
+
+```mermaid
+graph TD
+  A[Intenção do Usuário] --> B{Analisador de Contexto}
+  B --> C[Pesquisa e Descoberta]
+  C --> D[Plano de Implementação]
+  D --> E[Execução por Subagentes]
+  E --> F[Validação e Feedback]
+  F --> |Falha| D
+  F --> |Sucesso| G[Entrega Final]
+```
+
+## Por que o Planejamento é Crucial?
+
+Sem um plano explícito, o agente tende a ser reativo. O planejamento força a IA a "olhar para frente" e considerar efeitos colaterais. Se o objetivo é adicionar um campo em um banco de dados, o plano deve incluir a migração, a atualização da entidade e o ajuste nas APIs de leitura.
+
+## Exemplo Real: "Adicionar Telefone ao Cliente"
+
+Um pedido vago como este dispara um fluxo estruturado:
+-   **Entidade**: `Customer` (Domínio)
+-   **Value Object**: `PhoneNumber` (Validação de formato)
+-   **Infra**: Inclusão na tabela `customers` via migração.
+-   **API**: Atualização do DTO de resposta e do comando de criação.
+
+## Conclusão
+
+O pensamento em agentes não é mágica, é **engenharia de fluxos**. Ao expor esse raciocínio para o usuário (através de planos e logs), criamos um sistema de confiança mútua onde a IA não apenas "faz", mas "explica por que faz".
+"""

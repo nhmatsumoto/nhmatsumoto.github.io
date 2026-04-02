@@ -1,0 +1,37 @@
+id = "2026-04-03-1300"
+slug = "engenharia-cognitiva-antigravity"
+title = "Engenharia Cognitiva: a filosofia por trás do Antigravity"
+summary = "Uma reflexão sobre como a IA deve atuar não apenas como um executor, mas como um parceiro cognitivo que remove a carga mental do desenvolvimento."
+published_at = "2026-04-03T10:00:00+09:00"
+updated_at = "2026-04-03T10:00:00+09:00"
+status = "published"
+tags = ["ia", "filosofia", "engenharia-cognitiva", "antigravity"]
+badges = ["vision", "human-ai-collaboration", "theory"]
+repo_url = ""
+code_url = ""
+featured = false
+has_asciimath = false
+
+body = """
+O termo **Antigravity** (Antigravidade) não foi escolhido por acaso. Na física, a antigravidade é a força que anula o peso. Na engenharia de software, o "peso" é a carga cognitiva: a necessidade de lembrar de cada detalhe da infraestrutura, cada regra de negócio e cada dependência.
+
+## A Missão: Remover a Fricção
+
+O desenvolvimento moderno está saturado de ferramentas. Paradoxalmente, quanto mais ferramentas temos, mais tempo gastamos gerenciando-as em vez de construir. A engenharia cognitiva propõe que a IA deve ser o **orquestrador silencioso** que entende o contexto e antecipa as necessidades.
+
+### Os Pilares do Antigravity
+
+1.  **Simetria de Contexto**: A IA e o humano devem compartilhar a mesma visão do "agora". Por isso, ler o estado atual do workspace antes de cada decisão é inegociável.
+2.  **Autonomia Responsável**: O sistema deve agir, mas nunca sem um plano visível e aprovável. O controle permanece humano; a execução é máquina.
+3.  **Memória Evolutiva**: Cada erro e cada correção devem ser integrados ao sistema. Se um erro de lint ocorre uma vez, o sistema aprende a regra e o impede na próxima.
+
+## De Executor a Parceiro
+
+Um "editor de texto inteligente" é um executor. Um "sistema de engenharia cognitiva" é um parceiro. Ele questiona requisitos vagos, sugere alternativas de arquitetura baseadas em padrões de mercado e garante que o código siga os princípios de **Clean Code** e **DDD**.
+
+> "A melhor ferramenta é aquela que você esquece que está usando, porque ela se tornou uma extensão do seu pensamento."
+
+## Conclusão
+
+Construir o Antigravity é um exercício de humildade e ambição. Humildade para reconhecer onde a IA falha e onde a intuição humana é soberana, e ambição para acreditar que podemos, sim, criar um mundo onde a programação seja tão fluida quanto o pensamento.
+"""

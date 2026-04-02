@@ -1,440 +1,706 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Hiro Matsumoto | Technical Knowledge OS</title>
-    <meta name="description" content="Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva.">
-    <link rel="canonical" href="https://nhmatsumoto.github.io/">
-    <link rel="stylesheet" href="/assets/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              accent: 'hsl(221, 83%, 53%)',
-              surface: 'hsl(220, 15%, 98%)',
-            },
-            fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
-              serif: ['Lora', 'serif'],
-              mono: ['JetBrains Mono', 'monospace'],
-            }
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Hiro Matsumoto | Technical Knowledge OS</title>
+  <meta name="description"
+    content="Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva.">
+  <link rel="canonical" href="https://nhmatsumoto.github.io/">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: 'hsl(221, 83%, 53%)',
+            surface: 'hsl(220, 15%, 98%)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['Lora', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
           }
         }
       }
-    </script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
-        lucide.createIcons();
-      });
-    </script>
-    
-    <style>
-      :root {
-        --h: 220;
-        --bg: hsl(var(--h), 20%, 99%);
-        --surface: hsl(var(--h), 15%, 98%);
-        --surface-strong: hsl(var(--h), 12%, 94%);
-        --surface-soft: #ffffff;
-        --border: hsla(var(--h), 10%, 10%, 0.05);
-        --accent: #00C2FF;
-        --accent-secondary: #7C5CFF;
-        --accent-soft: hsla(221, 83%, 53%, 0.06);
-        --text: hsl(var(--h), 25%, 15%);
-        --muted: hsl(var(--h), 8%, 45%);
-        --font-heading: "Inter", system-ui, sans-serif;
-        --font-body: "Lora", serif;
-        --font-ui: "Inter", system-ui, sans-serif;
-        --font-code: "JetBrains Mono", monospace;
-        --reading-width: 680px;
-        --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
-        --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05), 0 2px 10px -2px rgba(0,0,0,0.03);
-        --shadow-lg: 0 30px 60px -12px rgba(0,0,0,0.08), 0 18px 36px -18px rgba(0,0,0,0.03);
-        --radius: 24px;
-      }
-      html {
-        font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
-      }
-    </style>
-    
-    
-  </head>
-  <body class="page-home" data-has-math="false" data-default-locale="pt-BR">
-    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
-    
-    
-    <nav class="sticky top-6 z-[200] mx-auto w-full max-w-[1000px] px-6 pointer-events-none" aria-label="Navegação principal" data-i18n-aria-label="accessibility.primary_navigation">
-      <div class="bg-white/80 backdrop-blur-xl border border-black/5 rounded-full px-4 py-2 flex items-center justify-between shadow-lg shadow-black/5 pointer-events-auto transition-transform active:scale-[0.98]">
-        
-        <div class="flex items-center gap-4">
-          <a class="text-slate-900 font-bold tracking-tight hover:text-accent transition-colors" href="/">Hiro Matsumoto</a>
-          <span class="hidden md:block w-px h-4 bg-slate-200"></span>
-          <p class="hidden lg:block text-xs text-muted font-medium max-w-[240px] truncate">technical knowledge OS for scalable systems and autonomous agents.</p>
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+      lucide.createIcons();
+    });
+  </script>
+
+  <style>
+    :root {
+      --h: 220;
+      --bg: hsl(var(--h), 20%, 99%);
+      --surface: hsl(var(--h), 15%, 98%);
+      --surface-strong: hsl(var(--h), 12%, 94%);
+      --surface-soft: #ffffff;
+      --border: hsla(var(--h), 10%, 10%, 0.05);
+      --accent: #00C2FF;
+      --accent-secondary: #7C5CFF;
+      --accent-soft: hsla(221, 83%, 53%, 0.06);
+      --text: hsl(var(--h), 25%, 15%);
+      --muted: hsl(var(--h), 8%, 45%);
+      --font-heading: "Inter", system-ui, sans-serif;
+      --font-body: "Lora", serif;
+      --font-ui: "Inter", system-ui, sans-serif;
+      --font-code: "JetBrains Mono", monospace;
+      --reading-width: 680px;
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 10px -2px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 30px 60px -12px rgba(0, 0, 0, 0.08), 0 18px 36px -18px rgba(0, 0, 0, 0.03);
+      --radius: 24px;
+    }
+
+    html {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+    }
+  </style>
+
+
+</head>
+
+<body class="page-home" data-has-math="false" data-default-locale="pt-BR">
+  <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
+
+
+  <nav class="sticky top-6 z-[200] mx-auto w-full max-w-[1000px] px-6 pointer-events-none"
+    aria-label="Navegação principal" data-i18n-aria-label="accessibility.primary_navigation">
+    <div
+      class="bg-white/80 backdrop-blur-xl border border-black/5 rounded-full px-4 py-2 flex items-center justify-between shadow-lg shadow-black/5 pointer-events-auto transition-transform active:scale-[0.98]">
+
+      <div class="flex items-center gap-4">
+        <a class="text-slate-900 font-bold tracking-tight hover:text-accent transition-colors" href="/">Hiro
+          Matsumoto</a>
+        <span class="hidden md:block w-px h-4 bg-slate-200"></span>
+        <p class="hidden lg:block text-xs text-muted font-medium max-w-[240px] truncate">technical knowledge OS for
+          scalable systems and autonomous agents.</p>
+      </div>
+
+      <div class="hidden md:block" role="navigation">
+        <ul class="flex items-center gap-1 list-none m-0 p-0">
+          <li><a href="/publications/"
+              class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]"
+              data-i18n="nav.posts">publicações</a></li>
+          <li><a href="/projects/"
+              class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]"
+              data-i18n="nav.projects">projetos</a></li>
+          <li><a href="/documents/"
+              class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]"
+              data-i18n="nav.documents">documentos</a></li>
+          <li><a href="/about/"
+              class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]"
+              data-i18n="nav.about">sobre</a></li>
+        </ul>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-slate-400 hover:text-accent hover:bg-white hover:border-accent/20 transition-all text-xs"
+          type="button" data-open-palette aria-label="palette de comandos" data-i18n-aria-label="nav.search">
+          <i data-lucide="search" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline-block font-mono opacity-60">⌘K</span>
+        </button>
+
+        <div class="flex items-center gap-1 pl-2 border-l border-slate-100">
+          <button
+            class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors text-xs font-bold text-slate-600"
+            type="button" data-locale-toggle>
+            <span class="locale-current">PT</span>
+          </button>
+          <a class="hidden sm:flex items-center gap-2 px-4 py-1.5 bg-slate-900 text-white rounded-full text-xs font-semibold hover:bg-accent transition-all hover:shadow-md active:scale-95"
+            href="https://www.linkedin.com/in/nhmatsumoto/" rel="noopener noreferrer" target="_blank"
+            data-i18n="nav.cta">
+            trabalho aberto / contato
+            <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+          </a>
         </div>
-        
-        <div class="hidden md:block" role="navigation">
-          <ul class="flex items-center gap-1 list-none m-0 p-0">
-            <li><a href="/publications/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.posts">publicações</a></li><li><a href="/projects/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.projects">projetos</a></li><li><a href="/documents/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.documents">documentos</a></li><li><a href="/about/" class="px-4 py-2 rounded-full transition-all duration-200 text-muted hover:text-accent hover:bg-black/[0.02]" data-i18n="nav.about">sobre</a></li>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="site-shell">
+    <main class="site-main" id="content">
+
+
+      <section class="hero-panel">
+        <div class="hero-copy">
+          <p class="eyebrow">technical knowledge OS</p>
+          <h1>building scalable systems and autonomous agents</h1>
+          <p class="hero-intro">Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e
+            documentação viva.</p>
+          <div class="hero-meta">
+            <span>minimalist engineering notebook</span>
+            <span>focus</span><span>precision</span><span>technical depth</span>
+          </div>
+          <ul class="stack-list">
+            <li>c#</li>
+            <li>.net</li>
+            <li>distributed systems</li>
+            <li>ai agents</li>
+            <li>gis</li>
           </ul>
         </div>
+        <div class="hero-highlights">
+          <article class="highlight-card">
+            <p class="card-type" data-i18n="home.highlight_main_project">projeto principal</p>
+            <h2><a href="/projects/ronaldinho-agent/">Ronaldinho Agent</a></h2>
+            <p>Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e
+              runtime modular.</p>
+          </article>
+          <article class="highlight-card">
+            <p class="card-type" data-i18n="home.highlight_recent_article">artigo recente</p>
+            <h2><a href="/publications/2026-04-03-0900-orquestrador-agentes-ddd/">Orquestrador de agentes com DDD:
+                traduzindo linguagem natural em Linguagem Ubíqua</a></h2>
+            <p>Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de
+              múltiplos agentes de IA.</p>
+          </article>
+        </div>
+      </section>
 
-        <div class="flex items-center gap-2">
-          <button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-slate-400 hover:text-accent hover:bg-white hover:border-accent/20 transition-all text-xs" type="button" data-open-palette aria-label="palette de comandos" data-i18n-aria-label="nav.search">
-            <i data-lucide="search" class="w-3.5 h-3.5"></i>
-            <span class="hidden sm:inline-block font-mono opacity-60">⌘K</span>
-          </button>
 
-          <div class="flex items-center gap-1 pl-2 border-l border-slate-100">
-            <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors text-xs font-bold text-slate-600" type="button" data-locale-toggle>
-              <span class="locale-current">PT</span>
-            </button>
-            <a class="hidden sm:flex items-center gap-2 px-4 py-1.5 bg-slate-900 text-white rounded-full text-xs font-semibold hover:bg-accent transition-all hover:shadow-md active:scale-95" href="https://www.linkedin.com/in/nhmatsumoto/" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">
-              trabalho aberto / contato
-              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
-            </a>
+      <section class="section-panel" aria-labelledby="posts-title">
+        <header class="section-header">
+          <div>
+            <p class="section-kicker" data-i18n="nav.posts">publicações</p>
+            <h2 id="posts-title" data-i18n="sections.posts_title">Publicações recentes</h2>
           </div>
-        </div>
-      </div>
-    </nav>
-    
+          <p class="section-copy" data-i18n="sections.posts_copy">Textos com tempo de leitura, tags, badges e links
+            diretos para repositórios quando fizer sentido.</p>
+        </header>
 
-    <div class="site-shell">
-      <main class="site-main" id="content">
-        
-    
-    <section class="hero-panel">
-      <div class="hero-copy">
-        <p class="eyebrow">technical knowledge OS</p>
-        <h1>building scalable systems and autonomous agents</h1>
-        <p class="hero-intro">Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva.</p>
-        <div class="hero-meta">
-          <span>minimalist engineering notebook</span>
-          <span>focus</span><span>precision</span><span>technical depth</span>
-        </div>
-        <ul class="stack-list"><li>c#</li><li>.net</li><li>distributed systems</li><li>ai agents</li><li>gis</li></ul>
-      </div>
-      <div class="hero-highlights">
-        <article class="highlight-card">
-              <p class="card-type" data-i18n="home.highlight_main_project">projeto principal</p>
-              <h2><a href="/projects/ronaldinho-agent/">Ronaldinho Agent</a></h2>
-              <p>Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e runtime modular.</p>
-            </article><article class="highlight-card">
-              <p class="card-type" data-i18n="home.highlight_recent_article">artigo recente</p>
-              <h2><a href="/publications/2026-04-03-0900-orquestrador-agentes-ddd/">Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua</a></h2>
-              <p>Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.</p>
-            </article>
-      </div>
-    </section>
-    
-    
-    <section class="section-panel" aria-labelledby="posts-title">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="nav.posts">publicações</p>
-          <h2 id="posts-title" data-i18n="sections.posts_title">Publicações recentes</h2>
-        </div>
-        <p class="section-copy" data-i18n="sections.posts_copy">Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.</p>
-      </header>
-      
         <div class="section-controls">
-          <div class="pill-row"><span class="pill">dotnet</span><span class="pill">ddd</span><span class="pill">ai</span><span class="pill">gis</span></div>
+          <div class="pill-row"><span class="pill">dotnet</span><span class="pill">ddd</span><span
+              class="pill">ai</span><span class="pill">gis</span></div>
           <div class="view-switch" data-post-view data-default-view="list">
-            <button type="button" data-view-option="list" data-i18n="view.list">lista</button><button type="button" data-view-option="grid" data-i18n="view.grid">grade</button>
+            <button type="button" data-view-option="list" data-i18n="view.list">lista</button><button type="button"
+              data-view-option="grid" data-i18n="view.grid">grade</button>
           </div>
         </div>
-        
-      <ol class="resource-list post-collection" data-post-collection data-view="list">
-        <li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">arquitetura</li><li class="badge">ddd</li><li class="badge">ai-agents</li></ul>
+
+        <ol class="resource-list post-collection" data-post-collection data-view="list">
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list">
+                  <li class="badge">reasoning</li>
+                  <li class="badge">agentic-workflows</li>
+                  <li class="badge">engineering</li>
+                </ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-1200-fluxo-pensamento-agentes/">A anatomia do pensamento em agentes:
+                  transformando intenção em execução</a></h3>
+              <p class="card-summary">Uma análise sobre como o 'Chain of Thought' e a estruturação de planos permitem
+                que agentes de IA resolvam tarefas complexas com precisão.</p>
+              <ul class="metric-list">
+                <li><time datetime="2026-04-03T09:00:00+09:00" data-localize-date="short">03 abr 2026</time></li>
+                <li><span data-reading-time="2">2 min de leitura</span></li>
+              </ul>
+              <ul class="tag-list">
+                <li>ia</li>
+                <li>agentes</li>
+                <li>chain-of-thought</li>
+                <li>metacognicao</li>
+              </ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list">
+                  <li class="badge">vision</li>
+                  <li class="badge">human-ai-collaboration</li>
+                  <li class="badge">theory</li>
+                </ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-1300-engenharia-cognitiva-antigravity/">Engenharia Cognitiva: a
+                  filosofia por trás do Antigravity</a></h3>
+              <p class="card-summary">Uma reflexão sobre como a IA deve atuar não apenas como um executor, mas como um
+                parceiro cognitivo que remove a carga mental do desenvolvimento.</p>
+              <ul class="metric-list">
+                <li><time datetime="2026-04-03T10:00:00+09:00" data-localize-date="short">03 abr 2026</time></li>
+                <li><span data-reading-time="2">2 min de leitura</span></li>
+              </ul>
+              <ul class="tag-list">
+                <li>ia</li>
+                <li>filosofia</li>
+                <li>engenharia-cognitiva</li>
+                <li>antigravity</li>
+              </ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list">
+                  <li class="badge">arquitetura</li>
+                  <li class="badge">ddd</li>
+                  <li class="badge">ai-agents</li>
+                </ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-0900-orquestrador-agentes-ddd/">Orquestrador de agentes com DDD:
+                  traduzindo linguagem natural em Linguagem Ubíqua</a></h3>
+              <p class="card-summary">Documento técnico sobre como converter linguagem natural em artefatos de DDD
+                usando orquestração de múltiplos agentes de IA.</p>
+              <ul class="metric-list">
+                <li><time datetime="2026-04-02T21:00:00+09:00" data-localize-date="short">02 abr 2026</time></li>
+                <li><span data-reading-time="1">1 min de leitura</span></li>
+              </ul>
+              <ul class="tag-list">
+                <li>ddd</li>
+                <li>arquitetura</li>
+                <li>agentes-ia</li>
+                <li>inteligência-artificial</li>
+              </ul>
+
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list">
+                  <li class="badge">architecture</li>
+                  <li class="badge">experiment</li>
+                </ul>
+              </div>
+              <h3><a href="/publications/20260402-203000-ddd-boundaries-for-agent-systems/">DDD boundaries for agent
+                  systems</a></h3>
+              <p class="card-summary">Notas práticas sobre como separar domínio, execução de tools e políticas de
+                coordenação em sistemas com agentes.</p>
+              <ul class="metric-list">
+                <li><time datetime="2026-04-02T20:30:00+09:00" data-localize-date="short">02 abr 2026</time></li>
+                <li><span data-reading-time="1">1 min de leitura</span></li>
+              </ul>
+              <ul class="tag-list">
+                <li>dotnet</li>
+                <li>ddd</li>
+                <li>ai</li>
+              </ul>
+              <ul class="action-list">
+                <li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer"
+                    data-i18n="actions.repo">repo</a></li>
+                <li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer"
+                    data-i18n="actions.code">código</a></li>
+              </ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list">
+                  <li class="badge">knowledge-mining</li>
+                  <li class="badge">compliance</li>
+                  <li class="badge">poc</li>
+                </ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-1100-poc-minerando-logs/">PoC: minerando logs de conversas para
+                  gerar posts com rastreabilidade e privacidade (LGPD)</a></h3>
+              <p class="card-summary">Documento conceitual sobre como extrair conhecimento técnico de logs de chat
+                anonimizados e transformá-los em conteúdo publicável.</p>
+              <ul class="metric-list">
+                <li><time datetime="2026-04-02T23:00:00+09:00" data-localize-date="short">02 abr 2026</time></li>
+                <li><span data-reading-time="1">1 min de leitura</span></li>
+              </ul>
+              <ul class="tag-list">
+                <li>ia</li>
+                <li>log-mining</li>
+                <li>privacidade</li>
+                <li>lgpd</li>
+                <li>embeddings</li>
+              </ul>
+
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list">
+                  <li class="badge">agentes</li>
+                  <li class="badge">evelução</li>
+                  <li class="badge">feedback-loop</li>
+                </ul>
+              </div>
+              <h3><a href="/publications/2026-04-03-1000-neuroplasticidade-agentes/">“Neuroplasticidade” em sistemas de
+                  agentes: feedback, memória e melhoria contínua</a></h3>
+              <p class="card-summary">Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de
+                ciclos de feedback e memória curada.</p>
+              <ul class="metric-list">
+                <li><time datetime="2026-04-02T22:00:00+09:00" data-localize-date="short">02 abr 2026</time></li>
+                <li><span data-reading-time="1">1 min de leitura</span></li>
+              </ul>
+              <ul class="tag-list">
+                <li>ia</li>
+                <li>agentes</li>
+                <li>feedback</li>
+                <li>neuroplasticidade</li>
+              </ul>
+
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list">
+                  <li class="badge">production</li>
+                </ul>
+              </div>
+              <h3><a href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/">GIS pipelines with
+                  event-driven services</a></h3>
+              <p class="card-summary">Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional
+                sem transformar o backend em um monólito acidental.</p>
+              <ul class="metric-list">
+                <li><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="short">01 abr 2026</time></li>
+                <li><span data-reading-time="1">1 min de leitura</span></li>
+              </ul>
+              <ul class="tag-list">
+                <li>gis</li>
+                <li>dotnet</li>
+                <li>architecture</li>
+              </ul>
+
+            </article>
+          </li>
+          <li>
+            <article class="resource-card post-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.post">publicação</p>
+                <ul class="badge-list">
+                  <li class="badge">architecture</li>
+                </ul>
+              </div>
+              <h3><a href="/publications/20260312-090000-primeiro-post/">Bem-vindo ao meu novo blog</a></h3>
+              <p class="card-summary">O ponto de partida de um blog estático simples, versionado por Git e editado
+                localmente.</p>
+              <ul class="metric-list">
+                <li><time datetime="2026-03-12T09:00:00+09:00" data-localize-date="short">12 mar 2026</time></li>
+                <li><span data-reading-time="1">1 min de leitura</span></li>
+              </ul>
+              <ul class="tag-list">
+                <li>pessoal</li>
+                <li>anuncio</li>
+              </ul>
+              <ul class="action-list">
+                <li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank"
+                    rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li>
+                <li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts"
+                    target="_blank" rel="noopener noreferrer" data-i18n="actions.code">código</a></li>
+              </ul>
+            </article>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section-panel" style="margin-top: 4rem;">
+        <div class="section-header">
+          <h2 class="flex items-center gap-2">
+            <i data-lucide="network" class="w-6 h-6 text-accent"></i>
+            Knowledge Graph
+          </h2>
+          <p class="text-muted text-sm">Visualização semântica das conexões entre arquitetura, agentes e experimentos.
+          </p>
         </div>
-        <h3><a href="/publications/2026-04-03-0900-orquestrador-agentes-ddd/">Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua</a></h3>
-        <p class="card-summary">Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-02T21:00:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>ddd</li><li>arquitetura</li><li>agentes-ia</li><li>inteligência-artificial</li></ul>
-        
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">architecture</li><li class="badge">experiment</li></ul>
+        <div data-knowledge-graph
+          class="w-full h-[400px] bg-surface rounded-3xl border border-border mt-6 overflow-hidden relative">
+          <div class="absolute top-4 right-4 flex gap-2">
+            <span
+              class="px-2 py-1 bg-white/80 backdrop-blur text-[10px] rounded border border-border flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-accent"></span> Projeto
+            </span>
+            <span
+              class="px-2 py-1 bg-white/80 backdrop-blur text-[10px] rounded border border-border flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-slate-800"></span> Post/Doc
+            </span>
+          </div>
         </div>
-        <h3><a href="/publications/20260402-203000-ddd-boundaries-for-agent-systems/">DDD boundaries for agent systems</a></h3>
-        <p class="card-summary">Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-02T20:30:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>dotnet</li><li>ddd</li><li>ai</li></ul>
-        <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer" data-i18n="actions.code">código</a></li></ul>
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">knowledge-mining</li><li class="badge">compliance</li><li class="badge">poc</li></ul>
-        </div>
-        <h3><a href="/publications/2026-04-03-1100-poc-minerando-logs/">PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)</a></h3>
-        <p class="card-summary">Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-02T23:00:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>ia</li><li>log-mining</li><li>privacidade</li><li>lgpd</li><li>embeddings</li></ul>
-        
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">agentes</li><li class="badge">evelução</li><li class="badge">feedback-loop</li></ul>
-        </div>
-        <h3><a href="/publications/2026-04-03-1000-neuroplasticidade-agentes/">“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua</a></h3>
-        <p class="card-summary">Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-02T22:00:00+09:00" data-localize-date="short">02 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>ia</li><li>agentes</li><li>feedback</li><li>neuroplasticidade</li></ul>
-        
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">production</li></ul>
-        </div>
-        <h3><a href="/publications/20260401-184500-gis-pipelines-with-event-driven-services/">GIS pipelines with event-driven services</a></h3>
-        <p class="card-summary">Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.</p>
-        <ul class="metric-list"><li><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="short">01 abr 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>gis</li><li>dotnet</li><li>architecture</li></ul>
-        
-      </article>
-    </li>
-<li>
-      <article class="resource-card post-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.post">publicação</p>
-          <ul class="badge-list"><li class="badge">architecture</li></ul>
-        </div>
-        <h3><a href="/publications/20260312-090000-primeiro-post/">Bem-vindo ao meu novo blog</a></h3>
-        <p class="card-summary">O ponto de partida de um blog estático simples, versionado por Git e editado localmente.</p>
-        <ul class="metric-list"><li><time datetime="2026-03-12T09:00:00+09:00" data-localize-date="short">12 mar 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-        <ul class="tag-list"><li>pessoal</li><li>anuncio</li></ul>
-        <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts" target="_blank" rel="noopener noreferrer" data-i18n="actions.code">código</a></li></ul>
-      </article>
-    </li>
-      </ol>
-    </section>
-    
-    <section class="section-panel" style="margin-top: 4rem;">
-      <div class="section-header">
-        <h2 class="flex items-center gap-2">
-          <i data-lucide="network" class="w-6 h-6 text-accent"></i>
-          Knowledge Graph
-        </h2>
-        <p class="text-muted text-sm">Visualização semântica das conexões entre arquitetura, agentes e experimentos.</p>
-      </div>
-      <div data-knowledge-graph class="w-full h-[400px] bg-surface rounded-3xl border border-border mt-6 overflow-hidden relative">
-        <div class="absolute top-4 right-4 flex gap-2">
-          <span class="px-2 py-1 bg-white/80 backdrop-blur text-[10px] rounded border border-border flex items-center gap-1">
-            <span class="w-2 h-2 rounded-full bg-accent"></span> Projeto
-          </span>
-          <span class="px-2 py-1 bg-white/80 backdrop-blur text-[10px] rounded border border-border flex items-center gap-1">
-            <span class="w-2 h-2 rounded-full bg-slate-800"></span> Post/Doc
-          </span>
-        </div>
-      </div>
-    </section>
-    
-    <section class="section-panel" aria-labelledby="projects-title">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="nav.projects">projetos</p>
-          <h2 id="projects-title" data-i18n="sections.projects_title">Sistemas centrais</h2>
-        </div>
-        <p class="section-copy" data-i18n="sections.projects_copy">Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.</p>
-      </header>
-      <ol class="resource-list project-collection">
-        <li>
-      <article class="resource-card project-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.project">projeto</p>
-          <div class="card-state"><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></div>
-        </div>
-        <h3><a href="/projects/ronaldinho-agent/">Ronaldinho Agent</a></h3>
-        <p class="card-summary">Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e runtime modular.</p>
-        <ul class="stack-list"><li>TypeScript</li><li>OpenAI</li><li>tool orchestration</li><li>memory snapshots</li></ul>
-        <ul class="badge-list"><li class="badge">architecture</li><li class="badge">experiment</li></ul>
-        <pre class="diagram-preview"><code>runtime -&gt; planner -&gt; tools
+      </section>
+
+      <section class="section-panel" aria-labelledby="projects-title">
+        <header class="section-header">
+          <div>
+            <p class="section-kicker" data-i18n="nav.projects">projetos</p>
+            <h2 id="projects-title" data-i18n="sections.projects_title">Sistemas centrais</h2>
+          </div>
+          <p class="section-copy" data-i18n="sections.projects_copy">Projetos tratados como ativos de longo prazo:
+            arquitetura, stack, status, roadmap e documentos de apoio.</p>
+        </header>
+        <ol class="resource-list project-collection">
+          <li>
+            <article class="resource-card project-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.project">projeto</p>
+                <div class="card-state"><span class="status-chip status-research"
+                    data-status-key="status.research">pesquisa</span></div>
+              </div>
+              <h3><a href="/projects/ronaldinho-agent/">Ronaldinho Agent</a></h3>
+              <p class="card-summary">Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas,
+                memória versionada e runtime modular.</p>
+              <ul class="stack-list">
+                <li>TypeScript</li>
+                <li>OpenAI</li>
+                <li>tool orchestration</li>
+                <li>memory snapshots</li>
+              </ul>
+              <ul class="badge-list">
+                <li class="badge">architecture</li>
+                <li class="badge">experiment</li>
+              </ul>
+              <pre class="diagram-preview"><code>runtime -&gt; planner -&gt; tools
    |         |         |
 memory &lt;--- state ---&gt; logs</code></pre>
-        <ul class="action-list"><li><a href="/documents/adr-versioned-memory/" data-i18n="actions.view_architecture">ver arquitetura</a></li><li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer" data-i18n="actions.view_code">ver código</a></li><li><a href="/documents/ronaldinho-architecture-overview/" data-i18n="actions.open_docs">abrir docs</a></li></ul>
-      </article>
-    </li>
-<li>
-      <article class="resource-card project-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.project">projeto</p>
-          <div class="card-state"><span class="status-chip status-in_progress" data-status-key="status.in_progress">em andamento</span></div>
-        </div>
-        <h3><a href="/projects/splitcosts/">SplitCosts</a></h3>
-        <p class="card-summary">Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional.</p>
-        <ul class="stack-list"><li>.NET</li><li>React</li><li>PostgreSQL</li><li>multi-tenant architecture</li></ul>
-        <ul class="badge-list"><li class="badge">production</li><li class="badge">architecture</li></ul>
-        <pre class="diagram-preview"><code>api -&gt; domain -&gt; projections
+              <ul class="action-list">
+                <li><a href="/documents/adr-versioned-memory/" data-i18n="actions.view_architecture">ver arquitetura</a>
+                </li>
+                <li><a href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener noreferrer"
+                    data-i18n="actions.view_code">ver código</a></li>
+                <li><a href="/documents/ronaldinho-architecture-overview/" data-i18n="actions.open_docs">abrir docs</a>
+                </li>
+              </ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card project-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.project">projeto</p>
+                <div class="card-state"><span class="status-chip status-in_progress"
+                    data-status-key="status.in_progress">em andamento</span></div>
+              </div>
+              <h3><a href="/projects/splitcosts/">SplitCosts</a></h3>
+              <p class="card-summary">Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e
+                consistência operacional.</p>
+              <ul class="stack-list">
+                <li>.NET</li>
+                <li>React</li>
+                <li>PostgreSQL</li>
+                <li>multi-tenant architecture</li>
+              </ul>
+              <ul class="badge-list">
+                <li class="badge">production</li>
+                <li class="badge">architecture</li>
+              </ul>
+              <pre class="diagram-preview"><code>api -&gt; domain -&gt; projections
  |       |          |
 ui &lt;-- tenancy --&gt; db</code></pre>
-        <ul class="action-list"><li><a href="/documents/system-architecture/" data-i18n="actions.view_architecture">ver arquitetura</a></li><li><a href="/documents/system-architecture/" data-i18n="actions.open_docs">abrir docs</a></li></ul>
-      </article>
-    </li>
-<li>
-      <article class="resource-card project-card">
-        <div class="card-headline">
-          <p class="card-type" data-i18n="kinds.project">projeto</p>
-          <div class="card-state"><span class="status-chip status-production" data-status-key="status.production">produção</span></div>
-        </div>
-        <h3><a href="/projects/gis-incident-lab/">GIS Incident Lab</a></h3>
-        <p class="card-summary">Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta.</p>
-        <ul class="stack-list"><li>Python</li><li>.NET</li><li>GIS</li><li>event-driven services</li></ul>
-        <ul class="badge-list"><li class="badge">production</li></ul>
-        <pre class="diagram-preview"><code>ingest -&gt; normalize -&gt; geocode
+              <ul class="action-list">
+                <li><a href="/documents/system-architecture/" data-i18n="actions.view_architecture">ver arquitetura</a>
+                </li>
+                <li><a href="/documents/system-architecture/" data-i18n="actions.open_docs">abrir docs</a></li>
+              </ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card project-card">
+              <div class="card-headline">
+                <p class="card-type" data-i18n="kinds.project">projeto</p>
+                <div class="card-state"><span class="status-chip status-production"
+                    data-status-key="status.production">produção</span></div>
+              </div>
+              <h3><a href="/projects/gis-incident-lab/">GIS Incident Lab</a></h3>
+              <p class="card-summary">Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções
+                operacionais para times de resposta.</p>
+              <ul class="stack-list">
+                <li>Python</li>
+                <li>.NET</li>
+                <li>GIS</li>
+                <li>event-driven services</li>
+              </ul>
+              <ul class="badge-list">
+                <li class="badge">production</li>
+              </ul>
+              <pre class="diagram-preview"><code>ingest -&gt; normalize -&gt; geocode
    |         |          |
 events -&gt; risk map -&gt; ops view</code></pre>
-        <ul class="action-list"><li><a href="/documents/system-architecture/" data-i18n="actions.view_architecture">ver arquitetura</a></li><li><a href="/documents/agent-integration-surface/" data-i18n="actions.open_docs">abrir docs</a></li></ul>
-      </article>
-    </li>
-      </ol>
-    </section>
-    
-    
-    <section class="section-panel" aria-labelledby="documents-title">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="nav.documents">documentos</p>
-          <h2 id="documents-title" data-i18n="sections.documents_title">Sistema de documentação</h2>
-        </div>
-        <p class="section-copy" data-i18n="sections.documents_copy">Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.</p>
-      </header>
-      <ol class="resource-list document-collection"><li>
-      <article class="resource-card document-card">
-        <div class="card-headline">
-          <p class="card-type">agents</p>
-          <p class="card-version">ADR 003</p>
-        </div>
-        <h3><a href="/documents/adr-versioned-memory/">ADR 003 - Versioned Memory</a></h3>
-        <p class="card-summary">Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.</p>
-        <div class="document-flags">
-          <span class="mini-flag" data-i18n="common.agent_generated">gerado por agente</span>
-        </div>
-        <ul class="tag-list"><li>agents</li><li>adr</li><li>memory</li></ul>
-      </article>
-    </li>
-<li>
-      <article class="resource-card document-card">
-        <div class="card-headline">
-          <p class="card-type">agents</p>
-          <p class="card-version">v0.1</p>
-        </div>
-        <h3><a href="/documents/ronaldinho-architecture-overview/">Ronaldinho Architecture Overview</a></h3>
-        <p class="card-summary">Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.</p>
-        <div class="document-flags">
-          <span class="mini-flag" data-i18n="common.agent_generated">gerado por agente</span>
-        </div>
-        <ul class="tag-list"><li>agents</li><li>architecture</li><li>runtime</li></ul>
-      </article>
-    </li>
-<li>
-      <article class="resource-card document-card">
-        <div class="card-headline">
-          <p class="card-type">apis</p>
-          <p class="card-version">v1</p>
-        </div>
-        <h3><a href="/documents/agent-integration-surface/">Agent Integration Surface</a></h3>
-        <p class="card-summary">Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes.</p>
-        <div class="document-flags">
-          <span class="mini-flag" data-i18n="common.agent_generated">gerado por agente</span>
-        </div>
-        <ul class="tag-list"><li>apis</li><li>agents</li><li>integration</li></ul>
-      </article>
-    </li>
-<li>
-      <article class="resource-card document-card">
-        <div class="card-headline">
-          <p class="card-type">architecture</p>
-          <p class="card-version">v1</p>
-        </div>
-        <h3><a href="/documents/system-architecture/">System Architecture</a></h3>
-        <p class="card-summary">Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.</p>
-        <div class="document-flags">
-          
-        </div>
-        <ul class="tag-list"><li>architecture</li><li>system</li></ul>
-      </article>
-    </li></ol>
-    </section>
-    
-    
-    <section class="section-panel about-teaser" aria-labelledby="about-title">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="nav.about">sobre</p>
-          <h2 id="about-title">a living technical documentation system</h2>
-        </div>
-        <p class="section-copy" data-i18n="sections.about_copy">O site é organizado mais como uma base de código do que como uma landing page pessoal.</p>
-      </header>
-      <div class="about-grid">
-        <pre class="tree-block"><code>/blog/posts
+              <ul class="action-list">
+                <li><a href="/documents/system-architecture/" data-i18n="actions.view_architecture">ver arquitetura</a>
+                </li>
+                <li><a href="/documents/agent-integration-surface/" data-i18n="actions.open_docs">abrir docs</a></li>
+              </ul>
+            </article>
+          </li>
+        </ol>
+      </section>
+
+
+      <section class="section-panel" aria-labelledby="documents-title">
+        <header class="section-header">
+          <div>
+            <p class="section-kicker" data-i18n="nav.documents">documentos</p>
+            <h2 id="documents-title" data-i18n="sections.documents_title">Sistema de documentação</h2>
+          </div>
+          <p class="section-copy" data-i18n="sections.documents_copy">Notas em markdown organizadas por domínio,
+            arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.</p>
+        </header>
+        <ol class="resource-list document-collection">
+          <li>
+            <article class="resource-card document-card">
+              <div class="card-headline">
+                <p class="card-type">agents</p>
+                <p class="card-version">ADR 003</p>
+              </div>
+              <h3><a href="/documents/adr-versioned-memory/">ADR 003 - Versioned Memory</a></h3>
+              <p class="card-summary">Decisão arquitetural sobre snapshots de memória e persistência de contexto em
+                workflows com agentes.</p>
+              <div class="document-flags">
+                <span class="mini-flag" data-i18n="common.agent_generated">gerado por agente</span>
+              </div>
+              <ul class="tag-list">
+                <li>agents</li>
+                <li>adr</li>
+                <li>memory</li>
+              </ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card document-card">
+              <div class="card-headline">
+                <p class="card-type">agents</p>
+                <p class="card-version">v0.1</p>
+              </div>
+              <h3><a href="/documents/ronaldinho-architecture-overview/">Ronaldinho Architecture Overview</a></h3>
+              <p class="card-summary">Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do
+                runtime.</p>
+              <div class="document-flags">
+                <span class="mini-flag" data-i18n="common.agent_generated">gerado por agente</span>
+              </div>
+              <ul class="tag-list">
+                <li>agents</li>
+                <li>architecture</li>
+                <li>runtime</li>
+              </ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card document-card">
+              <div class="card-headline">
+                <p class="card-type">apis</p>
+                <p class="card-version">v1</p>
+              </div>
+              <h3><a href="/documents/agent-integration-surface/">Agent Integration Surface</a></h3>
+              <p class="card-summary">Contratos mínimos para expor ferramentas e serviços a um runtime orientado a
+                agentes.</p>
+              <div class="document-flags">
+                <span class="mini-flag" data-i18n="common.agent_generated">gerado por agente</span>
+              </div>
+              <ul class="tag-list">
+                <li>apis</li>
+                <li>agents</li>
+                <li>integration</li>
+              </ul>
+            </article>
+          </li>
+          <li>
+            <article class="resource-card document-card">
+              <div class="card-headline">
+                <p class="card-type">architecture</p>
+                <p class="card-version">v1</p>
+              </div>
+              <h3><a href="/documents/system-architecture/">System Architecture</a></h3>
+              <p class="card-summary">Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.
+              </p>
+              <div class="document-flags">
+
+              </div>
+              <ul class="tag-list">
+                <li>architecture</li>
+                <li>system</li>
+              </ul>
+            </article>
+          </li>
+        </ol>
+      </section>
+
+
+      <section class="section-panel about-teaser" aria-labelledby="about-title">
+        <header class="section-header">
+          <div>
+            <p class="section-kicker" data-i18n="nav.about">sobre</p>
+            <h2 id="about-title">a living technical documentation system</h2>
+          </div>
+          <p class="section-copy" data-i18n="sections.about_copy">O site é organizado mais como uma base de código do
+            que como uma landing page pessoal.</p>
+        </header>
+        <div class="about-grid">
+          <pre class="tree-block"><code>/blog/posts
 /blog/projects
 /blog/docs
 /blog/components
 /blog/domain
 /blog/application
 /blog/infra</code></pre>
-        <ul class="next-step-list"><li>generate react + tailwind template</li><li>create mdx structure</li><li>integrate with agent system</li></ul>
-      </div>
-    </section>
-    
-    
-      </main>
-      
+          <ul class="next-step-list">
+            <li>generate react + tailwind template</li>
+            <li>create mdx structure</li>
+            <li>integrate with agent system</li>
+          </ul>
+        </div>
+      </section>
+
+
+    </main>
+
     <footer class="site-footer">
       <div>
         <p class="footer-label">technical knowledge OS</p>
-        <p>Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
+        <p>Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências
+          externas.</p>
       </div>
       <div class="footer-meta">
-        <ul class="footer-pills"><li>clarity</li><li>depth</li><li>no distraction</li></ul>
-        <ul class="footer-pills"><li>engineering docs</li><li>light dashboards</li><li>structured README</li></ul>
+        <ul class="footer-pills">
+          <li>clarity</li>
+          <li>depth</li>
+          <li>no distraction</li>
+        </ul>
+        <ul class="footer-pills">
+          <li>engineering docs</li>
+          <li>light dashboards</li>
+          <li>structured README</li>
+        </ul>
       </div>
     </footer>
-    
-    </div>
-    
-    <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
-      <div class="palette-backdrop" data-close-palette></div>
-      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
-        <div class="palette-head">
-          <input class="palette-input" type="search" placeholder="Buscar publicações, projetos e documentos" data-palette-input data-i18n-placeholder="palette.placeholder">
-          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">Fechar</button>
-        </div>
-        <p class="palette-hint" data-i18n="palette.hint">Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.</p>
-        <ul class="palette-results" data-palette-results></ul>
+
+  </div>
+
+  <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
+    <div class="palette-backdrop" data-close-palette></div>
+    <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Palette de comandos"
+      data-i18n-aria-label="accessibility.command_palette">
+      <div class="palette-head">
+        <input class="palette-input" type="search" placeholder="Buscar publicações, projetos e documentos"
+          data-palette-input data-i18n-placeholder="palette.placeholder">
+        <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">Fechar</button>
       </div>
+      <p class="palette-hint" data-i18n="palette.hint">Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e
+        Esc para fechar.</p>
+      <ul class="palette-results" data-palette-results></ul>
     </div>
-    
-    <script id="site-i18n" type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "pt-PT", "ja-JP"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語"}, "aliases": {"pt": "pt-PT", "pt-br": "pt-BR", "pt-pt": "pt-PT", "ja": "ja-JP", "ja-jp": "ja-JP"}, "timezones": {"Asia/Tokyo": "ja-JP", "America/Sao_Paulo": "pt-BR", "America/Fortaleza": "pt-BR", "America/Manaus": "pt-BR", "Europe/Lisbon": "pt-PT"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "palette de comandos", "cta": "trabalho aberto / contato", "language": "idioma", "language_action": "trocar idioma"}, "palette": {"placeholder": "Buscar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal."}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Seção central", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda."}, "actions": {"repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço"}, "status": {"research": "pesquisa", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grade"}}, "pt-PT": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Paleta de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "paleta de comandos", "cta": "trabalho aberto / contacto", "language": "idioma", "language_action": "trocar idioma"}, "palette": {"placeholder": "Pesquisar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, etiquetas, badges e ligações diretas para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, estado, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site está organizado mais como uma base de código do que como uma landing page pessoal."}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experiências, modelação de domínio e heurísticas operacionais."}, "projects": {"title": "Secção central", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar às publicações", "copy_link": "Copiar ligação", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais recente", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Estado", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "pré-visualização", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Ainda não existem publicações publicadas.", "projects": "Nenhum projeto disponível.", "documents": "Ainda não existem documentos indexados."}, "actions": {"repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Ligação copiada", "copy_from_address": "Copie a partir da barra de endereço"}, "status": {"research": "investigação", "in_progress": "em progresso", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grelha"}}, "ja-JP": {"accessibility": {"skip_to_content": "本文へ移動", "primary_navigation": "メインナビゲーション", "breadcrumbs": "現在地", "language_switcher": "言語を選択", "command_palette": "コマンドパレット"}, "nav": {"home": "ホーム", "posts": "記事", "projects": "プロジェクト", "documents": "ドキュメント", "about": "概要", "search": "コマンドパレット", "cta": "仕事の相談 / 連絡", "language": "言語", "language_action": "言語を切り替える"}, "palette": {"placeholder": "記事、プロジェクト、ドキュメントを検索", "close": "閉じる", "hint": "Ctrl/⌘ K で開き、Enter で先頭結果を開き、Esc で閉じます。", "empty": "一致する結果がありません。"}, "home": {"highlight_main_project": "メインプロジェクト", "highlight_recent_article": "最新記事"}, "sections": {"posts_title": "最近の投稿", "posts_copy": "読了時間、タグ、バッジ、必要に応じたリポジトリへの直接リンクを含む投稿一覧です。", "projects_title": "主要システム", "projects_copy": "プロジェクトを長期資産として整理し、アーキテクチャ、スタック、状態、ロードマップ、関連ドキュメントをまとめています。", "documents_title": "ドキュメントシステム", "documents_copy": "ドメイン、アーキテクチャ、エージェント、API ごとに整理された markdown ベースのノートです。", "about_copy": "このサイトは個人用ランディングページというより、構造化されたコードベースのように整理されています。"}, "pages": {"archive": {"title": "すべての公開記事", "description": "アーキテクチャ、実験、ドメイン設計、運用上の知見をまとめた執筆一覧です。"}, "projects": {"title": "コアセクション", "description": "各プロジェクトを、課題、解決策、アーキテクチャ、スタック、ADR、ロードマップの単位で整理しています。"}, "documents": {"title": "ドキュメントシステム", "description": "意思決定を追跡しやすくするため、ドメイン、アーキテクチャ、エージェント、API ごとに文書を整理しています。"}, "about": {"title": "ミニマルなエンジニアリングノート", "operating_model": "運用モデル", "structure": "構成", "next_steps": "次のステップ", "future_frontend": "将来のフロントエンド案"}, "post": {"kicker": "記事", "metadata": "メタデータ", "back": "記事一覧へ戻る", "copy_link": "リンクをコピー", "navigation": "記事ナビゲーション", "newer_empty": "これより新しい記事はありません", "older_empty": "これより古い記事はありません"}, "project": {"kicker": "プロジェクト", "status": "状態", "stack": "スタック", "actions": "アクション", "overview": "概要", "problem_solution": "課題と解決策", "architecture": "アーキテクチャ", "adr": "ADR", "roadmap": "ロードマップ"}, "document": {"kicker": "ドキュメント", "meta": "ドキュメント情報", "version": "バージョン", "category": "カテゴリ"}}, "common": {"preview": "プレビュー", "content_in_preparation": "内容を準備中です。", "agent_generated": "エージェント生成"}, "empty": {"posts": "まだ公開済みの記事はありません。", "projects": "利用可能なプロジェクトはありません。", "documents": "まだ索引化されたドキュメントはありません。"}, "actions": {"repo": "repo", "code": "コード", "view_architecture": "構成を見る", "view_code": "コードを見る", "open_docs": "ドキュメントを開く", "link_copied": "リンクをコピーしました", "copy_from_address": "アドレスバーからコピーしてください"}, "status": {"research": "調査", "in_progress": "進行中", "production": "本番"}, "kinds": {"home": "ホーム", "about": "概要", "post": "記事", "project": "プロジェクト", "document": "ドキュメント"}, "templates": {"reading_time": "読了 {minutes} 分"}, "view": {"list": "一覧", "grid": "グリッド"}}}}</script>
-    <script src="/assets/blog.js" defer></script>
-    <script src="/assets/graphview.js" defer></script>
-  </body>
+  </div>
+
+  <script id="site-i18n"
+    type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "pt-PT", "ja-JP"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語"}, "aliases": {"pt": "pt-PT", "pt-br": "pt-BR", "pt-pt": "pt-PT", "ja": "ja-JP", "ja-jp": "ja-JP"}, "timezones": {"Asia/Tokyo": "ja-JP", "America/Sao_Paulo": "pt-BR", "America/Fortaleza": "pt-BR", "America/Manaus": "pt-BR", "Europe/Lisbon": "pt-PT"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "palette de comandos", "cta": "trabalho aberto / contato", "language": "idioma", "language_action": "trocar idioma"}, "palette": {"placeholder": "Buscar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal."}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Seção central", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda."}, "actions": {"repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço"}, "status": {"research": "pesquisa", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grade"}}, "pt-PT": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Paleta de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "paleta de comandos", "cta": "trabalho aberto / contacto", "language": "idioma", "language_action": "trocar idioma"}, "palette": {"placeholder": "Pesquisar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, etiquetas, badges e ligações diretas para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, estado, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site está organizado mais como uma base de código do que como uma landing page pessoal."}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experiências, modelação de domínio e heurísticas operacionais."}, "projects": {"title": "Secção central", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar às publicações", "copy_link": "Copiar ligação", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais recente", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Estado", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "pré-visualização", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Ainda não existem publicações publicadas.", "projects": "Nenhum projeto disponível.", "documents": "Ainda não existem documentos indexados."}, "actions": {"repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Ligação copiada", "copy_from_address": "Copie a partir da barra de endereço"}, "status": {"research": "investigação", "in_progress": "em progresso", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grelha"}}, "ja-JP": {"accessibility": {"skip_to_content": "本文へ移動", "primary_navigation": "メインナビゲーション", "breadcrumbs": "現在地", "language_switcher": "言語を選択", "command_palette": "コマンドパレット"}, "nav": {"home": "ホーム", "posts": "記事", "projects": "プロジェクト", "documents": "ドキュメント", "about": "概要", "search": "コマンドパレット", "cta": "仕事の相談 / 連絡", "language": "言語", "language_action": "言語を切り替える"}, "palette": {"placeholder": "記事、プロジェクト、ドキュメントを検索", "close": "閉じる", "hint": "Ctrl/⌘ K で開き、Enter で先頭結果を開き、Esc で閉じます。", "empty": "一致する結果がありません。"}, "home": {"highlight_main_project": "メインプロジェクト", "highlight_recent_article": "最新記事"}, "sections": {"posts_title": "最近の投稿", "posts_copy": "読了時間、タグ、バッジ、必要に応じたリポジトリへの直接リンクを含む投稿一覧です。", "projects_title": "主要システム", "projects_copy": "プロジェクトを長期資産として整理し、アーキテクチャ、スタック、状態、ロードマップ、関連ドキュメントをまとめています。", "documents_title": "ドキュメントシステム", "documents_copy": "ドメイン、アーキテクチャ、エージェント、API ごとに整理された markdown ベースのノートです。", "about_copy": "このサイトは個人用ランディングページというより、構造化されたコードベースのように整理されています。"}, "pages": {"archive": {"title": "すべての公開記事", "description": "アーキテクチャ、実験、ドメイン設計、運用上の知見をまとめた執筆一覧です。"}, "projects": {"title": "コアセクション", "description": "各プロジェクトを、課題、解決策、アーキテクチャ、スタック、ADR、ロードマップの単位で整理しています。"}, "documents": {"title": "ドキュメントシステム", "description": "意思決定を追跡しやすくするため、ドメイン、アーキテクチャ、エージェント、API ごとに文書を整理しています。"}, "about": {"title": "ミニマルなエンジニアリングノート", "operating_model": "運用モデル", "structure": "構成", "next_steps": "次のステップ", "future_frontend": "将来のフロントエンド案"}, "post": {"kicker": "記事", "metadata": "メタデータ", "back": "記事一覧へ戻る", "copy_link": "リンクをコピー", "navigation": "記事ナビゲーション", "newer_empty": "これより新しい記事はありません", "older_empty": "これより古い記事はありません"}, "project": {"kicker": "プロジェクト", "status": "状態", "stack": "スタック", "actions": "アクション", "overview": "概要", "problem_solution": "課題と解決策", "architecture": "アーキテクチャ", "adr": "ADR", "roadmap": "ロードマップ"}, "document": {"kicker": "ドキュメント", "meta": "ドキュメント情報", "version": "バージョン", "category": "カテゴリ"}}, "common": {"preview": "プレビュー", "content_in_preparation": "内容を準備中です。", "agent_generated": "エージェント生成"}, "empty": {"posts": "まだ公開済みの記事はありません。", "projects": "利用可能なプロジェクトはありません。", "documents": "まだ索引化されたドキュメントはありません。"}, "actions": {"repo": "repo", "code": "コード", "view_architecture": "構成を見る", "view_code": "コードを見る", "open_docs": "ドキュメントを開く", "link_copied": "リンクをコピーしました", "copy_from_address": "アドレスバーからコピーしてください"}, "status": {"research": "調査", "in_progress": "進行中", "production": "本番"}, "kinds": {"home": "ホーム", "about": "概要", "post": "記事", "project": "プロジェクト", "document": "ドキュメント"}, "templates": {"reading_time": "読了 {minutes} 分"}, "view": {"list": "一覧", "grid": "グリッド"}}}}</script>
+  <script src="/assets/blog.js" defer></script>
+  <script src="/assets/graphview.js" defer></script>
+</body>
+
 </html>
