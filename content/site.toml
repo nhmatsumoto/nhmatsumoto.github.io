@@ -1,0 +1,18 @@
+title = "Hiro Matsumoto"
+headline = "Vida prática, software e tecnologia sem verniz."
+description = "Blog pessoal publicado via GitHub Pages com HTML semântico, conteúdo em TOML e um editor local simples."
+language = "pt-BR"
+author = "Hiro Matsumoto"
+base_url = "https://nhmatsumoto.github.io"
+github_url = "https://github.com/nhmatsumoto"
+linkedin_url = "https://www.linkedin.com/in/nhmatsumoto/"
+home_title = "Anotações sobre estilo de vida, software e tecnologia."
+home_intro = """
+Este espaço foi desenhado para ser direto: conteúdo em TOML, HTML semântico no destino final e um fluxo de publicação controlado por commit.
+
+Escrevo aqui para registrar ideias técnicas, notas de arquitetura, decisões práticas e observações sobre a rotina de construir software.
+"""
+about = """
+Sou engenheiro de software e uso este blog como um caderno público de trabalho. A proposta é simples: escrever com clareza, publicar com Git e manter a estrutura pequena o suficiente para durar.
+"""
+footer_note = "Publicado com HTML semântico, TOML e um gerador local sem dependências externas."

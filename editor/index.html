@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Editor Local do Blog</title>
+    <link rel="stylesheet" href="/editor/styles.css">
+    <script src="/editor/app.js" defer></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="kicker">localhost editor</p>
+        <h1>Editor do blog</h1>
+      </div>
+      <p class="header-copy">
+        Conteúdo em TOML, preview em HTML semântico e publicação guiada por Git.
+      </p>
+    </header>
+
+    <main class="app-shell">
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-head">
+            <h2>Posts</h2>
+            <button id="new-post" type="button">Novo rascunho</button>
+          </div>
+          <label class="field">
+            <span>Filtro</span>
+            <input id="search-posts" type="search" placeholder="Buscar por título ou tag">
+          </label>
+          <ul id="post-list" class="post-list" aria-label="Lista de posts"></ul>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sidebar-head">
+            <h2>Git</h2>
+            <button id="refresh-status" type="button">Atualizar</button>
+          </div>
+          <pre id="git-status" class="status-box">Carregando…</pre>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <section class="toolbar">
+          <div class="toolbar-actions">
+            <button id="save-site" type="button">Salvar blog</button>
+            <button id="save-post" type="button">Salvar post</button>
+            <button id="preview-post" type="button">Visualizar</button>
+            <button id="build-site" type="button">Buildar site</button>
+          </div>
+          <div class="publish-bar">
+            <input id="commit-message" type="text" placeholder="Mensagem de commit">
+            <label class="checkbox">
+              <input id="push-after-commit" type="checkbox">
+              <span>dar push depois do commit</span>
+            </label>
+            <button id="publish-blog" type="button" class="accent">Publicar</button>
+          </div>
+          <p id="notice" class="notice" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="editor-grid">
+          <section class="panel">
+            <details open>
+              <summary>Configuração do blog</summary>
+              <form id="site-form" class="form-grid">
+                <label class="field field-span-2">
+                  <span>Título</span>
+                  <input name="title" type="text">
+                </label>
+                <label class="field field-span-2">
+                  <span>Headline</span>
+                  <input name="headline" type="text">
+                </label>
+                <label class="field field-span-2">
+                  <span>Descrição</span>
+                  <textarea name="description" rows="3"></textarea>
+                </label>
+                <label class="field">
+                  <span>Idioma</span>
+                  <input name="language" type="text">
+                </label>
+                <label class="field">
+                  <span>Autor</span>
+                  <input name="author" type="text">
+                </label>
+                <label class="field">
+                  <span>Base URL</span>
+                  <input name="base_url" type="url" placeholder="https://usuario.github.io">
+                </label>
+                <label class="field">
+                  <span>GitHub</span>
+                  <input name="github_url" type="url">
+                </label>
+                <label class="field">
+                  <span>LinkedIn</span>
+                  <input name="linkedin_url" type="url">
+                </label>
+                <label class="field field-span-2">
+                  <span>Título da home</span>
+                  <input name="home_title" type="text">
+                </label>
+                <label class="field field-span-2">
+                  <span>Intro da home</span>
+                  <textarea name="home_intro" rows="4"></textarea>
+                </label>
+                <label class="field field-span-2">
+                  <span>Sobre</span>
+                  <textarea name="about" rows="6"></textarea>
+                </label>
+                <label class="field field-span-2">
+                  <span>Rodapé</span>
+                  <input name="footer_note" type="text">
+                </label>
+              </form>
+            </details>
+
+            <details open>
+              <summary>Post atual</summary>
+              <form id="post-form" class="form-grid">
+                <label class="field">
+                  <span>ID</span>
+                  <input name="id" type="text" readonly>
+                </label>
+                <label class="field">
+                  <span>Status</span>
+                  <select name="status">
+                    <option value="draft">draft</option>
+                    <option value="published">published</option>
+                  </select>
+                </label>
+                <label class="field field-span-2">
+                  <span>Título</span>
+                  <input name="title" id="post-title" type="text" placeholder="Novo texto">
+                </label>
+                <label class="field field-span-2">
+                  <span>Slug</span>
+                  <input name="slug" id="post-slug" type="text" placeholder="novo-texto">
+                </label>
+                <label class="field field-span-2">
+                  <span>Resumo</span>
+                  <textarea name="summary" rows="3"></textarea>
+                </label>
+                <label class="field">
+                  <span>Publicado em</span>
+                  <input name="published_at" type="text" placeholder="2026-04-03T22:15:00+09:00">
+                </label>
+                <label class="field">
+                  <span>Atualizado em</span>
+                  <input name="updated_at" type="text" readonly>
+                </label>
+                <label class="field field-span-2">
+                  <span>Tags</span>
+                  <input name="tags" type="text" placeholder="tecnologia, vida, arquitetura">
+                </label>
+                <label class="checkbox checkbox-wide">
+                  <input name="has_asciimath" type="checkbox">
+                  <span>este post usa AsciiMath</span>
+                </label>
+                <label class="field field-span-2">
+                  <span>Corpo</span>
+                  <textarea name="body" rows="18" placeholder="# Título do texto"></textarea>
+                </label>
+              </form>
+              <div class="help-box">
+                <p>Markdown suportado: títulos, listas, links, blockquote, código cercado por <code>```</code>.</p>
+                <p>AsciiMath: use <code>%%formula%%</code> em linha e <code>%%%formula%%%</code> em bloco.</p>
+              </div>
+            </details>
+          </section>
+
+          <section class="panel preview-panel">
+            <div class="preview-head">
+              <h2>Preview</h2>
+              <p>Pré-visualização renderizada pelo mesmo motor usado no build.</p>
+            </div>
+            <div id="preview" class="preview-frame">
+              <p class="empty-preview">Clique em “Visualizar” para renderizar o post atual.</p>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

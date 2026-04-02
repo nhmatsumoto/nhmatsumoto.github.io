@@ -1,0 +1,29 @@
+id = "20260312-090000"
+slug = "primeiro-post"
+title = "Bem-vindo ao meu novo blog"
+summary = "O ponto de partida de um blog estático simples, versionado por Git e editado localmente."
+published_at = "2026-03-12T09:00:00+09:00"
+updated_at = "2026-04-03T00:00:00+09:00"
+status = "published"
+tags = ["pessoal", "anuncio"]
+has_asciimath = false
+
+body = """
+# Olá, mundo!
+
+Este é o primeiro post do novo formato do blog. A proposta é manter tudo simples: conteúdo versionado, HTML final legível e uma ferramenta local pequena o bastante para ser entendida rapidamente.
+
+## O que muda neste projeto
+
+- O conteúdo passa a viver em arquivos TOML.
+- O site público é gerado como HTML estático.
+- O fluxo de publicação acontece por `git commit` e `git push`.
+
+## O que esperar daqui
+
+1. Notas sobre arquitetura e produto.
+2. Publicações sobre tecnologia aplicada.
+3. Alguns registros sobre rotina, trabalho e estilo de vida.
+
+Este espaço existe para durar com baixa manutenção.
+"""

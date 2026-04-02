@@ -1,0 +1,13 @@
+[build]
+site_file = "content/site.toml"
+posts_dir = "content/posts"
+publications_dir = "publications"
+home_file = "index.html"
+archive_file = "publications/index.html"
+posts_on_home = 6
+
+[math]
+enabled = true
+script_url = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"
+inline_delimiter = "%%"
+block_delimiter = "%%%"

@@ -1,0 +1,24 @@
+[feature]
+name = "blog-mvp"
+status = "in_progress"
+summary = "MVP de um blog estático com conteúdo em TOML, geração local de HTML e editor localhost para salvar, pré-visualizar, buildar e publicar via Git."
+
+[[requirements]]
+name = "site-publico"
+status = "done"
+details = "O site deve publicar HTML semântico, CSS manual e JavaScript mínimo."
+
+[[requirements]]
+name = "conteudo-em-toml"
+status = "done"
+details = "Configuração, planejamento e posts passam a usar arquivos TOML."
+
+[[requirements]]
+name = "editor-local"
+status = "in_progress"
+details = "Aplicação localhost para editar posts, salvar TOML, visualizar e acionar build/commit."
+
+[[requirements]]
+name = "publicacao-por-git"
+status = "in_progress"
+details = "As mudanças do blog devem ser geradas localmente e preparadas para commit e push."
