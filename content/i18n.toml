@@ -55,6 +55,7 @@ documents_copy = "Notas em markdown organizadas por domínio, arquitetura, agent
 about_copy = "O site é organizado mais como uma base de código do que como uma landing page pessoal."
 brain_map_title = "Mapa cerebral vivo"
 brain_map_copy = "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos."
+welcome_message = "Seja bem-vindo ao nhmatsumoto-blog-engine — um notebook técnico que começa com esta saudação e te guia pelo meu cérebro técnico."
 
 [strings."pt-BR".pages.archive]
 title = "Todas as publicações"
@@ -178,6 +179,7 @@ documents_copy = "Markdown notes organized by domain, architecture, agents and A
 about_copy = "The site is organized more like a codebase than a personal landing page."
 brain_map_title = "Living brain map"
 brain_map_copy = "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain."
+welcome_message = "Welcome to nhmatsumoto-blog-engine — a technical notebook that begins with this greeting and guides you through my technical brain."
 
 [strings."en-US".pages.archive]
 title = "All posts"

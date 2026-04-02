@@ -420,6 +420,28 @@ pre {
   min-height: 30rem;
 }
 
+.hero-welcome {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.profile-avatar {
+  font-family: var(--font-code);
+  font-size: 0.68rem;
+  line-height: 0.85;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.05);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: pre;
+}
+
 .hero-copy {
   display: grid;
   align-content: start;

@@ -1026,7 +1026,13 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
       <div class="bg-white/80 backdrop-blur-xl border border-black/5 rounded-full px-4 py-2 flex items-center justify-between shadow-lg shadow-black/5 pointer-events-auto transition-transform active:scale-[0.98]">
         
         <div class="flex items-center gap-4">
-          <a class="text-slate-900 font-bold tracking-tight hover:text-accent transition-colors" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
+          <div class="profile-avatar" aria-label="Perfil de Hiro Matsumoto">
+            <span data-asciimath="%%\n /\\_/\\\\\n( o.o )\n > ^ <\n%%">/\\_/\\\n( o.o )\n > ^ <</span>
+          </div>
+          <div>
+            <a class="text-slate-900 font-bold tracking-tight hover:text-accent transition-colors" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
+            <p class="hidden md:block text-[10px] text-muted font-medium uppercase tracking-widest opacity-60">nhmatsumoto-blog-engine</p>
+          </div>
           <span class="hidden md:block w-px h-4 bg-slate-200"></span>
           <p class="hidden lg:block text-xs text-muted font-medium max-w-[240px] truncate">{html.escape(tagline)}</p>
         </div>
@@ -1335,6 +1341,7 @@ def render_hero(
     return f"""
     <section class="hero-panel">
       <div class="hero-copy">
+        <p class="hero-welcome" data-i18n="sections.welcome_message">Seja bem-vindo ao nhmatsumoto-blog-engine — um notebook técnico que começa com esta saudação e te guia pelo meu cérebro técnico.</p>
         <p class="eyebrow">{html.escape(concept)}</p>
         <h1>{html.escape(headline)}</h1>
         <p class="hero-intro">{html.escape(site['description'])}</p>
