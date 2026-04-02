@@ -36,7 +36,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF', edgeLabelBackground: '#ffffff', tertiaryColor: '#f8fafc' } });
         lucide.createIcons();
       });
     </script>
@@ -58,7 +58,7 @@
         --font-body: "Lora", serif;
         --font-ui: "Inter", system-ui, sans-serif;
         --font-code: "JetBrains Mono", monospace;
-        --reading-width: 680px;
+        --reading-width: 840px;
         --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
         --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05), 0 2px 10px -2px rgba(0,0,0,0.03);
         --shadow-lg: 0 30px 60px -12px rgba(0,0,0,0.08), 0 18px 36px -18px rgba(0,0,0,0.03);
@@ -129,6 +129,7 @@
             <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
           </div>
         </header>
+        <section class="post-content">
         <p>Quando alguém pede que um sistema “aprenda com correções repetidas”, o requisito real costuma ser: capturar feedback, transformá-lo em regra operacional e impedir regressões. Este post propõe um desenho de <strong>neuroplasticidade</strong> para sistemas de agentes.</p>
 <h2>O problema da memória em agentes</h2>
 <p>Na prática, sistemas de agentes falham por três motivos: (1) não lembram decisões anteriores, (2) lembram “qualquer coisa” sem curadoria, ou (3) incorporam feedback sem avaliação e pioram outras tarefas.</p>
@@ -141,15 +142,31 @@
 <ol><li><strong>Categorias de feedback</strong>: classifique se a correção é factual, de formato, de segurança ou de escopo.</li><li><strong>Ciclo de artefatos</strong>: converta feedback em regras concretas no sistema (ex: novo termo no glossário).</li><li><strong>Tool calling para ações verificáveis</strong>: use function calling para realizar tarefas tangíveis e mensuráveis.</li></ol>
 <h2>Conclusão</h2>
 <p>Implementar &quot;neuroplasticidade&quot; não é deixar a IA livre para aprender qualquer coisa, mas sim criar um <strong>sistema de governança</strong> que captura o aprendizado humano e o transforma em diretrizes operacionais robustas para o agente.</p>
+        </section>
+
+        <footer class="post-footer-metadata">
+          <div>
+            <h3 data-i18n="pages.post.metadata">Metadados</h3>
+            <ul class="metric-list">
+              <li><time datetime="2026-04-02T22:00:00+09:00" data-localize-date="long">2 de abril de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Badges</h3>
+            <ul class="badge-list"><li class="badge">agentes</li><li class="badge">evelução</li><li class="badge">feedback-loop</li></ul>
+          </div>
+          <div>
+            <h3>Tags</h3>
+            <ul class="tag-list"><li>ia</li><li>agentes</li><li>feedback</li><li>neuroplasticidade</li></ul>
+          </div>
+          <div class="footer-actions">
+            <h3>Ações</h3>
+            <ul class="action-list"></ul>
+          </div>
+        </footer>
       </article>
       
-    <aside class="sidebar-panel">
-      <h2 data-i18n="pages.post.metadata">Metadados</h2>
-      <ul class="metric-list"><li><time datetime="2026-04-02T22:00:00+09:00" data-localize-date="long">2 de abril de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-      <ul class="badge-list"><li class="badge">agentes</li><li class="badge">evelução</li><li class="badge">feedback-loop</li></ul>
-      <ul class="tag-list"><li>ia</li><li>agentes</li><li>feedback</li><li>neuroplasticidade</li></ul>
-      
-    </aside>
+
     
     </section>
     

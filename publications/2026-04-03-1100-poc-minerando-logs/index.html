@@ -36,7 +36,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF', edgeLabelBackground: '#ffffff', tertiaryColor: '#f8fafc' } });
         lucide.createIcons();
       });
     </script>
@@ -58,7 +58,7 @@
         --font-body: "Lora", serif;
         --font-ui: "Inter", system-ui, sans-serif;
         --font-code: "JetBrains Mono", monospace;
-        --reading-width: 680px;
+        --reading-width: 840px;
         --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
         --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05), 0 2px 10px -2px rgba(0,0,0,0.03);
         --shadow-lg: 0 30px 60px -12px rgba(0,0,0,0.08), 0 18px 36px -18px rgba(0,0,0,0.03);
@@ -129,6 +129,7 @@
             <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
           </div>
         </header>
+        <section class="post-content">
         <p>Transformar conversas em conteúdo publicável é uma automação tentadora, mas exige método: extração, clusterização por temas, rastreabilidade de fontes e revisão humana. Este post descreve uma PoC que processa logs de chat e identifica conceitos/PoCs.</p>
 <h2>Contexto e motivação</h2>
 <p>Conversas técnicas acumulam decisões, argumentos, pequenas PoCs e “microaprendizados” que raramente viram documentação. Embeddings são um mecanismo consagrado para medir similaridade textual e permitir clusterização e busca semântica em grandes volumes de texto.</p>
@@ -140,15 +141,31 @@
 <ol><li><strong>Ingestão e segmentação</strong>: parse do export do chat (normalmente JSON/HTML) e quebra em mensagens/trechos.</li><li><strong>Redação (Privacy by Design)</strong>: aplicar filtros (regex + detectores) para tokens sensíveis antes da indexação.</li><li><strong>Embeddings e Clusterização</strong>: gerar embedding por trecho e agrupar por similaridade.</li><li><strong>Geração Estruturada</strong>: para cada cluster, extrair o conceito e os trade-offs debatidos.</li><li><strong>Rastreabilidade de Fontes</strong>: anexar, a cada afirmação factual, a referência documental.</li></ol>
 <h2>Conclusão</h2>
 <p>Essa abordagem permite que o conhecimento gerado em sessões de brainstorming não se perca, transformando-se em <strong>ativos digitais estruturados</strong> e respeitando os limites da privacidade e conformidade de dados.</p>
+        </section>
+
+        <footer class="post-footer-metadata">
+          <div>
+            <h3 data-i18n="pages.post.metadata">Metadados</h3>
+            <ul class="metric-list">
+              <li><time datetime="2026-04-02T23:00:00+09:00" data-localize-date="long">2 de abril de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Badges</h3>
+            <ul class="badge-list"><li class="badge">knowledge-mining</li><li class="badge">compliance</li><li class="badge">poc</li></ul>
+          </div>
+          <div>
+            <h3>Tags</h3>
+            <ul class="tag-list"><li>ia</li><li>log-mining</li><li>privacidade</li><li>lgpd</li><li>embeddings</li></ul>
+          </div>
+          <div class="footer-actions">
+            <h3>Ações</h3>
+            <ul class="action-list"></ul>
+          </div>
+        </footer>
       </article>
       
-    <aside class="sidebar-panel">
-      <h2 data-i18n="pages.post.metadata">Metadados</h2>
-      <ul class="metric-list"><li><time datetime="2026-04-02T23:00:00+09:00" data-localize-date="long">2 de abril de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-      <ul class="badge-list"><li class="badge">knowledge-mining</li><li class="badge">compliance</li><li class="badge">poc</li></ul>
-      <ul class="tag-list"><li>ia</li><li>log-mining</li><li>privacidade</li><li>lgpd</li><li>embeddings</li></ul>
-      
-    </aside>
+
     
     </section>
     

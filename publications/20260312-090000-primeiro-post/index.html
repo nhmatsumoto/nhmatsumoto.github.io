@@ -36,7 +36,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF', edgeLabelBackground: '#ffffff', tertiaryColor: '#f8fafc' } });
         lucide.createIcons();
       });
     </script>
@@ -58,7 +58,7 @@
         --font-body: "Lora", serif;
         --font-ui: "Inter", system-ui, sans-serif;
         --font-code: "JetBrains Mono", monospace;
-        --reading-width: 680px;
+        --reading-width: 840px;
         --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
         --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05), 0 2px 10px -2px rgba(0,0,0,0.03);
         --shadow-lg: 0 30px 60px -12px rgba(0,0,0,0.08), 0 18px 36px -18px rgba(0,0,0,0.03);
@@ -129,6 +129,7 @@
             <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
           </div>
         </header>
+        <section class="post-content">
         <h1>Olá, mundo!</h1>
 <p>Este é o primeiro post do novo formato do blog. A proposta continua simples no runtime, mas agora a superfície do site passa a ser organizada como um notebook técnico: posts, projetos, documentos e decisões vivendo lado a lado.</p>
 <h2>O que muda neste projeto</h2>
@@ -136,15 +137,31 @@
 <h2>O que esperar daqui</h2>
 <ol><li>Notas sobre arquitetura e produto.</li><li>Publicações sobre agentes, .NET, DDD, GIS e sistemas distribuídos.</li><li>Documentação viva dos projetos que importam.</li></ol>
 <p>Este espaço existe para durar com baixa manutenção.</p>
+        </section>
+
+        <footer class="post-footer-metadata">
+          <div>
+            <h3 data-i18n="pages.post.metadata">Metadados</h3>
+            <ul class="metric-list">
+              <li><time datetime="2026-03-12T09:00:00+09:00" data-localize-date="long">12 de março de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Badges</h3>
+            <ul class="badge-list"><li class="badge">architecture</li></ul>
+          </div>
+          <div>
+            <h3>Tags</h3>
+            <ul class="tag-list"><li>pessoal</li><li>anuncio</li></ul>
+          </div>
+          <div class="footer-actions">
+            <h3>Ações</h3>
+            <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts" target="_blank" rel="noopener noreferrer" data-i18n="actions.code">código</a></li></ul>
+          </div>
+        </footer>
       </article>
       
-    <aside class="sidebar-panel">
-      <h2 data-i18n="pages.post.metadata">Metadados</h2>
-      <ul class="metric-list"><li><time datetime="2026-03-12T09:00:00+09:00" data-localize-date="long">12 de março de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-      <ul class="badge-list"><li class="badge">architecture</li></ul>
-      <ul class="tag-list"><li>pessoal</li><li>anuncio</li></ul>
-      <ul class="action-list"><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer" data-i18n="actions.repo">repo</a></li><li><a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts" target="_blank" rel="noopener noreferrer" data-i18n="actions.code">código</a></li></ul>
-    </aside>
+
     
     </section>
     
