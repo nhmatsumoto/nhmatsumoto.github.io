@@ -129,6 +129,12 @@ pre {
   justify-content: center;
   padding: 1.5rem;
   pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-header--scrolled {
+  padding: 0;
+  height: 0;
 }
 
 .site-nav {
@@ -146,7 +152,41 @@ pre {
   box-shadow: 
     0 4px 6px -1px rgba(0, 0, 0, 0.05),
     0 10px 30px -5px rgba(0, 0, 0, 0.05);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 1041px) {
+  .site-nav--scrolled {
+    position: fixed;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%) translateX(-20px);
+    width: auto;
+    flex-direction: column;
+    padding: 1.25rem 0.6rem;
+    border-radius: 24px;
+    gap: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .site-nav--scrolled.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .site-nav--scrolled .nav-brand {
+    padding: 0;
+    flex-direction: column;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .site-nav--scrolled .nav-tagline { display: none; }
+  .site-nav--scrolled .nav-links-list { flex-direction: column; gap: 0.5rem; }
+  .site-nav--scrolled .site-nav-actions { flex-direction: column; padding-top: 1rem; border-top: 1px solid var(--border); }
 }
 
 .site-nav:hover {
