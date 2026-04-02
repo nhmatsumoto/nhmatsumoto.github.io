@@ -1080,6 +1080,12 @@ def render_layout(
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>{html.escape(page_title)}</title>
     <meta name="description" content="{html.escape(page_description, quote=True)}">
     <link rel="canonical" href="{html.escape(canonical_url(site, canonical_path), quote=True)}">
