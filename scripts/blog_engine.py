@@ -933,24 +933,29 @@ def theme_css(system: dict[str, Any]) -> str:
     return f"""
     <style>
       :root {{
-        --bg: {bg};
-        --surface: {surface};
-        --surface-strong: #f1f3f5;
+        --h: 220;
+        --bg: hsl(var(--h), 20%, 99%);
+        --surface: hsl(var(--h), 15%, 98%);
+        --surface-strong: hsl(var(--h), 12%, 94%);
         --surface-soft: #ffffff;
-        --border: {border};
+        --border: hsla(var(--h), 10%, 10%, 0.05);
         --accent: {accents[0]};
         --accent-secondary: {accents[1] if len(accents) > 1 else accents[0]};
-        --accent-soft: rgba(37, 99, 235, 0.08);
-        --text: {text};
-        --muted: {muted};
+        --accent-soft: hsla(221, 83%, 53%, 0.06);
+        --text: hsl(var(--h), 25%, 15%);
+        --muted: hsl(var(--h), 8%, 45%);
         --font-heading: "Inter", system-ui, sans-serif;
         --font-body: "Lora", serif;
         --font-ui: "Inter", system-ui, sans-serif;
         --font-code: "JetBrains Mono", monospace;
         --reading-width: {reading_width};
-        --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-        --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+        --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05), 0 2px 10px -2px rgba(0,0,0,0.03);
+        --shadow-lg: 0 30px 60px -12px rgba(0,0,0,0.08), 0 18px 36px -18px rgba(0,0,0,0.03);
+        --radius: 24px;
+      }}
+      html {{
+        font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
       }}
     </style>
     """
