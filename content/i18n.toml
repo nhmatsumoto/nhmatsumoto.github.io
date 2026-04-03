@@ -263,3 +263,6 @@ reading_time = "{minutes} min read"
 [strings."en-US".view]
 list = "list"
 grid = "grid"
+navigation_kicker = "navigation"
+navigation_title = "Sitemap & categories"
+navigation_copy = "Direct links to publications, projects, documents and the most relevant categories."

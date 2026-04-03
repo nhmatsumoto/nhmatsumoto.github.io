@@ -1536,6 +1536,48 @@ def render_brain_map_section(site: dict[str, str], system: dict[str, Any], i18n:
     """
 
 
+def render_navigation_section(
+    system: dict[str, Any],
+    posts: list[dict[str, Any]],
+    projects: list[dict[str, Any]],
+    documents: list[dict[str, Any]],
+    i18n: dict[str, Any],
+    locale: str,
+) -> str:
+    categories = sorted({doc["category"] for doc in documents if doc["category"]})
+    nav_items = (
+        [
+            ("nav.posts", "/publications/"),
+            ("nav.projects", "/projects/"),
+            ("nav.documents", "/documents/"),
+            ("nav.about", "/about/"),
+        ]
+        + [(f"sections.category_{cat}", f"/documents/?category={cat}") for cat in categories if cat]
+    )
+
+    links = "\n".join(
+        f'<a class="nav-link" href="{html.escape(url, quote=True)}" data-i18n="{html.escape(key, quote=True)}">'
+        f"{html.escape(translate(i18n, locale, key, key.split('.')[-1].replace('_', ' ')))}"
+        "</a>"
+        for key, url in nav_items
+    )
+
+    return f"""
+    <section class="section-panel navigation-grid" aria-labelledby="nav-grid-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker" data-i18n="sections.navigation_kicker">{html.escape(translate(i18n, locale, 'sections.navigation_kicker', 'navegação'))}</p>
+          <h2 id="nav-grid-title" data-i18n="sections.navigation_title">{html.escape(translate(i18n, locale, 'sections.navigation_title', 'Sitemap e categorias'))}</h2>
+        </div>
+        <p data-i18n="sections.navigation_copy">{html.escape(translate(i18n, locale, 'sections.navigation_copy', 'Links diretos para publicações, projetos, documentos e categorias mais relevantes.'))}</p>
+      </header>
+      <div class="navigation-grid-links">
+        {links}
+      </div>
+    </section>
+    """
+
+
 def render_home_page(
     site: dict[str, str],
     system: dict[str, Any],
@@ -1548,6 +1590,7 @@ def render_home_page(
     config = load_blog_config()["build"]
     content = f"""
     {render_hero(site, system, posts, projects, i18n, locale)}
+    {render_navigation_section(system, posts, projects, documents, i18n, locale)}
     {render_posts_section(system, posts, i18n, locale, limit=int(config['posts_on_home']))}
     {render_brain_map_section(site, system, i18n, locale)}
     {render_projects_section(projects, i18n, locale, limit=int(config['projects_on_home']))}

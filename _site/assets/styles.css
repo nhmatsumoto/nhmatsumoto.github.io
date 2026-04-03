@@ -420,6 +420,39 @@ pre {
   min-height: 30rem;
 }
 
+.navigation-grid {
+  margin-top: 2rem;
+}
+
+.navigation-grid-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  padding: 0.5rem 0;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--text);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  background: rgba(0, 194, 255, 0.08);
+}
+
 .hero-welcome {
   font-size: 0.95rem;
   font-weight: 500;
