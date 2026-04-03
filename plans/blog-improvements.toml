@@ -1,6 +1,6 @@
 [request]
 name = "technical-knowledge-os-improvements"
-status = "in_progress"
+status = "done"
 summary = "Aplicar a direção visual e estrutural de um notebook técnico minimalista sobre a base estática atual, persistindo especificação, conteúdo e plano em TOML."
 
 [[steps]]
@@ -9,21 +9,19 @@ status = "done"
 details = "Persistir a especificação do usuário em content/system.toml para orientar conteúdo, design e navegação."
 
 [[steps]]
-name = "expandir-conteudo"
-status = "in_progress"
+status = "done"
 details = "Adicionar posts técnicos, projetos centrais e documentos indexáveis com metadados em TOML."
 
 [[steps]]
 name = "evoluir-gerador"
-status = "pending"
+status = "in_progress"
 details = "Gerar páginas para posts, projetos, documentos e about, além de index de busca local."
 
 [[steps]]
 name = "refazer-ui"
-status = "pending"
-details = "Aplicar layout fixo, hero técnico, command palette e seções com foco em leitura."
+status = "done", details = "Aplicar layout fixo, hero técnico, command palette e seções com foco em leitura."
 
 [[steps]]
 name = "validar-e-documentar"
-status = "pending"
+status = "done"
 details = "Executar build, revisar HTML gerado e atualizar o README com o novo modelo."

@@ -935,49 +935,53 @@ def theme_css(system: dict[str, Any]) -> str:
     typography = system.get("design", {}).get("typography", {})
     ux = system.get("ux", {})
     
-    # Light theme defaults
-    bg = "#ffffff"
-    surface = "#f8f9fa"
-    text = "#1a1a1a"
-    muted = "#666666"
-    accent = "#2563eb" # Royal blue
-    border = "rgba(0, 0, 0, 0.08)"
-
-    accents = normalize_string_list(colors.get("accent", [])) or [accent, "#7c3aed"]
-    headings = normalize_string_list(typography.get("headings", [])) or ["Inter", "system-ui"]
-    body_font = ["Lora", "Charter", "serif"]
-    code_font = str(typography.get("code", "JetBrains Mono") or "JetBrains Mono")
-    reading_width = str(ux.get("reading_width", "720px") or "720px")
-
-    def font_stack(fonts: list[str], fallback: str) -> str:
-        return ", ".join([f'"{font}"' for font in fonts] + [fallback])
-
+    # System Tokens (Fallback to specifications in system.toml)
+    bg = str(colors.get("background", "#0B0F14"))
+    surface = str(colors.get("surface", "#121821"))
+    text_primary = str(colors.get("text_primary", "#E6EDF3"))
+    text_secondary = str(colors.get("text_secondary", "#9DA7B3"))
+    
+    accents = normalize_string_list(colors.get("accent", [])) or ["#00C2FF", "#7C5CFF"]
+    accent_primary = accents[0]
+    accent_secondary = accents[1] if len(accents) > 1 else accent_primary
+    
+    reading_width = str(ux.get("reading_width", "680px") or "680px")
+    
     return f"""
     <style>
       :root {{
-        --h: 220;
-        --bg: hsl(var(--h), 20%, 99%);
-        --surface: hsl(var(--h), 15%, 98%);
-        --surface-strong: hsl(var(--h), 12%, 94%);
-        --surface-soft: #ffffff;
-        --border: hsla(var(--h), 10%, 10%, 0.05);
-        --accent: {accents[0]};
-        --accent-secondary: {accents[1] if len(accents) > 1 else accents[0]};
-        --accent-soft: hsla(221, 83%, 53%, 0.06);
-        --text: hsl(var(--h), 25%, 15%);
-        --muted: hsl(var(--h), 8%, 45%);
-        --font-heading: "Inter", system-ui, sans-serif;
-        --font-body: "Lora", serif;
+        --bg: {bg};
+        --surface: {surface};
+        --surface-strong: {surface}; /* Adjusted for dark mode default */
+        --surface-soft: {surface};
+        --border: rgba(255, 255, 255, 0.08);
+        --accent: {accent_primary};
+        --accent-secondary: {accent_secondary};
+        --accent-soft: {accent_primary}1a;
+        --text: {text_primary};
+        --muted: {text_secondary};
+        --font-heading: "Inter", "Satoshi", system-ui, sans-serif;
+        --font-body: "Inter", system-ui, sans-serif;
         --font-ui: "Inter", system-ui, sans-serif;
         --font-code: "JetBrains Mono", monospace;
         --reading-width: {reading_width};
-        --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
-        --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05), 0 2px 10px -2px rgba(0,0,0,0.03);
-        --shadow-lg: 0 30px 60px -12px rgba(0,0,0,0.08), 0 18px 36px -18px rgba(0,0,0,0.03);
+        --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+        --shadow-md: 0 8px 32px rgba(0,0,0,0.6);
+        --shadow-lg: 0 24px 64px rgba(0,0,0,0.8);
         --radius: 24px;
+        --glass-bg: rgba(11, 15, 20, 0.8);
+        --glass-border: rgba(255, 255, 255, 0.1);
       }}
-      html {{
-        font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+
+      /* Default to dark mode aesthetics based on system.toml */
+      [data-theme="light"] :root {{
+        --bg: #ffffff;
+        --surface: #f8f9fa;
+        --text: #1a1a1a;
+        --muted: #666666;
+        --border: rgba(0, 0, 0, 0.08);
+        --glass-bg: rgba(255, 255, 255, 0.8);
+        --glass-border: rgba(0, 0, 0, 0.1);
       }}
     </style>
     """
@@ -1147,14 +1151,20 @@ def render_layout(
         ensure_ascii=False,
     ).replace("<", "\\u003c")
 
+    colors = system.get("design", {}).get("colors", {})
+    accents = normalize_string_list(colors.get("accent", [])) or ["#00C2FF", "#7C5CFF"]
+    accent_primary = accents[0]
+    surface = str(colors.get("surface", "#121821"))
+    bg = str(colors.get("background", "#0B0F14"))
+
     return f"""<!DOCTYPE html>
-<html lang="{html.escape(locale, quote=True)}">
+<html lang="{html.escape(locale, quote=True)}" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -1168,12 +1178,13 @@ def render_layout(
         theme: {{
           extend: {{
             colors: {{
-              accent: 'hsl(221, 83%, 53%)',
-              surface: 'hsl(220, 15%, 98%)',
+              accent: '{accent_primary}',
+              surface: '{surface}',
+              background: '{bg}',
             }},
             fontFamily: {{
               sans: ['Inter', 'system-ui', 'sans-serif'],
-              serif: ['Lora', 'serif'],
+              serif: ['Inter', 'serif'],
               mono: ['JetBrains Mono', 'monospace'],
             }}
           }}

@@ -400,7 +400,7 @@ const initThemeManager = () => {
     }
   };
 
-  const currentTheme = getStoredTheme() || getSystemTheme();
+  const currentTheme = getStoredTheme() || "dark";
   applyTheme(currentTheme);
 
   if (themeToggle) {

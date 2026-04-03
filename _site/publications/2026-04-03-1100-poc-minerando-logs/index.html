@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -19,12 +19,13 @@
         theme: {
           extend: {
             colors: {
-              accent: 'hsl(221, 83%, 53%)',
-              surface: 'hsl(220, 15%, 98%)',
+              accent: '#00C2FF',
+              surface: '#121821',
+              background: '#0B0F14',
             },
             fontFamily: {
               sans: ['Inter', 'system-ui', 'sans-serif'],
-              serif: ['Lora', 'serif'],
+              serif: ['Inter', 'serif'],
               mono: ['JetBrains Mono', 'monospace'],
             }
           }
@@ -43,29 +44,38 @@
     
     <style>
       :root {
-        --h: 220;
-        --bg: hsl(var(--h), 20%, 99%);
-        --surface: hsl(var(--h), 15%, 98%);
-        --surface-strong: hsl(var(--h), 12%, 94%);
-        --surface-soft: #ffffff;
-        --border: hsla(var(--h), 10%, 10%, 0.05);
+        --bg: #0B0F14;
+        --surface: #121821;
+        --surface-strong: #121821; /* Adjusted for dark mode default */
+        --surface-soft: #121821;
+        --border: rgba(255, 255, 255, 0.08);
         --accent: #00C2FF;
         --accent-secondary: #7C5CFF;
-        --accent-soft: hsla(221, 83%, 53%, 0.06);
-        --text: hsl(var(--h), 25%, 15%);
-        --muted: hsl(var(--h), 8%, 45%);
-        --font-heading: "Inter", system-ui, sans-serif;
-        --font-body: "Lora", serif;
+        --accent-soft: #00C2FF1a;
+        --text: #E6EDF3;
+        --muted: #9DA7B3;
+        --font-heading: "Inter", "Satoshi", system-ui, sans-serif;
+        --font-body: "Inter", system-ui, sans-serif;
         --font-ui: "Inter", system-ui, sans-serif;
         --font-code: "JetBrains Mono", monospace;
         --reading-width: 680px;
-        --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
-        --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05), 0 2px 10px -2px rgba(0,0,0,0.03);
-        --shadow-lg: 0 30px 60px -12px rgba(0,0,0,0.08), 0 18px 36px -18px rgba(0,0,0,0.03);
+        --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+        --shadow-md: 0 8px 32px rgba(0,0,0,0.6);
+        --shadow-lg: 0 24px 64px rgba(0,0,0,0.8);
         --radius: 24px;
+        --glass-bg: rgba(11, 15, 20, 0.8);
+        --glass-border: rgba(255, 255, 255, 0.1);
       }
-      html {
-        font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+
+      /* Default to dark mode aesthetics based on system.toml */
+      [data-theme="light"] :root {
+        --bg: #ffffff;
+        --surface: #f8f9fa;
+        --text: #1a1a1a;
+        --muted: #666666;
+        --border: rgba(0, 0, 0, 0.08);
+        --glass-bg: rgba(255, 255, 255, 0.8);
+        --glass-border: rgba(0, 0, 0, 0.1);
       }
     </style>
     
