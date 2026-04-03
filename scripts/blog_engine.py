@@ -1021,44 +1021,37 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     links = "".join(link_fragments)
     nav_aria = translate(i18n, locale, "accessibility.primary_navigation", "Primary navigation")
     
+    pill_links = " ".join(
+        f'<a class="nav-pill" href="{nav_url(site, item)}" data-i18n="{html.escape(f"nav.{item}", quote=True)}">{html.escape(translate(i18n, locale, f"nav.{item}", item))}</a>'
+        for item in nav_items
+    )
     return f"""
-    <nav class="sticky top-6 z-[200] mx-auto w-full max-w-[1000px] px-6 pointer-events-none" aria-label="{html.escape(nav_aria, quote=True)}" data-i18n-aria-label="accessibility.primary_navigation">
-      <div class="bg-white/80 backdrop-blur-xl border border-black/5 rounded-full px-4 py-2 flex items-center justify-between shadow-lg shadow-black/5 pointer-events-auto transition-transform active:scale-[0.98]">
-        
-        <div class="flex items-center gap-4">
-          <div class="profile-avatar" aria-label="Perfil de Hiro Matsumoto">
-            <span data-asciimath="%%\n   ___\n  /   \\\\\n |  o o |\n  \\  ^ /\n   ||||\n   ----\n%%">   ___\n  /   \\\\\n |  o o |\n  \\  ^ /\n   ||||\n   ----</span>
+    <nav class="nav-shell" aria-label="{html.escape(nav_aria, quote=True)}">
+      <div class="nav-topbar">
+        <div class="nav-brand">
+          <div class="profile-canvas-shell" aria-label="Avatar Doraemon">
+            <canvas id="doraemon-avatar" width="80" height="80"></canvas>
           </div>
           <div>
-            <a class="text-slate-900 font-bold tracking-tight hover:text-accent transition-colors" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
-            <p class="hidden md:block text-[10px] text-muted font-medium uppercase tracking-widest opacity-60">nhmatsumoto-blog-engine</p>
+            <a class="nav-title" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
+            <p class="nav-tagline">{html.escape(tagline)}</p>
           </div>
-          <span class="hidden md:block w-px h-4 bg-slate-200"></span>
-          <p class="hidden lg:block text-xs text-muted font-medium max-w-[240px] truncate">{html.escape(tagline)}</p>
         </div>
-        
-        <div class="hidden md:block" role="navigation">
-          <ul class="flex items-center gap-1 list-none m-0 p-0">
-            {links}
-          </ul>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-slate-400 hover:text-accent hover:bg-white hover:border-accent/20 transition-all text-xs" type="button" data-open-palette aria-label="{html.escape(search_label, quote=True)}" data-i18n-aria-label="nav.search">
-            <i data-lucide="search" class="w-3.5 h-3.5"></i>
-            <span class="hidden sm:inline-block font-mono opacity-60">⌘K</span>
+        <div class="nav-actions">
+          <button data-open-palette class="nav-button" aria-label="{html.escape(search_label, quote=True)}">
+            <i data-lucide="search"></i><span>⌘K</span>
           </button>
-
-          <div class="flex items-center gap-1 pl-2 border-l border-slate-100">
-            <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors text-xs font-bold text-slate-600" type="button" data-locale-toggle>
-              <span class="locale-current">{html.escape(locale.split('-')[0].upper())}</span>
-            </button>
-            <a class="hidden sm:flex items-center gap-2 px-4 py-1.5 bg-slate-900 text-white rounded-full text-xs font-semibold hover:bg-accent transition-all hover:shadow-md active:scale-95" href="{html.escape(cta_url, quote=True)}" rel="noopener noreferrer" target="_blank" data-i18n="nav.cta">
-              {html.escape(cta_label)}
-              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
-            </a>
-          </div>
+          <button class="nav-button" type="button" data-locale-toggle>
+            <i data-lucide="globe"></i>
+          </button>
+          <a class="nav-cta" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">
+            {html.escape(cta_label)}
+            <i data-lucide="arrow-up-right"></i>
+          </a>
         </div>
+      </div>
+      <div class="nav-menu">
+        {pill_links}
       </div>
     </nav>
     """
