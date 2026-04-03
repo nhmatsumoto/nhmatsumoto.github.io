@@ -374,6 +374,56 @@ const initPostViewSwitchers = () => {
   }
 };
 
+const initThemeManager = () => {
+  const storageKey = "site-theme";
+  const themeToggle = document.querySelector("[data-theme-toggle]");
+  const htmlElement = document.documentElement;
+
+  const getStoredTheme = () => localStorage.getItem(storageKey);
+  const getSystemTheme = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  
+  const applyTheme = (theme) => {
+    htmlElement.dataset.theme = theme;
+    localStorage.setItem(storageKey, theme);
+    
+    // Update icons if any
+    const moonIcon = document.querySelector(".theme-icon-moon");
+    const sunIcon = document.querySelector(".theme-icon-sun");
+    if (moonIcon && sunIcon) {
+      if (theme === "dark") {
+        moonIcon.classList.add("hidden");
+        sunIcon.classList.remove("hidden");
+      } else {
+        moonIcon.classList.remove("hidden");
+        sunIcon.classList.add("hidden");
+      }
+    }
+  };
+
+  const currentTheme = getStoredTheme() || getSystemTheme();
+  applyTheme(currentTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const newTheme = htmlElement.dataset.theme === "dark" ? "light" : "dark";
+      applyTheme(newTheme);
+      
+      // Animation effect
+      themeToggle.style.transform = "scale(1.2) rotate(15deg)";
+      setTimeout(() => {
+        themeToggle.style.transform = "";
+      }, 200);
+    });
+  }
+
+  // Sync with system changes
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+    if (!getStoredTheme()) {
+      applyTheme(e.matches ? "dark" : "light");
+    }
+  });
+};
+
 const initCommandPalette = (localization) => {
   const shell = document.querySelector("[data-command-palette]");
   if (!shell) {
@@ -502,6 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
   enhanceCopyLink(localization);
   initPostViewSwitchers();
   initLocaleToggle(localization);
+  initThemeManager();
   initCommandPalette(localization);
   loadAsciiMath();
 });

@@ -1008,50 +1008,37 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     cta_label = translate(i18n, locale, "nav.cta", str(header.get("cta", "open work / contact") or "open work / contact"))
     search_label = translate(i18n, locale, "nav.search", str(header.get("search", "command palette") or "command palette"))
     cta_url = site.get("linkedin_url") or site.get("github_url") or "#"
-    tagline = str(site.get("headline", "") or "").strip()
 
-    link_fragments: list[str] = []
-    for item in nav_items:
-        is_active = item == active_nav
-        active_cls = "text-accent bg-accent/5 font-semibold" if is_active else "text-muted hover:text-accent hover:bg-black/[0.02]"
-        label = translate(i18n, locale, f"nav.{item}", item)
-        link_fragments.append(
-            f'<li><a href="{nav_url(site, item)}" class="px-4 py-2 rounded-full transition-all duration-200 {active_cls}" data-i18n="{html.escape(f"nav.{item}", quote=True)}">{html.escape(label)}</a></li>'
-        )
-    links = "".join(link_fragments)
-    nav_aria = translate(i18n, locale, "accessibility.primary_navigation", "Primary navigation")
-    
     pill_links = " ".join(
-        f'<a class="nav-pill" href="{nav_url(site, item)}" data-i18n="{html.escape(f"nav.{item}", quote=True)}">{html.escape(translate(i18n, locale, f"nav.{item}", item))}</a>'
+        f'<li><a class="nav-pill" href="{nav_url(site, item)}" {(f"aria-current=\"page\"") if item == active_nav else ""} data-i18n="{html.escape(f"nav.{item}", quote=True)}">{html.escape(translate(i18n, locale, f"nav.{item}", item))}</a></li>'
         for item in nav_items
     )
+
     return f"""
-    <nav class="nav-shell" aria-label="{html.escape(nav_aria, quote=True)}">
-      <div class="nav-topbar">
-        <div class="nav-brand">
-          <div class="profile-canvas-shell" aria-label="Avatar Doraemon">
-            <canvas id="doraemon-avatar" width="80" height="80"></canvas>
-          </div>
-          <div>
-            <a class="nav-title" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
-            <p class="nav-tagline">{html.escape(tagline)}</p>
-          </div>
-        </div>
-        <div class="nav-actions">
-          <button data-open-palette class="nav-button" aria-label="{html.escape(search_label, quote=True)}">
-            <i data-lucide="search"></i><span>⌘K</span>
-          </button>
-          <button class="nav-button" type="button" data-locale-toggle>
-            <i data-lucide="globe"></i>
-          </button>
-          <a class="nav-cta" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">
-            {html.escape(cta_label)}
-            <i data-lucide="arrow-up-right"></i>
-          </a>
-        </div>
+    <nav class="nav-shell">
+      <div class="nav-brand">
+        <a class="nav-title" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
       </div>
-      <div class="nav-menu">
+      
+      <ul class="nav-menu">
         {pill_links}
+      </ul>
+
+      <div class="nav-actions">
+        <button class="nav-button" type="button" data-open-palette aria-label="{html.escape(search_label, quote=True)}">
+          <i data-lucide="search" class="w-4 h-4"></i>
+        </button>
+        <button class="nav-button" type="button" data-theme-toggle aria-label="Toggle theme">
+          <i data-lucide="moon" class="theme-icon-moon w-4 h-4"></i>
+          <i data-lucide="sun" class="theme-icon-sun hidden w-4 h-4"></i>
+        </button>
+        <button class="nav-button" type="button" data-locale-toggle aria-label="Toggle language">
+          <i data-lucide="languages" class="w-4 h-4"></i>
+        </button>
+        <a class="nav-cta" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">
+          {html.escape(cta_label)}
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </a>
       </div>
     </nav>
     """
@@ -1184,7 +1171,7 @@ def render_layout(
     
     {render_site_nav(site, system, active_nav, i18n, locale)}
 
-    <div class="site-shell">
+    <div class="site-shell" style="padding-top: 8rem;">
       <main class="site-main" id="content">
         {content}
       </main>
@@ -1303,8 +1290,7 @@ def render_hero(
     headline = str(hero.get("headline", site["home_title"]) or site["home_title"])
     hero_stack = normalize_string_list(hero.get("stack", []))
     concept = str(blog.get("concept", "technical notebook") or "technical notebook")
-    style = str(blog.get("style", "minimalist engineering notebook") or "minimalist engineering notebook")
-    feelings = normalize_string_list(identity.get("feeling", []))
+    feels = normalize_string_list(identity.get("feeling", []))
 
     main_project = next((project for project in projects if project["featured"]), projects[0] if projects else None)
     recent_article = posts[0] if posts else None
@@ -1313,20 +1299,27 @@ def render_hero(
     if main_project:
         highlight_cards.append(
             f"""
-            <article class="highlight-card">
+            <article class="highlight-card h-full">
               <p class="card-type" data-i18n="home.highlight_main_project">{html.escape(translate(i18n, locale, "home.highlight_main_project", "main project"))}</p>
-              <h2><a href="{html.escape(main_project['resolved_url'])}">{html.escape(main_project['name'])}</a></h2>
-              <p>{html.escape(main_project['summary'])}</p>
+              <h2 class="text-3xl font-bold tracking-tighter mb-2"><a href="{html.escape(main_project['resolved_url'])}">{html.escape(main_project['name'])}</a></h2>
+              <p class="text-muted text-sm leading-relaxed">{html.escape(main_project['summary'])}</p>
+              <div class="mt-auto pt-4 flex gap-2">
+                {render_stack_list(main_project["stack"][:3])}
+              </div>
             </article>
             """.strip()
         )
     if recent_article:
         highlight_cards.append(
             f"""
-            <article class="highlight-card">
+            <article class="highlight-card h-full">
               <p class="card-type" data-i18n="home.highlight_recent_article">{html.escape(translate(i18n, locale, "home.highlight_recent_article", "recent article"))}</p>
-              <h2><a href="{html.escape(recent_article['resolved_url'])}">{html.escape(recent_article['title'])}</a></h2>
-              <p>{html.escape(recent_article['summary'])}</p>
+              <h2 class="text-3xl font-bold tracking-tighter mb-2"><a href="{html.escape(recent_article['resolved_url'])}">{html.escape(recent_article['title'])}</a></h2>
+              <p class="text-muted text-sm leading-relaxed">{html.escape(recent_article['summary'])}</p>
+              <div class="mt-auto pt-4 flex items-center justify-between">
+                {render_localized_date(recent_article["published_dt"], locale, "short")}
+                <span class="text-xs font-mono opacity-50">{recent_article["reading_time"]}m</span>
+              </div>
             </article>
             """.strip()
         )
@@ -1334,15 +1327,16 @@ def render_hero(
     return f"""
     <section class="hero-panel">
       <div class="hero-copy">
-        <h1 class="hero-welcome" data-i18n="sections.welcome_message">Seja bem-vindo ao nhmatsumoto-blog-engine — um notebook técnico que começa com esta saudação e te guia pelo meu cérebro técnico.</h1>
-        <p class="eyebrow">{html.escape(concept)}</p>
-        <h2 class="hero-headline">{html.escape(headline)}</h2>
-        <p class="hero-intro">{html.escape(site['description'])}</p>
-        <div class="hero-meta">
-          <span>{html.escape(style)}</span>
-          {''.join(f'<span>{html.escape(item)}</span>' for item in feelings)}
+        <p class="eyebrow mb-4">{html.escape(concept)}</p>
+        <h1 class="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8" data-i18n="sections.welcome_message">
+          {html.escape(headline)}
+        </h1>
+        <p class="text-xl md:text-2xl text-muted max-w-[600px] mb-8 leading-relaxed">
+          {html.escape(site['description'])}
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          {''.join(f'<span class="px-3 py-1 bg-accent/10 text-accent rounded-full text-xs font-bold uppercase tracking-wider">{html.escape(item)}</span>' for item in feels)}
         </div>
-        {render_stack_list(hero_stack)}
       </div>
       <div class="hero-highlights">
         {''.join(highlight_cards)}

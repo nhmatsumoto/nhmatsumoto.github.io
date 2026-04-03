@@ -34,6 +34,7 @@ cta = "trabalho aberto / contato"
 graph = "mapa cerebral"
 language = "idioma"
 language_action = "trocar idioma"
+theme = "alternar tema"
 
 [strings."pt-BR".palette]
 placeholder = "Buscar publicações, projetos e documentos"
@@ -55,7 +56,7 @@ documents_copy = "Notas em markdown organizadas por domínio, arquitetura, agent
 about_copy = "O site é organizado mais como uma base de código do que como uma landing page pessoal."
 brain_map_title = "Mapa cerebral vivo"
 brain_map_copy = "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos."
-welcome_message = "Seja bem-vindo ao nhmatsumoto-blog-engine — um notebook técnico que começa com esta saudação e te guia pelo meu cérebro técnico."
+welcome_message = "SO de Conhecimento Técnico"
 
 [strings."pt-BR".pages.archive]
 title = "Todas as publicações"
@@ -158,6 +159,7 @@ cta = "open work / contact"
 graph = "brain map"
 language = "language"
 language_action = "switch language"
+theme = "toggle theme"
 
 [strings."en-US".palette]
 placeholder = "Search posts, projects and documents"
@@ -179,7 +181,7 @@ documents_copy = "Markdown notes organized by domain, architecture, agents and A
 about_copy = "The site is organized more like a codebase than a personal landing page."
 brain_map_title = "Living brain map"
 brain_map_copy = "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain."
-welcome_message = "Welcome to nhmatsumoto-blog-engine — a technical notebook that begins with this greeting and guides you through my technical brain."
+welcome_message = "Technical Knowledge OS"
 
 [strings."en-US".pages.archive]
 title = "All posts"
