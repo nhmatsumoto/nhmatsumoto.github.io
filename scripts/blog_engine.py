@@ -1341,9 +1341,9 @@ def render_hero(
     return f"""
     <section class="hero-panel">
       <div class="hero-copy">
-        <p class="hero-welcome" data-i18n="sections.welcome_message">Seja bem-vindo ao nhmatsumoto-blog-engine — um notebook técnico que começa com esta saudação e te guia pelo meu cérebro técnico.</p>
+        <h1 class="hero-welcome" data-i18n="sections.welcome_message">Seja bem-vindo ao nhmatsumoto-blog-engine — um notebook técnico que começa com esta saudação e te guia pelo meu cérebro técnico.</h1>
         <p class="eyebrow">{html.escape(concept)}</p>
-        <h1>{html.escape(headline)}</h1>
+        <h2 class="hero-headline">{html.escape(headline)}</h2>
         <p class="hero-intro">{html.escape(site['description'])}</p>
         <div class="hero-meta">
           <span>{html.escape(style)}</span>

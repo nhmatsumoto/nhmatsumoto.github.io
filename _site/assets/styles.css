@@ -420,6 +420,22 @@ pre {
   min-height: 30rem;
 }
 
+.hero-welcome {
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.hero-headline {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.25;
+  margin: 0.25rem 0 0.5rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
 .navigation-grid {
   margin-top: 2rem;
 }
