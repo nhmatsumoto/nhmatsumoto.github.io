@@ -1342,36 +1342,6 @@ def render_hero(
     <section class="hero-panel">
       <div class="hero-copy">
         <p class="hero-welcome" data-i18n="sections.welcome_message">Seja bem-vindo ao nhmatsumoto-blog-engine — um notebook técnico que começa com esta saudação e te guia pelo meu cérebro técnico.</p>
-        <div class="ascii-showcase">
-          <div class="ascii-cell">
-            <span class="ascii-animation" data-asciimath="%%
-   /\\_/\\
-  ( o.o )
-   > ^ <
-%%
-">   /\\_/\\
-  ( o.o )
-   > ^ <
-</span>
-            <p>MapleStory</p>
-          </div>
-          <div class="ascii-cell">
-            <span class="ascii-animation" data-asciimath="%%
-  __
- /__\\
-| oo|
- \\__/
-  /\\
-%%
-">  __
- /__\\
-| oo|
- \\__/
-  /\\
-</span>
-            <p>Gunbound</p>
-          </div>
-        </div>
         <p class="eyebrow">{html.escape(concept)}</p>
         <h1>{html.escape(headline)}</h1>
         <p class="hero-intro">{html.escape(site['description'])}</p>

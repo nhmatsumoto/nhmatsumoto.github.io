@@ -442,51 +442,6 @@ pre {
   white-space: pre;
 }
 
-.ascii-showcase {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-}
-
-.ascii-cell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.ascii-cell p {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--muted);
-  margin: 0;
-}
-
-.ascii-animation {
-  font-family: var(--font-code);
-  font-size: 0.65rem;
-  text-align: center;
-  animation: pulse-ascii 4s infinite step-end;
-  display: inline-block;
-  white-space: pre;
-}
-
-@keyframes pulse-ascii {
-  0%, 40% {
-    opacity: 0.5;
-    transform: translateY(0);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-4px);
-  }
-  100% {
-    opacity: 0.75;
-    transform: translateY(0);
-  }
-}
 
 .hero-copy {
   display: grid;
