@@ -126,6 +126,8 @@
         "documents": "Nenhum documento indexado ainda."
       },
       "actions": {
+        "copy": "copiar",
+        "copied": "copiado",
         "repo": "repo",
         "code": "código",
         "view_architecture": "ver arquitetura",
@@ -255,6 +257,8 @@
         "documents": "No documents indexed yet."
       },
       "actions": {
+        "copy": "copy",
+        "copied": "copied",
         "repo": "repo",
         "code": "code",
         "view_architecture": "view architecture",

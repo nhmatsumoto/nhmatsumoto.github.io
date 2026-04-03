@@ -7,6 +7,7 @@
   --surface-soft: #ffffff;
   --border: hsla(var(--h), 10%, 10%, 0.05);
   --accent: hsl(221, 83%, 53%);
+  --accent-rgb: 37, 99, 235;
   --accent-secondary: hsl(262, 83%, 58%);
   --accent-soft: hsla(221, 83%, 53%, 0.06);
   --text: hsl(var(--h), 25%, 15%);
@@ -35,6 +36,7 @@
   --surface-soft: hsla(var(--h), 15%, 12%, 0.6);
   --border: hsla(var(--h), 10%, 100%, 0.08);
   --accent: hsl(200, 100%, 60%);
+  --accent-rgb: 56, 189, 248;
   --accent-secondary: hsl(250, 80%, 70%);
   --accent-soft: hsla(200, 100%, 60%, 0.12);
   --text: hsl(var(--h), 10%, 92%);
@@ -53,6 +55,7 @@
 html {
   color-scheme: light;
   scroll-behavior: smooth;
+  counter-reset: section;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
 }
@@ -62,8 +65,9 @@ body {
   min-height: 100vh;
   background: var(--bg);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.03) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(124, 58, 237, 0.03) 0px, transparent 50%);
+    linear-gradient(rgba(var(--accent-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-rgb), 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 1.125rem;
@@ -192,6 +196,16 @@ pre {
   font-size: 0.95rem;
   letter-spacing: -0.02em;
   color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+@media (max-width: 400px) {
+  .nav-title {
+    max-width: 80px;
+  }
 }
 
 .nav-menu {
@@ -801,6 +815,51 @@ pre {
 .section-panel {
   position: relative;
   overflow: hidden;
+  padding: 6rem 0;
+  border-bottom: 1px solid var(--border);
+  counter-increment: section;
+}
+
+.section-header {
+  margin-bottom: 4rem;
+  max-width: 900px;
+}
+
+.section-kicker {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-kicker::before {
+  content: "0x0" counter(section, lower-hexadecimal);
+  opacity: 0.5;
+  font-weight: 400;
+  padding: 2px 6px;
+  background: var(--accent-soft);
+  border-radius: 4px;
+}
+
+.section-panel h2 {
+  font-size: 2.75rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.25rem;
+  line-height: 1.1;
+}
+
+.section-copy {
+  font-size: 1.15rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 640px;
 }
 
 .section-panel::after {
@@ -1540,4 +1599,98 @@ pre {
     justify-content: center;
     width: 100%;
   }
+}
+
+/* --- Enhanced Code Blocks --- */
+.code-shell {
+  margin: 2rem 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.code-shell-header {
+  padding: 0.75rem 1.25rem;
+  background: var(--surface-strong);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.code-shell-label {
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.code-shell-copy {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.code-shell-copy:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.code-shell pre {
+  margin: 0;
+  padding: 1.5rem;
+  overflow-x: auto;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Base Syntax Highlighting (Themes) */
+.token.comment { color: var(--muted); font-style: italic; }
+.token.keyword { color: #f97316; font-weight: 700; }
+.token.string { color: #10b981; }
+.token.function { color: #8b5cf6; }
+.token.number { color: #06b6d4; }
+
+/* Glow Effects Utility */
+.glow-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(var(--accent-rgb), 0.1),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+[data-theme="dark"] .glow-card::before {
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(var(--accent-rgb), 0.15),
+    transparent 40%
+  );
 }
