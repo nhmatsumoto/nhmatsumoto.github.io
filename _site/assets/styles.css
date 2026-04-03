@@ -133,6 +133,7 @@ pre {
   left: 50%;
   transform: translateX(-50%);
   width: min(940px, calc(100vw - 2rem));
+  max-width: 95%;
   z-index: 500;
   background: var(--glass-bg);
   backdrop-filter: blur(16px) saturate(180%);
@@ -145,6 +146,34 @@ pre {
   justify-content: space-between;
   box-shadow: var(--shadow-lg);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-shell[data-nav-open="true"] {
+  border-radius: 24px;
+  border-color: var(--accent);
+}
+
+.desktop-only {
+  display: flex !important;
+}
+
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: flex !important;
+  }
+  .nav-shell {
+    padding: 0.4rem 0.6rem;
+  }
+  .nav-actions {
+    padding-left: 0.5rem;
+  }
 }
 
 .nav-shell:hover {
@@ -231,6 +260,62 @@ pre {
 .nav-cta:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 12px var(--accent-soft);
+}
+
+/* Mobile Menu */
+.nav-mobile-menu {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 0;
+  width: 100%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  animation: navReveal 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@keyframes navReveal {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-mobile-links .nav-pill {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
+}
+
+.nav-mobile-actions {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.nav-mobile-cta {
+  width: 100%;
+  padding: 1rem;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .sidebar-panel,

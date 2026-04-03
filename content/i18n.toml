@@ -42,6 +42,12 @@ close = "Fechar"
 hint = "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar."
 empty = "Nenhum resultado encontrado."
 
+[strings."pt-BR".actions]
+copy = "copiar"
+copied = "copiado"
+link_copied = "link copiado"
+copy_from_address = "copiar da barra de endereço"
+
 [strings."pt-BR".home]
 highlight_main_project = "projeto principal"
 highlight_recent_article = "artigo recente"
@@ -166,6 +172,12 @@ placeholder = "Search posts, projects and documents"
 close = "Close"
 hint = "Use Ctrl/⌘ K to open, Enter to open first result and Esc to close."
 empty = "No results found."
+
+[strings."en-US".actions]
+copy = "copy"
+copied = "copied"
+link_copied = "link copied"
+copy_from_address = "copy from address bar"
 
 [strings."en-US".home]
 highlight_main_project = "main project"

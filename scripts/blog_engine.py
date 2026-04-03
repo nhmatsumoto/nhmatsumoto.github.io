@@ -729,9 +729,19 @@ def render_markdown(text: str) -> str:
             if language == "mermaid":
                 parts.append(f'<div class="mermaid">{"".join(code_lines)}</div>')
             else:
-                class_attr = f' class="language-{html.escape(language)}"' if language else ""
-                code_block = html.escape("\n".join(code_lines))
-                parts.append(f"<pre><code{class_attr}>{code_block}</code></pre>")
+                code_content = html.escape("\n".join(code_lines))
+                lang_display = language if language else "text"
+                parts.append(
+                    f'<div class="code-shell" data-language="{html.escape(language)}">'
+                    f'  <div class="code-shell-header">'
+                    f'    <span class="code-shell-label">{html.escape(lang_display)}</span>'
+                    f'    <button class="code-shell-copy" aria-label="Copy code">'
+                    f'      <i data-lucide="copy"></i>'
+                    f'    </button>'
+                    f'  </div>'
+                    f'  <pre><code class="language-{html.escape(language)}">{code_content}</code></pre>'
+                    f'</div>'
+                )
             continue
 
         heading = HEADING_RE.match(stripped)
@@ -1015,12 +1025,12 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     )
 
     return f"""
-    <nav class="nav-shell">
+    <nav class="nav-shell" data-nav-shell>
       <div class="nav-brand">
         <a class="nav-title" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
       </div>
       
-      <ul class="nav-menu">
+      <ul class="nav-menu desktop-only">
         {pill_links}
       </ul>
 
@@ -1035,10 +1045,26 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         <button class="nav-button" type="button" data-locale-toggle aria-label="Toggle language">
           <i data-lucide="languages" class="w-4 h-4"></i>
         </button>
-        <a class="nav-cta" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">
+        <button class="nav-button mobile-only" type="button" data-nav-toggle aria-label="Toggle menu">
+          <i data-lucide="menu" class="nav-icon-menu w-4 h-4"></i>
+          <i data-lucide="x" class="nav-icon-close hidden w-4 h-4"></i>
+        </button>
+        <a class="nav-cta desktop-only" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">
           {html.escape(cta_label)}
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
+      </div>
+
+      <div class="nav-mobile-menu" data-nav-menu hidden>
+        <ul class="nav-mobile-links">
+          {pill_links}
+        </ul>
+        <div class="nav-mobile-actions">
+          <a class="nav-mobile-cta" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">
+            {html.escape(cta_label)}
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </a>
+        </div>
       </div>
     </nav>
     """

@@ -424,6 +424,55 @@ const initThemeManager = () => {
   });
 };
 
+const initNavToggle = () => {
+  const toggle = document.querySelector("[data-nav-toggle]");
+  const menu = document.querySelector("[data-nav-menu]");
+  const shell = document.querySelector("[data-nav-shell]");
+  const iconMenu = document.querySelector(".nav-icon-menu");
+  const iconClose = document.querySelector(".nav-icon-close");
+
+  if (!toggle || !menu || !shell) {
+    return;
+  }
+
+  const toggleMenu = (force) => {
+    const isOpen = typeof force === "boolean" ? force : menu.hidden;
+    menu.hidden = !isOpen;
+    shell.dataset.navOpen = String(isOpen);
+
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      iconMenu?.classList.add("hidden");
+      iconClose?.classList.remove("hidden");
+    } else {
+      document.body.style.overflow = "";
+      iconMenu?.classList.remove("hidden");
+      iconClose?.classList.add("hidden");
+    }
+  };
+
+  toggle.addEventListener("click", () => toggleMenu());
+
+  // Close on link click
+  menu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => toggleMenu(false));
+  });
+
+  // Close on escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !menu.hidden) {
+      toggleMenu(false);
+    }
+  });
+
+  // Sync with resize
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 768 && !menu.hidden) {
+      toggleMenu(false);
+    }
+  });
+};
+
 const initCommandPalette = (localization) => {
   const shell = document.querySelector("[data-command-palette]");
   if (!shell) {
@@ -553,6 +602,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initPostViewSwitchers();
   initLocaleToggle(localization);
   initThemeManager();
+  initNavToggle();
   initCommandPalette(localization);
   loadAsciiMath();
 });
