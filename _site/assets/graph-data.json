@@ -1,449 +1,2306 @@
 {
   "nodes": [
     {
+      "id": "hiro",
+      "title": "Hiro",
+      "kind": "central",
+      "color": "#FFFFFF",
+      "glow": true,
+      "size": 20
+    },
+    {
+      "id": "tech_skills",
+      "title": "Tech Skills",
+      "kind": "group",
+      "color": "#00C2FF",
+      "size": 15
+    },
+    {
+      "id": "engineering",
+      "title": "Engineering",
+      "kind": "group",
+      "color": "#7C5CFF",
+      "size": 15
+    },
+    {
+      "id": "soft_skills",
+      "title": "Capabilities",
+      "kind": "group",
+      "color": "#FF5C93",
+      "size": 15
+    },
+    {
+      "id": "labs",
+      "title": "Labs",
+      "kind": "group",
+      "color": "#3DFFBA",
+      "size": 15
+    },
+    {
+      "id": "topic-testes",
+      "title": "testes",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ddd",
+      "title": "ddd",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-estruturas-de-dados",
+      "title": "estruturas-de-dados",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-threejs",
+      "title": "threejs",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-domain",
+      "title": "domain",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ai",
+      "title": "ai",
+      "kind": "topic",
+      "color": "#3DFFBA",
+      "size": 10
+    },
+    {
+      "id": "topic-desempenho",
+      "title": "desempenho",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-projeto",
+      "title": "projeto",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-clean-architecture",
+      "title": "clean-architecture",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-qualidade",
+      "title": "qualidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-postgis",
+      "title": "postgis",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-entropia",
+      "title": "entropia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-apis",
+      "title": "apis",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-pytorch",
+      "title": "pytorch",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-gc",
+      "title": "gc",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-teoria",
+      "title": "teoria",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-memory",
+      "title": "memory",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-operations",
+      "title": "operations",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-log-mining",
+      "title": "log-mining",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-matematica",
+      "title": "matemática",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-chain-of-thought",
+      "title": "chain-of-thought",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-knowledge",
+      "title": "knowledge",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-banco-de-dados",
+      "title": "banco-de-dados",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-frontend",
+      "title": "frontend",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-bits-vs-qubits",
+      "title": "bits-vs-qubits",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-computacao",
+      "title": "computação",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-diffusao",
+      "title": "diffusao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-distribuido",
+      "title": "distribuido",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-tomada-de-decisao",
+      "title": "tomada-de-decisão",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-javascript",
+      "title": "javascript",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-computacao",
+      "title": "computacao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-tipagem",
+      "title": "tipagem",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-particulas",
+      "title": "particulas",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-spatial",
+      "title": "spatial",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-feedback",
+      "title": "feedback",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-pessoal",
+      "title": "pessoal",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-simulacao",
+      "title": "simulacao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-tdd",
+      "title": "tdd",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-inovacao",
+      "title": "inovação",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-mobile",
+      "title": "mobile",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-event-driven",
+      "title": "event-driven",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-anuncio",
+      "title": "anuncio",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-biografia",
+      "title": "biografia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-rabbitmq",
+      "title": "rabbitmq",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-cognicao",
+      "title": "cognição",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-filas",
+      "title": "filas",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-gis",
+      "title": "gis",
+      "kind": "topic",
+      "color": "#3DFFBA",
+      "size": 10
+    },
+    {
+      "id": "topic-dart",
+      "title": "dart",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ia",
+      "title": "ia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agentes",
+      "title": "agentes",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-postgresql",
+      "title": "postgresql",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-redes-neurais",
+      "title": "redes-neurais",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-architecture",
+      "title": "architecture",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-quantica",
+      "title": "quantica",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-solid",
+      "title": "solid",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-privacidade",
+      "title": "privacidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-event-driven-services",
+      "title": "event-driven services",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-mensageria",
+      "title": "mensageria",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-python",
+      "title": "python",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-historia",
+      "title": "história",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-3d",
+      "title": "3d",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-machine-learning",
+      "title": "machine-learning",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-big-o",
+      "title": "big-o",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-dotnet",
+      "title": "dotnet",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-typescript",
+      "title": "typescript",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-flutter",
+      "title": "flutter",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-sos",
+      "title": "sos",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-engenharia",
+      "title": "engenharia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-teoria-da-computacao",
+      "title": "teoria-da-computação",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-design-patterns",
+      "title": "design-patterns",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-react",
+      "title": "react",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-fisica",
+      "title": "fisica",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-feynman",
+      "title": "feynman",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-net",
+      "title": ".net",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-criptografia",
+      "title": "criptografia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-manutenibilidade",
+      "title": "manutenibilidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-performance",
+      "title": "performance",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-turing",
+      "title": "turing",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-software",
+      "title": "software",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-fisica",
+      "title": "física",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agents",
+      "title": "agents",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-webgl",
+      "title": "webgl",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-backend",
+      "title": "backend",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ciencia",
+      "title": "ciência",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-orm",
+      "title": "orm",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-risk-analysis",
+      "title": "risk-analysis",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-inteligencia-artificial",
+      "title": "inteligência-artificial",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-microsoft",
+      "title": "microsoft",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-node-js",
+      "title": "node.js",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-runtime",
+      "title": "runtime",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-arquitetura",
+      "title": "arquitetura",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-neuroplasticidade",
+      "title": "neuroplasticidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-guerra",
+      "title": "guerra",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-system",
+      "title": "system",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-techstack",
+      "title": "techstack",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-monte-carlo",
+      "title": "monte-carlo",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agentes-ia",
+      "title": "agentes-ia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-cqrs",
+      "title": "cqrs",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-multi-tenant-architecture",
+      "title": "multi-tenant architecture",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-linguagens",
+      "title": "linguagens",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-algoritmos",
+      "title": "algoritmos",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ciencia",
+      "title": "ciencia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-integration",
+      "title": "integration",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-adr",
+      "title": "adr",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ml",
+      "title": "ml",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-tecnologia",
+      "title": "tecnologia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-kahneman",
+      "title": "kahneman",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-psicologia",
+      "title": "psicologia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-nobel",
+      "title": "nobel",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-embeddings",
+      "title": "embeddings",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-projeto-manhattan",
+      "title": "projeto-manhattan",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-lgpd",
+      "title": "lgpd",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-metacognicao",
+      "title": "metacognicao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
       "id": "sos-location-ml-risk-neural-models",
       "title": "SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/",
+      "size": 6
     },
     {
       "id": "sos-location-postgis-spatial-intelligence",
       "title": "SOS Location: PostGIS e inteligência espacial para resposta a desastres",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/",
+      "size": 6
     },
     {
       "id": "sos-location-clean-architecture-dotnet10",
       "title": "SOS Location: Clean Architecture + CQRS em .NET 10",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/",
+      "size": 6
     },
     {
       "id": "sos-location-webgl-3d-city-engine",
       "title": "SOS Location: Motor WebGL 3D de visualização de cidades em tempo real",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/",
+      "size": 6
     },
     {
       "id": "sos-location-stack",
       "title": "SOS Location: Tecnologias, ferramentas e exemplos",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1100-sos-location-stack/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1100-sos-location-stack/",
+      "size": 6
     },
     {
       "id": "sos-location-flow-architecture",
       "title": "SOS Location: Fluxos, arquitetura e diagramas",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1000-sos-location-flow-architecture/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1000-sos-location-flow-architecture/",
+      "size": 6
     },
     {
       "id": "sos-location-business-rules",
       "title": "SOS Location: Regras de negócio, contratos e operação",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-0900-sos-location-business-rules/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-0900-sos-location-business-rules/",
+      "size": 6
     },
     {
       "id": "ia-inspirada-pela-fisica-redes-neurais",
       "title": "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/",
+      "size": 6
     },
     {
       "id": "computacao-quantica-qbits-vs-bits",
       "title": "Computação Quântica: O Poder Além dos Bits",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2500-computacao-quantica-qbits-vs-bits/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2500-computacao-quantica-qbits-vs-bits/",
+      "size": 6
     },
     {
       "id": "introducao-intuitiva-fisica-quantica",
       "title": "O Universo Quântico: Além da Lógica Clássica",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/",
+      "size": 6
     },
     {
       "id": "simulacao-fisica-particulas-monte-carlo",
       "title": "Simulação de Partículas: O poder dos Métodos de Monte Carlo",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/",
+      "size": 6
     },
     {
       "id": "estruturas-de-dados-pilha-fila-arvores",
       "title": "Excelência em Dados: Pilhas, Filas e Árvores",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/",
+      "size": 6
     },
     {
       "id": "algoritmos-busca-ordenacao-com-big-o",
       "title": "Algoritmos e Big O: Entendendo a Eficiência do Código",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/",
+      "size": 6
     },
     {
       "id": "daniel-kahneman-raciocinio-economico",
       "title": "Daniel Kahneman: Rápido e Devagar - A Economia Comportamental",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/",
+      "size": 6
     },
     {
       "id": "projeto-manhattan-bomba-atomica",
       "title": "Projeto Manhattan: A Ciência da Bomba",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/",
+      "size": 6
     },
     {
       "id": "segunda-guerra-mundial-tecnologia",
       "title": "Segunda Guerra Mundial: O Motor da Inovação Tecnológica",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/",
+      "size": 6
     },
     {
       "id": "sistemas-orientados-a-filas",
       "title": "Resiliência e Escala: Sistemas orientados a Filas de Mensageria",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1600-sistemas-orientados-a-filas/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1600-sistemas-orientados-a-filas/",
+      "size": 6
     },
     {
       "id": "richard-feynman-prazer-descobrir",
       "title": "Richard Feynman: O Prazer de Descobrir e o Pensamento Quântico",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/",
+      "size": 6
     },
     {
       "id": "alan-turing-computacao-enigma",
       "title": "Alan Turing: O Código Enigma e o Nascimento da IA",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/",
+      "size": 6
     },
     {
       "id": "bill-gates-microsoft-historia",
       "title": "Bill Gates e a Microsoft: Do Desktop à Ubiquidade",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/",
+      "size": 6
     },
     {
       "id": "typescript-tipagem-avancada",
       "title": "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/",
+      "size": 6
     },
     {
       "id": "tdd-ciclo-vermelho-verde-refactor",
       "title": "TDD: O Ciclo Red-Green-Refactor como Proteção de Domínio",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/",
+      "size": 6
     },
     {
       "id": "sistemas-de-tipagem-estatico-vs-dinamico",
       "title": "Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/",
+      "size": 6
     },
     {
       "id": "fluxo-pensamento-agentes",
       "title": "A anatomia do pensamento em agentes: transformando intenção em execução",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1200-fluxo-pensamento-agentes/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1200-fluxo-pensamento-agentes/",
+      "size": 6
     },
     {
       "id": "redes-neurais-do-zero-python",
       "title": "Redes Neurais do Zero: Implementação Matemática em Python",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/",
+      "size": 6
     },
     {
       "id": "performance-dotnet-pre-compilacao",
       "title": "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/",
+      "size": 6
     },
     {
       "id": "flutter-arquitetura-dart",
       "title": "Flutter & Dart: Arquitetura de Estados e Performance Mobile",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/",
+      "size": 6
     },
     {
       "id": "engenharia-cognitive-agentes-ia",
       "title": "Engenharia Cognitiva: Como Agentes de IA 'Pensam'",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/",
+      "size": 6
     },
     {
       "id": "design-patterns-gang-of-four-moderno",
       "title": "Design Patterns: O que ainda é Relevante no C# Moderno?",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/",
+      "size": 6
     },
     {
       "id": "boas-praticas-clean-code-solid",
       "title": "Clean Code & SOLID: O Custo da Dívida Técnica",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/",
+      "size": 6
     },
     {
       "id": "dapper-vs-efcore-performance",
       "title": "Dapper vs EF Core: Quando a Performance Supera a Abstração",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/",
+      "size": 6
     },
     {
       "id": "poc-minerando-logs",
       "title": "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1100-poc-minerando-logs/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1100-poc-minerando-logs/",
+      "size": 6
     },
     {
       "id": "neuroplasticidade-agentes",
       "title": "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1000-neuroplasticidade-agentes/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1000-neuroplasticidade-agentes/",
+      "size": 6
     },
     {
       "id": "orquestrador-agentes-ddd",
       "title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0900-orquestrador-agentes-ddd/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0900-orquestrador-agentes-ddd/",
+      "size": 6
     },
     {
       "id": "ddd-boundaries-for-agent-systems",
       "title": "DDD boundaries for agent systems",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/20260402-203000-ddd-boundaries-for-agent-systems/"
+      "url": "https://nhmatsumoto.github.io/publications/20260402-203000-ddd-boundaries-for-agent-systems/",
+      "size": 6
     },
     {
       "id": "gis-pipelines-with-event-driven-services",
       "title": "GIS pipelines with event-driven services",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/20260401-184500-gis-pipelines-with-event-driven-services/"
+      "url": "https://nhmatsumoto.github.io/publications/20260401-184500-gis-pipelines-with-event-driven-services/",
+      "size": 6
     },
     {
       "id": "primeiro-post",
       "title": "Bem-vindo ao meu novo blog",
       "kind": "post",
-      "url": "https://nhmatsumoto.github.io/publications/20260312-090000-primeiro-post/"
+      "url": "https://nhmatsumoto.github.io/publications/20260312-090000-primeiro-post/",
+      "size": 6
     },
     {
       "id": "sos-location",
       "title": "SOS Location",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/sos-location/"
+      "url": "https://nhmatsumoto.github.io/projects/sos-location/",
+      "size": 8
     },
     {
       "id": "splitcosts",
       "title": "SplitCosts",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/splitcosts/"
+      "url": "https://nhmatsumoto.github.io/projects/splitcosts/",
+      "size": 8
     },
     {
       "id": "gis-incident-lab",
       "title": "GIS Incident Lab",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/gis-incident-lab/"
+      "url": "https://nhmatsumoto.github.io/projects/gis-incident-lab/",
+      "size": 8
     },
     {
       "id": "apollo-11",
       "title": "Apollo-11",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/apollo-11/"
+      "url": "https://nhmatsumoto.github.io/projects/apollo-11/",
+      "size": 8
     },
     {
       "id": "automapper",
       "title": "AutoMapper",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/automapper/"
+      "url": "https://nhmatsumoto.github.io/projects/automapper/",
+      "size": 8
     },
     {
       "id": "brumadinho-location",
       "title": "brumadinho_location",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/brumadinho-location/"
+      "url": "https://nhmatsumoto.github.io/projects/brumadinho-location/",
+      "size": 8
     },
     {
       "id": "chess",
       "title": "chess",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/chess/"
+      "url": "https://nhmatsumoto.github.io/projects/chess/",
+      "size": 8
     },
     {
       "id": "claw-code",
       "title": "claw-code",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/claw-code/"
+      "url": "https://nhmatsumoto.github.io/projects/claw-code/",
+      "size": 8
     },
     {
       "id": "deepseek-v3",
       "title": "DeepSeek-V3",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/deepseek-v3/"
+      "url": "https://nhmatsumoto.github.io/projects/deepseek-v3/",
+      "size": 8
     },
     {
       "id": "financial",
       "title": "Financial",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/financial/"
+      "url": "https://nhmatsumoto.github.io/projects/financial/",
+      "size": 8
     },
     {
       "id": "gaussian-splatting",
       "title": "gaussian-splatting",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/gaussian-splatting/"
+      "url": "https://nhmatsumoto.github.io/projects/gaussian-splatting/",
+      "size": 8
     },
     {
       "id": "gemini-cli",
       "title": "gemini-cli",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/gemini-cli/"
+      "url": "https://nhmatsumoto.github.io/projects/gemini-cli/",
+      "size": 8
     },
     {
       "id": "java-servlet-pages",
       "title": "Java-Servlet-Pages",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/java-servlet-pages/"
+      "url": "https://nhmatsumoto.github.io/projects/java-servlet-pages/",
+      "size": 8
     },
     {
       "id": "leaflet",
       "title": "Leaflet",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/leaflet/"
+      "url": "https://nhmatsumoto.github.io/projects/leaflet/",
+      "size": 8
     },
     {
       "id": "macos",
       "title": "macos",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/macos/"
+      "url": "https://nhmatsumoto.github.io/projects/macos/",
+      "size": 8
     },
     {
       "id": "maplebr",
       "title": "MapleBR",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/maplebr/"
+      "url": "https://nhmatsumoto.github.io/projects/maplebr/",
+      "size": 8
     },
     {
       "id": "mermaid-live-editor",
       "title": "mermaid-live-editor",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/mermaid-live-editor/"
+      "url": "https://nhmatsumoto.github.io/projects/mermaid-live-editor/",
+      "size": 8
     },
     {
       "id": "mermaid",
       "title": "mermaid",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/mermaid/"
+      "url": "https://nhmatsumoto.github.io/projects/mermaid/",
+      "size": 8
     },
     {
       "id": "nhmatsumoto-exception-middleware",
       "title": "nhmatsumoto.exception.middleware",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-exception-middleware/"
+      "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-exception-middleware/",
+      "size": 8
     },
     {
       "id": "nhmatsumoto-github-io",
       "title": "nhmatsumoto.github.io",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-github-io/"
+      "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-github-io/",
+      "size": 8
     },
     {
       "id": "playground-fe",
       "title": "Playground-FE",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/playground-fe/"
+      "url": "https://nhmatsumoto.github.io/projects/playground-fe/",
+      "size": 8
     },
     {
       "id": "prog-lib",
       "title": "prog_lib",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/prog-lib/"
+      "url": "https://nhmatsumoto.github.io/projects/prog-lib/",
+      "size": 8
     },
     {
       "id": "quickreaderv1",
       "title": "QuickReaderv1",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/quickreaderv1/"
+      "url": "https://nhmatsumoto.github.io/projects/quickreaderv1/",
+      "size": 8
     },
     {
       "id": "react-data-grid",
       "title": "react-data-grid",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/react-data-grid/"
+      "url": "https://nhmatsumoto.github.io/projects/react-data-grid/",
+      "size": 8
     },
     {
       "id": "responsemiddleware",
       "title": "ResponseMiddleware",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/responsemiddleware/"
+      "url": "https://nhmatsumoto.github.io/projects/responsemiddleware/",
+      "size": 8
     },
     {
       "id": "ronaldinho-agent",
       "title": "ronaldinho-agent",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/ronaldinho-agent/"
+      "url": "https://nhmatsumoto.github.io/projects/ronaldinho-agent/",
+      "size": 8
     },
     {
       "id": "security-jwt",
       "title": "Security.Jwt",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/security-jwt/"
+      "url": "https://nhmatsumoto.github.io/projects/security-jwt/",
+      "size": 8
     },
     {
       "id": "sos",
       "title": "sos",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/sos/"
+      "url": "https://nhmatsumoto.github.io/projects/sos/",
+      "size": 8
     },
     {
       "id": "splitcost-backend",
       "title": "SplitCost-Backend",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/splitcost-backend/"
+      "url": "https://nhmatsumoto.github.io/projects/splitcost-backend/",
+      "size": 8
     },
     {
       "id": "splitcosts-fe",
       "title": "SplitCosts-FE",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/splitcosts-fe/"
+      "url": "https://nhmatsumoto.github.io/projects/splitcosts-fe/",
+      "size": 8
     },
     {
       "id": "system-prompts-and-models-of-ai-tools",
       "title": "system-prompts-and-models-of-ai-tools",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/system-prompts-and-models-of-ai-tools/"
+      "url": "https://nhmatsumoto.github.io/projects/system-prompts-and-models-of-ai-tools/",
+      "size": 8
     },
     {
       "id": "user-auth",
       "title": "User-Auth",
       "kind": "project",
-      "url": "https://nhmatsumoto.github.io/projects/user-auth/"
+      "url": "https://nhmatsumoto.github.io/projects/user-auth/",
+      "size": 8
     },
     {
       "id": "technical-knowledge-os",
       "title": "Technical Knowledge OS",
       "kind": "document",
-      "url": "https://nhmatsumoto.github.io/documents/technical-knowledge-os/"
+      "url": "https://nhmatsumoto.github.io/documents/technical-knowledge-os/",
+      "size": 6
     },
     {
       "id": "system-architecture",
       "title": "System Architecture",
       "kind": "document",
-      "url": "https://nhmatsumoto.github.io/documents/system-architecture/"
+      "url": "https://nhmatsumoto.github.io/documents/system-architecture/",
+      "size": 6
     },
     {
       "id": "adr-versioned-memory",
       "title": "ADR 003 - Versioned Memory",
       "kind": "document",
-      "url": "https://nhmatsumoto.github.io/documents/adr-versioned-memory/"
+      "url": "https://nhmatsumoto.github.io/documents/adr-versioned-memory/",
+      "size": 6
     },
     {
       "id": "agent-integration-surface",
       "title": "Agent Integration Surface",
       "kind": "document",
-      "url": "https://nhmatsumoto.github.io/documents/agent-integration-surface/"
+      "url": "https://nhmatsumoto.github.io/documents/agent-integration-surface/",
+      "size": 6
     },
     {
       "id": "ronaldinho-architecture-overview",
       "title": "Ronaldinho Architecture Overview",
       "kind": "document",
-      "url": "https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/"
+      "url": "https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/",
+      "size": 6
     }
   ],
-  "links": []
+  "links": [
+    {
+      "source": "hiro",
+      "target": "tech_skills",
+      "value": 3
+    },
+    {
+      "source": "hiro",
+      "target": "engineering",
+      "value": 3
+    },
+    {
+      "source": "hiro",
+      "target": "soft_skills",
+      "value": 3
+    },
+    {
+      "source": "hiro",
+      "target": "labs",
+      "value": 3
+    },
+    {
+      "source": "engineering",
+      "target": "topic-ddd",
+      "value": 2
+    },
+    {
+      "source": "labs",
+      "target": "topic-ai",
+      "value": 2
+    },
+    {
+      "source": "tech_skills",
+      "target": "topic-javascript",
+      "value": 2
+    },
+    {
+      "source": "labs",
+      "target": "topic-gis",
+      "value": 2
+    },
+    {
+      "source": "engineering",
+      "target": "topic-architecture",
+      "value": 2
+    },
+    {
+      "source": "engineering",
+      "target": "topic-solid",
+      "value": 2
+    },
+    {
+      "source": "tech_skills",
+      "target": "topic-python",
+      "value": 2
+    },
+    {
+      "source": "tech_skills",
+      "target": "topic-typescript",
+      "value": 2
+    },
+    {
+      "source": "tech_skills",
+      "target": "topic-net",
+      "value": 2
+    },
+    {
+      "source": "topic-ml",
+      "target": "sos-location-ml-risk-neural-models",
+      "value": 1
+    },
+    {
+      "source": "topic-pytorch",
+      "target": "sos-location-ml-risk-neural-models",
+      "value": 1
+    },
+    {
+      "source": "topic-python",
+      "target": "sos-location-ml-risk-neural-models",
+      "value": 1
+    },
+    {
+      "source": "topic-gis",
+      "target": "sos-location-ml-risk-neural-models",
+      "value": 1
+    },
+    {
+      "source": "topic-risk-analysis",
+      "target": "sos-location-ml-risk-neural-models",
+      "value": 1
+    },
+    {
+      "source": "topic-gis",
+      "target": "sos-location-postgis-spatial-intelligence",
+      "value": 1
+    },
+    {
+      "source": "topic-postgis",
+      "target": "sos-location-postgis-spatial-intelligence",
+      "value": 1
+    },
+    {
+      "source": "topic-postgresql",
+      "target": "sos-location-postgis-spatial-intelligence",
+      "value": 1
+    },
+    {
+      "source": "topic-spatial",
+      "target": "sos-location-postgis-spatial-intelligence",
+      "value": 1
+    },
+    {
+      "source": "topic-backend",
+      "target": "sos-location-postgis-spatial-intelligence",
+      "value": 1
+    },
+    {
+      "source": "topic-dotnet",
+      "target": "sos-location-clean-architecture-dotnet10",
+      "value": 1
+    },
+    {
+      "source": "topic-clean-architecture",
+      "target": "sos-location-clean-architecture-dotnet10",
+      "value": 1
+    },
+    {
+      "source": "topic-cqrs",
+      "target": "sos-location-clean-architecture-dotnet10",
+      "value": 1
+    },
+    {
+      "source": "topic-backend",
+      "target": "sos-location-clean-architecture-dotnet10",
+      "value": 1
+    },
+    {
+      "source": "topic-architecture",
+      "target": "sos-location-clean-architecture-dotnet10",
+      "value": 1
+    },
+    {
+      "source": "topic-webgl",
+      "target": "sos-location-webgl-3d-city-engine",
+      "value": 1
+    },
+    {
+      "source": "topic-threejs",
+      "target": "sos-location-webgl-3d-city-engine",
+      "value": 1
+    },
+    {
+      "source": "topic-gis",
+      "target": "sos-location-webgl-3d-city-engine",
+      "value": 1
+    },
+    {
+      "source": "topic-3d",
+      "target": "sos-location-webgl-3d-city-engine",
+      "value": 1
+    },
+    {
+      "source": "topic-typescript",
+      "target": "sos-location-webgl-3d-city-engine",
+      "value": 1
+    },
+    {
+      "source": "topic-gis",
+      "target": "sos-location-stack",
+      "value": 1
+    },
+    {
+      "source": "topic-techstack",
+      "target": "sos-location-stack",
+      "value": 1
+    },
+    {
+      "source": "topic-sos",
+      "target": "sos-location-stack",
+      "value": 1
+    },
+    {
+      "source": "topic-gis",
+      "target": "sos-location-flow-architecture",
+      "value": 1
+    },
+    {
+      "source": "topic-architecture",
+      "target": "sos-location-flow-architecture",
+      "value": 1
+    },
+    {
+      "source": "topic-sos",
+      "target": "sos-location-flow-architecture",
+      "value": 1
+    },
+    {
+      "source": "topic-gis",
+      "target": "sos-location-business-rules",
+      "value": 1
+    },
+    {
+      "source": "topic-operations",
+      "target": "sos-location-business-rules",
+      "value": 1
+    },
+    {
+      "source": "topic-sos",
+      "target": "sos-location-business-rules",
+      "value": 1
+    },
+    {
+      "source": "topic-ia",
+      "target": "ia-inspirada-pela-fisica-redes-neurais",
+      "value": 1
+    },
+    {
+      "source": "topic-fisica",
+      "target": "ia-inspirada-pela-fisica-redes-neurais",
+      "value": 1
+    },
+    {
+      "source": "topic-entropia",
+      "target": "ia-inspirada-pela-fisica-redes-neurais",
+      "value": 1
+    },
+    {
+      "source": "topic-redes-neurais",
+      "target": "ia-inspirada-pela-fisica-redes-neurais",
+      "value": 1
+    },
+    {
+      "source": "topic-diffusao",
+      "target": "ia-inspirada-pela-fisica-redes-neurais",
+      "value": 1
+    },
+    {
+      "source": "topic-quantica",
+      "target": "computacao-quantica-qbits-vs-bits",
+      "value": 1
+    },
+    {
+      "source": "topic-computacao",
+      "target": "computacao-quantica-qbits-vs-bits",
+      "value": 1
+    },
+    {
+      "source": "topic-bits-vs-qubits",
+      "target": "computacao-quantica-qbits-vs-bits",
+      "value": 1
+    },
+    {
+      "source": "topic-tecnologia",
+      "target": "computacao-quantica-qbits-vs-bits",
+      "value": 1
+    },
+    {
+      "source": "topic-fisica",
+      "target": "introducao-intuitiva-fisica-quantica",
+      "value": 1
+    },
+    {
+      "source": "topic-quantica",
+      "target": "introducao-intuitiva-fisica-quantica",
+      "value": 1
+    },
+    {
+      "source": "topic-ciencia",
+      "target": "introducao-intuitiva-fisica-quantica",
+      "value": 1
+    },
+    {
+      "source": "topic-teoria",
+      "target": "introducao-intuitiva-fisica-quantica",
+      "value": 1
+    },
+    {
+      "source": "topic-fisica",
+      "target": "simulacao-fisica-particulas-monte-carlo",
+      "value": 1
+    },
+    {
+      "source": "topic-particulas",
+      "target": "simulacao-fisica-particulas-monte-carlo",
+      "value": 1
+    },
+    {
+      "source": "topic-simulacao",
+      "target": "simulacao-fisica-particulas-monte-carlo",
+      "value": 1
+    },
+    {
+      "source": "topic-monte-carlo",
+      "target": "simulacao-fisica-particulas-monte-carlo",
+      "value": 1
+    },
+    {
+      "source": "topic-algoritmos",
+      "target": "simulacao-fisica-particulas-monte-carlo",
+      "value": 1
+    },
+    {
+      "source": "topic-estruturas-de-dados",
+      "target": "estruturas-de-dados-pilha-fila-arvores",
+      "value": 1
+    },
+    {
+      "source": "topic-computacao",
+      "target": "estruturas-de-dados-pilha-fila-arvores",
+      "value": 1
+    },
+    {
+      "source": "topic-desempenho",
+      "target": "estruturas-de-dados-pilha-fila-arvores",
+      "value": 1
+    },
+    {
+      "source": "topic-engenharia",
+      "target": "estruturas-de-dados-pilha-fila-arvores",
+      "value": 1
+    },
+    {
+      "source": "topic-algoritmos",
+      "target": "algoritmos-busca-ordenacao-com-big-o",
+      "value": 1
+    },
+    {
+      "source": "topic-computacao",
+      "target": "algoritmos-busca-ordenacao-com-big-o",
+      "value": 1
+    },
+    {
+      "source": "topic-big-o",
+      "target": "algoritmos-busca-ordenacao-com-big-o",
+      "value": 1
+    },
+    {
+      "source": "topic-performance",
+      "target": "algoritmos-busca-ordenacao-com-big-o",
+      "value": 1
+    },
+    {
+      "source": "topic-historia",
+      "target": "daniel-kahneman-raciocinio-economico",
+      "value": 1
+    },
+    {
+      "source": "topic-kahneman",
+      "target": "daniel-kahneman-raciocinio-economico",
+      "value": 1
+    },
+    {
+      "source": "topic-psicologia",
+      "target": "daniel-kahneman-raciocinio-economico",
+      "value": 1
+    },
+    {
+      "source": "topic-tomada-de-decisao",
+      "target": "daniel-kahneman-raciocinio-economico",
+      "value": 1
+    },
+    {
+      "source": "topic-nobel",
+      "target": "daniel-kahneman-raciocinio-economico",
+      "value": 1
+    },
+    {
+      "source": "topic-historia",
+      "target": "projeto-manhattan-bomba-atomica",
+      "value": 1
+    },
+    {
+      "source": "topic-fisica",
+      "target": "projeto-manhattan-bomba-atomica",
+      "value": 1
+    },
+    {
+      "source": "topic-guerra",
+      "target": "projeto-manhattan-bomba-atomica",
+      "value": 1
+    },
+    {
+      "source": "topic-projeto-manhattan",
+      "target": "projeto-manhattan-bomba-atomica",
+      "value": 1
+    },
+    {
+      "source": "topic-historia",
+      "target": "segunda-guerra-mundial-tecnologia",
+      "value": 1
+    },
+    {
+      "source": "topic-tecnologia",
+      "target": "segunda-guerra-mundial-tecnologia",
+      "value": 1
+    },
+    {
+      "source": "topic-guerra",
+      "target": "segunda-guerra-mundial-tecnologia",
+      "value": 1
+    },
+    {
+      "source": "topic-inovacao",
+      "target": "segunda-guerra-mundial-tecnologia",
+      "value": 1
+    },
+    {
+      "source": "topic-arquitetura",
+      "target": "sistemas-orientados-a-filas",
+      "value": 1
+    },
+    {
+      "source": "topic-distribuido",
+      "target": "sistemas-orientados-a-filas",
+      "value": 1
+    },
+    {
+      "source": "topic-filas",
+      "target": "sistemas-orientados-a-filas",
+      "value": 1
+    },
+    {
+      "source": "topic-mensageria",
+      "target": "sistemas-orientados-a-filas",
+      "value": 1
+    },
+    {
+      "source": "topic-rabbitmq",
+      "target": "sistemas-orientados-a-filas",
+      "value": 1
+    },
+    {
+      "source": "topic-historia",
+      "target": "richard-feynman-prazer-descobrir",
+      "value": 1
+    },
+    {
+      "source": "topic-feynman",
+      "target": "richard-feynman-prazer-descobrir",
+      "value": 1
+    },
+    {
+      "source": "topic-fisica",
+      "target": "richard-feynman-prazer-descobrir",
+      "value": 1
+    },
+    {
+      "source": "topic-ciencia",
+      "target": "richard-feynman-prazer-descobrir",
+      "value": 1
+    },
+    {
+      "source": "topic-biografia",
+      "target": "richard-feynman-prazer-descobrir",
+      "value": 1
+    },
+    {
+      "source": "topic-historia",
+      "target": "alan-turing-computacao-enigma",
+      "value": 1
+    },
+    {
+      "source": "topic-turing",
+      "target": "alan-turing-computacao-enigma",
+      "value": 1
+    },
+    {
+      "source": "topic-ia",
+      "target": "alan-turing-computacao-enigma",
+      "value": 1
+    },
+    {
+      "source": "topic-computacao",
+      "target": "alan-turing-computacao-enigma",
+      "value": 1
+    },
+    {
+      "source": "topic-criptografia",
+      "target": "alan-turing-computacao-enigma",
+      "value": 1
+    },
+    {
+      "source": "topic-historia",
+      "target": "bill-gates-microsoft-historia",
+      "value": 1
+    },
+    {
+      "source": "topic-microsoft",
+      "target": "bill-gates-microsoft-historia",
+      "value": 1
+    },
+    {
+      "source": "topic-biografia",
+      "target": "bill-gates-microsoft-historia",
+      "value": 1
+    },
+    {
+      "source": "topic-software",
+      "target": "bill-gates-microsoft-historia",
+      "value": 1
+    },
+    {
+      "source": "topic-typescript",
+      "target": "typescript-tipagem-avancada",
+      "value": 1
+    },
+    {
+      "source": "topic-javascript",
+      "target": "typescript-tipagem-avancada",
+      "value": 1
+    },
+    {
+      "source": "topic-tipagem",
+      "target": "typescript-tipagem-avancada",
+      "value": 1
+    },
+    {
+      "source": "topic-frontend",
+      "target": "typescript-tipagem-avancada",
+      "value": 1
+    },
+    {
+      "source": "topic-qualidade",
+      "target": "tdd-ciclo-vermelho-verde-refactor",
+      "value": 1
+    },
+    {
+      "source": "topic-tdd",
+      "target": "tdd-ciclo-vermelho-verde-refactor",
+      "value": 1
+    },
+    {
+      "source": "topic-testes",
+      "target": "tdd-ciclo-vermelho-verde-refactor",
+      "value": 1
+    },
+    {
+      "source": "topic-engenharia",
+      "target": "tdd-ciclo-vermelho-verde-refactor",
+      "value": 1
+    },
+    {
+      "source": "topic-teoria-da-computacao",
+      "target": "sistemas-de-tipagem-estatico-vs-dinamico",
+      "value": 1
+    },
+    {
+      "source": "topic-linguagens",
+      "target": "sistemas-de-tipagem-estatico-vs-dinamico",
+      "value": 1
+    },
+    {
+      "source": "topic-tipagem",
+      "target": "sistemas-de-tipagem-estatico-vs-dinamico",
+      "value": 1
+    },
+    {
+      "source": "topic-engenharia",
+      "target": "sistemas-de-tipagem-estatico-vs-dinamico",
+      "value": 1
+    },
+    {
+      "source": "topic-ia",
+      "target": "fluxo-pensamento-agentes",
+      "value": 1
+    },
+    {
+      "source": "topic-agentes",
+      "target": "fluxo-pensamento-agentes",
+      "value": 1
+    },
+    {
+      "source": "topic-chain-of-thought",
+      "target": "fluxo-pensamento-agentes",
+      "value": 1
+    },
+    {
+      "source": "topic-metacognicao",
+      "target": "fluxo-pensamento-agentes",
+      "value": 1
+    },
+    {
+      "source": "topic-ia",
+      "target": "redes-neurais-do-zero-python",
+      "value": 1
+    },
+    {
+      "source": "topic-matematica",
+      "target": "redes-neurais-do-zero-python",
+      "value": 1
+    },
+    {
+      "source": "topic-python",
+      "target": "redes-neurais-do-zero-python",
+      "value": 1
+    },
+    {
+      "source": "topic-machine-learning",
+      "target": "redes-neurais-do-zero-python",
+      "value": 1
+    },
+    {
+      "source": "topic-dotnet",
+      "target": "performance-dotnet-pre-compilacao",
+      "value": 1
+    },
+    {
+      "source": "topic-performance",
+      "target": "performance-dotnet-pre-compilacao",
+      "value": 1
+    },
+    {
+      "source": "topic-runtime",
+      "target": "performance-dotnet-pre-compilacao",
+      "value": 1
+    },
+    {
+      "source": "topic-gc",
+      "target": "performance-dotnet-pre-compilacao",
+      "value": 1
+    },
+    {
+      "source": "topic-mobile",
+      "target": "flutter-arquitetura-dart",
+      "value": 1
+    },
+    {
+      "source": "topic-flutter",
+      "target": "flutter-arquitetura-dart",
+      "value": 1
+    },
+    {
+      "source": "topic-dart",
+      "target": "flutter-arquitetura-dart",
+      "value": 1
+    },
+    {
+      "source": "topic-arquitetura",
+      "target": "flutter-arquitetura-dart",
+      "value": 1
+    },
+    {
+      "source": "topic-ia",
+      "target": "engenharia-cognitive-agentes-ia",
+      "value": 1
+    },
+    {
+      "source": "topic-agentes",
+      "target": "engenharia-cognitive-agentes-ia",
+      "value": 1
+    },
+    {
+      "source": "topic-cognicao",
+      "target": "engenharia-cognitive-agentes-ia",
+      "value": 1
+    },
+    {
+      "source": "topic-arquitetura",
+      "target": "engenharia-cognitive-agentes-ia",
+      "value": 1
+    },
+    {
+      "source": "topic-arquitetura",
+      "target": "design-patterns-gang-of-four-moderno",
+      "value": 1
+    },
+    {
+      "source": "topic-dotnet",
+      "target": "design-patterns-gang-of-four-moderno",
+      "value": 1
+    },
+    {
+      "source": "topic-design-patterns",
+      "target": "design-patterns-gang-of-four-moderno",
+      "value": 1
+    },
+    {
+      "source": "topic-engenharia",
+      "target": "design-patterns-gang-of-four-moderno",
+      "value": 1
+    },
+    {
+      "source": "topic-qualidade",
+      "target": "boas-praticas-clean-code-solid",
+      "value": 1
+    },
+    {
+      "source": "topic-arquitetura",
+      "target": "boas-praticas-clean-code-solid",
+      "value": 1
+    },
+    {
+      "source": "topic-solid",
+      "target": "boas-praticas-clean-code-solid",
+      "value": 1
+    },
+    {
+      "source": "topic-manutenibilidade",
+      "target": "boas-praticas-clean-code-solid",
+      "value": 1
+    },
+    {
+      "source": "topic-dotnet",
+      "target": "dapper-vs-efcore-performance",
+      "value": 1
+    },
+    {
+      "source": "topic-performance",
+      "target": "dapper-vs-efcore-performance",
+      "value": 1
+    },
+    {
+      "source": "topic-orm",
+      "target": "dapper-vs-efcore-performance",
+      "value": 1
+    },
+    {
+      "source": "topic-banco-de-dados",
+      "target": "dapper-vs-efcore-performance",
+      "value": 1
+    },
+    {
+      "source": "topic-ia",
+      "target": "poc-minerando-logs",
+      "value": 1
+    },
+    {
+      "source": "topic-log-mining",
+      "target": "poc-minerando-logs",
+      "value": 1
+    },
+    {
+      "source": "topic-privacidade",
+      "target": "poc-minerando-logs",
+      "value": 1
+    },
+    {
+      "source": "topic-lgpd",
+      "target": "poc-minerando-logs",
+      "value": 1
+    },
+    {
+      "source": "topic-embeddings",
+      "target": "poc-minerando-logs",
+      "value": 1
+    },
+    {
+      "source": "topic-ia",
+      "target": "neuroplasticidade-agentes",
+      "value": 1
+    },
+    {
+      "source": "topic-agentes",
+      "target": "neuroplasticidade-agentes",
+      "value": 1
+    },
+    {
+      "source": "topic-feedback",
+      "target": "neuroplasticidade-agentes",
+      "value": 1
+    },
+    {
+      "source": "topic-neuroplasticidade",
+      "target": "neuroplasticidade-agentes",
+      "value": 1
+    },
+    {
+      "source": "topic-ddd",
+      "target": "orquestrador-agentes-ddd",
+      "value": 1
+    },
+    {
+      "source": "topic-arquitetura",
+      "target": "orquestrador-agentes-ddd",
+      "value": 1
+    },
+    {
+      "source": "topic-agentes-ia",
+      "target": "orquestrador-agentes-ddd",
+      "value": 1
+    },
+    {
+      "source": "topic-inteligencia-artificial",
+      "target": "orquestrador-agentes-ddd",
+      "value": 1
+    },
+    {
+      "source": "topic-dotnet",
+      "target": "ddd-boundaries-for-agent-systems",
+      "value": 1
+    },
+    {
+      "source": "topic-ddd",
+      "target": "ddd-boundaries-for-agent-systems",
+      "value": 1
+    },
+    {
+      "source": "topic-ai",
+      "target": "ddd-boundaries-for-agent-systems",
+      "value": 1
+    },
+    {
+      "source": "topic-gis",
+      "target": "gis-pipelines-with-event-driven-services",
+      "value": 1
+    },
+    {
+      "source": "topic-dotnet",
+      "target": "gis-pipelines-with-event-driven-services",
+      "value": 1
+    },
+    {
+      "source": "topic-architecture",
+      "target": "gis-pipelines-with-event-driven-services",
+      "value": 1
+    },
+    {
+      "source": "topic-pessoal",
+      "target": "primeiro-post",
+      "value": 1
+    },
+    {
+      "source": "topic-anuncio",
+      "target": "primeiro-post",
+      "value": 1
+    },
+    {
+      "source": "topic-projeto",
+      "target": "primeiro-post",
+      "value": 1
+    },
+    {
+      "source": "topic-typescript",
+      "target": "sos-location",
+      "value": 1
+    },
+    {
+      "source": "topic-node-js",
+      "target": "sos-location",
+      "value": 1
+    },
+    {
+      "source": "topic-gis",
+      "target": "sos-location",
+      "value": 1
+    },
+    {
+      "source": "topic-event-driven",
+      "target": "sos-location",
+      "value": 1
+    },
+    {
+      "source": "topic-net",
+      "target": "splitcosts",
+      "value": 1
+    },
+    {
+      "source": "topic-react",
+      "target": "splitcosts",
+      "value": 1
+    },
+    {
+      "source": "topic-postgresql",
+      "target": "splitcosts",
+      "value": 1
+    },
+    {
+      "source": "topic-multi-tenant-architecture",
+      "target": "splitcosts",
+      "value": 1
+    },
+    {
+      "source": "topic-python",
+      "target": "gis-incident-lab",
+      "value": 1
+    },
+    {
+      "source": "topic-net",
+      "target": "gis-incident-lab",
+      "value": 1
+    },
+    {
+      "source": "topic-gis",
+      "target": "gis-incident-lab",
+      "value": 1
+    },
+    {
+      "source": "topic-event-driven-services",
+      "target": "gis-incident-lab",
+      "value": 1
+    },
+    {
+      "source": "topic-domain",
+      "target": "technical-knowledge-os",
+      "value": 1
+    },
+    {
+      "source": "topic-knowledge",
+      "target": "technical-knowledge-os",
+      "value": 1
+    },
+    {
+      "source": "topic-architecture",
+      "target": "system-architecture",
+      "value": 1
+    },
+    {
+      "source": "topic-system",
+      "target": "system-architecture",
+      "value": 1
+    },
+    {
+      "source": "topic-agents",
+      "target": "adr-versioned-memory",
+      "value": 1
+    },
+    {
+      "source": "topic-adr",
+      "target": "adr-versioned-memory",
+      "value": 1
+    },
+    {
+      "source": "topic-memory",
+      "target": "adr-versioned-memory",
+      "value": 1
+    },
+    {
+      "source": "topic-apis",
+      "target": "agent-integration-surface",
+      "value": 1
+    },
+    {
+      "source": "topic-agents",
+      "target": "agent-integration-surface",
+      "value": 1
+    },
+    {
+      "source": "topic-integration",
+      "target": "agent-integration-surface",
+      "value": 1
+    },
+    {
+      "source": "topic-agents",
+      "target": "ronaldinho-architecture-overview",
+      "value": 1
+    },
+    {
+      "source": "topic-architecture",
+      "target": "ronaldinho-architecture-overview",
+      "value": 1
+    },
+    {
+      "source": "topic-runtime",
+      "target": "ronaldinho-architecture-overview",
+      "value": 1
+    }
+  ]
 }

@@ -119,11 +119,71 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     }
 
 def build_graph_data(posts, projects, documents):
+    from .utils import load_toml, slugify
+    
+    graph_config_path = ROOT / "config/graph.toml"
+    graph_config = load_toml(graph_config_path) if graph_config_path.exists() else {}
+    
     nodes = []
     links = []
     node_map = {}
-    all_res = [] # Replaced broken unpacking
-    # Flattening for loop (simplified for refactor)
+    
+    # 1. Hiro Node
+    hiro_cfg = graph_config.get("hiro", {})
+    hiro_id = "hiro"
+    nodes.append({
+        "id": hiro_id,
+        "title": hiro_cfg.get("label", "Hiro"),
+        "kind": "central",
+        "color": hiro_cfg.get("color", "#FFFFFF"),
+        "glow": True,
+        "size": 20
+    })
+    
+    # 2. Category Nodes
+    categories = graph_config.get("categories", {})
+    tag_to_cat = {}
+    
+    for cat_id, cat_cfg in categories.items():
+        nodes.append({
+            "id": cat_id,
+            "title": cat_cfg.get("label", cat_id),
+            "kind": "group",
+            "color": cat_cfg.get("color", "#00C2FF"),
+            "size": 15
+        })
+        links.append({"source": hiro_id, "target": cat_id, "value": 3})
+        
+        for tag in cat_cfg.get("tags", []):
+            tag_to_cat[tag.lower()] = cat_id
+
+    # 3. Topic Nodes (from tags)
+    all_tags = set()
+    for res in posts + documents:
+        for tag in res.get("tags", []):
+            all_tags.add(tag.lower())
+    for p in projects:
+        for tag in p.get("stack", []):
+            all_tags.add(tag.lower())
+            
+    topic_map = {}
+    for tag in all_tags:
+        topic_id = f"topic-{slugify(tag)}"
+        topic_map[tag] = topic_id
+        cat_id = tag_to_cat.get(tag)
+        
+        nodes.append({
+            "id": topic_id,
+            "title": tag,
+            "kind": "topic",
+            "color": categories.get(cat_id, {}).get("color", "#64748b") if cat_id else "#64748b",
+            "size": 10
+        })
+        
+        if cat_id:
+            links.append({"source": cat_id, "target": topic_id, "value": 2})
+
+    # 4. Publication Nodes
     flat = []
     for p in posts: flat.append((p, "post"))
     for p in projects: flat.append((p, "project"))
@@ -131,14 +191,30 @@ def build_graph_data(posts, projects, documents):
     
     for res, kind in flat:
         slug = res.get("slug")
-        node_map[slug] = {"id": slug, "title": res.get("title") or res.get("name"), "kind": kind, "url": res.get("resolved_url")}
+        node_map[slug] = {
+            "id": slug, 
+            "title": res.get("title") or res.get("name"), 
+            "kind": kind, 
+            "url": res.get("resolved_url"),
+            "size": 8 if kind == "project" else 6
+        }
         nodes.append(node_map[slug])
+        
+        # Link topics to publications
+        res_tags = res.get("tags", []) if kind != "project" else res.get("stack", [])
+        for tag in res_tags:
+            tag_lower = tag.lower()
+            if tag_lower in topic_map:
+                links.append({"source": topic_map[tag_lower], "target": slug, "value": 1})
     
+    # 5. Wikilinks (existing logic)
     for res, _ in flat:
         body = res.get("body", "") or res.get("overview", "") or ""
         for target, _ in WIKILINK_RE.findall(body):
-            if target.strip() in node_map:
-                links.append({"source": res.get("slug"), "target": target.strip()})
+            target_slug = target.strip()
+            if target_slug in node_map:
+                links.append({"source": res.get("slug"), "target": target_slug, "value": 1})
+                
     return {"nodes": nodes, "links": links}
 
 def publish_changes(message: str, push: bool = False) -> dict[str, Any]:

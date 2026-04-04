@@ -28,10 +28,19 @@ const mountGraph = (container, data) => {
   svg.call(zoom);
 
   const simulation = d3.forceSimulation(data.nodes)
-    .force("link", d3.forceLink(data.links).id((d) => d.id).distance(120))
-    .force("charge", d3.forceManyBody().strength(-200))
+    .force("link", d3.forceLink(data.links).id((d) => d.id).distance((d) => {
+      // Shorter distance for hierarchy levels
+      if (d.source.kind === "central" || d.target.kind === "central") return 150;
+      if (d.source.kind === "group" || d.target.kind === "group") return 100;
+      return 60;
+    }))
+    .force("charge", d3.forceManyBody().strength((d) => {
+      if (d.kind === "central") return -1000;
+      if (d.kind === "group") return -500;
+      return -100;
+    }))
     .force("center", d3.forceCenter(width / 2, height / 2))
-    .force("collision", d3.forceCollide().radius(50));
+    .force("collision", d3.forceCollide().radius((d) => (d.size || 6) * 2 + 10));
 
   const link = g
     .append("g")
@@ -57,44 +66,55 @@ const mountGraph = (container, data) => {
 
   node
     .append("circle")
-    .attr("r", (d) => (d.kind === "project" ? 8 : 6))
-    .attr("fill", (d) => {
-      if (d.kind === "project") return "#00C2FF";
-      if (d.kind === "document") return "#7C5CFF";
-      return "#1e293b";
-    })
-    .attr("stroke", "#fff")
-    .attr("stroke-width", 2);
+    .attr("r", (d) => d.size || 6)
+    .attr("fill", (d) => d.color || "#1e293b")
+    .attr("stroke", (d) => (d.glow ? "rgba(255,255,255,0.8)" : "#fff"))
+    .attr("stroke-width", (d) => (d.kind === "central" ? 3 : 1.5))
+    .style("filter", (d) => d.glow ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "none");
 
   node
     .append("text")
-    .attr("x", 14)
+    .attr("x", (d) => (d.size || 6) + 6)
     .attr("y", 4)
     .text((d) => d.title)
-    .style("font-size", isFullScreen ? "13px" : "11px")
+    .style("font-size", (d) => {
+        if (d.kind === "central") return "16px";
+        if (d.kind === "group") return "14px";
+        return isFullScreen ? "12px" : "10px";
+    })
     .style("font-family", "var(--font-ui), sans-serif")
-    .style("fill", "#64748b")
+    .style("fill", (d) => (d.kind === "central" || d.kind === "group" ? "#f8fafc" : "#94a3b8"))
     .style("pointer-events", "none")
-    .style("text-shadow", "0 1px 2px white");
+    .style("font-weight", (d) => (d.kind === "central" || d.kind === "group" ? "bold" : "normal"))
+    .style("text-shadow", "0 1px 3px rgba(0,0,0,0.3)");
 
-  node.on("mouseenter", function () {
+  node.on("mouseenter", function (event, d) {
     d3.select(this)
       .select("circle")
-      .attr("r", (d) => (d.kind === "project" ? 12 : 10));
+      .transition()
+      .duration(200)
+      .attr("r", (d.size || 6) * 1.5);
+    
     d3.select(this)
       .select("text")
-      .style("font-weight", "bold")
-      .style("fill", "#00C2FF");
+      .transition()
+      .duration(200)
+      .style("fill", d.color || "#00C2FF")
+      .style("opacity", 1);
   });
 
-  node.on("mouseleave", function () {
+  node.on("mouseleave", function (event, d) {
     d3.select(this)
       .select("circle")
-      .attr("r", (d) => (d.kind === "project" ? 8 : 6));
+      .transition()
+      .duration(200)
+      .attr("r", d.size || 6);
+    
     d3.select(this)
       .select("text")
-      .style("font-weight", "normal")
-      .style("fill", "#64748b");
+      .transition()
+      .duration(200)
+      .style("fill", (d.kind === "central" || d.kind === "group" ? "#f8fafc" : "#94a3b8"));
   });
 
   node.call(
