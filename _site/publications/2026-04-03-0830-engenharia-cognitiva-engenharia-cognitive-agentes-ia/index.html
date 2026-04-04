@@ -25,9 +25,9 @@
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     
     
-    <nav class="nav-shell">
+    <nav class="nav-shell" data-nav-shell>
       <div class="nav-brand">
-        <a class="nav-title" href="/">nhmatsumoto-blog-engine</a>
+        <a class="nav-title" href="/"><span class="brand-accent">NHM</span> / OS</a>
       </div>
       
       <div class="nav-menu desktop-only">
@@ -35,8 +35,12 @@
       </div>
 
       <div class="nav-actions">
+        <div class="nav-group desktop-only">
+          <a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
+        </div>
+        <div class="nav-divider desktop-only"></div>
         <button class="nav-button" type="button" data-open-palette aria-label="palette de comandos">
-          <i data-lucide="command"></i>
+          <i data-lucide="search"></i>
         </button>
         <button class="nav-button" type="button" data-theme-toggle aria-label="Toggle theme">
           <i data-lucide="moon" class="theme-icon-moon"></i>
@@ -52,12 +56,25 @@
         </a>
       </div>
 
-      <div class="nav-mobile-menu" data-nav-menu hidden>
-        <a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
-        <a class="nav-cta" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer">
-          <span data-i18n="nav.cta">trabalho aberto / contato</span>
-          <i data-lucide="arrow-up-right"></i>
-        </a>
+      <div class="nav-drawer" data-nav-menu hidden>
+        <div class="drawer-backdrop" data-nav-toggle></div>
+        <div class="drawer-content">
+          <div class="drawer-header">
+            <span class="nav-title"><span class="brand-accent">NHM</span> / OS</span>
+            <button class="nav-button" type="button" data-nav-toggle>
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+          <div class="drawer-links">
+            <a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
+          </div>
+          <div class="drawer-footer">
+            <a class="nav-cta" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer">
+              <span data-i18n="nav.cta">trabalho aberto / contato</span>
+              <i data-lucide="arrow-up-right"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </nav>
     

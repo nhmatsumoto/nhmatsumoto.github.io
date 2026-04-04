@@ -973,9 +973,9 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     )
 
     return f"""
-    <nav class="nav-shell">
+    <nav class="nav-shell" data-nav-shell>
       <div class="nav-brand">
-        <a class="nav-title" href="{site_href(site, "/")}">{html.escape(site["title"])}</a>
+        <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span> / OS</a>
       </div>
       
       <div class="nav-menu desktop-only">
@@ -983,8 +983,12 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
       </div>
 
       <div class="nav-actions">
+        <div class="nav-group desktop-only">
+          {pill_links}
+        </div>
+        <div class="nav-divider desktop-only"></div>
         <button class="nav-button" type="button" data-open-palette aria-label="{html.escape(search_label, quote=True)}">
-          <i data-lucide="command"></i>
+          <i data-lucide="search"></i>
         </button>
         <button class="nav-button" type="button" data-theme-toggle aria-label="Toggle theme">
           <i data-lucide="moon" class="theme-icon-moon"></i>
@@ -1000,12 +1004,25 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         </a>
       </div>
 
-      <div class="nav-mobile-menu" data-nav-menu hidden>
-        {pill_links}
-        <a class="nav-cta" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer">
-          <span data-i18n="nav.cta">{html.escape(cta_label)}</span>
-          <i data-lucide="arrow-up-right"></i>
-        </a>
+      <div class="nav-drawer" data-nav-menu hidden>
+        <div class="drawer-backdrop" data-nav-toggle></div>
+        <div class="drawer-content">
+          <div class="drawer-header">
+            <span class="nav-title"><span class="brand-accent">NHM</span> / OS</span>
+            <button class="nav-button" type="button" data-nav-toggle>
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+          <div class="drawer-links">
+            {pill_links}
+          </div>
+          <div class="drawer-footer">
+            <a class="nav-cta" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer">
+              <span data-i18n="nav.cta">{html.escape(cta_label)}</span>
+              <i data-lucide="arrow-up-right"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </nav>
     """

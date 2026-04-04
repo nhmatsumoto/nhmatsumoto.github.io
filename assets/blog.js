@@ -164,10 +164,10 @@ const initThemeManager = () => {
 };
 
 const initNavToggle = () => {
-  const toggle = document.querySelector("[data-nav-toggle]");
+  const toggles = document.querySelectorAll("[data-nav-toggle]");
   const menu = document.querySelector("[data-nav-menu]");
   const shell = document.querySelector("[data-nav-shell]");
-  if (!toggle || !menu || !shell) return;
+  if (!menu || !shell) return;
 
   const setNavOpen = (open) => {
     shell.dataset.navOpen = String(open);
@@ -175,7 +175,7 @@ const initNavToggle = () => {
     document.body.style.overflow = open ? "hidden" : "";
   };
 
-  toggle.addEventListener("click", () => setNavOpen(menu.hidden));
+  toggles.forEach(t => t.addEventListener("click", () => setNavOpen(menu.hidden)));
   menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setNavOpen(false)));
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") setNavOpen(false); });
   window.addEventListener("resize", () => { if (window.innerWidth >= 768) setNavOpen(false); });
