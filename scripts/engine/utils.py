@@ -117,20 +117,21 @@ def resolve_optional_url(site: dict[str, str], url: str) -> str:
     return resolve_url(site, url) if str(url or "").strip() else ""
 
 def minify_js(content: str) -> str:
-    """Lightweight JS minifier (Regex-based)."""
-    # Remove single line comments (basic check, avoids URLs)
-    content = re.sub(r'(?<!:)\/\/.*?\n', '\n', content)
+    """Safely remove comments and redundant whitespace."""
     # Remove multi-line comments
     content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
-    # Collapse whitespace
-    content = re.sub(r'\s+', ' ', content)
-    # Minimize around syntax characters
-    for c in '{}(),;=:<>+-*/%&|^!?[]':
-        content = content.replace(f' {c}', c).replace(f'{c} ', c)
+    # Remove single line comments
+    content = re.sub(r'(?<!:)\/\/.*?\n', '\n', content)
+    # Collapse spaces on same line
+    content = re.sub(r'[ \t]+', ' ', content)
+    # Strip whitespace from start/end of lines
+    content = re.sub(r'^[ \t]+|[ \t]+$', '', content, flags=re.MULTILINE)
+    # Remove empty lines
+    content = re.sub(r'\n\s*\n', '\n', content)
     return content.strip()
 
 def minify_css(content: str) -> str:
-    """Lightweight CSS minifier (Regex-based)."""
+    """Safer CSS minifier."""
     content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
     content = re.sub(r'\s+', ' ', content)
     for c in '{}:;,':
