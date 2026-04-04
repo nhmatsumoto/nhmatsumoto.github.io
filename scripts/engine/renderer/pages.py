@@ -62,9 +62,59 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], publicatio
 
 def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]]) -> str:
     unified_items = []
-    for item in posts: unified_items.append({"kind": "post", "name": item["title"], "headline": item["summary"], "summary": item["summary"], "status": "production", "stack": item["tags"], "url": item["resolved_url"]})
-    for item in projects: unified_items.append({"kind": "project", "name": item["name"], "headline": item.get("headline", ""), "summary": item["summary"], "status": item["status"], "stack": item["stack"], "url": item["resolved_url"]})
-    for item in documents: unified_items.append({"kind": "document", "name": item["title"], "headline": item["summary"], "summary": item["summary"], "status": "production", "stack": item["tags"], "url": item["resolved_url"]})
+    
+    for item in posts:
+        sections = [
+            {"id": "overview", "title": "Overview", "content": item["summary"], "type": "intro", "animation": "typewriter", "children": ["content"]},
+            {"id": "content", "title": "Conteúdo", "content": item["body"][:1200] + ("..." if len(item["body"]) > 1200 else ""), "type": "text", "animation": "fade", "children": []}
+        ]
+        unified_items.append({
+            "id": f"post-{item['slug']}",
+            "kind": "post",
+            "name": item["title"],
+            "headline": item["summary"],
+            "summary": item["summary"],
+            "status": "production",
+            "stack": item["tags"],
+            "url": item["url"],
+            "sections": sections
+        })
+
+    for item in projects:
+        sections = [
+            {"id": "overview", "title": "Visão Geral", "content": item["overview"] or item["summary"], "type": "intro", "animation": "typewriter", "children": ["arch", "stack"]},
+            {"id": "arch", "title": "Arquitetura", "content": item["architecture"] or "Detalhes técnicos em desenvolvimento.", "type": "architecture", "animation": "slide_right", "children": []},
+            {"id": "stack", "title": "Tecnologias", "content": item["stack_notes"] or ", ".join(item["stack"]), "type": "stack", "animation": "zoom", "children": []}
+        ]
+        unified_items.append({
+            "id": f"project-{item['slug']}",
+            "kind": "project",
+            "name": item["name"],
+            "headline": item.get("headline", ""),
+            "summary": item["summary"],
+            "status": item["status"],
+            "stack": item["stack"],
+            "url": item["url"],
+            "sections": sections
+        })
+
+    for item in documents:
+        sections = [
+            {"id": "overview", "title": "Doc Overview", "content": item["summary"], "type": "intro", "animation": "typewriter", "children": ["body"]},
+            {"id": "body", "title": "Especificação", "content": item["body"][:1200] + ("..." if len(item["body"]) > 1200 else ""), "type": "text", "animation": "fade", "children": []}
+        ]
+        unified_items.append({
+            "id": f"document-{item['slug']}",
+            "kind": "document",
+            "name": item["title"],
+            "headline": item["summary"],
+            "summary": item["summary"],
+            "status": "production",
+            "stack": item["tags"],
+            "url": item["url"],
+            "sections": sections
+        })
+
     return json.dumps(unified_items, ensure_ascii=False).replace("<", "\\u003c")
 
 def render_projects_index_page(site: dict[str, str], system: dict[str, Any], posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
@@ -73,8 +123,8 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     content = f"""
     <div class="project-flow-shell">
       <div class="flow-toolbar">
-        {breadcrumbs}
         <div class="flow-toolbar-nav">
+          {breadcrumbs}
           <span class="flow-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projetos"))}</span>
           <span class="flow-hint" data-i18n="pages.projects.flow_hint">{html.escape(translate(i18n, locale, "pages.projects.flow_hint", "Explore a visualização interativa das publicações."))}</span>
         </div>
@@ -88,7 +138,8 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     </div>
     <script id="projects-data" type="application/json">{flow_data}</script>
     """
-    return render_layout(page_title=f"Projects | {site['title']}", page_description="Visual exploration of the ecosystem.", site=site, system=system, body_class="page-projects", canonical_path="/projects/", has_math=False, content=content, active_nav="/projects/", i18n=i18n, locale=locale, extra_scripts=["projects.js"])
+    has_math = any(p.get("has_math") for p in posts) or any(p.get("has_math") for p in projects)
+    return render_layout(page_title=f"Projects | {site['title']}", page_description="Visual exploration of the ecosystem.", site=site, system=system, body_class="page-projects", canonical_path="/projects/", has_math=has_math, content=content, active_nav="/projects/", i18n=i18n, locale=locale, extra_scripts=["projects.js"])
 
 def render_documents_index_page(site: dict[str, str], system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.documents", "documents"), "url": "", "key": "nav.documents"}], i18n, locale)
@@ -106,7 +157,7 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.posts", "posts"), "url": site_href(site, "/publications/"), "key": "nav.posts"}, {"label": post["title"], "url": ""}], i18n, locale)
     sidebar = f"""<aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2>{render_metric_list([render_localized_date(post["published_dt"], locale, "long"), render_reading_time(post["reading_time"], i18n, locale)], escape_items=False)}{render_badge_list(post.get('badges', []))}{render_tag_list(post.get('tags', []))}<div class="sidebar-actions">{f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">repo</a>' if post.get("resolved_repo_url") else ""}{f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if post.get("resolved_code_url") else ""}</div></aside>"""
     content = f"""{breadcrumbs}<section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p><h1>{html.escape(post['title'])}</h1><p class="post-summary">{html.escape(post['summary'])}</p><div class="post-meta">{render_localized_date(post['published_dt'], locale, "long")}{render_reading_time(post['reading_time'], i18n, locale)}</div></header>{render_markdown(post['body'])}<footer class="post-author"><p><strong>Autor:</strong> {html.escape(str(site.get('author') or 'Hiro Matsumoto'))}</p></footer></article>{sidebar}</section>"""
-    return render_layout(page_title=f"{post['title']} | {site['title']}", page_description=post["summary"], site=site, system=system, body_class="page-post", canonical_path=post["url"], has_math=post.get("has_asciimath", False), content=content, active_nav="posts", i18n=i18n, locale=locale)
+    return render_layout(page_title=f"{post['title']} | {site['title']}", page_description=post["summary"], site=site, system=system, body_class="page-post", canonical_path=post["url"], has_math=post.get("has_math", False), content=content, active_nav="posts", i18n=i18n, locale=locale)
 
 def render_project_page(site: dict[str, str], system: dict[str, Any], project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.projects", "projects"), "url": site_href(site, "/projects/"), "key": "nav.projects"}, {"label": project["name"], "url": ""}], i18n, locale)

@@ -34,7 +34,7 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
     status = str(raw.get("status", "") or "draft").strip().lower()
     tags = normalize_string_list(raw.get("tags", []))
     badges = normalize_string_list(raw.get("badges", []))
-    has_asciimath = bool(raw.get("has_asciimath", False))
+    has_math = bool(raw.get("has_math", raw.get("has_asciimath", False)))
     output_dir_name = f"{post_id}-{slug}"
     config = load_blog_config()
     publications_dir = config["build"]["publications_dir"]
@@ -54,7 +54,7 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
         "repo_url": str(raw.get("repo_url", "") or "").strip(),
         "code_url": str(raw.get("code_url", "") or "").strip(),
         "featured": bool(raw.get("featured", False)),
-        "has_asciimath": has_asciimath
+        "has_math": has_math
         or config["math"]["inline_delimiter"] in body
         or config["math"]["block_delimiter"] in body,
         "body": body.rstrip() + "\n" if body.strip() else "",
