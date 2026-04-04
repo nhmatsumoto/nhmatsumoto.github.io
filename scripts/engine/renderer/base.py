@@ -1,146 +1,129 @@
 import html
 import json
 from typing import Any
-from ..i18n import translate, default_locale
-from ..utils import load_blog_config, site_href
+from ..utils import site_href, normalize_string_list
+from ..i18n import translate
 
-def render_navigation_section(site: dict[str, str], i18n: dict[str, Any], locale: str, active_nav: str = "") -> str:
-    links = [
-        {"label": translate(i18n, locale, "nav.home", "home"), "url": "/", "key": "nav.home", "id": "home"},
-        {"label": translate(i18n, locale, "nav.posts", "posts"), "url": "/publications/", "key": "nav.posts", "id": "posts"},
-        {"label": translate(i18n, locale, "nav.projects", "projects"), "url": "/projects/", "key": "nav.projects", "id": "projects"},
-        {"label": translate(i18n, locale, "nav.documents", "documents"), "url": "/documents/", "key": "nav.documents", "id": "documents"},
-        {"label": translate(i18n, locale, "nav.about", "about"), "url": "/about/", "key": "nav.about", "id": "about"},
-    ]
+def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: str, i18n: dict[str, Any], locale: str) -> str:
+    header = system.get("layout", {}).get("header", {})
+    nav_items = normalize_string_list(header.get("nav", [])) or ["posts", "projects", "documents", "about"]
     
-    html_links = []
-    for link in links:
-        is_active = active_nav == link["id"] or active_nav == link["url"].strip("/")
-        active_class = ' active' if is_active else ''
-        aria_current = ' aria-current="page"' if is_active else ''
-        href = site_href(site, link["url"])
-        html_links.append(
-            f'<a class="nav-link{active_class}" href="{html.escape(href)}"{aria_current} data-i18n="{link["key"]}">{html.escape(link["label"])}</a>'
-        )
-    return "\n".join(html_links)
+    def nav_url(item):
+        mapping = {"posts": "/publications/", "projects": "/projects/", "documents": "/documents/", "about": "/about/"}
+        return site_href(site, mapping.get(item, "/"))
 
-def render_layout(
-    *,
-    page_title: str,
-    page_description: str,
-    site: dict[str, str],
-    system: dict[str, Any],
-    body_class: str,
-    canonical_path: str,
-    has_math: bool,
-    content: str,
-    active_nav: str,
-    i18n: dict[str, Any],
-    locale: str,
-    extra_scripts: list[str] | None = None,
-) -> str:
-    config = load_blog_config()
-    math = config["math"]
-    math_meta = ""
-    if has_math and math["enabled"]:
-        math_meta = f"""
-    <meta name="x-asciimath-inline" content="{html.escape(math['inline_delimiter'], quote=True)}">
-    <meta name="x-asciimath-block" content="{html.escape(math['block_delimiter'], quote=True)}">
-    <script src="{html.escape(math['script_url'], quote=True)}" async></script>
-    """
-
-    scripts_html = ""
-    if extra_scripts:
-        for s in extra_scripts:
-            scripts_html += f'<script src="{site_href(site, f"/assets/{s}")}" defer></script>\n'
-
-    return f"""<!DOCTYPE html>
-<html lang="{html.escape(locale)}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{html.escape(page_title)}</title>
-    <meta name="description" content="{html.escape(page_description)}">
-    <link rel="canonical" href="{html.escape(site_href(site, canonical_path))}">
-    <link rel="stylesheet" href="{site_href(site, "/assets/styles.css")}">
-    {math_meta}
-    <script src="{site_href(site, "/assets/blog.js")}" defer></script>
-    {scripts_html}
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
-</head>
-<body class="{html.escape(body_class)}">
-    <header class="main-nav">
-        <div class="nav-container">
-            <a href="{site_href(site, "/")}" class="nav-brand">
-                <span class="brand-glyph">TK</span>
-                <span class="brand-name">OS.</span>
-            </a>
-            <nav class="nav-menu">
-                {render_navigation_section(site, i18n, locale, active_nav)}
-            </nav>
-            <div class="nav-actions">
-                <button class="icon-button" id="search-toggle" aria-label="{html.escape(translate(i18n, locale, 'actions.search', 'Search'), quote=True)}" data-i18n-aria-label="actions.search">
-                   <i data-lucide="search"></i>
-                </button>
-                <div class="locale-selector">
-                    <button class="icon-button" id="locale-toggle" aria-label="Language">
-                        <i data-lucide="languages"></i>
-                    </button>
-                    <div class="locale-dropdown" id="locale-dropdown">
-                        {render_locale_options(i18n)}
-                    </div>
-                </div>
-            </div>
-            <button class="mobile-toggle" aria-label="Menu">
-                <i data-lucide="menu"></i>
-            </button>
-        </div>
-    </header>
-
-    <main id="content">
-        <div class="content-container">
-            {content}
-        </div>
-    </main>
-
-    <footer class="main-footer">
-        <div class="footer-container">
-            <div class="footer-info">
-                <p>&copy; {datetime.now().year} {html.escape(str(site.get('author') or 'Hiro Matsumoto'))}. {html.escape(str(site.get('footer_note') or ''))}</p>
-                <p class="footer-meta" data-i18n="common.generated">Built with custom SSG v2.</p>
-            </div>
-            <div class="footer-social">
-                <a href="{html.escape(site.get('github_url', ''))}" target="_blank" rel="noopener">GitHub</a>
-                <a href="{html.escape(site.get('linkedin_url', ''))}" target="_blank" rel="noopener">LinkedIn</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Search Overlay -->
-    <div id="search-overlay" class="search-overlay">
-        <div class="search-modal">
-            <div class="search-header">
-                <i data-lucide="search"></i>
-                <input type="text" id="search-input" placeholder="{html.escape(translate(i18n, locale, 'actions.search_placeholder', 'Search knowledge...'), quote=True)}" data-i18n-placeholder="actions.search_placeholder">
-                <button id="search-close" class="close-button">ESC</button>
-            </div>
-            <div id="search-results" class="search-results"></div>
-        </div>
-    </div>
-
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>lucide.createIcons();</script>
-    <script src="{site_href(site, "/assets/blog.js")}" defer></script>
-</body>
-</html>
-"""
-
-def render_locale_options(i18n: dict[str, Any]) -> str:
-    locales = i18n.get("supported_locales", [])
-    names = i18n.get("language_names", {})
-    return "\n".join(
-        f'<button class="locale-option" data-locale="{l}">{html.escape(names.get(l, l))}</button>'
-        for l in locales
+    pill_links = "".join(
+        f'<a class="nav-pill" href="{nav_url(it)}" '
+        f'{"aria-current=\"page\"" if it == active_nav else ""} '
+        f'data-i18n="nav.{it}">'
+        f'{html.escape(translate(i18n, locale, f"nav.{it}", it))}</a>'
+        for it in nav_items
     )
 
-from datetime import datetime
+    search_label = translate(i18n, locale, "nav.search", "command palette")
+    return f"""
+    <nav class="nav-shell" data-nav-shell>
+      <div class="nav-brand">
+        <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+      </div>
+      <div class="nav-menu desktop-only">{pill_links}</div>
+      <div class="nav-actions">
+        <div class="nav-divider desktop-only"></div>
+        <button class="nav-button" type="button" data-open-palette aria-label="{html.escape(search_label)}"><i data-lucide="search"></i></button>
+        <button class="nav-button" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
+        <button class="nav-button mobile-only" type="button" data-nav-toggle aria-label="Toggle menu"><i data-lucide="menu" class="nav-icon-menu"></i><i data-lucide="x" class="nav-icon-close hidden"></i></button>
+      </div>
+      <div class="nav-drawer" data-nav-menu hidden>
+        <div class="drawer-backdrop" data-nav-toggle></div>
+        <div class="drawer-content">
+          <div class="drawer-header"><span class="nav-title"><span class="brand-accent">NHM</span>ATSUMOTO</span><button class="nav-button" type="button" data-nav-toggle><i data-lucide="x"></i></button></div>
+          <div class="drawer-links">{pill_links}</div>
+          <div class="drawer-footer"><div class="drawer-social">
+            {"".join(f'<a class="drawer-social-link" href="{html.escape(url)}" target="_blank" rel="noopener noreferrer"><i data-lucide="{icon}"></i><span>{label}</span></a>' for label, icon, url in [("GitHub", "github", site.get("github_url", "")), ("LinkedIn", "linkedin", site.get("linkedin_url", ""))] if url)}
+          </div></div>
+        </div>
+      </div>
+    </nav>
+    """
+
+def render_footer(site: dict[str, str], system: dict[str, Any]) -> str:
+    from .components import render_tag_list
+    blog = system.get("blog", {})
+    identity = system.get("identity", {})
+    footer_note = site.get("footer_note") or "Publicado localmente e versionado por Git."
+    focus = render_tag_list(normalize_string_list(blog.get("focus", [])), "footer-pills")
+    refs = render_tag_list(normalize_string_list(identity.get("references", [])), "footer-pills")
+    return f"""
+    <footer class="site-footer">
+      <div><p class="footer-label">{html.escape(str(blog.get("concept", "technical notebook")))}</p><p>{html.escape(footer_note)}</p></div>
+      <div class="footer-meta">{focus}{refs}</div>
+    </footer>
+    """
+
+def render_palette(site: dict[str, str], i18n: dict[str, Any], locale: str) -> str:
+    aria_label = translate(i18n, locale, "accessibility.command_palette", "Command palette")
+    placeholder = translate(i18n, locale, "palette.placeholder", "Search posts, projects and documents")
+    close_label = translate(i18n, locale, "palette.close", "Close")
+    hint = translate(i18n, locale, "palette.hint", "Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.")
+    return f"""
+    <div class="palette-shell" hidden data-command-palette data-search-index="{site_href(site, '/assets/search-index.json')}">
+      <div class="palette-backdrop" data-close-palette></div>
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="{html.escape(aria_label)}" data-i18n-aria-label="accessibility.command_palette">
+        <div class="palette-head">
+          <input class="palette-input" type="search" placeholder="{html.escape(placeholder)}" data-palette-input data-i18n-placeholder="palette.placeholder">
+          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">{html.escape(close_label)}</button>
+        </div>
+        <p class="palette-hint" data-i18n="palette.hint">{html.escape(hint)}</p>
+        <ul class="palette-results" data-palette-results></ul>
+      </div>
+    </div>
+    """
+
+def render_layout(*, page_title: str, page_description: str, site: dict[str, str], system: dict[str, Any], body_class: str, canonical_path: str, has_math: bool, content: str, active_nav: str, i18n: dict[str, Any], locale: str, extra_scripts: list[str] | None = None) -> str:
+    from ..utils import load_blog_config
+    config = load_blog_config()
+    math_config = config.get("math", {})
+    math_meta = ""
+    if has_math and math_config.get("enabled"):
+        math_meta = f'<meta name="x-asciimath-inline" content="{html.escape(math_config.get("inline_delimiter", "`"))}"><meta name="x-asciimath-block" content="{html.escape(math_config.get("block_delimiter", "$$"))}"><meta name="x-asciimath-script" content="{html.escape(math_config.get("script_url", ""))}">'
+
+    i18n_payload = json.dumps({
+        "defaultLocale": i18n.get("default_locale", locale),
+        "supportedLocales": i18n.get("supported_locales", []),
+        "languageNames": i18n.get("language_names", {}),
+        "strings": i18n.get("strings", {}),
+    }, ensure_ascii=False).replace("<", "\\u003c")
+
+    scripts_html = "\n    ".join(f'<script src="{site_href(site, f"/assets/{s}")}" defer></script>' for s in (extra_scripts or []))
+
+    return f"""<!DOCTYPE html>
+<html lang="{html.escape(locale)}" data-theme="dark">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>{html.escape(page_title)}</title><meta name="description" content="{html.escape(page_description)}">
+    <link rel="canonical" href="{html.escape(site_href(site, canonical_path))}">
+    <link rel="stylesheet" href="{site_href(site, '/assets/styles.css')}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', () => {{ mermaid.initialize({{ startOnLoad: true, theme: 'dark' }}); lucide.createIcons(); }});</script>
+    {math_meta}
+  </head>
+  <body class="{html.escape(body_class)}" data-has-math="{str(has_math).lower()}" data-default-locale="{html.escape(locale)}">
+    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">{html.escape(translate(i18n, locale, "accessibility.skip_to_content", "Ir para o conteúdo"))}</a>
+    {render_site_nav(site, system, active_nav, i18n, locale)}
+    <div class="site-shell">
+      <main class="site-main" id="content">{content}</main>
+      {render_footer(site, system)}
+    </div>
+    {render_palette(site, i18n, locale)}
+    <script id="site-i18n" type="application/json">{i18n_payload}</script>
+    <script src="{site_href(site, '/assets/blog.js')}" defer></script>
+    <script src="{site_href(site, '/assets/graphview.js')}" defer></script>
+    <script src="{site_href(site, '/assets/btree-view.js')}" defer></script>
+    {scripts_html}
+  </body>
+</html>
+"""

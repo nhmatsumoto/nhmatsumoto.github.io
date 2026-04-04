@@ -6,6 +6,22 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 from .constants import ROOT, CONFIG_PATH, DEFAULT_BUILD_CONFIG, DEFAULT_MATH_CONFIG
+import re
+
+HEADING_RE = re.compile(r"^(?P<level>#{1,6})\s+(?P<content>.+)$")
+UNORDERED_LIST_RE = re.compile(r"^[*\-+]\s+(.+)$")
+ORDERED_LIST_RE = re.compile(r"^\d+\.\s+(.+)$")
+
+def is_special_block_start(line: str) -> bool:
+    s = line.strip()
+    return any([
+        s.startswith("```"),
+        HEADING_RE.match(s),
+        UNORDERED_LIST_RE.match(s),
+        ORDERED_LIST_RE.match(s),
+        s.startswith(">"),
+        s == "---"
+    ])
 
 def now_local() -> datetime:
     return datetime.now().astimezone()

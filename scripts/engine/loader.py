@@ -113,6 +113,7 @@ def normalise_document(raw: dict[str, Any], source_path: Path | None = None) -> 
             body = source_file.read_text(encoding="utf-8")
 
     category = str(raw.get("category", "") or "architecture").strip().lower()
+    published_dt = parse_datetime(str(raw.get("published_at", "") or "")) or now_local()
     return {
         "slug": slug,
         "kind": "document",
@@ -124,6 +125,7 @@ def normalise_document(raw: dict[str, Any], source_path: Path | None = None) -> 
         "agent_generated_tag": bool(raw.get("agent_generated_tag", False)),
         "order": parse_int(raw.get("order", 999)),
         "body": body.rstrip() + "\n" if body.strip() else "",
+        "published_dt": published_dt,
         "source_path": source_path,
         "url": f"/documents/{slug}/",
     }
