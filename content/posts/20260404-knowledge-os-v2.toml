@@ -1,0 +1,24 @@
+id = "20260404-knowledge-os-v2"
+slug = "technical-knowledge-os-v2"
+title = "O Despertar do Technical Knowledge OS v2"
+summary = "Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico."
+published_at = "2026-04-04T22:15:00+09:00"
+updated_at = "2026-04-04T22:15:00+09:00"
+status = "production"
+tags = ["meta", "architecture", "knowledge-os", "hiro"]
+badges = ["SSG", "Refactor"]
+featured = true
+body = """
+O conceito de **Technical Knowledge OS** não é apenas uma metáfora visual; é um manifesto sobre como interagimos com as informações que acumulamos. Recentemente, iniciamos uma refatoração profunda no motor original (`blog_engine.py`) para algo mais robusto e modular em `scripts/engine/`.
+
+### Do Monólito ao Componente
+O antigo motor era um gigante que tentava fazer tudo: carregar dados, processar imagens, renderizar HTML e gerenciar traduções em um único arquivo de 2000 linhas. Através de princípios de **SOLID** e **DDD**, quebramos essa estrutura em pedaços atômicos:
+- `loader.py`: A única fonte de verdade para normalização de metadados.
+- `i18n.py`: Orquestração semântica de idiomas.
+- `renderer/components.py`: A biblioteca de UI que define o DNA visual do site.
+
+### A Interface como Extensão do Cérebro
+Nesta versão v2, o objetivo é que o site agisse como uma camada de consulta rápida e visualização. Não estamos apenas postando artigos, estamos registrando **Nós de Conhecimento** em um sistema que entende as conexões entre eles.
+
+A transição para um layout **Glass Terminal** reforça essa ideia: o software não deve ser apenas funcional, ele deve ser esteticamente denso e inspirador.
+"""

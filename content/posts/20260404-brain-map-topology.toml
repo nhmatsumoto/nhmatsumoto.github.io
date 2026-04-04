@@ -1,0 +1,27 @@
+id = "20260404-brain-map-topology"
+slug = "brain-map-topology-hiro"
+title = "Topologias de Conhecimento: O Grafo Hiro"
+summary = "Explorando a implementação de uma hierarquia D3.js para visualizar a inteligência técnica de forma não-linear."
+published_at = "2026-04-04T22:20:00+09:00"
+updated_at = "2026-04-04T22:20:00+09:00"
+status = "production"
+tags = ["visual-computing", "graphs", "d3js", "architecture"]
+badges = ["D3.js", "Knowledge Graph"]
+featured = true
+body = """
+O **Mapa Cerebral** (Knowledge Graph) evoluiu. Saímos de uma lista plana de publicações para uma topologia que reflete a estrutura da mente.
+
+### O Nó Central: Hiro
+Em qualquer sistema operacional, existe o kernel. No Technical Knowledge OS, o nó **Hiro** é esse kernel — o ponto de convergência de toda a inteligência e experiência acumuladas. 
+
+### Camadas de Abstração
+Utilizamos D3.js para implementar uma simulação de forças com três camadas principais:
+1.  **Hiro (Root)**: O núcleo central.
+2.  **Grupos de Skill (Tech Skills, Engineering, Labs)**: Agrupadores semânticos que definem grandes áreas de atuação.
+3.  **Tópicos (Tags)**: Atuam como pontes de dados entre os grupos e o conteúdo final.
+
+### Por que Hierarquia?
+A mente não armazena fatos isolados; ela armazena **grafos de associação**. Ao visualizar o `DDD` conectado a `Engineering` e, consequentemente, a projetos práticos, reforçamos a ideia de que a teoria e a prática são inseparáveis.
+
+A implementação técnica usa um arquivo de configuração centralizado (`config/graph.toml`), permitindo que a topologia mude dinamicamente conforme novas áreas de estudo — como AI, Robotics ou Security — surgem.
+"""

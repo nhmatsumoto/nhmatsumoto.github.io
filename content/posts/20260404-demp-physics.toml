@@ -1,0 +1,28 @@
+id = "20260404-demp-physics"
+slug = "fisica-demp-pulsos-dispersos"
+title = "A Física dos Pulsos Dispersos: Além do EMP Convencional"
+summary = "Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos."
+published_at = "2026-04-04T22:30:00+09:00"
+updated_at = "2026-04-04T22:30:00+09:00"
+status = "production"
+tags = ["physics", "astrophysics", "electromagnetism", "science"]
+badges = ["DEMP", "EMP"]
+featured = true
+body = """
+O termo **Pulso Eletromagnético Disperso (DEMP)** não é apenas uma curiosidade técnica; é um conceito fundamental para entender como a energia viaja através de meios complexos, como a ionosfera Terrestre.
+
+### O que é dispersão?
+Um pulso convencional é uma perturbação transitória de curtíssima duração. No entanto, quando esse pulso viaja por um meio dispersivo, suas diferentes componentes de frequência se propagam em velocidades variadas. O resultado é o sinal se "espalhando" no tempo — o que tecnicamente chamamos de **Pulso Disperso**.
+
+### Fontes de Irradiância
+Podemos separar os fenômenos em três grandes vertentes astrofísicas:
+
+1.  **Supernovas de Colapso**: Quando o núcleo colapsa, ocorre o *shock breakout*, um clarão intenso em UV/X-ray que serve como modelo teórico para pulsos radiativos transitórios.
+2.  **Gamma-Ray Bursts (GRBs)**: O análogo mais próximo de um pulso eletromagnético extremo. Associados a jatos ultra-relativísticos, eles transportam energias colossais em gamas em janelas temporais minúsculas.
+3.  **Eventos Solares (CMEs & Flares)**: O "sopro" estelar que, ao interagir com a magnetosfera, induz correntes em infraestruturas industriais.
+
+### A Anatomia do Pulso Nuclear (HEMP)
+Diferente das estrelas, a detonação em alta altitude utiliza o **Efeito Compton**, onde raios gama colidem com moléculas de ar, ejetando elétrons acelerados que, submetidos ao campo magnético terrestre, geram o pulso eletromagnético continental (HEMP).
+
+Enquanto a estrela deforma o campo magnético do planeta como um todo, a versão artificial foca em saturar componentes eletrônicos diretamente através do acoplamento rápido e violento.
+"""
