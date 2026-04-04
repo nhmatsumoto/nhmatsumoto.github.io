@@ -5,43 +5,16 @@ from ..utils import site_href, normalize_string_list
 from ..i18n import translate
 
 def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: str, i18n: dict[str, Any], locale: str) -> str:
-    header = system.get("layout", {}).get("header", {})
-    nav_items = normalize_string_list(header.get("nav", [])) or ["posts", "projects", "documents", "about"]
-    
-    def nav_url(item):
-        mapping = {"posts": "/publications/", "projects": "/projects/", "documents": "/documents/", "about": "/about/"}
-        return site_href(site, mapping.get(item, "/"))
-
-    pill_links = "".join(
-        f'<a class="nav-pill" href="{nav_url(it)}" '
-        f'{"aria-current=\"page\"" if it == active_nav else ""} '
-        f'data-i18n="nav.{it}">'
-        f'{html.escape(translate(i18n, locale, f"nav.{it}", it))}</a>'
-        for it in nav_items
-    )
-
     search_label = translate(i18n, locale, "nav.search", "command palette")
     return f"""
     <nav class="nav-shell" data-nav-shell>
       <div class="nav-brand">
         <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
       </div>
-      <div class="nav-menu desktop-only">{pill_links}</div>
       <div class="nav-actions">
-        <div class="nav-divider desktop-only"></div>
-        <button class="nav-button" type="button" data-open-palette aria-label="{html.escape(search_label)}"><i data-lucide="search"></i></button>
-        <button class="nav-button" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
-        <button class="nav-button mobile-only" type="button" data-nav-toggle aria-label="Toggle menu"><i data-lucide="menu" class="nav-icon-menu"></i><i data-lucide="x" class="nav-icon-close hidden"></i></button>
-      </div>
-      <div class="nav-drawer" data-nav-menu hidden>
-        <div class="drawer-backdrop" data-nav-toggle></div>
-        <div class="drawer-content">
-          <div class="drawer-header"><span class="nav-title"><span class="brand-accent">NHM</span>ATSUMOTO</span><button class="nav-button" type="button" data-nav-toggle><i data-lucide="x"></i></button></div>
-          <div class="drawer-links">{pill_links}</div>
-          <div class="drawer-footer"><div class="drawer-social">
-            {"".join(f'<a class="drawer-social-link" href="{html.escape(url)}" target="_blank" rel="noopener noreferrer"><i data-lucide="{icon}"></i><span>{label}</span></a>' for label, icon, url in [("GitHub", "github", site.get("github_url", "")), ("LinkedIn", "linkedin", site.get("linkedin_url", ""))] if url)}
-          </div></div>
-        </div>
+        <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_label)}"><i data-lucide="search"></i></button>
+        <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="Toggle language"><i data-lucide="languages"></i><span class="locale-label" data-locale-label>PT</span></button>
+        <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
       </div>
     </nav>
     """

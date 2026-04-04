@@ -125,7 +125,7 @@ view_code = "ver código"
 open_docs = "abrir docs"
 link_copied = "Link copiado"
 copy_from_address = "Copie pela barra de endereço"
-view_project = "Ver projeto"
+view_project = "Ver"
 close = "Fechar"
 
 [strings."pt-BR".status]
@@ -257,7 +257,7 @@ view_code = "view code"
 open_docs = "open docs"
 link_copied = "Link copied"
 copy_from_address = "Copy from address bar"
-view_project = "View project"
+view_project = "View"
 close = "Close"
 
 [strings."en-US".status]

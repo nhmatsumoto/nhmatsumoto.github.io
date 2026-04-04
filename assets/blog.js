@@ -130,12 +130,17 @@ const initThemeManager = () => {
   const getStored = () => localStorage.getItem(storageKey);
   const getSystem = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   
+  const updateThemeIcons = (theme) => {
+    document.querySelectorAll(".theme-icon-moon").forEach(el => el.classList.toggle("hidden", theme === "light"));
+    document.querySelectorAll(".theme-icon-sun").forEach(el => el.classList.toggle("hidden", theme === "dark"));
+  };
+
   const setTheme = (theme, transition = true) => {
     if (!transition) html.classList.add("no-transitions");
     html.dataset.theme = theme;
     localStorage.setItem(storageKey, theme);
+    updateThemeIcons(theme);
     if (!transition) {
-      // Force repaint
       html.offsetHeight;
       html.classList.remove("no-transitions");
     }
@@ -148,8 +153,7 @@ const initThemeManager = () => {
     toggle.addEventListener("click", () => {
       const next = html.dataset.theme === "dark" ? "light" : "dark";
       setTheme(next);
-      
-      // Feedback animation
+
       toggle.animate([
         { transform: "rotate(0) scale(1)" },
         { transform: "rotate(15deg) scale(1.2)", offset: 0.5 },
@@ -179,6 +183,38 @@ const initNavToggle = () => {
   menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setNavOpen(false)));
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") setNavOpen(false); });
   window.addEventListener("resize", () => { if (window.innerWidth >= 768) setNavOpen(false); });
+};
+
+const initLocaleToggle = (loc) => {
+  if (!loc) return;
+  const btns = document.querySelectorAll("[data-locale-toggle]");
+  if (!btns.length) return;
+
+  const supported = loc.getSupportedLocales();
+  if (supported.length < 2) return;
+
+  const updateLabels = () => {
+    const current = loc.getLocale();
+    const short = current.split("-")[0].toUpperCase();
+    document.querySelectorAll("[data-locale-label]").forEach(el => el.textContent = short);
+  };
+
+  updateLabels();
+
+  btns.forEach(btn => btn.addEventListener("click", () => {
+    const current = loc.getLocale();
+    const idx = supported.indexOf(current);
+    const next = supported[(idx + 1) % supported.length];
+    loc.setLocale(next);
+    loc.applyTranslations();
+    updateLabels();
+
+    btn.animate([
+      { transform: "scale(1)" },
+      { transform: "scale(1.15)", offset: 0.4 },
+      { transform: "scale(1)" }
+    ], { duration: 250, easing: "ease-out" });
+  }));
 };
 
 const initCommandPalette = (loc) => {
@@ -310,6 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loc?.applyTranslations();
   initThemeManager();
   initNavToggle();
+  initLocaleToggle(loc);
   initCommandPalette(loc);
   initCodeBlocks();
   initInteractiveGlow();

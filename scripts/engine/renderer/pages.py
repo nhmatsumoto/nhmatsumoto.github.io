@@ -183,7 +183,7 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
         <div class="panel-scroll-body">
           <p class="panel-headline" data-panel-headline data-reveal></p><p class="panel-summary" data-panel-summary data-reveal></p><div class="panel-stack" data-panel-stack data-reveal></div>
         </div>
-        <div class="panel-actions" data-reveal><a class="panel-cta nav-cta" href="#" data-panel-link>{html.escape(translate(i18n, locale, "actions.view_project", "Ver projeto"))} <i data-lucide="arrow-right"></i></a></div>
+        <div class="panel-actions" data-reveal><a class="panel-cta nav-cta" href="#" data-panel-link><i data-lucide="eye"></i> {html.escape(translate(i18n, locale, "actions.view_project", "Ver"))} <i data-lucide="arrow-right"></i></a></div>
       </aside>
     </div>
     <script id="projects-data" type="application/json">{flow_data}</script>
