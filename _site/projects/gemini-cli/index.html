@@ -75,6 +75,25 @@
       <main class="site-main" id="content">
         
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">Gemini CLI</span></li></ol></nav>
+    
+    <section class="canvas-reader-section">
+      <div class="canvas-reader-header">
+        <div class="canvas-reader-tabs">
+          <button class="canvas-tab active" data-tab="canvas" type="button">Explore on Canvas</button>
+          <button class="canvas-tab" data-tab="static" type="button">Read as article</button>
+        </div>
+        <div class="canvas-reader-controls">
+          <button class="nav-button" id="reader-back-btn" data-reader-back hidden type="button"
+                  aria-label="Back">
+            <i data-lucide="arrow-left"></i>
+          </button>
+          <span class="reader-progress" data-reader-progress></span>
+        </div>
+      </div>
+      <div class="canvas-reader-shell" data-section-reader></div>
+    </section>
+    <script id="sections-data" type="application/json">[{"id": 0, "type": "intro", "title": "Gemini CLI", "content": "An open-source AI agent that brings the power of Gemini directly into your terminal. Built in Go, designed for developers who live in the command line.", "animation": "fade", "children": [1, 2]}, {"id": 1, "type": "problem", "title": "The Problem", "content": "Context switching between the editor and AI chat breaks flow. Every file lookup, every code question costs a context switch. Developers need intelligence where they already work.", "animation": "slide_right", "children": [3]}, {"id": 2, "type": "architecture", "title": "Architecture", "content": "CLI → Planner → Tool Executor → Models. The planner decomposes tasks into atomic tool calls. Each tool is isolated and composable. The core runtime never changes — only skills grow.", "animation": "matrix_rain", "children": [3]}, {"id": 3, "type": "solution", "title": "The Solution", "content": "Gemini CLI acts as a local agent with full filesystem access. It reads context, plans changes, executes tools, and streams feedback — all without leaving the terminal.", "animation": "zoom", "children": [4]}, {"id": 4, "type": "stack", "title": "Stack", "content": "Go for performance and single-binary distribution. Gemini API for multimodal reasoning. Streaming output for instant feedback. Modular skill system for extensibility.", "animation": "expand_node", "children": [5]}, {"id": 5, "type": "text", "title": "Roadmap", "content": "Parallel subagents. Long-term contextual memory. Screenshot support via multimodal Gemini. Plugin marketplace for community skills.", "animation": "typewriter", "children": []}]</script>
+    
     <section class="page-grid">
       <article class="project-shell prose">
         <header class="post-header">
@@ -159,5 +178,6 @@ agent  &lt;- models &lt;- i/o</code></pre>
     <script src="/assets/blog.js" defer></script>
     <script src="/assets/graphview.js" defer></script>
     <script src="/assets/projects.js" defer></script>
+    <script src="/assets/canvas-reader.js" defer></script>
   </body>
 </html>
