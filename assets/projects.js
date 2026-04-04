@@ -134,48 +134,67 @@ class ProjectMap3D {
   buildAraucariaTree() {
     this.araucariaGroup = new THREE.Group(); this.araucariaGroup.visible = false; this.scene.add(this.araucariaGroup)
     
-    // 1. Trunk (Discrete Segments)
-    const trunkH = 900, baseR = 15
-    const numSegments = 12
+    // 1. Trunk (Tapered & Elevated)
+    const trunkH = 1100, baseR = 16
+    const numSegments = 14
     for (let i = 0; i < numSegments; i++) {
-        const h = trunkH / numSegments, r1 = baseR * Math.pow(1 - i/numSegments, 0.7), r2 = baseR * Math.pow(1 - (i+1)/numSegments, 0.7)
-        const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1, h, 12), new THREE.MeshStandardMaterial({ color: 0x1a1a1a, emissive: 0x00C2FF, emissiveIntensity: 0.1 }))
-        seg.position.y = i * h + h/2; this.araucariaGroup.add(seg)
+        const r1 = baseR * Math.pow(1 - i/numSegments, 0.6)
+        const r2 = baseR * Math.pow(1 - (i+1)/numSegments, 0.6)
+        const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1, trunkH / numSegments, 8), new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.4, roughness: 0.9 }))
+        seg.position.y = (i * (trunkH / numSegments)) + (trunkH / numSegments / 2) + 125
+        this.araucariaGroup.add(seg)
     }
 
-    // 2. Whorls (Verticilos)
-    const items = this.nodes.slice(1)
-    const whorlSpacing = 110, startH = 250
-    const b0 = 5 // Average branches per whorl
+    // 2. Semantic Node Distribution (Araucaria Candelabra Profile)
+    const items = [...this.data].sort((a,b) => this.getNodeTier(a) - this.getNodeTier(b))
+    const startH = trunkH * 0.4 + 125 // Branches start higher up
+    const whorlSpacing = 110, b0 = 5 
+    let itemIdx = 0, whorlIdx = 0
     
-    let itemIdx = 0
-    let whorlIdx = 0
-    
+    const numWhorls = Math.ceil(items.length / b0)
+
     while (itemIdx < items.length) {
-      const h_n = startH + whorlIdx * whorlSpacing + 60 // Shifted up for pot
-      const b_n = Math.min(b0 + Math.floor(Math.random() * 2), items.length - itemIdx)
-      const q = 0.88 // Reduction factor
-      const L_n = 400 * Math.pow(q, whorlIdx)
+      const tier = this.getNodeTier(items[itemIdx])
+      // Whorls get closer and wider towards the top (the "Cup" or crown)
+      const h_progress = whorlIdx / numWhorls
+      const h_n = startH + (whorlIdx * whorlSpacing * (1 - h_progress * 0.4))
+      const b_n = Math.min(b0 + Math.floor(h_progress * 3), items.length - itemIdx)
+      
+      // Araucarias have wider spreads at the top tiers
+      const L_n = (280 + tier * 120 + h_progress * 250)
       
       for (let m = 0; m < b_n; m++) {
-        const node = items[itemIdx]
-        const theta = (m * Math.PI * 2) / b_n + (whorlIdx * 0.5) // Angular symmetry + whorl offset
-        
-        // Characteristic curved pos
-        const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n/300, 2) * 60, Math.sin(theta) * L_n)
+        const item = items[itemIdx]
+        const node = this.nodes.find(n => n.userData.item === item)
+        if (!node) { itemIdx++; continue }
+
+        const theta = (m * Math.PI * 2) / b_n + (whorlIdx * 0.7)
+        // Upward "hook" position
+        const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n/320, 2.5) * 110, Math.sin(theta) * L_n)
         node.userData.treePos = pos
         
-        // Branch Curve (Upward tension)
+        // Branch Curve (Characteristic Araucaria upward sweep)
         const start = new THREE.Vector3(0, h_n, 0)
-        const mid = start.clone().lerp(pos, 0.5); mid.y += 50 // Curve peak
+        const mid = start.clone().lerp(pos, 0.6)
+        mid.y -= 30 // Initial dip for older/larger branches
         const curve = new THREE.QuadraticBezierCurve3(start, mid, pos)
-        const branch = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(24)), new THREE.LineBasicMaterial({ color: 0x00DBFF, transparent: true, opacity: 0.25 }))
-        this.araucariaGroup.add(branch)
         
+        const branchMat = new THREE.LineBasicMaterial({ color: 0x00DBFF, transparent: true, opacity: 0.18 })
+        const branch = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(32)), branchMat)
+        
+        node.userData.branch = branch
+        this.araucariaGroup.add(branch)
         itemIdx++
       }
       whorlIdx++
     }
+  }
+
+  getNodeTier(item) {
+    const fnd = ['solid','filas','estruturas-de-dados','ddd','arquitetura','architecture','clean-architecture','oop','algorithms','patterns','teoria','computacao']
+    const stk = (item.stack || []).map(s => s.toLowerCase())
+    if (stk.some(s => fnd.includes(s))) return 0
+    return item.kind === 'project' ? 1 : 2
   }
 
   buildAraucariaBase() {
@@ -243,13 +262,16 @@ class ProjectMap3D {
   }
 
   createConnections() {
+    // 1. Atom Center Links
     this.atomConnections = new THREE.Group(); const ctr = this.nodes[0].position
     this.nodes.slice(1).forEach(n => {
       const t = n.position, cc = KIND_COLOR[n.userData.item.kind]
       const mid = ctr.clone().lerp(t, 0.5); mid.y += 40 + Math.random()*60
       const link = new THREE.Line(new THREE.BufferGeometry().setFromPoints(new THREE.QuadraticBezierCurve3(ctr, mid, t).getPoints(30)), new THREE.LineBasicMaterial({ color: cc, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending }))
+      n.userData.atomLink = link
       this.atomConnections.add(link)
-    }); this.atomGroup.add(this.atomConnections)
+    })
+    this.atomGroup.add(this.atomConnections)
   }
 
   setLayout(mode) {
@@ -401,12 +423,26 @@ document.addEventListener('DOMContentLoaded', () => {
     p.querySelector('[data-panel-name]').textContent = item.name || item.title
     p.querySelector('[data-panel-role]').textContent = (KIND_LABEL[item.kind]||item.kind).toUpperCase()
     p.querySelector('[data-panel-role]').style.color = KIND_HEX[item.kind]
-    p.querySelector('[data-panel-headline]').textContent = item.headline || item.summary || ''
+    
+    // Support both headline and summary
+    p.querySelector('[data-panel-headline]').textContent = item.headline || ''
+    const summaryEl = p.querySelector('[data-panel-summary]')
+    if (summaryEl) summaryEl.textContent = item.summary || ''
+    
     const stk = p.querySelector('[data-panel-stack]'); if (stk) stk.innerHTML = (item.stack||[]).map(s => `<span class="stack-chip">${esc(s)}</span>`).join('')
     const link = p.querySelector('[data-panel-link]'); if (link) link.onclick = (e) => { e.preventDefault(); window.projectMap.enterReader(item) }
+    
     p.dataset.open = 'true'; p.setAttribute('aria-hidden', 'false')
+    
+    // Trigger staggered reveal
+    const targets = p.querySelectorAll('[data-reveal]')
+    targets.forEach((el, i) => setTimeout(() => el.classList.add('reveal-in'), i * 60))
   }
-  window.hidePanel = () => { const p = document.querySelector('[data-project-panel]'); if (p) { p.dataset.open='false'; p.setAttribute('aria-hidden','true') } }
+  window.hidePanel = () => { 
+    const p = document.querySelector('[data-project-panel]'); if (!p) return
+    p.dataset.open = 'false'; p.setAttribute('aria-hidden', 'true')
+    p.querySelectorAll('[data-reveal]').forEach(el => el.classList.remove('reveal-in'))
+  }
   document.querySelector('[data-panel-close]')?.addEventListener('click', () => window.projectMap?.deselectNode())
   
   const params = new URLSearchParams(window.location.search), sid = params.get('select')
