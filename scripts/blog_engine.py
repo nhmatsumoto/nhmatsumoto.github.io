@@ -1140,6 +1140,7 @@ def render_layout(
     <script id="site-i18n" type="application/json">{i18n_payload}</script>
     <script src="{site_href(site, '/assets/blog.js')}" defer></script>
     <script src="{site_href(site, '/assets/graphview.js')}" defer></script>
+    <script src="{site_href(site, '/assets/projects.js')}" defer></script>
   </body>
 </html>
 """
@@ -1749,6 +1750,25 @@ def render_archive_page(
     )
 
 
+def render_projects_flow_data(projects: list[dict[str, Any]]) -> str:
+    items = [
+        {
+            "name": p["name"],
+            "headline": p["headline"],
+            "summary": p["summary"],
+            "status": p["status"],
+            "stack": p["stack"],
+            "badges": p["badges"],
+            "featured": p["featured"],
+            "url": p.get("resolved_url", p["url"]),
+            "repo_url": p.get("resolved_repo_url", p.get("repo_url", "")),
+            "code_url": p.get("resolved_code_url", p.get("code_url", "")),
+        }
+        for p in projects
+    ]
+    return json.dumps(items, ensure_ascii=False).replace("<", "\\u003c")
+
+
 def render_projects_index_page(site: dict[str, str], system: dict[str, Any], projects: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs(
         [
@@ -1758,18 +1778,50 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pro
         i18n,
         locale,
     )
+
+    view_project_label = html.escape(translate(i18n, locale, "actions.view_project", "Ver projeto"))
+    close_label        = html.escape(translate(i18n, locale, "actions.close", "Fechar"))
+
+    flow_data = render_projects_flow_data(projects)
+
     content = f"""
     {breadcrumbs}
-    <section class="page-heading">
+    <section class="page-heading flow-heading">
       <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
-      <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Core section"))}</h1>
-      <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projects are presented as systems: problem, solution, architecture, stack, ADRs and roadmap."))}</p>
+      <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Core systems"))}</h1>
+      <p class="flow-hint" data-i18n="pages.projects.flow_hint">{html.escape(translate(i18n, locale, "pages.projects.flow_hint", "Click a node to explore. Connected nodes share stack."))}</p>
     </section>
-    {render_projects_section(projects, i18n, locale)}
+
+    <div class="project-flow-shell">
+      <div class="project-flow-wrapper" data-project-flow></div>
+
+      <aside class="project-detail-panel" data-project-panel data-open="false" aria-hidden="true">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-role card-type" data-panel-role></span>
+            <h2 class="panel-name" data-panel-name></h2>
+          </div>
+          <button class="nav-button panel-close" type="button" data-panel-close aria-label="{close_label}">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <p class="panel-headline" data-panel-headline></p>
+        <p class="panel-summary" data-panel-summary></p>
+        <div class="panel-stack" data-panel-stack></div>
+        <div class="panel-actions">
+          <a class="panel-cta nav-cta" href="#" data-panel-link>
+            {view_project_label} <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <script id="projects-data" type="application/json">{flow_data}</script>
     """
+
     return render_layout(
         page_title=f"Projects | {site['title']}",
-        page_description="Core projects and technical work.",
+        page_description="Interactive project visualization — explore systems, stack and architecture.",
         site=site,
         system=system,
         body_class="page-projects",

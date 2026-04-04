@@ -68,10 +68,11 @@
   --container-width: 1200px;
   --container-gutter: var(--space-6);
   --reading-width: 720px;
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 32px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-full: 9999px;
+  --radius: var(--radius-md);
   
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 12px 24px -4px rgba(0, 0, 0, 0.5);
@@ -185,7 +186,7 @@ button, input, select {
 .site-shell {
   width: min(var(--container-width), 100% - var(--container-gutter) * 2);
   margin: 0 auto;
-  padding-top: var(--space-12);
+  padding-top: 5rem;
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
@@ -193,25 +194,17 @@ button, input, select {
 
 .nav-shell {
   position: fixed;
-  top: var(--space-4);
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(var(--container-width), 100% - var(--container-gutter) * 2);
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-3) max(var(--container-gutter), calc((100% - var(--container-width)) / 2 + var(--container-gutter)));
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  box-shadow: var(--shadow-md);
-  transition: var(--transition-smooth);
-}
-
-.nav-shell:hover {
-  border-color: var(--accent-soft);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-brand {
@@ -254,14 +247,14 @@ button, input, select {
 
 .nav-pill {
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--muted);
   transition: var(--transition-base);
 }
 
-.nav-pill:hover, 
+.nav-pill:hover,
 .nav-pill[aria-current="page"] {
   color: var(--text);
   background: var(--surface-strong);
@@ -281,7 +274,7 @@ button, input, select {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
   background: transparent;
   color: var(--muted);
@@ -299,7 +292,7 @@ button, input, select {
   padding: var(--space-2) var(--space-4);
   background: var(--text);
   color: var(--bg);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -322,11 +315,11 @@ button, input, select {
 @media (max-width: 768px) {
   .desktop-only { display: none !important; }
   .mobile-only { display: flex !important; }
-  
+
   .nav-shell {
-    padding: var(--space-2);
+    padding: var(--space-3) var(--container-gutter);
   }
-  
+
   .nav-actions {
     border-left: none;
     padding-left: 0;
@@ -556,7 +549,7 @@ button, input, select {
 
 .brain-map-canvas {
   min-height: 360px;
-  border-radius: 28px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
   background: var(--surface-soft);
   overflow: hidden;
@@ -751,7 +744,7 @@ button, input, select {
   gap: var(--space-1);
   padding: var(--space-1) var(--space-3);
   border: 1px solid var(--border);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--muted);
@@ -952,7 +945,7 @@ button, input, select {
   height: 100%;
   padding: 1.5rem;
   border: 1px solid var(--border);
-  border-radius: 28px;
+  border-radius: var(--radius-md);
   background: var(--surface-soft);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: var(--shadow-sm);
@@ -1234,7 +1227,7 @@ button, input, select {
 @media (max-width: 720px) {
   .site-shell {
     width: min(100vw - 1rem, 100%);
-    padding-top: 8.2rem;
+    padding-top: 4.5rem;
   }
 
   .site-nav,
@@ -1247,7 +1240,7 @@ button, input, select {
   .sidebar-panel,
   .post-pager,
   .site-footer {
-    border-radius: 20px;
+    border-radius: var(--radius-md);
   }
 
   .hero-panel h1,
@@ -1398,7 +1391,7 @@ button, input, select {
   padding: 0.6rem 1.2rem;
   background: var(--text);
   color: white;
-  border-radius: 99px;
+  border-radius: var(--radius-sm);
   font-size: 0.8rem;
   font-weight: 700;
   text-decoration: none;
@@ -1483,7 +1476,7 @@ button, input, select {
   margin: 2rem 0;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-md);
 }
@@ -1641,7 +1634,7 @@ button, input, select {
   gap: 0.5rem;
   background: var(--surface-soft);
   padding: 0.5rem;
-  border-radius: 99px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
 }
@@ -1653,7 +1646,7 @@ button, input, select {
   align-items: center;
   justify-content: center;
   padding: 0 1rem;
-  border-radius: 99px;
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
   font-weight: 700;
   text-decoration: none;
@@ -1686,4 +1679,140 @@ button, input, select {
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* ─── Project Flow Canvas ───────────────────────────────────────────────── */
+
+.flow-heading {
+  padding-bottom: var(--space-4);
+}
+
+.flow-hint {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.project-flow-shell {
+  position: relative;
+  width: 100%;
+  margin-bottom: var(--space-12);
+}
+
+.project-flow-wrapper {
+  width: 100%;
+  height: clamp(480px, calc(100svh - 14rem), 820px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg);
+  cursor: crosshair;
+}
+
+.project-flow-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Detail panel — slides up from bottom of the shell */
+.project-detail-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+  max-height: 55%;
+  overflow-y: auto;
+}
+
+.project-detail-panel[data-open="true"] {
+  transform: translateY(0);
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.panel-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.panel-role {
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+}
+
+.panel-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.panel-headline {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+
+.panel-summary {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.panel-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.panel-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.panel-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media (min-width: 769px) {
+  .project-detail-panel {
+    left: auto;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: min(380px, 40%);
+    border-top: none;
+    border-left: 1px solid var(--border);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    max-height: 100%;
+    transform: translateX(100%);
+  }
+  .project-detail-panel[data-open="true"] {
+    transform: translateX(0);
+  }
 }
