@@ -172,7 +172,8 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     {{
       "imports": {{
         "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+        "@tweenjs/tween.js": "https://unpkg.com/@tweenjs/tween.js@23.0.0/dist/tween.esm.js"
       }}
     }}
     </script>
