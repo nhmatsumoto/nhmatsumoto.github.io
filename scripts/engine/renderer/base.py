@@ -62,9 +62,9 @@ def render_layout(
     <title>{html.escape(page_title)}</title>
     <meta name="description" content="{html.escape(page_description)}">
     <link rel="canonical" href="{html.escape(site_href(site, canonical_path))}">
-    <link rel="stylesheet" href="{site_href(site, "/assets/index.css")}">
+    <link rel="stylesheet" href="{site_href(site, "/assets/styles.css")}">
     {math_meta}
-    <script src="{site_href(site, "/assets/i18n-engine.js")}" defer></script>
+    <script src="{site_href(site, "/assets/blog.js")}" defer></script>
     {scripts_html}
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
@@ -130,7 +130,7 @@ def render_layout(
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>lucide.createIcons();</script>
-    <script src="{site_href(site, "/assets/main.js")}" defer></script>
+    <script src="{site_href(site, "/assets/blog.js")}" defer></script>
 </body>
 </html>
 """

@@ -65,6 +65,20 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     for dname in [config["publications_dir"], config["projects_output_dir"], config["documents_output_dir"], Path(config["about_file"]).parent]:
         clean_output_directory(target_root / dname)
 
+    # Mirror assets
+    src_assets = ROOT / "assets"
+    dst_assets = target_root / "assets"
+    if src_assets.exists():
+        dst_assets.mkdir(parents=True, exist_ok=True)
+        for item in src_assets.iterdir():
+            if item.is_dir():
+                # For directories like images/ thumbnails/, copy tree
+                d_dst = dst_assets / item.name
+                if d_dst.exists(): shutil.rmtree(d_dst)
+                shutil.copytree(item, d_dst)
+            else:
+                shutil.copy2(item, dst_assets / item.name)
+
     generated_paths: list[str] = []
     
     # Render static pages
