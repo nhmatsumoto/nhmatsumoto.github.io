@@ -122,13 +122,6 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     flow_data = render_projects_flow_data(posts, projects, documents)
     content = f"""
     <div class="project-flow-shell">
-      <div class="flow-toolbar">
-        <div class="flow-toolbar-nav">
-          {breadcrumbs}
-          <span class="flow-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projetos"))}</span>
-          <span class="flow-hint" data-i18n="pages.projects.flow_hint">{html.escape(translate(i18n, locale, "pages.projects.flow_hint", "Explore a visualização interativa das publicações."))}</span>
-        </div>
-      </div>
       <div class="project-flow-wrapper" data-project-flow></div>
       <aside class="project-detail-panel" data-project-panel data-open="false" aria-hidden="true">
         <div class="panel-header" data-reveal><div class="panel-title-group"><span class="panel-role card-type" data-panel-role></span><h2 class="panel-name" data-panel-name></h2></div><button class="nav-button panel-close" type="button" data-panel-close aria-label="Close"><i data-lucide="x"></i></button></div>

@@ -418,14 +418,20 @@
     let readerNodes = [], readerConns = []
     let backBtn = null
     
-    // Zoom/Pan State (Reader Mode)
-    let panX = 0, panY = 0, viewScale = 1, targetScale = 1
     let dragging = false, dragSX = 0, dragSY = 0, panSX = 0, panSY = 0
+    let breadcrumbs = [
+      { label: 'Home', url: '/' },
+      { label: 'Projects', url: '/projects/' }
+    ]
 
-    // ── Layout: Fibonacci / golden-angle spiral ──────────────────
+    // ── Layout ───────────────────────────────────────────────────
     function layout() {
       W = wrapper.clientWidth
-      H = Math.max(wrapper.clientHeight, 520)
+      // Fill the remaining viewport height
+      const navH = 56 // estimated
+      const footH = 48 // estimated
+      H = Math.max(window.innerHeight - navH - footH - 40, 520)
+      
       canvas.width  = W * dpr
       canvas.height = H * dpr
       canvas.style.width  = W + 'px'
@@ -631,6 +637,14 @@
       const mx = e.clientX - r.left
       const my = e.clientY - r.top
 
+      // Check breadcrumbs
+      for (const bc of breadcrumbs) {
+        if (mx >= bc.x - 5 && mx <= bc.x + bc.w + 5 && my >= 30 - 10 && my <= 30 + 10) {
+          window.location.href = bc.url
+          return
+        }
+      }
+
       if (currentMode === MODE.EXPLORE) {
         const hit = nodes.find(n => n.hit(mx, my))
         if (hit) {
@@ -673,6 +687,9 @@
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.clearRect(0, 0, W, H)
+
+      // ── In-Canvas Breadcrumbs ──────────────────────────────────
+      drawBreadcrumbs(ctx)
 
       // Background: subtle dot grid
       ctx.fillStyle = 'rgba(0,194,255,0.035)'
@@ -752,6 +769,33 @@
 
       ctx.restore()
       requestAnimationFrame(draw)
+    }
+
+    function drawBreadcrumbs(ctx) {
+      ctx.save()
+      ctx.font = '600 12px "JetBrains Mono",monospace'
+      let curX = 30
+      const curY = 30
+      
+      breadcrumbs.forEach((bc, i) => {
+        const label = bc.label.toUpperCase()
+        const tw = ctx.measureText(label).width
+        
+        // Hover state (simplified)
+        const isHover = mouseX >= curX - 5 && mouseX <= curX + tw + 5 && mouseY >= curY - 10 && mouseY <= curY + 10
+        ctx.fillStyle = isHover ? '#00C2FF' : 'rgba(255,255,255,0.4)'
+        ctx.fillText(label, curX, curY)
+        
+        bc.x = curX; bc.w = tw
+        curX += tw + 10
+        
+        if (i < breadcrumbs.length - 1) {
+          ctx.fillStyle = 'rgba(255,255,255,0.15)'
+          ctx.fillText('/', curX, curY)
+          curX += 15
+        }
+      })
+      ctx.restore()
     }
 
     layout()

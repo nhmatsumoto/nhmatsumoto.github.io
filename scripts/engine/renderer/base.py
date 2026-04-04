@@ -55,8 +55,7 @@ def render_footer(site: dict[str, str], system: dict[str, Any]) -> str:
     refs = render_tag_list(normalize_string_list(identity.get("references", [])), "footer-pills")
     return f"""
     <footer class="site-footer">
-      <div><p class="footer-label">{html.escape(str(blog.get("concept", "technical notebook")))}</p><p>{html.escape(footer_note)}</p></div>
-      <div class="footer-meta">{focus}{refs}</div>
+      <p>clarity | depth | no distraction</p>
     </footer>
     """
 
