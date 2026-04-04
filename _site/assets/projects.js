@@ -15,6 +15,7 @@ const KIND_HEX = {
 const KIND_LABEL = {
   post: 'Publicação', project: 'Projeto', document: 'Documento',
 }
+const esc = (s) => (s||'').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 function createGlowTexture(size = 128) {
   const c = document.createElement('canvas'); c.width = c.height = size
@@ -397,11 +398,20 @@ class ProjectMap3D {
     if (hits.length) { document.body.style.cursor = 'pointer'; let t = hits[0].object; while (t.parent && !t.userData.item) t = t.parent; if (t.userData.item) t.scale.set(1.2,1.2,1.2) }
     else document.body.style.cursor = 'default'
   }
+  handleNodeClick(node) {
+    if (this.selected === node) return
+    this.selected = node; this.focusOnNode(node); this.highlightNode(node)
+    window.showPanel(node.userData.item, this.data)
+  }
+
   onClick() {
     if (this.readerActive) return
     this.raycaster.setFromCamera(this.mouse, this.camera)
-    const hits = this.raycaster.intersectObjects(this.nodes, true)
-    if (hits.length) { let t = hits[0].object; while (t.parent && !t.userData.item) t = t.parent; if (t.userData.item) { this.selected = t; this.focusOnNode(t); this.highlightNode(t); window.showPanel(t.userData.item, this.data); return } }
+    const hits = this.raycaster.intersectObjects(this.nodes, true).filter(h => h.object.type === 'Mesh')
+    if (hits.length) { 
+      let t = hits[0].object; while (t.parent && !t.userData.item) t = t.parent
+      if (t.userData.item) { this.handleNodeClick(t); return }
+    }
     this.deselectNode()
   }
 
@@ -443,23 +453,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.showPanel = (item, all) => {
     const p = document.querySelector('[data-project-panel]'); if (!p) return
+    
+    // 1. Reset state (immediate)
+    p.querySelectorAll('[data-reveal]').forEach(el => el.classList.remove('reveal-in'))
+    
+    // 2. Populate
     p.querySelector('[data-panel-name]').textContent = item.name || item.title
     p.querySelector('[data-panel-role]').textContent = (KIND_LABEL[item.kind]||item.kind).toUpperCase()
     p.querySelector('[data-panel-role]').style.color = KIND_HEX[item.kind]
-    
-    // Support both headline and summary
     p.querySelector('[data-panel-headline]').textContent = item.headline || ''
+    
     const summaryEl = p.querySelector('[data-panel-summary]')
-    if (summaryEl) summaryEl.textContent = item.summary || ''
+    if (summaryEl) summaryEl.innerHTML = item.summary || ''
     
     const stk = p.querySelector('[data-panel-stack]'); if (stk) stk.innerHTML = (item.stack||[]).map(s => `<span class="stack-chip">${esc(s)}</span>`).join('')
     const link = p.querySelector('[data-panel-link]'); if (link) link.onclick = (e) => { e.preventDefault(); window.projectMap.enterReader(item) }
     
+    // 3. Open & Trigger reveals
     p.dataset.open = 'true'; p.setAttribute('aria-hidden', 'false')
-    
-    // Trigger staggered reveal
-    const targets = p.querySelectorAll('[data-reveal]')
-    targets.forEach((el, i) => setTimeout(() => el.classList.add('reveal-in'), i * 60))
+    setTimeout(() => {
+      const targets = p.querySelectorAll('[data-reveal]')
+      targets.forEach((el, i) => setTimeout(() => el.classList.add('reveal-in'), i * 50))
+    }, 10)
   }
   window.hidePanel = () => { 
     const p = document.querySelector('[data-project-panel]'); if (!p) return
