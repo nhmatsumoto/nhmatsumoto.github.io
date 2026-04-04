@@ -218,6 +218,10 @@ button, input, select {
   gap: var(--space-8);
 }
 
+.page-projects .site-shell {
+  padding-top: 3.5rem;
+}
+
 .nav-shell {
   position: fixed;
   top: 0;
@@ -1257,14 +1261,16 @@ button, input, select {
 
 /* Footer */
 .site-footer {
-  margin-top: var(--space-12);
-  padding: var(--space-8) 0;
+  margin-top: var(--space-8);
+  padding: var(--space-4) var(--container-gutter);
+  background: var(--surface-soft);
   border-top: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
 @media (max-width: 1040px) {
@@ -1773,7 +1779,7 @@ button, input, select {
   overflow: hidden;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-6);
   background: var(--bg);
 }
 
