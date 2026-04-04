@@ -1751,26 +1751,47 @@ def render_archive_page(
     )
 
 
-def render_projects_flow_data(projects: list[dict[str, Any]]) -> str:
-    items = [
-        {
-            "name": p["name"],
-            "headline": p["headline"],
-            "summary": p["summary"],
-            "status": p["status"],
-            "stack": p["stack"],
-            "badges": p["badges"],
-            "featured": p["featured"],
-            "url": p.get("resolved_url", p["url"]),
-            "repo_url": p.get("resolved_repo_url", p.get("repo_url", "")),
-            "code_url": p.get("resolved_code_url", p.get("code_url", "")),
-        }
-        for p in projects
-    ]
-    return json.dumps(items, ensure_ascii=False).replace("<", "\\u003c")
+def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]]) -> str:
+    unified_items = []
+    
+    # Kind-based normalization for visualization
+    for item in posts:
+        unified_items.append({
+            "kind": "post",
+            "name": item["title"],
+            "headline": item["summary"],
+            "summary": item["summary"],
+            "status": "production",
+            "stack": item["tags"],
+            "url": item["resolved_url"],
+        })
+    
+    for item in projects:
+        unified_items.append({
+            "kind": "project",
+            "name": item["name"],
+            "headline": item["headline"],
+            "summary": item["summary"],
+            "status": item["status"],
+            "stack": item["stack"],
+            "url": item["resolved_url"],
+        })
+        
+    for item in documents:
+        unified_items.append({
+            "kind": "document",
+            "name": item["title"],
+            "headline": item["summary"],
+            "summary": item["summary"],
+            "status": "production",
+            "stack": item["tags"],
+            "url": item["resolved_url"],
+        })
+
+    return json.dumps(unified_items, ensure_ascii=False).replace("<", "\\u003c")
 
 
-def render_projects_index_page(site: dict[str, str], system: dict[str, Any], projects: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+def render_projects_index_page(site: dict[str, str], system: dict[str, Any], posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs(
         [
             {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
@@ -1783,10 +1804,10 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pro
     view_project_label = html.escape(translate(i18n, locale, "actions.view_project", "Ver projeto"))
     close_label        = html.escape(translate(i18n, locale, "actions.close", "Fechar"))
 
-    flow_data = render_projects_flow_data(projects)
+    flow_data = render_projects_flow_data(posts, projects, documents)
 
-    flow_hint = html.escape(translate(i18n, locale, "pages.projects.flow_hint", "Click a node to explore. Connected nodes share stack."))
-    kicker    = html.escape(translate(i18n, locale, "nav.projects", "projects"))
+    flow_hint = html.escape(translate(i18n, locale, "pages.projects.flow_hint", "Explore a visualização interativa das publicações."))
+    kicker    = html.escape(translate(i18n, locale, "nav.projects", "projetos"))
 
     content = f"""
     {breadcrumbs}
@@ -1823,16 +1844,19 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pro
     <script id="projects-data" type="application/json">{flow_data}</script>
     """
 
+    page_title = f"{translate(i18n, locale, 'nav.projects', 'projetos')} | {site['title']}"
+    page_description = translate(i18n, locale, "pages.projects.description", "Exploração visual do ecossistema de conhecimento.")
+
     return render_layout(
-        page_title=f"Projects | {site['title']}",
-        page_description="Interactive project visualization — explore systems, stack and architecture.",
+        page_title=page_title,
+        page_description=page_description,
         site=site,
         system=system,
         body_class="page-projects",
         canonical_path="/projects/",
         has_math=False,
         content=content,
-        active_nav="projects",
+        active_nav="/projects/",
         i18n=i18n,
         locale=locale,
         extra_scripts=["projects.js"],
@@ -2365,7 +2389,7 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         write_text(destination, render_archive_page(site, system, page_items, i18n, locale, current_page=p, total_pages=total_pages))
         generated_paths.append(str(destination.relative_to(target_root)))
 
-    write_text(project_index_path, render_projects_index_page(site, system, projects, i18n, locale))
+    write_text(project_index_path, render_projects_index_page(site, system, posts, projects, documents, i18n, locale))
     generated_paths.append(str(project_index_path.relative_to(target_root)))
 
     write_text(documents_index_path, render_documents_index_page(site, system, documents, i18n, locale))

@@ -66,34 +66,36 @@
 
   // ─── Project Node ──────────────────────────────────────────────────────────
 
-  const STATUS_COLOR = {
-    production: '#00C2FF',
-    in_progress: '#7C5CFF',
-    research: '#64748b',
+  const KIND_COLOR = {
+    post:     '#00C2FF', // Vibrant Blue
+    project:  '#7C5CFF', // Deep Purple
+    document: '#10B981', // Emerald Green
   }
-
   class ProjectNode {
     constructor(project, bx, by, idx) {
       this.project = project
       this.bx = bx; this.by = by
       this.x  = bx; this.y  = by
-      // Floating orbit parameters — each node unique
+      // Floating orbit
       this.phX  = Math.random() * Math.PI * 2
       this.phY  = Math.random() * Math.PI * 2
-      this.frX  = 0.22 + Math.random() * 0.28
-      this.frY  = 0.18 + Math.random() * 0.22
-      this.ampX = 14 + Math.random() * 22
-      this.ampY = 10 + Math.random() * 16
+      this.frX  = 0.18 + Math.random() * 0.22
+      this.frY  = 0.15 + Math.random() * 0.20
+      this.ampX = 12 + Math.random() * 18
+      this.ampY = 8 + Math.random() * 14
       this.idx  = idx
-      // Card dimensions
-      this.W = 200; this.H = 86
+      
+      // Node dimensions (Point radius)
+      this.radius = 5
+      
       // Spring state
       this.scale    = 1;   this.scaleV  = 0
       this.glow     = 0;   this.glowV   = 0
       this.hover    = false
       this.selected = false
-      this.statusColor = STATUS_COLOR[project.status] || '#64748b'
-      // Ripple rings on select
+      this.color    = KIND_COLOR[project.kind] || '#64748b'
+      
+      // Ripple rings
       this.ripples  = []
       this.prevSelected = false
     }
@@ -139,114 +141,75 @@
     }
 
     draw(ctx, t, dimmed) {
-      const alpha = dimmed ? 0.18 : 1
-      const hw = this.W / 2, hh = this.H / 2
+      const alpha = dimmed ? 0.2 : 1
+      const r = this.radius * this.scale
 
       ctx.save()
       ctx.translate(this.x, this.y)
-      ctx.scale(this.scale, this.scale)
 
       // ── Ripple rings ─────────────────────────────────────────────
       for (const rp of this.ripples) {
         if (rp.delay > 0) continue
         const fade = (1 - rp.life) * alpha
         ctx.beginPath()
-        ctx.arc(0, 0, hw * 0.6 + rp.r, 0, Math.PI * 2)
-        ctx.strokeStyle = `rgba(0,194,255,${fade * 0.55})`
-        ctx.lineWidth = 1.5
+        ctx.arc(0, 0, this.radius * 2 + rp.r, 0, Math.PI * 2)
+        ctx.strokeStyle = `${this.color}${Math.floor(fade * 140).toString(16).padStart(2, '0')}`
+        ctx.lineWidth = 1.2
         ctx.stroke()
       }
 
       // ── Outer glow ──────────────────────────────────────────────
       if (this.glow > 0.01) {
-        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, hw * 1.7)
-        g.addColorStop(0, `rgba(0,194,255,${this.glow * 0.18 * alpha})`)
-        g.addColorStop(1, 'rgba(0,194,255,0)')
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, this.radius * 6)
+        const gAlpha = Math.floor(this.glow * 0.3 * alpha * 255).toString(16).padStart(2, '0')
+        g.addColorStop(0, `${this.color}${gAlpha}`)
+        g.addColorStop(1, `${this.color}00`)
         ctx.fillStyle = g
-        ctx.fillRect(-hw * 1.8, -hh * 2, this.W * 1.8, this.H * 2)
-      }
-
-      // ── Card body ───────────────────────────────────────────────
-      roundRect(ctx, -hw, -hh, this.W, this.H, 6)
-      ctx.fillStyle = `hsla(220,15%,9%,${0.96 * alpha})`
-      ctx.fill()
-
-      // ── Scan line on hover (moves top→bottom, loops) ────────────
-      if ((this.hover || this.selected) && alpha > 0.5) {
-        const scanY = -hh + ((t * 28) % this.H)
         ctx.beginPath()
-        ctx.moveTo(-hw, scanY)
-        ctx.lineTo( hw, scanY)
-        ctx.strokeStyle = `rgba(0,194,255,0.12)`
-        ctx.lineWidth = 2
-        ctx.stroke()
-      }
-
-      // ── Border ──────────────────────────────────────────────────
-      roundRect(ctx, -hw, -hh, this.W, this.H, 6)
-      ctx.strokeStyle = `rgba(0,194,255,${lerp(0.12, 0.75, this.glow) * alpha})`
-      ctx.lineWidth = 1
-      ctx.stroke()
-
-      // ── Corner brackets (code aesthetic) ────────────────────────
-      const cs = 9
-      ctx.strokeStyle = `rgba(0,194,255,${lerp(0, 0.9, this.glow) * alpha})`
-      ctx.lineWidth = 1.5
-      for (const [cx2, cy2] of [[-hw,-hh],[hw,-hh],[-hw,hh],[hw,hh]]) {
-        const sx = cx2 < 0 ? 1 : -1
-        const sy = cy2 < 0 ? 1 : -1
-        ctx.beginPath()
-        ctx.moveTo(cx2 + sx * cs, cy2)
-        ctx.lineTo(cx2, cy2)
-        ctx.lineTo(cx2, cy2 + sy * cs)
-        ctx.stroke()
-      }
-
-      // ── Status dot + pulse (production only) ────────────────────
-      const dotX = -hw + 10, dotY = -hh + 10
-      ctx.beginPath()
-      ctx.arc(dotX, dotY, 3, 0, Math.PI * 2)
-      ctx.fillStyle = this.statusColor
-      ctx.fill()
-
-      if (this.project.status === 'production') {
-        const pulse = (Math.sin(t * 1.8 + this.idx * 1.2) * 0.5 + 0.5)
-        ctx.beginPath()
-        ctx.arc(dotX, dotY, 4 + pulse * 7, 0, Math.PI * 2)
-        ctx.strokeStyle = `rgba(0,194,255,${0.45 * (1 - pulse) * alpha})`
-        ctx.lineWidth = 1
-        ctx.stroke()
-      }
-
-      // ── Title ───────────────────────────────────────────────────
-      ctx.font = `700 12px Inter,system-ui,sans-serif`
-      ctx.fillStyle = `rgba(230,237,243,${alpha})`
-      ctx.textBaseline = 'top'
-      ctx.fillText(clipText(ctx, this.project.name, this.W - 30), -hw + 20, -hh + 14)
-
-      // ── Stack chips (first 3) ────────────────────────────────────
-      ctx.font = `500 8.5px "JetBrains Mono",monospace`
-      let chipX = -hw + 12
-      const chipY = hh - 24
-      for (const s of (this.project.stack || []).slice(0, 3)) {
-        const tw = ctx.measureText(s).width + 10
-        if (chipX + tw > hw - 4) break
-        roundRect(ctx, chipX, chipY, tw, 16, 3)
-        ctx.fillStyle = `rgba(0,194,255,${0.1 * alpha})`
+        ctx.arc(0, 0, this.radius * 6, 0, Math.PI * 2)
         ctx.fill()
-        ctx.fillStyle = `rgba(0,194,255,${0.75 * alpha})`
-        ctx.fillText(s, chipX + 5, chipY + 4)
-        chipX += tw + 4
+      }
+
+      // ── Node Point ──────────────────────────────────────────────
+      ctx.beginPath()
+      ctx.arc(0, 0, r, 0, Math.PI * 2)
+      ctx.fillStyle = this.color
+      ctx.globalAlpha = alpha
+      ctx.fill()
+      
+      // Node interior detail
+      ctx.beginPath()
+      ctx.arc(0, 0, r * 0.4, 0, Math.PI * 2)
+      ctx.fillStyle = '#fff'
+      ctx.fill()
+      ctx.globalAlpha = 1
+
+      // ── Title Label ─────────────────────────────────────────────
+      const labelAlpha = (this.hover || this.selected) ? 1 : 0.65
+      ctx.font = `500 11px "Inter",system-ui,sans-serif`
+      ctx.fillStyle = `rgba(230,237,243,${labelAlpha * alpha})`
+      ctx.textAlign = 'left'
+      ctx.textBaseline = 'middle'
+      
+      const labelOffset = r + 10
+      ctx.fillText(this.project.name, labelOffset, 0)
+      
+      // Optional category label on hover/select
+      if (this.hover || this.selected) {
+        ctx.font = `600 8px "JetBrains Mono",monospace`
+        ctx.fillStyle = this.color
+        ctx.globalAlpha = alpha
+        ctx.fillText(this.project.kind.toUpperCase(), labelOffset, 12)
+        ctx.globalAlpha = 1
       }
 
       ctx.restore()
     }
 
     hit(mx, my) {
-      const hw = (this.W / 2) * this.scale
-      const hh = (this.H / 2) * this.scale
-      return mx >= this.x - hw && mx <= this.x + hw &&
-             my >= this.y - hh && my <= this.y + hh
+      // Larger hit area for easier interaction with points
+      const hitRadius = Math.max(10, this.radius * 2.5 * this.scale)
+      return dist2(mx, my, this.x, this.y) <= (hitRadius ** 2)
     }
   }
 
@@ -307,7 +270,7 @@
 
       // Populate content
       panel.querySelector('[data-panel-name]').textContent     = p.name
-      panel.querySelector('[data-panel-role]').textContent     = p.status.replace(/_/g, ' ')
+      panel.querySelector('[data-panel-role]').textContent     = p.kind.toUpperCase()
       panel.querySelector('[data-panel-headline]').textContent = p.headline || p.summary
       panel.querySelector('[data-panel-summary]').textContent  = p.summary
       const stackEl = panel.querySelector('[data-panel-stack]')
@@ -427,8 +390,8 @@
         ctx.beginPath()
         ctx.moveTo(a.x, a.y)
         ctx.quadraticCurveTo(cpx, cpy, b.x, b.y)
-        ctx.strokeStyle = `rgba(124,92,255,${alpha})`
-        ctx.lineWidth = Math.min(w, 3)
+        ctx.strokeStyle = (isActive) ? a.color : `rgba(124,92,255,${alpha})`
+        ctx.lineWidth = isActive ? 1.5 : 0.8
         ctx.stroke()
 
         // Animated dot flowing along the connection when active
