@@ -2218,3 +2218,395 @@ tbody tr:hover td {
 .mjx-chtml {
   outline: none !important;
 }
+
+/* ── Reader 2D — DOM overlay for project reader mode ───────────────────── */
+
+.reader-2d {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  background: rgba(4, 8, 16, 0.96);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+  --reader-accent: #00C2FF;
+}
+
+.reader-2d.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Header */
+.reader-2d-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.reader-2d-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.reader-2d-kind {
+  font-family: var(--font-code);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--reader-accent);
+  padding: 0.15em 0.6em;
+  border: 1px solid var(--reader-accent);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.reader-2d-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reader-2d-close {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.reader-2d-close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Stage — card viewport */
+.reader-2d-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-8);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Card */
+.reader-2d-card {
+  width: 100%;
+  max-width: 720px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: var(--space-8) var(--space-10, 3rem);
+  box-shadow:
+    0 4px 40px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  position: absolute;
+}
+
+.reader-2d-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.reader-2d-card-num {
+  font-family: var(--font-code);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.reader-2d-card-divider {
+  width: 2px;
+  height: 28px;
+  border-radius: 1px;
+  opacity: 0.5;
+}
+
+.reader-2d-card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.reader-2d-card-body {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 400;
+}
+
+.reader-2d-card-body p {
+  margin: 0 0 var(--space-4);
+}
+
+.reader-2d-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.reader-2d-empty {
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
+}
+
+/* Footer */
+.reader-2d-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.reader-2d-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.55em 1.2em;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 110px;
+  justify-content: center;
+}
+
+.reader-2d-btn:hover:not(:disabled) {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--reader-accent);
+  box-shadow: 0 0 12px rgba(0, 194, 255, 0.15);
+}
+
+.reader-2d-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+/* Progress dots */
+.reader-2d-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.reader-2d-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.reader-2d-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.reader-2d-dot.active {
+  background: var(--reader-accent);
+  border-color: var(--reader-accent);
+  box-shadow: 0 0 8px var(--reader-accent);
+  transform: scale(1.25);
+}
+
+.reader-2d-dot:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.reader-2d-counter {
+  font-family: var(--font-code);
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.1em;
+}
+
+/* ── Reader Motion Keyframes ───────────────────────────────────────────── */
+
+/* 1. Fade */
+.reader-motion-fade {
+  animation: r-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes r-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* 2. Slide Up */
+.reader-motion-slide-up {
+  animation: r-slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes r-slide-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 3. Slide Down */
+.reader-motion-slide-down {
+  animation: r-slide-down 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes r-slide-down {
+  from { opacity: 0; transform: translateY(-40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 4. Zoom */
+.reader-motion-zoom {
+  animation: r-zoom 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes r-zoom {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* 5. Slide Left */
+.reader-motion-slide-left {
+  animation: r-slide-left 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes r-slide-left {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* 6. Blur In */
+.reader-motion-blur-in {
+  animation: r-blur-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes r-blur-in {
+  from { opacity: 0; filter: blur(12px); transform: scale(1.04); }
+  to   { opacity: 1; filter: blur(0);    transform: scale(1); }
+}
+
+/* 7. Flip */
+.reader-motion-flip {
+  animation: r-flip 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  perspective: 800px;
+}
+@keyframes r-flip {
+  from { opacity: 0; transform: perspective(800px) rotateX(-12deg) translateY(20px); }
+  to   { opacity: 1; transform: perspective(800px) rotateX(0deg) translateY(0); }
+}
+
+/* Exit animation */
+.reader-motion-exit {
+  animation: r-exit 0.35s cubic-bezier(0.55, 0, 1, 0.45) both;
+  pointer-events: none;
+}
+@keyframes r-exit {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.92) translateY(-20px); }
+}
+
+/* ── Reader 2D Responsive ──────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .reader-2d-header {
+    padding: var(--space-3) var(--space-4);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .reader-2d-title {
+    font-size: 1rem;
+  }
+
+  .reader-2d-close span {
+    display: none;
+  }
+
+  .reader-2d-close {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-4);
+  }
+
+  .reader-2d-stage {
+    padding: var(--space-4);
+  }
+
+  .reader-2d-card {
+    padding: var(--space-6);
+    border-radius: 12px;
+  }
+
+  .reader-2d-card-num {
+    font-size: 1.4rem;
+  }
+
+  .reader-2d-card-title {
+    font-size: 1.1rem;
+  }
+
+  .reader-2d-card-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .reader-2d-footer {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .reader-2d-btn {
+    font-size: 0.7rem;
+    padding: 0.45em 0.8em;
+    min-width: 90px;
+  }
+
+  .reader-2d-dots {
+    gap: 4px;
+  }
+
+  .reader-2d-dot {
+    width: 6px;
+    height: 6px;
+  }
+}

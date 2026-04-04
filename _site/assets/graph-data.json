@@ -37,43 +37,8 @@
       "size": 15
     },
     {
-      "id": "topic-defense",
-      "title": "defense",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-resilience",
-      "title": "resilience",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-postgis",
-      "title": "postgis",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-javascript",
-      "title": "javascript",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-anuncio",
-      "title": "anuncio",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-entropia",
-      "title": "entropia",
+      "id": "topic-feynman",
+      "title": "feynman",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -86,771 +51,8 @@
       "size": 10
     },
     {
-      "id": "topic-knowledge",
-      "title": "knowledge",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-dotnet",
-      "title": "dotnet",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-net",
-      "title": ".net",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-sos",
-      "title": "sos",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-operations",
-      "title": "operations",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-d3js",
-      "title": "d3js",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-solid",
-      "title": "solid",
-      "kind": "topic",
-      "color": "#7C5CFF",
-      "size": 10
-    },
-    {
-      "id": "topic-integration",
-      "title": "integration",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-monte-carlo",
-      "title": "monte-carlo",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-adr",
-      "title": "adr",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-agentes",
-      "title": "agentes",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-historia",
-      "title": "história",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-kahneman",
-      "title": "kahneman",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-ddd",
-      "title": "ddd",
-      "kind": "topic",
-      "color": "#7C5CFF",
-      "size": 10
-    },
-    {
-      "id": "topic-physics",
-      "title": "physics",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-teoria",
-      "title": "teoria",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-3d",
-      "title": "3d",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-system",
-      "title": "system",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-distribuido",
-      "title": "distribuido",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-log-mining",
-      "title": "log-mining",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-electromagnetism",
-      "title": "electromagnetism",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-spatial",
-      "title": "spatial",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-ciencia",
-      "title": "ciencia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-hiro",
-      "title": "hiro",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-linguagens",
-      "title": "linguagens",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-psicologia",
-      "title": "psicologia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-ml",
-      "title": "ml",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-dart",
-      "title": "dart",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-memory",
-      "title": "memory",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-cognicao",
-      "title": "cognição",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-rabbitmq",
-      "title": "rabbitmq",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-algoritmos",
-      "title": "algoritmos",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-fisica",
-      "title": "fisica",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-electronics",
-      "title": "electronics",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-tecnologia",
-      "title": "tecnologia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-computacao",
-      "title": "computação",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-teoria-da-computacao",
-      "title": "teoria-da-computação",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-feynman",
-      "title": "feynman",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-clean-architecture",
-      "title": "clean-architecture",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-testes",
-      "title": "testes",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-inteligencia-artificial",
-      "title": "inteligência-artificial",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-gis",
-      "title": "gis",
-      "kind": "topic",
-      "color": "#3DFFBA",
-      "size": 10
-    },
-    {
-      "id": "topic-ciencia",
-      "title": "ciência",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-performance",
-      "title": "performance",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-microsoft",
-      "title": "microsoft",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-software",
-      "title": "software",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-qualidade",
-      "title": "qualidade",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-threejs",
-      "title": "threejs",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-science",
-      "title": "science",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-techstack",
-      "title": "techstack",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-manutenibilidade",
-      "title": "manutenibilidade",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-event-driven-services",
-      "title": "event-driven services",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-big-o",
-      "title": "big-o",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-matematica",
-      "title": "matemática",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-redes-neurais",
-      "title": "redes-neurais",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-bits-vs-qubits",
-      "title": "bits-vs-qubits",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-estruturas-de-dados",
-      "title": "estruturas-de-dados",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-knowledge-os",
-      "title": "knowledge-os",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-frontend",
-      "title": "frontend",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-pytorch",
-      "title": "pytorch",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-pessoal",
-      "title": "pessoal",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-engineering",
-      "title": "engineering",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-agents",
-      "title": "agents",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-feedback",
-      "title": "feedback",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-mensageria",
-      "title": "mensageria",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-filas",
-      "title": "filas",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-lgpd",
-      "title": "lgpd",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-desempenho",
-      "title": "desempenho",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-diffusao",
-      "title": "diffusao",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-guerra",
-      "title": "guerra",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-agentes-ia",
-      "title": "agentes-ia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-event-driven",
-      "title": "event-driven",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
       "id": "topic-gc",
       "title": "gc",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-fisica",
-      "title": "física",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-orm",
-      "title": "orm",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-inovacao",
-      "title": "inovação",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-neuroplasticidade",
-      "title": "neuroplasticidade",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-radiation",
-      "title": "radiation",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-risk-analysis",
-      "title": "risk-analysis",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-privacidade",
-      "title": "privacidade",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-mobile",
-      "title": "mobile",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-architecture",
-      "title": "architecture",
-      "kind": "topic",
-      "color": "#7C5CFF",
-      "size": 10
-    },
-    {
-      "id": "topic-meta",
-      "title": "meta",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-metacognicao",
-      "title": "metacognicao",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-biografia",
-      "title": "biografia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-security",
-      "title": "security",
-      "kind": "topic",
-      "color": "#7C5CFF",
-      "size": 10
-    },
-    {
-      "id": "topic-simulacao",
-      "title": "simulacao",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-ia",
-      "title": "ia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-turing",
-      "title": "turing",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-react",
-      "title": "react",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-astrophysics",
-      "title": "astrophysics",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-criptografia",
-      "title": "criptografia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-nobel",
-      "title": "nobel",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-projeto-manhattan",
-      "title": "projeto-manhattan",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-particulas",
-      "title": "particulas",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-tomada-de-decisao",
-      "title": "tomada-de-decisão",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-space-weather",
-      "title": "space-weather",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-quantica",
-      "title": "quantica",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-tipagem",
-      "title": "tipagem",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-embeddings",
-      "title": "embeddings",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-node-js",
-      "title": "node.js",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-computacao",
-      "title": "computacao",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-machine-learning",
-      "title": "machine-learning",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-chain-of-thought",
-      "title": "chain-of-thought",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-visual-computing",
-      "title": "visual-computing",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-cqrs",
-      "title": "cqrs",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-graphs",
-      "title": "graphs",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-banco-de-dados",
-      "title": "banco-de-dados",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-python",
-      "title": "python",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-runtime",
-      "title": "runtime",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -863,22 +65,8 @@
       "size": 10
     },
     {
-      "id": "topic-projeto",
-      "title": "projeto",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-ai",
-      "title": "ai",
-      "kind": "topic",
-      "color": "#3DFFBA",
-      "size": 10
-    },
-    {
-      "id": "topic-domain",
-      "title": "domain",
+      "id": "topic-desempenho",
+      "title": "desempenho",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -891,50 +79,113 @@
       "size": 10
     },
     {
-      "id": "topic-pulse-power",
-      "title": "pulse-power",
+      "id": "topic-privacidade",
+      "title": "privacidade",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-typescript",
-      "title": "typescript",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-backend",
-      "title": "backend",
+      "id": "topic-engineering",
+      "title": "engineering",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-arquitetura",
-      "title": "arquitetura",
+      "id": "topic-tomada-de-decisao",
+      "title": "tomada-de-decisão",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-flutter",
-      "title": "flutter",
+      "id": "topic-rabbitmq",
+      "title": "rabbitmq",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-engenharia",
-      "title": "engenharia",
+      "id": "topic-pessoal",
+      "title": "pessoal",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-apis",
-      "title": "apis",
+      "id": "topic-pytorch",
+      "title": "pytorch",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-techstack",
+      "title": "techstack",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-fisica",
+      "title": "física",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-projeto-manhattan",
+      "title": "projeto-manhattan",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-architecture",
+      "title": "architecture",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-dart",
+      "title": "dart",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-software",
+      "title": "software",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ml",
+      "title": "ml",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-testes",
+      "title": "testes",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-linguagens",
+      "title": "linguagens",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-defense",
+      "title": "defense",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -947,8 +198,757 @@
       "size": 10
     },
     {
+      "id": "topic-apis",
+      "title": "apis",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ai",
+      "title": "ai",
+      "kind": "topic",
+      "color": "#3DFFBA",
+      "size": 10
+    },
+    {
+      "id": "topic-teoria-da-computacao",
+      "title": "teoria-da-computação",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-diffusao",
+      "title": "diffusao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-adr",
+      "title": "adr",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ciencia",
+      "title": "ciência",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-inovacao",
+      "title": "inovação",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-knowledge",
+      "title": "knowledge",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-chain-of-thought",
+      "title": "chain-of-thought",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-risk-analysis",
+      "title": "risk-analysis",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-pulse-power",
+      "title": "pulse-power",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-fisica",
+      "title": "fisica",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-distribuido",
+      "title": "distribuido",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-feedback",
+      "title": "feedback",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ciencia",
+      "title": "ciencia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-gis",
+      "title": "gis",
+      "kind": "topic",
+      "color": "#3DFFBA",
+      "size": 10
+    },
+    {
+      "id": "topic-big-o",
+      "title": "big-o",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-security",
+      "title": "security",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-kahneman",
+      "title": "kahneman",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-anuncio",
+      "title": "anuncio",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-cqrs",
+      "title": "cqrs",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-particulas",
+      "title": "particulas",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-quantica",
+      "title": "quantica",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-guerra",
+      "title": "guerra",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-meta",
+      "title": "meta",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-psicologia",
+      "title": "psicologia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-log-mining",
+      "title": "log-mining",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-estruturas-de-dados",
+      "title": "estruturas-de-dados",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-3d",
+      "title": "3d",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-engenharia",
+      "title": "engenharia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-nobel",
+      "title": "nobel",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-tipagem",
+      "title": "tipagem",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-flutter",
+      "title": "flutter",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-machine-learning",
+      "title": "machine-learning",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agentes",
+      "title": "agentes",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ia",
+      "title": "ia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-biografia",
+      "title": "biografia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-arquitetura",
+      "title": "arquitetura",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
       "id": "topic-postgresql",
       "title": "postgresql",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-metacognicao",
+      "title": "metacognicao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-computacao",
+      "title": "computacao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-bits-vs-qubits",
+      "title": "bits-vs-qubits",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-qualidade",
+      "title": "qualidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-banco-de-dados",
+      "title": "banco-de-dados",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agentes-ia",
+      "title": "agentes-ia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-knowledge-os",
+      "title": "knowledge-os",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agents",
+      "title": "agents",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-manutenibilidade",
+      "title": "manutenibilidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-science",
+      "title": "science",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-embeddings",
+      "title": "embeddings",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-neuroplasticidade",
+      "title": "neuroplasticidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-python",
+      "title": "python",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-electronics",
+      "title": "electronics",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-graphs",
+      "title": "graphs",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-react",
+      "title": "react",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-turing",
+      "title": "turing",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-solid",
+      "title": "solid",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-radiation",
+      "title": "radiation",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-clean-architecture",
+      "title": "clean-architecture",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-space-weather",
+      "title": "space-weather",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-criptografia",
+      "title": "criptografia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-mensageria",
+      "title": "mensageria",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-physics",
+      "title": "physics",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-algoritmos",
+      "title": "algoritmos",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-frontend",
+      "title": "frontend",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-orm",
+      "title": "orm",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-hiro",
+      "title": "hiro",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-inteligencia-artificial",
+      "title": "inteligência-artificial",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-postgis",
+      "title": "postgis",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-lgpd",
+      "title": "lgpd",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-memory",
+      "title": "memory",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-astrophysics",
+      "title": "astrophysics",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-spatial",
+      "title": "spatial",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-javascript",
+      "title": "javascript",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-resilience",
+      "title": "resilience",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-cognicao",
+      "title": "cognição",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-historia",
+      "title": "história",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-matematica",
+      "title": "matemática",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-sos",
+      "title": "sos",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-system",
+      "title": "system",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-net",
+      "title": ".net",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-filas",
+      "title": "filas",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-runtime",
+      "title": "runtime",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-typescript",
+      "title": "typescript",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-operations",
+      "title": "operations",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-domain",
+      "title": "domain",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-microsoft",
+      "title": "microsoft",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-redes-neurais",
+      "title": "redes-neurais",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-node-js",
+      "title": "node.js",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-projeto",
+      "title": "projeto",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-integration",
+      "title": "integration",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-event-driven",
+      "title": "event-driven",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-teoria",
+      "title": "teoria",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ddd",
+      "title": "ddd",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-visual-computing",
+      "title": "visual-computing",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-simulacao",
+      "title": "simulacao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-event-driven-services",
+      "title": "event-driven services",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-d3js",
+      "title": "d3js",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-mobile",
+      "title": "mobile",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-backend",
+      "title": "backend",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-computacao",
+      "title": "computação",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-threejs",
+      "title": "threejs",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-performance",
+      "title": "performance",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-tecnologia",
+      "title": "tecnologia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-electromagnetism",
+      "title": "electromagnetism",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-monte-carlo",
+      "title": "monte-carlo",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-entropia",
+      "title": "entropia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-dotnet",
+      "title": "dotnet",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -1536,33 +1536,18 @@
       "value": 3
     },
     {
-      "source": "tech_skills",
-      "target": "topic-javascript",
-      "value": 2
-    },
-    {
-      "source": "tech_skills",
-      "target": "topic-net",
-      "value": 2
-    },
-    {
       "source": "engineering",
-      "target": "topic-solid",
+      "target": "topic-architecture",
       "value": 2
     },
     {
-      "source": "engineering",
-      "target": "topic-ddd",
+      "source": "labs",
+      "target": "topic-ai",
       "value": 2
     },
     {
       "source": "labs",
       "target": "topic-gis",
-      "value": 2
-    },
-    {
-      "source": "engineering",
-      "target": "topic-architecture",
       "value": 2
     },
     {
@@ -1576,13 +1561,28 @@
       "value": 2
     },
     {
-      "source": "labs",
-      "target": "topic-ai",
+      "source": "engineering",
+      "target": "topic-solid",
+      "value": 2
+    },
+    {
+      "source": "tech_skills",
+      "target": "topic-javascript",
+      "value": 2
+    },
+    {
+      "source": "tech_skills",
+      "target": "topic-net",
       "value": 2
     },
     {
       "source": "tech_skills",
       "target": "topic-typescript",
+      "value": 2
+    },
+    {
+      "source": "engineering",
+      "target": "topic-ddd",
       "value": 2
     },
     {
