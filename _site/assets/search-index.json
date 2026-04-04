@@ -900,8 +900,13 @@
     "title": "User-Auth",
     "url": "https://nhmatsumoto.github.io/projects/user-auth/",
     "kind": "project",
-    "summary": "Repositório User-Auth sincronizado via GitHub.",
-    "keywords": []
+    "summary": "Serviço de autenticação e autorização em TypeScript/Node.js com gestão de usuários, sessões e integração com provedores de identidade como Keycloak.",
+    "keywords": [
+      "TypeScript",
+      "Node.js",
+      "JWT",
+      "OAuth2"
+    ]
   },
   {
     "title": "Technical Knowledge OS",
