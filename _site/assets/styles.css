@@ -1840,8 +1840,10 @@ button, input, select {
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
+  background: rgba(4, 8, 16, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
@@ -1852,6 +1854,7 @@ button, input, select {
   z-index: 10;
   max-height: 52%;
   overflow-y: auto;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .project-detail-panel[data-open="true"] {
@@ -1934,18 +1937,25 @@ button, input, select {
 
 @media (min-width: 769px) {
   .project-detail-panel {
-    /* Slide in from the right side of the shell */
-    inset: 0 0 0 auto;           /* top:0 right:0 bottom:0 left:auto */
+    inset: 0 0 0 auto;
     width: min(400px, 36%);
     max-height: 100%;
     border-top: none;
-    border-left: 1px solid var(--border);
-    transform: translateX(100%);  /* start fully off to the right */
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    transform: translateX(100%);
   }
   .project-detail-panel[data-open="true"] {
     transform: translateX(0);
   }
 }
+
+.project-detail-panel .panel-name { color: #ffffff; }
+.project-detail-panel .panel-headline { color: rgba(255, 255, 255, 0.85); }
+.project-detail-panel .panel-summary { color: rgba(255, 255, 255, 0.55); }
+.project-detail-panel .panel-close { color: rgba(255, 255, 255, 0.5); }
+.project-detail-panel .panel-close:hover { color: #ffffff; }
+.project-detail-panel .panel-actions { border-top-color: rgba(255, 255, 255, 0.08); }
+.project-detail-panel .panel-cta { color: var(--accent); }
 
 /* ── Panel Sections (expandable content inside detail panel) ─────────────── */
 .panel-sections {
@@ -1955,9 +1965,10 @@ button, input, select {
 }
 
 .panel-section {
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-sm, 8px);
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .panel-section-title {
@@ -1975,6 +1986,10 @@ button, input, select {
   gap: var(--space-2);
 }
 
+.panel-section-title:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
 .panel-section-title::before {
   content: "▸";
   transition: transform 0.2s;
@@ -1987,7 +2002,7 @@ details[open] > .panel-section-title::before {
 .panel-section-content {
   font-size: 0.82rem;
   line-height: 1.65;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.5);
   padding: 0 var(--space-4) var(--space-4);
 }
 
@@ -2002,7 +2017,7 @@ details[open] > .panel-section-title::before {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.4);
   margin: 0 0 var(--space-2);
 }
 
@@ -2021,7 +2036,7 @@ details[open] > .panel-section-title::before {
 }
 
 .panel-related-item:hover {
-  background: var(--accent-soft);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .panel-related-link {
@@ -2030,7 +2045,7 @@ details[open] > .panel-section-title::before {
   gap: var(--space-3);
   padding: var(--space-2) var(--space-3);
   text-decoration: none;
-  color: var(--text);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .panel-related-kind {
