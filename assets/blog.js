@@ -387,6 +387,9 @@ const initIntelligencePanel = (loc) => {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") setOpen(false);
   });
+
+  // Initial icon check
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 };
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -200,18 +200,25 @@ def build_graph_data(posts, projects, documents):
     
     for res, kind in flat:
         slug = res.get("slug")
+        tags = res.get("tags", []) if kind != "project" else res.get("stack", [])
+        
         node_map[slug] = {
             "id": slug, 
             "title": res.get("title") or res.get("name"), 
-            "kind": kind, 
+            "kind": kind,
             "url": res.get("resolved_url"),
+            "summary": res.get("summary") or res.get("headline", ""),
+            "headline": res.get("headline", ""),
+            "published_dt": res.get("published_dt").isoformat() if res.get("published_dt") and hasattr(res.get("published_dt"), "isoformat") else None,
+            "reading_time": res.get("reading_time"),
+            "category": res.get("category"),
+            "stack": res.get("stack") if kind == "project" else res.get("tags"),
             "size": 8 if kind == "project" else 6
         }
         nodes.append(node_map[slug])
         
         # Link topics to publications
-        res_tags = res.get("tags", []) if kind != "project" else res.get("stack", [])
-        for tag in res_tags:
+        for tag in tags:
             tag_lower = tag.lower()
             if tag_lower in topic_map:
                 links.append({"source": topic_map[tag_lower], "target": slug, "value": 1})

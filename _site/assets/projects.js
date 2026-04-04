@@ -297,7 +297,7 @@ const p = node.position.clone(), dist = 450
 this.cameraGoal = p.clone().add(this.camera.position.clone().sub(this.controls.target).normalize().multiplyScalar(dist))
 this.cameraTarget = p.clone(); this.transitioning = true
 }
-deselectNode() { this.selected = null; this.controls.autoRotate = true; this.restoreNodeVisibility(); this.resetCameraFocus(); window.hidePanel() }
+deselectNode() { this.selected = null; this.controls.autoRotate = true; this.restoreNodeVisibility(); this.resetCameraFocus(); if (window.hideIntelligencePanel) window.hideIntelligencePanel() }
 resetCameraFocus() {
 const isTree = this.layoutMode === 'arvore'
 this.cameraGoal = isTree ? new THREE.Vector3(2200, 1500, 2200) : new THREE.Vector3(0, 400, 1000)
@@ -342,7 +342,7 @@ this.container.appendChild(this.readerEl); this.readerEl.querySelector('[data-r-
 }
 enterReader(item) {
 this.readerActive = true; this.atomGroup.visible = this.araucariaGroup.visible = false; this.nodes.forEach(n => n.visible = false)
-this.controls.autoRotate = false; this.controls.enabled = false; window.hidePanel(); this.readerEl.classList.add('open')
+this.controls.autoRotate = false; this.controls.enabled = false; if (window.hideIntelligencePanel) window.hideIntelligencePanel(); this.readerEl.classList.add('open')
 const cnt = this.readerEl.querySelector('[data-r-content]')
 cnt.innerHTML = `<h1>${esc(item.name || item.title)}</h1><div class="reader-article-divider"></div><section>${item.body_html || item.summary}</section>`
 }
@@ -371,7 +371,9 @@ else document.body.style.cursor = 'default'
 handleNodeClick(node) {
 if (this.selected === node) return
 this.selected = node; this.focusOnNode(node); this.highlightNode(node)
-window.showPanel(node.userData.item, this.data)
+if (window.showIntelligencePanel) {
+window.showIntelligencePanel(node.userData.item);
+}
 }
 onClick() {
 if (this.readerActive) return
@@ -415,28 +417,6 @@ toggle.innerHTML = m === 'atomo'
 }
 updateLabel(current); shell.prepend(toggle)
 toggle.onclick = () => { current = (current === 'atomo' ? 'arvore' : 'atomo'); updateLabel(current); window.projectMap.setLayout(current) }
-}
-window.showPanel = (item, all) => {
-const p = document.querySelector('[data-project-panel]'); if (!p) return
-p.querySelectorAll('[data-reveal]').forEach(el => el.classList.remove('reveal-in'))
-p.querySelector('[data-panel-name]').textContent = item.name || item.title
-p.querySelector('[data-panel-role]').textContent = (KIND_LABEL[item.kind]||item.kind).toUpperCase()
-p.querySelector('[data-panel-role]').style.color = KIND_HEX[item.kind]
-p.querySelector('[data-panel-headline]').textContent = item.headline || ''
-const summaryEl = p.querySelector('[data-panel-summary]')
-if (summaryEl) summaryEl.innerHTML = item.summary || ''
-const stk = p.querySelector('[data-panel-stack]'); if (stk) stk.innerHTML = (item.stack||[]).map(s => `<span class="stack-chip">${esc(s)}</span>`).join('')
-const link = p.querySelector('[data-panel-link]'); if (link) link.onclick = (e) => { e.preventDefault(); window.projectMap.enterReader(item) }
-p.dataset.open = 'true'; p.setAttribute('aria-hidden', 'false')
-setTimeout(() => {
-const targets = p.querySelectorAll('[data-reveal]')
-targets.forEach((el, i) => setTimeout(() => el.classList.add('reveal-in'), i * 50))
-}, 10)
-}
-window.hidePanel = () => {
-const p = document.querySelector('[data-project-panel]'); if (!p) return
-p.dataset.open = 'false'; p.setAttribute('aria-hidden', 'true')
-p.querySelectorAll('[data-reveal]').forEach(el => el.classList.remove('reveal-in'))
 }
 document.querySelector('[data-panel-close]')?.addEventListener('click', () => window.projectMap?.deselectNode())
 const params = new URLSearchParams(window.location.search), sid = params.get('select')

@@ -58,7 +58,10 @@ const mountGraph = (container, data) => {
     .join("g")
     .style("cursor", "pointer")
     .on("click", (event, d) => {
-      if (d.url) {
+      // If global intelligence panel exists, show it. Otherwise fallback to direct navigation.
+      if (typeof window.showIntelligencePanel === "function") {
+        window.showIntelligencePanel(d);
+      } else if (d.url) {
         const cleanUrl = d.url.startsWith("http") ? d.url : d.url.startsWith("/") ? d.url : `/${d.url}`;
         window.location.href = cleanUrl;
       }
