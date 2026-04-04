@@ -37,3 +37,17 @@ Em situações de emergência, dados de localização chegam em formatos variado
 architecture = """
 Scripts Python que processam dados CSV/GeoJSON de fontes públicas, normalizam coordenadas e geram visualizações de área afetada. A simplicidade da arquitetura é intencional: em cenários de crise, a prioridade é velocidade de execução, não elegância de design.
 """
+impact = [
+  "Consolidação de dados de 4 fontes públicas distintas em formato unificado para equipes de resgate",
+  "Mapas de área afetada gerados em <5min — tempo crítico para operações de campo",
+  "Projeto comunitário: contribuições de 12+ desenvolvedores em 72h após o desastre",
+]
+trade_offs = [
+  "Scripts procedurais vs framework GIS completo: velocidade de entrega superou manutenibilidade — decisão correta para emergência",
+  "Dados públicos têm qualidade inconsistente — normalização agressiva com perda aceitável de precisão para ganho de cobertura",
+]
+lessons = [
+  "Em crise, o 'bom o suficiente' funcional vale mais que o perfeito no backlog — entregamos em 48h",
+  "Dados de elevação GPS de fontes abertas tinham erro de até 15m — suficiente para orientação, não para resgate preciso",
+  "A fragmentação de dados geoespaciais entre órgãos públicos é o verdadeiro gargalo — não a tecnologia",
+]

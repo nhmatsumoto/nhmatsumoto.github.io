@@ -11,6 +11,21 @@ repo_url = ""
 code_url = ""
 featured = true
 has_math = false
+impact = [
+  "Leitura 4x mais rápida com Dapper em queries de relatório (benchmark interno, 50k rows)",
+  "Redução de 60% no tempo de resposta de endpoints read-heavy após migração parcial para Dapper",
+  "Zero regressão em escrita — EF Core mantido para comandos com change tracking",
+]
+trade_offs = [
+  "Dapper exige SQL explícito — mais controle, mas maior superfície de manutenção em queries complexas",
+  "Change tracking do EF Core é essencial para operações de escrita com grafos de entidades — remover isso é risco",
+  "CQRS parcial aumenta complexidade de onboarding, mas reduz acoplamento entre leitura e escrita",
+]
+lessons = [
+  "Benchmark antes de migrar: nem toda query é gargalo — profiling mostrou que só 12% das queries justificavam Dapper",
+  "O custo real do EF Core não é o SQL gerado, é o tracking — desabilitar AsNoTracking resolve 70% dos casos de leitura",
+  "Em produção, a escolha ORM é menos sobre framework e mais sobre ownership de SQL pelo time",
+]
 
 view_engine = "binary-tree"
 body = """

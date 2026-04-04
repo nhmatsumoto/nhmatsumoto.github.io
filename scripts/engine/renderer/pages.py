@@ -19,6 +19,10 @@ from .components import (
     render_stack_list,
     render_pagination_controls,
     render_documents_section,
+    render_impact_bar,
+    render_trade_offs_section,
+    render_lessons_section,
+    render_evidence_highlights,
 )
 from ..utils import site_href, normalize_string_list, load_blog_config
 from ..i18n import translate
@@ -30,6 +34,7 @@ def render_home_page(site: dict[str, str], system: dict[str, Any], posts: list[d
     proj_limit = int(config.get("projects_on_home", 3))
     content = f"""
     {render_hero(site, system, posts, projects, i18n, locale)}
+    {render_evidence_highlights(posts, projects, i18n, locale)}
     {render_navigation_section(system, documents, i18n, locale)}
     {render_publications_grouped_section(system, publications, i18n, locale, limit=limit)}
     {render_brain_map_section(site, system, i18n, locale)}
@@ -91,6 +96,18 @@ def _build_project_body(item: dict[str, Any]) -> str:
     rm = item.get("roadmap") or []
     if rm:
         parts.append("## Roadmap\n\n" + "\n".join(f"- {r}" for r in rm))
+    impact = item.get("impact") or []
+    if impact:
+        parts.append("## Impacto & Resultados\n\n" + "\n".join(f"- {m}" for m in impact))
+    trade_offs = item.get("trade_offs") or []
+    if trade_offs:
+        parts.append("## Trade-offs & Decisões\n\n" + "\n".join(f"- {t}" for t in trade_offs))
+    lessons = item.get("lessons") or []
+    if lessons:
+        parts.append("## Lições Aprendidas\n\n" + "\n".join(f"- {le}" for le in lessons))
+    pn = (item.get("production_notes") or "").strip()
+    if pn:
+        parts.append(f"## Notas de Produção\n\n{pn}")
     return "\n\n".join(parts) if parts else item.get("summary", "")
 
 def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]]) -> str:
@@ -163,7 +180,9 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
       <div class="project-flow-wrapper" data-project-flow></div>
       <aside class="project-detail-panel" data-project-panel data-open="false" aria-hidden="true">
         <div class="panel-header" data-reveal><div class="panel-title-group"><span class="panel-role card-type" data-panel-role></span><h2 class="panel-name" data-panel-name></h2></div><button class="nav-button panel-close" type="button" data-panel-close aria-label="Close"><i data-lucide="x"></i></button></div>
-        <p class="panel-headline" data-panel-headline data-reveal></p><p class="panel-summary" data-panel-summary data-reveal></p><div class="panel-stack" data-panel-stack data-reveal></div>
+        <div class="panel-scroll-body">
+          <p class="panel-headline" data-panel-headline data-reveal></p><p class="panel-summary" data-panel-summary data-reveal></p><div class="panel-stack" data-panel-stack data-reveal></div>
+        </div>
         <div class="panel-actions" data-reveal><a class="panel-cta nav-cta" href="#" data-panel-link>{html.escape(translate(i18n, locale, "actions.view_project", "Ver projeto"))} <i data-lucide="arrow-right"></i></a></div>
       </aside>
     </div>
@@ -186,14 +205,16 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
 
 def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[str, Any], previous_post: Any, next_post: Any, i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.posts", "posts"), "url": site_href(site, "/publications/"), "key": "nav.posts"}, {"label": post["title"], "url": ""}], i18n, locale)
-    sidebar = f"""<aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2>{render_metric_list([render_localized_date(post["published_dt"], locale, "long"), render_reading_time(post["reading_time"], i18n, locale)], escape_items=False)}{render_badge_list(post.get('badges', []))}{render_tag_list(post.get('tags', []))}<div class="sidebar-actions">{f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">repo</a>' if post.get("resolved_repo_url") else ""}{f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if post.get("resolved_code_url") else ""}</div></aside>"""
-    content = f"""{breadcrumbs}<section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p><h1>{html.escape(post['title'])}</h1><p class="post-summary">{html.escape(post['summary'])}</p><div class="post-meta">{render_localized_date(post['published_dt'], locale, "long")}{render_reading_time(post['reading_time'], i18n, locale)}</div></header>{render_markdown(post['body'])}<footer class="post-author"><p><strong>Autor:</strong> {html.escape(str(site.get('author') or 'Hiro Matsumoto'))}</p></footer></article>{sidebar}</section>"""
+    evidence_html = render_impact_bar(post.get("impact", [])) + render_trade_offs_section(post.get("trade_offs", [])) + render_lessons_section(post.get("lessons", []))
+    sidebar = f"""<aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2>{render_metric_list([render_localized_date(post["published_dt"], locale, "long"), render_reading_time(post["reading_time"], i18n, locale)], escape_items=False)}{render_badge_list(post.get('badges', []))}{render_tag_list(post.get('tags', []))}{render_impact_bar(post.get("impact", []))}<div class="sidebar-actions">{f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">repo</a>' if post.get("resolved_repo_url") else ""}{f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if post.get("resolved_code_url") else ""}</div></aside>"""
+    content = f"""{breadcrumbs}<section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p><h1>{html.escape(post['title'])}</h1><p class="post-summary">{html.escape(post['summary'])}</p><div class="post-meta">{render_localized_date(post['published_dt'], locale, "long")}{render_reading_time(post['reading_time'], i18n, locale)}</div></header>{render_markdown(post['body'])}{render_trade_offs_section(post.get("trade_offs", []))}{render_lessons_section(post.get("lessons", []))}<footer class="post-author"><p><strong>Autor:</strong> {html.escape(str(site.get('author') or 'Hiro Matsumoto'))}</p></footer></article>{sidebar}</section>"""
     return render_layout(page_title=f"{post['title']} | {site['title']}", page_description=post["summary"], site=site, system=system, body_class="page-post", canonical_path=post["url"], has_math=post.get("has_math", False), content=content, active_nav="posts", i18n=i18n, locale=locale)
 
 def render_project_page(site: dict[str, str], system: dict[str, Any], project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.projects", "projects"), "url": site_href(site, "/projects/"), "key": "nav.projects"}, {"label": project["name"], "url": ""}], i18n, locale)
-    sidebar = f"""<aside class="sidebar-panel"><h2 data-i18n="pages.project.status">{html.escape(translate(i18n, locale, "pages.project.status", "Status"))}</h2><p>{render_status_badge(project['status'], i18n, locale)}</p><h3 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h3>{render_stack_list(project['stack'])}<div class="sidebar-actions">{f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">architecture</a>' if project.get("resolved_architecture_url") else ""}{f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if project.get("resolved_code_url") else ""}</div></aside>"""
-    content = f"""{breadcrumbs}<section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p><h1>{html.escape(project['name'])}</h1><p class="post-summary">{html.escape(project['headline'] or project['summary'])}</p>{render_badge_list(project.get('badges', []))}</header><section><h2 data-i18n="pages.project.overview">{html.escape(translate(i18n, locale, "pages.project.overview", "Overview"))}</h2>{render_markdown(project.get('overview', ""))}</section><section><h2 data-i18n="pages.project.architecture">{html.escape(translate(i18n, locale, "pages.project.architecture", "Architecture"))}</h2>{render_markdown(project.get('architecture', ""))}{f'<pre class="diagram-preview large"><code>{html.escape(project["diagram_preview"])}</code></pre>' if project.get("diagram_preview") else ""}</section></article>{sidebar}</section>"""
+    production_html = f'<section><h2>Notas de Produção</h2>{render_markdown(project["production_notes"])}</section>' if project.get("production_notes") else ""
+    sidebar = f"""<aside class="sidebar-panel"><h2 data-i18n="pages.project.status">{html.escape(translate(i18n, locale, "pages.project.status", "Status"))}</h2><p>{render_status_badge(project['status'], i18n, locale)}</p><h3 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h3>{render_stack_list(project['stack'])}{render_impact_bar(project.get("impact", []))}<div class="sidebar-actions">{f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">architecture</a>' if project.get("resolved_architecture_url") else ""}{f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if project.get("resolved_code_url") else ""}</div></aside>"""
+    content = f"""{breadcrumbs}<section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p><h1>{html.escape(project['name'])}</h1><p class="post-summary">{html.escape(project['headline'] or project['summary'])}</p>{render_badge_list(project.get('badges', []))}</header><section><h2 data-i18n="pages.project.overview">{html.escape(translate(i18n, locale, "pages.project.overview", "Overview"))}</h2>{render_markdown(project.get('overview', ""))}</section><section><h2 data-i18n="pages.project.architecture">{html.escape(translate(i18n, locale, "pages.project.architecture", "Architecture"))}</h2>{render_markdown(project.get('architecture', ""))}{f'<pre class="diagram-preview large"><code>{html.escape(project["diagram_preview"])}</code></pre>' if project.get("diagram_preview") else ""}</section>{production_html}{render_trade_offs_section(project.get("trade_offs", []))}{render_lessons_section(project.get("lessons", []))}</article>{sidebar}</section>"""
     return render_layout(page_title=f"{project['name']} | {site['title']}", page_description=project["summary"], site=site, system=system, body_class="page-project", canonical_path=project["url"], has_math=project.get("has_math", False), content=content, active_nav="projects", i18n=i18n, locale=locale, extra_scripts=["canvas-reader.js"])
 
 def render_document_page(site: dict[str, str], system: dict[str, Any], document: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:

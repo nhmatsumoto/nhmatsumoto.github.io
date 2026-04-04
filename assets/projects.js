@@ -78,6 +78,7 @@ class ProjectMap3D {
     this.container.appendChild(this.renderer.domElement)
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     Object.assign(this.controls, { enableDamping: true, dampingFactor: 0.06, autoRotate: true, autoRotateSpeed: 0.3, enablePan: false, minDistance: 300, maxDistance: 2000, zoomSpeed: 0.4 })
+    this.controls.saveState()
     this.scene.add(new THREE.AmbientLight(0x1a1a2e, 0.6))
     const kl = new THREE.PointLight(0x00C2FF, 3, 1800); kl.position.set(400, 400, 400); this.scene.add(kl)
     const fl = new THREE.PointLight(0x7C5CFF, 1.5, 1400); fl.position.set(-300, -200, 300); this.scene.add(fl)
@@ -109,7 +110,35 @@ class ProjectMap3D {
   }
 
   // ── Camera ────────────────────────────────────────────────────────────
-  focusOnNode(ng) { const p = ng.position.clone(), d = this.camera.position.clone().sub(this.controls.target).normalize(); this.cameraGoal = p.clone().add(d.multiplyScalar(420)); this.cameraTarget = p.clone(); this.transitioning = true }
+  getPanelOffset(dist) {
+    const pnl = document.querySelector('[data-project-panel]')
+    if (!pnl) return new THREE.Vector3()
+    const fovRad = this.camera.fov * Math.PI / 180
+    const viewDir = this.camera.position.clone().sub(this.controls.target).normalize()
+    const forward = viewDir.clone().negate()
+    const worldUp = new THREE.Vector3(0, 1, 0)
+    const right = new THREE.Vector3().crossVectors(forward, worldUp).normalize()
+    if (window.innerWidth >= 769) {
+      const panelRatio = pnl.offsetWidth / this.container.clientWidth
+      const visibleWidth = 2 * dist * Math.tan(fovRad / 2) * this.camera.aspect
+      return right.multiplyScalar((panelRatio / 2) * visibleWidth)
+    } else {
+      const visibleHeight = 2 * dist * Math.tan(fovRad / 2)
+      const up = new THREE.Vector3().crossVectors(right, forward).normalize()
+      return up.multiplyScalar(-(0.35 / 2) * visibleHeight)
+    }
+  }
+
+  focusOnNode(ng) {
+    const p = ng.position.clone()
+    const d = this.camera.position.clone().sub(this.controls.target).normalize()
+    const dist = 420
+    const offset = this.getPanelOffset(dist)
+    this.cameraGoal = p.clone().add(d.multiplyScalar(dist)).add(offset)
+    this.cameraTarget = p.clone().add(offset)
+    this.transitioning = true
+  }
+
   resetCameraFocus() { this.cameraGoal = new THREE.Vector3(0, 200, 800); this.cameraTarget = new THREE.Vector3(0, 0, 0); this.transitioning = true }
   updateCameraTransition() { if (!this.transitioning) return; this.camera.position.lerp(this.cameraGoal, 0.045); this.controls.target.lerp(this.cameraTarget, 0.045); if (this.camera.position.distanceTo(this.cameraGoal) < 1) this.transitioning = false }
 
@@ -212,6 +241,7 @@ class ProjectMap3D {
     this.nodes.forEach(n => n.visible = false)
     this.connections.forEach(c => c.visible = false)
     this.controls.autoRotate = false
+    this.controls.enabled = false
     window.hidePanel()
 
     const accent = KIND_HEX[item.kind] || KIND_HEX.post
@@ -264,10 +294,12 @@ class ProjectMap3D {
     this.readerEl.classList.remove('open')
     this.nodes.forEach(n => n.visible = true)
     this.connections.forEach(c => c.visible = true)
+    this.controls.enabled = true
     this.controls.autoRotate = true
     this.resetCameraFocus()
     this.restoreNodeVisibility()
     this.selected = null
+    this.controls.update()
   }
 
   // ── Events ────────────────────────────────────────────────────────────
@@ -276,7 +308,10 @@ class ProjectMap3D {
     this.renderer.domElement.addEventListener('mousemove', e => this.onMouseMove(e))
     this.renderer.domElement.addEventListener('click', e => this.onClick(e))
     window.addEventListener('keydown', e => {
-      if (this.readerActive && e.key === 'Escape') this.exitReader()
+      if (e.key === 'Escape') {
+        if (this.readerActive) this.exitReader()
+        else if (this.selected) this.deselectNode()
+      }
     })
   }
 
@@ -313,8 +348,13 @@ class ProjectMap3D {
   }
 
   deselectNode() {
-    this.selected = null; this.controls.autoRotate = true
-    this.restoreNodeVisibility(); this.resetCameraFocus(); window.hidePanel()
+    this.selected = null
+    this.controls.enabled = true
+    this.controls.autoRotate = true
+    this.restoreNodeVisibility()
+    this.resetCameraFocus()
+    this.controls.update()
+    window.hidePanel()
   }
 
   // ── Animate ───────────────────────────────────────────────────────────
@@ -344,6 +384,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.showPanel = (item, allData) => {
     const pnl = document.querySelector('[data-project-panel]'); if (!pnl) return
+    const scrollBody = pnl.querySelector('.panel-scroll-body')
+    const actionsEl = pnl.querySelector('.panel-actions')
+
+    // ── Central node: show full grouped content index ──
+    if (item.kind === 'central') {
+      pnl.querySelector('[data-panel-name]').textContent = item.name || 'Hiro'
+      pnl.querySelector('[data-panel-role]').textContent = 'MAPA DO ECOSSISTEMA'
+      pnl.querySelector('[data-panel-role]').style.color = KIND_HEX.central
+      pnl.querySelector('[data-panel-headline]').textContent = 'Todo o conteudo do blog, agrupado por categoria.'
+      pnl.querySelector('[data-panel-summary]').textContent = ''
+      const stk = pnl.querySelector('[data-panel-stack]'); if (stk) stk.innerHTML = ''
+
+      // Ensure dynamic containers exist
+      let secEl = pnl.querySelector('[data-panel-sections]')
+      if (!secEl) { secEl = document.createElement('div'); secEl.setAttribute('data-panel-sections',''); secEl.setAttribute('data-reveal',''); secEl.className = 'panel-sections'; scrollBody.appendChild(secEl) }
+      let relEl = pnl.querySelector('[data-panel-related]')
+      if (!relEl) { relEl = document.createElement('div'); relEl.setAttribute('data-panel-related',''); relEl.setAttribute('data-reveal',''); relEl.className = 'panel-related'; scrollBody.appendChild(relEl) }
+      secEl.innerHTML = ''; relEl.innerHTML = ''
+
+      // Group items by kind
+      const groups = {}
+      const kindOrder = ['project', 'post', 'document']
+      for (const d of (allData || [])) {
+        const k = d.kind || 'post'
+        if (!groups[k]) groups[k] = []
+        groups[k].push(d)
+      }
+
+      let html = ''
+      for (const kind of kindOrder) {
+        const items = groups[kind]
+        if (!items?.length) continue
+        const color = KIND_HEX[kind] || KIND_HEX.post
+        const label = KIND_LABEL[kind] || kind
+        html += `<div class="hub-group" style="--hub-color:${color}">
+          <h3 class="hub-group-title"><span class="hub-group-dot" style="background:${color}"></span>${esc(label)}s <span class="hub-group-count">${items.length}</span></h3>
+          <ul class="hub-group-list">${items.map(d =>
+            `<li class="hub-group-item"><button type="button" class="hub-group-link" data-hub-id="${esc(d.id)}"><span class="hub-group-link-name">${esc(d.name || d.title)}</span></button></li>`
+          ).join('')}</ul>
+        </div>`
+      }
+
+      secEl.innerHTML = html
+
+      // Wire up clicks → navigate to node in 3D canvas
+      secEl.querySelectorAll('[data-hub-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tNode = window.projectMap.nodes.find(n => n.userData.item?.id === btn.dataset.hubId)
+          if (tNode) window.projectMap.handleNodeClick(tNode)
+        })
+      })
+
+      if (actionsEl) actionsEl.style.display = 'none'
+      pnl.dataset.open = 'true'; pnl.setAttribute('aria-hidden','false')
+      if (scrollBody) scrollBody.scrollTop = 0
+      requestAnimationFrame(() => pnl.querySelectorAll('[data-reveal]').forEach((el,i) => { el.classList.remove('reveal-in'); setTimeout(()=>el.classList.add('reveal-in'), 60*i) }))
+      return
+    }
+
+    // ── Regular node panel ──
+    if (actionsEl) actionsEl.style.display = ''
     pnl.querySelector('[data-panel-name]').textContent = item.name || item.title
     pnl.querySelector('[data-panel-role]').textContent = item.kind.toUpperCase()
     pnl.querySelector('[data-panel-role]').style.color = KIND_HEX[item.kind] || KIND_HEX.post
@@ -351,15 +452,24 @@ document.addEventListener('DOMContentLoaded', () => {
     pnl.querySelector('[data-panel-summary]').textContent = (item.headline && item.summary !== item.headline) ? item.summary : ''
     const stk = pnl.querySelector('[data-panel-stack]'); if (stk) stk.innerHTML = (item.stack||[]).map(s=>`<span class="stack-chip">${esc(s)}</span>`).join('')
     let secEl = pnl.querySelector('[data-panel-sections]')
-    if (!secEl) { secEl = document.createElement('div'); secEl.setAttribute('data-panel-sections',''); secEl.setAttribute('data-reveal',''); secEl.className = 'panel-sections'; const a = pnl.querySelector('.panel-actions'); a ? pnl.insertBefore(secEl, a) : pnl.appendChild(secEl) }
+    if (!secEl) { secEl = document.createElement('div'); secEl.setAttribute('data-panel-sections',''); secEl.setAttribute('data-reveal',''); secEl.className = 'panel-sections'; scrollBody.appendChild(secEl) }
     secEl.innerHTML = ''
     let relEl = pnl.querySelector('[data-panel-related]')
-    if (!relEl) { relEl = document.createElement('div'); relEl.setAttribute('data-panel-related',''); relEl.setAttribute('data-reveal',''); relEl.className = 'panel-related'; const a = pnl.querySelector('.panel-actions'); a ? pnl.insertBefore(relEl, a) : pnl.appendChild(relEl) }
+    if (!relEl) { relEl = document.createElement('div'); relEl.setAttribute('data-panel-related',''); relEl.setAttribute('data-reveal',''); relEl.className = 'panel-related'; scrollBody.appendChild(relEl) }
     const rel = findRelated(item, allData||[])
-    relEl.innerHTML = rel.length ? `<h3 class="panel-related-title">Relacionados</h3><ul class="panel-related-list">${rel.map(r=>`<li class="panel-related-item"><a href="${esc(r.url||'#')}" class="panel-related-link"><span class="panel-related-kind" style="color:${KIND_HEX[r.kind]||KIND_HEX.post}">${esc(r.kind)}</span><span class="panel-related-name">${esc(r.name||r.title)}</span></a></li>`).join('')}</ul>` : ''
+    relEl.innerHTML = rel.length ? `<h3 class="panel-related-title">Relacionados</h3><ul class="panel-related-list">${rel.map(r=>`<li class="panel-related-item"><button type="button" class="panel-related-link" data-related-id="${esc(r.id)}"><span class="panel-related-kind" style="color:${KIND_HEX[r.kind]||KIND_HEX.post}">${esc(r.kind)}</span><span class="panel-related-name">${esc(r.name||r.title)}</span></button></li>`).join('')}</ul>` : ''
+    // Related items click → navigate to that node in the 3D canvas
+    relEl.querySelectorAll('[data-related-id]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.dataset.relatedId
+        const targetNode = window.projectMap.nodes.find(n => n.userData.item?.id === targetId)
+        if (targetNode) window.projectMap.handleNodeClick(targetNode)
+      })
+    })
     const btn = pnl.querySelector('[data-panel-link]')
     if (btn) { btn.href = '#'; btn.onclick = ev => { ev.preventDefault(); window.projectMap.enterReader(item) } }
     pnl.dataset.open = 'true'; pnl.setAttribute('aria-hidden','false')
+    if (scrollBody) scrollBody.scrollTop = 0
     requestAnimationFrame(() => pnl.querySelectorAll('[data-reveal]').forEach((el,i) => { el.classList.remove('reveal-in'); setTimeout(()=>el.classList.add('reveal-in'), 60*i) }))
   }
 

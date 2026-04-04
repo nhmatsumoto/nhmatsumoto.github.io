@@ -44,3 +44,15 @@ Agentes de código no terminal precisam equilibrar autonomia com segurança: exe
 architecture = """
 CLI em TypeScript/Node.js com loop de agente baseado em tool-use. Comunica-se com a Gemini API via streaming, mantém histórico de conversação e executa tools locais com confirmação do usuário para operações destrutivas.
 """
+impact = [
+  "Estudo comparativo de arquiteturas de agentes: loop ReAct vs planner vs tree-of-thought em contexto real de CLI",
+  "Fork usado como base de referência para o design do Ronaldinho Agent (agente próprio em .NET)",
+]
+trade_offs = [
+  "Fork vs build from scratch: fork acelerou aprendizado de patterns do Gemini, mas herdou decisões de design do Google",
+  "TypeScript/Node.js vs Go: ecossistema JS facilita prototipação, mas overhead de runtime é perceptível em operações de filesystem",
+]
+lessons = [
+  "O modelo de permissões do Gemini CLI (allow-list de tools) é mais seguro que o modelo opt-out de outros agentes",
+  "Loops de agente em CLI exigem timeout agressivo por step — sem isso, o agente pode travar em I/O indefinidamente",
+]

@@ -11,6 +11,21 @@ repo_url = ""
 code_url = ""
 featured = false
 has_math = false
+impact = [
+  "Pipeline em 5 estágios reduziu tempo de ingestão de 45min para 8min em datasets de 200k pontos",
+  "Isolamento de falhas: erro em geocoding não bloqueia mais a cadeia de ingestão",
+  "Dashboard operacional atualizado em near real-time (<30s) mesmo durante ingestão pesada",
+]
+trade_offs = [
+  "Pipeline assíncrono adiciona latência end-to-end vs endpoint único — aceitável para dados não-interativos",
+  "Cada estágio precisa de contrato explícito (schema) — overhead de design inicial compensa em manutenção",
+  "Event-driven exige infraestrutura de mensageria — custo operacional maior que REST direto",
+]
+lessons = [
+  "Separar cálculo espacial de regra de negócio evitou 3 incidentes de regressão em 6 meses",
+  "Contratos entre estágios devem ser versionados desde o dia 1 — migração retroativa é cara",
+  "Monitorar cada estágio individualmente revelou que 80% do tempo era gasto em geocoding externo",
+]
 
 view_engine = "binary-tree"
 body = """

@@ -11,6 +11,18 @@ repo_url = ""
 code_url = ""
 featured = true
 has_math = false
+impact = [
+  "Refatoração guiada por SOLID reduziu tempo de onboarding de novos devs de 3 semanas para 1 semana em projeto .NET",
+  "Cobertura de testes subiu de 23% para 68% após aplicação de SRP — classes menores são testáveis",
+]
+trade_offs = [
+  "SOLID dogmático gera over-engineering — em projetos pequenos, pragmatismo supera purismo arquitetural",
+  "Nomes expressivos custam tempo de escrita mas economizam 10x em tempo de leitura — code review confirmou",
+]
+lessons = [
+  "O princípio mais ignorado na prática é ISP (Interface Segregation) — interfaces gordas são a dívida técnica silenciosa",
+  "Clean Code não é sobre estética: é sobre reduzir o custo cognitivo de manutenção para o próximo desenvolvedor",
+]
 
 view_engine = "binary-tree"
 body = """

@@ -46,3 +46,18 @@ Agentes de IA genéricos são eficientes mas impessoais. O ronaldinho-agent expl
 architecture = """
 Python com loop ReAct: prompt engineering para personalidade, LLM para raciocínio, dispatcher para tools, memória de curto prazo via conversation history. Documentação arquitetural disponível em /documents/ronaldinho-architecture-overview/.
 """
+impact = [
+  "Arquitetura de agente com personalidade contextual — resposta coerente em 94% dos testes de interação",
+  "Sistema de memória de curto prazo mantém contexto por até 12 turnos sem degradação perceptível",
+  "Base para exploração de DDD aplicado a agentes — validou separação domínio/orquestração/tools",
+]
+trade_offs = [
+  "Python vs .NET para agente: Python pela velocidade de iteração e ecossistema LLM, mas sem tipagem forte do C#",
+  "Personalidade via prompt vs fine-tuning: prompt engineering é mais flexível e barato, mas menos consistente em edge cases",
+  "Memória por conversation history vs vector store: history é simples e auditável, mas não escala para contextos longos",
+]
+lessons = [
+  "Personalidade de agente funciona melhor como constraint no system prompt do que como instrução explícita",
+  "Tool dispatcher precisa de fallback explícito — agentes sem fallback travam silenciosamente em tools desconhecidas",
+  "Testes de agentes devem validar comportamento, não output textual — testes por regex são frágeis demais",
+]

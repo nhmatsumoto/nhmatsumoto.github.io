@@ -416,6 +416,45 @@ def render_pagination_controls(site: dict[str, str], current_page: int, total_pa
         links.append(f'<span class="pagination-link pagination-disabled">{html.escape(translate(i18n, locale, "pagination.next", "next"))} →</span>')
     return f'<nav class="pagination-container" aria-label="Pagination"><div class="pagination-inner">{"".join(links)}</div></nav>'
 
+def render_impact_bar(items: list[str]) -> str:
+    if not items: return ""
+    metrics = "".join(f'<li class="impact-metric"><i data-lucide="trending-up"></i><span>{html.escape(it)}</span></li>' for it in items)
+    return f'<aside class="evidence-impact"><h3 class="evidence-title">Impacto & Resultados</h3><ul class="impact-list">{metrics}</ul></aside>'
+
+def render_trade_offs_section(items: list[str]) -> str:
+    if not items: return ""
+    rows = "".join(f'<li class="tradeoff-item"><i data-lucide="scale"></i><span>{html.escape(it)}</span></li>' for it in items)
+    return f'<section class="evidence-section"><h2 class="evidence-title">Trade-offs & Decisões</h2><ul class="tradeoff-list">{rows}</ul></section>'
+
+def render_lessons_section(items: list[str]) -> str:
+    if not items: return ""
+    rows = "".join(f'<li class="lesson-item"><i data-lucide="lightbulb"></i><span>{html.escape(it)}</span></li>' for it in items)
+    return f'<section class="evidence-section"><h2 class="evidence-title">Lições Aprendidas</h2><ul class="lesson-list">{rows}</ul></section>'
+
+def render_evidence_highlights(posts: list[dict[str, Any]], projects: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    cards = []
+    all_items = [(p, "post") for p in posts] + [(p, "project") for p in projects]
+    for item, kind in all_items:
+        impact = item.get("impact", [])
+        if not impact: continue
+        name = item.get("title") or item.get("name", "")
+        url = item.get("resolved_url") or item.get("url", "#")
+        metrics_html = "".join(f'<span class="highlight-metric">{html.escape(m)}</span>' for m in impact[:2])
+        cards.append(f'<article class="evidence-card"><div class="evidence-card-head"><span class="card-type">{html.escape(kind)}</span><h3><a href="{html.escape(url)}">{html.escape(name)}</a></h3></div><div class="evidence-card-metrics">{metrics_html}</div></article>')
+    if not cards: return ""
+    return f"""
+    <section class="section-panel evidence-highlights" aria-labelledby="evidence-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">evidência</p>
+          <h2 id="evidence-title">Resultados em Produção</h2>
+        </div>
+        <p>Métricas, decisões arquiteturais e resultados concretos documentados nos projetos e publicações.</p>
+      </header>
+      <div class="evidence-grid">{"".join(cards[:6])}</div>
+    </section>
+    """
+
 def render_documents_section(system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str, *, limit: int | None = None, grouped: bool = False) -> str:
     items = documents[:limit] if limit is not None else documents
     if grouped:

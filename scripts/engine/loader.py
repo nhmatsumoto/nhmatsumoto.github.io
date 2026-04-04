@@ -65,6 +65,9 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
         "source_path": source_path,
         "output_dir_name": output_dir_name,
         "url": f"/{publications_dir}/{output_dir_name}/",
+        "impact": normalize_string_list(raw.get("impact", [])),
+        "trade_offs": normalize_string_list(raw.get("trade_offs", [])),
+        "lessons": normalize_string_list(raw.get("lessons", [])),
     }
 
 def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
@@ -97,6 +100,10 @@ def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> d
         "stack_notes": str(raw.get("stack_notes", "") or "").strip(),
         "adr": normalize_string_list(raw.get("adr", [])),
         "roadmap": normalize_string_list(raw.get("roadmap", [])),
+        "impact": normalize_string_list(raw.get("impact", [])),
+        "trade_offs": normalize_string_list(raw.get("trade_offs", [])),
+        "lessons": normalize_string_list(raw.get("lessons", [])),
+        "production_notes": str(raw.get("production_notes", "") or "").strip(),
         "source_path": source_path,
         "url": f"/projects/{slug}/",
         "has_math": bool(raw.get("has_math", raw.get("has_asciimath", False)))
