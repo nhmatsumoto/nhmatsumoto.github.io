@@ -1775,17 +1775,20 @@ button, input, select {
 
 /* ─── Project Flow Canvas ───────────────────────────────────────────────── */
 
-/* Full-bleed shell — breaks out of the container gutter */
+/* Full-bleed shell — covers the entire available space */
 .project-flow-shell {
   position: relative;
-  /* Break out of .site-shell max-width */
   width: 100vw;
   margin-left: calc(50% - 50vw);
+  height: calc(100vh - 56px - 40px); /* 56px navbar + 40px estimated footer */
   overflow: hidden;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: var(--space-6);
   background: var(--bg);
+  border: none;
+}
+
+.page-projects .site-shell {
+  padding: 0 !important;
+  max-width: 100% !important;
 }
 
 /* Slim toolbar above the canvas */
