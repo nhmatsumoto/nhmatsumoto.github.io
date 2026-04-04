@@ -7,6 +7,12 @@ focus = ["clarity", "depth", "no distraction"]
 feeling = ["focus", "precision", "technical depth"]
 references = ["engineering docs", "light dashboards", "structured README"]
 
+[identity.developer]
+name = "Hiro Matsumoto"
+handle = "@nhmatsumoto"
+role = "Software Engineer"
+location = "Brasil / Remote"
+
 [layout.header]
 type = "fixed"
 logo = "text"

@@ -975,17 +975,14 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     return f"""
     <nav class="nav-shell" data-nav-shell>
       <div class="nav-brand">
-        <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span> / OS</a>
+        <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
       </div>
-      
+
       <div class="nav-menu desktop-only">
         {pill_links}
       </div>
 
       <div class="nav-actions">
-        <div class="nav-group desktop-only">
-          {pill_links}
-        </div>
         <div class="nav-divider desktop-only"></div>
         <button class="nav-button" type="button" data-open-palette aria-label="{html.escape(search_label, quote=True)}">
           <i data-lucide="search"></i>
@@ -1008,7 +1005,7 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         <div class="drawer-backdrop" data-nav-toggle></div>
         <div class="drawer-content">
           <div class="drawer-header">
-            <span class="nav-title"><span class="brand-accent">NHM</span> / OS</span>
+            <span class="nav-title"><span class="brand-accent">NHM</span>ATSUMOTO</span>
             <button class="nav-button" type="button" data-nav-toggle>
               <i data-lucide="x"></i>
             </button>
@@ -1330,6 +1327,58 @@ def render_pagination_controls(
 
 
 
+def render_developer_profile(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+    developer = system.get("identity", {}).get("developer", {})
+    hero = system.get("layout", {}).get("hero", {})
+    name = str(developer.get("name", "") or site.get("author", "")).strip() or "Developer"
+    handle = str(developer.get("handle", "") or "").strip()
+    role = str(developer.get("role", "") or "").strip()
+    location = str(developer.get("location", "") or "").strip()
+    stack = normalize_string_list(hero.get("stack", []))
+    github_url = html.escape(site.get("github_url", "") or "", quote=True)
+    linkedin_url = html.escape(site.get("linkedin_url", "") or "", quote=True)
+
+    handle_html = f'<span class="profile-handle">{html.escape(handle)}</span>' if handle else ""
+    role_html = f'<p class="profile-role">{html.escape(role)}</p>' if role else ""
+    location_html = (
+        f'<p class="profile-location"><i data-lucide="map-pin"></i>{html.escape(location)}</p>'
+        if location else ""
+    )
+    stack_html = render_stack_list(stack[:5]) if stack else ""
+
+    links: list[str] = []
+    if github_url:
+        links.append(
+            f'<a class="profile-social-link" href="{github_url}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">'
+            f'<i data-lucide="github"></i><span>GitHub</span></a>'
+        )
+    if linkedin_url:
+        links.append(
+            f'<a class="profile-social-link" href="{linkedin_url}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">'
+            f'<i data-lucide="linkedin"></i><span>LinkedIn</span></a>'
+        )
+    links_html = f'<div class="profile-social">{" ".join(links)}</div>' if links else ""
+
+    return f"""
+    <article class="highlight-card profile-card">
+      <p class="card-type" data-i18n="kinds.developer">{html.escape(translate(i18n, locale, "kinds.developer", "developer"))}</p>
+      <div class="profile-identity">
+        <div class="profile-avatar-block">
+          <div class="profile-initials">{html.escape(name[:2].upper())}</div>
+        </div>
+        <div class="profile-info">
+          <h2 class="profile-name">{html.escape(name)}</h2>
+          {handle_html}
+        </div>
+      </div>
+      {role_html}
+      {location_html}
+      {stack_html}
+      {links_html}
+    </article>
+    """.strip()
+
+
 def render_hero(
     site: dict[str, str],
     system: dict[str, Any],
@@ -1349,7 +1398,8 @@ def render_hero(
     main_project = next((project for project in projects if project["featured"]), projects[0] if projects else None)
     recent_article = posts[0] if posts else None
 
-    highlight_cards: list[str] = []
+    highlight_cards: list[str] = [render_developer_profile(site, system, i18n, locale)]
+
     if main_project:
         highlight_cards.append(
             f"""
