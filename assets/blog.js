@@ -298,48 +298,6 @@ const initInteractiveGlow = () => {
   });
 };
 
-const initKnowledgeGraph = async () => {
-  const container = document.querySelector("[data-knowledge-graph]");
-  if (!container || !window.d3) return;
-
-  const data = await fetch("/assets/graph-data.json").then(r => r.json()).catch(() => null);
-  if (!data) return;
-
-  const width = container.clientWidth;
-  const height = 400;
-  const svg = d3.select(container).append("svg")
-    .attr("viewBox", [0, 0, width, height])
-    .style("cursor", "grab");
-
-  const g = svg.append("g");
-  svg.call(d3.zoom().scaleExtent([0.5, 4]).on("zoom", (e) => g.attr("transform", e.transform)));
-
-  const sim = d3.forceSimulation(data.nodes)
-    .force("link", d3.forceLink(data.links).id(d => d.id).distance(80))
-    .force("charge", d3.forceManyBody().strength(-100))
-    .force("center", d3.forceCenter(width / 2, height / 2));
-
-  const link = g.append("g").attr("stroke", "var(--border)").attr("stroke-opacity", 0.4)
-    .selectAll("line").data(data.links).join("line");
-
-  const node = g.append("g")
-    .selectAll("circle").data(data.nodes).join("circle")
-    .attr("r", d => d.kind === "project" ? 6 : 4)
-    .attr("fill", d => `var(--accent${d.kind === "project" ? "" : "-secondary"})`)
-    .style("cursor", "pointer")
-    .on("click", (e, d) => { if (d.url) window.location.href = d.url; })
-    .call(d3.drag()
-      .on("start", (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-      .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
-      .on("end", (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
-
-  node.append("title").text(d => d.title);
-
-  sim.on("tick", () => {
-    link.attr("x1", d => d.source.x).attr("y1", d => d.source.y).attr("x2", d => d.target.x).attr("y2", d => d.target.y);
-    node.attr("cx", d => d.x).attr("cy", d => d.y);
-  });
-};
 
 document.addEventListener("DOMContentLoaded", () => {
   const loc = createLocalization();
@@ -350,5 +308,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initCommandPalette(loc);
   initCodeBlocks();
   initInteractiveGlow();
-  initKnowledgeGraph();
+  if (window.initKnowledgeGraph) window.initKnowledgeGraph();
 });

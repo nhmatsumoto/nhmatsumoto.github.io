@@ -7,7 +7,7 @@ from typing import Any
 from .constants import ROOT, MANAGED_GIT_PATHS, WIKILINK_RE
 from .utils import (
     load_blog_config, write_text, write_json, site_href, 
-    resolve_optional_url, now_local
+    resolve_optional_url, now_local, minify_js, minify_css
 )
 from .loader import load_site, load_system, load_posts, load_projects, load_documents
 from .i18n import load_i18n, default_locale
@@ -78,6 +78,14 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
                 if d_dst.exists(): shutil.rmtree(d_dst)
                 shutil.copytree(item, d_dst)
             else:
+                # Minify JS/CSS on the fly, copy others
+                if item.suffix in [".js", ".css"]:
+                    try:
+                        content = item.read_text(encoding="utf-8")
+                        minified = minify_js(content) if item.suffix == ".js" else minify_css(content)
+                        (dst_assets / item.name).write_text(minified, encoding="utf-8")
+                        continue
+                    except Exception: pass
                 shutil.copy2(item, dst_assets / item.name)
 
     generated_paths: list[str] = []

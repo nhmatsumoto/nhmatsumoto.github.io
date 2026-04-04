@@ -26,7 +26,6 @@ function createGlowTexture(size = 128) {
   return new THREE.CanvasTexture(c)
 }
 
-function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML }
 
 function findRelated(item, all) {
   if (!item.stack?.length) return []
@@ -149,17 +148,19 @@ class ProjectMap3D {
         this.araucariaGroup.add(seg)
     }
 
-    // 2. High-Fidelity Branching (The "Candelabra" Apex)
+    // 2. High-Fidelity Branching (Merged Foliage & Curves)
     const items = [...this.data].sort((a,b) => this.getNodeTier(a) - this.getNodeTier(b))
     const startH = trunkH * 0.45 + 125 
     const whorlSpacing = 95, b0 = 5 
     let itemIdx = 0, whorlIdx = 0
     const numWhorls = Math.ceil(items.length / b0)
 
+    const fPos = [], fCol = [], bPos = [], bCol = []
+    this.foliageRanges = new Map()
+
     while (itemIdx < items.length) {
       const tier = this.getNodeTier(items[itemIdx])
       const h_progress = whorlIdx / numWhorls
-      // Whorls are much denser at the top (The Crown)
       const h_n = startH + (whorlIdx * whorlSpacing * (1 - Math.pow(h_progress, 2) * 0.5))
       const b_n = Math.min(b0 + Math.floor(h_progress * 4), items.length - itemIdx)
       const L_n = (260 + tier * 100 + h_progress * 300)
@@ -173,45 +174,49 @@ class ProjectMap3D {
         const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n/300, 2.8) * 130, Math.sin(theta) * L_n)
         node.userData.treePos = pos
         
-        // Araucaria Branch - Dip then Steep Hook
-        const start = new THREE.Vector3(0, h_n, 0)
-        const mid = start.clone().lerp(pos, 0.65)
-        mid.y -= 45 // Deeper initial dip for mature branches
+        // Branch Curve
+        const start = new THREE.Vector3(0, h_n, 0), mid = start.clone().lerp(pos, 0.65); mid.y -= 45
         const curve = new THREE.QuadraticBezierCurve3(start, mid, pos)
-        
-        const branch = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(24)), new THREE.LineBasicMaterial({ color: 0x00A86B, transparent: true, opacity: 0.15 }))
-        node.userData.branch = branch
-        this.araucariaGroup.add(branch)
+        const pts = curve.getPoints(24)
+        for (let i = 0; i < pts.length-1; i++) { bPos.push(pts[i].x, pts[i].y, pts[i].z, pts[i+1].x, pts[i+1].y, pts[i+1].z); bCol.push(0, 0.66, 1, 0, 0.66, 1) }
 
-        // Add Foliage Rope (Detailed Needles)
-        this.araucariaGroup.add(this.createFoliage(curve))
+        // Foliage Data
+        const fStart = fPos.length / 3
+        this.addFoliageData(curve, fPos, fCol)
+        this.foliageRanges.set(node, { start: fStart, count: (fPos.length / 3) - fStart })
         
         itemIdx++
       }
       whorlIdx++
     }
+
+    // 3. Final Merged Objects
+    const bGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(bPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(bCol), 3))
+    this.mergedBranches = new THREE.LineSegments(bGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.2 }))
+    this.araucariaGroup.add(this.mergedBranches)
+
+    const fGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(fPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(fCol), 3))
+    this.mergedFoliage = new THREE.LineSegments(fGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }))
+    this.araucariaGroup.add(this.mergedFoliage)
   }
 
-  createFoliage(curve) {
-    const points = curve.getPoints(20), pos = [], col = []
+  addFoliageData(curve, pos, col) {
+    const points = curve.getPoints(20)
     points.forEach((p, i) => {
       if (i === 0) return
       const dir = p.clone().sub(points[i-1]).normalize()
       const side1 = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0,1,0)).normalize()
       const side2 = new THREE.Vector3().crossVectors(dir, side1).normalize()
-      const l_mult = i / points.length // Foliage gets denser/wider at the tips
+      const l_mult = i / points.length
       for (let j = 0; j < 5; j++) {
         const ang = (j / 5) * Math.PI * 2 + i * 0.5
         const s = side1.clone().multiplyScalar(Math.cos(ang)).add(side2.clone().multiplyScalar(Math.sin(ang)))
         const reach = (2 + l_mult * 8) * (0.8 + Math.random()*0.4)
-        const start = p.clone().add(s.clone().multiplyScalar(reach*0.5))
-        const end = start.clone().add(dir.clone().multiplyScalar(15)).add(s.clone().multiplyScalar(reach))
+        const start = p.clone().add(s.clone().multiplyScalar(reach*0.5)), end = start.clone().add(dir.clone().multiplyScalar(15)).add(s.clone().multiplyScalar(reach))
         pos.push(start.x, start.y, start.z, end.x, end.y, end.z)
-        col.push(0x00/255, 0x55/255, 0x44/255, 0x00/255, 0x33/255, 0x22/255)
+        col.push(0, 0.33, 0.26, 0, 0.2, 0.13)
       }
     })
-    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pos), 3)); geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(col), 3))
-    return new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }))
   }
 
   getNodeTier(item) {
@@ -352,14 +357,36 @@ class ProjectMap3D {
   }
   
   highlightNode(sel) {
-    this.nodes.forEach(n => { const s = n === sel; n.traverse(c => { if (c.material) { c.material._os = c.material._os ?? c.material.opacity; c.material.opacity = s ? c.material._os : c.material._os * 0.12 } }) })
-    this.atomGroup.traverse(c => { if (c.material) { c.material._os = c.material._os ?? c.material.opacity; c.material.opacity *= 0.1 } })
-    this.araucariaGroup.traverse(c => { if (c.material) { c.material._os = c.material._os ?? c.material.opacity; c.material.opacity *= 0.1 } })
+    const isTree = this.layoutMode === 'arvore'
+    this.nodes.forEach(n => { const s = n === sel; n.traverse(c => { if (c.material) { c.material._os = c.material._os ?? c.material.opacity; c.material.opacity = s ? c.material._os : c.material._os * 0.2; if (c.material.emissiveIntensity) c.material.emissiveIntensity = s ? 3 : 0.5 } }) })
+    if (!isTree) {
+        this.nodes.slice(1).forEach(n => { if (n.userData.atomLink) n.userData.atomLink.material.opacity = (n === sel) ? 0.8 : 0.05 })
+    } else {
+        this.mergedBranches.material.opacity = 0.05; this.mergedFoliage.material.opacity = 0.2
+        const range = this.foliageRanges.get(sel)
+        if (range) {
+            const colors = this.mergedFoliage.geometry.attributes.color.array
+            for (let i = 0; i < colors.length / 3; i++) {
+                const active = i >= range.start && i < (range.start + range.count)
+                const base = active ? [0, 0.8, 0.6] : [0, 0.2, 0.15]
+                colors[i*3] = base[0]; colors[i*3+1] = base[1]; colors[i*3+2] = base[2]
+            }
+            this.mergedFoliage.geometry.attributes.color.needsUpdate = true
+        }
+    }
+    if (sel) new TWEEN.Tween(sel.scale).to({ x: 1.4, y: 1.4, z: 1.4 }, 300).easing(TWEEN.Easing.Back.Out).start()
   }
+  
   restoreNodeVisibility() {
-    this.nodes.forEach(n => n.traverse(c => { if (c.material?._os !== undefined) c.material.opacity = c.material._os }))
-    this.atomGroup.traverse(c => { if (c.material?._os !== undefined) c.material.opacity = c.material._os })
-    this.araucariaGroup.traverse(c => { if (c.material?._os !== undefined) c.material.opacity = c.material._os })
+    this.nodes.forEach(n => { n.traverse(c => { if (c.material?._os !== undefined) c.material.opacity = c.material._os; if (c.material?.emissiveIntensity) c.material.emissiveIntensity = 1.8 }); new TWEEN.Tween(n.scale).to({ x: 1, y: 1, z: 1 }, 200).start() })
+    if (this.mergedBranches) this.mergedBranches.material.opacity = 0.2
+    if (this.mergedFoliage) {
+        this.mergedFoliage.material.opacity = 0.45
+        const colors = this.mergedFoliage.geometry.attributes.color.array
+        for (let i = 0; i < colors.length / 3; i++) { colors[i*3] = 0; colors[i*3+1] = 0.33; colors[i*3+2] = 0.26 }
+        this.mergedFoliage.geometry.attributes.color.needsUpdate = true
+    }
+    this.nodes.slice(1).forEach(n => { if (n.userData.atomLink) n.userData.atomLink.material.opacity = 0.15 })
   }
 
   buildReaderDOM() {

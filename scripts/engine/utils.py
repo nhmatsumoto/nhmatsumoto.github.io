@@ -112,5 +112,27 @@ def resolve_url(site: dict[str, str], url: str) -> str:
         return clean_url
     return site_href(site, clean_url if clean_url.startswith("/") else f"/{clean_url}")
 
+
 def resolve_optional_url(site: dict[str, str], url: str) -> str:
     return resolve_url(site, url) if str(url or "").strip() else ""
+
+def minify_js(content: str) -> str:
+    """Lightweight JS minifier (Regex-based)."""
+    # Remove single line comments (basic check, avoids URLs)
+    content = re.sub(r'(?<!:)\/\/.*?\n', '\n', content)
+    # Remove multi-line comments
+    content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
+    # Collapse whitespace
+    content = re.sub(r'\s+', ' ', content)
+    # Minimize around syntax characters
+    for c in '{}(),;=:<>+-*/%&|^!?[]':
+        content = content.replace(f' {c}', c).replace(f'{c} ', c)
+    return content.strip()
+
+def minify_css(content: str) -> str:
+    """Lightweight CSS minifier (Regex-based)."""
+    content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
+    content = re.sub(r'\s+', ' ', content)
+    for c in '{}:;,':
+        content = content.replace(f' {c}', c).replace(f'{c} ', c)
+    return content.strip()
