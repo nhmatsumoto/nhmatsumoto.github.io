@@ -80,8 +80,14 @@ class ProjectMap3D {
     
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     Object.assign(this.controls, { 
-      enableDamping: true, dampingFactor: 0.05, autoRotate: true, autoRotateSpeed: 0.25,
-      enablePan: false, minDistance: 300, maxDistance: 3000
+      enableDamping: true, dampingFactor: 0.06, autoRotate: true, autoRotateSpeed: 0.25,
+      enablePan: true, screenSpacePanning: true, 
+      minDistance: 150, maxDistance: 6000
+    })
+    
+    // Stop auto-rotation when user takes control
+    this.controls.addEventListener('start', () => {
+      this.controls.autoRotate = false
     })
     
     this.scene.add(new THREE.AmbientLight(0x1a1a2e, 0.8))
@@ -320,13 +326,14 @@ class ProjectMap3D {
       // TAKE 1: Low-Angle gaze at pedestal
       new TWEEN.Tween(this.camera.position).to({ x: 500, y: 150, z: 500 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
         .chain(
-          // TAKE 2: Ascending Spiral
-          new TWEEN.Tween(this.camera.position).to({ x: 200, y: 1600, z: 200 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
+          // TAKE 2: Ascending Diagonal (45 Degrees + Zoom Out)
+          new TWEEN.Tween(this.camera.position).to({ x: 1600, y: 1200, z: 1600 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
         ).start()
       
       new TWEEN.Tween(this.controls.target).to({ x: 0, y: 100, z: 0 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
         .chain(
-          new TWEEN.Tween(this.controls.target).to({ x: 0, y: 500, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
+          // Centered at mid-tree
+          new TWEEN.Tween(this.controls.target).to({ x: 0, y: 550, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
         ).start()
       
       new TWEEN.Tween(this.pedestalLight).to({ intensity: 6 }, 1500).start()
@@ -351,8 +358,8 @@ class ProjectMap3D {
   deselectNode() { this.selected = null; this.controls.autoRotate = true; this.restoreNodeVisibility(); this.resetCameraFocus(); window.hidePanel() }
   resetCameraFocus() { 
     const isTree = this.layoutMode === 'arvore'
-    this.cameraGoal = isTree ? new THREE.Vector3(20, 1600, 20) : new THREE.Vector3(0, 400, 1000)
-    this.cameraTarget = isTree ? new THREE.Vector3(0, 450, 0) : new THREE.Vector3(0, 0, 0)
+    this.cameraGoal = isTree ? new THREE.Vector3(1600, 1200, 1600) : new THREE.Vector3(0, 400, 1000)
+    this.cameraTarget = isTree ? new THREE.Vector3(0, 550, 0) : new THREE.Vector3(0, 0, 0)
     this.transitioning = true 
   }
   

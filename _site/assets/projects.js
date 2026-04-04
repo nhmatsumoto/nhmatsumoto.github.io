@@ -63,8 +63,12 @@ this.container.appendChild(this.renderer.domElement)
 this.renderer.domElement.style.pointerEvents = 'auto'
 this.controls = new OrbitControls(this.camera, this.renderer.domElement)
 Object.assign(this.controls, {
-enableDamping: true, dampingFactor: 0.05, autoRotate: true, autoRotateSpeed: 0.25,
-enablePan: false, minDistance: 300, maxDistance: 3000
+enableDamping: true, dampingFactor: 0.06, autoRotate: true, autoRotateSpeed: 0.25,
+enablePan: true, screenSpacePanning: true,
+minDistance: 150, maxDistance: 6000
+})
+this.controls.addEventListener('start', () => {
+this.controls.autoRotate = false
 })
 this.scene.add(new THREE.AmbientLight(0x1a1a2e, 0.8))
 const p1 = new THREE.PointLight(0x00C2FF, 3, 2000); p1.position.set(500, 500, 500); this.scene.add(p1)
@@ -251,11 +255,11 @@ if (target) new TWEEN.Tween(n.position).to({ x: target.x, y: target.y, z: target
 if (isTree) {
 new TWEEN.Tween(this.camera.position).to({ x: 500, y: 150, z: 500 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
 .chain(
-new TWEEN.Tween(this.camera.position).to({ x: 200, y: 1600, z: 200 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
+new TWEEN.Tween(this.camera.position).to({ x: 1600, y: 1200, z: 1600 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
 ).start()
 new TWEEN.Tween(this.controls.target).to({ x: 0, y: 100, z: 0 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
 .chain(
-new TWEEN.Tween(this.controls.target).to({ x: 0, y: 500, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
+new TWEEN.Tween(this.controls.target).to({ x: 0, y: 550, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
 ).start()
 new TWEEN.Tween(this.pedestalLight).to({ intensity: 6 }, 1500).start()
 } else {
@@ -275,8 +279,8 @@ this.cameraTarget = p.clone(); this.transitioning = true
 deselectNode() { this.selected = null; this.controls.autoRotate = true; this.restoreNodeVisibility(); this.resetCameraFocus(); window.hidePanel() }
 resetCameraFocus() {
 const isTree = this.layoutMode === 'arvore'
-this.cameraGoal = isTree ? new THREE.Vector3(20, 1600, 20) : new THREE.Vector3(0, 400, 1000)
-this.cameraTarget = isTree ? new THREE.Vector3(0, 450, 0) : new THREE.Vector3(0, 0, 0)
+this.cameraGoal = isTree ? new THREE.Vector3(1600, 1200, 1600) : new THREE.Vector3(0, 400, 1000)
+this.cameraTarget = isTree ? new THREE.Vector3(0, 550, 0) : new THREE.Vector3(0, 0, 0)
 this.transitioning = true
 }
 highlightNode(sel) {
