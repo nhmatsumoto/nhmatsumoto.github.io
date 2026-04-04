@@ -97,8 +97,10 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
         "languageNames": i18n.get("language_names", {}),
         "strings": i18n.get("strings", {}),
     }, ensure_ascii=False).replace("<", "\\u003c")
-
-    scripts_html = "\n    ".join(f'<script src="{site_href(site, f"/assets/{s}")}" defer></script>' for s in (extra_scripts or []))
+    scripts_html = "\n    ".join(
+        f'<script src="{site_href(site, f"/assets/{s.split("?")[0]}")}" {"type=\"module\"" if "?module=true" in s else "defer"}></script>'
+        for s in (extra_scripts or [])
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="{html.escape(locale)}" data-theme="dark">

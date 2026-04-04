@@ -121,6 +121,14 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.projects", "projects"), "url": "", "key": "nav.projects"}], i18n, locale)
     flow_data = render_projects_flow_data(posts, projects, documents)
     content = f"""
+    <script type="importmap">
+    {{
+      "imports": {{
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }}
+    }}
+    </script>
     <div class="project-flow-shell">
       <div class="project-flow-wrapper" data-project-flow></div>
       <aside class="project-detail-panel" data-project-panel data-open="false" aria-hidden="true">
@@ -132,7 +140,7 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     <script id="projects-data" type="application/json">{flow_data}</script>
     """
     has_math = any(p.get("has_math") for p in posts) or any(p.get("has_math") for p in projects)
-    return render_layout(page_title=f"Projects | {site['title']}", page_description="Visual exploration of the ecosystem.", site=site, system=system, body_class="page-projects", canonical_path="/projects/", has_math=has_math, content=content, active_nav="/projects/", i18n=i18n, locale=locale, extra_scripts=["projects.js"])
+    return render_layout(page_title=f"Projects | {site['title']}", page_description="Visual exploration of the ecosystem.", site=site, system=system, body_class="page-projects", canonical_path="/projects/", has_math=has_math, content=content, active_nav="/projects/", i18n=i18n, locale=locale, extra_scripts=["projects.js?module=true"])
 
 def render_documents_index_page(site: dict[str, str], system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.documents", "documents"), "url": "", "key": "nav.documents"}], i18n, locale)
