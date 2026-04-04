@@ -10,7 +10,7 @@ badges = ["ai-theory", "physics", "deep-learning"]
 repo_url = ""
 code_url = ""
 featured = false
-has_asciimath = true
+has_math = true
 
 view_engine = "binary-tree"
 body = """

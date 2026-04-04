@@ -4,16 +4,16 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>Engenharia Cognitiva: Como Agentes de IA &#x27;Pensam&#x27; | nhmatsumoto-blog-engine</title><meta name="description" content="Uma análise sobre a orquestração de pensamento em LLMs, do ciclo Percepção-Ação à estrutura de memória de curto e longo prazo (RAG).">
-    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/">
+    <title>Topologias de Conhecimento: O Grafo Hiro | nhmatsumoto-blog-engine</title><meta name="description" content="Explorando a implementação de uma hierarquia D3.js para visualizar a inteligência técnica de forma não-linear.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/20260404-brain-map-topology-brain-map-topology-hiro/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    
   </head>
-  <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
+  <body class="page-post" data-has-math="false" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     
     <nav class="nav-shell" data-nav-shell>
@@ -40,24 +40,17 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Engenharia Cognitiva: Como Agentes de IA &#x27;Pensam&#x27;</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>Engenharia Cognitiva: Como Agentes de IA &#x27;Pensam&#x27;</h1><p class="post-summary">Uma análise sobre a orquestração de pensamento em LLMs, do ciclo Percepção-Ação à estrutura de memória de curto e longo prazo (RAG).</p><div class="post-meta"><time datetime="2026-04-03T08:30:00+09:00" data-localize-date="long">3 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>Agentes de IA não são apenas modelos de linguagem (LLMs). Eles são <strong>sistemas cognitivos</strong> que utilizam modelos como &quot;motores de raciocínio&quot; dentro de um ecossistema de ferramentas e memória.</p>
-<h2>O Ciclo de Vida do Agente</h2>
-<p>O pensamento de um agente (como o modelo Antigravity) segue o ciclo <strong>PEA</strong>: <strong>Percepção</strong>, <strong>Execução</strong> e <strong>Adaptação</strong>.</p>
-<h2>Estrutura da Mente Sintética:</h2>
-<ul><li>  <strong>Memória de Trabalho (Contexto)</strong>: Onde o agente mantém o estado imediato do problema.</li> <li>  <strong>Memória de Longo Prazo (RAG/Knowledge)</strong>: Onde o agente busca fatos e históricos processados.</li> <li>  <strong>Planejamento (Thinking)</strong>: O processo de decompor um objetivo complexo em micro-tarefas executáveis.</li></ul>
-<h3>A Probabilidade de Sucesso (\(P_{success}\))</h3>
-<p>O sucesso de um agente depende da clareza da instrução (\(I\)) e da capacidade do modelo (\(M\)) versus o ruído do contexto (\(N\)):</p>
-<div class="math-block">$$P_{success} = \\\\frac{I \\\\cdot M}{N}$$</div>
-<h2>Orquestração Multi-Agente</h2>
-<p>Ao dividir o trabalho entre agentes especialistas (Requirement Agent, Frontend Agent, Code Agent), elevamos o teto de complexidade que a IA pode gerenciar.</p>
-<div class="mermaid">graph LR
-    A[Usuário] --&gt; B[Orquestrador]
-    B --&gt; C[Planejador]
-    C --&gt; D[Especialista 1]
-    C --&gt; E[Especialista 2]
-    D &amp; E --&gt; F[Validador]
-    F --&gt; G[Resultado]</div>
-<p>&gt; <strong>Heurística Operacional</strong>: O segredo de uma boa IA não é a inteligência pura, mas a estrutura de controle que evita que ela se perca em alucinações.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T08:30:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">ia</span><span class="badge">agentes</span><span class="badge">futuro</span></div><div class="tag-list"><span class="tag">ia</span><span class="tag">agentes</span><span class="tag">cognição</span><span class="tag">arquitetura</span></div><div class="sidebar-actions"></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Topologias de Conhecimento: O Grafo Hiro</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>Topologias de Conhecimento: O Grafo Hiro</h1><p class="post-summary">Explorando a implementação de uma hierarquia D3.js para visualizar a inteligência técnica de forma não-linear.</p><div class="post-meta"><time datetime="2026-04-04T22:20:00+09:00" data-localize-date="long">4 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>O <strong>Mapa Cerebral</strong> (Knowledge Graph) evoluiu. Saímos de uma lista plana de publicações para uma topologia que reflete a estrutura da mente.</p>
+<h3>O Nó Central: Hiro</h3>
+<p>Em qualquer sistema operacional, existe o kernel. No Technical Knowledge OS, o nó <strong>Hiro</strong> é esse kernel — o ponto de convergência de toda a inteligência e experiência acumuladas.</p>
+<h3>Camadas de Abstração</h3>
+<p>Utilizamos D3.js para implementar uma simulação de forças com três camadas principais:</p>
+<p>1.  <strong>Hiro (Root)</strong>: O núcleo central.</p>
+<p>2.  <strong>Grupos de Skill (Tech Skills, Engineering, Labs)</strong>: Agrupadores semânticos que definem grandes áreas de atuação.</p>
+<p>3.  <strong>Tópicos (Tags)</strong>: Atuam como pontes de dados entre os grupos e o conteúdo final.</p>
+<h3>Por que Hierarquia?</h3>
+<p>A mente não armazena fatos isolados; ela armazena <strong>grafos de associação</strong>. Ao visualizar o <code>DDD</code> conectado a <code>Engineering</code> e, consequentemente, a projetos práticos, reforçamos a ideia de que a teoria e a prática são inseparáveis.</p>
+<p>A implementação técnica usa um arquivo de configuração centralizado (<code>config/graph.toml</code>), permitindo que a topologia mude dinamicamente conforme novas áreas de estudo — como AI, Robotics ou Security — surgem.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-04T22:20:00+09:00" data-localize-date="long">4 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">D3.js</span><span class="badge">Knowledge Graph</span></div><div class="tag-list"><span class="tag">visual-computing</span><span class="tag">graphs</span><span class="tag">d3js</span><span class="tag">architecture</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">
       <p>clarity | depth | no distraction</p>

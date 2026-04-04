@@ -10,7 +10,7 @@ badges = ["arquitetura", "ddd", "ai-agents"]
 repo_url = ""
 code_url = ""
 featured = true
-has_asciimath = false
+has_math = false
 
 view_engine = "binary-tree"
 body = """

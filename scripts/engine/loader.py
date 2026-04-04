@@ -98,7 +98,7 @@ def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> d
         "roadmap": normalize_string_list(raw.get("roadmap", [])),
         "source_path": source_path,
         "url": f"/projects/{slug}/",
-        "has_math": bool(raw.get("has_asciimath", False)) 
+        "has_math": bool(raw.get("has_math", raw.get("has_asciimath", False)))
         or any(config["math"]["inline_delimiter"] in str(raw.get(f, "")) for f in ["overview", "problem_solution", "architecture", "stack_notes"])
         or any(config["math"]["block_delimiter"] in str(raw.get(f, "")) for f in ["overview", "problem_solution", "architecture", "stack_notes"]),
     }

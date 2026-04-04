@@ -22,5 +22,5 @@ documents_on_home = 4
 [math]
 enabled = true
 script_url = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"
-inline_delimiter = "%%"
-block_delimiter = "%%%"
+inline_delimiter = "$"
+block_delimiter = "$$"

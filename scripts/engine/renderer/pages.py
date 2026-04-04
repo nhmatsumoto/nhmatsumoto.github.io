@@ -60,13 +60,25 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], publicatio
     """
     return render_layout(page_title=f"Posts - Page {current_page} | {site['title']}", page_description="Archive of publications.", site=site, system=system, body_class="page-archive", canonical_path=f"/publications/page/{current_page}/" if current_page > 1 else "/publications/", has_math=any(p.get('has_math') for p in publications), content=content, active_nav="posts", i18n=i18n, locale=locale)
 
+def _safe_truncate(text: str, limit: int = 1200) -> str:
+    if len(text) <= limit:
+        return text
+    cut = text[:limit]
+    para = cut.rfind("\n\n")
+    if para > limit // 3:
+        return cut[:para].rstrip() + "\n..."
+    line = cut.rfind("\n")
+    if line > limit // 3:
+        return cut[:line].rstrip() + "\n..."
+    return cut.rstrip() + "..."
+
 def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]]) -> str:
     unified_items = []
     
     for item in posts:
         sections = [
             {"id": "overview", "title": "Overview", "content": item["summary"], "type": "intro", "animation": "typewriter", "children": ["content"]},
-            {"id": "content", "title": "Conteúdo", "content": item["body"][:1200] + ("..." if len(item["body"]) > 1200 else ""), "type": "text", "animation": "fade", "children": []}
+            {"id": "content", "title": "Conteúdo", "content": _safe_truncate(item["body"]), "type": "text", "animation": "fade", "children": []}
         ]
         unified_items.append({
             "id": f"post-{item['slug']}",
@@ -101,7 +113,7 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
     for item in documents:
         sections = [
             {"id": "overview", "title": "Doc Overview", "content": item["summary"], "type": "intro", "animation": "typewriter", "children": ["body"]},
-            {"id": "body", "title": "Especificação", "content": item["body"][:1200] + ("..." if len(item["body"]) > 1200 else ""), "type": "text", "animation": "fade", "children": []}
+            {"id": "body", "title": "Especificação", "content": _safe_truncate(item["body"]), "type": "text", "animation": "fade", "children": []}
         ]
         unified_items.append({
             "id": f"document-{item['slug']}",

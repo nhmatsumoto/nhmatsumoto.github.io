@@ -11,7 +11,7 @@ repo_url = "https://github.com/nhmatsumoto/sos_location"
 code_url = "https://github.com/nhmatsumoto/sos_location"
 project_url = "/projects/sos-location/"
 featured = false
-has_asciimath = false
+has_math = false
 
 view_engine = "binary-tree"
 body = '''

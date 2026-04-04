@@ -10,7 +10,7 @@ badges = ["resilience", "scalability", "cloud-native"]
 repo_url = ""
 code_url = ""
 featured = false
-has_asciimath = false
+has_math = false
 
 view_engine = "binary-tree"
 body = """

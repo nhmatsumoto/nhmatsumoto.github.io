@@ -95,7 +95,7 @@ POST_FIELD_ORDER = [
     "repo_url",
     "code_url",
     "featured",
-    "has_asciimath",
+    "has_math",
     "body",
 ]
 

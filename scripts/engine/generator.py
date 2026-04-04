@@ -58,6 +58,7 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         p["resolved_url"] = site_href(site, p["url"])
         p["resolved_repo_url"] = resolve_optional_url(site, p["repo_url"])
         p["resolved_code_url"] = resolve_optional_url(site, p["code_url"] or p["repo_url"])
+        p["resolved_architecture_url"] = resolve_optional_url(site, p["architecture_url"])
     for d in documents:
         d["resolved_url"] = site_href(site, d["url"])
 

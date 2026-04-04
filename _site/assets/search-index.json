@@ -97,6 +97,78 @@
     ]
   },
   {
+    "title": "Tecnologia de Pulso: Do HEMP ao Micro-ondas de Alta Potência",
+    "url": "https://nhmatsumoto.github.io/publications/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/",
+    "kind": "post",
+    "summary": "Uma análise técnica sobre a geração artificial de pulsos eletromagnéticos, do Efeito Compton ao Gerador de Compressão de Fluxo.",
+    "keywords": [
+      "engineering",
+      "defense",
+      "electromagnetism",
+      "pulse-power"
+    ]
+  },
+  {
+    "title": "Sopros Estelares: De Supernovas a Space Weather",
+    "url": "https://nhmatsumoto.github.io/publications/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/",
+    "kind": "post",
+    "summary": "Anatomia dos fenômenos astrofísicos que geram emissões eletromagnéticas extremas e seu impacto nos sistemas tecnológicos.",
+    "keywords": [
+      "astrophysics",
+      "science",
+      "space-weather",
+      "radiation"
+    ]
+  },
+  {
+    "title": "Engenharia de Resiliência Eletromagnética e Acoplamento",
+    "url": "https://nhmatsumoto.github.io/publications/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/",
+    "kind": "post",
+    "summary": "Do ponto zero à ruptura de junções: como circuitos reais falham sob transientes de alta intensidade.",
+    "keywords": [
+      "engineering",
+      "electronics",
+      "resilience",
+      "security"
+    ]
+  },
+  {
+    "title": "A Física dos Pulsos Dispersos: Além do EMP Convencional",
+    "url": "https://nhmatsumoto.github.io/publications/20260404-demp-physics-fisica-demp-pulsos-dispersos/",
+    "kind": "post",
+    "summary": "Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos.",
+    "keywords": [
+      "physics",
+      "astrophysics",
+      "electromagnetism",
+      "science"
+    ]
+  },
+  {
+    "title": "Topologias de Conhecimento: O Grafo Hiro",
+    "url": "https://nhmatsumoto.github.io/publications/20260404-brain-map-topology-brain-map-topology-hiro/",
+    "kind": "post",
+    "summary": "Explorando a implementação de uma hierarquia D3.js para visualizar a inteligência técnica de forma não-linear.",
+    "keywords": [
+      "visual-computing",
+      "graphs",
+      "d3js",
+      "architecture"
+    ]
+  },
+  {
+    "title": "O Despertar do Technical Knowledge OS v2",
+    "url": "https://nhmatsumoto.github.io/publications/20260404-knowledge-os-v2-technical-knowledge-os-v2/",
+    "kind": "post",
+    "summary": "Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico.",
+    "keywords": [
+      "meta",
+      "architecture",
+      "knowledge-os",
+      "hiro"
+    ]
+  },
+  {
     "title": "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
     "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/",
     "kind": "post",
