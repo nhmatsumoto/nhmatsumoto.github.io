@@ -50,12 +50,7 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], publicatio
     pagination = render_pagination_controls(site, current_page, total_pages, "/publications/", i18n, locale)
     content = f"""
     {breadcrumbs}
-    <section class="page-heading">
-      <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
-      <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "All publications"))}</h1>
-      <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Writing stream for architecture notes, experiments, domain modeling and operating heuristics."))}</p>
-    </section>
-    {render_publications_grouped_section(system, publications, i18n, locale)}
+    {render_publications_grouped_section(system, publications, i18n, locale, show_header=False)}
     {pagination}
     """
     return render_layout(page_title=f"Posts - Page {current_page} | {site['title']}", page_description="Archive of publications.", site=site, system=system, body_class="page-archive", canonical_path=f"/publications/page/{current_page}/" if current_page > 1 else "/publications/", has_math=any(p.get('has_math') for p in publications), content=content, active_nav="posts", i18n=i18n, locale=locale)

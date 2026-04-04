@@ -252,7 +252,7 @@ def render_publication_card(item: dict[str, Any], i18n: dict[str, Any], locale: 
     if item.get("kind") == "article": return render_post_card(item, i18n, locale)
     return render_document_card(item, i18n, locale)
 
-def render_publications_grouped_section(system: dict[str, Any], publications: list[dict[str, Any]], i18n: dict[str, Any], locale: str, *, limit: int | None = None) -> str:
+def render_publications_grouped_section(system: dict[str, Any], publications: list[dict[str, Any]], i18n: dict[str, Any], locale: str, *, limit: int | None = None, show_header: bool = True) -> str:
     items = publications[:limit] if limit is not None else publications
     from collections import defaultdict
     groups = defaultdict(list)
@@ -276,13 +276,17 @@ def render_publications_grouped_section(system: dict[str, Any], publications: li
 
     empty_msg = translate(i18n, locale, "empty.publications", "No publications found.")
     content = "\n".join(blocks) if blocks else f'<p class="empty-state">{html.escape(empty_msg)}</p>'
-    return f"""
-    <section class="section-panel" aria-labelledby="pubs-title">
+    header_html = ""
+    if show_header:
+        header_html = f"""
       <header class="section-header">
         <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "publications"))}</p>
         <h2 id="pubs-title" data-i18n="sections.publications_title">{html.escape(translate(i18n, locale, "sections.publications_title", "Technical Knowledge OS"))}</h2>
         <p class="section-copy" data-i18n="sections.publications_copy">{html.escape(translate(i18n, locale, "sections.publications_copy", "Unified stream of architecture documents, technical articles and research notes."))}</p>
-      </header>
+      </header>"""
+    return f"""
+    <section class="section-panel" aria-labelledby="pubs-title">
+      {header_html}
       <div class="publications-grid">{content}</div>
     </section>
     """
