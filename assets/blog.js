@@ -299,6 +299,96 @@ const initInteractiveGlow = () => {
 };
 
 
+const initIntelligencePanel = (loc) => {
+  const panel = document.querySelector("[data-intelligence-panel]");
+  const content = panel?.querySelector(".panel-content");
+  if (!panel || !content) return;
+
+  const elements = {
+    role: panel.querySelector("[data-panel-role]"),
+    name: panel.querySelector("[data-panel-name]"),
+    headline: panel.querySelector("[data-panel-headline]"),
+    summary: panel.querySelector("[data-panel-summary]"),
+    stack: panel.querySelector("[data-panel-stack]"),
+    metrics: panel.querySelector("[data-panel-metrics]"),
+    link: panel.querySelector("[data-panel-link]"),
+    metaRow: panel.querySelector("[data-panel-meta-row]")
+  };
+
+  const setOpen = (open) => {
+    panel.dataset.open = String(open);
+    panel.setAttribute("aria-hidden", String(!open));
+    if (open) {
+      document.body.style.overflow = "hidden";
+      setTimeout(() => content.dataset.revealed = "true", 100);
+    } else {
+      document.body.style.overflow = "";
+      content.dataset.revealed = "false";
+    }
+  };
+
+  const show = (data) => {
+    if (!data) return;
+
+    // Reset animations
+    content.dataset.revealed = "false";
+
+    // Populate data
+    if (elements.role) {
+      const kind = data.kind || "knowledge";
+      elements.role.textContent = loc?.translate(`kinds.${kind}`, kind) || kind;
+      elements.role.dataset.i18n = `kinds.${kind}`;
+    }
+    
+    if (elements.name) elements.name.textContent = data.name || data.title || "";
+    if (elements.headline) elements.headline.textContent = data.headline || "";
+    
+    if (elements.summary) {
+      // If summary is HTML (from project flow), use innerHTML, else textContent
+      if (data.body_html) {
+        elements.summary.innerHTML = data.body_html;
+      } else {
+        elements.summary.textContent = data.summary || "";
+      }
+    }
+
+    if (elements.stack) {
+      elements.stack.innerHTML = (data.stack || []).map(s => `<span class="stack-chip">${s}</span>`).join("");
+    }
+
+    if (elements.metaRow) {
+      const meta = [];
+      if (data.published_dt) {
+        const date = new Date(data.published_dt);
+        meta.push(`<span>${new Intl.DateTimeFormat(loc?.getLocale() || "pt-BR", { day: "2-digit", month: "long", year: "numeric" }).format(date)}</span>`);
+      }
+      if (data.reading_time) meta.push(`<span>${data.reading_time} min</span>`);
+      if (data.category) meta.push(`<span>${data.category}</span>`);
+      elements.metaRow.innerHTML = meta.join(" &middot; ");
+    }
+
+    if (elements.link) {
+      elements.link.href = data.resolved_url || data.url || "#";
+      const actionKey = data.kind === "project" ? "actions.view_project" : "actions.read_article";
+      elements.link.innerHTML = `<i data-lucide="eye"></i> ${loc?.translate(actionKey, "Ver")} <i data-lucide="arrow-right"></i>`;
+      lucide.createIcons();
+    }
+
+    setOpen(true);
+  };
+
+  window.showIntelligencePanel = show;
+  window.hideIntelligencePanel = () => setOpen(false);
+
+  panel.querySelectorAll("[data-panel-close]").forEach(el => {
+    el.addEventListener("click", () => setOpen(false));
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
+  });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const loc = createLocalization();
   loc?.applyTranslations();
@@ -308,5 +398,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initCommandPalette(loc);
   initCodeBlocks();
   initInteractiveGlow();
+  initIntelligencePanel(loc);
   if (window.initKnowledgeGraph) window.initKnowledgeGraph();
 });

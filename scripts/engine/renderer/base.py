@@ -47,6 +47,38 @@ def render_palette(site: dict[str, str], i18n: dict[str, Any], locale: str) -> s
     </div>
     """
 
+def render_intelligence_panel(site: dict[str, str], i18n: dict[str, Any], locale: str) -> str:
+    close_label = translate(i18n, locale, "actions.close", "Fechar")
+    view_label = translate(i18n, locale, "actions.view_content", "Ver conteúdo")
+    return f"""
+    <aside class="intelligence-panel" data-intelligence-panel data-open="false" aria-hidden="true">
+      <div class="panel-backdrop" data-panel-close></div>
+      <div class="panel-content">
+        <div class="panel-header" data-reveal>
+          <div class="panel-title-group">
+            <span class="panel-role card-type" data-panel-role></span>
+            <h2 class="panel-name" data-panel-name></h2>
+            <div class="panel-meta-row" data-panel-meta-row></div>
+          </div>
+          <button class="nav-button panel-close" type="button" data-panel-close aria-label="{html.escape(close_label)}">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="panel-scroll-body">
+          <p class="panel-headline" data-panel-headline data-reveal></p>
+          <div class="panel-summary prose" data-panel-summary data-reveal></div>
+          <div class="panel-stack" data-panel-stack data-reveal></div>
+          <div class="panel-metrics" data-panel-metrics data-reveal></div>
+        </div>
+        <div class="panel-actions" data-reveal>
+          <a class="panel-cta nav-cta" href="#" data-panel-link>
+            <i data-lucide="eye"></i> {html.escape(view_label)} <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+    """
+
 def render_layout(*, page_title: str, page_description: str, site: dict[str, str], system: dict[str, Any], body_class: str, canonical_path: str, has_math: bool, content: str, active_nav: str, i18n: dict[str, Any], locale: str, extra_scripts: list[str] | None = None) -> str:
     from ..utils import load_blog_config
     config = load_blog_config()
@@ -93,6 +125,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     <div class="site-shell">
       <main class="site-main" id="content">{content}</main>
       {render_footer(site, system)}
+      {render_intelligence_panel(site, i18n, locale)}
     </div>
     {render_palette(site, i18n, locale)}
     <script id="site-i18n" type="application/json">{i18n_payload}</script>

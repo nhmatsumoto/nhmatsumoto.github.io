@@ -179,13 +179,6 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     </script>
     <div class="project-flow-shell">
       <div class="project-flow-wrapper" data-project-flow></div>
-      <aside class="project-detail-panel" data-project-panel data-open="false" aria-hidden="true">
-        <div class="panel-header" data-reveal><div class="panel-title-group"><span class="panel-role card-type" data-panel-role></span><h2 class="panel-name" data-panel-name></h2></div><button class="nav-button panel-close" type="button" data-panel-close aria-label="Close"><i data-lucide="x"></i></button></div>
-        <div class="panel-scroll-body">
-          <p class="panel-headline" data-panel-headline data-reveal></p><p class="panel-summary" data-panel-summary data-reveal></p><div class="panel-stack" data-panel-stack data-reveal></div>
-        </div>
-        <div class="panel-actions" data-reveal><a class="panel-cta nav-cta" href="#" data-panel-link><i data-lucide="eye"></i> {html.escape(translate(i18n, locale, "actions.view_project", "Ver"))} <i data-lucide="arrow-right"></i></a></div>
-      </aside>
     </div>
     <script id="projects-data" type="application/json">{flow_data}</script>
     """

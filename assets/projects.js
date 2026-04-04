@@ -140,51 +140,61 @@ class ProjectMap3D {
   buildAraucariaTree() {
     this.araucariaGroup = new THREE.Group(); this.araucariaGroup.visible = false; this.scene.add(this.araucariaGroup)
     
-    // 1. Trunk (Knobby & Tapered)
-    const trunkH = 1100, baseR = 18
-    const numSegments = 16
+    // 1. Mature Trunk (10-11 Years)
+    const trunkH = 1500, baseR = 28 
+    const numSegments = 20
     for (let i = 0; i < numSegments; i++) {
-        const r1 = baseR * Math.pow(1 - i/numSegments, 0.6)
-        const r2 = baseR * Math.pow(1 - (i+1)/numSegments, 0.6)
-        // Add "whorl scars" (slightly wider base)
-        const isWhorlBase = i % 2 === 0
-        const m = isWhorlBase ? 1.05 : 1.0
-        const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1 * m, trunkH / numSegments, 10), new THREE.MeshStandardMaterial({ color: 0x121212, metalness: 0.1, roughness: 1.0 }))
+        const r1 = baseR * Math.pow(1 - i / numSegments, 0.7)
+        const r2 = baseR * Math.pow(1 - (i + 1) / numSegments, 0.7)
+        const isWhorlBase = i > (numSegments * 0.6) && i % 2 === 0
+        const m = isWhorlBase ? 1.08 : 1.0
+        const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1 * m, trunkH / numSegments, 12), new THREE.MeshStandardMaterial({ color: 0x0a0a0a, metalness: 0.2, roughness: 0.8 }))
         seg.position.y = (i * (trunkH / numSegments)) + (trunkH / numSegments / 2) + 125
         this.araucariaGroup.add(seg)
     }
 
-    // 2. High-Fidelity Branching (Merged Foliage & Curves)
+    // 2. High-Fidelity Branching (Mature Umbrella Crown)
     const items = [...this.data].sort((a,b) => this.getNodeTier(a) - this.getNodeTier(b))
-    const startH = trunkH * 0.45 + 125 
-    const whorlSpacing = 95, b0 = 5 
+    const startH = trunkH * 0.6 + 125 // Mature trees have clear trunks
+    const whorlSpacing = 80, b0 = 5 
     let itemIdx = 0, whorlIdx = 0
     const numWhorls = Math.ceil(items.length / b0)
 
-    const fPos = [], fCol = [], bPos = [], bCol = []
+    const fPos = [], fCol = [], bPos = [], bCol = [], pPos = [], pCol = []
     this.foliageRanges = new Map()
 
     while (itemIdx < items.length) {
       const tier = this.getNodeTier(items[itemIdx])
       const h_progress = whorlIdx / numWhorls
-      const h_n = startH + (whorlIdx * whorlSpacing * (1 - Math.pow(h_progress, 2) * 0.5))
-      const b_n = Math.min(b0 + Math.floor(h_progress * 4), items.length - itemIdx)
-      const L_n = (260 + tier * 100 + h_progress * 300)
+      // Steeper distribution for flattened crown
+      const h_n = startH + (whorlIdx * whorlSpacing * (0.8 + Math.pow(h_progress, 1.5) * 0.4))
+      const b_n = Math.min(b0 + Math.floor(h_progress * 6), items.length - itemIdx)
+      const L_n = (320 + tier * 80 + h_progress * 450)
       
       for (let m = 0; m < b_n; m++) {
         const item = items[itemIdx]
         const node = this.nodes.find(n => n.userData.item === item)
         if (!node) { itemIdx++; continue }
 
-        const theta = (m * Math.PI * 2) / b_n + (whorlIdx * 0.8)
-        const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n/300, 2.8) * 130, Math.sin(theta) * L_n)
+        const theta = (m * Math.PI * 2) / b_n + (whorlIdx * 1.1)
+        // Upward tilt for mature branches
+        const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n/400, 2.5) * 180, Math.sin(theta) * L_n)
         node.userData.treePos = pos
         
-        // Branch Curve
-        const start = new THREE.Vector3(0, h_n, 0), mid = start.clone().lerp(pos, 0.65); mid.y -= 45
+        // Branch Curve (Stronger profile)
+        const start = new THREE.Vector3(0, h_n, 0), mid = start.clone().lerp(pos, 0.7); mid.y += 20
         const curve = new THREE.QuadraticBezierCurve3(start, mid, pos)
         const pts = curve.getPoints(24)
-        for (let i = 0; i < pts.length-1; i++) { bPos.push(pts[i].x, pts[i].y, pts[i].z, pts[i+1].x, pts[i+1].y, pts[i+1].z); bCol.push(0, 0.66, 1, 0, 0.66, 1) }
+        for (let i = 0; i < pts.length-1; i++) { 
+          bPos.push(pts[i].x, pts[i].y, pts[i].z, pts[i+1].x, pts[i+1].y, pts[i+1].z)
+          const bClr = tier === 0 ? [0, 0.8, 1] : [0, 0.66, 1]
+          bCol.push(...bClr, ...bClr) 
+        }
+
+        // Fruits (Pinhas) for Projects
+        if (item.kind === 'project') {
+          this.addFruitData(pos, pPos, pCol)
+        }
 
         // Foliage Data
         const fStart = fPos.length / 3
@@ -204,6 +214,21 @@ class ProjectMap3D {
     const fGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(fPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(fCol), 3))
     this.mergedFoliage = new THREE.LineSegments(fGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }))
     this.araucariaGroup.add(this.mergedFoliage)
+
+    // 4. Pinhas (Fruits) - Merged Meshes
+    const pGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(pPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(pCol), 3))
+    const pMat = new THREE.MeshStandardMaterial({ vertexColors: true, metalness: 0.8, roughness: 0.2, emissiveIntensity: 0.5 })
+    this.mergedFruits = new THREE.Mesh(pGeo, pMat)
+    this.araucariaGroup.add(this.mergedFruits)
+  }
+
+  addFruitData(pos, vertices, colors) {
+    const geo = new THREE.IcosahedronGeometry(12, 0)
+    const vArr = geo.attributes.position.array
+    for (let i = 0; i < vArr.length; i += 3) {
+      vertices.push(vArr[i] + pos.x, vArr[i+1] + pos.y, vArr[i+2] + pos.z)
+      colors.push(0, 0.7, 1) // Pine cone cyan glow
+    }
   }
 
   addFoliageData(curve, pos, col) {
@@ -214,13 +239,15 @@ class ProjectMap3D {
       const side1 = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0,1,0)).normalize()
       const side2 = new THREE.Vector3().crossVectors(dir, side1).normalize()
       const l_mult = i / points.length
-      for (let j = 0; j < 5; j++) {
-        const ang = (j / 5) * Math.PI * 2 + i * 0.5
+      const tier = this.getNodeTier({ stack: [] }) // Default check
+      const d_mult = l_mult > 0.6 ? 8 : 4 // More density at tips
+      for (let j = 0; j < d_mult; j++) {
+        const ang = (j / d_mult) * Math.PI * 2 + i * 0.5
         const s = side1.clone().multiplyScalar(Math.cos(ang)).add(side2.clone().multiplyScalar(Math.sin(ang)))
-        const reach = (2 + l_mult * 8) * (0.8 + Math.random()*0.4)
-        const start = p.clone().add(s.clone().multiplyScalar(reach*0.5)), end = start.clone().add(dir.clone().multiplyScalar(15)).add(s.clone().multiplyScalar(reach))
+        const reach = (3 + l_mult * 10) * (0.8 + Math.random()*0.4)
+        const start = p.clone().add(s.clone().multiplyScalar(reach*0.5)), end = start.clone().add(dir.clone().multiplyScalar(18)).add(s.clone().multiplyScalar(reach))
         pos.push(start.x, start.y, start.z, end.x, end.y, end.z)
-        col.push(0, 0.33, 0.26, 0, 0.2, 0.13)
+        col.push(0, 0.4, 0.35, 0, 0.25, 0.18)
       }
     })
   }
@@ -326,14 +353,14 @@ class ProjectMap3D {
       // TAKE 1: Low-Angle gaze at pedestal
       new TWEEN.Tween(this.camera.position).to({ x: 500, y: 150, z: 500 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
         .chain(
-          // TAKE 2: Ascending Diagonal (45 Degrees + Zoom Out)
-          new TWEEN.Tween(this.camera.position).to({ x: 1600, y: 1200, z: 1600 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
+          // TAKE 2: Wide Majestic Profile (Full View Zoom Out)
+          new TWEEN.Tween(this.camera.position).to({ x: 2200, y: 1500, z: 2200 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
         ).start()
       
       new TWEEN.Tween(this.controls.target).to({ x: 0, y: 100, z: 0 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
         .chain(
-          // Centered at mid-tree
-          new TWEEN.Tween(this.controls.target).to({ x: 0, y: 550, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
+          // Centered at mid-tree for wide view
+          new TWEEN.Tween(this.controls.target).to({ x: 0, y: 500, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
         ).start()
       
       new TWEEN.Tween(this.pedestalLight).to({ intensity: 6 }, 1500).start()
@@ -358,8 +385,8 @@ class ProjectMap3D {
   deselectNode() { this.selected = null; this.controls.autoRotate = true; this.restoreNodeVisibility(); this.resetCameraFocus(); window.hidePanel() }
   resetCameraFocus() { 
     const isTree = this.layoutMode === 'arvore'
-    this.cameraGoal = isTree ? new THREE.Vector3(1600, 1200, 1600) : new THREE.Vector3(0, 400, 1000)
-    this.cameraTarget = isTree ? new THREE.Vector3(0, 550, 0) : new THREE.Vector3(0, 0, 0)
+    this.cameraGoal = isTree ? new THREE.Vector3(2200, 1500, 2200) : new THREE.Vector3(0, 400, 1000)
+    this.cameraTarget = isTree ? new THREE.Vector3(0, 500, 0) : new THREE.Vector3(0, 0, 0)
     this.transitioning = true 
   }
   
