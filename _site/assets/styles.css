@@ -1938,7 +1938,7 @@ button, input, select {
 @media (min-width: 769px) {
   .project-detail-panel {
     inset: 0 0 0 auto;
-    width: min(400px, 36%);
+    width: 35%;
     max-height: 100%;
     border-top: none;
     border-left: 1px solid rgba(255, 255, 255, 0.06);
