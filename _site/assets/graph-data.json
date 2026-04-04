@@ -115,6 +115,12 @@
       "url": "/publications/20260402-203000-ddd-boundaries-for-agent-systems/"
     },
     {
+      "id": "primeiro-post",
+      "title": "Bem-vindo ao meu novo blog",
+      "kind": "post",
+      "url": "/publications/20260312-090000-primeiro-post/"
+    },
+    {
       "id": "sos-location-ml-risk-neural-models",
       "title": "SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica",
       "kind": "post",
@@ -217,22 +223,10 @@
       "url": "/publications/20260401-184500-gis-pipelines-with-event-driven-services/"
     },
     {
-      "id": "primeiro-post",
-      "title": "Bem-vindo ao meu novo blog",
-      "kind": "post",
-      "url": "/publications/20260312-090000-primeiro-post/"
-    },
-    {
       "id": "sos-location",
       "title": "SOS Location",
       "kind": "project",
       "url": "/projects/sos-location/"
-    },
-    {
-      "id": "ronaldinho-agent",
-      "title": "Ronaldinho Agent",
-      "kind": "project",
-      "url": "/projects/ronaldinho-agent/"
     },
     {
       "id": "splitcosts",
@@ -241,16 +235,184 @@
       "url": "/projects/splitcosts/"
     },
     {
-      "id": "gemini-cli",
-      "title": "Gemini CLI",
-      "kind": "project",
-      "url": "/projects/gemini-cli/"
-    },
-    {
       "id": "gis-incident-lab",
       "title": "GIS Incident Lab",
       "kind": "project",
       "url": "/projects/gis-incident-lab/"
+    },
+    {
+      "id": "apollo-11",
+      "title": "Apollo-11",
+      "kind": "project",
+      "url": "/projects/apollo-11/"
+    },
+    {
+      "id": "automapper",
+      "title": "AutoMapper",
+      "kind": "project",
+      "url": "/projects/automapper/"
+    },
+    {
+      "id": "brumadinho-location",
+      "title": "brumadinho_location",
+      "kind": "project",
+      "url": "/projects/brumadinho-location/"
+    },
+    {
+      "id": "chess",
+      "title": "chess",
+      "kind": "project",
+      "url": "/projects/chess/"
+    },
+    {
+      "id": "claw-code",
+      "title": "claw-code",
+      "kind": "project",
+      "url": "/projects/claw-code/"
+    },
+    {
+      "id": "deepseek-v3",
+      "title": "DeepSeek-V3",
+      "kind": "project",
+      "url": "/projects/deepseek-v3/"
+    },
+    {
+      "id": "financial",
+      "title": "Financial",
+      "kind": "project",
+      "url": "/projects/financial/"
+    },
+    {
+      "id": "gaussian-splatting",
+      "title": "gaussian-splatting",
+      "kind": "project",
+      "url": "/projects/gaussian-splatting/"
+    },
+    {
+      "id": "gemini-cli",
+      "title": "gemini-cli",
+      "kind": "project",
+      "url": "/projects/gemini-cli/"
+    },
+    {
+      "id": "java-servlet-pages",
+      "title": "Java-Servlet-Pages",
+      "kind": "project",
+      "url": "/projects/java-servlet-pages/"
+    },
+    {
+      "id": "leaflet",
+      "title": "Leaflet",
+      "kind": "project",
+      "url": "/projects/leaflet/"
+    },
+    {
+      "id": "macos",
+      "title": "macos",
+      "kind": "project",
+      "url": "/projects/macos/"
+    },
+    {
+      "id": "maplebr",
+      "title": "MapleBR",
+      "kind": "project",
+      "url": "/projects/maplebr/"
+    },
+    {
+      "id": "mermaid",
+      "title": "mermaid",
+      "kind": "project",
+      "url": "/projects/mermaid/"
+    },
+    {
+      "id": "mermaid-live-editor",
+      "title": "mermaid-live-editor",
+      "kind": "project",
+      "url": "/projects/mermaid-live-editor/"
+    },
+    {
+      "id": "nhmatsumoto-exception-middleware",
+      "title": "nhmatsumoto.exception.middleware",
+      "kind": "project",
+      "url": "/projects/nhmatsumoto-exception-middleware/"
+    },
+    {
+      "id": "nhmatsumoto-github-io",
+      "title": "nhmatsumoto.github.io",
+      "kind": "project",
+      "url": "/projects/nhmatsumoto-github-io/"
+    },
+    {
+      "id": "playground-fe",
+      "title": "Playground-FE",
+      "kind": "project",
+      "url": "/projects/playground-fe/"
+    },
+    {
+      "id": "prog-lib",
+      "title": "prog_lib",
+      "kind": "project",
+      "url": "/projects/prog-lib/"
+    },
+    {
+      "id": "quickreaderv1",
+      "title": "QuickReaderv1",
+      "kind": "project",
+      "url": "/projects/quickreaderv1/"
+    },
+    {
+      "id": "react-data-grid",
+      "title": "react-data-grid",
+      "kind": "project",
+      "url": "/projects/react-data-grid/"
+    },
+    {
+      "id": "responsemiddleware",
+      "title": "ResponseMiddleware",
+      "kind": "project",
+      "url": "/projects/responsemiddleware/"
+    },
+    {
+      "id": "ronaldinho-agent",
+      "title": "ronaldinho-agent",
+      "kind": "project",
+      "url": "/projects/ronaldinho-agent/"
+    },
+    {
+      "id": "security-jwt",
+      "title": "Security.Jwt",
+      "kind": "project",
+      "url": "/projects/security-jwt/"
+    },
+    {
+      "id": "sos",
+      "title": "sos",
+      "kind": "project",
+      "url": "/projects/sos/"
+    },
+    {
+      "id": "splitcost-backend",
+      "title": "SplitCost-Backend",
+      "kind": "project",
+      "url": "/projects/splitcost-backend/"
+    },
+    {
+      "id": "splitcosts-fe",
+      "title": "SplitCosts-FE",
+      "kind": "project",
+      "url": "/projects/splitcosts-fe/"
+    },
+    {
+      "id": "system-prompts-and-models-of-ai-tools",
+      "title": "system-prompts-and-models-of-ai-tools",
+      "kind": "project",
+      "url": "/projects/system-prompts-and-models-of-ai-tools/"
+    },
+    {
+      "id": "user-auth",
+      "title": "User-Auth",
+      "kind": "project",
+      "url": "/projects/user-auth/"
     },
     {
       "id": "adr-versioned-memory",

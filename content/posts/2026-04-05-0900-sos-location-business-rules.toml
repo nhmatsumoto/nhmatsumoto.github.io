@@ -13,6 +13,7 @@ project_url = "/projects/sos-location/"
 featured = false
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 # Regras de negócio do SOS Location
 

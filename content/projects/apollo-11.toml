@@ -1,0 +1,21 @@
+name = "Apollo-11"
+slug = "apollo-11"
+headline = "Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules."
+summary = "Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/Apollo-11"
+code_url = "https://github.com/nhmatsumoto/Apollo-11"
+published_at = "2024-01-19T20:32:17Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

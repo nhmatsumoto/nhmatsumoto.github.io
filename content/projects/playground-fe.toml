@@ -1,0 +1,21 @@
+name = "Playground-FE"
+slug = "playground-fe"
+headline = "Projeto frontend criado com React e TypeScript, com integração básica ao Keycloak já configurada, incluindo funcionalidades de login e logout. A aplicação está preparada para autenticação de usuários por meio do Keycloak, servindo como base para futuros desenvolvimentos com controle de acesso."
+summary = "Projeto frontend criado com React e TypeScript, com integração básica ao Keycloak já configurada, incluindo funcionalidades de login e logout. A aplicação está preparada para autenticação de usuários por meio do Keycloak, servindo como base para futuros desenvolvimentos com controle de acesso."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/Playground-FE"
+code_url = "https://github.com/nhmatsumoto/Playground-FE"
+published_at = "2025-06-28T07:49:30Z"
+tags = ["TypeScript"]
+view_engine = "binary-tree"
+
+overview = """
+Projeto frontend criado com React e TypeScript, com integração básica ao Keycloak já configurada, incluindo funcionalidades de login e logout. A aplicação está preparada para autenticação de usuários por meio do Keycloak, servindo como base para futuros desenvolvimentos com controle de acesso.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

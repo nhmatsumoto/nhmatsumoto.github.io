@@ -1,0 +1,21 @@
+name = "MapleBR"
+slug = "maplebr"
+headline = "Repositório MapleBR sincronizado via GitHub."
+summary = "Repositório MapleBR sincronizado via GitHub."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/MapleBR"
+code_url = "https://github.com/nhmatsumoto/MapleBR"
+published_at = "2026-03-10T21:08:24Z"
+tags = ["Makefile"]
+view_engine = "binary-tree"
+
+overview = """
+Repositório MapleBR sincronizado via GitHub.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

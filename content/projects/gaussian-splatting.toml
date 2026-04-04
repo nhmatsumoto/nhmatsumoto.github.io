@@ -1,0 +1,21 @@
+name = "gaussian-splatting"
+slug = "gaussian-splatting"
+headline = "Original reference implementation of \"3D Gaussian Splatting for Real-Time Radiance Field Rendering\""
+summary = "Original reference implementation of \"3D Gaussian Splatting for Real-Time Radiance Field Rendering\""
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/gaussian-splatting"
+code_url = "https://github.com/nhmatsumoto/gaussian-splatting"
+published_at = "2026-02-24T14:33:21Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Original reference implementation of "3D Gaussian Splatting for Real-Time Radiance Field Rendering"
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

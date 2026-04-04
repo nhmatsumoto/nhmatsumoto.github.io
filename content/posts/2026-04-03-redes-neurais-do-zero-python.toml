@@ -12,6 +12,7 @@ code_url = ""
 featured = true
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 Entender redes neurais através de bibliotecas como PyTorch ou TensorFlow é útil, mas entender a **matemática fundamental** por trás de um neurônio é o que separa o "usuário" do "engenheiro de IA".
 

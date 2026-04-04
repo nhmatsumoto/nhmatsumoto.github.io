@@ -12,6 +12,7 @@ code_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io"
 featured = true
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = '''
 # Bem-vindo ao Technical Knowledge OS v2
 

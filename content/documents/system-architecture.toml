@@ -1,3 +1,4 @@
+status = "published"
 slug = "system-architecture"
 title = "System Architecture"
 summary = "Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto."
@@ -7,3 +8,4 @@ tags = ["architecture", "system"]
 agent_generated_tag = false
 order = 2
 source_path = "docs/architecture.md"
+view_engine = "binary-tree"

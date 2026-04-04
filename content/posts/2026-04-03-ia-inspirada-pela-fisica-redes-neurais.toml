@@ -12,6 +12,7 @@ code_url = ""
 featured = false
 has_asciimath = true
 
+view_engine = "binary-tree"
 body = """
 A inteligência artificial não nasceu apenas de algoritmos matemáticos puros, ela bebeu da fonte da **Física Estatística**. Muitos dos modelos que usamos hoje tratam a informação como se fosse energia em um sistema físico.
 

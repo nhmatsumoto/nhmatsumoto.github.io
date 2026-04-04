@@ -1,0 +1,21 @@
+name = "react-data-grid"
+slug = "react-data-grid"
+headline = "Feature-rich and customizable data grid React component"
+summary = "Feature-rich and customizable data grid React component"
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/react-data-grid"
+code_url = "https://github.com/nhmatsumoto/react-data-grid"
+published_at = "2024-11-06T14:38:32Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Feature-rich and customizable data grid React component
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

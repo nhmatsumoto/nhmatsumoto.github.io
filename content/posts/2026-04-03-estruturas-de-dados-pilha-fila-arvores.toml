@@ -12,6 +12,7 @@ code_url = ""
 featured = false
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 Sistemas de software são, em última análise, o gerenciamento de dados em movimento e em repouso. Aprender **Estrutura de Dados** é entender como organizar esses dados para que o computador trabalhe menos e entregue mais.
 

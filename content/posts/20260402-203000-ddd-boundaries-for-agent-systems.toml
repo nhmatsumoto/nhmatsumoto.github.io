@@ -12,6 +12,7 @@ code_url = "https://github.com/nhmatsumoto/ronaldinho-agent"
 featured = true
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 # Separando domínio de orquestração em sistemas com agentes
 

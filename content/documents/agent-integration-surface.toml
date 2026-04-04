@@ -1,3 +1,4 @@
+status = "published"
 slug = "agent-integration-surface"
 title = "Agent Integration Surface"
 summary = "Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes."
@@ -7,3 +8,4 @@ tags = ["apis", "agents", "integration"]
 agent_generated_tag = true
 order = 4
 source_path = "docs/apis/agent_integration_surface.md"
+view_engine = "binary-tree"

@@ -12,6 +12,7 @@ code_url = ""
 featured = false
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 Transformar conversas em conteúdo publicável é uma automação tentadora, mas exige método: extração, clusterização por temas, rastreabilidade de fontes e revisão humana. Este post descreve uma PoC que processa logs de chat e identifica conceitos/PoCs.
 

@@ -1,3 +1,4 @@
+status = "published"
 slug = "ronaldinho-architecture-overview"
 title = "Ronaldinho Architecture Overview"
 summary = "Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime."
@@ -7,3 +8,4 @@ tags = ["agents", "architecture", "runtime"]
 agent_generated_tag = true
 order = 5
 source_path = "docs/ronaldinho/architecture_overview.md"
+view_engine = "binary-tree"

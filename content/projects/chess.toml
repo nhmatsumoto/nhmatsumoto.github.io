@@ -1,0 +1,21 @@
+name = "chess"
+slug = "chess"
+headline = "Repositório chess sincronizado via GitHub."
+summary = "Repositório chess sincronizado via GitHub."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/chess"
+code_url = "https://github.com/nhmatsumoto/chess"
+published_at = "2026-03-11T01:32:49Z"
+tags = ["C#"]
+view_engine = "binary-tree"
+
+overview = """
+Repositório chess sincronizado via GitHub.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

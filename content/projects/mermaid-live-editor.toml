@@ -1,0 +1,21 @@
+name = "mermaid-live-editor"
+slug = "mermaid-live-editor"
+headline = "Edit, preview and share mermaid charts/diagrams. New implementation of the live editor."
+summary = "Edit, preview and share mermaid charts/diagrams. New implementation of the live editor."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/mermaid-live-editor"
+code_url = "https://github.com/nhmatsumoto/mermaid-live-editor"
+published_at = "2026-01-31T19:13:57Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Edit, preview and share mermaid charts/diagrams. New implementation of the live editor.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

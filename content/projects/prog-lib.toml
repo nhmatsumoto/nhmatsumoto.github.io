@@ -1,0 +1,21 @@
+name = "prog_lib"
+slug = "prog-lib"
+headline = "Repositório prog_lib sincronizado via GitHub."
+summary = "Repositório prog_lib sincronizado via GitHub."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/prog_lib"
+code_url = "https://github.com/nhmatsumoto/prog_lib"
+published_at = "2026-03-18T07:12:51Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Repositório prog_lib sincronizado via GitHub.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

@@ -1,0 +1,21 @@
+name = "sos"
+slug = "sos"
+headline = "Repositório sos sincronizado via GitHub."
+summary = "Repositório sos sincronizado via GitHub."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/sos"
+code_url = "https://github.com/nhmatsumoto/sos"
+published_at = "2026-03-20T11:07:55Z"
+tags = []
+view_engine = "binary-tree"
+
+overview = """
+Repositório sos sincronizado via GitHub.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

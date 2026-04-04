@@ -1,0 +1,21 @@
+name = "nhmatsumoto.exception.middleware"
+slug = "nhmatsumoto-exception-middleware"
+headline = "GlobalExceptionMiddleware for .net core"
+summary = "GlobalExceptionMiddleware for .net core"
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/nhmatsumoto.exception.middleware"
+code_url = "https://github.com/nhmatsumoto/nhmatsumoto.exception.middleware"
+published_at = "2023-11-27T10:21:43Z"
+tags = ["C#"]
+view_engine = "binary-tree"
+
+overview = """
+GlobalExceptionMiddleware for .net core
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

@@ -1,0 +1,21 @@
+name = "Security.Jwt"
+slug = "security-jwt"
+headline = "Jwt Manager. Set of components to deal with Jwt Stuff. Automate your key rotating, add support for jwks_uri. Store your cryptography keys in a secure place."
+summary = "Jwt Manager. Set of components to deal with Jwt Stuff. Automate your key rotating, add support for jwks_uri. Store your cryptography keys in a secure place."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/Security.Jwt"
+code_url = "https://github.com/nhmatsumoto/Security.Jwt"
+published_at = "2024-11-01T09:27:40Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Jwt Manager. Set of components to deal with Jwt Stuff. Automate your key rotating, add support for jwks_uri. Store your cryptography keys in a secure place.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

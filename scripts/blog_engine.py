@@ -1138,6 +1138,7 @@ def render_layout(
     <script id="site-i18n" type="application/json">{i18n_payload}</script>
     <script src="{site_href(site, '/assets/blog.js')}" defer></script>
     <script src="{site_href(site, '/assets/graphview.js')}" defer></script>
+    <script src="{site_href(site, '/assets/btree-view.js')}" defer></script>
     {scripts_html}
   </body>
 </html>

@@ -308,6 +308,19 @@
     ]
   },
   {
+    "title": "Bem-vindo ao meu novo blog",
+    "url": "/publications/20260312-090000-primeiro-post/",
+    "kind": "post",
+    "summary": "O ponto de partida do Technical Knowledge OS: um notebook de engenharia versionado, focado em arquitetura, sistemas distribuídos e documentação viva.",
+    "keywords": [
+      "pessoal",
+      "anuncio",
+      "projeto",
+      "architecture",
+      "modernization"
+    ]
+  },
+  {
     "title": "SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica",
     "url": "/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/",
     "kind": "post",
@@ -558,17 +571,6 @@
     ]
   },
   {
-    "title": "Bem-vindo ao meu novo blog",
-    "url": "/publications/20260312-090000-primeiro-post/",
-    "kind": "post",
-    "summary": "O ponto de partida de um blog estático simples, versionado por Git e editado localmente.",
-    "keywords": [
-      "pessoal",
-      "anuncio",
-      "architecture"
-    ]
-  },
-  {
     "title": "SOS Location",
     "url": "/projects/sos-location/",
     "kind": "project",
@@ -581,21 +583,6 @@
       "social-good",
       "gis",
       "open-source",
-      "production"
-    ]
-  },
-  {
-    "title": "Ronaldinho Agent",
-    "url": "/projects/ronaldinho-agent/",
-    "kind": "project",
-    "summary": "Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e runtime modular.",
-    "keywords": [
-      "TypeScript",
-      "OpenAI",
-      "tool orchestration",
-      "memory snapshots",
-      "architecture",
-      "experiment",
       "research"
     ]
   },
@@ -611,22 +598,7 @@
       "multi-tenant architecture",
       "production",
       "architecture",
-      "in_progress"
-    ]
-  },
-  {
-    "title": "Gemini CLI",
-    "url": "/projects/gemini-cli/",
-    "kind": "project",
-    "summary": "Agente de IA via CLI para automação de tarefas, geração de código e interação rica no terminal.",
-    "keywords": [
-      "Go",
-      "Gemini API",
-      "CLI Architecture",
-      "ai",
-      "terminal",
-      "automation",
-      "production"
+      "research"
     ]
   },
   {
@@ -640,7 +612,268 @@
       "GIS",
       "event-driven services",
       "production",
-      "production"
+      "research"
+    ]
+  },
+  {
+    "title": "Apollo-11",
+    "url": "/projects/apollo-11/",
+    "kind": "project",
+    "summary": "Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "AutoMapper",
+    "url": "/projects/automapper/",
+    "kind": "project",
+    "summary": "A convention-based object-object mapper in .NET.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "brumadinho_location",
+    "url": "/projects/brumadinho-location/",
+    "kind": "project",
+    "summary": "Conjunto de ferramentas para ajudar no resgate e localização das vítimas atingidas pelo rompimento da barragem que ocorreu recentemente em Brumadinho/MG",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "chess",
+    "url": "/projects/chess/",
+    "kind": "project",
+    "summary": "Repositório chess sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "claw-code",
+    "url": "/projects/claw-code/",
+    "kind": "project",
+    "summary": "Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "DeepSeek-V3",
+    "url": "/projects/deepseek-v3/",
+    "kind": "project",
+    "summary": "Repositório DeepSeek-V3 sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "Financial",
+    "url": "/projects/financial/",
+    "kind": "project",
+    "summary": "Monolito para gestão financeira pessoal.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "gaussian-splatting",
+    "url": "/projects/gaussian-splatting/",
+    "kind": "project",
+    "summary": "Original reference implementation of \"3D Gaussian Splatting for Real-Time Radiance Field Rendering\"",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "gemini-cli",
+    "url": "/projects/gemini-cli/",
+    "kind": "project",
+    "summary": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "Java-Servlet-Pages",
+    "url": "/projects/java-servlet-pages/",
+    "kind": "project",
+    "summary": "Repositório Java-Servlet-Pages sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "Leaflet",
+    "url": "/projects/leaflet/",
+    "kind": "project",
+    "summary": "🍃 JavaScript library for mobile-friendly interactive maps 🇺🇦",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "macos",
+    "url": "/projects/macos/",
+    "kind": "project",
+    "summary": "macOS inside a Docker container.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "MapleBR",
+    "url": "/projects/maplebr/",
+    "kind": "project",
+    "summary": "Repositório MapleBR sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "mermaid",
+    "url": "/projects/mermaid/",
+    "kind": "project",
+    "summary": "Generation of diagrams like flowcharts or sequence diagrams from text in a similar manner as markdown",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "mermaid-live-editor",
+    "url": "/projects/mermaid-live-editor/",
+    "kind": "project",
+    "summary": "Edit, preview and share mermaid charts/diagrams. New implementation of the live editor.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "nhmatsumoto.exception.middleware",
+    "url": "/projects/nhmatsumoto-exception-middleware/",
+    "kind": "project",
+    "summary": "GlobalExceptionMiddleware for .net core",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "nhmatsumoto.github.io",
+    "url": "/projects/nhmatsumoto-github-io/",
+    "kind": "project",
+    "summary": "Repositório nhmatsumoto.github.io sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "Playground-FE",
+    "url": "/projects/playground-fe/",
+    "kind": "project",
+    "summary": "Projeto frontend criado com React e TypeScript, com integração básica ao Keycloak já configurada, incluindo funcionalidades de login e logout. A aplicação está preparada para autenticação de usuários por meio do Keycloak, servindo como base para futuros desenvolvimentos com controle de acesso.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "prog_lib",
+    "url": "/projects/prog-lib/",
+    "kind": "project",
+    "summary": "Repositório prog_lib sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "QuickReaderv1",
+    "url": "/projects/quickreaderv1/",
+    "kind": "project",
+    "summary": "Repositório QuickReaderv1 sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "react-data-grid",
+    "url": "/projects/react-data-grid/",
+    "kind": "project",
+    "summary": "Feature-rich and customizable data grid React component",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "ResponseMiddleware",
+    "url": "/projects/responsemiddleware/",
+    "kind": "project",
+    "summary": "Repositório ResponseMiddleware sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "ronaldinho-agent",
+    "url": "/projects/ronaldinho-agent/",
+    "kind": "project",
+    "summary": "Daqui pra frente é só pra trás.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "Security.Jwt",
+    "url": "/projects/security-jwt/",
+    "kind": "project",
+    "summary": "Jwt Manager. Set of components to deal with Jwt Stuff. Automate your key rotating, add support for jwks_uri. Store your cryptography keys in a secure place.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "sos",
+    "url": "/projects/sos/",
+    "kind": "project",
+    "summary": "Repositório sos sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "SplitCost-Backend",
+    "url": "/projects/splitcost-backend/",
+    "kind": "project",
+    "summary": "Repositório SplitCost-Backend sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "SplitCosts-FE",
+    "url": "/projects/splitcosts-fe/",
+    "kind": "project",
+    "summary": "Repositório SplitCosts-FE sincronizado via GitHub.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "system-prompts-and-models-of-ai-tools",
+    "url": "/projects/system-prompts-and-models-of-ai-tools/",
+    "kind": "project",
+    "summary": "FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser, Trae AI & Cluely (And other Open Sourced) System Prompts, Tools & AI Models.",
+    "keywords": [
+      "research"
+    ]
+  },
+  {
+    "title": "User-Auth",
+    "url": "/projects/user-auth/",
+    "kind": "project",
+    "summary": "Repositório User-Auth sincronizado via GitHub.",
+    "keywords": [
+      "research"
     ]
   },
   {

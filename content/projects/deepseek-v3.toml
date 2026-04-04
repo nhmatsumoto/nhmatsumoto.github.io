@@ -1,0 +1,21 @@
+name = "DeepSeek-V3"
+slug = "deepseek-v3"
+headline = "Repositório DeepSeek-V3 sincronizado via GitHub."
+summary = "Repositório DeepSeek-V3 sincronizado via GitHub."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/DeepSeek-V3"
+code_url = "https://github.com/nhmatsumoto/DeepSeek-V3"
+published_at = "2025-01-27T20:19:13Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Repositório DeepSeek-V3 sincronizado via GitHub.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

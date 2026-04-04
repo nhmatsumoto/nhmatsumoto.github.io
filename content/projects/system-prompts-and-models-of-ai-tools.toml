@@ -1,0 +1,21 @@
+name = "system-prompts-and-models-of-ai-tools"
+slug = "system-prompts-and-models-of-ai-tools"
+headline = "FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser, Trae AI & Cluely (And other Open Sourced) System Prompts, Tools & AI Models."
+summary = "FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser, Trae AI & Cluely (And other Open Sourced) System Prompts, Tools & AI Models."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/system-prompts-and-models-of-ai-tools"
+code_url = "https://github.com/nhmatsumoto/system-prompts-and-models-of-ai-tools"
+published_at = "2026-02-24T12:44:20Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser, Trae AI & Cluely (And other Open Sourced) System Prompts, Tools & AI Models.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

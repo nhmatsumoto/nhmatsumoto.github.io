@@ -12,6 +12,7 @@ code_url = ""
 featured = true
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 O Projeto Manhattan não foi apenas a criação de uma arma; foi o nascimento do **Big Science** — projetos de pesquisa massivos, ultra-financiados e multidisciplinares.
 

@@ -1,0 +1,21 @@
+name = "macos"
+slug = "macos"
+headline = "macOS inside a Docker container."
+summary = "macOS inside a Docker container."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/macos"
+code_url = "https://github.com/nhmatsumoto/macos"
+published_at = "2025-07-05T10:29:41Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+macOS inside a Docker container.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

@@ -12,6 +12,7 @@ code_url = ""
 featured = false
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 Sistemas síncronos (HTTP/REST) são simples, mas frágeis. Se o serviço B cai, o serviço A também falha. As **Filas de Mensageria** resolvem isso ao introduzir um intermediário (Message Broker) que garante que o trabalho será feito, mesmo que não seja agora.
 

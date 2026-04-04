@@ -12,6 +12,7 @@ code_url = ""
 featured = false
 has_asciimath = true
 
+view_engine = "binary-tree"
 body = """
 Esqueça tudo o que você sabe sobre como o mundo funciona. Na escala subatômica, um objeto não está em apenas um lugar, mas em muitos ao mesmo tempo. Bem-vindo à **Mecânica Quântica**.
 

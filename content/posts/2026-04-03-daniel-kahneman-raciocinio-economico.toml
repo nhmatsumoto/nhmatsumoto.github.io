@@ -12,6 +12,7 @@ code_url = ""
 featured = true
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 Daniel Kahneman, junto com Amos Tversky, desafiou o dogma do *Homo Economicus*. Sua obra prova que nossa mente é mestre em tomar atalhos, muitas vezes ao custo da lógica pura.
 

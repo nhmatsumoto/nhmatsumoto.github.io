@@ -1,0 +1,21 @@
+name = "QuickReaderv1"
+slug = "quickreaderv1"
+headline = "Repositório QuickReaderv1 sincronizado via GitHub."
+summary = "Repositório QuickReaderv1 sincronizado via GitHub."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/QuickReaderv1"
+code_url = "https://github.com/nhmatsumoto/QuickReaderv1"
+published_at = "2025-01-20T17:47:50Z"
+tags = ["TypeScript"]
+view_engine = "binary-tree"
+
+overview = """
+Repositório QuickReaderv1 sincronizado via GitHub.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

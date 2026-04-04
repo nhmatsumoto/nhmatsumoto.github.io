@@ -1,40 +1,21 @@
+name = "ronaldinho-agent"
 slug = "ronaldinho-agent"
-name = "Ronaldinho Agent"
-headline = "Agent orchestration playground for durable workflows, tool execution and evolving governance."
-summary = "Projeto central de pesquisa sobre agentes autônomos, execução de ferramentas, memória versionada e runtime modular."
-status = "research"
-stack = ["TypeScript", "OpenAI", "tool orchestration", "memory snapshots"]
-badges = ["architecture", "experiment"]
+headline = "Daqui pra frente é só pra trás. "
+summary = "Daqui pra frente é só pra trás. "
+status = "published"
+featured = false
+order = 999
 repo_url = "https://github.com/nhmatsumoto/ronaldinho-agent"
 code_url = "https://github.com/nhmatsumoto/ronaldinho-agent"
-docs_url = "/documents/ronaldinho-architecture-overview/"
-architecture_url = "/documents/adr-versioned-memory/"
-featured = true
-order = 1
-diagram_preview = """
-runtime -> planner -> tools
-   |         |         |
-memory <--- state ---> logs
-"""
+published_at = "2026-02-12T06:00:18Z"
+tags = ["Python"]
+view_engine = "binary-tree"
+
 overview = """
-Ronaldinho Agent é o espaço onde eu testo como um sistema com agentes deve se comportar quando precisa ser útil de verdade: com rastreabilidade, isolamento de contexto, memória e ferramentas claramente modeladas.
+Daqui pra frente é só pra trás. 
+
+Este projeto foi sincronizado automaticamente do GitHub.
 """
-problem_solution = """
-O problema central é evitar que um agente vire apenas uma sequência opaca de prompts. A solução adotada é tratar o runtime como um sistema modular: o domínio descreve capacidades e limites; a aplicação coordena execução; a infraestrutura conecta modelos, tools e persistência.
-"""
-architecture = """
-O projeto caminha para uma arquitetura com runtime modular, memória versionada e pipelines de tool execution. A decisão mais importante é separar estratégia cognitiva, estado e I/O externo, em vez de concentrar tudo dentro de uma única etapa de inferência.
-"""
-stack_notes = """
-O stack atual privilegia iteração rápida no runtime e documentação clara das decisões. O objetivo não é acoplar o projeto a um provider específico, mas tornar o sistema observável e intercambiável.
-"""
-adr = [
-  "Memória versionada para snapshots de contexto e reexecução controlada.",
-  "Separação entre coordenação, capabilities e adaptadores de infraestrutura.",
-  "Execução de tools como pipeline explícito, e não detalhe incidental do prompt.",
-]
-roadmap = [
-  "Adicionar evaluation harness orientado a cenários e tools.",
-  "Formalizar boundaries entre planner, executor e memory manager.",
-  "Conectar a documentação do runtime ao fluxo de publicação do blog.",
-]
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

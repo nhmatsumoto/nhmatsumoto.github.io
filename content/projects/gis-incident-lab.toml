@@ -2,7 +2,7 @@ slug = "gis-incident-lab"
 name = "GIS Incident Lab"
 headline = "Operational mapping for incident response, risk analysis and spatial pipelines."
 summary = "Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta."
-status = "production"
+status = "published"
 stack = ["Python", ".NET", "GIS", "event-driven services"]
 badges = ["production"]
 repo_url = ""
@@ -16,6 +16,7 @@ ingest -> normalize -> geocode
    |         |          |
 events -> risk map -> ops view
 """
+view_engine = "binary-tree"
 overview = """
 Este laboratório consolida uma linha de trabalho com GIS orientada a operação. O foco não é só mapa: é como transformar dado espacial em leitura acionável.
 """

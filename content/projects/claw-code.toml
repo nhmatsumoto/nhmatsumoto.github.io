@@ -1,0 +1,21 @@
+name = "claw-code"
+slug = "claw-code"
+headline = "Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust."
+summary = "Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/claw-code"
+code_url = "https://github.com/nhmatsumoto/claw-code"
+published_at = "2026-03-31T19:21:01Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

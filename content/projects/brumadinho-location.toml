@@ -1,0 +1,21 @@
+name = "brumadinho_location"
+slug = "brumadinho-location"
+headline = "Conjunto de ferramentas para ajudar no resgate e localização das vítimas atingidas pelo rompimento da barragem que ocorreu recentemente em Brumadinho/MG"
+summary = "Conjunto de ferramentas para ajudar no resgate e localização das vítimas atingidas pelo rompimento da barragem que ocorreu recentemente em Brumadinho/MG"
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/brumadinho_location"
+code_url = "https://github.com/nhmatsumoto/brumadinho_location"
+published_at = "2026-03-04T03:55:07Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Conjunto de ferramentas para ajudar no resgate e localização das vítimas atingidas pelo rompimento da barragem que ocorreu recentemente em Brumadinho/MG
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

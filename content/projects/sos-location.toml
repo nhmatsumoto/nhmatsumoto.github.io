@@ -2,7 +2,7 @@ slug = "sos-location"
 name = "SOS Location"
 headline = "Open-source platform for monitoring, mapping, and coordinating natural disaster response."
 summary = "Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real."
-status = "production"
+status = "published"
 stack = ["TypeScript", "Node.js", "GIS", "Event-Driven"]
 badges = ["social-good", "gis", "open-source"]
 repo_url = "https://github.com/nhmatsumoto/sos_location"
@@ -15,6 +15,7 @@ ingest -> normalize -> geocode
    |         |          |
 events -> risk map -> ops view
 """
+view_engine = "binary-tree"
 overview = """
 SOS Location é uma iniciativa de resposta humanitária focada no uso de tecnologia geoespacial para acelerar a tomada de decisão em cenários de crise. O projeto organiza camadas de dados complexas em uma interface operacional simples.
 """

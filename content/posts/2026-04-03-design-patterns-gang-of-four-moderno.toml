@@ -12,6 +12,7 @@ code_url = ""
 featured = true
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 Os **Design Patterns** (GoF) foram escritos em uma era de C++ e Smalltalk primitivos. Com a evolução das linguagens modernas, muitos desses padrões tornaram-se nativos da plataforma.
 

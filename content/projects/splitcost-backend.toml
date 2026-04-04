@@ -1,0 +1,21 @@
+name = "SplitCost-Backend"
+slug = "splitcost-backend"
+headline = "Repositório SplitCost-Backend sincronizado via GitHub."
+summary = "Repositório SplitCost-Backend sincronizado via GitHub."
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/SplitCost-Backend"
+code_url = "https://github.com/nhmatsumoto/SplitCost-Backend"
+published_at = "2025-05-11T07:24:11Z"
+tags = ["C#"]
+view_engine = "binary-tree"
+
+overview = """
+Repositório SplitCost-Backend sincronizado via GitHub.
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

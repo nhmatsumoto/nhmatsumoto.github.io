@@ -12,6 +12,7 @@ code_url = ""
 featured = true
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 O .NET moderno não é mais o framework lento de 15 anos atrás. Com o .NET 8 e 9, a Microsoft entregou uma plataforma que rivaliza com C++ e Rust em muitos cenários de latência.
 

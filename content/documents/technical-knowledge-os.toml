@@ -1,3 +1,4 @@
+status = "published"
 slug = "technical-knowledge-os"
 title = "Technical Knowledge OS"
 summary = "A definição operacional do blog como sistema vivo de documentação técnica."
@@ -7,3 +8,4 @@ tags = ["domain", "knowledge"]
 agent_generated_tag = false
 order = 1
 source_path = "docs/domain/technical_knowledge_os.md"
+view_engine = "binary-tree"

@@ -2,7 +2,7 @@ slug = "splitcosts"
 name = "SplitCosts"
 headline = "Expense sharing focused on clarity, tenancy boundaries and operational simplicity."
 summary = "Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional."
-status = "in_progress"
+status = "published"
 stack = [".NET", "React", "PostgreSQL", "multi-tenant architecture"]
 badges = ["production", "architecture"]
 repo_url = ""
@@ -16,6 +16,7 @@ api -> domain -> projections
  |       |          |
 ui <-- tenancy --> db
 """
+view_engine = "binary-tree"
 overview = """
 SplitCosts nasceu para resolver um problema simples sem cair em uma solução rasa: compartilhar despesas com contexto, histórico e separação clara entre grupos e usuários.
 """

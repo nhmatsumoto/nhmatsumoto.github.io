@@ -12,6 +12,7 @@ code_url = ""
 featured = true
 has_asciimath = false
 
+view_engine = "binary-tree"
 body = """
 No ecossistema .NET, a escolha entre **Entity Framework Core (EF Core)** e **Dapper** é frequentemente reduzida a "facilidade vs velocidade", mas a realidade arquitetural é mais profunda.
 

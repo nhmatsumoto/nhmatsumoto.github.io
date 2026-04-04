@@ -1,0 +1,21 @@
+name = "AutoMapper"
+slug = "automapper"
+headline = "A convention-based object-object mapper in .NET. "
+summary = "A convention-based object-object mapper in .NET. "
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/AutoMapper"
+code_url = "https://github.com/nhmatsumoto/AutoMapper"
+published_at = "2025-04-03T11:57:29Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+A convention-based object-object mapper in .NET. 
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."

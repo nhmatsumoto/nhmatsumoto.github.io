@@ -1,0 +1,21 @@
+name = "mermaid"
+slug = "mermaid"
+headline = "Generation of diagrams like flowcharts or sequence diagrams from text in a similar manner as markdown"
+summary = "Generation of diagrams like flowcharts or sequence diagrams from text in a similar manner as markdown"
+status = "published"
+featured = false
+order = 999
+repo_url = "https://github.com/nhmatsumoto/mermaid"
+code_url = "https://github.com/nhmatsumoto/mermaid"
+published_at = "2024-01-13T07:11:22Z"
+tags = ["fork"]
+view_engine = "binary-tree"
+
+overview = """
+Generation of diagrams like flowcharts or sequence diagrams from text in a similar manner as markdown
+
+Este projeto foi sincronizado automaticamente do GitHub.
+"""
+
+problem_solution = "Sincronizado via Technical Knowledge OS build engine."
+architecture = "Repositório público no GitHub."
