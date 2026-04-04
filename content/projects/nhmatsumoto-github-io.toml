@@ -1,21 +1,49 @@
 name = "nhmatsumoto.github.io"
 slug = "nhmatsumoto-github-io"
-headline = "Repositório nhmatsumoto.github.io sincronizado via GitHub."
-summary = "Repositório nhmatsumoto.github.io sincronizado via GitHub."
+headline = "Technical Knowledge OS — blog e portfolio com engine de geração estática e visualização 3D interativa."
+summary = "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, visualização 3D interativa com Three.js, sistema de grafo de conhecimento e deploy via GitHub Pages."
 status = "published"
-featured = false
-order = 999
+featured = true
+order = 1
 repo_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io"
 code_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io"
 published_at = "2026-02-22T03:06:53Z"
 tags = ["HTML"]
+stack = ["Python", "Three.js", "HTML", "CSS", "GitHub Pages"]
 view_engine = "binary-tree"
 
 overview = """
-Repositório nhmatsumoto.github.io sincronizado via GitHub.
+Este é o repositório do Technical Knowledge OS — o site que você está usando agora. Uma plataforma de publicação técnica construída do zero com um engine de geração estática em Python e visualização 3D interativa.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Arquitetura do engine
+
+O engine de geração estática processa conteúdo em TOML, renderiza markdown para HTML e gera um site completo com:
+
+- **Posts** — artigos técnicos com suporte a math (AsciiMath), Mermaid, code blocks e tabelas
+- **Projetos** — portfolio com dados estruturados e visualização interativa
+- **Documentos** — especificações técnicas com versionamento
+- **i18n** — suporte a internacionalização multi-idioma
+- **Busca** — índice JSON para search client-side
+
+## Visualização 3D
+
+A página de projetos utiliza Three.js para renderizar um grafo 3D interativo onde cada nó representa um projeto, post ou documento. O grafo inclui:
+
+- Starfield com 4000 partículas
+- Nós de vidro com efeitos de glow e órbitas
+- Conexões bezier entre nós
+- Painel de detalhes com navegação
+- Reader mode para leitura de conteúdo inline
+
+## Deploy
+
+GitHub Actions executa o build em cada push ao master e deploya o resultado no GitHub Pages automaticamente.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Plataformas de blog existentes são genéricas demais para um portfolio técnico que precisa de visualizações interativas, suporte a fórmulas matemáticas e controle total sobre o design. O Technical Knowledge OS resolve isso com um engine customizado que trata conteúdo como domínio.
+"""
+
+architecture = """
+Engine Python modular: loader (TOML → dict), renderer (dict → HTML), generator (orquestração). Assets estáticos (CSS, JS) são copiados e servidos diretamente. Three.js carregado via importmap para a visualização 3D. GitHub Actions para CI/CD.
+"""

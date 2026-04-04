@@ -1,21 +1,48 @@
 name = "ronaldinho-agent"
 slug = "ronaldinho-agent"
-headline = "Daqui pra frente é só pra trás. "
-summary = "Daqui pra frente é só pra trás. "
+headline = "Agente autônomo em Python com personalidade e capacidade de decisão baseada em contexto."
+summary = "Agente autônomo em Python com personalidade inspirada em Ronaldinho Gaúcho — arquitetura de decisão baseada em contexto, memória e interação conversacional."
 status = "published"
 featured = false
-order = 999
+order = 15
 repo_url = "https://github.com/nhmatsumoto/ronaldinho-agent"
 code_url = "https://github.com/nhmatsumoto/ronaldinho-agent"
 published_at = "2026-02-12T06:00:18Z"
 tags = ["Python"]
+stack = ["Python", "LLM", "AI Agents", "Prompt Engineering"]
 view_engine = "binary-tree"
 
 overview = """
-Daqui pra frente é só pra trás. 
+Agente autônomo em Python com personalidade e capacidade de decisão baseada em contexto. "Daqui pra frente é só pra trás."
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Conceito
+
+O ronaldinho-agent é um experimento de engenharia de agentes que explora como personalidade e tom afetam a interação usuário-agente. A arquitetura combina:
+
+- **System prompt com personalidade** — tom informal, referências culturais, humor
+- **Memória de conversação** — contexto acumulado entre interações
+- **Decisão baseada em contexto** — o agente escolhe ações baseado no histórico e intenção detectada
+- **Tool use** — integração com ferramentas externas para execução de tarefas
+
+## Arquitetura de agente
+
+O loop principal segue o padrão ReAct (Reasoning + Acting):
+
+1. Receber input do usuário
+2. Raciocinar sobre o contexto e intenção
+3. Decidir entre responder diretamente ou usar uma ferramenta
+4. Executar a ação e observar o resultado
+5. Formular a resposta com a personalidade do agente
+
+## Relação com o ecossistema
+
+Este projeto é documentado no **ronaldinho-architecture-overview** e conecta-se ao trabalho de pesquisa em agentes de IA presente nos posts do blog.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Agentes de IA genéricos são eficientes mas impessoais. O ronaldinho-agent explora como a adição de personalidade e tom conversacional afeta a adoção e a experiência do usuário, mantendo a capacidade técnica do agente.
+"""
+
+architecture = """
+Python com loop ReAct: prompt engineering para personalidade, LLM para raciocínio, dispatcher para tools, memória de curto prazo via conversation history. Documentação arquitetural disponível em /documents/ronaldinho-architecture-overview/.
+"""

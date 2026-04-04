@@ -1,7 +1,7 @@
 name = "Playground-FE"
 slug = "playground-fe"
-headline = "Projeto frontend criado com React e TypeScript, com integração básica ao Keycloak já configurada, incluindo funcionalidades de login e logout. A aplicação está preparada para autenticação de usuários por meio do Keycloak, servindo como base para futuros desenvolvimentos com controle de acesso."
-summary = "Projeto frontend criado com React e TypeScript, com integração básica ao Keycloak já configurada, incluindo funcionalidades de login e logout. A aplicação está preparada para autenticação de usuários por meio do Keycloak, servindo como base para futuros desenvolvimentos com controle de acesso."
+headline = "Frontend React/TypeScript com integração Keycloak — base para aplicações com controle de acesso."
+summary = "Projeto frontend em React e TypeScript com integração ao Keycloak para autenticação, servindo como base para futuros desenvolvimentos com controle de acesso."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,36 @@ repo_url = "https://github.com/nhmatsumoto/Playground-FE"
 code_url = "https://github.com/nhmatsumoto/Playground-FE"
 published_at = "2025-06-28T07:49:30Z"
 tags = ["TypeScript"]
+stack = ["React", "TypeScript", "Keycloak", "OAuth2"]
 view_engine = "binary-tree"
 
 overview = """
-Projeto frontend criado com React e TypeScript, com integração básica ao Keycloak já configurada, incluindo funcionalidades de login e logout. A aplicação está preparada para autenticação de usuários por meio do Keycloak, servindo como base para futuros desenvolvimentos com controle de acesso.
+Projeto frontend criado com React e TypeScript, com integração completa ao Keycloak para autenticação e autorização de usuários.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Funcionalidades
+
+- **Login/Logout** via Keycloak com fluxo OAuth2/OIDC
+- **Token management** — refresh automático de access tokens
+- **Protected routes** — rotas que exigem autenticação
+- **Role-based UI** — componentes condicionais baseados em roles do Keycloak
+- **Silent refresh** — renovação de token sem interrupção da sessão
+
+## Stack técnico
+
+- React com hooks e context API para state management
+- TypeScript para type safety em toda a aplicação
+- Keycloak JS adapter para integração com o identity provider
+- Vite como build tool
+
+## Relação com o ecossistema
+
+Este playground serve como base de autenticação para os frontends do **SplitCosts-FE** e outros projetos que precisam de controle de acesso. As decisões de integração com Keycloak testadas aqui são replicadas nos projetos de produção.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Integrar autenticação OAuth2/OIDC corretamente em SPAs tem armadilhas: PKCE, refresh silencioso, CORS, logout distribuído. Este playground isola a complexidade de autenticação para testar padrões antes de aplicá-los em projetos reais.
+"""
+
+architecture = """
+SPA React com Keycloak JS adapter inicializado no bootstrap da aplicação. O adapter gerencia o ciclo de vida dos tokens (access, refresh, id) e expõe um AuthContext para toda a árvore de componentes.
+"""

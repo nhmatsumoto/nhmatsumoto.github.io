@@ -1,7 +1,7 @@
 name = "prog_lib"
 slug = "prog-lib"
-headline = "Repositório prog_lib sincronizado via GitHub."
-summary = "Repositório prog_lib sincronizado via GitHub."
+headline = "Biblioteca de referência com algoritmos e estruturas de dados para estudo e consulta."
+summary = "Coleção de implementações de algoritmos e estruturas de dados clássicos, organizada como biblioteca de referência para estudo e consulta rápida."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,32 @@ repo_url = "https://github.com/nhmatsumoto/prog_lib"
 code_url = "https://github.com/nhmatsumoto/prog_lib"
 published_at = "2026-03-18T07:12:51Z"
 tags = ["fork"]
+stack = ["Algorithms", "Data Structures"]
 view_engine = "binary-tree"
 
 overview = """
-Repositório prog_lib sincronizado via GitHub.
+Biblioteca de referência com implementações de algoritmos e estruturas de dados fundamentais da ciência da computação.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Conteúdo
+
+Coleção organizada por categoria:
+
+- **Ordenação** — quicksort, mergesort, heapsort, radix sort
+- **Busca** — binary search, BFS, DFS, A*
+- **Estruturas** — listas, pilhas, filas, árvores, grafos, hash tables
+- **Grafos** — Dijkstra, Bellman-Ford, topological sort, MST
+- **Programação dinâmica** — knapsack, LCS, edit distance
+- **Strings** — KMP, Rabin-Karp, suffix arrays
+
+## Propósito
+
+Servir como material de consulta rápida e estudo, com implementações limpas e comentadas que priorizam clareza sobre otimização.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Algoritmos e estruturas de dados são fundamentos que precisam ser revisitados periodicamente. Ter uma biblioteca pessoal de implementações facilita a consulta rápida e reforça o entendimento dos conceitos.
+"""
+
+architecture = """
+Organizada por categoria, cada implementação é auto-contida com documentação inline explicando complexidade temporal e espacial, invariantes e edge cases.
+"""
