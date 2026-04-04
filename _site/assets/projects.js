@@ -51,9 +51,9 @@ class ProjectMap3D {
     this.controls.autoRotate = true
     this.controls.autoRotateSpeed = 0.5
     this.controls.enablePan = false
-    this.controls.minDistance = 100
-    this.controls.maxDistance = 2500
-    this.controls.zoomSpeed = 1.2
+    this.controls.minDistance = 300
+    this.controls.maxDistance = 2000
+    this.controls.zoomSpeed = 0.4
 
     // Lights
     this.scene.add(new THREE.AmbientLight(0xffffff, 0.7))

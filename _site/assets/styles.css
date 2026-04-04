@@ -223,6 +223,7 @@ button, input, select {
   padding-top: 0;
   max-width: none;
   width: 100%;
+  gap: 0;
 }
 
 .nav-shell {
