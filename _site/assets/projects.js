@@ -2,18 +2,34 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 /**
- * Technical Knowledge OS — 3D Project Flow (V2.5 — Full Depth & Neon Orbits)
+ * Technical Knowledge OS — 3D Project Flow (V3 — Focus & Interactive Panel)
  * Powered by Three.js + WebGL.
  */
 
 const KIND_COLOR = {
-  post:     0x00C2FF, // Vibrant Blue
-  project:  0x7C5CFF, // Deep Purple
-  document: 0x10B981, // Emerald Green
-  central:  0xFF3E00, // Hiro Red/Orange
+  post:     0x00C2FF,
+  project:  0x7C5CFF,
+  document: 0x10B981,
+  central:  0xFF3E00,
+}
+
+const KIND_HEX = {
+  post:     '#00C2FF',
+  project:  '#7C5CFF',
+  document: '#10B981',
+  central:  '#FF3E00',
 }
 
 const MODE = { EXPLORE: 'explore', READ: 'read' }
+
+// Simple lerp for smooth camera transitions
+function lerpVec3(from, to, t) {
+  return new THREE.Vector3(
+    from.x + (to.x - from.x) * t,
+    from.y + (to.y - from.y) * t,
+    from.z + (to.z - from.z) * t
+  )
+}
 
 class ProjectMap3D {
   constructor(container, data) {
@@ -23,7 +39,10 @@ class ProjectMap3D {
     this.connections = []
     this.mode = MODE.EXPLORE
     this.selected = null
-    
+    this.cameraTarget = null
+    this.cameraGoal = null
+    this.transitioning = false
+
     this.initScene()
     this.createNodes()
     this.createConnections()
@@ -33,10 +52,10 @@ class ProjectMap3D {
 
   initScene() {
     this.scene = new THREE.Scene()
-    
+
     const w = this.container.clientWidth
     const h = this.container.clientHeight
-    
+
     this.camera = new THREE.PerspectiveCamera(60, w / h, 5, 5000)
     this.camera.position.set(0, 300, 900)
 
@@ -55,7 +74,6 @@ class ProjectMap3D {
     this.controls.maxDistance = 2000
     this.controls.zoomSpeed = 0.4
 
-    // Lights
     this.scene.add(new THREE.AmbientLight(0xffffff, 0.7))
     const p1 = new THREE.PointLight(0x00C2FF, 2.5, 1200)
     p1.position.set(300, 300, 300)
@@ -63,117 +81,71 @@ class ProjectMap3D {
 
     this.raycaster = new THREE.Raycaster()
     this.mouse = new THREE.Vector2()
-    
-    this.createBackBtn()
   }
 
-  createBackBtn() {
-    this.backBtn = document.createElement('button')
-    this.backBtn.className = 'nav-button'
-    this.backBtn.style.cssText = 'position:absolute;top:24px;right:24px;z-index:100;display:none;align-items:center;gap:8px;background:rgba(10,15,25,0.8);border:1px solid var(--accent);color:var(--accent);padding:12px 24px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer;transition:all 0.2s;backdrop-filter:blur(10px);box-shadow:0 12px 40px rgba(0,0,0,0.5);letter-spacing:0.1em;'
-    this.backBtn.innerHTML = '<i data-lucide="arrow-left" style="width:14px;height:14px"></i> Back to Map'
-    this.container.appendChild(this.backBtn)
-    this.backBtn.onclick = () => this.transitionToExplorer()
-    if (window.lucide) window.lucide.createIcons()
+  // ── Smooth camera focus on a node ──────────────────────────────────────
+  focusOnNode(nodeGroup) {
+    const nodePos = nodeGroup.position.clone()
+    const dir = this.camera.position.clone().sub(this.controls.target).normalize()
+    this.cameraGoal = nodePos.clone().add(dir.multiplyScalar(420))
+    this.cameraTarget = nodePos.clone()
+    this.transitioning = true
   }
 
-  transitionToReader(project) {
-    this.mode = MODE.READ
-    this.backBtn.style.display = 'flex'
-    this.controls.autoRotate = false
-    
-    // Hide explore nodes with fade if possible
-    this.nodes.forEach(n => { n.visible = false })
-    this.connections.forEach(c => { c.visible = false })
-    
-    this.treeGroup = new THREE.Group()
-    this.scene.add(this.treeGroup)
-    
-    const sections = project.sections || []
-    const nodeMap = {}
-    
-    sections.forEach(s => {
-      const card = this.createSectionCard(s)
-      nodeMap[s.id] = card
-      this.treeGroup.add(card)
-    })
+  resetCameraFocus() {
+    this.cameraGoal = new THREE.Vector3(0, 200, 800)
+    this.cameraTarget = new THREE.Vector3(0, 0, 0)
+    this.transitioning = true
+  }
 
-    const NODE_GAP_X = 450, NODE_GAP_Y = -350
-    const layoutNode = (id, x, y, z) => {
-      const node = nodeMap[id]
-      if (!node) return
-      node.position.set(x, y, z)
-      
-      const children = node.userData.section.children || []
-      children.forEach((cid, i) => {
-        const startX = x - ((children.length - 1) * NODE_GAP_X) / 2
-        layoutNode(cid, startX + i * NODE_GAP_X, y + NODE_GAP_Y, z)
-        this.createTreeLink(node.position, nodeMap[cid].position)
+  updateCameraTransition() {
+    if (!this.transitioning) return
+    const speed = 0.045
+
+    this.camera.position.lerp(this.cameraGoal, speed)
+    this.controls.target.lerp(this.cameraTarget, speed)
+
+    if (this.camera.position.distanceTo(this.cameraGoal) < 1) {
+      this.transitioning = false
+    }
+  }
+
+  // ── Node visibility: dim non-selected ──────────────────────────────────
+  highlightNode(selectedGroup) {
+    this.nodes.forEach(n => {
+      const isSelected = n === selectedGroup
+      n.traverse(child => {
+        if (child.material) {
+          if (child.material.opacity !== undefined) {
+            child.material._savedOpacity = child.material._savedOpacity ?? child.material.opacity
+            child.material.opacity = isSelected ? child.material._savedOpacity : child.material._savedOpacity * 0.2
+          }
+        }
       })
-    }
-
-    if (sections.length > 0) layoutNode(sections[0].id, 0, 400, 0)
-    
-    this.camera.position.set(0, 0, 1100)
-    this.controls.target.set(0, 0, 0)
-    this.controls.enablePan = true
-    this.controls.update()
+    })
+    this.connections.forEach(c => {
+      c.material._savedOpacity = c.material._savedOpacity ?? c.material.opacity
+      c.material.opacity = c.material._savedOpacity * 0.1
+    })
   }
 
-  createSectionCard(section) {
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-    canvas.width = 512; canvas.height = 300
-    
-    ctx.fillStyle = 'rgba(10, 15, 25, 0.98)'
-    ctx.fillRect(0, 0, 512, 300)
-    ctx.strokeStyle = KIND_COLOR[this.selected.userData.item.kind] || '#00C2FF'
-    ctx.lineWidth = 8
-    ctx.strokeRect(0, 0, 512, 300)
-    
-    ctx.fillStyle = '#ffffff'
-    ctx.font = 'bold 36px "Inter"'
-    ctx.fillText(section.title, 40, 70)
-    
-    ctx.font = '22px "Inter"'
-    ctx.fillStyle = 'rgba(255,255,255,0.7)'
-    const wordList = section.content.split(' ')
-    let currentLine = '', y = 130
-    for (const w of wordList) {
-        if (ctx.measureText(currentLine + w).width > 420) { ctx.fillText(currentLine, 40, y); currentLine = w + ' '; y += 34 }
-        else currentLine += w + ' '
-    }
-    ctx.fillText(currentLine, 40, y)
-
-    const tex = new THREE.CanvasTexture(canvas)
-    const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide })
-    const plane = new THREE.Mesh(new THREE.PlaneGeometry(360, 210), mat)
-    plane.userData = { section }
-    return plane
+  restoreNodeVisibility() {
+    this.nodes.forEach(n => {
+      n.traverse(child => {
+        if (child.material && child.material._savedOpacity !== undefined) {
+          child.material.opacity = child.material._savedOpacity
+        }
+      })
+    })
+    this.connections.forEach(c => {
+      if (c.material._savedOpacity !== undefined) {
+        c.material.opacity = c.material._savedOpacity
+      }
+    })
   }
 
-  createTreeLink(p1, p2) {
-    const geo = new THREE.BufferGeometry().setFromPoints([p1, p2])
-    const mat = new THREE.LineBasicMaterial({ color: 0x00C2FF, transparent: true, opacity: 0.3 })
-    const line = new THREE.Line(geo, mat)
-    this.treeGroup.add(line)
-  }
-
-  transitionToExplorer() {
-    this.mode = MODE.EXPLORE
-    this.backBtn.style.display = 'none'
-    this.controls.autoRotate = true
-    this.controls.enablePan = false
-    if (this.treeGroup) { this.scene.remove(this.treeGroup); this.treeGroup = null }
-    this.nodes.forEach(n => n.visible = true)
-    this.connections.forEach(c => c.visible = true)
-    this.camera.position.set(0, 200, 800)
-    this.controls.target.set(0, 0, 0)
-    this.deselectNode()
-  }
-
+  // ── Nodes ──────────────────────────────────────────────────────────────
   createNodes() {
-    // Hiro — The Core
     this.addNode({ kind: 'central', name: 'Hiro', headline: 'Central Intelligence System' }, new THREE.Vector3(0, 0, 0), true)
 
     const items = this.data
@@ -182,16 +154,16 @@ class ProjectMap3D {
     const GoldenAngle = Math.PI * (3 - Math.sqrt(5))
 
     for (let i = 0; i < count; i++) {
-        const y = 1 - (i / (count - 1)) * 2
-        const rAcross = Math.sqrt(1 - y * y)
-        const theta = GoldenAngle * i
-        
-        const pos = new THREE.Vector3(
-          Math.cos(theta) * rAcross * sphereRadius,
-          y * sphereRadius,
-          Math.sin(theta) * rAcross * sphereRadius
-        )
-        this.addNode(items[i], pos)
+      const y = 1 - (i / (count - 1)) * 2
+      const rAcross = Math.sqrt(1 - y * y)
+      const theta = GoldenAngle * i
+
+      const pos = new THREE.Vector3(
+        Math.cos(theta) * rAcross * sphereRadius,
+        y * sphereRadius,
+        Math.sin(theta) * rAcross * sphereRadius
+      )
+      this.addNode(items[i], pos)
     }
   }
 
@@ -201,7 +173,6 @@ class ProjectMap3D {
     nodeGroup.position.copy(position)
     nodeGroup.userData = { item, isCentral, rings: [] }
 
-    // Core Luminous Sphere
     const sphereGeo = new THREE.SphereGeometry(isCentral ? 14 : 9, 32, 32)
     const sphereMat = new THREE.MeshPhysicalMaterial({
       color: colorCode,
@@ -214,27 +185,22 @@ class ProjectMap3D {
       transparent: true,
       opacity: 0.95
     })
-    const core = new THREE.Mesh(sphereGeo, sphereMat)
-    nodeGroup.add(core)
+    nodeGroup.add(new THREE.Mesh(sphereGeo, sphereMat))
 
-    // Neon Orbits (Rings)
     const ringCount = isCentral ? 3 : 2
     for (let r = 0; r < ringCount; r++) {
       const radius = (isCentral ? 22 : 15) + r * 6
       const ringGeo = new THREE.RingGeometry(radius, radius + 0.8, 64)
-      const ringMat = new THREE.MeshBasicMaterial({ 
-        color: colorCode, 
-        side: THREE.DoubleSide, 
-        transparent: true, 
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: colorCode,
+        side: THREE.DoubleSide,
+        transparent: true,
         opacity: 0.4 - r * 0.1,
         blending: THREE.AdditiveBlending
       })
       const ring = new THREE.Mesh(ringGeo, ringMat)
-      
-      // Random initial rotation
       ring.rotation.x = Math.random() * Math.PI
       ring.rotation.y = Math.random() * Math.PI
-      
       nodeGroup.add(ring)
       nodeGroup.userData.rings.push({
         mesh: ring,
@@ -243,63 +209,61 @@ class ProjectMap3D {
       })
     }
 
-    // Interactive Sprite Label
     if (!isCentral) {
-       const labelCanvas = document.createElement('canvas')
-       const lctx = labelCanvas.getContext('2d')
-       labelCanvas.width = 512; labelCanvas.height = 128
-       lctx.font = 'bold 32px "JetBrains Mono"'
-       lctx.fillStyle = '#ffffff'
-       lctx.textAlign = 'center'
-       lctx.shadowBlur = 10
-       lctx.shadowColor = 'rgba(0,194,255,0.5)'
-       lctx.fillText((item.name || item.title).toUpperCase(), 256, 64)
-       
-       const labelTex = new THREE.CanvasTexture(labelCanvas)
-       const labelMat = new THREE.SpriteMaterial({ map: labelTex, transparent: true, opacity: 0.7 })
-       const sprite = new THREE.Sprite(labelMat)
-       sprite.position.y = isCentral ? 35 : 28
-       sprite.scale.set(160, 40, 1)
-       nodeGroup.add(sprite)
+      const labelCanvas = document.createElement('canvas')
+      const lctx = labelCanvas.getContext('2d')
+      labelCanvas.width = 512; labelCanvas.height = 128
+      lctx.font = 'bold 32px "JetBrains Mono"'
+      lctx.fillStyle = '#ffffff'
+      lctx.textAlign = 'center'
+      lctx.shadowBlur = 10
+      lctx.shadowColor = 'rgba(0,194,255,0.5)'
+      lctx.fillText((item.name || item.title).toUpperCase(), 256, 64)
+
+      const labelTex = new THREE.CanvasTexture(labelCanvas)
+      const labelMat = new THREE.SpriteMaterial({ map: labelTex, transparent: true, opacity: 0.7 })
+      const sprite = new THREE.Sprite(labelMat)
+      sprite.position.y = 28
+      sprite.scale.set(160, 40, 1)
+      nodeGroup.add(sprite)
     }
 
     this.scene.add(nodeGroup)
     this.nodes.push(nodeGroup)
   }
 
+  // ── Connections ────────────────────────────────────────────────────────
   createConnections() {
     const centralPos = this.nodes[0].position
-    
+
     this.nodes.slice(1).forEach(node => {
       const targetPos = node.position
       const colorCode = KIND_COLOR[node.userData.item.kind] || 0x00C2FF
-      
-      // Main Connection Line
+
       const lineGeo = new THREE.BufferGeometry().setFromPoints([centralPos, targetPos])
-      const lineMat = new THREE.LineBasicMaterial({ 
-        color: colorCode, 
-        transparent: true, 
+      const lineMat = new THREE.LineBasicMaterial({
+        color: colorCode,
+        transparent: true,
         opacity: 0.15,
         blending: THREE.AdditiveBlending
       })
       const line = new THREE.Line(lineGeo, lineMat)
       this.scene.add(line)
       this.connections.push(line)
-      
-      // Secondary Luminous Path (Faint Glow)
-      const glowMat = new THREE.LineBasicMaterial({ 
-        color: colorCode, 
-        transparent: true, 
+
+      const glowMat = new THREE.LineBasicMaterial({
+        color: colorCode,
+        transparent: true,
         opacity: 0.05,
         linewidth: 2,
         blending: THREE.AdditiveBlending
       })
-      const glowLine = new THREE.Line(lineGeo, glowMat)
-      this.scene.add(glowLine)
-      this.connections.push(glowLine)
+      this.scene.add(new THREE.Line(lineGeo, glowMat))
+      this.connections.push(new THREE.Line(lineGeo, glowMat))
     })
   }
 
+  // ── Events ─────────────────────────────────────────────────────────────
   addEventHandlers() {
     window.addEventListener('resize', () => this.onResize())
     this.renderer.domElement.addEventListener('mousemove', (e) => this.onMouseMove(e))
@@ -318,20 +282,17 @@ class ProjectMap3D {
     const r = this.renderer.domElement.getBoundingClientRect()
     this.mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1
     this.mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1
-    
+
     this.raycaster.setFromCamera(this.mouse, this.camera)
     const hits = this.raycaster.intersectObjects(this.nodes, true)
-    
-    this.nodes.forEach(n => {
-      n.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1)
-    })
+
+    this.nodes.forEach(n => n.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1))
 
     if (hits.length > 0) {
-      let targetGroup = hits[0].object
-      while (targetGroup.parent && !targetGroup.userData.item) targetGroup = targetGroup.parent
-      
-      if (targetGroup.userData.item) {
-        targetGroup.scale.lerp(new THREE.Vector3(1.3, 1.3, 1.3), 0.2)
+      let tg = hits[0].object
+      while (tg.parent && !tg.userData.item) tg = tg.parent
+      if (tg.userData.item) {
+        tg.scale.lerp(new THREE.Vector3(1.3, 1.3, 1.3), 0.2)
         document.body.style.cursor = 'pointer'
       }
     } else {
@@ -343,38 +304,41 @@ class ProjectMap3D {
     this.raycaster.setFromCamera(this.mouse, this.camera)
     const hits = this.raycaster.intersectObjects(this.nodes, true)
     if (hits.length > 0) {
-      let targetGroup = hits[0].object
-      while (targetGroup.parent && !targetGroup.userData.item) targetGroup = targetGroup.parent
-      if (targetGroup.userData.item) this.handleNodeClick(targetGroup)
-    } else {
-      this.deselectNode()
+      let tg = hits[0].object
+      while (tg.parent && !tg.userData.item) tg = tg.parent
+      if (tg.userData.item) { this.handleNodeClick(tg); return }
     }
+    this.deselectNode()
   }
 
   handleNodeClick(node) {
     if (this.selected === node) { this.deselectNode(); return }
+
     this.selected = node
     this.controls.autoRotate = false
-    window.showPanel(node.userData.item)
+    this.focusOnNode(node)
+    this.highlightNode(node)
+    window.showPanel(node.userData.item, this.data)
   }
 
   deselectNode() {
     this.selected = null
     this.controls.autoRotate = true
+    this.restoreNodeVisibility()
+    this.resetCameraFocus()
     window.hidePanel()
   }
 
+  // ── Animate ────────────────────────────────────────────────────────────
   animate() {
     requestAnimationFrame(() => this.animate())
+    this.updateCameraTransition()
     this.controls.update()
-    
+
     const elapsed = performance.now() * 0.001
-    
+
     this.nodes.forEach((group, i) => {
-      // Floating animation
       if (i > 0) group.position.y += Math.sin(elapsed + i) * 0.05
-      
-      // Orbiting rings animation
       if (group.userData.rings) {
         group.userData.rings.forEach(r => {
           r.mesh.rotation.x += r.speedX
@@ -387,6 +351,29 @@ class ProjectMap3D {
   }
 }
 
+// ── Panel controller ───────────────────────────────────────────────────────
+function escapeHtml(s) {
+  const div = document.createElement('div')
+  div.textContent = s
+  return div.innerHTML
+}
+
+function findRelatedItems(item, allData) {
+  if (!item.stack || !item.stack.length) return []
+  const myTags = new Set(item.stack.map(t => t.toLowerCase()))
+  const myId = item.id || ''
+  return allData
+    .filter(d => d.id !== myId)
+    .map(d => {
+      const dTags = new Set((d.stack || []).map(t => t.toLowerCase()))
+      const overlap = [...myTags].filter(t => dTags.has(t)).length
+      return { ...d, overlap }
+    })
+    .filter(d => d.overlap > 0)
+    .sort((a, b) => b.overlap - a.overlap)
+    .slice(0, 5)
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('[data-project-flow]')
   const jsonEl = document.getElementById('projects-data')
@@ -394,28 +381,118 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const projectData = JSON.parse(jsonEl.textContent)
   window.projectMap = new ProjectMap3D(container, projectData)
-  
-  window.showPanel = (p) => {
+
+  window.showPanel = (item, allData) => {
     const pnl = document.querySelector('[data-project-panel]')
     if (!pnl) return
-    pnl.querySelector('[data-panel-name]').textContent = p.name || p.title
-    pnl.querySelector('[data-panel-role]').textContent = p.kind.toUpperCase()
-    pnl.querySelector('[data-panel-headline]').textContent = p.headline || p.summary
-    pnl.querySelector('[data-panel-summary]').textContent = p.summary
-    
+
+    // Header
+    pnl.querySelector('[data-panel-name]').textContent = item.name || item.title
+    pnl.querySelector('[data-panel-role]').textContent = item.kind.toUpperCase()
+    pnl.querySelector('[data-panel-role]').style.color = KIND_HEX[item.kind] || KIND_HEX.post
+
+    // Summary content
+    const headlineEl = pnl.querySelector('[data-panel-headline]')
+    const summaryEl = pnl.querySelector('[data-panel-summary]')
+    headlineEl.textContent = item.headline || item.summary || ''
+    summaryEl.textContent = (item.headline && item.summary !== item.headline) ? item.summary : ''
+
+    // Stack chips
     const stk = pnl.querySelector('[data-panel-stack]')
-    if (stk) stk.innerHTML = (p.stack || []).map(s => `<span class="stack-chip">${s}</span>`).join('')
-    
-    const btn = pnl.querySelector('[data-panel-link]')
-    if (btn) {
-      btn.href = '#'
-      btn.onclick = (ev) => { ev.preventDefault(); window.projectMap.transitionToReader(p) }
+    if (stk) {
+      stk.innerHTML = (item.stack || [])
+        .map(s => `<span class="stack-chip">${escapeHtml(s)}</span>`)
+        .join('')
     }
+
+    // Sections content
+    let sectionsEl = pnl.querySelector('[data-panel-sections]')
+    if (!sectionsEl) {
+      sectionsEl = document.createElement('div')
+      sectionsEl.setAttribute('data-panel-sections', '')
+      sectionsEl.setAttribute('data-reveal', '')
+      sectionsEl.className = 'panel-sections'
+      const actionsEl = pnl.querySelector('.panel-actions')
+      if (actionsEl) pnl.insertBefore(sectionsEl, actionsEl)
+      else pnl.appendChild(sectionsEl)
+    }
+
+    const sections = item.sections || []
+    if (sections.length > 0) {
+      sectionsEl.innerHTML = sections.map(sec => `
+        <details class="panel-section" open>
+          <summary class="panel-section-title">${escapeHtml(sec.title)}</summary>
+          <div class="panel-section-content">${escapeHtml(sec.content).replace(/\n/g, '<br>')}</div>
+        </details>
+      `).join('')
+    } else {
+      sectionsEl.innerHTML = ''
+    }
+
+    // Related items
+    let relatedEl = pnl.querySelector('[data-panel-related]')
+    if (!relatedEl) {
+      relatedEl = document.createElement('div')
+      relatedEl.setAttribute('data-panel-related', '')
+      relatedEl.setAttribute('data-reveal', '')
+      relatedEl.className = 'panel-related'
+      const actionsEl = pnl.querySelector('.panel-actions')
+      if (actionsEl) pnl.insertBefore(relatedEl, actionsEl)
+      else pnl.appendChild(relatedEl)
+    }
+
+    const related = findRelatedItems(item, allData || [])
+    if (related.length > 0) {
+      relatedEl.innerHTML = `
+        <h3 class="panel-related-title">Relacionados</h3>
+        <ul class="panel-related-list">
+          ${related.map(r => `
+            <li class="panel-related-item">
+              <a href="${escapeHtml(r.url || '#')}" class="panel-related-link">
+                <span class="panel-related-kind" style="color:${KIND_HEX[r.kind] || KIND_HEX.post}">${escapeHtml(r.kind)}</span>
+                <span class="panel-related-name">${escapeHtml(r.name || r.title)}</span>
+              </a>
+            </li>
+          `).join('')}
+        </ul>
+      `
+    } else {
+      relatedEl.innerHTML = ''
+    }
+
+    // Main action link
+    const btn = pnl.querySelector('[data-panel-link]')
+    if (btn && item.url) {
+      btn.href = item.url
+      btn.onclick = null
+    }
+
+    // Open panel
     pnl.dataset.open = 'true'
+    pnl.setAttribute('aria-hidden', 'false')
+
+    // Trigger reveal animations
+    requestAnimationFrame(() => {
+      pnl.querySelectorAll('[data-reveal]').forEach((el, i) => {
+        el.classList.remove('reveal-in')
+        setTimeout(() => el.classList.add('reveal-in'), 60 * i)
+      })
+    })
   }
 
   window.hidePanel = () => {
     const pnl = document.querySelector('[data-project-panel]')
-    if (pnl) pnl.dataset.open = 'false'
+    if (!pnl) return
+    pnl.dataset.open = 'false'
+    pnl.setAttribute('aria-hidden', 'true')
+    pnl.querySelectorAll('[data-reveal]').forEach(el => el.classList.remove('reveal-in'))
+  }
+
+  // Close panel button
+  const closeBtn = document.querySelector('[data-panel-close]')
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      if (window.projectMap) window.projectMap.deselectNode()
+    })
   }
 })
