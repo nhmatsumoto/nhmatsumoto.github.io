@@ -41,9 +41,14 @@
     
     <div class="site-shell">
       <main class="site-main" id="content">
-    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><span aria-current="page" data-i18n="nav.projects">projetos</span></li></ol></nav>
     <div class="project-flow-shell">
-      <div class="flow-toolbar"><span class="flow-kicker" data-i18n="nav.projects">projetos</span><span class="flow-hint" data-i18n="pages.projects.flow_hint">Clique em um nó para explorar. Nós conectados compartilham stack.</span></div>
+      <div class="flow-toolbar">
+        <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><span aria-current="page" data-i18n="nav.projects">projetos</span></li></ol></nav>
+        <div class="flow-toolbar-nav">
+          <span class="flow-kicker" data-i18n="nav.projects">projetos</span>
+          <span class="flow-hint" data-i18n="pages.projects.flow_hint">Clique em um nó para explorar. Nós conectados compartilham stack.</span>
+        </div>
+      </div>
       <div class="project-flow-wrapper" data-project-flow></div>
       <aside class="project-detail-panel" data-project-panel data-open="false" aria-hidden="true">
         <div class="panel-header" data-reveal><div class="panel-title-group"><span class="panel-role card-type" data-panel-role></span><h2 class="panel-name" data-panel-name></h2></div><button class="nav-button panel-close" type="button" data-panel-close aria-label="Close"><i data-lucide="x"></i></button></div>

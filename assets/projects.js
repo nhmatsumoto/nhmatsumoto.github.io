@@ -70,6 +70,7 @@
     post:     '#00C2FF', // Vibrant Blue
     project:  '#7C5CFF', // Deep Purple
     document: '#10B981', // Emerald Green
+    central:  '#FF3E00', // Hiro Red/Orange
   }
   class ProjectNode {
     constructor(project, bx, by, idx) {
@@ -86,7 +87,7 @@
       this.idx  = idx
       
       // Node dimensions (Point radius)
-      this.radius = 5
+      this.radius = project.kind === 'central' ? 12 : 8
       
       // Spring state
       this.scale    = 1;   this.scaleV  = 0
@@ -221,8 +222,9 @@
       ctx.globalAlpha = 1
 
       // ── Title Label ─────────────────────────────────────────────
-      const labelAlpha = (this.hover || this.selected) ? 1 : 0.65
-      ctx.font = `500 11px "Inter",system-ui,sans-serif`
+      const labelAlpha = (this.hover || this.selected) ? 1 : 0.75
+      const fontSize = this.project.kind === 'central' ? 14 : 13
+      ctx.font = `500 ${fontSize}px "Inter",system-ui,sans-serif`
       ctx.fillStyle = `rgba(230,237,243,${labelAlpha * alpha})`
       ctx.textAlign = 'left'
       ctx.textBaseline = 'middle'
@@ -276,21 +278,25 @@
       const cy     = H / 2
       const spread = Math.min(W * 0.4, H * 0.4)
       const n      = projects.length
+      const hiro   = { kind: 'central', name: 'Hiro', headline: 'Central Intelligence', summary: 'Nó central de conhecimento do ecossistema.', stack: [], url: '/' }
 
-      nodes = projects.map((p, i) => {
-        const angle = i * 2 * Math.PI / phi
-        const r     = spread * Math.sqrt((i + 0.5) / n)
-        return new ProjectNode(p, cx + r * Math.cos(angle), cy + r * Math.sin(angle), i)
+      // Central Node: Hiro
+      nodes = [new ProjectNode(hiro, cx, cy, 0)]
+
+      // Circumference layout
+      projects.forEach((p, i) => {
+        const angle = i * 2 * Math.PI / n
+        const r     = spread * (0.7 + 0.3 * Math.random())
+        nodes.push(new ProjectNode(p, cx + r * Math.cos(angle), cy + r * Math.sin(angle), i + 1))
       })
 
       particles = Array.from({ length: 80 }, () => new Particle())
 
       connections = []
-      nodes.forEach((a, i) => {
-        nodes.slice(i + 1).forEach(b => {
-          const shared = (a.project.stack || []).filter(s => (b.project.stack || []).includes(s))
-          if (shared.length) connections.push({ a, b, w: shared.length })
-        })
+      const centralNode = nodes[0]
+      // Connect everything to Hiro
+      nodes.slice(1).forEach(node => {
+        connections.push({ a: centralNode, b: node, w: 2 })
       })
     }
 
