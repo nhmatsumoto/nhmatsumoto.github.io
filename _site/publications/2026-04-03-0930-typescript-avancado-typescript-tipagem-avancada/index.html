@@ -43,24 +43,23 @@
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">TypeScript Avançado: Mapeamento de Tipos e Generics Complexos</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>TypeScript Avançado: Mapeamento de Tipos e Generics Complexos</h1><p class="post-summary">Uma análise profunda sobre o sistema de tipos Turing-complete do TypeScript, explorando tipos condicionais, inferência e utilitários de transformação.</p><div class="post-meta"><time datetime="2026-04-03T09:30:00+09:00" data-localize-date="long">3 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>O TypeScript não é apenas &quot;JS com tipos&quot;. O sistema de tipos do TS é <strong>Turing-complete</strong>, o que significa que podemos realizar computações complexas apenas em tempo de compilação.</p>
 <h2>Tipos Condicionais e <code>infer</code></h2>
 <p>Tipos condicionais permitem que você defina lógica de seleção de tipos:</p>
-<div class="code-shell" data-language="typescript">  <div class="code-shell-header">    <span class="code-shell-label">typescript</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-typescript">type IsString&lt;T&gt; = T extends string ? true : false;
+<div class="code-shell" data-language="typescript">  <div class="code-shell-header"><span class="code-shell-label">typescript</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>type IsString&lt;T&gt; = T extends string ? true : false;
 type Result = IsString&lt;&quot;hello&quot;&gt;; // true</code></pre></div>
 <p>O uso de <code>infer</code> permite extrair partes de tipos complexos, como o tipo de retorno de uma função ou o tipo de uma Promise.</p>
 <h2>Mapeamento de Tipos (\(Mapped Types\))</h2>
 <p>Transforme um tipo existente em um novo tipo iterando sobre suas propriedades. Útil para criar utilitários como <code>ReadOnly</code>, <code>Partial</code> ou prefixar chaves de um objeto.</p>
 <h3>A Complexidade do Tipo (\(C\))</h3>
 <p>Podemos medir a complexidade de um tipo (\(C\)) como o número de transformações e inferências necessárias para o compilador resolvê-lo:</p>
-<p>$$C = \\\\sum_{i=1}^n T_i + I_i$$</p>
+<div class="math-block">$$C = \\\\sum_{i=1}^n T_i + I_i$$</div>
 <p>Se \(C\) for muito alto, o IntelliSense ficará lento e o tempo de compilação aumentará.</p>
 <h2>Utilitários de Tipo Customizados:</h2>
-<p>*   <strong>Template Literal Types</strong>: Combine strings e crie tipos ultra-específicos para rotas ou eventos.</p>
-<p>*   <strong>Discriminated Unions</strong>: O padrão ouro para lidar com estados de UI de forma segura.</p>
+<ul><li>  <strong>Template Literal Types</strong>: Combine strings e crie tipos ultra-específicos para rotas ou eventos.</li> <li>  <strong>Discriminated Unions</strong>: O padrão ouro para lidar com estados de UI de forma segura.</li></ul>
 <div class="mermaid">graph TD
-    A[Base Types] --> B[Generics]
-    B --> C[Conditional Types]
-    C --> D[Mapped Types]
-    D --> E[Template Literals]
-    E --> F[Type Programming]</div>
+    A[Base Types] --&gt; B[Generics]
+    B --&gt; C[Conditional Types]
+    C --&gt; D[Mapped Types]
+    D --&gt; E[Template Literals]
+    E --&gt; F[Type Programming]</div>
 <p>&gt; <strong>Heurística Operacional</strong>: Se você estiver usando <code>any</code> para resolver um problema de tipagem complexo, você não está resolvendo o problema; você está escondendo o bug. Use <code>unknown</code> e <em>type guards</em> se a tipagem for realmente dinâmica.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T09:30:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">avançado</span><span class="badge">web</span><span class="badge">arquitetura</span></div><div class="tag-list"><span class="tag">typescript</span><span class="tag">javascript</span><span class="tag">tipagem</span><span class="tag">frontend</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">

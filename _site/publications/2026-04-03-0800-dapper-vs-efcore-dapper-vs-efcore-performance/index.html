@@ -47,15 +47,15 @@
 <p>Dapper não tenta ser um gestor de estado. Ele é um mapeador de objetos que estende <code>IDbConnection</code>, focado em transformar resultados de SQL puro em POCOs da forma mais rápida possível.</p>
 <h3>Comparativo de Overhead (\(T\))</h3>
 <p>Podemos modelar o tempo total de execução (\(T\)) como:</p>
-<p>$$T_{total} = T_{sql} + T_{mapping} + T_{tracking}$$</p>
+<div class="math-block">$$T_{total} = T_{sql} + T_{mapping} + T_{tracking}$$</div>
 <p>No Dapper, \(T_{tracking} \\approx 0\), o que o torna imbatível para operações de leitura intensiva.</p>
 <h2>Quando usar qual?</h2>
 <div class="mermaid">graph TD
-    A[Nova Funcionalidade] --> B{Complexidade de Escrita?}
-    B -- Alta --> C[EF Core]
-    B -- Baixa --> D{Volume de Leitura?}
-    D -- Crítico --> E[Dapper]
-    D -- Padrão --> C</div>
+    A[Nova Funcionalidade] --&gt; B{Complexidade de Escrita?}
+    B -- Alta --&gt; C[EF Core]
+    B -- Baixa --&gt; D{Volume de Leitura?}
+    D -- Crítico --&gt; E[Dapper]
+    D -- Padrão --&gt; C</div>
 <p>&gt; <strong>Heurística Operacional</strong>: Use EF Core para comandos (escrita) e Dapper para consultas (leitura) em uma arquitetura de estilo <strong>CQRS</strong>.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T08:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">performance</span><span class="badge">dotnet</span><span class="badge">arquitetura</span></div><div class="tag-list"><span class="tag">dotnet</span><span class="tag">performance</span><span class="tag">orm</span><span class="tag">banco-de-dados</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">

@@ -49,22 +49,22 @@
 <p>1. <strong>Artefatos de linguagem e domínio</strong>: glossário do contexto, sinônimos proibidos, definições canônicas, comandos/eventos e regras/invariantes.</p>
 <p>2. <strong>Plano de execução multiagente</strong>: tarefas para agentes especializados (modelagem, API, persistência, testes, segurança), com retorno estruturado e rastreável.</p>
 <div class="mermaid">flowchart TD
-  A[Entrada em linguagem natural] --> B[Detecção de intenção e contexto]
-  B --> C[Tradutor DDD: Linguagem Ubíqua]
-  C --> D{Roteador de tarefas}
-  D --> E[Agente: Modelagem de domínio]
-  D --> F[Agente: Implementação/API]
-  D --> G[Agente: Testes e invariantes]
-  D --> H[Agente: Segurança e privacidade]
-  E --> I[Memória de feedback e decisões]
-  F --> I
-  G --> I
-  H --> I
-  I --> C</div>
+  A[Entrada em linguagem natural] --&gt; B[Detecção de intenção e contexto]
+  B --&gt; C[Tradutor DDD: Linguagem Ubíqua]
+  C --&gt; D{Roteador de tarefas}
+  D --&gt; E[Agente: Modelagem de domínio]
+  D --&gt; F[Agente: Implementação/API]
+  D --&gt; G[Agente: Testes e invariantes]
+  D --&gt; H[Agente: Segurança e privacidade]
+  E --&gt; I[Memória de feedback e decisões]
+  F --&gt; I
+  G --&gt; I
+  H --&gt; I
+  I --&gt; C</div>
 <h2>Passos de implementação</h2>
 <p>A forma mais robusta de manter rastreabilidade é exigir <strong>saídas estruturadas</strong>. Em APIs modernas de LLMs, isso costuma ser feito com JSON Schema.</p>
 <p>1) <strong>Defina o contrato do “Tradutor DDD”</strong> (JSON Schema). Ele deve retornar: <code>boundedContext</code>, <code>glossario</code>, <code>entidades</code>, <code>comandos</code>, <code>eventos</code>, <code>regras</code> e <code>termosProibidos</code>.</p>
-<div class="code-shell" data-language="json">  <div class="code-shell-header">    <span class="code-shell-label">json</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-json">{
+<div class="code-shell" data-language="json">  <div class="code-shell-header"><span class="code-shell-label">json</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>{
   &quot;type&quot;: &quot;object&quot;,
   &quot;required&quot;: [&quot;boundedContext&quot;, &quot;glossario&quot;, &quot;eventos&quot;, &quot;regras&quot;],
   &quot;properties&quot;: {
@@ -85,7 +85,7 @@
 <p>3.  <strong>Consolidação de Invariantes</strong>: O agente de domínio garante que as regras de negócio em nível de aplicação (ex: &quot;um pedido não pode ter valor negativo&quot;) sejam respeitadas em cada comando gerado.</p>
 <h2>Resolução de Conflitos e Linguagem Ubíqua</h2>
 <p>Quando dois agentes propõem nomes diferentes para o mesmo conceito, o Orquestrador atua como um <strong>Mediador de Domínio</strong>. Ele utiliza uma base de conhecimento centralizada (Memória Curada) para forçar a convergência.</p>
-<p>*   <strong>Exemplo</strong>: Se o agente de API propõe <code>userId</code> e o agente de Domínio propõe <code>CustomerIdentifier</code>, o Orquestrador consulta o glossário canônico do projeto e impõe o termo definido na Linguagem Ubíqua acordada com o humano.</p>
+<ul><li>  <strong>Exemplo</strong>: Se o agente de API propõe <code>userId</code> e o agente de Domínio propõe <code>CustomerIdentifier</code>, o Orquestrador consulta o glossário canônico do projeto e impõe o termo definido na Linguagem Ubíqua acordada com o humano.</li></ul>
 <h2>Conclusão</h2>
 <p>Essa arquitetura não apenas automatiza a tradução de requisitos, mas garante que a <strong>Linguagem Ubíqua</strong> seja o fio condutor de toda a engenharia, reduzindo drasticamente o retrabalho e as falhas de comunicação entre humanos e máquinas.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-02T21:00:00+09:00" data-localize-date="long">2 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="2">2 min de leitura</span></span></div><div class="badge-list"><span class="badge">arquitetura</span><span class="badge">ddd</span><span class="badge">ai-agents</span></div><div class="tag-list"><span class="tag">ddd</span><span class="tag">arquitetura</span><span class="tag">agentes-ia</span><span class="tag">inteligência-artificial</span></div><div class="sidebar-actions"></div></aside></section></main>
       

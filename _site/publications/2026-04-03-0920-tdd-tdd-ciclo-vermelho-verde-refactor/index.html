@@ -47,22 +47,18 @@
 <p>3.  <strong>REFACTOR</strong>: Melhore o código mantendo o teste passando.</p>
 <h2>A Pirâmide de Testes (\(P\))</h2>
 <p>A estrutura ideal de testes em um projeto de engenharia deve seguir a pirâmide:</p>
-<p>*   <strong>Base (Unitários)</strong>: Rápidos, isolados e em grande quantidade.</p>
-<p>*   <strong>Meio (Integração)</strong>: Testam a interação entre componentes e DB.</p>
-<p>*   <strong>Topo (E2E)</strong>: Simulam o fluxo real do usuário na interface.</p>
+<ul><li>  <strong>Base (Unitários)</strong>: Rápidos, isolados e em grande quantidade.</li> <li>  <strong>Meio (Integração)</strong>: Testam a interação entre componentes e DB.</li> <li>  <strong>Topo (E2E)</strong>: Simulam o fluxo real do usuário na interface.</li></ul>
 <h3>O Coeficiente de Confiança (\(C\))</h3>
 <p>A confiança (\(C\)) em um despliegue (\(D\)) é proporcional à cobertura de caminhos críticos (\(Co\)) e à velocidade de execução (\(S\)):</p>
-<p>$$C \\\\propto Co \\\\cdot S$$</p>
+<div class="math-block">$$C \\\\propto Co \\\\cdot S$$</div>
 <p>No TDD, \(S\) é maximizado porque os testes unitários rodam em milissegundos.</p>
 <div class="mermaid">graph LR
-    A[Requisito] --> B[Teste RED]
-    B --> C[Código GREEN]
-    C --> D[Refactor]
-    D --> B</div>
+    A[Requisito] --&gt; B[Teste RED]
+    B --&gt; C[Código GREEN]
+    C --&gt; D[Refactor]
+    D --&gt; B</div>
 <h2>Benefícios Arquiteturais:</h2>
-<p>*   <strong>Desacoplamento Inevitável</strong>: Código difícil de testar geralmente é código muito acoplado.</p>
-<p>*   <strong>Documentação Viva</strong>: Os testes explicam como a classe deve se comportar.</p>
-<p>*   <strong>Coragem para Refatorar</strong>: Você sabe imediatamente se quebrou algo.</p>
+<ul><li>  <strong>Desacoplamento Inevitável</strong>: Código difícil de testar geralmente é código muito acoplado.</li> <li>  <strong>Documentação Viva</strong>: Os testes explicam como a classe deve se comportar.</li> <li>  <strong>Coragem para Refatorar</strong>: Você sabe imediatamente se quebrou algo.</li></ul>
 <p>&gt; <strong>Heurística Operacional</strong>: Se você precisa de &quot;Mocks&quot; em excesso para rodar um teste unitário, seu domínio está sofrendo de vazamento de responsabilidade. Reavalie a abstração.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T09:20:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">qualidade</span><span class="badge">agilidade</span><span class="badge">arquitetura</span></div><div class="tag-list"><span class="tag">qualidade</span><span class="tag">tdd</span><span class="tag">testes</span><span class="tag">engenharia</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">

@@ -49,14 +49,14 @@
 <p>3. <strong>Auditoria obrigatória</strong> — Cada mutação de estado precisa de <code>trace_id</code>, <code>actor</code> e <code>reason</code></p>
 <p>4. <strong>Evolução constante</strong> — Fase 8, 9, 10... o sistema cresce com o projeto</p>
 <p>Clean Architecture separa essas preocupações em camadas com dependências unidirecionais:</p>
-<div class="code-shell" data-language="">  <div class="code-shell-header">    <span class="code-shell-label">text</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-">Domain         → apenas lógica de negócio, sem imports de infraestrutura
+<div class="code-shell" data-language="">  <div class="code-shell-header"><span class="code-shell-label">text</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>Domain         → apenas lógica de negócio, sem imports de infraestrutura
 Application    → casos de uso (Commands, Queries, Handlers)
 Infrastructure → EF Core, PostGIS, SignalR, Keycloak
 Presentation   → ASP.NET Core Controllers, Minimal API</code></pre></div>
 <h2>CQRS com MediatR</h2>
 <p>O padrão CQRS (Command Query Responsibility Segregation) separa operações de escrita (Commands) de leitura (Queries).</p>
 <h3>Command: criar incidente</h3>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">// Application/Commands/CreateIncidentCommand.cs
+<div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>// Application/Commands/CreateIncidentCommand.cs
 public record CreateIncidentCommand(
     string EventId,
     IncidentType Type,
@@ -101,7 +101,7 @@ public class CreateIncidentHandler : IRequestHandler&lt;CreateIncidentCommand, R
     }
 }</code></pre></div>
 <h3>Query: busca espacial com PostGIS</h3>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">// Application/Queries/GetIncidentsInRadiusQuery.cs
+<div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>// Application/Queries/GetIncidentsInRadiusQuery.cs
 public record GetIncidentsInRadiusQuery(
     double Lat, double Lon, double RadiusKm
 ) : IRequest&lt;IReadOnlyList&lt;IncidentDto&gt;&gt;;
@@ -127,7 +127,7 @@ public class GetIncidentsInRadiusHandler
 }</code></pre></div>
 <h2>Domain Events para operações críticas</h2>
 <p>O domínio publica eventos sem saber quem os consome. A infraestrutura conecta:</p>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">// Domain/Events/CriticalIncidentCreated.cs
+<div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>// Domain/Events/CriticalIncidentCreated.cs
 public record CriticalIncidentCreated(Incident Incident) : IDomainEvent;
 
 // Infrastructure/EventHandlers/NotifyOpsOnCriticalIncident.cs
@@ -149,7 +149,7 @@ public class NotifyOpsOnCriticalIncident
 }</code></pre></div>
 <h2>Pipeline de comportamentos transversais</h2>
 <p>MediatR permite adicionar behaviors que se aplicam a todos os Commands/Queries — como logging, validação e retry:</p>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">// Registrado no DI antes de todos os handlers
+<div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>// Registrado no DI antes de todos os handlers
 services.AddTransient(typeof(IPipelineBehavior&lt;,&gt;), typeof(ValidationBehavior&lt;,&gt;));
 services.AddTransient(typeof(IPipelineBehavior&lt;,&gt;), typeof(LoggingBehavior&lt;,&gt;));
 services.AddTransient(typeof(IPipelineBehavior&lt;,&gt;), typeof(DistributedTracingBehavior&lt;,&gt;));
@@ -172,7 +172,7 @@ public class LoggingBehavior&lt;TRequest, TResponse&gt;
     }
 }</code></pre></div>
 <h2>Estrutura de pastas (pós-refatoração de Abril/2026)</h2>
-<div class="code-shell" data-language="">  <div class="code-shell-header">    <span class="code-shell-label">text</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-">backend-dotnet/
+<div class="code-shell" data-language="">  <div class="code-shell-header"><span class="code-shell-label">text</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>backend-dotnet/
   SOSLocation.Domain/
     Entities/       Incident, Resource, Mission, WatchPoint
     Events/         CriticalIncidentCreated, ResourceAllocated

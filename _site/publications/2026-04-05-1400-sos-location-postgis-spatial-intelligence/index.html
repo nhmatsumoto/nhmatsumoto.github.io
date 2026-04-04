@@ -43,7 +43,7 @@
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">SOS Location: PostGIS e inteligência espacial para resposta a desastres</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>SOS Location: PostGIS e inteligência espacial para resposta a desastres</h1><p class="post-summary">PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.</p><div class="post-meta"><time datetime="2026-04-05T14:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><h1>PostGIS: o motor geoespacial do SOS Location</h1>
 <p>PostgreSQL é excelente. Com PostGIS, ele se torna um sistema de informação geográfica completo dentro do seu banco de dados. No SOS Location, todas as decisões táticas passam por consultas espaciais — e a diferença entre 200ms e 2s numa query pode definir se uma equipe chega a tempo.</p>
 <h2>Schema espacial</h2>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Incidents com geometria PostGIS
+<div class="code-shell" data-language="sql">  <div class="code-shell-header"><span class="code-shell-label">sql</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>-- Incidents com geometria PostGIS
 CREATE TABLE incidents (
   id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   event_id     TEXT UNIQUE NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE resources (
 CREATE INDEX idx_resources_location ON resources USING GIST (location);</code></pre></div>
 <h2>Consultas espaciais críticas</h2>
 <h3>1. Busca de recursos no raio de um incidente</h3>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Todos os recursos disponíveis em raio de 10km do incidente
+<div class="code-shell" data-language="sql">  <div class="code-shell-header"><span class="code-shell-label">sql</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>-- Todos os recursos disponíveis em raio de 10km do incidente
 SELECT
   r.id,
   r.type,
@@ -96,7 +96,7 @@ ORDER BY distance_km ASC
 LIMIT 20;</code></pre></div>
 <p>O cast <code>::geography</code> é essencial: garante que a distância seja em <strong>metros reais</strong> sobre a superfície da Terra, não graus de arco.</p>
 <h3>2. Intersecção entre área afetada e zonas de risco</h3>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Quais zonas de risco catalogadas se intersectam com a área afetada?
+<div class="code-shell" data-language="sql">  <div class="code-shell-header"><span class="code-shell-label">sql</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>-- Quais zonas de risco catalogadas se intersectam com a área afetada?
 SELECT
   rz.id,
   rz.name,
@@ -109,7 +109,7 @@ WHERE ST_Intersects(i.affected_area, rz.boundary)
 ORDER BY overlap_km2 DESC;</code></pre></div>
 <h3>3. Line of sight para watchpoints</h3>
 <p>A visibilidade de linha direta entre um watchpoint (câmera, sensor) e um incidente é crítica para alocação de recursos de monitoramento:</p>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Verifica se existe obstáculo entre watchpoint e incidente usando DEM
+<div class="code-shell" data-language="sql">  <div class="code-shell-header"><span class="code-shell-label">sql</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>-- Verifica se existe obstáculo entre watchpoint e incidente usando DEM
 -- (simplificado — a implementação real usa uma função PL/pgSQL customizada)
 CREATE OR REPLACE FUNCTION line_of_sight(
   observer_geom  GEOMETRY(Point, 4326),
@@ -137,7 +137,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;</code></pre></div>
 <h3>4. Clustering de incidentes para o mapa tático</h3>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Agrupa incidentes próximos (&lt; 500m) para evitar sobreposição no mapa
+<div class="code-shell" data-language="sql">  <div class="code-shell-header"><span class="code-shell-label">sql</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>-- Agrupa incidentes próximos (&lt; 500m) para evitar sobreposição no mapa
 SELECT
   ST_AsGeoJSON(ST_Centroid(ST_Collect(location))) AS centroid,
   COUNT(*) AS incident_count,
@@ -150,7 +150,7 @@ GROUP BY ST_SnapToGrid(location, 0.005)  -- grid de ~500m
 ORDER BY max_severity DESC;</code></pre></div>
 <h2>Benchmark e indexação</h2>
 <p>Sem GIST index, uma busca <code>ST_DWithin</code> em 50.000 registros demora ~800ms. Com o índice: <strong>&lt; 8ms</strong>.</p>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Análise de performance
+<div class="code-shell" data-language="sql">  <div class="code-shell-header"><span class="code-shell-label">sql</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>-- Análise de performance
 EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
 SELECT * FROM incidents
 WHERE ST_DWithin(location::geography, ST_Point(-43.9, -19.9)::geography, 5000);
@@ -161,7 +161,7 @@ WHERE ST_DWithin(location::geography, ST_Point(-43.9, -19.9)::geography, 5000);
 -- Execution Time: 7.2 ms</code></pre></div>
 <h2>EF Core + Npgsql + NetTopologySuite</h2>
 <p>No .NET, o mapeamento de tipos PostGIS usa <code>NetTopologySuite</code>:</p>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">// SosDbContext.cs
+<div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>// SosDbContext.cs
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
     optionsBuilder.UseNpgsql(connectionString, o =&gt;
@@ -179,7 +179,7 @@ public class Incident
     // ...
 }</code></pre></div>
 <p>A combinação PostGIS + NetTopologySuite + EF Core permite escrever queries LINQ com operações espaciais que compilam para SQL otimizado:</p>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">var nearbyIncidents = await _db.Incidents
+<div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>var nearbyIncidents = await _db.Incidents
     .Where(i =&gt; i.Location.IsWithinDistance(searchPoint, radiusMeters))
     .OrderByDescending(i =&gt; i.Severity)
     .ToListAsync();

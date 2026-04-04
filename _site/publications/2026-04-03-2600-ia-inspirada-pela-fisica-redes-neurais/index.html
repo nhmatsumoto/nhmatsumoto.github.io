@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <meta name="x-asciimath-inline" content="%%"><meta name="x-asciimath-block" content="%%%"><meta name="x-asciimath-script" content="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["%%", "%%"], ["%%%", "%%%"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -46,8 +46,8 @@
 <h2>Redes de Hopfield e a Energia de um Sistema</h2>
 <p>John Hopfield, físico de formação, criou uma rede neural onde a memória é um estado de <strong>Mínima Energia</strong>. Imagine uma bola rolando em uma paisagem de montanhas; a memória é o fundo do vale.</p>
 <div class="mermaid">graph TD
-    A[Estado de Alta Energia - Desordenado] -->|Descida do Gradiente| B[Estado de Baixa Energia - Estável]
-    B --> C[Memória Recuperada]
+    A[Estado de Alta Energia - Desordenado] --&gt;|Descida do Gradiente| B[Estado de Baixa Energia - Estável]
+    B --&gt; C[Memória Recuperada]
     style B fill:#dfd,stroke:#333</div>
 <h3>Diffusion Models: Criando do Caos</h3>
 <p>Os modelos de imagem modernos (como Midjourney ou Stable Diffusion) usam um processo físico inverso. Eles adicionam ruído (caos/entropia) a uma imagem até que ela vire chiado puro e, então, ensinam a rede a <strong>reverter a difusão</strong>, extraindo ordem do caos.</p>

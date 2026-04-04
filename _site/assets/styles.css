@@ -2015,3 +2015,73 @@ button, input, select {
 .page-projects .breadcrumbs {
   margin-bottom: var(--space-2);
 }
+
+/* ── Tables & Technical Data ────────────────────────────────────────────── */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: var(--space-8) 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  backdrop-filter: blur(8px);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+thead th {
+  background: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.05);
+  color: var(--accent);
+  font-family: var(--font-code);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 2px solid var(--accent);
+}
+
+tbody td {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+  background: hsla(var(--h), var(--s), 100%, 0.02);
+}
+
+tbody tr:hover td {
+  color: var(--text);
+  background: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.03);
+}
+
+/* ── Mathematics (AsciiMath) ─────────────────────────────────────────────── */
+.math-block {
+  margin: var(--space-8) 0;
+  padding: var(--space-6);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-size: 1.2rem;
+  overflow-x: auto;
+}
+
+.math-inline {
+  padding: 0 0.2em;
+  color: var(--accent-secondary);
+}
+
+.mjx-chtml {
+  outline: none !important;
+}

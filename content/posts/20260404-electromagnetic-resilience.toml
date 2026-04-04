@@ -8,14 +8,23 @@ status = "production"
 tags = ["engineering", "electronics", "resilience", "security"]
 badges = ["EMC", "Hardening"]
 featured = true
-body = """
+body = '''
 O "dano" eletromagnético (EMP) não é apenas o calor de uma explosão; é a fração da energia emitida que consegue se **acoplar** ao seu sistema. A vulnerabilidade de um circuito depende diretamente de sua geometria, blindagem e filtragem.
 
 ### A Equação de Dano
 Para entender a resiliência, não pensamos em "raio de efeito" — o dano é uma função de transferência de energia:
-$$ Dano \\propto Fonte \\times Propaga\\c{c}ão \\times Acoplamento \\times Vulnerabilidade $$
+
+$$ Dano = Fonte \times Propaga\c{c}ão \times Acoplamento \times Vulnerabilidade $$
 
 Dessa forma, dois equipamentos à mesma distância do ponto zero terão resultados totalmente diferentes:
+
+| Componente | Descrição | Fator de Impacto |
+| :--- | :--- | :--- |
+| **Fonte** | Intensidade e duração do pulso original | Alto (E1/E2/E3) |
+| **Propagação** | Perdas no meio e distância | Inverso do Quadrado |
+| **Acoplamento** | Eficiência da "antena" (cabos, trilhas) | Geometria do Alvo |
+| **Vulnerabilidade** | Resistência do silício (MOSFETs, ICs) | Limiar Térmico |
+
 1.  Um **aparelho pequeno**, desconectado e sem cabos longos, pode sobreviver.
 2.  Um **sistema ligado à rede**, com cabeamento extenso ou antenas, sofrerá muito mais acoplamento e dano.
 
@@ -39,4 +48,4 @@ Se o objetivo é a resiliência técnica legítima, o caminho é o endurecimento
 - **Isolamento Crítico**: Redução de cabos expostos e uso de interfaces não-metálicas.
 
 No fim, dois equipamentos à mesma distância do ponto zero terão resultados totalmente diferentes se um deles for projetado com resiliência em camadas.
-"""
+'''

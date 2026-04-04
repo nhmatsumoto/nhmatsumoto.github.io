@@ -56,13 +56,13 @@
   participant V as Revisão humana
   participant P as Publicação
 
-  U->>I: Exporta logs (JSON/HTML/texto)
-  I->>R: Normaliza + remove PII/segredos
-  R->>E: Cria embeddings por trecho
-  E->>C: Agrupa por similaridade
-  C->>G: Extrai itens (conceitos/PoCs) + estrutura
-  G->>V: Entrega rascunhos com fontes/assunções
-  V->>P: Aprova e publica</div>
+  U-&gt;&gt;I: Exporta logs (JSON/HTML/texto)
+  I-&gt;&gt;R: Normaliza + remove PII/segredos
+  R-&gt;&gt;E: Cria embeddings por trecho
+  E-&gt;&gt;C: Agrupa por similaridade
+  C-&gt;&gt;G: Extrai itens (conceitos/PoCs) + estrutura
+  G-&gt;&gt;V: Entrega rascunhos com fontes/assunções
+  V-&gt;&gt;P: Aprova e publica</div>
 <h2>Passos de implementação</h2>
 <p>1. <strong>Ingestão e segmentação</strong>: parse do export do chat (normalmente JSON/HTML) e quebra em mensagens/trechos.</p>
 <p>2. <strong>Redação (Privacy by Design)</strong>: aplicar filtros (regex + detectores) para tokens sensíveis antes da indexação.</p>

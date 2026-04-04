@@ -47,24 +47,17 @@
 <p>O primeiro que entra é o primeiro que sai. Essencial para processamento de tarefas em background e sistemas de mensageria que garantem a ordem.</p>
 <h2>Árvores e sua Eficiência Hierárquica</h2>
 <p>Árvores (especialmente as Binárias de Busca) permitem localizar, inserir e remover dados de forma extremamente rápida. Elas são a base de:</p>
-<p>*   <strong>Sistemas de Arquivos</strong>: Onde pastas contêm subpastas.</p>
-<p>*   <strong>DOM (Document Object Model)</strong>: A estrutura de toda página web.</p>
-<p>*   <strong>Índices de Banco de Dados</strong>: O segredo para queries que não travam.</p>
+<ul><li>  <strong>Sistemas de Arquivos</strong>: Onde pastas contêm subpastas.</li> <li>  <strong>DOM (Document Object Model)</strong>: A estrutura de toda página web.</li> <li>  <strong>Índices de Banco de Dados</strong>: O segredo para queries que não travam.</li></ul>
 <div class="mermaid">graph TD
     Root((Raiz))
-    Root --> L1[Esquerda]
-    Root --> R1[Direita]
-    L1 --> LL1[Sub-esquerda]
-    L1 --> LR1[Sub-direita]
-    R1 --> RL1[Sub-esquerda]
-    R1 --> RR1[Sub-direita]</div>
+    Root --&gt; L1[Esquerda]
+    Root --&gt; R1[Direita]
+    L1 --&gt; LL1[Sub-esquerda]
+    L1 --&gt; LR1[Sub-direita]
+    R1 --&gt; RL1[Sub-esquerda]
+    R1 --&gt; RR1[Sub-direita]</div>
 <h3>Qual Escolher?</h3>
-<p>| Problema | Estrutura Ideal |</p>
-<p>| :--- | :--- |</p>
-<p>| Histórico de Navegação | Pilha |</p>
-<p>| Gerenciamento de Impressão | Fila |</p>
-<p>| Busca em Grande Volume | Árvores (B-Tree, AVL) |</p>
-<p>| Relacionamentos Rápidos | Hash Table |</p>
+<div class="table-wrapper"><table><thead><tr><th>Problema</th><th>Estrutura Ideal</th></tr></thead><tbody><tr><td>Histórico de Navegação</td><td>Pilha</td></tr><tr><td>Gerenciamento de Impressão</td><td>Fila</td></tr><tr><td>Busca em Grande Volume</td><td>Árvores (B-Tree, AVL)</td></tr><tr><td>Relacionamentos Rápidos</td><td>Hash Table</td></tr></tbody></table></div>
 <h2>Conclusão</h2>
 <p>Ter um martelo não faz de você um mestre de obras. Saber qual estrutura usar para cada problema é o que separa um programador iniciante de um engenheiro de software profissional.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T18:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">computer-science</span><span class="badge">data-structures</span><span class="badge">core</span></div><div class="tag-list"><span class="tag">estruturas-de-dados</span><span class="tag">computacao</span><span class="tag">desempenho</span><span class="tag">engenharia</span></div><div class="sidebar-actions"></div></aside></section></main>
       

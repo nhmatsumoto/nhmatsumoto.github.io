@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <meta name="x-asciimath-inline" content="%%"><meta name="x-asciimath-block" content="%%%"><meta name="x-asciimath-script" content="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["%%", "%%"], ["%%%", "%%%"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -44,12 +44,12 @@
 <h2>O Que é um Qubit?</h2>
 <p>O Qubit pode ser 0, 1 ou uma <strong>Superposição</strong> de ambos. Isso significa que, enquanto um computador comum tenta um caminho de cada vez em um labirinto, o computador quântico tenta <strong>todos os caminhos simultaneamente</strong>.</p>
 <div class="mermaid">graph LR
-  B[Bit Clássico] -->|Estado| B1[0 OU 1]
-  Q[Qubit Quântico] -->|Estado| Q1[0 E 1 Simultaneamente]
-  Q1 -->|Processamento| Q2[Explosão Exponencial]</div>
+  B[Bit Clássico] --&gt;|Estado| B1[0 OU 1]
+  Q[Qubit Quântico] --&gt;|Estado| Q1[0 E 1 Simultaneamente]
+  Q1 --&gt;|Processamento| Q2[Explosão Exponencial]</div>
 <h3>Por que o Poder é Exponencial?</h3>
 <p>Para cada bit clássico que você adiciona, a capacidade dobra linearmente. Com qubits, a capacidade aumenta exponencialmente.</p>
-<p>-   300 Qubits podem representar mais valores do que o número de átomos no universo observável.</p>
+<ul><li>  300 Qubits podem representar mais valores do que o número de átomos no universo observável.</li></ul>
 <h2>Aplicações que Mudarão o Mundo</h2>
 <p>1.  <strong>Criptografia</strong>: O algoritmo de Shor pode quebrar chaves RSA em minutos.</p>
 <p>2.  <strong>Criação de Materiais</strong>: Simular moléculas complexas para novos remédios ou baterias eficientes.</p>

@@ -42,16 +42,12 @@
     <div class="site-shell">
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Design Patterns: O que ainda é Relevante no C# Moderno?</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>Design Patterns: O que ainda é Relevante no C# Moderno?</h1><p class="post-summary">Uma revisão crítica dos padrões GoF, analisando como o C# 12 e 13 tornaram alguns obsoletos através de registros e correspondência de padrões.</p><div class="post-meta"><time datetime="2026-04-03T08:20:00+09:00" data-localize-date="long">3 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>Os <strong>Design Patterns</strong> (GoF) foram escritos em uma era de C++ e Smalltalk primitivos. Com a evolução das linguagens modernas, muitos desses padrões tornaram-se nativos da plataforma.</p>
 <h2>Padrões Sobreviventes:</h2>
-<p>*   <strong>Strategy</strong>: Ainda fundamental para desacoplar algoritmos de contextos.</p>
-<p>*   <strong>Observer/Mediator</strong>: Essencial para sistemas orientados a eventos (usando <strong>MediatR</strong> no .NET).</p>
-<p>*   <strong>Decorator</strong>: A base para middlewares e interceptadores de Cross-Cutting Concerns.</p>
+<ul><li>  <strong>Strategy</strong>: Ainda fundamental para desacoplar algoritmos de contextos.</li> <li>  <strong>Observer/Mediator</strong>: Essencial para sistemas orientados a eventos (usando <strong>MediatR</strong> no .NET).</li> <li>  <strong>Decorator</strong>: A base para middlewares e interceptadores de Cross-Cutting Concerns.</li></ul>
 <h2>Padrões que o C# &quot;Matou&quot;:</h2>
-<p>*   <strong>Singleton</strong>: Injetores de Dependência (DI) nativos cuidam disso agora.</p>
-<p>*   <strong>Iterator</strong>: <code>IEnumerable</code> e <code>yield return</code> embutiram isso diretamente no <code>foreach</code>.</p>
-<p>*   <strong>Visitor</strong>: Substituído pela superioridade do <strong>Pattern Matching</strong> moderno.</p>
+<ul><li>  <strong>Singleton</strong>: Injetores de Dependência (DI) nativos cuidam disso agora.</li> <li>  <strong>Iterator</strong>: <code>IEnumerable</code> e <code>yield return</code> embutiram isso diretamente no <code>foreach</code>.</li> <li>  <strong>Visitor</strong>: Substituído pela superioridade do <strong>Pattern Matching</strong> moderno.</li></ul>
 <h3>Exemplo: Pattern Matching vs Visitor (\(S\))</h3>
 <p>A satisfação semântica (\(S\)) em C# moderno é muito maior com padrões funcionais:</p>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">// Pattern Matching (Modo Moderno)
+<div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>// Pattern Matching (Modo Moderno)
 public static decimal CalculateArea(Shape shape) =&gt; shape switch
 {
     Circle c =&gt; Math.PI * c.Radius * c.Radius,
@@ -61,9 +57,9 @@ public static decimal CalculateArea(Shape shape) =&gt; shape switch
 <h2>Evolução Arquitetural</h2>
 <p>Os padrões GoF migraram de &quot;como estruturar classes&quot; para &quot;como estruturar microsserviços&quot;.</p>
 <div class="mermaid">graph TD
-    A[GoF Patterns] --> B[Enterprise Patterns]
-    B --> C[Microservices Patterns]
-    C --> D[Cloud Native Patterns]</div>
+    A[GoF Patterns] --&gt; B[Enterprise Patterns]
+    B --&gt; C[Microservices Patterns]
+    C --&gt; D[Cloud Native Patterns]</div>
 <p>&gt; <strong>Heurística Operacional</strong>: Se o seu diagrama de classes parece um labirinto, você está aplicando padrões demais por excesso de engenharia. Padrões devem simplificar, não complicar.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T08:20:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">arquitetura</span><span class="badge">dotnet</span><span class="badge">design</span></div><div class="tag-list"><span class="tag">arquitetura</span><span class="tag">dotnet</span><span class="tag">design-patterns</span><span class="tag">engenharia</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">

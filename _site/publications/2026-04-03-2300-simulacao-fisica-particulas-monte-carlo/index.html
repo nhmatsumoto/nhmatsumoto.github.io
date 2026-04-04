@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <meta name="x-asciimath-inline" content="%%"><meta name="x-asciimath-block" content="%%%"><meta name="x-asciimath-script" content="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["%%", "%%"], ["%%%", "%%%"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -44,14 +44,13 @@
 <h2>O Que é Monte Carlo?</h2>
 <p>O nome vem do famoso cassino em Mônaco, pois a técnica baseia-se em <strong>aleatoriedade</strong>. Se você quiser calcular a área de um círculo mas só souber a de um quadrado, você pode &quot;jogar dardos&quot; aleatoriamente no quadrado. A proporção de dardos dentro do círculo dará a você uma aproximação de <code>pi</code>.</p>
 <div class="mermaid">graph LR
-  A[Input Aleatório] --> B[Processo Físico]
-  B --> C[Resultado Determinístico]
-  C --> D[Média Estatística]
-  D --> E[Aproximação da Realidade]</div>
+  A[Input Aleatório] --&gt; B[Processo Físico]
+  B --&gt; C[Resultado Determinístico]
+  C --&gt; D[Média Estatística]
+  D --&gt; E[Aproximação da Realidade]</div>
 <h3>Simulação de Partículas e Fluidos</h3>
 <p>Em física de partículas, usamos Monte Carlo para simular colisões em aceleradores (como o CERN). No desenvolvimento de software, aplicamos as mesmas leis:</p>
-<p><em>   <strong>Gravidade</strong>: <code>F = G </em> (m1 * m2) / r^2</code></p>
-<p>*   <strong>Colisões</strong>: Conservação de momento linear e energia cinética.</p>
+<ul><li>  <strong>Gravidade</strong>: <code>F = G * (m1 * m2) / r^2</code></li> <li>  <strong>Colisões</strong>: Conservação de momento linear e energia cinética.</li></ul>
 <h2>Leis da Física em Código</h2>
 <p>Imagine aplicar as leis da física no seu Knowledge Graph. Cada nó (post ou projeto) tem uma &quot;massa&quot; baseada no número de conexões, e os links são &quot;molas&quot; que tentam manter os nós próximos. Esse é o princípio por trás do <strong>D3 Force Layout</strong>.</p>
 <h3>A Conexão com a IA</h3>

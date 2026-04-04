@@ -45,14 +45,9 @@
 <p>A resposta foi construir um <strong>motor WebGL 2.0 do zero</strong>, usando Three.js como base e dados abertos para reconstruir a malha urbana.</p>
 <h2>Fontes de dados para o mundo 3D</h2>
 <p>Antes de qualquer shader, o problema é de dados:</p>
-<p>| Fonte | O que oferece | API |</p>
-<p>|---|---|---|</p>
-<p>| OpenTopography (SRTMGL1) | DEM 30m global | REST |</p>
-<p>| OpenStreetMap / Overpass | Edificações 3D, ruas | Overpass QL |</p>
-<p>| Open-Meteo | Clima em tempo real | REST |</p>
-<p>| IBGE | Dados populacionais | REST |</p>
+<div class="table-wrapper"><table><thead><tr><th>Fonte</th><th>O que oferece</th><th>API</th></tr></thead><tbody><tr><td>OpenTopography (SRTMGL1)</td><td>DEM 30m global</td><td>REST</td></tr><tr><td>OpenStreetMap / Overpass</td><td>Edificações 3D, ruas</td><td>Overpass QL</td></tr><tr><td>Open-Meteo</td><td>Clima em tempo real</td><td>REST</td></tr><tr><td>IBGE</td><td>Dados populacionais</td><td>REST</td></tr></tbody></table></div>
 <p>O fluxo de ingestão começa com uma query Overpass para buscar todas as edificações dentro de um bounding box:</p>
-<div class="code-shell" data-language="typescript">  <div class="code-shell-header">    <span class="code-shell-label">typescript</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-typescript">const overpassQuery = `
+<div class="code-shell" data-language="typescript">  <div class="code-shell-header"><span class="code-shell-label">typescript</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>const overpassQuery = `
   [out:json][timeout:60];
   (
     way[&quot;building&quot;](${bbox});
@@ -69,7 +64,7 @@ const meshes = buildings.elements
   .map(el =&gt; buildingToMesh(el, demElevation));</code></pre></div>
 <h2>Construindo o terreno</h2>
 <p>O DEM (Digital Elevation Model) é um grid de elevações. A conversão para <code>PlaneGeometry</code> Three.js:</p>
-<div class="code-shell" data-language="typescript">  <div class="code-shell-header">    <span class="code-shell-label">typescript</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-typescript">function demToTerrain(dem: Float32Array, width: number, height: number): THREE.Mesh {
+<div class="code-shell" data-language="typescript">  <div class="code-shell-header"><span class="code-shell-label">typescript</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>function demToTerrain(dem: Float32Array, width: number, height: number): THREE.Mesh {
   const geometry = new THREE.PlaneGeometry(
     TILE_SIZE_METERS, TILE_SIZE_METERS,
     width - 1, height - 1
@@ -92,7 +87,7 @@ const meshes = buildings.elements
 }</code></pre></div>
 <h2>Edificações 3D com telhados</h2>
 <p>Cada edificação OSM vira um <code>ExtrudeGeometry</code>. O desafio é que o polígono OSM é 2D; a altura vem do tag <code>building:levels</code> ou <code>height</code>:</p>
-<div class="code-shell" data-language="typescript">  <div class="code-shell-header">    <span class="code-shell-label">typescript</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-typescript">function buildingToMesh(way: OsmWay, dem: DemProvider): THREE.Mesh {
+<div class="code-shell" data-language="typescript">  <div class="code-shell-header"><span class="code-shell-label">typescript</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>function buildingToMesh(way: OsmWay, dem: DemProvider): THREE.Mesh {
   const coords = way.nodes.map(id =&gt; nodeMap[id]);
   const shape = new THREE.Shape(
     coords.map(c =&gt; new THREE.Vector2(c.lon * SCALE, c.lat * SCALE))
@@ -115,7 +110,7 @@ const meshes = buildings.elements
 <h2>Camadas de desastre ao vivo</h2>
 <p>O que diferencia o SOS Location de um simples visualizador 3D é a <strong>sobreposição de camadas de risco em tempo real</strong>. Cada camada é um shader personalizado.</p>
 <h3>Shader de inundação (FragmentShader)</h3>
-<div class="code-shell" data-language="glsl">  <div class="code-shell-header">    <span class="code-shell-label">glsl</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-glsl">uniform float u_waterLevel;
+<div class="code-shell" data-language="glsl">  <div class="code-shell-header"><span class="code-shell-label">glsl</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>uniform float u_waterLevel;
 uniform float u_time;
 uniform sampler2D u_elevation;
 
@@ -137,7 +132,7 @@ void main() {
   }
 }</code></pre></div>
 <h3>Integração das camadas no pipeline</h3>
-<div class="code-shell" data-language="typescript">  <div class="code-shell-header">    <span class="code-shell-label">typescript</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-typescript">class DisasterLayerManager {
+<div class="code-shell" data-language="typescript">  <div class="code-shell-header"><span class="code-shell-label">typescript</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>class DisasterLayerManager {
   private layers = new Map&lt;DisasterType, THREE.Mesh&gt;();
 
   addLayer(type: DisasterType, params: LayerParams) {
@@ -160,9 +155,7 @@ void main() {
 }</code></pre></div>
 <h2>Resultado operacional</h2>
 <p>O motor renderiza cidades completas a 60fps num navegador desktop moderno:</p>
-<p>- <strong>Curitiba (BR)</strong>: ~12.000 edificações, DEM 30m → carregamento em ~3s</p>
-<p>- <strong>Shimane (JP)</strong>: testado com dados do GSI/MLIT</p>
-<p>- Camadas ativas: inundação, incêndio, deslizamento, terremoto (vibração por shader)</p>
+<ul><li><strong>Curitiba (BR)</strong>: ~12.000 edificações, DEM 30m → carregamento em ~3s</li> <li><strong>Shimane (JP)</strong>: testado com dados do GSI/MLIT</li> <li>Camadas ativas: inundação, incêndio, deslizamento, terremoto (vibração por shader)</li></ul>
 <p>O próximo passo (Fase 9) é o <strong>Full WebGL City Component</strong> com Keycloak-gated access para centros de comando reais.</p>
 <h2>Link com o projeto</h2>
 <p>Esse motor é o coração do <a href="/projects/sos-location/">SOS Location</a>. Os posts de arquitetura descrevem como as camadas de dados chegam até ele.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-05T12:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="2">2 min de leitura</span></span></div><div class="badge-list"><span class="badge">engineering</span><span class="badge">production</span></div><div class="tag-list"><span class="tag">webgl</span><span class="tag">threejs</span><span class="tag">gis</span><span class="tag">3d</span><span class="tag">typescript</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">repo</a><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">code</a></div></aside></section></main>

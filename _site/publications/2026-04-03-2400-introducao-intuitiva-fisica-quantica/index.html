@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <meta name="x-asciimath-inline" content="%%"><meta name="x-asciimath-block" content="%%%"><meta name="x-asciimath-script" content="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["%%", "%%"], ["%%%", "%%%"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -44,17 +44,15 @@
 <h2>Superposição: O Lado A e o Lado B Simultâneos</h2>
 <p>Diferente de um interruptor que está ligado ou desligado, uma partícula quântica pode estar em uma <strong>Superposição</strong> de ambos os estados. Só sabemos o estado real quando medimos.</p>
 <div class="mermaid">graph TD
-  A[Qubit] -->|Colapso| B[Estado 0]
-  A -->|Colapso| C[Estado 1]
-  A -.->|Antes da Medição| D[Superposição de 0 e 1]</div>
+  A[Qubit] --&gt;|Colapso| B[Estado 0]
+  A --&gt;|Colapso| C[Estado 1]
+  A -.-&gt;|Antes da Medição| D[Superposição de 0 e 1]</div>
 <h3>Entrelaçamento: A &quot;Ação Fantasmagórica à Distância&quot;</h3>
 <p>O <strong>Entrelaçamento Quântico</strong> é o fenômeno onde duas partículas ficam tão conectadas que o estado de uma afeta instantaneamente o estado da outra, não importa a distância. Einstein chamou isso de &quot;ação fantasmagórica&quot;.</p>
-<p>*   <strong>Princípio de Incerteza de Heisenberg</strong>: Você não pode saber a posição exata e a velocidade exata de uma partícula ao mesmo tempo. Quanto mais você sabe de uma, menos sabe da outra.</p>
+<ul><li>  <strong>Princípio de Incerteza de Heisenberg</strong>: Você não pode saber a posição exata e a velocidade exata de uma partícula ao mesmo tempo. Quanto mais você sabe de uma, menos sabe da outra.</li></ul>
 <h2>Por Que Isso é Importante?</h2>
 <p>Não é apenas filosofia. A física quântica é a base para:</p>
-<p>*   <strong>Transistores</strong>: Que fazem o seu computador funcionar.</p>
-<p>*   <strong>Lasers</strong>: Que transmitem a internet por fibra ótica.</p>
-<p>*   <strong>Ressonância Magnética</strong>: Que salva vidas em hospitais.</p>
+<ul><li>  <strong>Transistores</strong>: Que fazem o seu computador funcionar.</li> <li>  <strong>Lasers</strong>: Que transmitem a internet por fibra ótica.</li> <li>  <strong>Ressonância Magnética</strong>: Que salva vidas em hospitais.</li></ul>
 <h2>Conclusão</h2>
 <p>O universo quântico nos ensina que a realidade é fundamentalmente baseada em <strong>probabilidades</strong>, não em certezas. Para nós, engenheiros, isso abre as portas para uma nova era de processamento de informação que estamos apenas começando a entender.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T21:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">quantum</span><span class="badge">science</span><span class="badge">theoretical</span></div><div class="tag-list"><span class="tag">fisica</span><span class="tag">quantica</span><span class="tag">ciencia</span><span class="tag">teoria</span></div><div class="sidebar-actions"></div></aside></section></main>
       

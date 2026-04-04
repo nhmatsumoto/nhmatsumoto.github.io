@@ -44,23 +44,19 @@
 <h2>O que é Clean Code?</h2>
 <p>Não é apenas uma questão estética. É sobre <strong>redutibilidade cognitiva</strong>. Se um desenvolvedor precisa de 10 segundos para entender uma função, ela é &quot;limpa&quot;. Se precisa de 2 minutos, ela é uma dívida técnica.</p>
 <h3>Princípios SOLID resumidos:</h3>
-<p>*   <strong>S (Single Responsibility)</strong>: Uma classe deve ter uma única razão para mudar.</p>
-<p>*   <strong>O (Open/Closed)</strong>: Aberto para extensão, fechado para modificação.</p>
-<p>*   <strong>L (Liskov Substitution)</strong>: Subclasses devem ser substituíveis por suas superclasses.</p>
-<p>*   <strong>I (Interface Segregation)</strong>: Muitas interfaces específicas são melhores que uma geral.</p>
-<p>*   <strong>D (Dependency Inversion)</strong>: Dependa de abstrações, não de implementações.</p>
+<ul><li>  <strong>S (Single Responsibility)</strong>: Uma classe deve ter uma única razão para mudar.</li> <li>  <strong>O (Open/Closed)</strong>: Aberto para extensão, fechado para modificação.</li> <li>  <strong>L (Liskov Substitution)</strong>: Subclasses devem ser substituíveis por suas superclasses.</li> <li>  <strong>I (Interface Segregation)</strong>: Muitas interfaces específicas são melhores que uma geral.</li> <li>  <strong>D (Dependency Inversion)</strong>: Dependa de abstrações, não de implementações.</li></ul>
 <h2>A Matemática da Manutenibilidade (\(M\))</h2>
 <p>Podemos pensar na manutenibilidade (\(M\)) como inversamente proporcional ao acoplamento (\(C\)) e à complexidade ciclomática (\(V\)):</p>
-<p>$$M \\\\propto \\\\frac{1}{C \\\\cdot V}$$</p>
+<div class="math-block">$$M \\\\propto \\\\frac{1}{C \\\\cdot V}$$</div>
 <p>Ao aplicar SOLID, reduzimos \(C\), aumentando drasticamente a vida útil do software.</p>
 <div class="mermaid">graph LR
-    A[Código Sujo] --> B[Dívida Técnica]
-    B --> C[Lentidão na Entrega]
-    C --> D[Falha de Negócio]
+    A[Código Sujo] --&gt; B[Dívida Técnica]
+    B --&gt; C[Lentidão na Entrega]
+    C --&gt; D[Falha de Negócio]
     
-    E[Clean Code] --> F[Agilidade]
-    F --> G[Escalabilidade]
-    G --> H[Sucesso Sustentável]</div>
+    E[Clean Code] --&gt; F[Agilidade]
+    F --&gt; G[Escalabilidade]
+    G --&gt; H[Sucesso Sustentável]</div>
 <p>&gt; <strong>Heurística Operacional</strong>: Se você precisar de um comentário para explicar <strong>o que</strong> o código faz, o código está errado. O comentário deve explicar apenas o <strong>porquê</strong>.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T08:10:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">qualidade</span><span class="badge">fundamentos</span><span class="badge">engenharia</span></div><div class="tag-list"><span class="tag">qualidade</span><span class="tag">arquitetura</span><span class="tag">solid</span><span class="tag">manutenibilidade</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">

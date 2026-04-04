@@ -48,19 +48,19 @@
 <p>O Ronaldinho Agent não é monolítico. Ele é uma orquestração de microsserviços e camadas de inteligência que garantem autonomia nível L6.</p>
 <h3>O Diagrama de Fluxo</h3>
 <div class="mermaid">graph TD
-    User([Usuário]) --> |Telegram| Bridge[Neural Bridge]
-    User --> |Browser| Dashboard[OpenClaw Dashboard]
+    User([Usuário]) --&gt; |Telegram| Bridge[Neural Bridge]
+    User --&gt; |Browser| Dashboard[OpenClaw Dashboard]
 
-    subgraph "Camada de Inteligência"
-        Bridge <--> Core[Neural Core - FastAPI]
-        Dashboard <--> Core
-        Core --> Skills[Engine de Habilidades]
-        Core --> Memory[Memory Store]
+    subgraph &quot;Camada de Inteligência&quot;
+        Bridge &lt;--&gt; Core[Neural Core - FastAPI]
+        Dashboard &lt;--&gt; Core
+        Core --&gt; Skills[Engine de Habilidades]
+        Core --&gt; Memory[Memory Store]
     end
 
-    subgraph "Execução Autónoma"
-        Core --> Lane[Execution Lane]
-        Core --> Tools[Terminal/File Tools]
+    subgraph &quot;Execução Autónoma&quot;
+        Core --&gt; Lane[Execution Lane]
+        Core --&gt; Tools[Terminal/File Tools]
     end</div>
 <h3>Componentes Chave</h3>
 <h4>1. Neural Core (Sessão Central)</h4>

@@ -42,25 +42,19 @@
     <div class="site-shell">
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">SOS Location: Tecnologias, ferramentas e exemplos</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>SOS Location: Tecnologias, ferramentas e exemplos</h1><p class="post-summary">Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location.</p><div class="post-meta"><time datetime="2026-04-05T11:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><h1>Stack, conceitos e ferramentas do SOS Location</h1>
 <h2>Tecnologias usadas</h2>
-<p>- <strong>TypeScript &amp; Node.js</strong> na ingestão e no núcleo de normalização.</p>
-<p>- <strong>.NET 8</strong> com ASP.NET Core para APIs de borda, execução de pipelines e orquestração.</p>
-<p>- <strong>PostgreSQL + PostGIS</strong> para armazenamento espacial com índices <code>GIST</code>.</p>
-<p>- <strong>Kafka + Redis Streams</strong> como backbone dos eventos.</p>
-<p>- <strong>React + Leaflet + D3</strong> para o dashboard e o mapa operacional.</p>
-<p>- <strong>Grafana + Loki + Tempo</strong> para observabilidade.</p>
-<p>- <strong>OpenTelemetry</strong> para tracing distribuído.</p>
+<ul><li><strong>TypeScript &amp; Node.js</strong> na ingestão e no núcleo de normalização.</li> <li><strong>.NET 8</strong> com ASP.NET Core para APIs de borda, execução de pipelines e orquestração.</li> <li><strong>PostgreSQL + PostGIS</strong> para armazenamento espacial com índices <code>GIST</code>.</li> <li><strong>Kafka + Redis Streams</strong> como backbone dos eventos.</li> <li><strong>React + Leaflet + D3</strong> para o dashboard e o mapa operacional.</li> <li><strong>Grafana + Loki + Tempo</strong> para observabilidade.</li> <li><strong>OpenTelemetry</strong> para tracing distribuído.</li></ul>
 <h2>Conceitos fundamentais</h2>
 <p>1. <strong>Segurança de contexto</strong>: cada diagnóstico carrega um <code>trust_level</code> e só libera dados sensíveis após o agente ser autenticado.</p>
 <p>2. <strong>Mapa operacional ativo</strong>: o front-end consome camadas <code>tiles</code> + <code>vector layers</code> e aplica <code>levels</code> de criticidade.</p>
 <p>3. <strong>Conversação com agentes</strong>: subagentes (via <code>ronaldinho-agent</code>) consultam <code>event history</code> antes de alterar estados.</p>
 <h2>Exemplos de código</h2>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">[HttpGet(&quot;incidents&quot;)]
+<div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>[HttpGet(&quot;incidents&quot;)]
 public IActionResult GetIncidents(string region)
 {
     var incidents = _repository.Fetch(region, DateTime.UtcNow.AddHours(-2));
     return Ok(incidents);
 }</code></pre></div>
-<div class="code-shell" data-language="ts">  <div class="code-shell-header">    <span class="code-shell-label">ts</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-ts">const watchResource = async (resourceId: string) =&gt; {
+<div class="code-shell" data-language="ts">  <div class="code-shell-header"><span class="code-shell-label">ts</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>const watchResource = async (resourceId: string) =&gt; {
   const data = await fetch(`/api/resources/${resourceId}`);
   renderOnMap(data);
 };</code></pre></div>

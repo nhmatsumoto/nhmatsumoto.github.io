@@ -44,17 +44,11 @@
 <p>Sistemas geoespaciais costumam acumular parsing, transformação, regras de negócio, projeção de coordenadas e relatórios operacionais em um mesmo serviço. Isso funciona por pouco tempo.</p>
 <h2>Pipeline melhor que endpoint gigante</h2>
 <p>Uma abordagem mais sustentável é separar o fluxo em etapas:</p>
-<p>- ingestão de dados;</p>
-<p>- normalização e validação;</p>
-<p>- enriquecimento e geocoding;</p>
-<p>- projeção para leitura operacional;</p>
-<p>- entrega para dashboard, API ou alerta.</p>
+<ul><li>ingestão de dados;</li> <li>normalização e validação;</li> <li>enriquecimento e geocoding;</li> <li>projeção para leitura operacional;</li> <li>entrega para dashboard, API ou alerta.</li></ul>
 <h2>Por que isso importa</h2>
 <p>Com esse desenho, cada etapa tem semântica própria e falhas mais legíveis. O dashboard não precisa entender o processamento bruto, e a camada de leitura pode responder rápido mesmo quando a ingestão está pesada.</p>
 <h2>O que eu procuro preservar</h2>
-<p>- rastreabilidade do dado;</p>
-<p>- contratos estáveis para consumo;</p>
-<p>- clareza entre cálculo espacial e regra de negócio.</p>
+<ul><li>rastreabilidade do dado;</li> <li>contratos estáveis para consumo;</li> <li>clareza entre cálculo espacial e regra de negócio.</li></ul>
 <p>Essa mesma lógica de separar escrita, leitura e decisão acaba aparecendo em quase todos os sistemas que escalam bem.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="long">1 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">production</span></div><div class="tag-list"><span class="tag">gis</span><span class="tag">dotnet</span><span class="tag">architecture</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">

@@ -47,16 +47,14 @@
 <p>A escolha do gestor de estado (Provider, Riverpod, Bloc, GetX) define como os dados fluem e como a UI reage (\(reactive UI\)).</p>
 <h3>A Árvore de Reconciliação (\(W\))</h3>
 <p>Podemos pensar na eficiência (\(E\)) do Flutter como função da imutabilidade (\(I\)) e da profundidade da árvore (\(D\)):</p>
-<p>$$E \\\\propto \\\\frac{I}{D}$$</p>
+<div class="math-block">$$E \\\\propto \\\\frac{I}{D}$$</div>
 <h2>Boas Práticas:</h2>
-<p>*   <strong>const Widgets</strong>: Use widgets constantes para evitar reconstruções desnecessárias.</p>
-<p>*   <strong>Repaint Boundary</strong>: Isole partes da UI que mudam frequentemente para não forçar o redesenho de toda a tela.</p>
-<p>*   <strong>Isolates</strong>: Use Threads (Isolates) em Dart para processamento pesado fora da UI Thread.</p>
+<ul><li>  <strong>const Widgets</strong>: Use widgets constantes para evitar reconstruções desnecessárias.</li> <li>  <strong>Repaint Boundary</strong>: Isole partes da UI que mudam frequentemente para não forçar o redesenho de toda a tela.</li> <li>  <strong>Isolates</strong>: Use Threads (Isolates) em Dart para processamento pesado fora da UI Thread.</li></ul>
 <div class="mermaid">graph TD
-    A[Gestão de Estado] --> B[Widget Tree]
-    B --> C[Element Tree]
-    C --> D[Render Object Tree]
-    D --> E[GPU/Skia]</div>
+    A[Gestão de Estado] --&gt; B[Widget Tree]
+    B --&gt; C[Element Tree]
+    C --&gt; D[Render Object Tree]
+    D --&gt; E[GPU/Skia]</div>
 <p>&gt; <strong>Heurística Operacional</strong>: Se o seu <code>build</code> method tem mais de 50 linhas, você não está compondo widgets, está escrevendo um monólito de UI. Decomponha-o.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T08:40:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">mobile</span><span class="badge">performance</span><span class="badge">ui</span></div><div class="tag-list"><span class="tag">mobile</span><span class="tag">flutter</span><span class="tag">dart</span><span class="tag">arquitetura</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">

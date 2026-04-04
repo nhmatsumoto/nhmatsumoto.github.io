@@ -43,7 +43,7 @@
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Redes Neurais do Zero: Implementação Matemática em Python</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>Redes Neurais do Zero: Implementação Matemática em Python</h1><p class="post-summary">Uma jornada do neurônio de McCulloch-Pitts ao Backpropagation, implementando uma rede neural densa usando apenas NumPy.</p><div class="post-meta"><time datetime="2026-04-03T09:00:00+09:00" data-localize-date="long">3 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>Entender redes neurais através de bibliotecas como PyTorch ou TensorFlow é útil, mas entender a <strong>matemática fundamental</strong> por trás de um neurônio é o que separa o &quot;usuário&quot; do &quot;engenheiro de IA&quot;.</p>
 <h2>O Neurônio Artificial</h2>
 <p>Um neurônio é uma função matemática que recebe entradas (\(x\)), aplica pesos (\(w\)), soma-os com um viés (\(b\)) e passa o resultado por uma função de ativação (\(f\)):</p>
-<p>$$y = f(\\\\sum_{i=1}^n w_i x_i + b)$$</p>
+<div class="math-block">$$y = f(\\\\sum_{i=1}^n w_i x_i + b)$$</div>
 <h2>O Ciclo da Aprendizagem:</h2>
 <p>1.  <strong>Forward Propagation</strong>: Os dados fluem da entrada para a saída.</p>
 <p>2.  <strong>Loss Function</strong>: Calculamos o erro (ex: <em>Mean Squared Error</em>).</p>
@@ -51,9 +51,9 @@
 <p>4.  <strong>Gradient Descent</strong>: Ajustamos os pesos na direção oposta ao gradiente.</p>
 <h3>O Gradiente do Erro (\(\\\\nabla E\))</h3>
 <p>A atualização dos pesos (\(w\)) com uma taxa de aprendizado (\(\\\\eta\)) é:</p>
-<p>$$w_{new} = w_{old} - \\\\eta \\\\cdot \\\\nabla E$$</p>
+<div class="math-block">$$w_{new} = w_{old} - \\\\eta \\\\cdot \\\\nabla E$$</div>
 <h2>Implementação Conceitual (Python/NumPy):</h2>
-<div class="code-shell" data-language="python">  <div class="code-shell-header">    <span class="code-shell-label">python</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-python">import numpy as np
+<div class="code-shell" data-language="python">  <div class="code-shell-header"><span class="code-shell-label">python</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>import numpy as np
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -66,11 +66,11 @@ bias = -0.1
 output = sigmoid(np.dot(inputs, weights) + bias)
 print(f&quot;Predição: {output}&quot;)</code></pre></div>
 <div class="mermaid">graph LR
-    X1((X1)) --> W1[W1]
-    X2((X2)) --> W2[W2]
-    W1 & W2 --> SUM[Σ + bias]
-    SUM --> ACT[Sigmoid]
-    ACT --> OUT((Saída))</div>
+    X1((X1)) --&gt; W1[W1]
+    X2((X2)) --&gt; W2[W2]
+    W1 &amp; W2 --&gt; SUM[Σ + bias]
+    SUM --&gt; ACT[Sigmoid]
+    ACT --&gt; OUT((Saída))</div>
 <p>&gt; <strong>Heurística Operacional</strong>: Se o seu gradiente está &quot;explodindo&quot; (valores infinitos), revise a inicialização dos pesos e considere usar normalização de lote (Batch Norm).</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T09:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">ia</span><span class="badge">ciência</span><span class="badge">deep-learning</span></div><div class="tag-list"><span class="tag">ia</span><span class="tag">matemática</span><span class="tag">python</span><span class="tag">machine-learning</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">

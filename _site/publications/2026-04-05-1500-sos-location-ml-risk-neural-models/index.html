@@ -43,7 +43,7 @@
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</h1><p class="post-summary">O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.</p><div class="post-meta"><time datetime="2026-04-05T15:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><h1>Modelos neurais de risco: o SOSLocation.ML</h1>
 <p>Em Março de 2026, o commit <code>feat(ml+tests): SOSLocation.ML .NET project + 40 unit/integration tests</code> formalizou o que já estava sendo construído: uma unidade de ML dedicada ao SOS Location. O objetivo é simples mas ambicioso — <strong>prever quais áreas serão afetadas</strong> antes que a crise se torne incontrolável.</p>
 <h2>Arquitetura do ML Unit</h2>
-<div class="code-shell" data-language="">  <div class="code-shell-header">    <span class="code-shell-label">text</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-">risk-analysis-unit/
+<div class="code-shell" data-language="">  <div class="code-shell-header"><span class="code-shell-label">text</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>risk-analysis-unit/
   api/            FastAPI — serve o modelo via REST e streaming gRPC
   models/         Definições PyTorch dos modelos
   training/       Scripts de treino + MLflow tracking
@@ -53,7 +53,7 @@
 <h2>Modelo de segmentação semântica</h2>
 <p>O problema de identificar zonas de risco em imagens de satélite é um problema de <strong>segmentação semântica</strong> — classificar cada pixel como &quot;risco alto&quot;, &quot;risco médio&quot;, &quot;seguro&quot;, &quot;água&quot;, etc.</p>
 <p>A arquitetura escolhida é uma U-Net modificada, clássica em problemas de segmentação de imagens médicas e geoespaciais:</p>
-<div class="code-shell" data-language="python">  <div class="code-shell-header">    <span class="code-shell-label">python</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-python">import torch
+<div class="code-shell" data-language="python">  <div class="code-shell-header"><span class="code-shell-label">python</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -114,13 +114,8 @@ class SOSRiskSegmenter(nn.Module):
         return self.out(d1)  # (B, num_classes, H, W)</code></pre></div>
 <h2>Features de entrada</h2>
 <p>O modelo recebe 6 canais por tile (256x256 pixels, ~100m/pixel):</p>
-<p>| Canal | Fonte | Descrição |</p>
-<p>|---|---|---|</p>
-<p>| R, G, B | Sentinel-2 / Landsat | Imagem óptica |</p>
-<p>| DEM | SRTMGL1 | Elevação em metros |</p>
-<p>| NDVI | Calculado | Índice de vegetação |</p>
-<p>| SMI | Calculado | Soil Moisture Index |</p>
-<div class="code-shell" data-language="python">  <div class="code-shell-header">    <span class="code-shell-label">python</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-python">def prepare_tile(
+<div class="table-wrapper"><table><thead><tr><th>Canal</th><th>Fonte</th><th>Descrição</th></tr></thead><tbody><tr><td>R, G, B</td><td>Sentinel-2 / Landsat</td><td>Imagem óptica</td></tr><tr><td>DEM</td><td>SRTMGL1</td><td>Elevação em metros</td></tr><tr><td>NDVI</td><td>Calculado</td><td>Índice de vegetação</td></tr><tr><td>SMI</td><td>Calculado</td><td>Soil Moisture Index</td></tr></tbody></table></div>
+<div class="code-shell" data-language="python">  <div class="code-shell-header"><span class="code-shell-label">python</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>def prepare_tile(
     rgb: np.ndarray,        # (3, 256, 256) float32 [0,1]
     dem: np.ndarray,        # (256, 256) float32 metros
     ndvi: np.ndarray,       # (256, 256) float32 [-1, 1]
@@ -131,10 +126,8 @@ class SOSRiskSegmenter(nn.Module):
     return torch.from_numpy(x).unsqueeze(0)  # (1, 6, 256, 256)</code></pre></div>
 <h2>Dados de treino</h2>
 <p>O arquivo <code>risk_training_data.csv</code> no repositório contém metadados de tiles históricos com anotações de risco vindas de:</p>
-<p>- <strong>CEMADEN</strong> (Brasil): dados de deslizamentos históricos</p>
-<p>- <strong>INMET</strong>: dados climáticos históricos correlacionados</p>
-<p>- <strong>Brumadinho (2019)</strong>: o desastre que inspirou o projeto</p>
-<div class="code-shell" data-language="python">  <div class="code-shell-header">    <span class="code-shell-label">python</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-python">class RiskDataset(Dataset):
+<ul><li><strong>CEMADEN</strong> (Brasil): dados de deslizamentos históricos</li> <li><strong>INMET</strong>: dados climáticos históricos correlacionados</li> <li><strong>Brumadinho (2019)</strong>: o desastre que inspirou o projeto</li></ul>
+<div class="code-shell" data-language="python">  <div class="code-shell-header"><span class="code-shell-label">python</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>class RiskDataset(Dataset):
     def __init__(self, csv_path: str, tiles_dir: str, augment: bool = True):
         self.df = pd.read_csv(csv_path)
         self.tiles_dir = Path(tiles_dir)
@@ -150,7 +143,7 @@ class SOSRiskSegmenter(nn.Module):
 
         return torch.from_numpy(tile), torch.from_numpy(mask).long()</code></pre></div>
 <h2>Servindo o modelo via FastAPI</h2>
-<div class="code-shell" data-language="python">  <div class="code-shell-header">    <span class="code-shell-label">python</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-python"># api/main.py
+<div class="code-shell" data-language="python">  <div class="code-shell-header"><span class="code-shell-label">python</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code># api/main.py
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 import torch, io, json
@@ -178,7 +171,7 @@ async def predict_risk(payload: RiskRequest):
     }</code></pre></div>
 <h2>Integração com o backend .NET</h2>
 <p>Quando o handler <code>CriticalIncidentCreated</code> é disparado, o cliente .NET chama o ML Unit:</p>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">// Infrastructure/ML/RiskModelClient.cs
+<div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>// Infrastructure/ML/RiskModelClient.cs
 public async Task&lt;RiskAnalysis&gt; RequestAnalysisAsync(
     Geometry incidentLocation, CancellationToken ct)
 {

@@ -18,68 +18,117 @@ from ..i18n import (
 )
 
 def render_markdown(text: str) -> str:
-    """Mock markdown renderer that ports the original code-shell and mermaid support."""
-    # This should be a more robust implementation, but for now we'll match the original's structure
-    # where possible or use a library if available. The original had a custom parser.
-    # We will use the original's custom parser logic if it was in the backup.
-    
+    import re
+    from ..constants import WIKILINK_RE, LINK_RE, STRONG_RE, EMPHASIS_RE, INLINE_CODE_RE
+
     lines = text.replace("\r\n", "\n").split("\n")
     parts: list[str] = []
-    index = 0
+    i = 0
 
     def render_inline(s: str) -> str:
+        # Preserve math delimiters during inline rendering
+        # We temporarily swap out $ and $$ to avoid escaping them, or just escape other things carefully
         s = html.escape(s)
-        s = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", s)
-        s = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", s)
-        s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
-        s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
+        # Inline Math: $...$ -> <span class="math-inline">$...$</span>
+        s = re.sub(r"(\$)(.+?)(\$)", r'<span class="math-inline">\1\2\3</span>', s)
+        s = STRONG_RE.sub(r"<strong>\1</strong>", s)
+        s = EMPHASIS_RE.sub(r"<em>\1</em>", s)
+        s = INLINE_CODE_RE.sub(r"<code>\1</code>", s)
+        s = WIKILINK_RE.sub(r'<a class="wikilink" href="/publications/\1/">\2</a>' if r"\2" else r'<a class="wikilink" href="/publications/\1/">\1</a>', s)
+        s = LINK_RE.sub(r'<a href="\2">\1</a>', s)
         return s
 
-    import re
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.strip()
 
-    while index < len(lines):
-        stripped = lines[index].strip()
         if not stripped:
-            index += 1
+            i += 1
             continue
 
+        # 1. Code Blocks
         if stripped.startswith("```"):
             language = stripped[3:].strip()
-            code_lines = []
-            index += 1
-            while index < len(lines) and not lines[index].strip().startswith("```"):
-                code_lines.append(lines[index])
-                index += 1
-            if index < len(lines): index += 1
+            block = []
+            i += 1
+            while i < len(lines) and not lines[i].strip().startswith("```"):
+                block.append(lines[i])
+                i += 1
+            if i < len(lines): i += 1
             
+            content = "\n".join(block)
             if language == "mermaid":
-                parts.append(f'<div class="mermaid">{"\n".join(code_lines)}</div>')
+                parts.append(f'<div class="mermaid">{html.escape(content)}</div>')
             else:
-                code_content = html.escape("\n".join(code_lines))
-                lang_display = language if language else "text"
                 parts.append(
                     f'<div class="code-shell" data-language="{html.escape(language)}">'
-                    f'  <div class="code-shell-header">'
-                    f'    <span class="code-shell-label">{html.escape(lang_display)}</span>'
-                    f'    <button class="code-shell-copy" aria-label="Copy code">'
-                    f'      <i data-lucide="copy"></i>'
-                    f'    </button>'
-                    f'  </div>'
-                    f'  <pre><code class="language-{html.escape(language)}">{code_content}</code></pre>'
-                    f'</div>'
+                    f'  <div class="code-shell-header"><span class="code-shell-label">{html.escape(language or "text")}</span>'
+                    f'  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>'
+                    f'  <pre><code>{html.escape(content)}</code></pre></div>'
                 )
             continue
 
-        # Simple Paragraph/Heading fallback
-        if stripped.startswith("#"):
-            level = len(re.match(r"#+", stripped).group(0))
-            content = stripped.lstrip("#").strip()
-            parts.append(f"<h{level}>{render_inline(content)}</h{level}>")
-            index += 1
+        # 2. Block Math ($$)
+        if stripped.startswith("$$"):
+            block = [stripped]
+            i += 1
+            # If the block math is on a single line like $$formula$$, handle it
+            if not stripped.endswith("$$") or len(stripped) == 2:
+                while i < len(lines):
+                    block.append(lines[i])
+                    if lines[i].strip().endswith("$$"):
+                        i += 1
+                        break
+                    i += 1
+            else:
+                i += 1
+            parts.append(f'<div class="math-block">{" ".join(block)}</div>')
             continue
 
+        # 3. Headings
+        if stripped.startswith("#"):
+            match = re.match(r"^(#+)\s+(.+)$", stripped)
+            if match:
+                level = len(match.group(1))
+                parts.append(f"<h{level}>{render_inline(match.group(2))}</h{level}>")
+                i += 1
+                continue
+
+        # 4. Tables
+        if "|" in stripped and i + 1 < len(lines) and re.match(r"^[\s|:-]+$", lines[i+1].strip()):
+            table_lines = []
+            while i < len(lines) and "|" in lines[i]:
+                table_lines.append(lines[i])
+                i += 1
+            
+            if len(table_lines) >= 2:
+                header_raw = table_lines[0].strip("|").split("|")
+                # Skip separator at index 1
+                body_raw = [row.strip("|").split("|") for row in table_lines[2:]]
+                
+                ths = "".join(f"<th>{render_inline(h.strip())}</th>" for h in header_raw)
+                trs = "".join(
+                    f'<tr>{"".join(f"<td>{render_inline(c.strip())}</td>" for c in row)}</tr>'
+                    for row in body_raw
+                )
+                parts.append(
+                    f'<div class="table-wrapper"><table><thead><tr>{ths}</tr></thead>'
+                    f'<tbody>{trs}</tbody></table></div>'
+                )
+                continue
+
+        # 5. Lists (Simple)
+        if stripped.startswith(("- ", "* ", "+ ")):
+            list_items = []
+            while i < len(lines) and lines[i].strip().startswith(("- ", "* ", "+ ")):
+                list_items.append(f"<li>{render_inline(lines[i].strip()[2:])}</li>")
+                i += 1
+            parts.append(f"<ul>{' '.join(list_items)}</ul>")
+            continue
+
+        # 6. Paragraph (Default)
         parts.append(f"<p>{render_inline(stripped)}</p>")
-        index += 1
+        i += 1
 
     return "\n".join(parts)
 

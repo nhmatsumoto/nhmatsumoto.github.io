@@ -43,26 +43,21 @@
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">SOS Location: Fluxos, arquitetura e diagramas</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>SOS Location: Fluxos, arquitetura e diagramas</h1><p class="post-summary">Descrição dos pipelines do SOS Location, diagramas e exemplos de código.</p><div class="post-meta"><time datetime="2026-04-05T10:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><h1>Arquitetura e fluxo do SOS Location</h1>
 <p>O pipeline do SOS Location conecta ingestão, enriquecimento e visualização. Abaixo está o diagrama de fluxo principal:</p>
 <div class="mermaid">flowchart LR
-    Sources -->|Kafka| Ingest[Ingestão]
-    Ingest -->|Normalize| Processor[Normalizador]
-    Processor -->|Event Store| Repository[(PostgreSQL)]
-    Processor --> Visualizer[Visualização (GIS)]
-    Visualizer -->|API| Frontend[Dashboard SOS]
-    Repository -->|API| Ops[Operational Map (WebSocket)]</div>
+    Sources --&gt;|Kafka| Ingest[Ingestão]
+    Ingest --&gt;|Normalize| Processor[Normalizador]
+    Processor --&gt;|Event Store| Repository[(PostgreSQL)]
+    Processor --&gt; Visualizer[Visualização (GIS)]
+    Visualizer --&gt;|API| Frontend[Dashboard SOS]
+    Repository --&gt;|API| Ops[Operational Map (WebSocket)]</div>
 <h2>Componentes principais</h2>
-<p>- <strong>Ingestão</strong>: serviços em TypeScript conectam com APIs externas e escrevem no tópico <code>sos-events</code>.</p>
-<p>- <strong>Normalizer</strong>: executado em Node.js e .NET (via gRPC) para aplicar regras de normalização (geometria, contexto, cluster).</p>
-<p>- <strong>Repository</strong>: PostgreSQL + PostGIS; índices <code>GIST</code> em <code>location</code>, <code>incident_type</code>.</p>
-<p>- <strong>Visualização</strong>: front-end React/Leaflet consome WebSockets para atualizar camadas de risco.</p>
+<ul><li><strong>Ingestão</strong>: serviços em TypeScript conectam com APIs externas e escrevem no tópico <code>sos-events</code>.</li> <li><strong>Normalizer</strong>: executado em Node.js e .NET (via gRPC) para aplicar regras de normalização (geometria, contexto, cluster).</li> <li><strong>Repository</strong>: PostgreSQL + PostGIS; índices <code>GIST</code> em <code>location</code>, <code>incident_type</code>.</li> <li><strong>Visualização</strong>: front-end React/Leaflet consome WebSockets para atualizar camadas de risco.</li></ul>
 <h2>Exemplo de código</h2>
-<div class="code-shell" data-language="ts">  <div class="code-shell-header">    <span class="code-shell-label">ts</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-ts">const enqueueEvent = (event: IncomingEvent) =&gt; {
+<div class="code-shell" data-language="ts">  <div class="code-shell-header"><span class="code-shell-label">ts</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>const enqueueEvent = (event: IncomingEvent) =&gt; {
   const normalized = normalize(event);
   kafkaProducer.send({ topic: &quot;sos-events&quot;, messages: [{ value: JSON.stringify(normalized) }] });
 };</code></pre></div>
 <h2>Observações operacionais</h2>
-<p>- Cada evento crítico dispara <code>notifyOps</code> se <code>normalized.region</code> estiver no mapa <code>coverageZones</code>.</p>
-<p>- O <code>LineOfSightService</code> recalcula visibilidade de recursos ao vivo a cada reconciliação.</p>
-<p>- O fluxo é monitorado com tracing distribuído (OpenTelemetry) para garantir latência abaixo de 2 segundos.</p>
+<ul><li>Cada evento crítico dispara <code>notifyOps</code> se <code>normalized.region</code> estiver no mapa <code>coverageZones</code>.</li> <li>O <code>LineOfSightService</code> recalcula visibilidade de recursos ao vivo a cada reconciliação.</li> <li>O fluxo é monitorado com tracing distribuído (OpenTelemetry) para garantir latência abaixo de 2 segundos.</li></ul>
 <h2>Link com o projeto</h2>
 <p>O post anterior lista as regras de negócio que justificam cada nó do fluxo; este detalha os mecanismos e diagramas do projeto <a href="/projects/sos-location/">SOS Location</a>.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-05T10:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">engineering</span><span class="badge">diagram</span></div><div class="tag-list"><span class="tag">gis</span><span class="tag">architecture</span><span class="tag">sos</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">repo</a><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">code</a></div></aside></section></main>
       

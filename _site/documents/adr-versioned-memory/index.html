@@ -49,17 +49,13 @@
     participant Snapshot
     participant GitHub
 
-    Agente->>Snapshot: Cria um snapshot do contexto atual
-    Snapshot->>GitHub: Commit do snapshot para o repositório Git
-    GitHub-->>Agente: Retorna confirmação e mantém histórico versionado</div>
+    Agente-&gt;&gt;Snapshot: Cria um snapshot do contexto atual
+    Snapshot-&gt;&gt;GitHub: Commit do snapshot para o repositório Git
+    GitHub--&gt;&gt;Agente: Retorna confirmação e mantém histórico versionado</div>
 <h2>Componentes Principais</h2>
-<p>- <strong>Agente</strong>: O agente de IA que está executando as tarefas e deseja manter o contexto.</p>
-<p>- <strong>Snapshot</strong>: Um ponto de salvamento do contexto atual, que inclui dados relevantes.</p>
-<p>- <strong>GitHub (ou outro repositório Git)</strong>: O repositório onde os snapshots são versionados e armazenados de forma segura.</p>
+<ul><li><strong>Agente</strong>: O agente de IA que está executando as tarefas e deseja manter o contexto.</li> <li><strong>Snapshot</strong>: Um ponto de salvamento do contexto atual, que inclui dados relevantes.</li> <li><strong>GitHub (ou outro repositório Git)</strong>: O repositório onde os snapshots são versionados e armazenados de forma segura.</li></ul>
 <h2>Benefícios</h2>
-<p>- <strong>Memória Persistente</strong>: O agente pode recuperar contextos antigos sem perder informações.</p>
-<p>- <strong>Histórico Versionado</strong>: Cada alteração é registrada, permitindo rastreabilidade.</p>
-<p>- <strong>Otimização</strong>: Menos reprocessamento de dados, economizando tokens e requisições.</p></article><aside class="sidebar-panel"><h2 data-i18n="pages.document.meta">Metadados do documento</h2><p class="doc-version">ADR 003</p><p class="doc-category">agents</p><div class="tag-list"><span class="tag">agents</span><span class="tag">adr</span><span class="tag">memory</span></div></aside></section></main>
+<ul><li><strong>Memória Persistente</strong>: O agente pode recuperar contextos antigos sem perder informações.</li> <li><strong>Histórico Versionado</strong>: Cada alteração é registrada, permitindo rastreabilidade.</li> <li><strong>Otimização</strong>: Menos reprocessamento de dados, economizando tokens e requisições.</li></ul></article><aside class="sidebar-panel"><h2 data-i18n="pages.document.meta">Metadados do documento</h2><p class="doc-version">ADR 003</p><p class="doc-category">agents</p><div class="tag-list"><span class="tag">agents</span><span class="tag">adr</span><span class="tag">memory</span></div></aside></section></main>
       
     <footer class="site-footer">
       <div><p class="footer-label">nhmatsumoto-blog-engine</p><p>nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p></div>

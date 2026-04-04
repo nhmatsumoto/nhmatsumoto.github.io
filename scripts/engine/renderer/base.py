@@ -85,7 +85,12 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     math_config = config.get("math", {})
     math_meta = ""
     if has_math and math_config.get("enabled"):
-        math_meta = f'<meta name="x-asciimath-inline" content="{html.escape(math_config.get("inline_delimiter", "`"))}"><meta name="x-asciimath-block" content="{html.escape(math_config.get("block_delimiter", "$$"))}"><meta name="x-asciimath-script" content="{html.escape(math_config.get("script_url", ""))}">'
+        math_meta = (
+            f'<script>window.MathJax = {{ loader: {{ load: ["input/asciimath", "output/chtml"] }}, '
+            f'asciimath: {{ delimiters: [["{math_config.get("inline_delimiter", "$")}", "{math_config.get("inline_delimiter", "$")}"], '
+            f'["{math_config.get("block_delimiter", "$$")}", "{math_config.get("block_delimiter", "$$")}"]] }} }};</script>'
+            f'<script src="{html.escape(math_config.get("script_url", ""))}" id="MathJax-script" async></script>'
+        )
 
     i18n_payload = json.dumps({
         "defaultLocale": i18n.get("default_locale", locale),

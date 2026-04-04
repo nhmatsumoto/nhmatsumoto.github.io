@@ -44,21 +44,19 @@
 <h2>O Ciclo de Vida do Agente</h2>
 <p>O pensamento de um agente (como o modelo Antigravity) segue o ciclo <strong>PEA</strong>: <strong>Percepção</strong>, <strong>Execução</strong> e <strong>Adaptação</strong>.</p>
 <h2>Estrutura da Mente Sintética:</h2>
-<p>*   <strong>Memória de Trabalho (Contexto)</strong>: Onde o agente mantém o estado imediato do problema.</p>
-<p>*   <strong>Memória de Longo Prazo (RAG/Knowledge)</strong>: Onde o agente busca fatos e históricos processados.</p>
-<p>*   <strong>Planejamento (Thinking)</strong>: O processo de decompor um objetivo complexo em micro-tarefas executáveis.</p>
+<ul><li>  <strong>Memória de Trabalho (Contexto)</strong>: Onde o agente mantém o estado imediato do problema.</li> <li>  <strong>Memória de Longo Prazo (RAG/Knowledge)</strong>: Onde o agente busca fatos e históricos processados.</li> <li>  <strong>Planejamento (Thinking)</strong>: O processo de decompor um objetivo complexo em micro-tarefas executáveis.</li></ul>
 <h3>A Probabilidade de Sucesso (\(P_{success}\))</h3>
 <p>O sucesso de um agente depende da clareza da instrução (\(I\)) e da capacidade do modelo (\(M\)) versus o ruído do contexto (\(N\)):</p>
-<p>$$P_{success} = \\\\frac{I \\\\cdot M}{N}$$</p>
+<div class="math-block">$$P_{success} = \\\\frac{I \\\\cdot M}{N}$$</div>
 <h2>Orquestração Multi-Agente</h2>
 <p>Ao dividir o trabalho entre agentes especialistas (Requirement Agent, Frontend Agent, Code Agent), elevamos o teto de complexidade que a IA pode gerenciar.</p>
 <div class="mermaid">graph LR
-    A[Usuário] --> B[Orquestrador]
-    B --> C[Planejador]
-    C --> D[Especialista 1]
-    C --> E[Especialista 2]
-    D & E --> F[Validador]
-    F --> G[Resultado]</div>
+    A[Usuário] --&gt; B[Orquestrador]
+    B --&gt; C[Planejador]
+    C --&gt; D[Especialista 1]
+    C --&gt; E[Especialista 2]
+    D &amp; E --&gt; F[Validador]
+    F --&gt; G[Resultado]</div>
 <p>&gt; <strong>Heurística Operacional</strong>: O segredo de uma boa IA não é a inteligência pura, mas a estrutura de controle que evita que ela se perca em alucinações.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T08:30:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">ia</span><span class="badge">agentes</span><span class="badge">futuro</span></div><div class="tag-list"><span class="tag">ia</span><span class="tag">agentes</span><span class="tag">cognição</span><span class="tag">arquitetura</span></div><div class="sidebar-actions"></div></aside></section></main>
       
     <footer class="site-footer">

@@ -48,15 +48,15 @@
 <h3>A Matriz de Tipagem (\(T\))</h3>
 <p>Podemos classificar as linguagens em quatro quadrantes de acordo com a força e o momento da verificação:</p>
 <div class="mermaid">graph TD
-    A[Sistemas de Tipagem] --> B[Estático]
-    A --> C[Dinâmico]
-    B --> D[Forte (Rust, C#)]
-    B --> E[Fraca (C++)]
-    C --> F[Forte (Python, Ruby)]
-    C --> G[Fraca (JavaScript, PHP)]</div>
+    A[Sistemas de Tipagem] --&gt; B[Estático]
+    A --&gt; C[Dinâmico]
+    B --&gt; D[Forte (Rust, C#)]
+    B --&gt; E[Fraca (C++)]
+    C --&gt; F[Forte (Python, Ruby)]
+    C --&gt; G[Fraca (JavaScript, PHP)]</div>
 <h3>O Custo da Incerteza (\(U\))</h3>
 <p>A incerteza (\(U\)) de um sistema cresce com a ausência de tipos estáticos (\(S\)) e a falta de testes (\(T\)):</p>
-<p>$$U \\\\propto \\\\frac{1}{S \\\\cdot T}$$</p>
+<div class="math-block">$$U \\\\propto \\\\frac{1}{S \\\\cdot T}$$</div>
 <h2>Evolução Moderna: Tipagem Progressiva</h2>
 <p>Linguagens como <strong>TypeScript</strong> e <strong>Python (com mypy)</strong> permitem que você adicione tipos gradualmente em sistemas dinâmicos, unindo o melhor dos dois mundos.</p>
 <p>&gt; <strong>Heurística Operacional</strong>: Para sistemas de missão crítica ou grandes equipes, a tipagem estática e forte não é opcional; é a única forma de garantir a sanidade do domínio em larga escala.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T09:10:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">ciência</span><span class="badge">fundamentos</span><span class="badge">linguagens</span></div><div class="tag-list"><span class="tag">teoria-da-computação</span><span class="tag">linguagens</span><span class="tag">tipagem</span><span class="tag">engenharia</span></div><div class="sidebar-actions"></div></aside></section></main>

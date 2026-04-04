@@ -50,16 +50,16 @@
 <p>2. <strong>Memória episódica com retenção mínima</strong>: logs de execução e justificativas para depurar e auditar.</p>
 <p>3. <strong>Ciclo de avaliação e anti-regressão</strong>: a cada correção relevante, cria-se um teste para garantir que a falha não volte.</p>
 <div class="mermaid">flowchart LR
-  A[Saída do agente] --> B[Revisão humana / feedback]
-  B --> C{Classificar feedback}
-  C -->|Correção factual| D[Atualizar base de conhecimento]
-  C -->|Correção de formato| E[Atualizar esquema/regras]
-  C -->|Correção de política| F[Atualizar guardrails]
-  D --> G[Suíte de testes de comportamento]
-  E --> G
-  F --> G
-  G --> H[Deploy de regras/memória]
-  H --> A</div>
+  A[Saída do agente] --&gt; B[Revisão humana / feedback]
+  B --&gt; C{Classificar feedback}
+  C --&gt;|Correção factual| D[Atualizar base de conhecimento]
+  C --&gt;|Correção de formato| E[Atualizar esquema/regras]
+  C --&gt;|Correção de política| F[Atualizar guardrails]
+  D --&gt; G[Suíte de testes de comportamento]
+  E --&gt; G
+  F --&gt; G
+  G --&gt; H[Deploy de regras/memória]
+  H --&gt; A</div>
 <h2>Implementação Prática</h2>
 <p>1. <strong>Categorias de feedback</strong>: classifique se a correção é factual, de formato, de segurança ou de escopo.</p>
 <p>2. <strong>Ciclo de artefatos</strong>: converta feedback em regras concretas no sistema (ex: novo termo no glossário).</p>

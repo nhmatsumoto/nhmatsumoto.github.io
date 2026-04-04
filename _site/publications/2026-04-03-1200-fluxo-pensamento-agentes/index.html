@@ -49,21 +49,18 @@
 <p>4.  <strong>Planejamento</strong>: Gerar uma lista de passos atômicos e verificáveis.</p>
 <p>5.  <strong>Execução</strong>: Agir através de ferramentas (tool calling).</p>
 <div class="mermaid">graph TD
-  A[Intenção do Usuário] --> B{Analisador de Contexto}
-  B --> C[Pesquisa e Descoberta]
-  C --> D[Plano de Implementação]
-  D --> E[Execução por Subagentes]
-  E --> F[Validação e Feedback]
-  F --> |Falha| D
-  F --> |Sucesso| G[Entrega Final]</div>
+  A[Intenção do Usuário] --&gt; B{Analisador de Contexto}
+  B --&gt; C[Pesquisa e Descoberta]
+  C --&gt; D[Plano de Implementação]
+  D --&gt; E[Execução por Subagentes]
+  E --&gt; F[Validação e Feedback]
+  F --&gt; |Falha| D
+  F --&gt; |Sucesso| G[Entrega Final]</div>
 <h2>Por que o Planejamento é Crucial?</h2>
 <p>Sem um plano explícito, o agente tende a ser reativo. O planejamento força a IA a &quot;olhar para frente&quot; e considerar efeitos colaterais. Se o objetivo é adicionar um campo em um banco de dados, o plano deve incluir a migração, a atualização da entidade e o ajuste nas APIs de leitura.</p>
 <h2>Exemplo Real: &quot;Adicionar Telefone ao Cliente&quot;</h2>
 <p>Um pedido vago como este dispara um fluxo estruturado:</p>
-<p>-   <strong>Entidade</strong>: <code>Customer</code> (Domínio)</p>
-<p>-   <strong>Value Object</strong>: <code>PhoneNumber</code> (Validação de formato)</p>
-<p>-   <strong>Infra</strong>: Inclusão na tabela <code>customers</code> via migração.</p>
-<p>-   <strong>API</strong>: Atualização do DTO de resposta e do comando de criação.</p>
+<ul><li>  <strong>Entidade</strong>: <code>Customer</code> (Domínio)</li> <li>  <strong>Value Object</strong>: <code>PhoneNumber</code> (Validação de formato)</li> <li>  <strong>Infra</strong>: Inclusão na tabela <code>customers</code> via migração.</li> <li>  <strong>API</strong>: Atualização do DTO de resposta e do comando de criação.</li></ul>
 <h2>Conclusão</h2>
 <p>O pensamento em agentes não é mágica, é <strong>engenharia de fluxos</strong>. Ao expor esse raciocínio para o usuário (através de planos e logs), criamos um sistema de confiança mútua onde a IA não apenas &quot;faz&quot;, mas &quot;explica por que faz&quot;.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T09:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">reasoning</span><span class="badge">agentic-workflows</span><span class="badge">engineering</span></div><div class="tag-list"><span class="tag">ia</span><span class="tag">agentes</span><span class="tag">chain-of-thought</span><span class="tag">metacognicao</span></div><div class="sidebar-actions"></div></aside></section></main>
       

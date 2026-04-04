@@ -44,9 +44,7 @@
 <p>Quando um projeto começa a misturar prompt, decisão de negócio, execução de tool e persistência no mesmo fluxo, a velocidade inicial costuma enganar. O custo aparece depois: pouca previsibilidade, testes frágeis e dificuldade para mudar o comportamento do sistema sem quebrar tudo.</p>
 <h2>Uma fronteira útil</h2>
 <p>Eu tenho tratado esses sistemas em três camadas explícitas:</p>
-<p>- <strong>domínio</strong>: regras, linguagem ubíqua, contratos e estado significativo;</p>
-<p>- <strong>orquestração</strong>: composição de passos, seleção de tools e roteamento;</p>
-<p>- <strong>infraestrutura</strong>: modelos, filas, banco, storage e conectores externos.</p>
+<ul><li><strong>domínio</strong>: regras, linguagem ubíqua, contratos e estado significativo;</li> <li><strong>orquestração</strong>: composição de passos, seleção de tools e roteamento;</li> <li><strong>infraestrutura</strong>: modelos, filas, banco, storage e conectores externos.</li></ul>
 <h2>O que muda na prática</h2>
 <p>Separar essas fronteiras ajuda em três pontos:</p>
 <p>1. O domínio volta a ser testável sem depender de modelo.</p>

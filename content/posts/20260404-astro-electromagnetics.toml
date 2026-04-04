@@ -8,7 +8,7 @@ status = "production"
 tags = ["astrophysics", "science", "space-weather", "radiation"]
 badges = ["GRB", "Supernova"]
 featured = true
-body = """
+body = '''
 Estrelas não geram um "EMP" no sentido estrito da engenharia eletrônica terrestre, mas produzem emissões eletromagnéticas extremas, ondas de choque e plasma magnetizado que desafiam nossa infraestrutura.
 
 ### 1. Supernova de Colapso do Núcleo
@@ -22,13 +22,13 @@ O GRB é o análogo cosmológico mais próximo de um pulso eletromagnético extr
 
 ### 3. Space Weather: Flares vs CMEs
 No nosso quintal solar, a distinção é vital para a resiliência:
-- **Flares Solares**: Liberam raios-X e EUV que atingem a Terra em ~8 minutos. Causam bleautes imediatos de rádio.
-- **CMEs (Ejeções de Massa Coronal)**: Nuvens de plasma magnetizado que levam de 15 a 48 horas para chegar. É o choque dessa nuvem com a magnetosfera que induz as temidas correntes elétricas em linhas de transmissão terrestres.
 
-### Diferença de Impacto
-Fenômeno | Origem | Alvo Principal | Duração
---- | --- | --- | ---
-**Flare Solar** | Reconexão Magnética | Ionosfera (Rádio/GPS) | Minutos
-**CME** | Plasma Magnetizado | Redes de Alta Tensão | Horas/Dias
-**GRB** | Jatos Relativísticos | Camada de Ozônio/Atmosfera | Milissegundos
-"""
+| Fenômeno | Origem | Alvo Principal | Duração | Impacto |
+| :--- | :--- | :--- | :--- | :--- |
+| **Flare Solar** | Reconexão Magnética | Ionosfera (Rádio/GPS) | Minutos | Blackout de Rádio |
+| **CME** | Plasma Magnetizado | Redes de Alta Tensão | Horas/Dias | Correntes Induzidas (GIC) |
+| **GRB** | Jatos Relativísticos | Camada de Ozônio | Milissegundos | Extinção Atmosférica |
+
+### Conclusão
+A compreensão desses fenômenos não é apenas acadêmica; cada um deles define um "envelope de teste" para a resiliência de sistemas espaciais e terrestres.
+'''
