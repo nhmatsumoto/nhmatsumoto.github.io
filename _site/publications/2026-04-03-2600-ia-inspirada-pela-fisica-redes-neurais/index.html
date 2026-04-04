@@ -157,7 +157,10 @@
 <p>Na física, a entropia mede a desordem. Na IA, usamos a <strong>Entropia Cruzada</strong> (Cross-Entropy) para medir quão longe nossa rede está da resposta correta. Treinar uma rede é, essencialmente, reduzir a desordem da sua predição.</p>
 <h2>Redes de Hopfield e a Energia de um Sistema</h2>
 <p>John Hopfield, físico de formação, criou uma rede neural onde a memória é um estado de <strong>Mínima Energia</strong>. Imagine uma bola rolando em uma paisagem de montanhas; a memória é o fundo do vale.</p>
-<div class="mermaid">graph TD    A[Estado de Alta Energia - Desordenado] -->|Descida do Gradiente| B[Estado de Baixa Energia - Estável]    B --> C[Memória Recuperada]    style B fill:#dfd,stroke:#333</div>
+<div class="mermaid">graph TD
+    A[Estado de Alta Energia - Desordenado] -->|Descida do Gradiente| B[Estado de Baixa Energia - Estável]
+    B --> C[Memória Recuperada]
+    style B fill:#dfd,stroke:#333</div>
 <h3>Diffusion Models: Criando do Caos</h3>
 <p>Os modelos de imagem modernos (como Midjourney ou Stable Diffusion) usam um processo físico inverso. Eles adicionam ruído (caos/entropia) a uma imagem até que ela vire chiado puro e, então, ensinam a rede a <strong>reverter a difusão</strong>, extraindo ordem do caos.</p>
 <h2>A Matemática do Aprendizado</h2>

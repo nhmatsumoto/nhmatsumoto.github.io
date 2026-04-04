@@ -157,7 +157,13 @@
 <p>A eficiência (\(E\)) do sistema é inversamente proporcional à pressão sobre o GC (\(P\)), que por sua vez é função da taxa de alocação (\(A\)): $$E \\\\propto \\\\frac{1}{P(A)}$$</p>
 <h2>Técnicas de Performance:</h2>
 <ul><li><strong>Span e ReadOnlySpan</strong>: Trabalhe com janelas de memória sem alocar cópias.</li><li><strong>ArrayPool</strong>: Reutilize buffers para evitar fragmentação da LOH.</li><li><strong>ValueTask</strong>: Reduza alocações no heap para operações assíncronas frequentes.</li></ul>
-<div class="mermaid">graph LR    A[C# Code] --> B[IL Compiler]    B --> C[DLL / EXE]    C --> D{Deployment Type}    D -- Standard --> E[JIT Engine]    D -- AOT --> F[Native Binary]    E & F --> G[Machine Code]</div>
+<div class="mermaid">graph LR
+    A[C# Code] --> B[IL Compiler]
+    B --> C[DLL / EXE]
+    C --> D{Deployment Type}
+    D -- Standard --> E[JIT Engine]
+    D -- AOT --> F[Native Binary]
+    E & F --> G[Machine Code]</div>
 <blockquote><p><strong>Heurística Operacional</strong>: Se o seu serviço leva mais de 500ms para subir no Kubernetes, você deveria considerar Native AOT ou revisar as injeções de dependência pesadas no <code>Startup</code>.</p></blockquote>
             <footer class="post-author">
               <p><strong>Autor:</strong> Hiro Matsumoto</p>

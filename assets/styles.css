@@ -1718,3 +1718,59 @@ pre {
     transparent 40%
   );
 }
+/* --- Grouped Publications Layout --- */
+.publications-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin-top: 2rem;
+}
+
+.publication-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.publication-group .document-group-head h3 {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: 1rem;
+}
+
+.publication-collection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+/* Mermaid Rendering Polish */
+.mermaid {
+  background: var(--surface-soft);
+  padding: 2rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .publication-collection {
+    grid-template-columns: 1fr;
+  }
+}

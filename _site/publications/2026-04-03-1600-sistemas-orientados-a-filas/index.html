@@ -151,7 +151,12 @@
             <p>Sistemas síncronos (HTTP/REST) são simples, mas frágeis. Se o serviço B cai, o serviço A também falha. As <strong>Filas de Mensageria</strong> resolvem isso ao introduzir um intermediário (Message Broker) que garante que o trabalho será feito, mesmo que não seja agora.</p>
 <h2>O Broker como &quot;Amortecedor&quot;</h2>
 <p>Imagine um serviço de processamento de vídeos. Receber milhares de uploads simultâneos via HTTP causaria um estouro de memória. Com filas, o upload apenas coloca a tarefa no &quot;fim da linha&quot; e o processador a consome no seu próprio ritmo.</p>
-<div class="mermaid">graph LR  P[Produtor - API] -->|Envia Mensagem| B((Message Broker))  B -->|Fila de Tarefas| C1[Consumidor 1]  B -->|Fila de Tarefas| C2[Consumidor 2]  C1 --> D[(Banco de Dados)]  C2 --> D</div>
+<div class="mermaid">graph LR
+  P[Produtor - API] -->|Envia Mensagem| B((Message Broker))
+  B -->|Fila de Tarefas| C1[Consumidor 1]
+  B -->|Fila de Tarefas| C2[Consumidor 2]
+  C1 --> D[(Banco de Dados)]
+  C2 --> D</div>
 <h3>Padrões Essenciais de Filas</h3>
 <ol><li><strong>Idempotência</strong>: O consumidor deve ser capaz de processar a mesma mensagem duas vezes sem efeitos colaterais (ex: verificar se o boleto já foi pago antes de processar).</li><li><strong>Dead Letter Queue (DLQ)</strong>: Mensagens que falham N vezes vão para uma fila separada para auditoria manual, evitando que o erro trave todo o sistema.</li><li><strong>Acknowledge (ACK)</strong>: O broker só remove a mensagem da fila quando o consumidor confirma que terminou o processamento com sucesso.</li></ol>
 <h2>Ferramentas de Mensageria</h2>

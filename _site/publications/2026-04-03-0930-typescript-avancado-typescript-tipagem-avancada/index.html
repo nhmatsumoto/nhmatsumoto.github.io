@@ -161,7 +161,12 @@ type Result = IsString&lt;&quot;hello&quot;&gt;; // true</code></pre></div>
 <p>Se \(C\) for muito alto, o IntelliSense ficará lento e o tempo de compilação aumentará.</p>
 <h2>Utilitários de Tipo Customizados:</h2>
 <ul><li><strong>Template Literal Types</strong>: Combine strings e crie tipos ultra-específicos para rotas ou eventos.</li><li><strong>Discriminated Unions</strong>: O padrão ouro para lidar com estados de UI de forma segura.</li></ul>
-<div class="mermaid">graph TD    A[Base Types] --> B[Generics]    B --> C[Conditional Types]    C --> D[Mapped Types]    D --> E[Template Literals]    E --> F[Type Programming]</div>
+<div class="mermaid">graph TD
+    A[Base Types] --> B[Generics]
+    B --> C[Conditional Types]
+    C --> D[Mapped Types]
+    D --> E[Template Literals]
+    E --> F[Type Programming]</div>
 <blockquote><p><strong>Heurística Operacional</strong>: Se você estiver usando <code>any</code> para resolver um problema de tipagem complexo, você não está resolvendo o problema; você está escondendo o bug. Use <code>unknown</code> e <em>type guards</em> se a tipagem for realmente dinâmica.</p></blockquote>
             <footer class="post-author">
               <p><strong>Autor:</strong> Hiro Matsumoto</p>

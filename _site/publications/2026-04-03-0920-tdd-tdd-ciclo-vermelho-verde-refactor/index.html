@@ -157,7 +157,11 @@
 <h3>O Coeficiente de Confiança (\(C\))</h3>
 <p>A confiança (\(C\)) em um despliegue (\(D\)) é proporcional à cobertura de caminhos críticos (\(Co\)) e à velocidade de execução (\(S\)): $$C \\\\propto Co \\\\cdot S$$</p>
 <p>No TDD, \(S\) é maximizado porque os testes unitários rodam em milissegundos.</p>
-<div class="mermaid">graph LR    A[Requisito] --> B[Teste RED]    B --> C[Código GREEN]    C --> D[Refactor]    D --> B</div>
+<div class="mermaid">graph LR
+    A[Requisito] --> B[Teste RED]
+    B --> C[Código GREEN]
+    C --> D[Refactor]
+    D --> B</div>
 <h2>Benefícios Arquiteturais:</h2>
 <ul><li><strong>Desacoplamento Inevitável</strong>: Código difícil de testar geralmente é código muito acoplado.</li><li><strong>Documentação Viva</strong>: Os testes explicam como a classe deve se comportar.</li><li><strong>Coragem para Refatorar</strong>: Você sabe imediatamente se quebrou algo.</li></ul>
 <blockquote><p><strong>Heurística Operacional</strong>: Se você precisa de &quot;Mocks&quot; em excesso para rodar um teste unitário, seu domínio está sofrendo de vazamento de responsabilidade. Reavalie a abstração.</p></blockquote>

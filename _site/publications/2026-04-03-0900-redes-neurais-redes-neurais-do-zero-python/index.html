@@ -168,7 +168,12 @@ bias = -0.1
 
 output = sigmoid(np.dot(inputs, weights) + bias)
 print(f&quot;Predição: {output}&quot;)</code></pre></div>
-<div class="mermaid">graph LR    X1((X1)) --> W1[W1]    X2((X2)) --> W2[W2]    W1 & W2 --> SUM[Σ + bias]    SUM --> ACT[Sigmoid]    ACT --> OUT((Saída))</div>
+<div class="mermaid">graph LR
+    X1((X1)) --> W1[W1]
+    X2((X2)) --> W2[W2]
+    W1 & W2 --> SUM[Σ + bias]
+    SUM --> ACT[Sigmoid]
+    ACT --> OUT((Saída))</div>
 <blockquote><p><strong>Heurística Operacional</strong>: Se o seu gradiente está &quot;explodindo&quot; (valores infinitos), revise a inicialização dos pesos e considere usar normalização de lote (Batch Norm).</p></blockquote>
             <footer class="post-author">
               <p><strong>Autor:</strong> Hiro Matsumoto</p>

@@ -156,7 +156,12 @@
 <h2>O Que é Notação Big O?</h2>
 <p>O Big O foca no <strong>pior cenário</strong>. Ele ignora constantes e foca na curva de crescimento.</p>
 <ul><li><strong>O(1)</strong> - Constante: O tempo não muda (ex: acessar um item em um array pelo índice).</li><li><strong>O(log n)</strong> - Logarítmico: A eficiência máxima (ex: Busca Binária).</li><li><strong>O(n)</strong> - Linear: O tempo cresce proporcionalmente aos dados (ex: percorrer uma lista).</li><li><strong>O(n log n)</strong> - Linearitmo: O padrão para ordenação eficiente (ex: Merge Sort, Quick Sort).</li><li><strong>O(n^2)</strong> - Quadrático: O perigo dos loops aninhados.</li></ul>
-<div class="mermaid">graph TD    A[O(1) - Excelente] --> B[O(log n) - Muito Bom]    B --> C[O(n) - Justo]    C --> D[O(n log n) - Razoável]    D --> E[O(n^2) - Ruim]    E --> F[O(2^n) - Horrível]</div>
+<div class="mermaid">graph TD
+    A[O(1) - Excelente] --> B[O(log n) - Muito Bom]
+    B --> C[O(n) - Justo]
+    C --> D[O(n log n) - Razoável]
+    D --> E[O(n^2) - Ruim]
+    E --> F[O(2^n) - Horrível]</div>
 <h3>Busca Binária: A Mágica do Logaritmo</h3>
 <p>Imagine procurar um nome em uma lista telefônica de 1 milhão de páginas. Uma busca linear (página por página) levaria até 1 milhão de passos. Uma <strong>Busca Binária</strong> (dividindo ao meio) levaria apenas <strong>20 passos</strong>.</p>
 <h3>Por que se Importar?</h3>

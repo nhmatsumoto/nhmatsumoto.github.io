@@ -157,7 +157,12 @@
 <p>Podemos modelar o tempo total de execução (\(T\)) como: $$T_{total} = T_{sql} + T_{mapping} + T_{tracking}$$</p>
 <p>No Dapper, \(T_{tracking} \\approx 0\), o que o torna imbatível para operações de leitura intensiva.</p>
 <h2>Quando usar qual?</h2>
-<div class="mermaid">graph TD    A[Nova Funcionalidade] --> B{Complexidade de Escrita?}    B -- Alta --> C[EF Core]    B -- Baixa --> D{Volume de Leitura?}    D -- Crítico --> E[Dapper]    D -- Padrão --> C</div>
+<div class="mermaid">graph TD
+    A[Nova Funcionalidade] --> B{Complexidade de Escrita?}
+    B -- Alta --> C[EF Core]
+    B -- Baixa --> D{Volume de Leitura?}
+    D -- Crítico --> E[Dapper]
+    D -- Padrão --> C</div>
 <blockquote><p><strong>Heurística Operacional</strong>: Use EF Core para comandos (escrita) e Dapper para consultas (leitura) em uma arquitetura de estilo <strong>CQRS</strong>.</p></blockquote>
             <footer class="post-author">
               <p><strong>Autor:</strong> Hiro Matsumoto</p>

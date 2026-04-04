@@ -41,8 +41,8 @@ DEFAULT_BUILD_CONFIG = {
 DEFAULT_MATH_CONFIG = {
     "enabled": True,
     "script_url": "https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js",
-    "inline_delimiter": "%%",
-    "block_delimiter": "%%%",
+    "inline_delimiter": "$",
+    "block_delimiter": "$$",
 }
 
 DEFAULT_SITE = {
@@ -409,9 +409,12 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
     config = load_blog_config()
     publications_dir = config["build"]["publications_dir"]
 
+    category = str(raw.get("category", "") or (tags[0] if tags else "engineering")).strip().lower()
     return {
         "id": post_id,
         "slug": slug,
+        "kind": "article",
+        "category": category,
         "title": title,
         "summary": summary,
         "published_at": published_dt.isoformat(timespec="seconds"),
@@ -466,6 +469,9 @@ def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> d
         "roadmap": normalize_string_list(raw.get("roadmap", [])),
         "source_path": source_path,
         "url": f"/projects/{slug}/",
+        "has_math": bool(raw.get("has_asciimath", False)) 
+        or any(load_blog_config()["math"]["inline_delimiter"] in str(raw.get(f, "")) for f in ["overview", "problem_solution", "architecture", "stack_notes"])
+        or any(load_blog_config()["math"]["block_delimiter"] in str(raw.get(f, "")) for f in ["overview", "problem_solution", "architecture", "stack_notes"]),
     }
 
 
@@ -479,18 +485,24 @@ def normalise_document(raw: dict[str, Any], source_path: Path | None = None) -> 
             body = source_file.read_text(encoding="utf-8")
 
     category = str(raw.get("category", "") or "architecture").strip().lower()
+    tags = normalize_string_list(raw.get("tags", []))
     return {
         "slug": slug,
+        "kind": "document",
         "title": str(raw.get("title", "") or "").strip() or "Untitled Document",
         "summary": str(raw.get("summary", "") or "").strip() or summarize_body(body),
         "category": category,
         "version": str(raw.get("version", "") or "").strip() or "v1",
-        "tags": normalize_string_list(raw.get("tags", [])),
+        "tags": tags,
         "agent_generated_tag": bool(raw.get("agent_generated_tag", False)),
         "order": parse_int(raw.get("order", 999)),
         "body": body.rstrip() + "\n" if body.strip() else "",
         "source_path": source_path,
         "url": f"/documents/{slug}/",
+        "published_dt": now_local(),
+        "has_math": bool(raw.get("has_asciimath", False))
+        or load_blog_config()["math"]["inline_delimiter"] in body
+        or load_blog_config()["math"]["block_delimiter"] in body,
     }
 
 
@@ -727,7 +739,7 @@ def render_markdown(text: str) -> str:
                 index += 1
 
             if language == "mermaid":
-                parts.append(f'<div class="mermaid">{"".join(code_lines)}</div>')
+                parts.append(f'<div class="mermaid">{"\n".join(code_lines)}</div>')
             else:
                 code_content = html.escape("\n".join(code_lines))
                 lang_display = language if language else "text"
@@ -1312,6 +1324,66 @@ def render_document_card(document: dict[str, Any], i18n: dict[str, Any], locale:
     </li>
     """.strip()
 
+def render_publication_card(item: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+    if item["kind"] == "article":
+        return render_post_card(item, i18n, locale)
+    return render_document_card(item, i18n, locale)
+
+def render_publications_grouped_section(
+    system: dict[str, Any],
+    publications: list[dict[str, Any]],
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    limit: int | None = None,
+) -> str:
+    items = publications[:limit] if limit is not None else publications
+    groups = docs_by_category(items)
+    blocks = []
+    
+    layout_docs = system.get("layout", {}).get("documents", {})
+    order = normalize_string_list(layout_docs.get("navigation", []))
+    
+    sorted_categories = order if order else sorted(groups.keys())
+    
+    for category in sorted_categories:
+        group_items = groups.get(category, [])
+        if not group_items:
+            continue
+        cards = "\n".join(render_publication_card(item, i18n, locale) for item in group_items)
+        blocks.append(f"""
+        <section class="publication-group">
+          <header class="document-group-head">
+            <h3 class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+              {html.escape(category.upper())}
+            </h3>
+          </header>
+          <ol class="resource-list publication-collection">
+            {cards}
+          </ol>
+        </section>
+        """)
+
+    empty_msg = translate(i18n, locale, "empty.publications", "No publications found.")
+    content = "\n".join(blocks) if blocks else f'<p class="empty-state">{html.escape(empty_msg)}</p>'
+
+    return f"""
+    <section class="section-panel" aria-labelledby="pubs-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "publications"))}</p>
+          <h2 id="pubs-title" data-i18n="sections.publications_title">{html.escape(translate(i18n, locale, "sections.publications_title", "Technical Knowledge OS"))}</h2>
+        </div>
+        <p class="section-copy" data-i18n="sections.publications_copy">{html.escape(translate(i18n, locale, "sections.publications_copy", "Unified stream of architecture documents, technical articles and research notes."))}</p>
+      </header>
+      <div class="publications-grid">
+        {content}
+      </div>
+    </section>
+    """
+
+
 
 def render_hero(
     site: dict[str, str],
@@ -1612,13 +1684,13 @@ def render_home_page(
     locale: str,
 ) -> str:
     config = load_blog_config()["build"]
+    publications = sorted(posts + documents, key=lambda x: x.get("published_dt", now_local()), reverse=True)
     content = f"""
     {render_hero(site, system, posts, projects, i18n, locale)}
     {render_navigation_section(system, posts, projects, documents, i18n, locale)}
-    {render_posts_section(system, posts, i18n, locale, limit=int(config['posts_on_home']))}
+    {render_publications_grouped_section(system, publications, i18n, locale, limit=int(config.get('posts_on_home', 10)))}
     {render_brain_map_section(site, system, i18n, locale)}
     {render_projects_section(projects, i18n, locale, limit=int(config['projects_on_home']))}
-    {render_documents_section(system, documents, i18n, locale, limit=int(config['documents_on_home']))}
     {render_about_teaser(system, i18n, locale)}
     """
     return render_layout(
@@ -1645,6 +1717,7 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
         i18n,
         locale,
     )
+    publications = sorted(posts, key=lambda x: x.get("published_dt", now_local()), reverse=True)
     content = f"""
     {breadcrumbs}
     <section class="page-heading">
@@ -1652,7 +1725,7 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
       <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "All publications"))}</h1>
       <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Writing stream for architecture notes, experiments, domain modeling and operating heuristics."))}</p>
     </section>
-    {render_posts_section(system, posts, i18n, locale, show_controls=True)}
+    {render_publications_grouped_section(system, publications, i18n, locale)}
     """
     return render_layout(
         page_title=f"Posts | {site['title']}",
@@ -1953,7 +2026,7 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
         system=system,
         body_class="page-project",
         canonical_path=project["url"],
-        has_math=False,
+        has_math=project.get("has_math", False),
         content=content,
         active_nav="projects",
         i18n=i18n,

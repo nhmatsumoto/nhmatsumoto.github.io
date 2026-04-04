@@ -155,7 +155,17 @@
 <h2>Mecanismos de Neuroplasticidade</h2>
 <p>Aqui, “neuroplasticidade” é uma metáfora útil para três mecanismos concretos:</p>
 <ol><li><strong>Memória declarativa curada</strong>: um repositório versionado de decisões (glossário, preferências de estilo, restrições).</li><li><strong>Memória episódica com retenção mínima</strong>: logs de execução e justificativas para depurar e auditar.</li><li><strong>Ciclo de avaliação e anti-regressão</strong>: a cada correção relevante, cria-se um teste para garantir que a falha não volte.</li></ol>
-<div class="mermaid">flowchart LR  A[Saída do agente] --> B[Revisão humana / feedback]  B --> C{Classificar feedback}  C -->|Correção factual| D[Atualizar base de conhecimento]  C -->|Correção de formato| E[Atualizar esquema/regras]  C -->|Correção de política| F[Atualizar guardrails]  D --> G[Suíte de testes de comportamento]  E --> G  F --> G  G --> H[Deploy de regras/memória]  H --> A</div>
+<div class="mermaid">flowchart LR
+  A[Saída do agente] --> B[Revisão humana / feedback]
+  B --> C{Classificar feedback}
+  C -->|Correção factual| D[Atualizar base de conhecimento]
+  C -->|Correção de formato| E[Atualizar esquema/regras]
+  C -->|Correção de política| F[Atualizar guardrails]
+  D --> G[Suíte de testes de comportamento]
+  E --> G
+  F --> G
+  G --> H[Deploy de regras/memória]
+  H --> A</div>
 <h2>Implementação Prática</h2>
 <ol><li><strong>Categorias de feedback</strong>: classifique se a correção é factual, de formato, de segurança ou de escopo.</li><li><strong>Ciclo de artefatos</strong>: converta feedback em regras concretas no sistema (ex: novo termo no glossário).</li><li><strong>Tool calling para ações verificáveis</strong>: use function calling para realizar tarefas tangíveis e mensuráveis.</li></ol>
 <h2>Conclusão</h2>

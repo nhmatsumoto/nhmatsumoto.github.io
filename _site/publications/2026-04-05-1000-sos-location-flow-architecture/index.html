@@ -150,7 +150,13 @@
             </header>
             <h1>Arquitetura e fluxo do SOS Location</h1>
 <p>O pipeline do SOS Location conecta ingestão, enriquecimento e visualização. Abaixo está o diagrama de fluxo principal:</p>
-<div class="mermaid">flowchart LR    Sources -->|Kafka| Ingest[Ingestão]    Ingest -->|Normalize| Processor[Normalizador]    Processor -->|Event Store| Repository[(PostgreSQL)]    Processor --> Visualizer[Visualização (GIS)]    Visualizer -->|API| Frontend[Dashboard SOS]    Repository -->|API| Ops[Operational Map (WebSocket)]</div>
+<div class="mermaid">flowchart LR
+    Sources -->|Kafka| Ingest[Ingestão]
+    Ingest -->|Normalize| Processor[Normalizador]
+    Processor -->|Event Store| Repository[(PostgreSQL)]
+    Processor --> Visualizer[Visualização (GIS)]
+    Visualizer -->|API| Frontend[Dashboard SOS]
+    Repository -->|API| Ops[Operational Map (WebSocket)]</div>
 <h2>Componentes principais</h2>
 <ul><li><strong>Ingestão</strong>: serviços em TypeScript conectam com APIs externas e escrevem no tópico <code>sos-events</code>.</li><li><strong>Normalizer</strong>: executado em Node.js e .NET (via gRPC) para aplicar regras de normalização (geometria, contexto, cluster).</li><li><strong>Repository</strong>: PostgreSQL + PostGIS; índices <code>GIST</code> em <code>location</code>, <code>incident_type</code>.</li><li><strong>Visualização</strong>: front-end React/Leaflet consome WebSockets para atualizar camadas de risco.</li></ul>
 <h2>Exemplo de código</h2>

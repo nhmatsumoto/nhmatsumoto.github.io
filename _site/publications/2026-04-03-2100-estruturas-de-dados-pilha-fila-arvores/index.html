@@ -156,7 +156,14 @@
 <h2>Árvores e sua Eficiência Hierárquica</h2>
 <p>Árvores (especialmente as Binárias de Busca) permitem localizar, inserir e remover dados de forma extremamente rápida. Elas são a base de:</p>
 <ul><li><strong>Sistemas de Arquivos</strong>: Onde pastas contêm subpastas.</li><li><strong>DOM (Document Object Model)</strong>: A estrutura de toda página web.</li><li><strong>Índices de Banco de Dados</strong>: O segredo para queries que não travam.</li></ul>
-<div class="mermaid">graph TD    Root((Raiz))    Root --> L1[Esquerda]    Root --> R1[Direita]    L1 --> LL1[Sub-esquerda]    L1 --> LR1[Sub-direita]    R1 --> RL1[Sub-esquerda]    R1 --> RR1[Sub-direita]</div>
+<div class="mermaid">graph TD
+    Root((Raiz))
+    Root --> L1[Esquerda]
+    Root --> R1[Direita]
+    L1 --> LL1[Sub-esquerda]
+    L1 --> LR1[Sub-direita]
+    R1 --> RL1[Sub-esquerda]
+    R1 --> RR1[Sub-direita]</div>
 <h3>Qual Escolher?</h3>
 <p>| Problema | Estrutura Ideal | | :--- | :--- | | Histórico de Navegação | Pilha | | Gerenciamento de Impressão | Fila | | Busca em Grande Volume | Árvores (B-Tree, AVL) | | Relacionamentos Rápidos | Hash Table |</p>
 <h2>Conclusão</h2>

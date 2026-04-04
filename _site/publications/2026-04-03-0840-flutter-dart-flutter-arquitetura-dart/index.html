@@ -157,7 +157,11 @@
 <p>Podemos pensar na eficiência (\(E\)) do Flutter como função da imutabilidade (\(I\)) e da profundidade da árvore (\(D\)): $$E \\\\propto \\\\frac{I}{D}$$</p>
 <h2>Boas Práticas:</h2>
 <ul><li><strong>const Widgets</strong>: Use widgets constantes para evitar reconstruções desnecessárias.</li><li><strong>Repaint Boundary</strong>: Isole partes da UI que mudam frequentemente para não forçar o redesenho de toda a tela.</li><li><strong>Isolates</strong>: Use Threads (Isolates) em Dart para processamento pesado fora da UI Thread.</li></ul>
-<div class="mermaid">graph TD    A[Gestão de Estado] --> B[Widget Tree]    B --> C[Element Tree]    C --> D[Render Object Tree]    D --> E[GPU/Skia]</div>
+<div class="mermaid">graph TD
+    A[Gestão de Estado] --> B[Widget Tree]
+    B --> C[Element Tree]
+    C --> D[Render Object Tree]
+    D --> E[GPU/Skia]</div>
 <blockquote><p><strong>Heurística Operacional</strong>: Se o seu <code>build</code> method tem mais de 50 linhas, você não está compondo widgets, está escrevendo um monólito de UI. Decomponha-o.</p></blockquote>
             <footer class="post-author">
               <p><strong>Autor:</strong> Hiro Matsumoto</p>

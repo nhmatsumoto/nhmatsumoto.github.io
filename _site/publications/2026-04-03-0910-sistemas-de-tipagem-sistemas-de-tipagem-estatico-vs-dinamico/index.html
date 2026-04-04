@@ -155,7 +155,13 @@
 <p>Os tipos são verificados em tempo de execução (\(runtime\)). Isso permite uma prototipagem extremamente rápida e flexível, mas exige uma cobertura de testes unitários muito mais rigorosa.</p>
 <h3>A Matriz de Tipagem (\(T\))</h3>
 <p>Podemos classificar as linguagens em quatro quadrantes de acordo com a força e o momento da verificação:</p>
-<div class="mermaid">graph TD    A[Sistemas de Tipagem] --> B[Estático]    A --> C[Dinâmico]    B --> D[Forte (Rust, C#)]    B --> E[Fraca (C++)]    C --> F[Forte (Python, Ruby)]    C --> G[Fraca (JavaScript, PHP)]</div>
+<div class="mermaid">graph TD
+    A[Sistemas de Tipagem] --> B[Estático]
+    A --> C[Dinâmico]
+    B --> D[Forte (Rust, C#)]
+    B --> E[Fraca (C++)]
+    C --> F[Forte (Python, Ruby)]
+    C --> G[Fraca (JavaScript, PHP)]</div>
 <h3>O Custo da Incerteza (\(U\))</h3>
 <p>A incerteza (\(U\)) de um sistema cresce com a ausência de tipos estáticos (\(S\)) e a falta de testes (\(T\)): $$U \\\\propto \\\\frac{1}{S \\\\cdot T}$$</p>
 <h2>Evolução Moderna: Tipagem Progressiva</h2>

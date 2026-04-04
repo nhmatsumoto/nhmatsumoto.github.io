@@ -155,7 +155,11 @@
             <p>Simular o universo não exige conhecer cada posição e cada velocidade de cada átomo. Em vez disso, usamos a <strong>Simulação Estocástica</strong>, e o rei dessa técnica é o <strong>Método de Monte Carlo</strong>.</p>
 <h2>O Que é Monte Carlo?</h2>
 <p>O nome vem do famoso cassino em Mônaco, pois a técnica baseia-se em <strong>aleatoriedade</strong>. Se você quiser calcular a área de um círculo mas só souber a de um quadrado, você pode &quot;jogar dardos&quot; aleatoriamente no quadrado. A proporção de dardos dentro do círculo dará a você uma aproximação de <code>pi</code>.</p>
-<div class="mermaid">graph LR  A[Input Aleatório] --> B[Processo Físico]  B --> C[Resultado Determinístico]  C --> D[Média Estatística]  D --> E[Aproximação da Realidade]</div>
+<div class="mermaid">graph LR
+  A[Input Aleatório] --> B[Processo Físico]
+  B --> C[Resultado Determinístico]
+  C --> D[Média Estatística]
+  D --> E[Aproximação da Realidade]</div>
 <h3>Simulação de Partículas e Fluidos</h3>
 <p>Em física de partículas, usamos Monte Carlo para simular colisões em aceleradores (como o CERN). No desenvolvimento de software, aplicamos as mesmas leis:</p>
 <ul><li><strong>Gravidade</strong>: <code>F = G * (m1 * m2) / r^2</code></li><li><strong>Colisões</strong>: Conservação de momento linear e energia cinética.</li></ul>

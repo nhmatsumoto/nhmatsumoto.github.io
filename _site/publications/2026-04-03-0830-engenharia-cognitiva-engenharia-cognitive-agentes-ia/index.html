@@ -157,7 +157,13 @@
 <p>O sucesso de um agente depende da clareza da instrução (\(I\)) e da capacidade do modelo (\(M\)) versus o ruído do contexto (\(N\)): $$P_{success} = \\\\frac{I \\\\cdot M}{N}$$</p>
 <h2>Orquestração Multi-Agente</h2>
 <p>Ao dividir o trabalho entre agentes especialistas (Requirement Agent, Frontend Agent, Code Agent), elevamos o teto de complexidade que a IA pode gerenciar.</p>
-<div class="mermaid">graph LR    A[Usuário] --> B[Orquestrador]    B --> C[Planejador]    C --> D[Especialista 1]    C --> E[Especialista 2]    D & E --> F[Validador]    F --> G[Resultado]</div>
+<div class="mermaid">graph LR
+    A[Usuário] --> B[Orquestrador]
+    B --> C[Planejador]
+    C --> D[Especialista 1]
+    C --> E[Especialista 2]
+    D & E --> F[Validador]
+    F --> G[Resultado]</div>
 <blockquote><p><strong>Heurística Operacional</strong>: O segredo de uma boa IA não é a inteligência pura, mas a estrutura de controle que evita que ela se perca em alucinações.</p></blockquote>
             <footer class="post-author">
               <p><strong>Autor:</strong> Hiro Matsumoto</p>

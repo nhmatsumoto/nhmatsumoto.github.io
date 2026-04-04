@@ -152,7 +152,14 @@
 <h2>O Ciclo Cognitivo</h2>
 <p>Diferente de um chat comum, um agente operacional segue um ciclo rigoroso para garantir que cada passo seja fundamentado na realidade do projeto.</p>
 <ol><li><strong>Percepção</strong>: Leitura do estado atual (arquivos, logs, memória).</li><li><strong>Classificação</strong>: Identificar se é uma nova funcionalidade, um bug ou uma dúvida técnica.</li><li><strong>Modelagem</strong>: Aplicar os princípios do domínio (DDD) para garantir consistência.</li><li><strong>Planejamento</strong>: Gerar uma lista de passos atômicos e verificáveis.</li><li><strong>Execução</strong>: Agir através de ferramentas (tool calling).</li></ol>
-<div class="mermaid">graph TD  A[Intenção do Usuário] --> B{Analisador de Contexto}  B --> C[Pesquisa e Descoberta]  C --> D[Plano de Implementação]  D --> E[Execução por Subagentes]  E --> F[Validação e Feedback]  F --> |Falha| D  F --> |Sucesso| G[Entrega Final]</div>
+<div class="mermaid">graph TD
+  A[Intenção do Usuário] --> B{Analisador de Contexto}
+  B --> C[Pesquisa e Descoberta]
+  C --> D[Plano de Implementação]
+  D --> E[Execução por Subagentes]
+  E --> F[Validação e Feedback]
+  F --> |Falha| D
+  F --> |Sucesso| G[Entrega Final]</div>
 <h2>Por que o Planejamento é Crucial?</h2>
 <p>Sem um plano explícito, o agente tende a ser reativo. O planejamento força a IA a &quot;olhar para frente&quot; e considerar efeitos colaterais. Se o objetivo é adicionar um campo em um banco de dados, o plano deve incluir a migração, a atualização da entidade e o ajuste nas APIs de leitura.</p>
 <h2>Exemplo Real: &quot;Adicionar Telefone ao Cliente&quot;</h2>
