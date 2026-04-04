@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 /**
- * Technical Knowledge OS — 3D Project Flow (V4 — Nebula & Starfield)
+ * Technical Knowledge OS — 3D Project Flow (V5 — Reader Mode)
  */
 
 const KIND_COLOR = {
@@ -19,7 +19,7 @@ const KIND_HEX = {
   central:  '#FFFFFF',
 }
 
-// ── Glow sprite texture (procedural) ─────────────────────────────────────
+// ── Glow texture ─────────────────────────────────────────────────────────
 function createGlowTexture(size = 128) {
   const c = document.createElement('canvas')
   c.width = c.height = size
@@ -35,6 +35,16 @@ function createGlowTexture(size = 128) {
   return new THREE.CanvasTexture(c)
 }
 
+// ── Transition effects for reader cards ──────────────────────────────────
+const TRANSITIONS = {
+  fade:        { from: { opacity: 0, y: 0, scale: 0.92 },   to: { opacity: 1, y: 0, scale: 1 } },
+  slideUp:     { from: { opacity: 0, y: 80, scale: 1 },     to: { opacity: 1, y: 0, scale: 1 } },
+  slideDown:   { from: { opacity: 0, y: -80, scale: 1 },    to: { opacity: 1, y: 0, scale: 1 } },
+  zoomIn:      { from: { opacity: 0, y: 0, scale: 0.6 },    to: { opacity: 1, y: 0, scale: 1 } },
+  zoomRotate:  { from: { opacity: 0, y: 0, scale: 0.7 },    to: { opacity: 1, y: 0, scale: 1 } },
+}
+const TRANSITION_NAMES = Object.keys(TRANSITIONS)
+
 class ProjectMap3D {
   constructor(container, data) {
     this.container = container
@@ -47,11 +57,19 @@ class ProjectMap3D {
     this.transitioning = false
     this.glowTex = createGlowTexture(256)
 
+    // Reader state
+    this.readerActive = false
+    this.readerCards = []
+    this.readerIndex = 0
+    this.readerGroup = null
+    this.readerItem = null
+
     this.initScene()
     this.createStarfield()
     this.createNebula()
     this.createNodes()
     this.createConnections()
+    this.createReaderUI()
     this.addEventHandlers()
     this.animate()
   }
@@ -84,7 +102,6 @@ class ProjectMap3D {
     this.controls.maxDistance = 2000
     this.controls.zoomSpeed = 0.4
 
-    // Lighting — warm + cool contrast
     this.scene.add(new THREE.AmbientLight(0x1a1a2e, 0.6))
     const keyLight = new THREE.PointLight(0x00C2FF, 3, 1800)
     keyLight.position.set(400, 400, 400)
@@ -106,26 +123,18 @@ class ProjectMap3D {
     const positions = new Float32Array(COUNT * 3)
     const sizes = new Float32Array(COUNT)
     const colors = new Float32Array(COUNT * 3)
-
-    const palette = [
-      new THREE.Color(0xffffff),
-      new THREE.Color(0xaaddff),
-      new THREE.Color(0xffeedd),
-      new THREE.Color(0xddccff),
-    ]
+    const palette = [new THREE.Color(0xffffff), new THREE.Color(0xaaddff), new THREE.Color(0xffeedd), new THREE.Color(0xddccff)]
 
     for (let i = 0; i < COUNT; i++) {
       const r = 1500 + Math.random() * 3000
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(2 * Math.random() - 1)
-      positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta)
+      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta)
       positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta)
       positions[i * 3 + 2] = r * Math.cos(phi)
       sizes[i] = 1.5 + Math.random() * 3
       const c = palette[Math.floor(Math.random() * palette.length)]
-      colors[i * 3] = c.r
-      colors[i * 3 + 1] = c.g
-      colors[i * 3 + 2] = c.b
+      colors[i * 3] = c.r; colors[i * 3 + 1] = c.g; colors[i * 3 + 2] = c.b
     }
 
     const geo = new THREE.BufferGeometry()
@@ -133,41 +142,25 @@ class ProjectMap3D {
     geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1))
     geo.setAttribute('color', new THREE.BufferAttribute(colors, 3))
 
-    const mat = new THREE.PointsMaterial({
-      size: 3,
-      map: this.glowTex,
-      transparent: true,
-      opacity: 0.9,
-      vertexColors: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      sizeAttenuation: true,
-    })
-
-    this.starfield = new THREE.Points(geo, mat)
+    this.starfield = new THREE.Points(geo, new THREE.PointsMaterial({
+      size: 3, map: this.glowTex, transparent: true, opacity: 0.9,
+      vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true,
+    }))
     this.scene.add(this.starfield)
   }
 
-  // ── Nebula clouds ──────────────────────────────────────────────────────
   createNebula() {
-    const nebulaColors = [0x0a1628, 0x120a30, 0x081420]
-    nebulaColors.forEach((color, i) => {
-      const geo = new THREE.SphereGeometry(800 + i * 300, 16, 16)
-      const mat = new THREE.MeshBasicMaterial({
-        color,
-        transparent: true,
-        opacity: 0.08 - i * 0.02,
-        side: THREE.BackSide,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      })
-      const mesh = new THREE.Mesh(geo, mat)
+    ;[0x0a1628, 0x120a30, 0x081420].forEach((color, i) => {
+      const mesh = new THREE.Mesh(
+        new THREE.SphereGeometry(800 + i * 300, 16, 16),
+        new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.08 - i * 0.02, side: THREE.BackSide, blending: THREE.AdditiveBlending, depthWrite: false })
+      )
       mesh.rotation.set(Math.random() * 3, Math.random() * 3, 0)
       this.scene.add(mesh)
     })
   }
 
-  // ── Smooth camera ─────────────────────────────────────────────────────
+  // ── Camera ────────────────────────────────────────────────────────────
   focusOnNode(nodeGroup) {
     const nodePos = nodeGroup.position.clone()
     const dir = this.camera.position.clone().sub(this.controls.target).normalize()
@@ -189,7 +182,7 @@ class ProjectMap3D {
     if (this.camera.position.distanceTo(this.cameraGoal) < 1) this.transitioning = false
   }
 
-  // ── Node highlight ────────────────────────────────────────────────────
+  // ── Highlight ─────────────────────────────────────────────────────────
   highlightNode(selectedGroup) {
     this.nodes.forEach(n => {
       const sel = n === selectedGroup
@@ -220,126 +213,67 @@ class ProjectMap3D {
   // ── Nodes ─────────────────────────────────────────────────────────────
   createNodes() {
     this.addNode({ kind: 'central', name: 'Hiro', headline: 'Central Intelligence System' }, new THREE.Vector3(0, 0, 0), true)
-
     const items = this.data
     const count = items.length
-    const sphereRadius = 400
-    const GA = Math.PI * (3 - Math.sqrt(5))
+    const R = 400, GA = Math.PI * (3 - Math.sqrt(5))
 
     for (let i = 0; i < count; i++) {
       const y = 1 - (i / (count - 1)) * 2
       const r = Math.sqrt(1 - y * y)
       const theta = GA * i
-      this.addNode(items[i], new THREE.Vector3(
-        Math.cos(theta) * r * sphereRadius,
-        y * sphereRadius,
-        Math.sin(theta) * r * sphereRadius
-      ))
+      this.addNode(items[i], new THREE.Vector3(Math.cos(theta) * r * R, y * R, Math.sin(theta) * r * R))
     }
   }
 
   addNode(item, position, isCentral = false) {
-    const color = new THREE.Color(KIND_COLOR[item.kind] || 0x64748b)
     const colorCode = KIND_COLOR[item.kind] || 0x64748b
+    const color = new THREE.Color(colorCode)
     const group = new THREE.Group()
     group.position.copy(position)
     group.userData = { item, isCentral, rings: [], pulsePhase: Math.random() * Math.PI * 2 }
 
-    // Core sphere — glass-like with inner glow
     const coreSize = isCentral ? 16 : 10
-    const coreGeo = new THREE.SphereGeometry(coreSize, 48, 48)
-    const coreMat = new THREE.MeshPhysicalMaterial({
-      color: colorCode,
-      emissive: colorCode,
-      emissiveIntensity: isCentral ? 2 : 1.5,
-      metalness: 0.1,
-      roughness: 0.05,
-      transmission: 0.85,
-      thickness: 2,
-      transparent: true,
-      opacity: 0.95,
-      clearcoat: 1,
-      clearcoatRoughness: 0.1,
-      ior: 1.5,
-    })
-    group.add(new THREE.Mesh(coreGeo, coreMat))
+    group.add(new THREE.Mesh(
+      new THREE.SphereGeometry(coreSize, 48, 48),
+      new THREE.MeshPhysicalMaterial({
+        color: colorCode, emissive: colorCode, emissiveIntensity: isCentral ? 2 : 1.5,
+        metalness: 0.1, roughness: 0.05, transmission: 0.85, thickness: 2,
+        transparent: true, opacity: 0.95, clearcoat: 1, clearcoatRoughness: 0.1, ior: 1.5,
+      })
+    ))
 
-    // Outer glow sprite
-    const glowScale = isCentral ? 80 : 50
-    const glowMat = new THREE.SpriteMaterial({
-      map: this.glowTex,
-      color: colorCode,
-      transparent: true,
-      opacity: 0.35,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    })
+    const glowMat = new THREE.SpriteMaterial({ map: this.glowTex, color: colorCode, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending, depthWrite: false })
     const glow = new THREE.Sprite(glowMat)
-    glow.scale.set(glowScale, glowScale, 1)
+    glow.scale.set(isCentral ? 80 : 50, isCentral ? 80 : 50, 1)
     group.add(glow)
     group.userData.glowSprite = glow
 
-    // Orbital rings — thinner, more elegant
     const ringCount = isCentral ? 3 : 1
     for (let r = 0; r < ringCount; r++) {
-      const radius = coreSize * 1.8 + r * 7
-      const ringGeo = new THREE.TorusGeometry(radius, 0.3, 8, 100)
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: colorCode,
-        transparent: true,
-        opacity: 0.5 - r * 0.12,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      })
-      const ring = new THREE.Mesh(ringGeo, ringMat)
-      ring.rotation.x = Math.random() * Math.PI
-      ring.rotation.y = Math.random() * Math.PI
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(coreSize * 1.8 + r * 7, 0.3, 8, 100),
+        new THREE.MeshBasicMaterial({ color: colorCode, transparent: true, opacity: 0.5 - r * 0.12, blending: THREE.AdditiveBlending, depthWrite: false })
+      )
+      ring.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0)
       group.add(ring)
-      group.userData.rings.push({
-        mesh: ring,
-        speedX: (Math.random() - 0.5) * 0.008,
-        speedY: (Math.random() - 0.5) * 0.012,
-      })
+      group.userData.rings.push({ mesh: ring, speedX: (Math.random() - 0.5) * 0.008, speedY: (Math.random() - 0.5) * 0.012 })
     }
 
-    // Label sprite
     const label = (item.name || item.title || '').toUpperCase()
-    if (label && !isCentral) {
+    if (label) {
       const lc = document.createElement('canvas')
       const lctx = lc.getContext('2d')
       lc.width = 512; lc.height = 96
-      lctx.font = '600 26px "JetBrains Mono", monospace'
-      lctx.textAlign = 'center'
-      lctx.textBaseline = 'middle'
+      lctx.font = isCentral ? 'bold 40px "JetBrains Mono"' : '600 26px "JetBrains Mono"'
+      lctx.textAlign = 'center'; lctx.textBaseline = 'middle'
       lctx.fillStyle = '#ffffff'
-      lctx.shadowBlur = 12
-      lctx.shadowColor = `#${color.getHexString()}`
+      lctx.shadowBlur = isCentral ? 20 : 12
+      lctx.shadowColor = isCentral ? '#ffffff' : `#${color.getHexString()}`
       lctx.fillText(label.length > 28 ? label.slice(0, 26) + '..' : label, 256, 48)
       const tex = new THREE.CanvasTexture(lc)
-      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.85, depthWrite: false })
-      const sprite = new THREE.Sprite(mat)
-      sprite.position.y = coreSize + 18
-      sprite.scale.set(140, 26, 1)
-      group.add(sprite)
-    }
-
-    // Hiro label (special)
-    if (isCentral) {
-      const lc = document.createElement('canvas')
-      const lctx = lc.getContext('2d')
-      lc.width = 256; lc.height = 96
-      lctx.font = 'bold 40px "JetBrains Mono", monospace'
-      lctx.textAlign = 'center'
-      lctx.textBaseline = 'middle'
-      lctx.fillStyle = '#ffffff'
-      lctx.shadowBlur = 20
-      lctx.shadowColor = '#ffffff'
-      lctx.fillText('HIRO', 128, 48)
-      const tex = new THREE.CanvasTexture(lc)
-      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.95, depthWrite: false })
-      const sprite = new THREE.Sprite(mat)
-      sprite.position.y = coreSize + 26
-      sprite.scale.set(80, 30, 1)
+      const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: isCentral ? 0.95 : 0.85, depthWrite: false }))
+      sprite.position.y = coreSize + (isCentral ? 26 : 18)
+      sprite.scale.set(isCentral ? 80 : 140, isCentral ? 30 : 26, 1)
       group.add(sprite)
     }
 
@@ -347,32 +281,251 @@ class ProjectMap3D {
     this.nodes.push(group)
   }
 
-  // ── Connections — curved lines ─────────────────────────────────────────
+  // ── Connections ────────────────────────────────────────────────────────
   createConnections() {
     const center = this.nodes[0].position
-
     this.nodes.slice(1).forEach(node => {
       const target = node.position
       const colorCode = KIND_COLOR[node.userData.item.kind] || 0x00C2FF
-
-      // Curved connection via quadratic bezier
       const mid = center.clone().add(target).multiplyScalar(0.5)
       mid.y += 30 + Math.random() * 40
-      const curve = new THREE.QuadraticBezierCurve3(center, mid, target)
-      const points = curve.getPoints(32)
-
-      const geo = new THREE.BufferGeometry().setFromPoints(points)
-      const mat = new THREE.LineBasicMaterial({
-        color: colorCode,
-        transparent: true,
-        opacity: 0.12,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      })
-      const line = new THREE.Line(geo, mat)
+      const points = new THREE.QuadraticBezierCurve3(center, mid, target).getPoints(32)
+      const line = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(points),
+        new THREE.LineBasicMaterial({ color: colorCode, transparent: true, opacity: 0.12, blending: THREE.AdditiveBlending, depthWrite: false })
+      )
       this.scene.add(line)
       this.connections.push(line)
     })
+  }
+
+  // ══════════════════════════════════════════════════════════════════════
+  //  READER MODE — presents sections as canvas cards with transitions
+  // ══════════════════════════════════════════════════════════════════════
+
+  createReaderUI() {
+    // Overlay navigation
+    this.readerOverlay = document.createElement('div')
+    this.readerOverlay.className = 'reader-overlay'
+    this.readerOverlay.style.cssText = 'position:absolute;inset:0;z-index:50;display:none;pointer-events:none;'
+    this.readerOverlay.innerHTML = `
+      <div class="reader-nav" style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:16px;pointer-events:auto;background:rgba(4,8,16,0.85);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px 20px;">
+        <button class="reader-btn reader-prev" style="background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;font:600 13px 'JetBrains Mono';padding:6px 14px;border-radius:6px;transition:all 0.2s;" data-reader-prev>&larr; Anterior</button>
+        <span class="reader-counter" style="font:500 12px 'JetBrains Mono';color:rgba(255,255,255,0.4);min-width:60px;text-align:center;" data-reader-counter>1 / 1</span>
+        <button class="reader-btn reader-next" style="background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;font:600 13px 'JetBrains Mono';padding:6px 14px;border-radius:6px;transition:all 0.2s;" data-reader-next>Próximo &rarr;</button>
+      </div>
+      <button class="reader-close" style="position:absolute;top:20px;right:20px;pointer-events:auto;background:rgba(4,8,16,0.8);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);cursor:pointer;font:600 11px 'JetBrains Mono';padding:10px 18px;border-radius:8px;text-transform:uppercase;letter-spacing:0.1em;transition:all 0.2s;" data-reader-close>Voltar ao Mapa</button>
+      <div class="reader-title-bar" style="position:absolute;top:20px;left:20px;pointer-events:none;">
+        <span style="font:700 10px 'JetBrains Mono';text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.3);" data-reader-kind></span>
+        <h2 style="font:700 18px 'Inter';color:#fff;margin:4px 0 0;" data-reader-title></h2>
+      </div>
+    `
+    this.container.appendChild(this.readerOverlay)
+
+    this.readerOverlay.querySelector('[data-reader-prev]').onclick = () => this.readerNavigate(-1)
+    this.readerOverlay.querySelector('[data-reader-next]').onclick = () => this.readerNavigate(1)
+    this.readerOverlay.querySelector('[data-reader-close]').onclick = () => this.exitReader()
+
+    // Hover styles
+    this.readerOverlay.querySelectorAll('.reader-btn').forEach(btn => {
+      btn.onmouseenter = () => { btn.style.color = '#fff'; btn.style.background = 'rgba(255,255,255,0.08)' }
+      btn.onmouseleave = () => { btn.style.color = 'rgba(255,255,255,0.6)'; btn.style.background = 'none' }
+    })
+  }
+
+  enterReader(item) {
+    this.readerActive = true
+    this.readerItem = item
+    this.readerIndex = 0
+
+    // Hide explore elements
+    this.nodes.forEach(n => n.visible = false)
+    this.connections.forEach(c => c.visible = false)
+    this.controls.autoRotate = false
+    this.controls.enablePan = true
+
+    // Build section cards as 3D planes
+    this.readerGroup = new THREE.Group()
+    this.scene.add(this.readerGroup)
+
+    const sections = item.sections || []
+    if (sections.length === 0) {
+      sections.push({ title: item.name || item.title, content: item.summary || '', type: 'intro' })
+    }
+
+    const kindColor = KIND_COLOR[item.kind] || 0x00C2FF
+    this.readerCards = sections.map((sec, idx) => {
+      const card = this._createReaderCard(sec, idx, kindColor)
+      card.visible = false
+      this.readerGroup.add(card)
+      card.position.set(0, 0, 0)
+      return { mesh: card, section: sec, transition: TRANSITION_NAMES[idx % TRANSITION_NAMES.length] }
+    })
+
+    // Camera for reader
+    this.cameraGoal = new THREE.Vector3(0, 0, 500)
+    this.cameraTarget = new THREE.Vector3(0, 0, 0)
+    this.transitioning = true
+
+    // Show overlay
+    this.readerOverlay.style.display = 'block'
+    this.readerOverlay.querySelector('[data-reader-kind]').textContent = item.kind.toUpperCase()
+    this.readerOverlay.querySelector('[data-reader-title]').textContent = item.name || item.title
+
+    // Hide panel
+    window.hidePanel()
+
+    this._showReaderCard(0)
+  }
+
+  _createReaderCard(section, index, kindColor) {
+    const W = 720, H = 440
+    const canvas = document.createElement('canvas')
+    canvas.width = W; canvas.height = H
+    const ctx = canvas.getContext('2d')
+
+    // Background
+    ctx.fillStyle = 'rgba(6, 10, 20, 0.96)'
+    ctx.beginPath()
+    ctx.roundRect(0, 0, W, H, 16)
+    ctx.fill()
+
+    // Accent border
+    const hexColor = `#${new THREE.Color(kindColor).getHexString()}`
+    ctx.strokeStyle = hexColor
+    ctx.lineWidth = 3
+    ctx.beginPath()
+    ctx.roundRect(2, 2, W - 4, H - 4, 14)
+    ctx.stroke()
+
+    // Section number
+    ctx.fillStyle = hexColor
+    ctx.font = 'bold 14px "JetBrains Mono"'
+    ctx.globalAlpha = 0.5
+    ctx.fillText(`${String(index + 1).padStart(2, '0')}`, 36, 50)
+    ctx.globalAlpha = 1
+
+    // Title
+    ctx.fillStyle = '#ffffff'
+    ctx.font = 'bold 28px "Inter"'
+    ctx.fillText(section.title || 'Section', 36, 96)
+
+    // Divider
+    ctx.fillStyle = hexColor
+    ctx.globalAlpha = 0.3
+    ctx.fillRect(36, 112, 120, 2)
+    ctx.globalAlpha = 1
+
+    // Content — word wrap
+    ctx.font = '17px "Inter"'
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.72)'
+    const content = section.content || ''
+    const words = content.split(/\s+/)
+    let line = '', y = 148, maxW = W - 72
+    for (const word of words) {
+      const test = line + word + ' '
+      if (ctx.measureText(test).width > maxW && line) {
+        ctx.fillText(line.trim(), 36, y)
+        line = word + ' '
+        y += 28
+        if (y > H - 40) { ctx.fillText('...', 36, y); break }
+      } else {
+        line = test
+      }
+    }
+    if (y <= H - 40) ctx.fillText(line.trim(), 36, y)
+
+    const tex = new THREE.CanvasTexture(canvas)
+    tex.minFilter = THREE.LinearFilter
+    const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide, depthWrite: false })
+    return new THREE.Mesh(new THREE.PlaneGeometry(500, 305), mat)
+  }
+
+  _showReaderCard(index) {
+    // Hide all
+    this.readerCards.forEach(c => { c.mesh.visible = false; c.mesh.material.opacity = 0 })
+
+    const card = this.readerCards[index]
+    if (!card) return
+
+    card.mesh.visible = true
+    card.mesh.position.set(0, 0, 0)
+    card.mesh.scale.set(1, 1, 1)
+    card.mesh.rotation.set(0, 0, 0)
+
+    // Animate in
+    const tr = TRANSITIONS[card.transition] || TRANSITIONS.fade
+    card.mesh.material.opacity = tr.from.opacity
+    card.mesh.position.y = tr.from.y
+    card.mesh.scale.setScalar(tr.from.scale)
+
+    const start = performance.now()
+    const duration = 600
+    const anim = () => {
+      const elapsed = performance.now() - start
+      const p = Math.min(elapsed / duration, 1)
+      const ease = 1 - Math.pow(1 - p, 3) // easeOutCubic
+      card.mesh.material.opacity = tr.from.opacity + (tr.to.opacity - tr.from.opacity) * ease
+      card.mesh.position.y = tr.from.y + (tr.to.y - tr.from.y) * ease
+      const s = tr.from.scale + (tr.to.scale - tr.from.scale) * ease
+      card.mesh.scale.setScalar(s)
+      if (p < 1) requestAnimationFrame(anim)
+    }
+    requestAnimationFrame(anim)
+
+    // Update counter
+    const counter = this.readerOverlay.querySelector('[data-reader-counter]')
+    if (counter) counter.textContent = `${index + 1} / ${this.readerCards.length}`
+
+    // Update button states
+    const prev = this.readerOverlay.querySelector('[data-reader-prev]')
+    const next = this.readerOverlay.querySelector('[data-reader-next]')
+    if (prev) prev.style.opacity = index === 0 ? '0.3' : '1'
+    if (next) next.style.opacity = index === this.readerCards.length - 1 ? '0.3' : '1'
+  }
+
+  readerNavigate(dir) {
+    const newIndex = this.readerIndex + dir
+    if (newIndex < 0 || newIndex >= this.readerCards.length) return
+
+    // Fade out current
+    const current = this.readerCards[this.readerIndex]
+    if (current) {
+      const fadeStart = performance.now()
+      const fadeDuration = 250
+      const fadeAnim = () => {
+        const p = Math.min((performance.now() - fadeStart) / fadeDuration, 1)
+        current.mesh.material.opacity = 1 - p
+        current.mesh.position.y = -dir * 40 * p
+        if (p < 1) requestAnimationFrame(fadeAnim)
+        else current.mesh.visible = false
+      }
+      requestAnimationFrame(fadeAnim)
+    }
+
+    this.readerIndex = newIndex
+    setTimeout(() => this._showReaderCard(newIndex), 280)
+  }
+
+  exitReader() {
+    this.readerActive = false
+    this.readerOverlay.style.display = 'none'
+    this.controls.enablePan = false
+
+    if (this.readerGroup) {
+      this.scene.remove(this.readerGroup)
+      this.readerGroup = null
+    }
+    this.readerCards = []
+    this.readerItem = null
+
+    // Restore explore
+    this.nodes.forEach(n => n.visible = true)
+    this.connections.forEach(c => c.visible = true)
+    this.controls.autoRotate = true
+    this.resetCameraFocus()
+    this.restoreNodeVisibility()
+    this.selected = null
   }
 
   // ── Events ────────────────────────────────────────────────────────────
@@ -380,39 +533,41 @@ class ProjectMap3D {
     window.addEventListener('resize', () => this.onResize())
     this.renderer.domElement.addEventListener('mousemove', (e) => this.onMouseMove(e))
     this.renderer.domElement.addEventListener('click', (e) => this.onClick(e))
+
+    // Keyboard nav for reader
+    window.addEventListener('keydown', (e) => {
+      if (!this.readerActive) return
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') this.readerNavigate(1)
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') this.readerNavigate(-1)
+      else if (e.key === 'Escape') this.exitReader()
+    })
   }
 
   onResize() {
-    const w = this.container.clientWidth
-    const h = this.container.clientHeight
+    const w = this.container.clientWidth, h = this.container.clientHeight
     this.camera.aspect = w / h
     this.camera.updateProjectionMatrix()
     this.renderer.setSize(w, h)
   }
 
   onMouseMove(e) {
+    if (this.readerActive) return
     const rect = this.renderer.domElement.getBoundingClientRect()
     this.mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
     this.mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
-
     this.raycaster.setFromCamera(this.mouse, this.camera)
     const hits = this.raycaster.intersectObjects(this.nodes, true)
-
     this.nodes.forEach(n => n.scale.lerp(new THREE.Vector3(1, 1, 1), 0.08))
-
     if (hits.length > 0) {
       let tg = hits[0].object
       while (tg.parent && !tg.userData.item) tg = tg.parent
-      if (tg.userData.item) {
-        tg.scale.lerp(new THREE.Vector3(1.25, 1.25, 1.25), 0.15)
-        document.body.style.cursor = 'pointer'
-        return
-      }
+      if (tg.userData.item) { tg.scale.lerp(new THREE.Vector3(1.25, 1.25, 1.25), 0.15); document.body.style.cursor = 'pointer'; return }
     }
     document.body.style.cursor = 'default'
   }
 
   onClick(e) {
+    if (this.readerActive) return
     this.raycaster.setFromCamera(this.mouse, this.camera)
     const hits = this.raycaster.intersectObjects(this.nodes, true)
     if (hits.length > 0) {
@@ -445,61 +600,31 @@ class ProjectMap3D {
     requestAnimationFrame(() => this.animate())
     this.updateCameraTransition()
     this.controls.update()
-
     const t = performance.now() * 0.001
-
-    // Slow starfield rotation
-    if (this.starfield) {
-      this.starfield.rotation.y = t * 0.005
-      this.starfield.rotation.x = Math.sin(t * 0.003) * 0.02
+    if (this.starfield) { this.starfield.rotation.y = t * 0.005; this.starfield.rotation.x = Math.sin(t * 0.003) * 0.02 }
+    if (!this.readerActive) {
+      this.nodes.forEach((group, i) => {
+        if (i > 0) group.position.y += Math.sin(t * 0.8 + i * 0.7) * 0.04
+        if (group.userData.rings) group.userData.rings.forEach(r => { r.mesh.rotation.x += r.speedX; r.mesh.rotation.y += r.speedY })
+        const glow = group.userData.glowSprite
+        if (glow) glow.material.opacity = 0.28 + Math.sin(t * 1.2 + (group.userData.pulsePhase || 0)) * 0.08
+      })
     }
-
-    this.nodes.forEach((group, i) => {
-      // Gentle floating
-      if (i > 0) group.position.y += Math.sin(t * 0.8 + i * 0.7) * 0.04
-
-      // Ring orbits
-      if (group.userData.rings) {
-        group.userData.rings.forEach(r => {
-          r.mesh.rotation.x += r.speedX
-          r.mesh.rotation.y += r.speedY
-        })
-      }
-
-      // Glow pulse
-      const glow = group.userData.glowSprite
-      if (glow) {
-        const phase = group.userData.pulsePhase || 0
-        const pulse = 0.28 + Math.sin(t * 1.2 + phase) * 0.08
-        glow.material.opacity = pulse
-      }
-    })
-
     this.renderer.render(this.scene, this.camera)
   }
 }
 
 // ── Panel controller ───────────────────────────────────────────────────────
-function escapeHtml(s) {
-  const div = document.createElement('div')
-  div.textContent = s
-  return div.innerHTML
-}
+function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML }
 
 function findRelatedItems(item, allData) {
   if (!item.stack || !item.stack.length) return []
   const myTags = new Set(item.stack.map(t => t.toLowerCase()))
   const myId = item.id || ''
-  return allData
-    .filter(d => d.id !== myId)
-    .map(d => {
-      const dTags = new Set((d.stack || []).map(t => t.toLowerCase()))
-      const overlap = [...myTags].filter(t => dTags.has(t)).length
-      return { ...d, overlap }
-    })
-    .filter(d => d.overlap > 0)
-    .sort((a, b) => b.overlap - a.overlap)
-    .slice(0, 5)
+  return allData.filter(d => d.id !== myId).map(d => {
+    const overlap = [...myTags].filter(t => new Set((d.stack || []).map(s => s.toLowerCase())).has(t)).length
+    return { ...d, overlap }
+  }).filter(d => d.overlap > 0).sort((a, b) => b.overlap - a.overlap).slice(0, 5)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -518,17 +643,12 @@ document.addEventListener('DOMContentLoaded', () => {
     pnl.querySelector('[data-panel-role]').textContent = item.kind.toUpperCase()
     pnl.querySelector('[data-panel-role]').style.color = KIND_HEX[item.kind] || KIND_HEX.post
 
-    const headlineEl = pnl.querySelector('[data-panel-headline]')
+    pnl.querySelector('[data-panel-headline]').textContent = item.headline || item.summary || ''
     const summaryEl = pnl.querySelector('[data-panel-summary]')
-    headlineEl.textContent = item.headline || item.summary || ''
     summaryEl.textContent = (item.headline && item.summary !== item.headline) ? item.summary : ''
 
     const stk = pnl.querySelector('[data-panel-stack]')
-    if (stk) {
-      stk.innerHTML = (item.stack || [])
-        .map(s => `<span class="stack-chip">${escapeHtml(s)}</span>`)
-        .join('')
-    }
+    if (stk) stk.innerHTML = (item.stack || []).map(s => `<span class="stack-chip">${escapeHtml(s)}</span>`).join('')
 
     let sectionsEl = pnl.querySelector('[data-panel-sections]')
     if (!sectionsEl) {
@@ -536,22 +656,13 @@ document.addEventListener('DOMContentLoaded', () => {
       sectionsEl.setAttribute('data-panel-sections', '')
       sectionsEl.setAttribute('data-reveal', '')
       sectionsEl.className = 'panel-sections'
-      const actionsEl = pnl.querySelector('.panel-actions')
-      if (actionsEl) pnl.insertBefore(sectionsEl, actionsEl)
-      else pnl.appendChild(sectionsEl)
+      const act = pnl.querySelector('.panel-actions')
+      if (act) pnl.insertBefore(sectionsEl, act); else pnl.appendChild(sectionsEl)
     }
-
     const sections = item.sections || []
-    if (sections.length > 0) {
-      sectionsEl.innerHTML = sections.map(sec => `
-        <details class="panel-section" open>
-          <summary class="panel-section-title">${escapeHtml(sec.title)}</summary>
-          <div class="panel-section-content">${escapeHtml(sec.content).replace(/\n/g, '<br>')}</div>
-        </details>
-      `).join('')
-    } else {
-      sectionsEl.innerHTML = ''
-    }
+    sectionsEl.innerHTML = sections.length > 0
+      ? sections.map(sec => `<details class="panel-section" open><summary class="panel-section-title">${escapeHtml(sec.title)}</summary><div class="panel-section-content">${escapeHtml(sec.content).replace(/\n/g, '<br>')}</div></details>`).join('')
+      : ''
 
     let relatedEl = pnl.querySelector('[data-panel-related]')
     if (!relatedEl) {
@@ -559,39 +670,23 @@ document.addEventListener('DOMContentLoaded', () => {
       relatedEl.setAttribute('data-panel-related', '')
       relatedEl.setAttribute('data-reveal', '')
       relatedEl.className = 'panel-related'
-      const actionsEl = pnl.querySelector('.panel-actions')
-      if (actionsEl) pnl.insertBefore(relatedEl, actionsEl)
-      else pnl.appendChild(relatedEl)
+      const act = pnl.querySelector('.panel-actions')
+      if (act) pnl.insertBefore(relatedEl, act); else pnl.appendChild(relatedEl)
     }
-
     const related = findRelatedItems(item, allData || [])
-    if (related.length > 0) {
-      relatedEl.innerHTML = `
-        <h3 class="panel-related-title">Relacionados</h3>
-        <ul class="panel-related-list">
-          ${related.map(r => `
-            <li class="panel-related-item">
-              <a href="${escapeHtml(r.url || '#')}" class="panel-related-link">
-                <span class="panel-related-kind" style="color:${KIND_HEX[r.kind] || KIND_HEX.post}">${escapeHtml(r.kind)}</span>
-                <span class="panel-related-name">${escapeHtml(r.name || r.title)}</span>
-              </a>
-            </li>
-          `).join('')}
-        </ul>
-      `
-    } else {
-      relatedEl.innerHTML = ''
-    }
+    relatedEl.innerHTML = related.length > 0
+      ? `<h3 class="panel-related-title">Relacionados</h3><ul class="panel-related-list">${related.map(r => `<li class="panel-related-item"><a href="${escapeHtml(r.url || '#')}" class="panel-related-link"><span class="panel-related-kind" style="color:${KIND_HEX[r.kind] || KIND_HEX.post}">${escapeHtml(r.kind)}</span><span class="panel-related-name">${escapeHtml(r.name || r.title)}</span></a></li>`).join('')}</ul>`
+      : ''
 
+    // "Ver projeto" enters reader mode
     const btn = pnl.querySelector('[data-panel-link]')
-    if (btn && item.url) {
-      btn.href = item.url
-      btn.onclick = null
+    if (btn) {
+      btn.href = '#'
+      btn.onclick = (ev) => { ev.preventDefault(); window.projectMap.enterReader(item) }
     }
 
     pnl.dataset.open = 'true'
     pnl.setAttribute('aria-hidden', 'false')
-
     requestAnimationFrame(() => {
       pnl.querySelectorAll('[data-reveal]').forEach((el, i) => {
         el.classList.remove('reveal-in')
@@ -608,10 +703,5 @@ document.addEventListener('DOMContentLoaded', () => {
     pnl.querySelectorAll('[data-reveal]').forEach(el => el.classList.remove('reveal-in'))
   }
 
-  const closeBtn = document.querySelector('[data-panel-close]')
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      if (window.projectMap) window.projectMap.deselectNode()
-    })
-  }
+  document.querySelector('[data-panel-close]')?.addEventListener('click', () => window.projectMap?.deselectNode())
 })
