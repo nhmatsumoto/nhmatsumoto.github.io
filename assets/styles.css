@@ -1781,7 +1781,7 @@ button, input, select {
   position: relative;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  height: calc(100vh - 56px - 40px); /* 56px navbar + 40px estimated footer */
+  height: calc(100vh - 56px);
   overflow: hidden;
   background: var(--bg);
   border: none;
@@ -1821,7 +1821,7 @@ button, input, select {
 
 .project-flow-wrapper {
   width: 100%;
-  height: clamp(520px, calc(100svh - 8rem), 900px);
+  height: 100%;
   overflow: hidden;
   background: var(--bg);
   cursor: crosshair;
