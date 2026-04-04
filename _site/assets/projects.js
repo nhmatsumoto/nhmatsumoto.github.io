@@ -134,60 +134,83 @@ class ProjectMap3D {
   buildAraucariaTree() {
     this.araucariaGroup = new THREE.Group(); this.araucariaGroup.visible = false; this.scene.add(this.araucariaGroup)
     
-    // 1. Trunk (Tapered & Elevated)
-    const trunkH = 1100, baseR = 16
-    const numSegments = 14
+    // 1. Trunk (Knobby & Tapered)
+    const trunkH = 1100, baseR = 18
+    const numSegments = 16
     for (let i = 0; i < numSegments; i++) {
         const r1 = baseR * Math.pow(1 - i/numSegments, 0.6)
         const r2 = baseR * Math.pow(1 - (i+1)/numSegments, 0.6)
-        const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1, trunkH / numSegments, 8), new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.4, roughness: 0.9 }))
+        // Add "whorl scars" (slightly wider base)
+        const isWhorlBase = i % 2 === 0
+        const m = isWhorlBase ? 1.05 : 1.0
+        const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1 * m, trunkH / numSegments, 10), new THREE.MeshStandardMaterial({ color: 0x121212, metalness: 0.1, roughness: 1.0 }))
         seg.position.y = (i * (trunkH / numSegments)) + (trunkH / numSegments / 2) + 125
         this.araucariaGroup.add(seg)
     }
 
-    // 2. Semantic Node Distribution (Araucaria Candelabra Profile)
+    // 2. High-Fidelity Branching (The "Candelabra" Apex)
     const items = [...this.data].sort((a,b) => this.getNodeTier(a) - this.getNodeTier(b))
-    const startH = trunkH * 0.4 + 125 // Branches start higher up
-    const whorlSpacing = 110, b0 = 5 
+    const startH = trunkH * 0.45 + 125 
+    const whorlSpacing = 95, b0 = 5 
     let itemIdx = 0, whorlIdx = 0
-    
     const numWhorls = Math.ceil(items.length / b0)
 
     while (itemIdx < items.length) {
       const tier = this.getNodeTier(items[itemIdx])
-      // Whorls get closer and wider towards the top (the "Cup" or crown)
       const h_progress = whorlIdx / numWhorls
-      const h_n = startH + (whorlIdx * whorlSpacing * (1 - h_progress * 0.4))
-      const b_n = Math.min(b0 + Math.floor(h_progress * 3), items.length - itemIdx)
-      
-      // Araucarias have wider spreads at the top tiers
-      const L_n = (280 + tier * 120 + h_progress * 250)
+      // Whorls are much denser at the top (The Crown)
+      const h_n = startH + (whorlIdx * whorlSpacing * (1 - Math.pow(h_progress, 2) * 0.5))
+      const b_n = Math.min(b0 + Math.floor(h_progress * 4), items.length - itemIdx)
+      const L_n = (260 + tier * 100 + h_progress * 300)
       
       for (let m = 0; m < b_n; m++) {
         const item = items[itemIdx]
         const node = this.nodes.find(n => n.userData.item === item)
         if (!node) { itemIdx++; continue }
 
-        const theta = (m * Math.PI * 2) / b_n + (whorlIdx * 0.7)
-        // Upward "hook" position
-        const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n/320, 2.5) * 110, Math.sin(theta) * L_n)
+        const theta = (m * Math.PI * 2) / b_n + (whorlIdx * 0.8)
+        const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n/300, 2.8) * 130, Math.sin(theta) * L_n)
         node.userData.treePos = pos
         
-        // Branch Curve (Characteristic Araucaria upward sweep)
+        // Araucaria Branch - Dip then Steep Hook
         const start = new THREE.Vector3(0, h_n, 0)
-        const mid = start.clone().lerp(pos, 0.6)
-        mid.y -= 30 // Initial dip for older/larger branches
+        const mid = start.clone().lerp(pos, 0.65)
+        mid.y -= 45 // Deeper initial dip for mature branches
         const curve = new THREE.QuadraticBezierCurve3(start, mid, pos)
         
-        const branchMat = new THREE.LineBasicMaterial({ color: 0x00DBFF, transparent: true, opacity: 0.18 })
-        const branch = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(32)), branchMat)
-        
+        const branch = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(24)), new THREE.LineBasicMaterial({ color: 0x00A86B, transparent: true, opacity: 0.15 }))
         node.userData.branch = branch
         this.araucariaGroup.add(branch)
+
+        // Add Foliage Rope (Detailed Needles)
+        this.araucariaGroup.add(this.createFoliage(curve))
+        
         itemIdx++
       }
       whorlIdx++
     }
+  }
+
+  createFoliage(curve) {
+    const points = curve.getPoints(20), pos = [], col = []
+    points.forEach((p, i) => {
+      if (i === 0) return
+      const dir = p.clone().sub(points[i-1]).normalize()
+      const side1 = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0,1,0)).normalize()
+      const side2 = new THREE.Vector3().crossVectors(dir, side1).normalize()
+      const l_mult = i / points.length // Foliage gets denser/wider at the tips
+      for (let j = 0; j < 5; j++) {
+        const ang = (j / 5) * Math.PI * 2 + i * 0.5
+        const s = side1.clone().multiplyScalar(Math.cos(ang)).add(side2.clone().multiplyScalar(Math.sin(ang)))
+        const reach = (2 + l_mult * 8) * (0.8 + Math.random()*0.4)
+        const start = p.clone().add(s.clone().multiplyScalar(reach*0.5))
+        const end = start.clone().add(dir.clone().multiplyScalar(15)).add(s.clone().multiplyScalar(reach))
+        pos.push(start.x, start.y, start.z, end.x, end.y, end.z)
+        col.push(0x00/255, 0x55/255, 0x44/255, 0x00/255, 0x33/255, 0x22/255)
+      }
+    })
+    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pos), 3)); geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(col), 3))
+    return new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }))
   }
 
   getNodeTier(item) {
