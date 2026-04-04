@@ -76,8 +76,20 @@ class ProjectMap3D {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
     this.renderer.toneMappingExposure = 1.2
     this.container.appendChild(this.renderer.domElement)
+    this.renderer.domElement.style.pointerEvents = 'auto' // Ensure canvas captures events
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    Object.assign(this.controls, { enableDamping: true, dampingFactor: 0.06, autoRotate: true, autoRotateSpeed: 0.3, enablePan: false, minDistance: 300, maxDistance: 2000, zoomSpeed: 0.4 })
+    Object.assign(this.controls, { 
+      enableDamping: true, 
+      dampingFactor: 0.05, 
+      autoRotate: true, 
+      autoRotateSpeed: 0.3, 
+      enablePan: false, 
+      enableRotate: true, 
+      enableZoom: true,
+      minDistance: 300, 
+      maxDistance: 2000, 
+      zoomSpeed: 0.5 
+    })
     this.controls.saveState()
     this.scene.add(new THREE.AmbientLight(0x1a1a2e, 0.6))
     const kl = new THREE.PointLight(0x00C2FF, 3, 1800); kl.position.set(400, 400, 400); this.scene.add(kl)
@@ -393,19 +405,41 @@ class AraucariaTree {
   }
 
   build() {
+    this.nodes = []; this.edges = [];
     const groups = {}
     for (const d of this.data) (groups[d.kind] ??= []).push(d)
-    const root = { id: '_root', label: 'Knowledge OS', kind: 'central', depth: 0, children: [], item: null, x: 0, y: 0 }
-    this.nodes.push(root); this.root = root
+
+    this.root = { id: '_root', label: 'Technical Knowledge OS', kind: 'central', depth: 0, children: [], x: 0, y: 0 }
+    this.nodes.push(this.root)
+
     for (const [kind, label] of [['project','Projetos'],['post','Publicações'],['document','Documentos']]) {
       const items = groups[kind]; if (!items?.length) continue
-      const cat = { id: `_${kind}`, label: `${label} (${items.length})`, kind, depth: 1, children: [], item: null, x: 0, y: 0 }
-      root.children.push(cat); this.nodes.push(cat); this.edges.push([root, cat])
-      for (const d of items) {
-        const leaf = { id: d.id, label: d.name || d.title, kind, depth: 2, item: d, x: 0, y: 0 }
-        cat.children.push(leaf); this.nodes.push(leaf); this.edges.push([cat, leaf])
+      const cat = { id: `_${kind}`, label: `${label} (${items.length})`, kind, depth: 1, children: [], x: 0, y: 0 }
+      this.root.children.push(cat); this.nodes.push(cat); this.edges.push([this.root, cat])
+      
+      const hierarchy = this._buildBinaryHierarchy(items, 2, kind)
+      if (hierarchy) {
+        cat.children.push(hierarchy)
+        this.edges.push([cat, hierarchy])
       }
     }
+  }
+
+  _buildBinaryHierarchy(items, depth, kind) {
+    if (items.length === 0) return null
+    if (items.length === 1) {
+      const d = items[0]
+      const leaf = { id: d.id, label: d.name || d.title, kind, depth: 5, item: d, x: 0, y: 0, children: [] }
+      this.nodes.push(leaf); return leaf
+    }
+    const mid = Math.ceil(items.length / 2)
+    const left = this._buildBinaryHierarchy(items.slice(0, mid), depth + 1, kind)
+    const right = this._buildBinaryHierarchy(items.slice(mid), depth + 1, kind)
+    const branch = { id: `_b_${Math.random()}`, label: '', kind: 'branch', depth, children: [left, right], x: 0, y: 0 }
+    this.nodes.push(branch)
+    if (left) this.edges.push([branch, left])
+    if (right) this.edges.push([branch, right])
+    return branch
   }
 
   resize() {
@@ -418,28 +452,44 @@ class AraucariaTree {
 
   layout() {
     const cats = this.root.children; if (!cats.length) return
-    const nodeGap = 130
-    let col = 0
-    for (const cat of cats) { cat._s = col; cat._n = cat.children.length; for (const c of cat.children) c._col = col++ }
-    const totalCols = col; const cw = (totalCols - 1) * nodeGap; const ox = -cw / 2
-    this.root.x = 0; this.root.y = 500
-    for (const cat of cats) { cat.x = ox + (cat._s + (cat._n - 1) / 2) * nodeGap; cat.y = 250 }
-    for (const cat of cats) {
-      for (const item of cat.children) {
-        item.x = ox + item._col * nodeGap
-        const t = cat._n > 1 ? (item._col - cat._s) / (cat._n - 1) : 0.5
-        item.y = 50 - Math.sin(t * Math.PI) * 70
+    
+    // Araucária Parameters
+    const trunkHeight = 500
+    const canopyWidth = 900
+    const crownY = -trunkHeight * 0.4
+    
+    this.root.x = 0; this.root.y = trunkHeight * 0.6
+    
+    const numCats = cats.length
+    cats.forEach((cat, i) => {
+      const angle = (i / (numCats - 1) - 0.5) * Math.PI * 0.7
+      cat.x = Math.sin(angle) * (canopyWidth * 0.25)
+      cat.y = crownY - Math.abs(Math.cos(angle)) * 40
+      
+      if (cat.children[0]) {
+        this._layoutBranch(cat.children[0], cat.x, cat.y, angle, canopyWidth * 0.35, 1)
       }
-    }
+    })
+
     if (!this._centered) {
       const xs = this.nodes.map(n => n.x), ys = this.nodes.map(n => n.y)
-      const bx = Math.min(...xs) - 120, by = Math.min(...ys) - 120
-      const bw = Math.max(...xs) - bx + 240, bh = Math.max(...ys) - by + 240
-      this.zoom = Math.min(this.W / bw, this.H / bh) * 0.82
+      const bx = Math.min(...xs) - 150, by = Math.min(...ys) - 150
+      const bw = Math.max(...xs) - bx + 300, bh = Math.max(...ys) - by + 300
+      this.zoom = Math.min(this.W / bw, this.H / bh) * 0.85
       this.panX = this.W / 2 - (bx + bw / 2) * this.zoom
       this.panY = this.H / 2 - (by + bh / 2) * this.zoom
       this._centered = true
     }
+  }
+
+  _layoutBranch(node, px, py, pAngle, length, level) {
+    const spread = 0.5 / Math.sqrt(level)
+    node.children.forEach((child, i) => {
+      const angle = pAngle + (i === 0 ? -spread : spread)
+      child.x = px + Math.sin(angle) * length
+      child.y = py - Math.abs(Math.cos(angle)) * (length * 0.22) // Flatten for Araucária look
+      this._layoutBranch(child, child.x, child.y, angle, length * 0.75, level + 1)
+    })
   }
 
   sx(wx) { return wx * this.zoom + this.panX }
@@ -480,11 +530,21 @@ class AraucariaTree {
       const active = sel && (from === sel || to === sel || from.children?.includes(sel))
       const c = KIND_HEX[to.kind] || '#64748b'
       const x1 = this.sx(from.x), y1 = this.sy(from.y), x2 = this.sx(to.x), y2 = this.sy(to.y)
-      let cx2, cy2
-      if (from.depth === 0) { cx2 = x1 + (x2 - x1) * 0.15; cy2 = y1 + (y2 - y1) * 0.65 }
-      else { cx2 = x1 + (x2 - x1) * 0.5; cy2 = y1 + (y2 - y1) * 0.15 }
-      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.quadraticCurveTo(cx2, cy2, x2, y2)
-      ctx.strokeStyle = active ? c + 'bb' : c + '1a'; ctx.lineWidth = from.depth === 0 ? 2.5 : 1.5; ctx.stroke()
+      
+      ctx.beginPath(); ctx.moveTo(x1, y1)
+      if (from.depth === 0) {
+        // Straight trunk
+        ctx.lineTo(x2, y2)
+        ctx.strokeStyle = '#2d3748'; ctx.lineWidth = 10 * zoom
+      } else {
+        // Curved Araucária branch
+        const cx = x1 + (x2 - x1) * 0.5
+        const cy = Math.min(y1, y2) - 40 * zoom // Concave up
+        ctx.quadraticCurveTo(cx, cy, x2, y2)
+        ctx.strokeStyle = active ? c + 'cc' : c + '22'
+        ctx.lineWidth = Math.max(1, (4 - from.depth) * zoom)
+      }
+      ctx.stroke()
     }
 
     // Nodes
@@ -572,13 +632,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const araucaria = new AraucariaTree(container, data, (item, allData) => window.showPanel(item, allData))
 
   // ── View toggle button ──
-  const shell = container.closest('.project-flow-shell')
+  const shell = container.closest('.project-flow-shell') || container.parentElement
   if (shell) {
+    // Remove existing toggle if any
+    shell.querySelectorAll('.view-mode-toggle').forEach(el => el.remove())
+    
     const toggle = document.createElement('button')
     toggle.className = 'view-mode-toggle'; toggle.title = 'Alternar visualização'
-    const setToggleIcon = (m) => { toggle.innerHTML = m === '3d' ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 10.5V7c0-1.38-4.03-2.5-7-2.5S3 5.62 3 7v10c0 1.38 4.03 2.5 7 2.5"/><path d="M3 7c0 1.38 4.03 2.5 7 2.5S17 8.38 17 7"/><path d="M3 12c0 1.38 4.03 2.5 7 2.5"/><path d="M19 22l3-3"/><circle cx="19" cy="19" r="3"/></svg><span>Araucária</span>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3m0 12v3m-7.8-4.2 2.1-2.1m11.4-5.4 2.1-2.1M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1"/></svg><span>3D</span>' }
-    setToggleIcon('3d'); shell.prepend(toggle)
-    toggle.addEventListener('click', () => {
+    toggle.style.zIndex = '9999' // Ensure it's on top
+    
+    const setToggleIcon = (m) => {
+      toggle.innerHTML = m === '3d' 
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Araucária</span>'
+        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2m-8-10H2m20 0h-2m-2.1-6.9l-1.4 1.4m-9 9l-1.4 1.4m0-11.8l1.4 1.4m9 9l1.4 1.4"/></svg><span>3D</span>'
+    }
+    
+    setToggleIcon('3d')
+    shell.prepend(toggle)
+    
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation()
       if (mode === '3d') {
         mode = 'tree'; setToggleIcon('tree')
         window.projectMap.renderer.domElement.style.display = 'none'
@@ -688,4 +761,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.hidePanel = () => { const p = document.querySelector('[data-project-panel]'); if (!p) return; p.dataset.open='false'; p.setAttribute('aria-hidden','true'); p.querySelectorAll('[data-reveal]').forEach(e=>e.classList.remove('reveal-in')) }
   document.querySelector('[data-panel-close]')?.addEventListener('click', () => window.projectMap?.deselectNode())
+
+  // ── Handle ?select=ID from URL ──
+  const params = new URLSearchParams(window.location.search)
+  const selectId = params.get('select')
+  if (selectId) {
+    setTimeout(() => {
+      if (mode === '3d') {
+        const node = window.projectMap.nodes.find(n => n.userData.item?.id === selectId)
+        if (node) window.projectMap.handleNodeClick(node)
+      } else {
+        const node = araucaria.nodes.find(n => n.item?.id === selectId)
+        if (node) window.showPanel(node.item, data)
+      }
+    }, 800)
+  }
 })
