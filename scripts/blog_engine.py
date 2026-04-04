@@ -995,10 +995,6 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
           <i data-lucide="menu" class="nav-icon-menu"></i>
           <i data-lucide="x" class="nav-icon-close hidden"></i>
         </button>
-        <a class="nav-cta desktop-only" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer">
-          <span data-i18n="nav.cta">{html.escape(cta_label)}</span>
-          <i data-lucide="arrow-up-right"></i>
-        </a>
       </div>
 
       <div class="nav-drawer" data-nav-menu hidden>
@@ -1014,10 +1010,9 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
             {pill_links}
           </div>
           <div class="drawer-footer">
-            <a class="nav-cta" href="{html.escape(cta_url, quote=True)}" target="_blank" rel="noopener noreferrer">
-              <span data-i18n="nav.cta">{html.escape(cta_label)}</span>
-              <i data-lucide="arrow-up-right"></i>
-            </a>
+            <div class="drawer-social">
+              {"".join(f'<a class="drawer-social-link" href="{html.escape(url, quote=True)}" target="_blank" rel="noopener noreferrer" aria-label="{label}"><i data-lucide="{icon}"></i><span>{label}</span></a>' for label, icon, url in [("GitHub", "github", site.get("github_url") or ""), ("LinkedIn", "linkedin", site.get("linkedin_url") or "")] if url)}
+            </div>
           </div>
         </div>
       </div>
@@ -1351,12 +1346,14 @@ def render_developer_profile(site: dict[str, str], system: dict[str, Any], i18n:
     if github_url:
         links.append(
             f'<a class="profile-social-link" href="{github_url}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">'
-            f'<i data-lucide="github"></i><span>GitHub</span></a>'
+            f'<i data-lucide="github"></i><span>GitHub</span>'
+            f'<i data-lucide="arrow-up-right" class="link-arrow"></i></a>'
         )
     if linkedin_url:
         links.append(
             f'<a class="profile-social-link" href="{linkedin_url}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">'
-            f'<i data-lucide="linkedin"></i><span>LinkedIn</span></a>'
+            f'<i data-lucide="linkedin"></i><span>LinkedIn</span>'
+            f'<i data-lucide="arrow-up-right" class="link-arrow"></i></a>'
         )
     links_html = f'<div class="profile-social">{" ".join(links)}</div>' if links else ""
 
@@ -1796,7 +1793,7 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pro
       <div class="project-flow-wrapper" data-project-flow></div>
 
       <aside class="project-detail-panel" data-project-panel data-open="false" aria-hidden="true">
-        <div class="panel-header">
+        <div class="panel-header" data-reveal>
           <div class="panel-title-group">
             <span class="panel-role card-type" data-panel-role></span>
             <h2 class="panel-name" data-panel-name></h2>
@@ -1805,10 +1802,10 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pro
             <i data-lucide="x"></i>
           </button>
         </div>
-        <p class="panel-headline" data-panel-headline></p>
-        <p class="panel-summary" data-panel-summary></p>
-        <div class="panel-stack" data-panel-stack></div>
-        <div class="panel-actions">
+        <p class="panel-headline" data-panel-headline data-reveal></p>
+        <p class="panel-summary" data-panel-summary data-reveal></p>
+        <div class="panel-stack" data-panel-stack data-reveal></div>
+        <div class="panel-actions" data-reveal>
           <a class="panel-cta nav-cta" href="#" data-panel-link>
             {view_project_label} <i data-lucide="arrow-right"></i>
           </a>

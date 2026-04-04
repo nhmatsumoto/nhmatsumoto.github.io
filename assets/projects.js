@@ -93,6 +93,9 @@
       this.hover    = false
       this.selected = false
       this.statusColor = STATUS_COLOR[project.status] || '#64748b'
+      // Ripple rings on select
+      this.ripples  = []
+      this.prevSelected = false
     }
 
     update(t, mx, my) {
@@ -109,9 +112,9 @@
       }
 
       // Spring: scale
-      const ts = this.hover ? 1.07 : this.selected ? 1.12 : 1
-      this.scaleV += (ts - this.scale) * 0.16
-      this.scaleV *= 0.72
+      const ts = this.hover ? 1.07 : this.selected ? 1.15 : 1
+      this.scaleV += (ts - this.scale) * 0.14
+      this.scaleV *= 0.68
       this.scale  += this.scaleV
 
       // Spring: glow
@@ -119,6 +122,20 @@
       this.glowV += (tg - this.glow) * 0.13
       this.glowV *= 0.70
       this.glow  += this.glowV
+
+      // Ripple: spawn rings when newly selected
+      if (this.selected && !this.prevSelected) {
+        for (let k = 0; k < 3; k++) this.ripples.push({ r: 0, delay: k * 12, life: 0 })
+      }
+      this.prevSelected = this.selected
+
+      // Advance ripples
+      this.ripples = this.ripples.filter(rp => {
+        if (rp.delay > 0) { rp.delay--; return true }
+        rp.r    += 4.5
+        rp.life += 0.045
+        return rp.life < 1
+      })
     }
 
     draw(ctx, t, dimmed) {
@@ -128,6 +145,17 @@
       ctx.save()
       ctx.translate(this.x, this.y)
       ctx.scale(this.scale, this.scale)
+
+      // ── Ripple rings ─────────────────────────────────────────────
+      for (const rp of this.ripples) {
+        if (rp.delay > 0) continue
+        const fade = (1 - rp.life) * alpha
+        ctx.beginPath()
+        ctx.arc(0, 0, hw * 0.6 + rp.r, 0, Math.PI * 2)
+        ctx.strokeStyle = `rgba(0,194,255,${fade * 0.55})`
+        ctx.lineWidth = 1.5
+        ctx.stroke()
+      }
 
       // ── Outer glow ──────────────────────────────────────────────
       if (this.glow > 0.01) {
@@ -271,21 +299,45 @@
     const shell = wrapper.closest('.project-flow-shell') || wrapper.parentElement
     const panel = shell.querySelector('[data-project-panel]')
 
+    // ── Panel reveal ─────────────────────────────────────────────
+    let panelRevealTimer = null
+
     function showPanel(p) {
       if (!panel) return
-      panel.querySelector('[data-panel-name]').textContent    = p.name
-      panel.querySelector('[data-panel-role]').textContent    = p.status.replace('_', ' ')
+
+      // Populate content
+      panel.querySelector('[data-panel-name]').textContent     = p.name
+      panel.querySelector('[data-panel-role]').textContent     = p.status.replace(/_/g, ' ')
       panel.querySelector('[data-panel-headline]').textContent = p.headline || p.summary
       panel.querySelector('[data-panel-summary]').textContent  = p.summary
       const stackEl = panel.querySelector('[data-panel-stack]')
       stackEl.innerHTML = (p.stack || []).map(s => `<span class="stack-chip">${s}</span>`).join('')
       const link = panel.querySelector('[data-panel-link]')
       link.href = p.url || '#'
+
+      // Reset all reveal states before opening
+      const revealEls = panel.querySelectorAll('[data-reveal]')
+      revealEls.forEach(el => { el.classList.remove('reveal-in'); el.style.transitionDelay = '' })
+
+      // Mark open (triggers CSS slide-in transition)
       panel.dataset.open = 'true'
+
+      // Stagger children in after panel slides in
+      clearTimeout(panelRevealTimer)
+      panelRevealTimer = setTimeout(() => {
+        revealEls.forEach((el, i) => {
+          el.style.transitionDelay = `${i * 70}ms`
+          el.classList.add('reveal-in')
+        })
+      }, 120)
     }
 
     function hidePanel() {
-      if (panel) panel.dataset.open = 'false'
+      if (!panel) return
+      clearTimeout(panelRevealTimer)
+      const revealEls = panel.querySelectorAll('[data-reveal]')
+      revealEls.forEach(el => { el.classList.remove('reveal-in'); el.style.transitionDelay = '' })
+      panel.dataset.open = 'false'
     }
 
     // ── Input ────────────────────────────────────────────────────

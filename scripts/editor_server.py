@@ -6,6 +6,7 @@ import json
 import mimetypes
 import os
 import re
+import tomllib
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -28,7 +29,51 @@ from blog_engine import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-EDITOR_DIR = ROOT / "editor"
+EDITOR_DIR   = ROOT / "editor"
+PROJECTS_DIR = ROOT / "content" / "projects"
+
+SECTION_TYPES = ["intro", "problem", "solution", "architecture", "stack", "code", "diagram", "text"]
+SECTION_ANIMATIONS = ["fade", "slide_right", "zoom", "typewriter", "matrix_rain", "expand_node"]
+
+
+def load_sections(slug: str) -> list[dict]:
+    """Load sections for a project from sections.json (or sections.toml fallback)."""
+    json_path = PROJECTS_DIR / slug / "sections.json"
+    if json_path.exists():
+        try:
+            return json.loads(json_path.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    toml_path = PROJECTS_DIR / slug / "sections.toml"
+    if toml_path.exists():
+        try:
+            with open(toml_path, "rb") as f:
+                data = tomllib.load(f)
+            return data.get("section", [])
+        except Exception:
+            pass
+    return []
+
+
+def save_sections(slug: str, sections: list[dict]) -> None:
+    dest = PROJECTS_DIR / slug
+    dest.mkdir(parents=True, exist_ok=True)
+    (dest / "sections.json").write_text(
+        json.dumps(sections, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+
+def list_projects() -> list[dict]:
+    result = []
+    for path in sorted(PROJECTS_DIR.glob("*.toml")):
+        try:
+            with open(path, "rb") as f:
+                data = tomllib.load(f)
+            result.append({"slug": data.get("slug", path.stem), "name": data.get("name", path.stem)})
+        except Exception:
+            pass
+    return result
 
 
 class EditorRequestHandler(BaseHTTPRequestHandler):
@@ -41,9 +86,26 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
             self.serve_file(EDITOR_DIR / "index.html")
             return
 
+        if parsed.path in {"/editor/sections", "/editor/sections/"}:
+            self.serve_file(EDITOR_DIR / "sections.html")
+            return
+
         if parsed.path.startswith("/editor/"):
             relative_path = parsed.path.removeprefix("/editor/")
             self.serve_file((EDITOR_DIR / relative_path).resolve())
+            return
+
+        if parsed.path == "/api/projects":
+            self.send_json(list_projects())
+            return
+
+        if parsed.path.startswith("/api/sections/"):
+            slug = parsed.path.removeprefix("/api/sections/").strip("/")
+            self.send_json(load_sections(slug))
+            return
+
+        if parsed.path == "/api/section-meta":
+            self.send_json({"types": SECTION_TYPES, "animations": SECTION_ANIMATIONS})
             return
 
         if parsed.path == "/api/state":
@@ -73,6 +135,21 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
+
+        # Sections endpoint accepts a JSON array — bypass dict-only read_json_body
+        if parsed.path.startswith("/api/sections/"):
+            try:
+                length = int(self.headers.get("Content-Length", "0") or 0)
+                raw = self.rfile.read(length).decode("utf-8") if length else "[]"
+                sections = json.loads(raw)
+                if not isinstance(sections, list):
+                    raise ValueError("Expected JSON array")
+                slug = parsed.path.removeprefix("/api/sections/").strip("/")
+                save_sections(slug, sections)
+                self.send_json({"ok": True})
+            except Exception as exc:
+                self.send_error_json(HTTPStatus.BAD_REQUEST, str(exc))
+            return
 
         try:
             payload = self.read_json_body()

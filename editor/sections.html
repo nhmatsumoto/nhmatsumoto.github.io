@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Section Editor — Canvas Reader</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+:root {
+  --bg: #0B0F14; --surface: #121821; --surface2: #1a2233; --surface3: #1e2a3a;
+  --border: rgba(0,194,255,0.13); --text: #E6EDF3; --muted: #9DA7B3;
+  --accent: #00C2FF; --accent2: #7C5CFF; --red: #f87171; --green: #34d399;
+  --yellow: #f59e0b; --radius: 8px; --mono: "JetBrains Mono", monospace;
+  --font: Inter, system-ui, sans-serif;
+}
+body { background: var(--bg); color: var(--text); font-family: var(--font);
+       display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+button { cursor: pointer; border: none; background: none; color: inherit; font: inherit; }
+input, textarea, select {
+  font: inherit; color: inherit; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px;
+  width: 100%; outline: none; transition: border-color .15s;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+textarea { resize: vertical; min-height: 90px; font-family: var(--mono); font-size: 13px; line-height: 1.65; }
+
+/* ── App header ─────────────────────────────────────────────────────────── */
+.app-header {
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 20px; border-bottom: 1px solid var(--border);
+  background: var(--surface); flex-shrink: 0;
+}
+.app-header h1 { font-size: 13px; font-weight: 700; letter-spacing: .1em;
+                 text-transform: uppercase; color: var(--accent); }
+.app-header select { width: 220px; font-size: 13px; flex-shrink: 0; }
+.spacer { flex: 1; }
+.header-link { font-size: 12px; color: var(--muted); text-decoration: none; padding: 4px 8px;
+               border-radius: 4px; transition: .14s; }
+.header-link:hover { color: var(--text); background: var(--surface2); }
+.status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+              background: var(--green); margin-right: 6px; opacity: 0; transition: .3s; }
+.status-dot.show { opacity: 1; }
+
+/* ── Shell ──────────────────────────────────────────────────────────────── */
+.shell { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Sidebar ────────────────────────────────────────────────────────────── */
+#sidebar {
+  width: 240px; flex-shrink: 0; border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; background: var(--surface); overflow: hidden;
+}
+#sections-list { flex: 1; overflow-y: auto; padding: 6px; }
+.sec-item {
+  display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+  border-radius: 6px; cursor: pointer; border: 1px solid transparent;
+  transition: background .12s, border-color .12s; user-select: none;
+}
+.sec-item:hover { background: var(--surface2); }
+.sec-item.active { background: var(--surface2); border-color: var(--accent); }
+.sec-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.sec-label { flex: 1; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sec-id { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+#sidebar-footer { padding: 8px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
+.btn { padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+       letter-spacing: .04em; transition: .14s; display: flex; align-items: center;
+       justify-content: center; gap: 6px; }
+.btn-primary { background: var(--accent); color: #0B0F14; }
+.btn-primary:hover { filter: brightness(1.1); }
+.btn-outline { border: 1px solid var(--border); color: var(--muted); }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.btn-danger { border: 1px solid var(--red); color: var(--red); }
+.btn-danger:hover { background: rgba(248,113,113,.08); }
+.btn-sm { padding: 5px 10px; font-size: 11px; }
+
+/* ── Main area ──────────────────────────────────────────────────────────── */
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+#editor-bar {
+  display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+#editor-bar h2 { font-size: 13px; color: var(--muted); font-weight: 600; flex: 1;
+                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#editor-body { flex: 1; display: flex; overflow: hidden; }
+#editor-empty { flex: 1; display: flex; align-items: center; justify-content: center;
+                color: var(--muted); font-size: 13px; text-align: center; flex-direction: column; gap: 8px; }
+#editor-empty p { max-width: 260px; line-height: 1.6; }
+
+/* ── Form ───────────────────────────────────────────────────────────────── */
+#form-panel { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 10px; font-weight: 700; letter-spacing: .12em;
+               text-transform: uppercase; color: var(--muted); }
+.field-row { display: flex; gap: 12px; }
+.field-row .field { flex: 1; }
+
+.children-area { display: flex; flex-direction: column; gap: 8px; }
+.children-chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.child-chip {
+  display: flex; align-items: center; gap: 5px; padding: 3px 8px 3px 10px;
+  border: 1px solid var(--border); border-radius: 4px;
+  font-size: 11px; font-family: var(--mono);
+}
+.child-chip .rm { color: var(--red); font-size: 14px; line-height: 1; cursor: pointer; }
+.child-chip .rm:hover { color: #fff; }
+.add-child-row { display: flex; gap: 6px; }
+.add-child-row input { max-width: 80px; text-align: center; font-family: var(--mono); }
+
+/* ── Right panel (preview + graph) ─────────────────────────────────────── */
+#right-panel {
+  width: 260px; flex-shrink: 0; border-left: 1px solid var(--border);
+  overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 16px;
+}
+.panel-section h3 { font-size: 10px; font-weight: 700; letter-spacing: .12em;
+                    text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.preview-card { border: 1px solid var(--border); border-radius: 8px; padding: 14px;
+                background: var(--surface2); }
+.pv-type { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+           margin-bottom: 6px; }
+.pv-title { font-size: 14px; font-weight: 700; line-height: 1.3; margin-bottom: 8px;
+            color: var(--text); }
+.pv-content { font-size: 11px; color: var(--muted); line-height: 1.6;
+              max-height: 90px; overflow: hidden; }
+.pv-footer { margin-top: 10px; display: flex; align-items: center; justify-content: space-between; }
+.pv-anim { font-size: 10px; font-family: var(--mono); color: var(--accent2);
+           padding: 3px 8px; border: 1px solid rgba(124,92,255,.35); border-radius: 4px; }
+.pv-children { font-size: 10px; color: var(--muted); }
+
+/* Graph view */
+.graph-lines { display: flex; flex-direction: column; gap: 2px; }
+.graph-line { font-size: 10px; font-family: var(--mono); color: var(--muted);
+              line-height: 1.8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+              padding: 2px 6px; border-radius: 3px; }
+.graph-line.current { color: var(--accent); background: rgba(0,194,255,.07); }
+.graph-line.is-child { color: var(--accent2); }
+
+/* Anim legend */
+.anim-badges { display: flex; flex-wrap: wrap; gap: 5px; }
+.anim-badge { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-family: var(--mono);
+              background: rgba(124,92,255,.1); color: var(--accent2);
+              border: 1px solid rgba(124,92,255,.28); cursor: default; }
+.anim-badge.selected { background: rgba(124,92,255,.25); border-color: var(--accent2); }
+
+/* Keyboard hint */
+.kbd-hint { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.kbd { padding: 1px 6px; border: 1px solid var(--border); border-radius: 3px;
+       font-family: var(--mono); font-size: 10px; color: var(--muted); }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>Section Editor</h1>
+  <select id="project-select"><option value="">— select project —</option></select>
+  <div class="spacer"></div>
+  <span class="status-dot" id="status-dot"></span>
+  <span id="status-text" style="font-size:11px;color:var(--green);opacity:0;transition:.3s" id="save-label">saved</span>
+  <a href="/editor/" class="header-link">← posts editor</a>
+</header>
+
+<div class="shell">
+  <nav id="sidebar">
+    <div id="sections-list"></div>
+    <div id="sidebar-footer">
+      <button class="btn btn-outline btn-sm" id="add-btn">+ New Section</button>
+      <button class="btn btn-primary" id="save-btn">Save All</button>
+      <div class="kbd-hint" style="justify-content:center;padding:4px 0">
+        <span class="kbd">Backspace</span> navigate back in canvas
+      </div>
+    </div>
+  </nav>
+
+  <div id="main">
+    <div id="editor-bar">
+      <h2 id="editor-title">No section selected</h2>
+      <button class="btn btn-danger btn-sm" id="delete-btn" hidden>Delete</button>
+    </div>
+    <div id="editor-body">
+      <div id="editor-empty">
+        <p>Select a project above, then click a section or add a new one.</p>
+        <p style="font-size:11px">Sections become a traversable canvas experience on the project page.</p>
+      </div>
+      <div id="form-panel" hidden>
+        <div class="field-row">
+          <div class="field">
+            <label>ID</label>
+            <input id="f-id" type="number" min="0" step="1">
+          </div>
+          <div class="field">
+            <label>Type</label>
+            <select id="f-type"></select>
+          </div>
+          <div class="field">
+            <label>Animation</label>
+            <select id="f-animation"></select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Title</label>
+          <input id="f-title" type="text" placeholder="Section title">
+        </div>
+        <div class="field">
+          <label>Content</label>
+          <textarea id="f-content" rows="7" placeholder="Write the section content..."></textarea>
+        </div>
+        <div class="field">
+          <label>Children (IDs of sections reachable from this one)</label>
+          <div class="children-area">
+            <div class="children-chips" id="children-chips"></div>
+            <div class="add-child-row">
+              <input id="child-input" type="number" min="0" placeholder="ID">
+              <button class="btn btn-outline btn-sm" id="add-child-btn">Add child</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="right-panel" hidden>
+        <div class="panel-section">
+          <h3>Preview</h3>
+          <div class="preview-card">
+            <div class="pv-type" id="pv-type"></div>
+            <div class="pv-title" id="pv-title"></div>
+            <div class="pv-content" id="pv-content"></div>
+            <div class="pv-footer">
+              <span class="pv-anim" id="pv-anim"></span>
+              <span class="pv-children" id="pv-children"></span>
+            </div>
+          </div>
+        </div>
+        <div class="panel-section">
+          <h3>Section Graph</h3>
+          <div class="graph-lines" id="graph-lines"></div>
+        </div>
+        <div class="panel-section">
+          <h3>Animations</h3>
+          <div class="anim-badges" id="anim-badges"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+;(function() {
+  'use strict'
+
+  const TYPE_COLORS = {
+    intro:'#00C2FF', problem:'#f59e0b', solution:'#34d399',
+    architecture:'#7C5CFF', stack:'#64748b', code:'#00C2FF',
+    diagram:'#7C5CFF', text:'#9DA7B3'
+  }
+
+  let TYPES = [], ANIMATIONS = []
+  let sections = [], currentProject = null, currentIdx = null
+  let autoSaveTimer = null
+
+  const $ = id => document.getElementById(id)
+
+  async function api(method, path, body) {
+    const opts = { method, headers: {} }
+    if (body !== undefined) {
+      opts.headers['Content-Type'] = 'application/json'
+      opts.body = JSON.stringify(body)
+    }
+    const res = await fetch('/api' + path, opts)
+    return res.json()
+  }
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  async function boot() {
+    const meta = await api('GET', '/section-meta')
+    TYPES = meta.types || []
+    ANIMATIONS = meta.animations || []
+
+    // Populate type select
+    TYPES.forEach(t => {
+      const o = document.createElement('option'); o.value = t; o.textContent = t
+      $('f-type').appendChild(o)
+    })
+    // Populate animation select
+    ANIMATIONS.forEach(a => {
+      const o = document.createElement('option'); o.value = a; o.textContent = a
+      $('f-animation').appendChild(o)
+    })
+    // Anim badges legend
+    const badges = $('anim-badges')
+    ANIMATIONS.forEach(a => {
+      const el = document.createElement('span')
+      el.className = 'anim-badge'; el.textContent = a; el.dataset.anim = a
+      el.title = a; badges.appendChild(el)
+    })
+
+    // Load projects
+    const projects = await api('GET', '/projects')
+    const sel = $('project-select')
+    projects.forEach(p => {
+      const o = document.createElement('option'); o.value = p.slug; o.textContent = p.name
+      sel.appendChild(o)
+    })
+    sel.addEventListener('change', () => loadProject(sel.value))
+  }
+
+  // ── Project ───────────────────────────────────────────────────────────────
+  async function loadProject(slug) {
+    if (!slug) return
+    currentProject = slug; currentIdx = null
+    sections = await api('GET', `/sections/${slug}`)
+    renderSidebar()
+    selectSection(null)
+  }
+
+  // ── Sidebar ───────────────────────────────────────────────────────────────
+  function renderSidebar() {
+    const list = $('sections-list')
+    list.innerHTML = ''
+    sections.forEach((s, i) => {
+      const el = document.createElement('div')
+      el.className = 'sec-item' + (i === currentIdx ? ' active' : '')
+      el.innerHTML = `
+        <div class="sec-dot" style="background:${TYPE_COLORS[s.type] || '#9DA7B3'}"></div>
+        <div class="sec-label">${s.title || '(untitled)'}</div>
+        <div class="sec-id">#${s.id}</div>
+      `
+      el.addEventListener('click', () => selectSection(i))
+      list.appendChild(el)
+    })
+  }
+
+  // ── Section select ─────────────────────────────────────────────────────────
+  function selectSection(idx) {
+    currentIdx = idx
+    document.querySelectorAll('.sec-item').forEach((el, i) => {
+      el.classList.toggle('active', i === idx)
+    })
+
+    const hasProject = !!currentProject
+    if (idx === null) {
+      $('editor-empty').hidden = false
+      $('form-panel').hidden = true
+      $('right-panel').hidden = true
+      $('delete-btn').hidden = true
+      $('editor-title').textContent = hasProject ? `${sections.length} section(s) — ${currentProject}` : 'No project selected'
+      return
+    }
+
+    const s = sections[idx]
+    $('editor-empty').hidden = true
+    $('form-panel').hidden = false
+    $('right-panel').hidden = false
+    $('delete-btn').hidden = false
+    $('editor-title').textContent = `#${s.id} — ${s.type} — ${s.title || '(untitled)'}`
+
+    $('f-id').value = s.id
+    $('f-type').value = s.type || 'text'
+    $('f-animation').value = s.animation || 'fade'
+    $('f-title').value = s.title || ''
+    $('f-content').value = s.content || ''
+    renderChildren(s.children || [])
+    updatePreview()
+    highlightAnimBadge(s.animation || 'fade')
+  }
+
+  // ── Children ──────────────────────────────────────────────────────────────
+  function renderChildren(children) {
+    const chips = $('children-chips')
+    chips.innerHTML = ''
+    children.forEach(cid => {
+      const chip = document.createElement('div')
+      chip.className = 'child-chip'
+      chip.innerHTML = `<span>#${cid}</span><span class="rm" data-id="${cid}">×</span>`
+      chip.querySelector('.rm').addEventListener('click', () => {
+        const s = sections[currentIdx]
+        s.children = (s.children || []).filter(c => c !== cid)
+        renderChildren(s.children)
+        updatePreview()
+        scheduleAutoSave()
+      })
+      chips.appendChild(chip)
+    })
+  }
+
+  $('add-child-btn').addEventListener('click', () => {
+    const val = parseInt($('child-input').value, 10)
+    if (isNaN(val)) return
+    const s = sections[currentIdx]
+    s.children = s.children || []
+    if (!s.children.includes(val)) {
+      s.children.push(val)
+      renderChildren(s.children)
+      updatePreview()
+      scheduleAutoSave()
+    }
+    $('child-input').value = ''
+  })
+
+  $('child-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); $('add-child-btn').click() }
+  })
+
+  // ── Form read / preview ───────────────────────────────────────────────────
+  function readForm() {
+    if (currentIdx === null) return
+    const s = sections[currentIdx]
+    const newId = parseInt($('f-id').value, 10)
+    if (!isNaN(newId)) s.id = newId
+    s.type      = $('f-type').value
+    s.animation = $('f-animation').value
+    s.title     = $('f-title').value
+    s.content   = $('f-content').value
+    // children managed separately
+  }
+
+  function updatePreview() {
+    if (currentIdx === null) return
+    readForm()
+    const s = sections[currentIdx]
+    const color = TYPE_COLORS[s.type] || '#9DA7B3'
+    $('pv-type').textContent = (s.type || 'text').toUpperCase()
+    $('pv-type').style.color = color
+    $('pv-title').textContent = s.title || '(no title)'
+    $('pv-content').textContent = s.content || ''
+    $('pv-anim').textContent = s.animation || 'fade'
+    const ch = s.children || []
+    $('pv-children').textContent = ch.length ? `→ ${ch.map(c => '#' + c).join(', ')}` : '— leaf'
+    $('editor-title').textContent = `#${s.id} — ${s.type} — ${s.title || '(untitled)'}`
+
+    // Graph
+    const lines = $('graph-lines')
+    lines.innerHTML = ''
+    sections.forEach(sec => {
+      const el = document.createElement('div')
+      const isActive = sec.id === s.id
+      const isChild = (s.children || []).includes(sec.id)
+      el.className = 'graph-line' + (isActive ? ' current' : isChild ? ' is-child' : '')
+      const ch = (sec.children || []).map(c => '#' + c).join(' ')
+      el.textContent = `#${String(sec.id).padStart(2, '0')} ${(sec.title || '').slice(0, 14).padEnd(14)} ${ch ? '→ ' + ch : ''}`
+      lines.appendChild(el)
+    })
+
+    highlightAnimBadge(s.animation || 'fade')
+  }
+
+  function highlightAnimBadge(anim) {
+    document.querySelectorAll('.anim-badge').forEach(el => {
+      el.classList.toggle('selected', el.dataset.anim === anim)
+    })
+  }
+
+  // ── Form event bindings ───────────────────────────────────────────────────
+  ;['f-id', 'f-type', 'f-animation', 'f-title'].forEach(id => {
+    $(id).addEventListener('change', () => { updatePreview(); scheduleAutoSave() })
+    $(id).addEventListener('input', updatePreview)
+  })
+  $('f-content').addEventListener('input', () => { updatePreview(); scheduleAutoSave() })
+
+  // ── Add / Delete ──────────────────────────────────────────────────────────
+  $('add-btn').addEventListener('click', () => {
+    if (!currentProject) { alert('Select a project first'); return }
+    const maxId = sections.reduce((m, s) => Math.max(m, s.id), -1)
+    sections.push({ id: maxId + 1, type: 'text', title: '', content: '', animation: 'fade', children: [] })
+    renderSidebar()
+    selectSection(sections.length - 1)
+  })
+
+  $('delete-btn').addEventListener('click', () => {
+    if (currentIdx === null || !confirm('Delete this section?')) return
+    sections.splice(currentIdx, 1)
+    renderSidebar()
+    selectSection(null)
+    scheduleAutoSave()
+  })
+
+  // ── Save ──────────────────────────────────────────────────────────────────
+  function showSaved() {
+    const dot = $('status-dot'); const label = $('status-text')
+    dot.classList.add('show'); label.style.opacity = '1'
+    setTimeout(() => { dot.classList.remove('show'); label.style.opacity = '0' }, 2200)
+  }
+
+  async function saveAll() {
+    if (!currentProject) return
+    readForm()
+    await api('POST', `/sections/${currentProject}`, sections)
+    showSaved()
+  }
+
+  function scheduleAutoSave() {
+    clearTimeout(autoSaveTimer)
+    autoSaveTimer = setTimeout(saveAll, 1000)
+  }
+
+  $('save-btn').addEventListener('click', saveAll)
+
+  // Keyboard save
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); saveAll() }
+  })
+
+  boot()
+})()
+</script>
+</body>
+</html>
