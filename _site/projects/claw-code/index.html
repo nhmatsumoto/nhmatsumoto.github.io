@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>claw-code | nhmatsumoto-blog-engine</title><meta name="description" content="Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust.">
+    <title>claw-code | nhmatsumoto-blog-engine</title><meta name="description" content="Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/claw-code/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,17 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">claw-code</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>claw-code</h1><p class="post-summary">Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/claw-code" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">claw-code</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>claw-code</h1><p class="post-summary">Better Harness Tools — ferramentas para análise e experimentação com Claude Code, em reescrita para Rust.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Fork do projeto Claw Code, focado em criar ferramentas úteis para análise e experimentação com a arquitetura de agentes de código como Claude Code.</p>
+<h2>Motivação</h2>
+<p>Entender como agentes de código funcionam internamente — seus system prompts, tool loops, decisão de contexto — é fundamental para quem trabalha com automação de engenharia. Este projeto vai além do arquivo: transforma referência em ferramenta.</p>
+<h2>Reescrita em Rust</h2>
+<p>A versão atual está sendo reescrita em Rust para:</p>
+<ul><li><strong>Performance</strong> — parsing e análise de prompts grandes sem overhead de runtime</li> <li><strong>Portabilidade</strong> — binário único sem dependências</li> <li><strong>CLI ergonômico</strong> — interface de terminal com output formatado</li></ul>
+<h2>Relação com o ecossistema</h2>
+<p>Complementa o repositório <strong>system-prompts-and-models-of-ai-tools</strong> como referência de engenharia de prompts e arquitetura de agentes.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>CLI em Rust com subcomandos para parsing de prompts, comparação entre versões e análise de tool definitions. Estruturado como workspace Cargo com crates separados para parsing, rendering e CLI.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">Rust</span><span class="stack-chip">CLI</span><span class="stack-chip">AI Agents</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/claw-code" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

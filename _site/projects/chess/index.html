@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>chess | nhmatsumoto-blog-engine</title><meta name="description" content="Repositório chess sincronizado via GitHub.">
+    <title>Chess | nhmatsumoto-blog-engine</title><meta name="description" content="Jogo de xadrez implementado em C# com foco em modelagem de domínio, validação de movimentos e representação do tabuleiro.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/chess/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,15 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">chess</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>chess</h1><p class="post-summary">Repositório chess sincronizado via GitHub.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Repositório chess sincronizado via GitHub.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/chess" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">Chess</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>Chess</h1><p class="post-summary">Implementação de xadrez em C# com modelagem de domínio orientada a regras.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Implementação de um jogo de xadrez completo em C#, com modelagem de domínio que trata cada peça como entidade com regras próprias de movimentação.</p>
+<h2>Modelagem de domínio</h2>
+<p>O tabuleiro é representado como uma matriz 8x8 onde cada célula pode conter uma peça. Cada tipo de peça (Rei, Rainha, Torre, Bispo, Cavalo, Peão) implementa suas próprias regras de movimentação, incluindo:</p>
+<ul><li>Movimentos válidos considerando o estado atual do tabuleiro</li> <li>Detecção de xeque e xeque-mate</li> <li>Movimentos especiais: roque, en passant, promoção de peão</li></ul>
+<h2>Decisões de design</h2>
+<ul><li><strong>Value Objects</strong> para posições no tabuleiro</li> <li><strong>Strategy pattern</strong> para regras de movimentação por tipo de peça</li> <li><strong>Imutabilidade</strong> do estado do jogo para facilitar undo/redo</li></ul></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Arquitetura em camadas simples: domínio (peças, tabuleiro, regras), aplicação (controle de jogo, turnos) e interface de console. O domínio é completamente independente da camada de apresentação.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">C#</span><span class="stack-chip">.NET</span><span class="stack-chip">OOP</span><span class="stack-chip">Domain Modeling</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/chess" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

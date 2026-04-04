@@ -1,7 +1,7 @@
 name = "SplitCosts-FE"
 slug = "splitcosts-fe"
-headline = "Repositório SplitCosts-FE sincronizado via GitHub."
-summary = "Repositório SplitCosts-FE sincronizado via GitHub."
+headline = "Frontend do SplitCosts — SPA React/TypeScript com UX focada em clareza operacional."
+summary = "Frontend do SplitCosts em React/TypeScript com Keycloak auth, visualização de despesas, saldos e reconciliação, consumindo o SplitCost-Backend via REST API."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,36 @@ repo_url = "https://github.com/nhmatsumoto/SplitCosts-FE"
 code_url = "https://github.com/nhmatsumoto/SplitCosts-FE"
 published_at = "2025-07-05T17:34:22Z"
 tags = ["TypeScript"]
+stack = ["React", "TypeScript", "Keycloak", "REST API"]
 view_engine = "binary-tree"
 
 overview = """
-Repositório SplitCosts-FE sincronizado via GitHub.
+Frontend do **SplitCosts** — SPA em React/TypeScript que consome o SplitCost-Backend para gerenciamento de despesas compartilhadas.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Funcionalidades
+
+- **Dashboard** — visão geral de saldos e despesas recentes por grupo
+- **Registro de despesas** — formulário com divisão proporcional ou customizada
+- **Reconciliação** — visualização de dívidas e sugestão de pagamentos mínimos
+- **Histórico** — timeline de transações com filtros por período e categoria
+- **Multi-grupo** — navegação entre diferentes households/grupos
+
+## Stack
+
+- React com hooks e context API
+- TypeScript para type safety end-to-end (tipos compartilhados com o backend)
+- Keycloak para autenticação (padrões validados no **Playground-FE**)
+- React-data-grid para tabelas de dados com virtualização
+
+## Design
+
+Interface dark-theme com foco em clareza operacional — números grandes, cores semânticas para saldos positivos/negativos e ações primárias sempre visíveis.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Aplicações financeiras precisam de UX que torne números complexos compreensíveis de relance. O frontend do SplitCosts prioriza hierarquia visual clara: saldos em destaque, despesas recentes acessíveis e reconciliação a um clique.
+"""
+
+architecture = """
+SPA React consumindo REST API do backend. Autenticação via Keycloak JS adapter (inicializado no bootstrap). State management via React context + hooks. Roteamento com React Router e lazy loading de módulos por grupo.
+"""

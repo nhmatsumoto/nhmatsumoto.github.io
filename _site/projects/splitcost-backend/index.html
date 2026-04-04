@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>SplitCost-Backend | nhmatsumoto-blog-engine</title><meta name="description" content="Repositório SplitCost-Backend sincronizado via GitHub.">
+    <title>SplitCost-Backend | nhmatsumoto-blog-engine</title><meta name="description" content="Backend do SplitCosts em .NET/C# com arquitetura multi-tenant, domain events, separação de contextos de leitura/escrita e projeções operacionais.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/splitcost-backend/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,17 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">SplitCost-Backend</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>SplitCost-Backend</h1><p class="post-summary">Repositório SplitCost-Backend sincronizado via GitHub.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Repositório SplitCost-Backend sincronizado via GitHub.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/SplitCost-Backend" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">SplitCost-Backend</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>SplitCost-Backend</h1><p class="post-summary">Backend do SplitCosts — API .NET com multi-tenant, domain events e projeções de leitura.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Backend do <strong>SplitCosts</strong> — API em .NET/C# que implementa a lógica de compartilhamento de despesas com foco em multi-tenancy e modelagem de domínio.</p>
+<h2>Arquitetura</h2>
+<ul><li><strong>Multi-tenant</strong> — isolamento de dados por grupo/household com tenant resolution no middleware</li> <li><strong>Domain events</strong> — mudanças de estado publicam eventos para manter projeções atualizadas</li> <li><strong>CQRS simplificado</strong> — separação entre comandos (escrita) e queries (projeções de leitura)</li> <li><strong>Repository pattern</strong> — abstração de persistência com PostgreSQL via Entity Framework</li></ul>
+<h2>Domínio</h2>
+<p>O modelo de domínio trata despesas como agregados com regras de negócio:</p>
+<ul><li>Divisão proporcional ou customizada entre participantes</li> <li>Histórico de pagamentos e saldos por período</li> <li>Reconciliação de dívidas entre membros do grupo</li> <li>Categorização e reporting</li></ul>
+<h2>Relação com o ecossistema</h2>
+<p>Evolução direta do <strong>Financial</strong> (monolito), agora com separação clara entre contextos, multi-tenancy e projeções de leitura. Consumido pelo <strong>SplitCosts-FE</strong> via REST API.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>API ASP.NET Core em camadas: Controllers → Application Services → Domain → Infrastructure. Multi-tenancy via middleware de tenant resolution. PostgreSQL com Entity Framework Core. Projeções de leitura como queries separadas sobre views materializadas.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">C#</span><span class="stack-chip">.NET</span><span class="stack-chip">PostgreSQL</span><span class="stack-chip">Multi-tenant</span><span class="stack-chip">DDD</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/SplitCost-Backend" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

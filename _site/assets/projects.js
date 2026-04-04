@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 /**
- * Technical Knowledge OS — 3D Project Flow (V6 — DOM Reader)
+ * Technical Knowledge OS — 3D Project Flow (V7 — Full Article Reader)
  */
 
 const KIND_COLOR = {
@@ -10,6 +10,9 @@ const KIND_COLOR = {
 }
 const KIND_HEX = {
   post: '#00C2FF', project: '#7C5CFF', document: '#10B981', central: '#FFFFFF',
+}
+const KIND_LABEL = {
+  post: 'Publicação', project: 'Projeto', document: 'Documento',
 }
 
 function createGlowTexture(size = 128) {
@@ -36,9 +39,6 @@ function findRelated(item, all) {
   }).filter(d => d.overlap > 0).sort((a, b) => b.overlap - a.overlap).slice(0, 5)
 }
 
-// ── CSS transition class names for reader cards ──────────────────────────
-const MOTION = ['reader-motion-fade', 'reader-motion-slide-up', 'reader-motion-slide-down', 'reader-motion-zoom', 'reader-motion-slide-left', 'reader-motion-blur-in', 'reader-motion-flip']
-
 class ProjectMap3D {
   constructor(container, data) {
     this.container = container
@@ -51,8 +51,6 @@ class ProjectMap3D {
     this.transitioning = false
     this.glowTex = createGlowTexture(256)
     this.readerActive = false
-    this.readerIndex = 0
-    this.readerSections = []
 
     this.initScene()
     this.createStarfield()
@@ -172,130 +170,98 @@ class ProjectMap3D {
   }
 
   // ══════════════════════════════════════════════════════════════════════
-  //  READER MODE — full DOM overlay with CSS motion transitions
+  //  READER MODE — full scrollable article overlay
   // ══════════════════════════════════════════════════════════════════════
 
   buildReaderDOM() {
     this.readerEl = document.createElement('div')
-    this.readerEl.className = 'reader-2d'
+    this.readerEl.className = 'reader-article'
     this.readerEl.innerHTML = `
-      <div class="reader-2d-header">
-        <div class="reader-2d-meta">
-          <span class="reader-2d-kind" data-r-kind></span>
-          <h2 class="reader-2d-title" data-r-title></h2>
+      <header class="reader-article-bar">
+        <div class="reader-article-bar-left">
+          <button class="reader-article-back" data-r-close>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            Voltar ao Mapa
+          </button>
         </div>
-        <button class="reader-2d-close" data-r-close>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-          <span>Voltar ao Mapa</span>
-        </button>
-      </div>
-      <div class="reader-2d-stage" data-r-stage></div>
-      <div class="reader-2d-footer">
-        <button class="reader-2d-btn" data-r-prev disabled>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-          Anterior
-        </button>
-        <div class="reader-2d-progress">
-          <div class="reader-2d-dots" data-r-dots></div>
-          <span class="reader-2d-counter" data-r-counter>1 / 1</span>
+        <div class="reader-article-bar-center">
+          <span class="reader-article-kind" data-r-kind></span>
+          <span class="reader-article-bar-title" data-r-bar-title></span>
         </div>
-        <button class="reader-2d-btn" data-r-next>
-          Próximo
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-        </button>
-      </div>
+        <div class="reader-article-bar-right">
+          <a class="reader-article-link" data-r-fullpage href="#" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Página completa
+          </a>
+          <a class="reader-article-link" data-r-repo href="#" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            Repositório
+          </a>
+        </div>
+      </header>
+      <main class="reader-article-body" data-r-body>
+        <article class="reader-article-content prose" data-r-content></article>
+      </main>
     `
     this.container.appendChild(this.readerEl)
-
-    this.readerEl.querySelector('[data-r-prev]').onclick = () => this.readerNav(-1)
-    this.readerEl.querySelector('[data-r-next]').onclick = () => this.readerNav(1)
     this.readerEl.querySelector('[data-r-close]').onclick = () => this.exitReader()
   }
 
   enterReader(item) {
     this.readerActive = true
-    this.readerIndex = 0
-
-    // Dim the 3D scene
     this.nodes.forEach(n => n.visible = false)
     this.connections.forEach(c => c.visible = false)
     this.controls.autoRotate = false
     window.hidePanel()
 
-    const sections = item.sections?.length ? item.sections : [{ title: item.name || item.title, content: item.summary || '' }]
-    this.readerSections = sections
-
     const accent = KIND_HEX[item.kind] || KIND_HEX.post
     this.readerEl.style.setProperty('--reader-accent', accent)
-    this.readerEl.querySelector('[data-r-kind]').textContent = item.kind.toUpperCase()
-    this.readerEl.querySelector('[data-r-title]').textContent = item.name || item.title
+    this.readerEl.querySelector('[data-r-kind]').textContent = (KIND_LABEL[item.kind] || item.kind).toUpperCase()
+    this.readerEl.querySelector('[data-r-bar-title]').textContent = item.name || item.title
 
-    // Dots
-    const dotsEl = this.readerEl.querySelector('[data-r-dots]')
-    dotsEl.innerHTML = sections.map((_, i) => `<span class="reader-2d-dot${i === 0 ? ' active' : ''}" data-dot="${i}"></span>`).join('')
-    dotsEl.querySelectorAll('[data-dot]').forEach(dot => {
-      dot.onclick = () => this.readerGoTo(parseInt(dot.dataset.dot))
-    })
+    // Links
+    const fullpageLink = this.readerEl.querySelector('[data-r-fullpage]')
+    const repoLink = this.readerEl.querySelector('[data-r-repo]')
+    const pageUrl = item.resolved_url || item.url || ''
+    fullpageLink.href = pageUrl || '#'
+    fullpageLink.style.display = pageUrl ? '' : 'none'
+    const repoUrl = item.repo_url || ''
+    repoLink.href = repoUrl || '#'
+    repoLink.style.display = repoUrl ? '' : 'none'
 
-    this.readerEl.classList.add('open')
-    this._renderCard(0)
-  }
+    // Build article header + body
+    const title = esc(item.name || item.title)
+    const summary = esc(item.headline || item.summary || '')
+    const stackHtml = (item.stack || []).map(s => `<span class="reader-chip">${esc(s)}</span>`).join('')
+    const bodyHtml = item.body_html || `<p>${summary}</p>`
 
-  _renderCard(index) {
-    const sec = this.readerSections[index]
-    if (!sec) return
-    const total = this.readerSections.length
-    const motion = MOTION[index % MOTION.length]
-    const stage = this.readerEl.querySelector('[data-r-stage]')
-    const accent = this.readerEl.style.getPropertyValue('--reader-accent') || '#00C2FF'
-
-    // Content paragraphs
-    const paragraphs = (sec.content || '').split('\n').filter(l => l.trim()).map(p => `<p>${esc(p)}</p>`).join('')
-
-    const card = document.createElement('article')
-    card.className = `reader-2d-card ${motion}`
-    card.innerHTML = `
-      <header class="reader-2d-card-header">
-        <span class="reader-2d-card-num" style="color:${accent}">${String(index + 1).padStart(2, '0')}</span>
-        <div class="reader-2d-card-divider" style="background:${accent}"></div>
-        <h3 class="reader-2d-card-title">${esc(sec.title || 'Section')}</h3>
+    const content = this.readerEl.querySelector('[data-r-content]')
+    content.innerHTML = `
+      <header class="reader-article-header">
+        <span class="reader-article-header-kind" style="color:${accent};border-color:${accent}">${(KIND_LABEL[item.kind] || item.kind).toUpperCase()}</span>
+        <h1 class="reader-article-h1">${title}</h1>
+        <p class="reader-article-summary">${summary}</p>
+        ${stackHtml ? `<div class="reader-article-stack">${stackHtml}</div>` : ''}
       </header>
-      <div class="reader-2d-card-body">${paragraphs || '<p class="reader-2d-empty">Conteúdo em preparação.</p>'}</div>
+      <div class="reader-article-divider" style="background:${accent}"></div>
+      <section class="reader-article-prose">${bodyHtml}</section>
     `
 
-    // Swap
-    const old = stage.querySelector('.reader-2d-card')
-    if (old) {
-      old.classList.add('reader-motion-exit')
-      old.addEventListener('animationend', () => old.remove(), { once: true })
-      setTimeout(() => old.remove(), 500) // fallback
-    }
-    stage.appendChild(card)
+    // Scroll to top
+    this.readerEl.querySelector('[data-r-body]').scrollTop = 0
+    this.readerEl.classList.add('open')
 
-    // UI update
-    this.readerEl.querySelector('[data-r-counter]').textContent = `${index + 1} / ${total}`
-    this.readerEl.querySelector('[data-r-prev]').disabled = index === 0
-    this.readerEl.querySelector('[data-r-next]').disabled = index === total - 1
-    this.readerEl.querySelectorAll('.reader-2d-dot').forEach((d, i) => d.classList.toggle('active', i === index))
-  }
-
-  readerNav(dir) {
-    const next = this.readerIndex + dir
-    if (next < 0 || next >= this.readerSections.length) return
-    this.readerIndex = next
-    this._renderCard(next)
-  }
-
-  readerGoTo(index) {
-    if (index < 0 || index >= this.readerSections.length || index === this.readerIndex) return
-    this.readerIndex = index
-    this._renderCard(index)
+    // Re-render mermaid diagrams and MathJax
+    requestAnimationFrame(() => {
+      try { if (window.mermaid) { window.mermaid.run({ nodes: content.querySelectorAll('.mermaid') }) } } catch(_) {}
+      try { if (window.MathJax?.typesetPromise) { window.MathJax.typesetPromise([content]) } } catch(_) {}
+      try { if (window.lucide) { window.lucide.createIcons({ nodes: content.querySelectorAll('[data-lucide]') }) } } catch(_) {}
+    })
   }
 
   exitReader() {
     this.readerActive = false
     this.readerEl.classList.remove('open')
-    this.readerSections = []
     this.nodes.forEach(n => n.visible = true)
     this.connections.forEach(c => c.visible = true)
     this.controls.autoRotate = true
@@ -310,10 +276,7 @@ class ProjectMap3D {
     this.renderer.domElement.addEventListener('mousemove', e => this.onMouseMove(e))
     this.renderer.domElement.addEventListener('click', e => this.onClick(e))
     window.addEventListener('keydown', e => {
-      if (!this.readerActive) return
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') this.readerNav(1)
-      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') this.readerNav(-1)
-      else if (e.key === 'Escape') this.exitReader()
+      if (this.readerActive && e.key === 'Escape') this.exitReader()
     })
   }
 
@@ -389,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stk = pnl.querySelector('[data-panel-stack]'); if (stk) stk.innerHTML = (item.stack||[]).map(s=>`<span class="stack-chip">${esc(s)}</span>`).join('')
     let secEl = pnl.querySelector('[data-panel-sections]')
     if (!secEl) { secEl = document.createElement('div'); secEl.setAttribute('data-panel-sections',''); secEl.setAttribute('data-reveal',''); secEl.className = 'panel-sections'; const a = pnl.querySelector('.panel-actions'); a ? pnl.insertBefore(secEl, a) : pnl.appendChild(secEl) }
-    secEl.innerHTML = (item.sections||[]).map(s=>`<details class="panel-section" open><summary class="panel-section-title">${esc(s.title)}</summary><div class="panel-section-content">${esc(s.content).replace(/\n/g,'<br>')}</div></details>`).join('')
+    secEl.innerHTML = ''
     let relEl = pnl.querySelector('[data-panel-related]')
     if (!relEl) { relEl = document.createElement('div'); relEl.setAttribute('data-panel-related',''); relEl.setAttribute('data-reveal',''); relEl.className = 'panel-related'; const a = pnl.querySelector('.panel-actions'); a ? pnl.insertBefore(relEl, a) : pnl.appendChild(relEl) }
     const rel = findRelated(item, allData||[])

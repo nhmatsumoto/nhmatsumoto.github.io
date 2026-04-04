@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>nhmatsumoto.github.io | nhmatsumoto-blog-engine</title><meta name="description" content="Repositório nhmatsumoto.github.io sincronizado via GitHub.">
+    <title>nhmatsumoto.github.io | nhmatsumoto-blog-engine</title><meta name="description" content="Site pessoal e Technical Knowledge OS: engine de geração estática em Python, visualização 3D interativa com Three.js, sistema de grafo de conhecimento e deploy via GitHub Pages.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/nhmatsumoto-github-io/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,18 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">nhmatsumoto.github.io</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>nhmatsumoto.github.io</h1><p class="post-summary">Repositório nhmatsumoto.github.io sincronizado via GitHub.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Repositório nhmatsumoto.github.io sincronizado via GitHub.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">nhmatsumoto.github.io</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>nhmatsumoto.github.io</h1><p class="post-summary">Technical Knowledge OS — blog e portfolio com engine de geração estática e visualização 3D interativa.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Este é o repositório do Technical Knowledge OS — o site que você está usando agora. Uma plataforma de publicação técnica construída do zero com um engine de geração estática em Python e visualização 3D interativa.</p>
+<h2>Arquitetura do engine</h2>
+<p>O engine de geração estática processa conteúdo em TOML, renderiza markdown para HTML e gera um site completo com:</p>
+<ul><li><strong>Posts</strong> — artigos técnicos com suporte a math (AsciiMath), Mermaid, code blocks e tabelas</li> <li><strong>Projetos</strong> — portfolio com dados estruturados e visualização interativa</li> <li><strong>Documentos</strong> — especificações técnicas com versionamento</li> <li><strong>i18n</strong> — suporte a internacionalização multi-idioma</li> <li><strong>Busca</strong> — índice JSON para search client-side</li></ul>
+<h2>Visualização 3D</h2>
+<p>A página de projetos utiliza Three.js para renderizar um grafo 3D interativo onde cada nó representa um projeto, post ou documento. O grafo inclui:</p>
+<ul><li>Starfield com 4000 partículas</li> <li>Nós de vidro com efeitos de glow e órbitas</li> <li>Conexões bezier entre nós</li> <li>Painel de detalhes com navegação</li> <li>Reader mode para leitura de conteúdo inline</li></ul>
+<h2>Deploy</h2>
+<p>GitHub Actions executa o build em cada push ao master e deploya o resultado no GitHub Pages automaticamente.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Engine Python modular: loader (TOML → dict), renderer (dict → HTML), generator (orquestração). Assets estáticos (CSS, JS) são copiados e servidos diretamente. Three.js carregado via importmap para a visualização 3D. GitHub Actions para CI/CD.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">Python</span><span class="stack-chip">Three.js</span><span class="stack-chip">HTML</span><span class="stack-chip">CSS</span><span class="stack-chip">GitHub Pages</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

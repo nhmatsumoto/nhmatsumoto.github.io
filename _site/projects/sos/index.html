@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>sos | nhmatsumoto-blog-engine</title><meta name="description" content="Repositório sos sincronizado via GitHub.">
+    <title>SOS | nhmatsumoto-blog-engine</title><meta name="description" content="Módulo auxiliar do ecossistema SOS Location com componentes compartilhados, utilitários e contratos de integração para os serviços de resposta a desastres.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/sos/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,15 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">sos</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>sos</h1><p class="post-summary">Repositório sos sincronizado via GitHub.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Repositório sos sincronizado via GitHub.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">SOS</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>SOS</h1><p class="post-summary">Módulo auxiliar do ecossistema SOS Location — componentes compartilhados para resposta a desastres.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Módulo auxiliar do ecossistema <strong>SOS Location</strong>, contendo componentes compartilhados entre os serviços da plataforma de resposta a desastres.</p>
+<h2>Papel no ecossistema</h2>
+<p>Enquanto o <strong>SOS Location</strong> é a aplicação principal com interface de usuário e pipelines de dados, o repositório <strong>SOS</strong> concentra:</p>
+<ul><li><strong>Contratos de integração</strong> — tipos TypeScript compartilhados entre serviços</li> <li><strong>Utilitários GIS</strong> — funções de conversão de coordenadas, cálculo de distâncias e processamento de GeoJSON</li> <li><strong>Configurações compartilhadas</strong> — constantes, enums e mapas de referência</li></ul>
+<h2>Relação com brumadinho_location</h2>
+<p>O aprendizado acumulado no projeto <strong>brumadinho_location</strong> foi formalizado nos utilitários deste módulo, transformando scripts ad-hoc em funções reutilizáveis e testáveis.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Pacote TypeScript/Node.js publicável como dependência local. Exporta tipos, interfaces e funções utilitárias consumidas pelos demais serviços do ecossistema SOS via import direto.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">TypeScript</span><span class="stack-chip">Node.js</span><span class="stack-chip">GIS</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

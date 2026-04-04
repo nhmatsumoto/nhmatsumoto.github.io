@@ -545,6 +545,19 @@
     ]
   },
   {
+    "title": "nhmatsumoto.github.io",
+    "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-github-io/",
+    "kind": "project",
+    "summary": "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, visualização 3D interativa com Three.js, sistema de grafo de conhecimento e deploy via GitHub Pages.",
+    "keywords": [
+      "Python",
+      "Three.js",
+      "HTML",
+      "CSS",
+      "GitHub Pages"
+    ]
+  },
+  {
     "title": "SplitCosts",
     "url": "https://nhmatsumoto.github.io/projects/splitcosts/",
     "kind": "project",
@@ -569,200 +582,319 @@
     ]
   },
   {
-    "title": "Apollo-11",
-    "url": "https://nhmatsumoto.github.io/projects/apollo-11/",
-    "kind": "project",
-    "summary": "Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.",
-    "keywords": []
-  },
-  {
-    "title": "AutoMapper",
-    "url": "https://nhmatsumoto.github.io/projects/automapper/",
-    "kind": "project",
-    "summary": "A convention-based object-object mapper in .NET.",
-    "keywords": []
-  },
-  {
     "title": "brumadinho_location",
     "url": "https://nhmatsumoto.github.io/projects/brumadinho-location/",
     "kind": "project",
-    "summary": "Conjunto de ferramentas para ajudar no resgate e localização das vítimas atingidas pelo rompimento da barragem que ocorreu recentemente em Brumadinho/MG",
-    "keywords": []
-  },
-  {
-    "title": "chess",
-    "url": "https://nhmatsumoto.github.io/projects/chess/",
-    "kind": "project",
-    "summary": "Repositório chess sincronizado via GitHub.",
-    "keywords": []
-  },
-  {
-    "title": "claw-code",
-    "url": "https://nhmatsumoto.github.io/projects/claw-code/",
-    "kind": "project",
-    "summary": "Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust.",
-    "keywords": []
-  },
-  {
-    "title": "DeepSeek-V3",
-    "url": "https://nhmatsumoto.github.io/projects/deepseek-v3/",
-    "kind": "project",
-    "summary": "Repositório DeepSeek-V3 sincronizado via GitHub.",
-    "keywords": []
-  },
-  {
-    "title": "Financial",
-    "url": "https://nhmatsumoto.github.io/projects/financial/",
-    "kind": "project",
-    "summary": "Monolito para gestão financeira pessoal.",
-    "keywords": []
-  },
-  {
-    "title": "gaussian-splatting",
-    "url": "https://nhmatsumoto.github.io/projects/gaussian-splatting/",
-    "kind": "project",
-    "summary": "Original reference implementation of \"3D Gaussian Splatting for Real-Time Radiance Field Rendering\"",
-    "keywords": []
-  },
-  {
-    "title": "gemini-cli",
-    "url": "https://nhmatsumoto.github.io/projects/gemini-cli/",
-    "kind": "project",
-    "summary": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
-    "keywords": []
-  },
-  {
-    "title": "Java-Servlet-Pages",
-    "url": "https://nhmatsumoto.github.io/projects/java-servlet-pages/",
-    "kind": "project",
-    "summary": "Repositório Java-Servlet-Pages sincronizado via GitHub.",
-    "keywords": []
-  },
-  {
-    "title": "Leaflet",
-    "url": "https://nhmatsumoto.github.io/projects/leaflet/",
-    "kind": "project",
-    "summary": "🍃 JavaScript library for mobile-friendly interactive maps 🇺🇦",
-    "keywords": []
-  },
-  {
-    "title": "macos",
-    "url": "https://nhmatsumoto.github.io/projects/macos/",
-    "kind": "project",
-    "summary": "macOS inside a Docker container.",
-    "keywords": []
-  },
-  {
-    "title": "MapleBR",
-    "url": "https://nhmatsumoto.github.io/projects/maplebr/",
-    "kind": "project",
-    "summary": "Repositório MapleBR sincronizado via GitHub.",
-    "keywords": []
-  },
-  {
-    "title": "mermaid-live-editor",
-    "url": "https://nhmatsumoto.github.io/projects/mermaid-live-editor/",
-    "kind": "project",
-    "summary": "Edit, preview and share mermaid charts/diagrams. New implementation of the live editor.",
-    "keywords": []
-  },
-  {
-    "title": "mermaid",
-    "url": "https://nhmatsumoto.github.io/projects/mermaid/",
-    "kind": "project",
-    "summary": "Generation of diagrams like flowcharts or sequence diagrams from text in a similar manner as markdown",
-    "keywords": []
-  },
-  {
-    "title": "nhmatsumoto.exception.middleware",
-    "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-exception-middleware/",
-    "kind": "project",
-    "summary": "GlobalExceptionMiddleware for .net core",
-    "keywords": []
-  },
-  {
-    "title": "nhmatsumoto.github.io",
-    "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-github-io/",
-    "kind": "project",
-    "summary": "Repositório nhmatsumoto.github.io sincronizado via GitHub.",
-    "keywords": []
-  },
-  {
-    "title": "Playground-FE",
-    "url": "https://nhmatsumoto.github.io/projects/playground-fe/",
-    "kind": "project",
-    "summary": "Projeto frontend criado com React e TypeScript, com integração básica ao Keycloak já configurada, incluindo funcionalidades de login e logout. A aplicação está preparada para autenticação de usuários por meio do Keycloak, servindo como base para futuros desenvolvimentos com controle de acesso.",
-    "keywords": []
-  },
-  {
-    "title": "prog_lib",
-    "url": "https://nhmatsumoto.github.io/projects/prog-lib/",
-    "kind": "project",
-    "summary": "Repositório prog_lib sincronizado via GitHub.",
-    "keywords": []
-  },
-  {
-    "title": "QuickReaderv1",
-    "url": "https://nhmatsumoto.github.io/projects/quickreaderv1/",
-    "kind": "project",
-    "summary": "Repositório QuickReaderv1 sincronizado via GitHub.",
-    "keywords": []
-  },
-  {
-    "title": "react-data-grid",
-    "url": "https://nhmatsumoto.github.io/projects/react-data-grid/",
-    "kind": "project",
-    "summary": "Feature-rich and customizable data grid React component",
-    "keywords": []
-  },
-  {
-    "title": "ResponseMiddleware",
-    "url": "https://nhmatsumoto.github.io/projects/responsemiddleware/",
-    "kind": "project",
-    "summary": "Repositório ResponseMiddleware sincronizado via GitHub.",
-    "keywords": []
+    "summary": "Conjunto de ferramentas geoespaciais para apoiar o resgate e localização de vítimas do desastre de Brumadinho/MG, utilizando dados públicos e coordenadas de referência.",
+    "keywords": [
+      "Python",
+      "GIS",
+      "Geolocation"
+    ]
   },
   {
     "title": "ronaldinho-agent",
     "url": "https://nhmatsumoto.github.io/projects/ronaldinho-agent/",
     "kind": "project",
-    "summary": "Daqui pra frente é só pra trás.",
-    "keywords": []
+    "summary": "Agente autônomo em Python com personalidade inspirada em Ronaldinho Gaúcho — arquitetura de decisão baseada em contexto, memória e interação conversacional.",
+    "keywords": [
+      "Python",
+      "LLM",
+      "AI Agents",
+      "Prompt Engineering"
+    ]
+  },
+  {
+    "title": "Apollo-11",
+    "url": "https://nhmatsumoto.github.io/projects/apollo-11/",
+    "kind": "project",
+    "summary": "Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar — referência histórica de engenharia de software embarcado.",
+    "keywords": [
+      "Assembly",
+      "AGC",
+      "Embedded Systems"
+    ]
+  },
+  {
+    "title": "AutoMapper",
+    "url": "https://nhmatsumoto.github.io/projects/automapper/",
+    "kind": "project",
+    "summary": "Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET — elimina boilerplate de transformação entre camadas.",
+    "keywords": [
+      "C#",
+      ".NET",
+      "Reflection"
+    ]
+  },
+  {
+    "title": "Chess",
+    "url": "https://nhmatsumoto.github.io/projects/chess/",
+    "kind": "project",
+    "summary": "Jogo de xadrez implementado em C# com foco em modelagem de domínio, validação de movimentos e representação do tabuleiro.",
+    "keywords": [
+      "C#",
+      ".NET",
+      "OOP",
+      "Domain Modeling"
+    ]
+  },
+  {
+    "title": "claw-code",
+    "url": "https://nhmatsumoto.github.io/projects/claw-code/",
+    "kind": "project",
+    "summary": "Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade.",
+    "keywords": [
+      "Rust",
+      "CLI",
+      "AI Agents"
+    ]
+  },
+  {
+    "title": "DeepSeek-V3",
+    "url": "https://nhmatsumoto.github.io/projects/deepseek-v3/",
+    "kind": "project",
+    "summary": "Fork do DeepSeek-V3, modelo de linguagem com arquitetura Mixture-of-Experts (MoE) e Multi-head Latent Attention para inferência eficiente em larga escala.",
+    "keywords": [
+      "Python",
+      "PyTorch",
+      "Transformers",
+      "MoE"
+    ]
+  },
+  {
+    "title": "Financial",
+    "url": "https://nhmatsumoto.github.io/projects/financial/",
+    "kind": "project",
+    "summary": "Aplicação monolítica de gestão financeira pessoal desenvolvida em C#/.NET, com foco em controle de despesas, categorização e relatórios.",
+    "keywords": [
+      "C#",
+      ".NET",
+      "Entity Framework",
+      "SQL Server"
+    ]
+  },
+  {
+    "title": "gaussian-splatting",
+    "url": "https://nhmatsumoto.github.io/projects/gaussian-splatting/",
+    "kind": "project",
+    "summary": "Fork da implementação original de 3D Gaussian Splatting — técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real.",
+    "keywords": [
+      "Python",
+      "CUDA",
+      "PyTorch",
+      "Computer Vision"
+    ]
+  },
+  {
+    "title": "gemini-cli",
+    "url": "https://nhmatsumoto.github.io/projects/gemini-cli/",
+    "kind": "project",
+    "summary": "Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem.",
+    "keywords": [
+      "TypeScript",
+      "Node.js",
+      "Gemini API",
+      "CLI"
+    ]
+  },
+  {
+    "title": "Java-Servlet-Pages",
+    "url": "https://nhmatsumoto.github.io/projects/java-servlet-pages/",
+    "kind": "project",
+    "summary": "Projeto de estudo com Java Servlets e JSP, cobrindo ciclo de vida de requisições HTTP, sessões, filtros e padrão MVC no servidor.",
+    "keywords": [
+      "Java",
+      "Servlets",
+      "JSP",
+      "Tomcat"
+    ]
+  },
+  {
+    "title": "Leaflet",
+    "url": "https://nhmatsumoto.github.io/projects/leaflet/",
+    "kind": "project",
+    "summary": "Fork do Leaflet, a biblioteca JavaScript mais popular para mapas interativos, utilizada como base nos projetos de GIS do ecossistema.",
+    "keywords": [
+      "JavaScript",
+      "GIS",
+      "Maps",
+      "WebGL"
+    ]
+  },
+  {
+    "title": "macos",
+    "url": "https://nhmatsumoto.github.io/projects/macos/",
+    "kind": "project",
+    "summary": "Fork do projeto Docker-OSX: virtualização de macOS dentro de containers Docker para testes de compatibilidade e desenvolvimento cross-platform.",
+    "keywords": [
+      "Docker",
+      "QEMU",
+      "KVM",
+      "macOS"
+    ]
+  },
+  {
+    "title": "MapleBR",
+    "url": "https://nhmatsumoto.github.io/projects/maplebr/",
+    "kind": "project",
+    "summary": "Projeto com ferramentas e configurações para servidores MapleStory, incluindo scripts de build e automação via Makefile.",
+    "keywords": [
+      "Makefile",
+      "C++",
+      "Networking"
+    ]
+  },
+  {
+    "title": "mermaid-live-editor",
+    "url": "https://nhmatsumoto.github.io/projects/mermaid-live-editor/",
+    "kind": "project",
+    "summary": "Fork do Mermaid Live Editor — aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação.",
+    "keywords": [
+      "Svelte",
+      "TypeScript",
+      "Mermaid",
+      "Monaco Editor"
+    ]
+  },
+  {
+    "title": "mermaid",
+    "url": "https://nhmatsumoto.github.io/projects/mermaid/",
+    "kind": "project",
+    "summary": "Fork do Mermaid.js — ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual.",
+    "keywords": [
+      "JavaScript",
+      "SVG",
+      "Parsing",
+      "Diagrams"
+    ]
+  },
+  {
+    "title": "nhmatsumoto.exception.middleware",
+    "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-exception-middleware/",
+    "kind": "project",
+    "summary": "Middleware de tratamento global de exceções para ASP.NET Core, padronizando respostas de erro e logging em aplicações web.",
+    "keywords": [
+      "C#",
+      ".NET Core",
+      "Middleware",
+      "REST API"
+    ]
+  },
+  {
+    "title": "Playground-FE",
+    "url": "https://nhmatsumoto.github.io/projects/playground-fe/",
+    "kind": "project",
+    "summary": "Projeto frontend em React e TypeScript com integração ao Keycloak para autenticação, servindo como base para futuros desenvolvimentos com controle de acesso.",
+    "keywords": [
+      "React",
+      "TypeScript",
+      "Keycloak",
+      "OAuth2"
+    ]
+  },
+  {
+    "title": "prog_lib",
+    "url": "https://nhmatsumoto.github.io/projects/prog-lib/",
+    "kind": "project",
+    "summary": "Coleção de implementações de algoritmos e estruturas de dados clássicos, organizada como biblioteca de referência para estudo e consulta rápida.",
+    "keywords": [
+      "Algorithms",
+      "Data Structures"
+    ]
+  },
+  {
+    "title": "QuickReaderv1",
+    "url": "https://nhmatsumoto.github.io/projects/quickreaderv1/",
+    "kind": "project",
+    "summary": "Aplicação de speed reading em TypeScript que apresenta texto em chunks otimizados para leitura rápida, com controle de velocidade e tracking de progresso.",
+    "keywords": [
+      "TypeScript",
+      "React",
+      "Speed Reading"
+    ]
+  },
+  {
+    "title": "react-data-grid",
+    "url": "https://nhmatsumoto.github.io/projects/react-data-grid/",
+    "kind": "project",
+    "summary": "Fork do react-data-grid — componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados.",
+    "keywords": [
+      "React",
+      "TypeScript",
+      "Virtualization"
+    ]
+  },
+  {
+    "title": "ResponseMiddleware",
+    "url": "https://nhmatsumoto.github.io/projects/responsemiddleware/",
+    "kind": "project",
+    "summary": "Middleware ASP.NET Core para padronização de respostas HTTP, envolvendo resultados de controllers em um envelope consistente com metadados de sucesso/erro.",
+    "keywords": [
+      "C#",
+      ".NET Core",
+      "Middleware",
+      "REST API"
+    ]
   },
   {
     "title": "Security.Jwt",
     "url": "https://nhmatsumoto.github.io/projects/security-jwt/",
     "kind": "project",
-    "summary": "Jwt Manager. Set of components to deal with Jwt Stuff. Automate your key rotating, add support for jwks_uri. Store your cryptography keys in a secure place.",
-    "keywords": []
+    "summary": "Biblioteca .NET para gerenciamento completo de JWT: rotação automática de chaves, endpoint JWKS, suporte a múltiplos algoritmos e armazenamento seguro de material criptográfico.",
+    "keywords": [
+      "C#",
+      ".NET",
+      "JWT",
+      "Cryptography",
+      "OAuth2"
+    ]
   },
   {
-    "title": "sos",
+    "title": "SOS",
     "url": "https://nhmatsumoto.github.io/projects/sos/",
     "kind": "project",
-    "summary": "Repositório sos sincronizado via GitHub.",
-    "keywords": []
+    "summary": "Módulo auxiliar do ecossistema SOS Location com componentes compartilhados, utilitários e contratos de integração para os serviços de resposta a desastres.",
+    "keywords": [
+      "TypeScript",
+      "Node.js",
+      "GIS"
+    ]
   },
   {
     "title": "SplitCost-Backend",
     "url": "https://nhmatsumoto.github.io/projects/splitcost-backend/",
     "kind": "project",
-    "summary": "Repositório SplitCost-Backend sincronizado via GitHub.",
-    "keywords": []
+    "summary": "Backend do SplitCosts em .NET/C# com arquitetura multi-tenant, domain events, separação de contextos de leitura/escrita e projeções operacionais.",
+    "keywords": [
+      "C#",
+      ".NET",
+      "PostgreSQL",
+      "Multi-tenant",
+      "DDD"
+    ]
   },
   {
     "title": "SplitCosts-FE",
     "url": "https://nhmatsumoto.github.io/projects/splitcosts-fe/",
     "kind": "project",
-    "summary": "Repositório SplitCosts-FE sincronizado via GitHub.",
-    "keywords": []
+    "summary": "Frontend do SplitCosts em React/TypeScript com Keycloak auth, visualização de despesas, saldos e reconciliação, consumindo o SplitCost-Backend via REST API.",
+    "keywords": [
+      "React",
+      "TypeScript",
+      "Keycloak",
+      "REST API"
+    ]
   },
   {
     "title": "system-prompts-and-models-of-ai-tools",
     "url": "https://nhmatsumoto.github.io/projects/system-prompts-and-models-of-ai-tools/",
     "kind": "project",
-    "summary": "FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser, Trae AI & Cluely (And other Open Sourced) System Prompts, Tools & AI Models.",
-    "keywords": []
+    "summary": "Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros — referência para engenharia de prompts.",
+    "keywords": [
+      "Prompt Engineering",
+      "AI Agents",
+      "LLM"
+    ]
   },
   {
     "title": "User-Auth",

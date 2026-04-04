@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>gemini-cli | nhmatsumoto-blog-engine</title><meta name="description" content="An open-source AI agent that brings the power of Gemini directly into your terminal.">
+    <title>gemini-cli | nhmatsumoto-blog-engine</title><meta name="description" content="Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/gemini-cli/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,21 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">gemini-cli</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>gemini-cli</h1><p class="post-summary">An open-source AI agent that brings the power of Gemini directly into your terminal.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>An open-source AI agent that brings the power of Gemini directly into your terminal.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/gemini-cli" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">gemini-cli</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>gemini-cli</h1><p class="post-summary">Agente de IA open-source que traz o poder do Gemini direto para o terminal.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Fork do Gemini CLI, o agente de IA open-source do Google que integra o modelo Gemini diretamente ao terminal, com capacidade de executar ferramentas de sistema.</p>
+<h2>Arquitetura de agente</h2>
+<p>O Gemini CLI implementa um loop de agente clássico:</p>
+<p>1. <strong>Input</strong> — recebe instrução do usuário via terminal</p>
+<p>2. <strong>Reasoning</strong> — o modelo Gemini processa o contexto e decide a próxima ação</p>
+<p>3. <strong>Tool execution</strong> — executa ferramentas (shell, file read/write, search)</p>
+<p>4. <strong>Observation</strong> — resultado da ferramenta alimenta o próximo ciclo</p>
+<p>5. <strong>Output</strong> — resposta final ao usuário</p>
+<h2>Por que este fork</h2>
+<p>Estudo comparativo de arquiteturas de agentes de código. Compara abordagens do Gemini CLI com Claude Code e outros agentes no repositório <strong>system-prompts-and-models-of-ai-tools</strong>.</p>
+<h2>Pontos de interesse</h2>
+<ul><li>Gestão de contexto e memória entre turnos</li> <li>Estratégia de tool selection e parameter extraction</li> <li>Sandboxing e permissões de execução</li> <li>Streaming de respostas longas</li></ul></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>CLI em TypeScript/Node.js com loop de agente baseado em tool-use. Comunica-se com a Gemini API via streaming, mantém histórico de conversação e executa tools locais com confirmação do usuário para operações destrutivas.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">TypeScript</span><span class="stack-chip">Node.js</span><span class="stack-chip">Gemini API</span><span class="stack-chip">CLI</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/gemini-cli" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

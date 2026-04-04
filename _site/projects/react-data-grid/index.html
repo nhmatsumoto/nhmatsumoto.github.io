@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>react-data-grid | nhmatsumoto-blog-engine</title><meta name="description" content="Feature-rich and customizable data grid React component">
+    <title>react-data-grid | nhmatsumoto-blog-engine</title><meta name="description" content="Fork do react-data-grid — componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/react-data-grid/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,16 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">react-data-grid</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>react-data-grid</h1><p class="post-summary">Feature-rich and customizable data grid React component</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Feature-rich and customizable data grid React component</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/react-data-grid" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">react-data-grid</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>react-data-grid</h1><p class="post-summary">Componente React de data grid com funcionalidades avançadas e alta customização.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Fork do react-data-grid, um componente React de alta performance para exibição e manipulação de dados tabulares.</p>
+<h2>Funcionalidades</h2>
+<ul><li><strong>Virtualização</strong> — renderiza apenas as linhas visíveis, suportando milhões de registros</li> <li><strong>Sorting</strong> — ordenação por múltiplas colunas</li> <li><strong>Filtering</strong> — filtros por coluna com operadores customizáveis</li> <li><strong>Editing inline</strong> — edição direta nas células com validação</li> <li><strong>Column resizing/reordering</strong> — ajuste de largura e ordem das colunas</li> <li><strong>Copy/Paste</strong> — suporte a clipboard para operações em massa</li></ul>
+<h2>Uso no ecossistema</h2>
+<p>Utilizado como referência para componentes de visualização de dados no <strong>SplitCosts-FE</strong> e outros projetos que precisam exibir tabelas com grande volume de dados de forma performática.</p>
+<h2>Por que virtualização importa</h2>
+<p>Renderizar 10.000 linhas no DOM degrada a performance do browser. Virtualização resolve isso renderizando apenas o viewport visível (~30 linhas), com scroll suave simulado via CSS transforms.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Componente React com virtualização baseada em position: absolute e CSS transforms. O scroll handler calcula quais linhas são visíveis e renderiza apenas essas, reciclando DOM nodes conforme o usuário scrolla.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">React</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Virtualization</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/react-data-grid" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

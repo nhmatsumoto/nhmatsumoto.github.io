@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>Leaflet | nhmatsumoto-blog-engine</title><meta name="description" content="🍃 JavaScript library for mobile-friendly interactive maps 🇺🇦">
+    <title>Leaflet | nhmatsumoto-blog-engine</title><meta name="description" content="Fork do Leaflet, a biblioteca JavaScript mais popular para mapas interativos, utilizada como base nos projetos de GIS do ecossistema.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/leaflet/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,17 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">Leaflet</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>Leaflet</h1><p class="post-summary">🍃 JavaScript library for mobile-friendly interactive maps 🇺🇦</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>🍃 JavaScript library for mobile-friendly interactive maps 🇺🇦</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/Leaflet" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">Leaflet</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>Leaflet</h1><p class="post-summary">Biblioteca JavaScript para mapas interativos mobile-friendly — referência para projetos GIS.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Fork do Leaflet, a biblioteca JavaScript open-source mais utilizada para renderização de mapas interativos na web.</p>
+<h2>Papel no ecossistema</h2>
+<p>Leaflet é a camada de visualização de mapas utilizada nos projetos <strong>SOS Location</strong>, <strong>brumadinho_location</strong> e <strong>GIS Incident Lab</strong>. Manter o fork permite:</p>
+<ul><li>Estudar internals de renderização de tiles e layers</li> <li>Testar plugins customizados antes de integrar nos projetos</li> <li>Avaliar performance com grandes volumes de marcadores</li></ul>
+<h2>Capacidades técnicas</h2>
+<ul><li><strong>Tile layers</strong> — suporte a múltiplos provedores (OpenStreetMap, Mapbox, etc.)</li> <li><strong>GeoJSON</strong> — renderização nativa de dados geoespaciais</li> <li><strong>Markers e popups</strong> — interação com pontos de interesse</li> <li><strong>Layer control</strong> — composição de camadas para visualização operacional</li> <li><strong>Mobile-first</strong> — touch events e gestos nativos</li></ul>
+<h2>Relevância para projetos de crise</h2>
+<p>Em projetos de resposta a desastres, a capacidade de renderizar milhares de pontos com performance e de funcionar offline (tile caching) é crítica para equipes de campo.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Biblioteca modular com core responsável por renderização de tiles, gerenciamento de layers e controle de viewport. Extensível via plugins que adicionam funcionalidades como clustering, heatmaps e draw tools.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">JavaScript</span><span class="stack-chip">GIS</span><span class="stack-chip">Maps</span><span class="stack-chip">WebGL</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/Leaflet" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

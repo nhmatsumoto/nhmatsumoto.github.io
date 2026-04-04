@@ -47,15 +47,11 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     """
 
 def render_footer(site: dict[str, str], system: dict[str, Any]) -> str:
-    from .components import render_tag_list
-    blog = system.get("blog", {})
-    identity = system.get("identity", {})
-    footer_note = site.get("footer_note") or "Publicado localmente e versionado por Git."
-    focus = render_tag_list(normalize_string_list(blog.get("focus", [])), "footer-pills")
-    refs = render_tag_list(normalize_string_list(identity.get("references", [])), "footer-pills")
+    github_url = site.get("github_url", "https://github.com/nhmatsumoto")
+    engine_url = f"{github_url}/nhmatsumoto-blog-engine"
     return f"""
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="{github_url}" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="{engine_url}" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     """
 

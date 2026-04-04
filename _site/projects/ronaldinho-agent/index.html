@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>ronaldinho-agent | nhmatsumoto-blog-engine</title><meta name="description" content="Daqui pra frente é só pra trás.">
+    <title>ronaldinho-agent | nhmatsumoto-blog-engine</title><meta name="description" content="Agente autônomo em Python com personalidade inspirada em Ronaldinho Gaúcho — arquitetura de decisão baseada em contexto, memória e interação conversacional.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/ronaldinho-agent/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,22 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">ronaldinho-agent</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>ronaldinho-agent</h1><p class="post-summary">Daqui pra frente é só pra trás.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Daqui pra frente é só pra trás.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">ronaldinho-agent</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>ronaldinho-agent</h1><p class="post-summary">Agente autônomo em Python com personalidade e capacidade de decisão baseada em contexto.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Agente autônomo em Python com personalidade e capacidade de decisão baseada em contexto. &quot;Daqui pra frente é só pra trás.&quot;</p>
+<h2>Conceito</h2>
+<p>O ronaldinho-agent é um experimento de engenharia de agentes que explora como personalidade e tom afetam a interação usuário-agente. A arquitetura combina:</p>
+<ul><li><strong>System prompt com personalidade</strong> — tom informal, referências culturais, humor</li> <li><strong>Memória de conversação</strong> — contexto acumulado entre interações</li> <li><strong>Decisão baseada em contexto</strong> — o agente escolhe ações baseado no histórico e intenção detectada</li> <li><strong>Tool use</strong> — integração com ferramentas externas para execução de tarefas</li></ul>
+<h2>Arquitetura de agente</h2>
+<p>O loop principal segue o padrão ReAct (Reasoning + Acting):</p>
+<p>1. Receber input do usuário</p>
+<p>2. Raciocinar sobre o contexto e intenção</p>
+<p>3. Decidir entre responder diretamente ou usar uma ferramenta</p>
+<p>4. Executar a ação e observar o resultado</p>
+<p>5. Formular a resposta com a personalidade do agente</p>
+<h2>Relação com o ecossistema</h2>
+<p>Este projeto é documentado no <strong>ronaldinho-architecture-overview</strong> e conecta-se ao trabalho de pesquisa em agentes de IA presente nos posts do blog.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Python com loop ReAct: prompt engineering para personalidade, LLM para raciocínio, dispatcher para tools, memória de curto prazo via conversation history. Documentação arquitetural disponível em /documents/ronaldinho-architecture-overview/.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">Python</span><span class="stack-chip">LLM</span><span class="stack-chip">AI Agents</span><span class="stack-chip">Prompt Engineering</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/ronaldinho-agent" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

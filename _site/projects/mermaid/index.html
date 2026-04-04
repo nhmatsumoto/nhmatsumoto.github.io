@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>mermaid | nhmatsumoto-blog-engine</title><meta name="description" content="Generation of diagrams like flowcharts or sequence diagrams from text in a similar manner as markdown">
+    <title>mermaid | nhmatsumoto-blog-engine</title><meta name="description" content="Fork do Mermaid.js — ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/mermaid/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,21 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">mermaid</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>mermaid</h1><p class="post-summary">Generation of diagrams like flowcharts or sequence diagrams from text in a similar manner as markdown</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Generation of diagrams like flowcharts or sequence diagrams from text in a similar manner as markdown</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/mermaid" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">mermaid</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>mermaid</h1><p class="post-summary">Geração de diagramas como fluxogramas e diagramas de sequência a partir de texto, similar a markdown.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Fork do Mermaid.js, a biblioteca de geração de diagramas a partir de texto que é integrada nativamente no Technical Knowledge OS.</p>
+<h2>Uso no ecossistema</h2>
+<p>O Mermaid é utilizado em posts, documentos e projetos para renderizar diagramas técnicos diretamente no conteúdo markdown:</p>
+<ul><li><strong>Flowcharts</strong> — fluxos de processamento e pipelines</li> <li><strong>Sequence diagrams</strong> — interações entre serviços</li> <li><strong>Class diagrams</strong> — modelagem de domínio</li> <li><strong>ER diagrams</strong> — esquemas de banco de dados</li> <li><strong>Gantt charts</strong> — cronogramas de projeto</li></ul>
+<h2>Integração</h2>
+<p>O render engine do blog detecta blocos de código marcados como <code>mermaid</code> e os renderiza automaticamente como SVG no lado do cliente. A biblioteca é carregada via CDN com tema escuro configurado para o design do site.</p>
+<h2>Exemplo</h2>
+<p>Um bloco como:</p>
+<div class="code-shell" data-language="">  <div class="code-shell-header"><span class="code-shell-label">text</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>graph LR
+  A[Input] --&gt; B[Process]
+  B --&gt; C[Output]</code></pre></div>
+<p>É renderizado como um diagrama de fluxo interativo diretamente na página.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Parser PEG.js que converte sintaxe textual em AST, renderer que transforma AST em SVG via D3.js. Suporta temas customizáveis e integração com markdown parsers via blocos de código fenced.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">JavaScript</span><span class="stack-chip">SVG</span><span class="stack-chip">Parsing</span><span class="stack-chip">Diagrams</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/mermaid" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

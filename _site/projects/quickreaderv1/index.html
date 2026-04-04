@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>QuickReaderv1 | nhmatsumoto-blog-engine</title><meta name="description" content="Repositório QuickReaderv1 sincronizado via GitHub.">
+    <title>QuickReaderv1 | nhmatsumoto-blog-engine</title><meta name="description" content="Aplicação de speed reading em TypeScript que apresenta texto em chunks otimizados para leitura rápida, com controle de velocidade e tracking de progresso.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/quickreaderv1/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,16 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">QuickReaderv1</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>QuickReaderv1</h1><p class="post-summary">Repositório QuickReaderv1 sincronizado via GitHub.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Repositório QuickReaderv1 sincronizado via GitHub.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/QuickReaderv1" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">QuickReaderv1</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>QuickReaderv1</h1><p class="post-summary">Aplicação de leitura rápida em TypeScript — speed reading com chunking de texto.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Aplicação de speed reading que apresenta texto em chunks otimizados para leitura rápida, inspirada na técnica RSVP (Rapid Serial Visual Presentation).</p>
+<h2>Como funciona</h2>
+<p>O texto é dividido em fragmentos (1-3 palavras) apresentados sequencialmente no centro da tela. O ponto focal (ORP - Optimal Recognition Point) de cada palavra é destacado para reduzir movimentos oculares.</p>
+<h2>Funcionalidades</h2>
+<ul><li>Controle de velocidade (palavras por minuto)</li> <li>Tracking de progresso de leitura</li> <li>Import de textos em diferentes formatos</li> <li>Ajuste de tamanho de chunk por complexidade do texto</li></ul>
+<h2>Contexto</h2>
+<p>Este projeto explora a interseção entre interface de usuário e cognição humana — como a apresentação do texto afeta a velocidade e compreensão de leitura.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>SPA em React/TypeScript com state machine para controle do fluxo de apresentação. O texto é tokenizado e processado em um pipeline: input → tokenize → chunk → schedule → render.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">TypeScript</span><span class="stack-chip">React</span><span class="stack-chip">Speed Reading</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/QuickReaderv1" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

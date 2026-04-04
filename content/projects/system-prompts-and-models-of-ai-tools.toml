@@ -1,7 +1,7 @@
 name = "system-prompts-and-models-of-ai-tools"
 slug = "system-prompts-and-models-of-ai-tools"
-headline = "FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser, Trae AI & Cluely (And other Open Sourced) System Prompts, Tools & AI Models."
-summary = "FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser, Trae AI & Cluely (And other Open Sourced) System Prompts, Tools & AI Models."
+headline = "Coleção completa de system prompts, tools e modelos de AI tools como v0, Cursor, Devin, Replit e outros."
+summary = "Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros — referência para engenharia de prompts."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,47 @@ repo_url = "https://github.com/nhmatsumoto/system-prompts-and-models-of-ai-tools
 code_url = "https://github.com/nhmatsumoto/system-prompts-and-models-of-ai-tools"
 published_at = "2026-02-24T12:44:20Z"
 tags = ["fork"]
+stack = ["Prompt Engineering", "AI Agents", "LLM"]
 view_engine = "binary-tree"
 
 overview = """
-FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent, VSCode Agent, Dia Browser, Trae AI & Cluely (And other Open Sourced) System Prompts, Tools & AI Models.
+Fork da coleção mais abrangente de system prompts e definições de tools de ferramentas de IA para desenvolvimento de software.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Conteúdo
+
+System prompts completos e definições de ferramentas de:
+
+- **v0** (Vercel) — geração de UI
+- **Cursor** — IDE com IA integrada
+- **Manus** — agente autônomo
+- **Same.dev** — clone de sites
+- **Lovable** — geração de apps
+- **Devin** — engenheiro de software autônomo
+- **Replit Agent** — ambiente de desenvolvimento com IA
+- **Windsurf Agent** — editor com IA
+- **VSCode Agent** — Copilot Chat
+- **Dia Browser** — browser com IA
+- **Trae AI** — assistente de código
+- **Cluely** — AI overlay
+
+## Relevância
+
+Estudar system prompts de produção revela padrões de engenharia de agentes:
+
+- Como diferentes ferramentas definem tool schemas
+- Estratégias de gestão de contexto e memória
+- Padrões de instrução para comportamento seguro
+- Trade-offs entre autonomia e controle do usuário
+
+## Relação com o ecossistema
+
+Complementa o **claw-code** (análise técnica de agentes) e o **gemini-cli** (implementação de agente). Juntos, formam um corpus de referência para entender como agentes de código são construídos.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Entender como agentes de IA são instruídos é fundamental para usá-los efetivamente e para construir os próprios. Esta coleção democratiza o acesso a system prompts que normalmente são proprietários e opacos.
+"""
+
+architecture = """
+Repositório documental organizado por ferramenta. Cada diretório contém o system prompt completo, definições de tools/functions e, quando disponível, exemplos de interação e configuração de modelos.
+"""

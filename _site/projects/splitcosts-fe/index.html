@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>SplitCosts-FE | nhmatsumoto-blog-engine</title><meta name="description" content="Repositório SplitCosts-FE sincronizado via GitHub.">
+    <title>SplitCosts-FE | nhmatsumoto-blog-engine</title><meta name="description" content="Frontend do SplitCosts em React/TypeScript com Keycloak auth, visualização de despesas, saldos e reconciliação, consumindo o SplitCost-Backend via REST API.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/splitcosts-fe/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,16 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">SplitCosts-FE</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>SplitCosts-FE</h1><p class="post-summary">Repositório SplitCosts-FE sincronizado via GitHub.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Repositório SplitCosts-FE sincronizado via GitHub.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/SplitCosts-FE" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">SplitCosts-FE</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>SplitCosts-FE</h1><p class="post-summary">Frontend do SplitCosts — SPA React/TypeScript com UX focada em clareza operacional.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Frontend do <strong>SplitCosts</strong> — SPA em React/TypeScript que consome o SplitCost-Backend para gerenciamento de despesas compartilhadas.</p>
+<h2>Funcionalidades</h2>
+<ul><li><strong>Dashboard</strong> — visão geral de saldos e despesas recentes por grupo</li> <li><strong>Registro de despesas</strong> — formulário com divisão proporcional ou customizada</li> <li><strong>Reconciliação</strong> — visualização de dívidas e sugestão de pagamentos mínimos</li> <li><strong>Histórico</strong> — timeline de transações com filtros por período e categoria</li> <li><strong>Multi-grupo</strong> — navegação entre diferentes households/grupos</li></ul>
+<h2>Stack</h2>
+<ul><li>React com hooks e context API</li> <li>TypeScript para type safety end-to-end (tipos compartilhados com o backend)</li> <li>Keycloak para autenticação (padrões validados no <strong>Playground-FE</strong>)</li> <li>React-data-grid para tabelas de dados com virtualização</li></ul>
+<h2>Design</h2>
+<p>Interface dark-theme com foco em clareza operacional — números grandes, cores semânticas para saldos positivos/negativos e ações primárias sempre visíveis.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>SPA React consumindo REST API do backend. Autenticação via Keycloak JS adapter (inicializado no bootstrap). State management via React context + hooks. Roteamento com React Router e lazy loading de módulos por grupo.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">React</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Keycloak</span><span class="stack-chip">REST API</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/SplitCosts-FE" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

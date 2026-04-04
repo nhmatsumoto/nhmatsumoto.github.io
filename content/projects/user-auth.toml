@@ -1,7 +1,7 @@
 name = "User-Auth"
 slug = "user-auth"
-headline = "Repositório User-Auth sincronizado via GitHub."
-summary = "Repositório User-Auth sincronizado via GitHub."
+headline = "Serviço de autenticação em TypeScript — gestão de usuários, sessões e integração com identity providers."
+summary = "Serviço de autenticação e autorização em TypeScript/Node.js com gestão de usuários, sessões e integração com provedores de identidade como Keycloak."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,40 @@ repo_url = "https://github.com/nhmatsumoto/User-Auth"
 code_url = "https://github.com/nhmatsumoto/User-Auth"
 published_at = "2024-10-12T10:33:49Z"
 tags = ["TypeScript"]
+stack = ["TypeScript", "Node.js", "JWT", "OAuth2"]
 view_engine = "binary-tree"
 
 overview = """
-Repositório User-Auth sincronizado via GitHub.
+Serviço de autenticação e autorização em TypeScript/Node.js, projetado para gerenciar usuários, sessões e integração com provedores de identidade.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Funcionalidades
+
+- **Registro e login** — criação de contas com validação de email
+- **JWT management** — emissão e validação de access/refresh tokens
+- **Session management** — controle de sessões ativas com revogação
+- **OAuth2 integration** — login via provedores externos (Keycloak, Google)
+- **Role-based access** — controle de permissões por papel do usuário
+
+## Relação com o ecossistema
+
+Componente de autenticação que complementa:
+
+- **Playground-FE** — frontend de teste para fluxos de auth
+- **Security.Jwt** — biblioteca de referência para gerenciamento de chaves JWT
+- **SplitCosts** — autenticação de produção via Keycloak
+
+## Decisões de design
+
+- Tokens de curta duração (15min access) com refresh transparente
+- Hashing de senhas com bcrypt (cost factor 12)
+- Rate limiting em endpoints de autenticação
+- Audit log de eventos de segurança (login, logout, failed attempts)
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Autenticação é um componente crítico que precisa ser implementado corretamente desde o início. Este serviço isola a complexidade de auth (hashing, tokens, sessões) em um módulo dedicado e testado.
+"""
+
+architecture = """
+API Node.js/TypeScript com endpoints REST para auth. JWT para stateless authentication, com refresh tokens armazenados em banco para revogação. Middleware de autenticação exportável como pacote para outros serviços.
+"""

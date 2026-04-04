@@ -1,7 +1,7 @@
 name = "SplitCost-Backend"
 slug = "splitcost-backend"
-headline = "Repositório SplitCost-Backend sincronizado via GitHub."
-summary = "Repositório SplitCost-Backend sincronizado via GitHub."
+headline = "Backend do SplitCosts — API .NET com multi-tenant, domain events e projeções de leitura."
+summary = "Backend do SplitCosts em .NET/C# com arquitetura multi-tenant, domain events, separação de contextos de leitura/escrita e projeções operacionais."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,37 @@ repo_url = "https://github.com/nhmatsumoto/SplitCost-Backend"
 code_url = "https://github.com/nhmatsumoto/SplitCost-Backend"
 published_at = "2025-05-11T07:24:11Z"
 tags = ["C#"]
+stack = ["C#", ".NET", "PostgreSQL", "Multi-tenant", "DDD"]
 view_engine = "binary-tree"
 
 overview = """
-Repositório SplitCost-Backend sincronizado via GitHub.
+Backend do **SplitCosts** — API em .NET/C# que implementa a lógica de compartilhamento de despesas com foco em multi-tenancy e modelagem de domínio.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Arquitetura
+
+- **Multi-tenant** — isolamento de dados por grupo/household com tenant resolution no middleware
+- **Domain events** — mudanças de estado publicam eventos para manter projeções atualizadas
+- **CQRS simplificado** — separação entre comandos (escrita) e queries (projeções de leitura)
+- **Repository pattern** — abstração de persistência com PostgreSQL via Entity Framework
+
+## Domínio
+
+O modelo de domínio trata despesas como agregados com regras de negócio:
+
+- Divisão proporcional ou customizada entre participantes
+- Histórico de pagamentos e saldos por período
+- Reconciliação de dívidas entre membros do grupo
+- Categorização e reporting
+
+## Relação com o ecossistema
+
+Evolução direta do **Financial** (monolito), agora com separação clara entre contextos, multi-tenancy e projeções de leitura. Consumido pelo **SplitCosts-FE** via REST API.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+O Financial original acoplava regras de negócio à infraestrutura e não suportava múltiplos grupos. O backend do SplitCosts resolve isso com fronteiras de domínio explícitas, tenant isolation e projeções dedicadas para cada tela.
+"""
+
+architecture = """
+API ASP.NET Core em camadas: Controllers → Application Services → Domain → Infrastructure. Multi-tenancy via middleware de tenant resolution. PostgreSQL com Entity Framework Core. Projeções de leitura como queries separadas sobre views materializadas.
+"""

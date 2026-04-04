@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>Financial | nhmatsumoto-blog-engine</title><meta name="description" content="Monolito para gestão financeira pessoal.">
+    <title>Financial | nhmatsumoto-blog-engine</title><meta name="description" content="Aplicação monolítica de gestão financeira pessoal desenvolvida em C#/.NET, com foco em controle de despesas, categorização e relatórios.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/financial/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,16 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">Financial</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>Financial</h1><p class="post-summary">Monolito para gestão financeira pessoal.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Monolito para gestão financeira pessoal.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/Financial" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">Financial</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>Financial</h1><p class="post-summary">Monolito para gestão financeira pessoal em C#/.NET.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Aplicação monolítica de gestão financeira pessoal, desenvolvida como exercício de arquitetura em .NET com Entity Framework e SQL Server.</p>
+<h2>Funcionalidades</h2>
+<ul><li>Cadastro e categorização de receitas e despesas</li> <li>Relatórios por período e categoria</li> <li>Controle de saldos e projeções simples</li></ul>
+<h2>Relação com o ecossistema</h2>
+<p>Este projeto é o predecessor direto do <strong>SplitCosts</strong> — a evolução natural de um monolito financeiro pessoal para uma aplicação multi-tenant de compartilhamento de despesas. Muitas das decisões de domínio do SplitCosts foram refinadas a partir das limitações encontradas aqui.</p>
+<h2>Lições aprendidas</h2>
+<p>O formato monolítico funcionou para o escopo inicial, mas revelou limitações quando o domínio cresceu: acoplamento entre regras de negócio e infraestrutura, dificuldade de testar cenários complexos e falta de separação entre contextos de leitura e escrita.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Monolito em camadas: Controllers → Services → Repository → Entity Framework → SQL Server. A simplicidade da arquitetura é adequada ao escopo, mas o acoplamento entre camadas motivou a adoção de uma abordagem mais modular no SplitCosts.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">C#</span><span class="stack-chip">.NET</span><span class="stack-chip">Entity Framework</span><span class="stack-chip">SQL Server</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/Financial" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>

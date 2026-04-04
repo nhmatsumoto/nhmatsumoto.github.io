@@ -4,7 +4,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>mermaid-live-editor | nhmatsumoto-blog-engine</title><meta name="description" content="Edit, preview and share mermaid charts/diagrams. New implementation of the live editor.">
+    <title>mermaid-live-editor | nhmatsumoto-blog-engine</title><meta name="description" content="Fork do Mermaid Live Editor — aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/projects/mermaid-live-editor/">
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,11 +40,16 @@
     </nav>
     
     <div class="site-shell">
-      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">mermaid-live-editor</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>mermaid-live-editor</h1><p class="post-summary">Edit, preview and share mermaid charts/diagrams. New implementation of the live editor.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Edit, preview and share mermaid charts/diagrams. New implementation of the live editor.</p>
-<p>Este projeto foi sincronizado automaticamente do GitHub.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>Repositório público no GitHub.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/mermaid-live-editor" target="_blank" rel="noopener">code</a></div></aside></section></main>
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a></li><li><span aria-current="page">mermaid-live-editor</span></li></ol></nav><section class="page-grid"><article class="project-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.project.kicker">projeto</p><h1>mermaid-live-editor</h1><p class="post-summary">Editor ao vivo para criação, preview e compartilhamento de diagramas Mermaid.</p></header><section><h2 data-i18n="pages.project.overview">Visão geral</h2><p>Fork do Mermaid Live Editor, a aplicação web oficial para criação e preview de diagramas Mermaid em tempo real.</p>
+<h2>Funcionalidades</h2>
+<ul><li><strong>Editor com syntax highlighting</strong> via Monaco Editor (mesmo do VS Code)</li> <li><strong>Preview instantâneo</strong> — renderização em tempo real conforme o texto é editado</li> <li><strong>Exportação</strong> — download em SVG, PNG e links compartilháveis</li> <li><strong>Templates</strong> — exemplos pré-configurados para cada tipo de diagrama</li> <li><strong>Temas</strong> — preview com diferentes temas (default, dark, forest, neutral)</li></ul>
+<h2>Uso prático</h2>
+<p>Ferramenta complementar ao fork do <strong>mermaid</strong> para desenvolvimento e teste de diagramas antes de incorporá-los aos posts e documentos do Technical Knowledge OS.</p>
+<h2>Stack</h2>
+<p>Construído com Svelte para uma experiência de UI reativa e leve, com TypeScript para type safety e Monaco Editor para a experiência de edição.</p></section><section><h2 data-i18n="pages.project.architecture">Arquitetura</h2><p>SPA em Svelte com três painéis: editor (Monaco), preview (Mermaid renderer) e configuração (tema, tipo de diagrama). Estado compartilhado via Svelte stores. Exportação feita via serialização do SVG renderizado.</p></section></article><aside class="sidebar-panel"><h2 data-i18n="pages.project.status">Status</h2><p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p><h3 data-i18n="pages.project.stack">Stack</h3><div class="stack-list"><span class="stack-chip">Svelte</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Mermaid</span><span class="stack-chip">Monaco Editor</span></div><div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/mermaid-live-editor" target="_blank" rel="noopener">code</a></div></aside></section></main>
       
     <footer class="site-footer">
-      <p>clarity | depth | no distraction</p>
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
     </footer>
     
     </div>
