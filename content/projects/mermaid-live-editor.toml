@@ -1,7 +1,7 @@
 name = "mermaid-live-editor"
 slug = "mermaid-live-editor"
-headline = "Edit, preview and share mermaid charts/diagrams. New implementation of the live editor."
-summary = "Edit, preview and share mermaid charts/diagrams. New implementation of the live editor."
+headline = "Editor ao vivo para criação, preview e compartilhamento de diagramas Mermaid."
+summary = "Fork do Mermaid Live Editor — aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,33 @@ repo_url = "https://github.com/nhmatsumoto/mermaid-live-editor"
 code_url = "https://github.com/nhmatsumoto/mermaid-live-editor"
 published_at = "2026-01-31T19:13:57Z"
 tags = ["fork"]
+stack = ["Svelte", "TypeScript", "Mermaid", "Monaco Editor"]
 view_engine = "binary-tree"
 
 overview = """
-Edit, preview and share mermaid charts/diagrams. New implementation of the live editor.
+Fork do Mermaid Live Editor, a aplicação web oficial para criação e preview de diagramas Mermaid em tempo real.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Funcionalidades
+
+- **Editor com syntax highlighting** via Monaco Editor (mesmo do VS Code)
+- **Preview instantâneo** — renderização em tempo real conforme o texto é editado
+- **Exportação** — download em SVG, PNG e links compartilháveis
+- **Templates** — exemplos pré-configurados para cada tipo de diagrama
+- **Temas** — preview com diferentes temas (default, dark, forest, neutral)
+
+## Uso prático
+
+Ferramenta complementar ao fork do **mermaid** para desenvolvimento e teste de diagramas antes de incorporá-los aos posts e documentos do Technical Knowledge OS.
+
+## Stack
+
+Construído com Svelte para uma experiência de UI reativa e leve, com TypeScript para type safety e Monaco Editor para a experiência de edição.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Escrever diagramas Mermaid sem feedback visual é lento e propenso a erros de sintaxe. O live editor resolve isso com preview instantâneo, reduzindo o ciclo de iteração de minutos para segundos.
+"""
+
+architecture = """
+SPA em Svelte com três painéis: editor (Monaco), preview (Mermaid renderer) e configuração (tema, tipo de diagrama). Estado compartilhado via Svelte stores. Exportação feita via serialização do SVG renderizado.
+"""
