@@ -392,6 +392,42 @@ button, input, select {
   to { transform: translateX(0); }
 }
 
+/* Breadcrumbs */
+.breadcrumbs {
+  margin-bottom: var(--space-6);
+}
+
+.breadcrumb-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.breadcrumb-list li + li::before {
+  content: "/";
+  opacity: 0.4;
+  margin-right: var(--space-2);
+}
+
+.breadcrumb-list a {
+  color: var(--muted);
+}
+
+.breadcrumb-list a:hover {
+  color: var(--accent);
+}
+
+.breadcrumb-list [aria-current="page"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
 /* Sections & Content */
 .section-panel {
   padding: var(--space-12) 0;
