@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -45,13 +45,13 @@
 <p>1.  <strong>RED</strong>: Escreva um teste que falha (ele nem deve compilar inicialmente).</p>
 <p>2.  <strong>GREEN</strong>: Escreva o código mínimo necessário para o teste passar.</p>
 <p>3.  <strong>REFACTOR</strong>: Melhore o código mantendo o teste passando.</p>
-<h2>A Pirâmide de Testes (\(P\))</h2>
+<h2>A Pirâmide de Testes (<span class="math-inline">\(P\)</span>)</h2>
 <p>A estrutura ideal de testes em um projeto de engenharia deve seguir a pirâmide:</p>
 <ul><li>  <strong>Base (Unitários)</strong>: Rápidos, isolados e em grande quantidade.</li> <li>  <strong>Meio (Integração)</strong>: Testam a interação entre componentes e DB.</li> <li>  <strong>Topo (E2E)</strong>: Simulam o fluxo real do usuário na interface.</li></ul>
-<h3>O Coeficiente de Confiança (\(C\))</h3>
-<p>A confiança (\(C\)) em um despliegue (\(D\)) é proporcional à cobertura de caminhos críticos (\(Co\)) e à velocidade de execução (\(S\)):</p>
-<div class="math-block">$$C \\\\propto Co \\\\cdot S$$</div>
-<p>No TDD, \(S\) é maximizado porque os testes unitários rodam em milissegundos.</p>
+<h3>O Coeficiente de Confiança (<span class="math-inline">\(C\)</span>)</h3>
+<p>A confiança (<span class="math-inline">\(C\)</span>) em um despliegue (<span class="math-inline">\(D\)</span>) é proporcional à cobertura de caminhos críticos (<span class="math-inline">\(Co\)</span>) e à velocidade de execução (<span class="math-inline">\(S\)</span>):</p>
+<div class="math-block">$$C \propto Co \cdot S$$</div>
+<p>No TDD, <span class="math-inline">\(S\)</span> é maximizado porque os testes unitários rodam em milissegundos.</p>
 <div class="mermaid">graph LR
     A[Requisito] --&gt; B[Teste RED]
     B --&gt; C[Código GREEN]

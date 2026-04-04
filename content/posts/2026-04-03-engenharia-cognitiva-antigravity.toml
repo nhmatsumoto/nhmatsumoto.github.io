@@ -26,7 +26,7 @@ O pensamento de um agente (como o modelo Antigravity) segue o ciclo **PEA**: **P
 
 ### A Probabilidade de Sucesso (\\(P_{success}\\))
 O sucesso de um agente depende da clareza da instrução (\\(I\\)) e da capacidade do modelo (\\(M\\)) versus o ruído do contexto (\\(N\\)):
-$$P_{success} = \\\\\\\\frac{I \\\\\\\\cdot M}{N}$$
+$$P_{success} = \\frac{I \\cdot M}{N}$$
 
 ## Orquestração Multi-Agente
 Ao dividir o trabalho entre agentes especialistas (Requirement Agent, Frontend Agent, Code Agent), elevamos o teto de complexidade que a IA pode gerenciar.

@@ -29,7 +29,7 @@ Transforme um tipo existente em um novo tipo iterando sobre suas propriedades. �
 
 ### A Complexidade do Tipo (\\(C\\))
 Podemos medir a complexidade de um tipo (\\(C\\)) como o número de transformações e inferências necessárias para o compilador resolvê-lo:
-$$C = \\\\\\\\sum_{i=1}^n T_i + I_i$$
+$$C = \\sum_{i=1}^n T_i + I_i$$
 
 Se \\(C\\) for muito alto, o IntelliSense ficará lento e o tempo de compilação aumentará.
 

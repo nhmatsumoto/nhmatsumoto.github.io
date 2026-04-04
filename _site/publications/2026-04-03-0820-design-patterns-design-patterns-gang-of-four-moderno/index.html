@@ -11,9 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
-  <body class="page-post" data-has-math="false" data-default-locale="pt-BR">
+  <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     
     <nav class="nav-shell" data-nav-shell>
@@ -45,8 +45,8 @@
 <ul><li>  <strong>Strategy</strong>: Ainda fundamental para desacoplar algoritmos de contextos.</li> <li>  <strong>Observer/Mediator</strong>: Essencial para sistemas orientados a eventos (usando <strong>MediatR</strong> no .NET).</li> <li>  <strong>Decorator</strong>: A base para middlewares e interceptadores de Cross-Cutting Concerns.</li></ul>
 <h2>Padrões que o C# &quot;Matou&quot;:</h2>
 <ul><li>  <strong>Singleton</strong>: Injetores de Dependência (DI) nativos cuidam disso agora.</li> <li>  <strong>Iterator</strong>: <code>IEnumerable</code> e <code>yield return</code> embutiram isso diretamente no <code>foreach</code>.</li> <li>  <strong>Visitor</strong>: Substituído pela superioridade do <strong>Pattern Matching</strong> moderno.</li></ul>
-<h3>Exemplo: Pattern Matching vs Visitor (\(S\))</h3>
-<p>A satisfação semântica (\(S\)) em C# moderno é muito maior com padrões funcionais:</p>
+<h3>Exemplo: Pattern Matching vs Visitor (<span class="math-inline">\(S\)</span>)</h3>
+<p>A satisfação semântica (<span class="math-inline">\(S\)</span>) em C# moderno é muito maior com padrões funcionais:</p>
 <div class="code-shell" data-language="csharp">  <div class="code-shell-header"><span class="code-shell-label">csharp</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>// Pattern Matching (Modo Moderno)
 public static decimal CalculateArea(Shape shape) =&gt; shape switch
 {

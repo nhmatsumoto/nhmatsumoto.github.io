@@ -56,7 +56,8 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
         "featured": bool(raw.get("featured", False)),
         "has_math": has_math
         or config["math"]["inline_delimiter"] in body
-        or config["math"]["block_delimiter"] in body,
+        or config["math"]["block_delimiter"] in body
+        or "\\(" in body,
         "body": body.rstrip() + "\n" if body.strip() else "",
         "published_dt": published_dt,
         "updated_dt": updated_dt,

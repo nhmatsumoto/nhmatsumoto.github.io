@@ -8,6 +8,7 @@ status = "published"
 tags = ["engineering", "electronics", "resilience", "security"]
 badges = ["EMC", "Hardening"]
 featured = true
+has_math = true
 body = '''
 O "dano" eletromagnético (EMP) não é apenas o calor de uma explosão; é a fração da energia emitida que consegue se **acoplar** ao seu sistema. A vulnerabilidade de um circuito depende diretamente de sua geometria, blindagem e filtragem.
 

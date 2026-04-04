@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -45,10 +45,10 @@
 <p>O EF Core é um ORM completo que gerencia o estado das entidades (Change Tracking). Ele é ideal para operações de escrita complexas onde a integridade do grafo de objetos é fundamental.</p>
 <h2>Dapper: O Micro-ORM de Alta Performance</h2>
 <p>Dapper não tenta ser um gestor de estado. Ele é um mapeador de objetos que estende <code>IDbConnection</code>, focado em transformar resultados de SQL puro em POCOs da forma mais rápida possível.</p>
-<h3>Comparativo de Overhead (\(T\))</h3>
-<p>Podemos modelar o tempo total de execução (\(T\)) como:</p>
+<h3>Comparativo de Overhead (<span class="math-inline">\(T\)</span>)</h3>
+<p>Podemos modelar o tempo total de execução (<span class="math-inline">\(T\)</span>) como:</p>
 <div class="math-block">$$T_{total} = T_{sql} + T_{mapping} + T_{tracking}$$</div>
-<p>No Dapper, \(T_{tracking} \\approx 0\), o que o torna imbatível para operações de leitura intensiva.</p>
+<p>No Dapper, <span class="math-inline">\(T_{tracking} \\approx 0\)</span>, o que o torna imbatível para operações de leitura intensiva.</p>
 <h2>Quando usar qual?</h2>
 <div class="mermaid">graph TD
     A[Nova Funcionalidade] --&gt; B{Complexidade de Escrita?}

@@ -27,10 +27,11 @@ def render_markdown(text: str) -> str:
 
     def render_inline(s: str) -> str:
         # Preserve math delimiters during inline rendering
-        # We temporarily swap out $ and $$ to avoid escaping them, or just escape other things carefully
         s = html.escape(s)
         # Inline Math: $...$ -> <span class="math-inline">$...$</span>
         s = re.sub(r"(\$)(.+?)(\$)", r'<span class="math-inline">\1\2\3</span>', s)
+        # Inline Math: \(...\) -> <span class="math-inline">\(...\)</span>
+        s = re.sub(r"(\\)\((.+?)\\(\))", r'<span class="math-inline">\1(\2\\\3</span>', s)
         s = STRONG_RE.sub(r"<strong>\1</strong>", s)
         s = EMPHASIS_RE.sub(r"<em>\1</em>", s)
         s = INLINE_CODE_RE.sub(r"<code>\1</code>", s)

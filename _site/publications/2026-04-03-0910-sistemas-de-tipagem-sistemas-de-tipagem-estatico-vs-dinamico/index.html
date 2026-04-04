@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -42,10 +42,10 @@
     <div class="site-shell">
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos</h1><p class="post-summary">Uma análise sobre a segurança de tempo de compilação versus a agilidade de tempo de execução, explorando tipagem forte, fraca e duck typing.</p><div class="post-meta"><time datetime="2026-04-03T09:10:00+09:00" data-localize-date="long">3 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>A tipagem não é apenas uma restrição; é uma ferramenta de <strong>comunicação entre o programador e o compilador</strong>. A escolha do sistema de tipagem define a robustez e a velocidade de iteração de um projeto.</p>
 <h2>Tipagem Estática (C#, Java, Rust, Go)</h2>
-<p>Os tipos são verificados em tempo de compilação (\(compile-time\)). Isso elimina uma classe inteira de erros de &quot;tipo incompatível&quot; antes mesmo do software rodar.</p>
+<p>Os tipos são verificados em tempo de compilação (<span class="math-inline">\(compile-time\)</span>). Isso elimina uma classe inteira de erros de &quot;tipo incompatível&quot; antes mesmo do software rodar.</p>
 <h2>Tipagem Dinâmica (Python, JavaScript, Ruby)</h2>
-<p>Os tipos são verificados em tempo de execução (\(runtime\)). Isso permite uma prototipagem extremamente rápida e flexível, mas exige uma cobertura de testes unitários muito mais rigorosa.</p>
-<h3>A Matriz de Tipagem (\(T\))</h3>
+<p>Os tipos são verificados em tempo de execução (<span class="math-inline">\(runtime\)</span>). Isso permite uma prototipagem extremamente rápida e flexível, mas exige uma cobertura de testes unitários muito mais rigorosa.</p>
+<h3>A Matriz de Tipagem (<span class="math-inline">\(T\)</span>)</h3>
 <p>Podemos classificar as linguagens em quatro quadrantes de acordo com a força e o momento da verificação:</p>
 <div class="mermaid">graph TD
     A[Sistemas de Tipagem] --&gt; B[Estático]
@@ -54,9 +54,9 @@
     B --&gt; E[Fraca (C++)]
     C --&gt; F[Forte (Python, Ruby)]
     C --&gt; G[Fraca (JavaScript, PHP)]</div>
-<h3>O Custo da Incerteza (\(U\))</h3>
-<p>A incerteza (\(U\)) de um sistema cresce com a ausência de tipos estáticos (\(S\)) e a falta de testes (\(T\)):</p>
-<div class="math-block">$$U \\\\propto \\\\frac{1}{S \\\\cdot T}$$</div>
+<h3>O Custo da Incerteza (<span class="math-inline">\(U\)</span>)</h3>
+<p>A incerteza (<span class="math-inline">\(U\)</span>) de um sistema cresce com a ausência de tipos estáticos (<span class="math-inline">\(S\)</span>) e a falta de testes (<span class="math-inline">\(T\)</span>):</p>
+<div class="math-block">$$U \propto \frac{1}{S \cdot T}$$</div>
 <h2>Evolução Moderna: Tipagem Progressiva</h2>
 <p>Linguagens como <strong>TypeScript</strong> e <strong>Python (com mypy)</strong> permitem que você adicione tipos gradualmente em sistemas dinâmicos, unindo o melhor dos dois mundos.</p>
 <p>&gt; <strong>Heurística Operacional</strong>: Para sistemas de missão crítica ou grandes equipes, a tipagem estática e forte não é opcional; é a única forma de garantir a sanidade do domínio em larga escala.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T09:10:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">ciência</span><span class="badge">fundamentos</span><span class="badge">linguagens</span></div><div class="tag-list"><span class="tag">teoria-da-computação</span><span class="tag">linguagens</span><span class="tag">tipagem</span><span class="tag">engenharia</span></div><div class="sidebar-actions"></div></aside></section></main>

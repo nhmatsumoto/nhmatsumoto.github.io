@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -42,12 +42,12 @@
     <div class="site-shell">
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Flutter &amp; Dart: Arquitetura de Estados e Performance Mobile</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>Flutter &amp; Dart: Arquitetura de Estados e Performance Mobile</h1><p class="post-summary">Uma análise técnica sobre a renderização do Skia/Impeller e como padrões como Riverpod e Bloc afetam o ciclo de vida do widget.</p><div class="post-meta"><time datetime="2026-04-03T08:40:00+09:00" data-localize-date="long">3 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>Flutter não é apenas um &quot;wrapper&quot; de UI; é um motor de renderização completo escrito em C++ que utiliza Dart como sua linguagem de orquestração de alto nível.</p>
 <h2>O Motor: Skia e Impeller</h2>
-<p>Enquanto outras tecnologias dependem de pontes (\(bridges\)) para o SO, o Flutter desenha cada pixel na tela (\(painting\)). Isso garante 60 ou 120 FPS constantes, desde que a árvore de widgets seja eficiente.</p>
+<p>Enquanto outras tecnologias dependem de pontes (<span class="math-inline">\(bridges\)</span>) para o SO, o Flutter desenha cada pixel na tela (<span class="math-inline">\(painting\)</span>). Isso garante 60 ou 120 FPS constantes, desde que a árvore de widgets seja eficiente.</p>
 <h2>Gestão de Estado: O Coração da App</h2>
-<p>A escolha do gestor de estado (Provider, Riverpod, Bloc, GetX) define como os dados fluem e como a UI reage (\(reactive UI\)).</p>
-<h3>A Árvore de Reconciliação (\(W\))</h3>
-<p>Podemos pensar na eficiência (\(E\)) do Flutter como função da imutabilidade (\(I\)) e da profundidade da árvore (\(D\)):</p>
-<div class="math-block">$$E \\\\propto \\\\frac{I}{D}$$</div>
+<p>A escolha do gestor de estado (Provider, Riverpod, Bloc, GetX) define como os dados fluem e como a UI reage (<span class="math-inline">\(reactive UI\)</span>).</p>
+<h3>A Árvore de Reconciliação (<span class="math-inline">\(W\)</span>)</h3>
+<p>Podemos pensar na eficiência (<span class="math-inline">\(E\)</span>) do Flutter como função da imutabilidade (<span class="math-inline">\(I\)</span>) e da profundidade da árvore (<span class="math-inline">\(D\)</span>):</p>
+<div class="math-block">$$E \propto \frac{I}{D}$$</div>
 <h2>Boas Práticas:</h2>
 <ul><li>  <strong>const Widgets</strong>: Use widgets constantes para evitar reconstruções desnecessárias.</li> <li>  <strong>Repaint Boundary</strong>: Isole partes da UI que mudam frequentemente para não forçar o redesenho de toda a tela.</li> <li>  <strong>Isolates</strong>: Use Threads (Isolates) em Dart para processamento pesado fora da UI Thread.</li></ul>
 <div class="mermaid">graph TD

@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -46,12 +46,12 @@
 <div class="code-shell" data-language="typescript">  <div class="code-shell-header"><span class="code-shell-label">typescript</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>type IsString&lt;T&gt; = T extends string ? true : false;
 type Result = IsString&lt;&quot;hello&quot;&gt;; // true</code></pre></div>
 <p>O uso de <code>infer</code> permite extrair partes de tipos complexos, como o tipo de retorno de uma função ou o tipo de uma Promise.</p>
-<h2>Mapeamento de Tipos (\(Mapped Types\))</h2>
+<h2>Mapeamento de Tipos (<span class="math-inline">\(Mapped Types\)</span>)</h2>
 <p>Transforme um tipo existente em um novo tipo iterando sobre suas propriedades. Útil para criar utilitários como <code>ReadOnly</code>, <code>Partial</code> ou prefixar chaves de um objeto.</p>
-<h3>A Complexidade do Tipo (\(C\))</h3>
-<p>Podemos medir a complexidade de um tipo (\(C\)) como o número de transformações e inferências necessárias para o compilador resolvê-lo:</p>
-<div class="math-block">$$C = \\\\sum_{i=1}^n T_i + I_i$$</div>
-<p>Se \(C\) for muito alto, o IntelliSense ficará lento e o tempo de compilação aumentará.</p>
+<h3>A Complexidade do Tipo (<span class="math-inline">\(C\)</span>)</h3>
+<p>Podemos medir a complexidade de um tipo (<span class="math-inline">\(C\)</span>) como o número de transformações e inferências necessárias para o compilador resolvê-lo:</p>
+<div class="math-block">$$C = \sum_{i=1}^n T_i + I_i$$</div>
+<p>Se <span class="math-inline">\(C\)</span> for muito alto, o IntelliSense ficará lento e o tempo de compilação aumentará.</p>
 <h2>Utilitários de Tipo Customizados:</h2>
 <ul><li>  <strong>Template Literal Types</strong>: Combine strings e crie tipos ultra-específicos para rotas ou eventos.</li> <li>  <strong>Discriminated Unions</strong>: O padrão ouro para lidar com estados de UI de forma segura.</li></ul>
 <div class="mermaid">graph TD

@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -45,9 +45,9 @@
 <p>O pensamento de um agente (como o modelo Antigravity) segue o ciclo <strong>PEA</strong>: <strong>Percepção</strong>, <strong>Execução</strong> e <strong>Adaptação</strong>.</p>
 <h2>Estrutura da Mente Sintética:</h2>
 <ul><li>  <strong>Memória de Trabalho (Contexto)</strong>: Onde o agente mantém o estado imediato do problema.</li> <li>  <strong>Memória de Longo Prazo (RAG/Knowledge)</strong>: Onde o agente busca fatos e históricos processados.</li> <li>  <strong>Planejamento (Thinking)</strong>: O processo de decompor um objetivo complexo em micro-tarefas executáveis.</li></ul>
-<h3>A Probabilidade de Sucesso (\(P_{success}\))</h3>
-<p>O sucesso de um agente depende da clareza da instrução (\(I\)) e da capacidade do modelo (\(M\)) versus o ruído do contexto (\(N\)):</p>
-<div class="math-block">$$P_{success} = \\\\frac{I \\\\cdot M}{N}$$</div>
+<h3>A Probabilidade de Sucesso (<span class="math-inline">\(P_{success}\)</span>)</h3>
+<p>O sucesso de um agente depende da clareza da instrução (<span class="math-inline">\(I\)</span>) e da capacidade do modelo (<span class="math-inline">\(M\)</span>) versus o ruído do contexto (<span class="math-inline">\(N\)</span>):</p>
+<div class="math-block">$$P_{success} = \frac{I \cdot M}{N}$$</div>
 <h2>Orquestração Multi-Agente</h2>
 <p>Ao dividir o trabalho entre agentes especialistas (Requirement Agent, Frontend Agent, Code Agent), elevamos o teto de complexidade que a IA pode gerenciar.</p>
 <div class="mermaid">graph LR

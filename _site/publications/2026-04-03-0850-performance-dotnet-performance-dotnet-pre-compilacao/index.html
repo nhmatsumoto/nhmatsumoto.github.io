@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -45,9 +45,9 @@
 <p>O GC é geracional (0, 1, 2) e funciona de maneira otimizada para requisições de curta duração (web apps). O maior inimigo da performance é o <strong>LOH (Large Object Heap)</strong>.</p>
 <h2>JIT vs Native AOT:</h2>
 <ul><li>  <strong>JIT (Just-In-Time)</strong>: Compila o IL para código de máquina na hora da execução. Excelente para otimizações de longo prazo via PGO (Profile-Guided Optimization).</li> <li>  <strong>Native AOT (Ahead-Of-Time)</strong>: Compila tudo antes da execução. Gera executáveis menores, com &quot;cold start&quot; quase instantâneo e menor consumo de memória por instância.</li></ul>
-<h3>A Taxa de Alocação (\(A\))</h3>
-<p>A eficiência (\(E\)) do sistema é inversamente proporcional à pressão sobre o GC (\(P\)), que por sua vez é função da taxa de alocação (\(A\)):</p>
-<div class="math-block">$$E \\\\propto \\\\frac{1}{P(A)}$$</div>
+<h3>A Taxa de Alocação (<span class="math-inline">\(A\)</span>)</h3>
+<p>A eficiência (<span class="math-inline">\(E\)</span>) do sistema é inversamente proporcional à pressão sobre o GC (<span class="math-inline">\(P\)</span>), que por sua vez é função da taxa de alocação (<span class="math-inline">\(A\)</span>):</p>
+<div class="math-block">$$E \propto \frac{1}{P(A)}$$</div>
 <h2>Técnicas de Performance:</h2>
 <ul><li>  <strong>Span e ReadOnlySpan</strong>: Trabalhe com janelas de memória sem alocar cópias.</li> <li>  <strong>ArrayPool</strong>: Reutilize buffers para evitar fragmentação da LOH.</li> <li>  <strong>ValueTask</strong>: Reduza alocações no heap para operações assíncronas frequentes.</li></ul>
 <div class="mermaid">graph LR

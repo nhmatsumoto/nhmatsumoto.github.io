@@ -28,7 +28,7 @@ Não é apenas uma questão estética. É sobre **redutibilidade cognitiva**. Se
 
 ## A Matemática da Manutenibilidade (\\(M\\))
 Podemos pensar na manutenibilidade (\\(M\\)) como inversamente proporcional ao acoplamento (\\(C\\)) e à complexidade ciclomática (\\(V\\)):
-$$M \\\\\\\\propto \\\\\\\\frac{1}{C \\\\\\\\cdot V}$$
+$$M \\propto \\frac{1}{C \\cdot V}$$
 
 Ao aplicar SOLID, reduzimos \\(C\\), aumentando drasticamente a vida útil do software.
 

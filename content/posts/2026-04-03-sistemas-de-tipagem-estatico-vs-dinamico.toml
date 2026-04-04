@@ -37,7 +37,7 @@ graph TD
 
 ### O Custo da Incerteza (\\(U\\))
 A incerteza (\\(U\\)) de um sistema cresce com a ausência de tipos estáticos (\\(S\\)) e a falta de testes (\\(T\\)):
-$$U \\\\\\\\propto \\\\\\\\frac{1}{S \\\\\\\\cdot T}$$
+$$U \\propto \\frac{1}{S \\cdot T}$$
 
 ## Evolução Moderna: Tipagem Progressiva
 Linguagens como **TypeScript** e **Python (com mypy)** permitem que você adicione tipos gradualmente em sistemas dinâmicos, unindo o melhor dos dois mundos.

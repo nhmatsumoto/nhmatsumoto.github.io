@@ -25,7 +25,7 @@ O GC é geracional (0, 1, 2) e funciona de maneira otimizada para requisições 
 
 ### A Taxa de Alocação (\\(A\\))
 A eficiência (\\(E\\)) do sistema é inversamente proporcional à pressão sobre o GC (\\(P\\)), que por sua vez é função da taxa de alocação (\\(A\\)):
-$$E \\\\\\\\propto \\\\\\\\frac{1}{P(A)}$$
+$$E \\propto \\frac{1}{P(A)}$$
 
 ## Técnicas de Performance:
 *   **Span e ReadOnlySpan**: Trabalhe com janelas de memória sem alocar cópias.

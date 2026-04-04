@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -42,16 +42,16 @@
     <div class="site-shell">
       <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Redes Neurais do Zero: Implementação Matemática em Python</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><h1>Redes Neurais do Zero: Implementação Matemática em Python</h1><p class="post-summary">Uma jornada do neurônio de McCulloch-Pitts ao Backpropagation, implementando uma rede neural densa usando apenas NumPy.</p><div class="post-meta"><time datetime="2026-04-03T09:00:00+09:00" data-localize-date="long">3 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>Entender redes neurais através de bibliotecas como PyTorch ou TensorFlow é útil, mas entender a <strong>matemática fundamental</strong> por trás de um neurônio é o que separa o &quot;usuário&quot; do &quot;engenheiro de IA&quot;.</p>
 <h2>O Neurônio Artificial</h2>
-<p>Um neurônio é uma função matemática que recebe entradas (\(x\)), aplica pesos (\(w\)), soma-os com um viés (\(b\)) e passa o resultado por uma função de ativação (\(f\)):</p>
-<div class="math-block">$$y = f(\\\\sum_{i=1}^n w_i x_i + b)$$</div>
+<p>Um neurônio é uma função matemática que recebe entradas (<span class="math-inline">\(x\)</span>), aplica pesos (<span class="math-inline">\(w\)</span>), soma-os com um viés (<span class="math-inline">\(b\)</span>) e passa o resultado por uma função de ativação (<span class="math-inline">\(f\)</span>):</p>
+<div class="math-block">$$y = f(\sum_{i=1}^n w_i x_i + b)$$</div>
 <h2>O Ciclo da Aprendizagem:</h2>
 <p>1.  <strong>Forward Propagation</strong>: Os dados fluem da entrada para a saída.</p>
 <p>2.  <strong>Loss Function</strong>: Calculamos o erro (ex: <em>Mean Squared Error</em>).</p>
 <p>3.  <strong>Backpropagation</strong>: Usamos a <strong>Regra da Cadeia</strong> do Cálculo para descobrir como cada peso contribuiu para o erro.</p>
 <p>4.  <strong>Gradient Descent</strong>: Ajustamos os pesos na direção oposta ao gradiente.</p>
-<h3>O Gradiente do Erro (\(\\\\nabla E\))</h3>
-<p>A atualização dos pesos (\(w\)) com uma taxa de aprendizado (\(\\\\eta\)) é:</p>
-<div class="math-block">$$w_{new} = w_{old} - \\\\eta \\\\cdot \\\\nabla E$$</div>
+<h3>O Gradiente do Erro (<span class="math-inline">\(\nabla E\)</span>)</h3>
+<p>A atualização dos pesos (<span class="math-inline">\(w\)</span>) com uma taxa de aprendizado (<span class="math-inline">\(\eta\)</span>) é:</p>
+<div class="math-block">$$w_{new} = w_{old} - \eta \cdot \nabla E$$</div>
 <h2>Implementação Conceitual (Python/NumPy):</h2>
 <div class="code-shell" data-language="python">  <div class="code-shell-header"><span class="code-shell-label">python</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>import numpy as np
 

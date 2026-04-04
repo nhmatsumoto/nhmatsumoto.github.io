@@ -29,7 +29,7 @@ A estrutura ideal de testes em um projeto de engenharia deve seguir a pirâmide:
 
 ### O Coeficiente de Confiança (\\(C\\))
 A confiança (\\(C\\)) em um despliegue (\\(D\\)) é proporcional à cobertura de caminhos críticos (\\(Co\\)) e à velocidade de execução (\\(S\\)):
-$$C \\\\\\\\propto Co \\\\\\\\cdot S$$
+$$C \\propto Co \\cdot S$$
 
 No TDD, \\(S\\) é maximizado porque os testes unitários rodam em milissegundos.
 

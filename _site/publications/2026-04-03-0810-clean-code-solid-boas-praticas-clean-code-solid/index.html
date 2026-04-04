@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    <script>window.MathJax = { loader: { load: ["input/asciimath", "output/chtml"] }, asciimath: { delimiters: [["$", "$"], ["$$", "$$"]] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, loader: { load: ["input/tex", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
   <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
@@ -45,10 +45,10 @@
 <p>Não é apenas uma questão estética. É sobre <strong>redutibilidade cognitiva</strong>. Se um desenvolvedor precisa de 10 segundos para entender uma função, ela é &quot;limpa&quot;. Se precisa de 2 minutos, ela é uma dívida técnica.</p>
 <h3>Princípios SOLID resumidos:</h3>
 <ul><li>  <strong>S (Single Responsibility)</strong>: Uma classe deve ter uma única razão para mudar.</li> <li>  <strong>O (Open/Closed)</strong>: Aberto para extensão, fechado para modificação.</li> <li>  <strong>L (Liskov Substitution)</strong>: Subclasses devem ser substituíveis por suas superclasses.</li> <li>  <strong>I (Interface Segregation)</strong>: Muitas interfaces específicas são melhores que uma geral.</li> <li>  <strong>D (Dependency Inversion)</strong>: Dependa de abstrações, não de implementações.</li></ul>
-<h2>A Matemática da Manutenibilidade (\(M\))</h2>
-<p>Podemos pensar na manutenibilidade (\(M\)) como inversamente proporcional ao acoplamento (\(C\)) e à complexidade ciclomática (\(V\)):</p>
-<div class="math-block">$$M \\\\propto \\\\frac{1}{C \\\\cdot V}$$</div>
-<p>Ao aplicar SOLID, reduzimos \(C\), aumentando drasticamente a vida útil do software.</p>
+<h2>A Matemática da Manutenibilidade (<span class="math-inline">\(M\)</span>)</h2>
+<p>Podemos pensar na manutenibilidade (<span class="math-inline">\(M\)</span>) como inversamente proporcional ao acoplamento (<span class="math-inline">\(C\)</span>) e à complexidade ciclomática (<span class="math-inline">\(V\)</span>):</p>
+<div class="math-block">$$M \propto \frac{1}{C \cdot V}$$</div>
+<p>Ao aplicar SOLID, reduzimos <span class="math-inline">\(C\)</span>, aumentando drasticamente a vida útil do software.</p>
 <div class="mermaid">graph LR
     A[Código Sujo] --&gt; B[Dívida Técnica]
     B --&gt; C[Lentidão na Entrega]

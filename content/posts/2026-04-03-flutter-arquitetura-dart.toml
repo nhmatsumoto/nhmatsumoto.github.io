@@ -24,7 +24,7 @@ A escolha do gestor de estado (Provider, Riverpod, Bloc, GetX) define como os da
 
 ### A Árvore de Reconciliação (\\(W\\))
 Podemos pensar na eficiência (\\(E\\)) do Flutter como função da imutabilidade (\\(I\\)) e da profundidade da árvore (\\(D\\)):
-$$E \\\\\\\\propto \\\\\\\\frac{I}{D}$$
+$$E \\propto \\frac{I}{D}$$
 
 ## Boas Práticas:
 *   **const Widgets**: Use widgets constantes para evitar reconstruções desnecessárias.
