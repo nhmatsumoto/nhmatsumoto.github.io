@@ -55,6 +55,7 @@ class ProjectMap3D {
     this.createNodes()
     this.createConnections()
     this.buildAraucariaTree()
+    this.buildAraucariaBase() // New Pedestal
     this.buildReaderDOM()
     this.addEventHandlers()
     
@@ -88,6 +89,12 @@ class ProjectMap3D {
     const p2 = new THREE.PointLight(0x7C5CFF, 2, 1500); p2.position.set(-500, -200, 0); this.scene.add(p2)
     
     this.scene.add(this.atomGroup); this.scene.add(this.araucariaGroup)
+    
+    // Dedicated Pedestal Lighting
+    this.pedestalLight = new THREE.SpotLight(0x00C2FF, 0, 1000, Math.PI/6, 0.5, 1)
+    this.pedestalLight.position.set(200, 600, 200)
+    this.scene.add(this.pedestalLight)
+
     this.raycaster = new THREE.Raycaster(); this.mouse = new THREE.Vector2()
   }
 
@@ -145,7 +152,7 @@ class ProjectMap3D {
     let whorlIdx = 0
     
     while (itemIdx < items.length) {
-      const h_n = startH + whorlIdx * whorlSpacing
+      const h_n = startH + whorlIdx * whorlSpacing + 60 // Shifted up for pot
       const b_n = Math.min(b0 + Math.floor(Math.random() * 2), items.length - itemIdx)
       const q = 0.88 // Reduction factor
       const L_n = 400 * Math.pow(q, whorlIdx)
@@ -169,6 +176,33 @@ class ProjectMap3D {
       }
       whorlIdx++
     }
+  }
+
+  buildAraucariaBase() {
+    const baseGroup = new THREE.Group(); this.araucariaGroup.add(baseGroup)
+    
+    // 1. Concrete Blocks (Triangle)
+    const blockGeo = new THREE.BoxGeometry(100, 30, 100)
+    const blockMat = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.1, roughness: 0.9 })
+    const positions = [[-60, 15, -35], [60, 15, -35], [0, 45, 60]] // Tiered triangle
+    positions.forEach(p => {
+      const b = new THREE.Mesh(blockGeo, blockMat); b.position.set(...p); baseGroup.add(b)
+      // Neon Edge
+      const edges = new THREE.EdgesGeometry(blockGeo); const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x00C2FF, transparent: true, opacity: 0.3 }))
+      line.position.copy(b.position); baseGroup.add(line)
+    })
+
+    // 2. Plant Pot (Vaso)
+    const potGeo = new THREE.CylinderGeometry(55, 40, 80, 32)
+    const potMat = new THREE.MeshPhysicalMaterial({ color: 0x111111, metalness: 0.9, roughness: 0.05, clearcoat: 1 })
+    const pot = new THREE.Mesh(potGeo, potMat); pot.position.set(0, 85, 0); baseGroup.add(pot)
+    
+    // Pot Rim Glow
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(55, 1, 16, 100), new THREE.MeshBasicMaterial({ color: 0x00C2FF, transparent: true, opacity: 0.5 }))
+    rim.rotation.x = Math.PI/2; rim.position.set(0, 125, 0); baseGroup.add(rim)
+
+    // Adjust entire group for cinematic focus
+    this.araucariaGroup.position.y = -100 
   }
 
   createNodes() {
@@ -220,14 +254,42 @@ class ProjectMap3D {
 
   setLayout(mode) {
     if (this.layoutMode === mode) return
-    this.layoutMode = mode; const isTree = mode === 'araucaria'
+    this.layoutMode = mode; const isTree = mode === 'arvore'
     this.atomGroup.visible = !isTree; this.araucariaGroup.visible = isTree
+    this.transitioning = true
+    
+    // Node Transitions
     this.nodes.forEach(n => {
       const target = isTree ? (n.userData.isCentral ? new THREE.Vector3(0,0,0) : n.userData.treePos) : n.userData.atomPos
-      if (target) new TWEEN.Tween(n.position).to({ x: target.x, y: target.y, z: target.z }, 1400).easing(TWEEN.Easing.Cubic.InOut).start()
+      if (target) new TWEEN.Tween(n.position).to({ x: target.x, y: target.y, z: target.z }, 1800).easing(TWEEN.Easing.Cubic.InOut).start()
     })
-    const lookT = isTree ? new THREE.Vector3(0, 450, 0) : new THREE.Vector3(0, 0, 0)
-    new TWEEN.Tween(this.controls.target).to({ x: lookT.x, y: lookT.y, z: lookT.z }, 1000).start()
+    
+    // Cinematic Camera Sequences
+    if (isTree) {
+      // TAKE 1: Low-Angle gaze at pedestal
+      new TWEEN.Tween(this.camera.position).to({ x: 500, y: 150, z: 500 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
+        .chain(
+          // TAKE 2: Ascending Spiral
+          new TWEEN.Tween(this.camera.position).to({ x: 200, y: 1600, z: 200 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
+        ).start()
+      
+      new TWEEN.Tween(this.controls.target).to({ x: 0, y: 100, z: 0 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
+        .chain(
+          new TWEEN.Tween(this.controls.target).to({ x: 0, y: 500, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
+        ).start()
+      
+      new TWEEN.Tween(this.pedestalLight).to({ intensity: 6 }, 1500).start()
+    } else {
+      // TAKE 1: Dive into Atom
+      new TWEEN.Tween(this.camera.position).to({ x: 0, y: 100, z: 400 }, 1000).easing(TWEEN.Easing.Cubic.In)
+        .chain(
+          // TAKE 2: Pull back to orbital
+          new TWEEN.Tween(this.camera.position).to({ x: 0, y: 400, z: 1000 }, 1200).easing(TWEEN.Easing.Cubic.Out)
+        ).start()
+      
+      new TWEEN.Tween(this.controls.target).to({ x: 0, y: 0, z: 0 }, 1500).start()
+      new TWEEN.Tween(this.pedestalLight).to({ intensity: 0 }, 1000).start()
+    }
   }
 
   focusOnNode(node) {
@@ -236,7 +298,12 @@ class ProjectMap3D {
     this.cameraTarget = p.clone(); this.transitioning = true
   }
   deselectNode() { this.selected = null; this.controls.autoRotate = true; this.restoreNodeVisibility(); this.resetCameraFocus(); window.hidePanel() }
-  resetCameraFocus() { this.cameraGoal = new THREE.Vector3(0, 400, 1000); this.cameraTarget = (this.layoutMode === 'araucaria' ? new THREE.Vector3(0, 450, 0) : new THREE.Vector3(0, 0, 0)); this.transitioning = true }
+  resetCameraFocus() { 
+    const isTree = this.layoutMode === 'arvore'
+    this.cameraGoal = isTree ? new THREE.Vector3(20, 1600, 20) : new THREE.Vector3(0, 400, 1000)
+    this.cameraTarget = isTree ? new THREE.Vector3(0, 450, 0) : new THREE.Vector3(0, 0, 0)
+    this.transitioning = true 
+  }
   
   highlightNode(sel) {
     this.nodes.forEach(n => { const s = n === sel; n.traverse(c => { if (c.material) { c.material._os = c.material._os ?? c.material.opacity; c.material.opacity = s ? c.material._os : c.material._os * 0.12 } }) })
@@ -263,7 +330,7 @@ class ProjectMap3D {
   }
   exitReader() {
     this.readerActive = false; this.readerEl.classList.remove('open'); this.nodes.forEach(n => n.visible = true)
-    this.atomGroup.visible = (this.layoutMode === 'atomo'); this.araucariaGroup.visible = (this.layoutMode === 'araucaria')
+    this.atomGroup.visible = (this.layoutMode === 'atomo'); this.araucariaGroup.visible = (this.layoutMode === 'arvore')
     this.controls.enabled = true; this.controls.autoRotate = true; this.resetCameraFocus(); this.selected = null
   }
 
@@ -322,11 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let current = 'atomo'
     const updateLabel = (m) => {
       toggle.innerHTML = m === 'atomo' 
-        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Araucária</span>'
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Árvore</span>'
         : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2m-8-10H2m20 0h-2m-2.1-6.9l-1.4 1.4m-9 9l-1.4 1.4m0-11.8l1.4 1.4m9 9l1.4 1.4"/></svg><span>Átomo</span>'
     }
     updateLabel(current); shell.prepend(toggle)
-    toggle.onclick = () => { current = (current === 'atomo' ? 'araucaria' : 'atomo'); updateLabel(current); window.projectMap.setLayout(current) }
+    toggle.onclick = () => { current = (current === 'atomo' ? 'arvore' : 'atomo'); updateLabel(current); window.projectMap.setLayout(current) }
   }
 
   window.showPanel = (item, all) => {
