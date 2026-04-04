@@ -1,448 +1,448 @@
 {
   "nodes": [
     {
-      "id": "daniel-kahneman-raciocinio-economico",
-      "title": "Daniel Kahneman: Rápido e Devagar - A Economia Comportamental",
-      "kind": "post",
-      "url": "/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/"
-    },
-    {
-      "id": "projeto-manhattan-bomba-atomica",
-      "title": "Projeto Manhattan: A Ciência da Bomba",
-      "kind": "post",
-      "url": "/publications/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/"
-    },
-    {
-      "id": "segunda-guerra-mundial-tecnologia",
-      "title": "Segunda Guerra Mundial: O Motor da Inovação Tecnológica",
-      "kind": "post",
-      "url": "/publications/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/"
-    },
-    {
-      "id": "richard-feynman-prazer-descobrir",
-      "title": "Richard Feynman: O Prazer de Descobrir e o Pensamento Quântico",
-      "kind": "post",
-      "url": "/publications/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/"
-    },
-    {
-      "id": "alan-turing-computacao-enigma",
-      "title": "Alan Turing: O Código Enigma e o Nascimento da IA",
-      "kind": "post",
-      "url": "/publications/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/"
-    },
-    {
-      "id": "bill-gates-microsoft-historia",
-      "title": "Bill Gates e a Microsoft: Do Desktop à Ubiquidade",
-      "kind": "post",
-      "url": "/publications/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/"
-    },
-    {
-      "id": "typescript-tipagem-avancada",
-      "title": "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/"
-    },
-    {
-      "id": "tdd-ciclo-vermelho-verde-refactor",
-      "title": "TDD: O Ciclo Red-Green-Refactor como Proteção de Domínio",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/"
-    },
-    {
-      "id": "sistemas-de-tipagem-estatico-vs-dinamico",
-      "title": "Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/"
-    },
-    {
-      "id": "fluxo-pensamento-agentes",
-      "title": "A anatomia do pensamento em agentes: transformando intenção em execução",
-      "kind": "post",
-      "url": "/publications/2026-04-03-1200-fluxo-pensamento-agentes/"
-    },
-    {
-      "id": "redes-neurais-do-zero-python",
-      "title": "Redes Neurais do Zero: Implementação Matemática em Python",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/"
-    },
-    {
-      "id": "performance-dotnet-pre-compilacao",
-      "title": "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/"
-    },
-    {
-      "id": "flutter-arquitetura-dart",
-      "title": "Flutter & Dart: Arquitetura de Estados e Performance Mobile",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/"
-    },
-    {
-      "id": "engenharia-cognitive-agentes-ia",
-      "title": "Engenharia Cognitiva: Como Agentes de IA 'Pensam'",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/"
-    },
-    {
-      "id": "design-patterns-gang-of-four-moderno",
-      "title": "Design Patterns: O que ainda é Relevante no C# Moderno?",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/"
-    },
-    {
-      "id": "boas-praticas-clean-code-solid",
-      "title": "Clean Code & SOLID: O Custo da Dívida Técnica",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/"
-    },
-    {
-      "id": "dapper-vs-efcore-performance",
-      "title": "Dapper vs EF Core: Quando a Performance Supera a Abstração",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/"
-    },
-    {
-      "id": "orquestrador-agentes-ddd",
-      "title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
-      "kind": "post",
-      "url": "/publications/2026-04-03-0900-orquestrador-agentes-ddd/"
-    },
-    {
-      "id": "ddd-boundaries-for-agent-systems",
-      "title": "DDD boundaries for agent systems",
-      "kind": "post",
-      "url": "/publications/20260402-203000-ddd-boundaries-for-agent-systems/"
-    },
-    {
-      "id": "primeiro-post",
-      "title": "Bem-vindo ao meu novo blog",
-      "kind": "post",
-      "url": "/publications/20260312-090000-primeiro-post/"
-    },
-    {
       "id": "sos-location-ml-risk-neural-models",
       "title": "SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica",
       "kind": "post",
-      "url": "/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/"
     },
     {
       "id": "sos-location-postgis-spatial-intelligence",
       "title": "SOS Location: PostGIS e inteligência espacial para resposta a desastres",
       "kind": "post",
-      "url": "/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/"
     },
     {
       "id": "sos-location-clean-architecture-dotnet10",
       "title": "SOS Location: Clean Architecture + CQRS em .NET 10",
       "kind": "post",
-      "url": "/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/"
     },
     {
       "id": "sos-location-webgl-3d-city-engine",
       "title": "SOS Location: Motor WebGL 3D de visualização de cidades em tempo real",
       "kind": "post",
-      "url": "/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/"
     },
     {
       "id": "sos-location-stack",
       "title": "SOS Location: Tecnologias, ferramentas e exemplos",
       "kind": "post",
-      "url": "/publications/2026-04-05-1100-sos-location-stack/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1100-sos-location-stack/"
     },
     {
       "id": "sos-location-flow-architecture",
       "title": "SOS Location: Fluxos, arquitetura e diagramas",
       "kind": "post",
-      "url": "/publications/2026-04-05-1000-sos-location-flow-architecture/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1000-sos-location-flow-architecture/"
     },
     {
       "id": "sos-location-business-rules",
       "title": "SOS Location: Regras de negócio, contratos e operação",
       "kind": "post",
-      "url": "/publications/2026-04-05-0900-sos-location-business-rules/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-05-0900-sos-location-business-rules/"
     },
     {
       "id": "ia-inspirada-pela-fisica-redes-neurais",
       "title": "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
       "kind": "post",
-      "url": "/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/"
     },
     {
       "id": "computacao-quantica-qbits-vs-bits",
       "title": "Computação Quântica: O Poder Além dos Bits",
       "kind": "post",
-      "url": "/publications/2026-04-03-2500-computacao-quantica-qbits-vs-bits/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2500-computacao-quantica-qbits-vs-bits/"
     },
     {
       "id": "introducao-intuitiva-fisica-quantica",
       "title": "O Universo Quântico: Além da Lógica Clássica",
       "kind": "post",
-      "url": "/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/"
     },
     {
       "id": "simulacao-fisica-particulas-monte-carlo",
       "title": "Simulação de Partículas: O poder dos Métodos de Monte Carlo",
       "kind": "post",
-      "url": "/publications/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/"
     },
     {
       "id": "estruturas-de-dados-pilha-fila-arvores",
       "title": "Excelência em Dados: Pilhas, Filas e Árvores",
       "kind": "post",
-      "url": "/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/"
     },
     {
       "id": "algoritmos-busca-ordenacao-com-big-o",
       "title": "Algoritmos e Big O: Entendendo a Eficiência do Código",
       "kind": "post",
-      "url": "/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/"
+    },
+    {
+      "id": "daniel-kahneman-raciocinio-economico",
+      "title": "Daniel Kahneman: Rápido e Devagar - A Economia Comportamental",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/"
+    },
+    {
+      "id": "projeto-manhattan-bomba-atomica",
+      "title": "Projeto Manhattan: A Ciência da Bomba",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/"
+    },
+    {
+      "id": "segunda-guerra-mundial-tecnologia",
+      "title": "Segunda Guerra Mundial: O Motor da Inovação Tecnológica",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/"
     },
     {
       "id": "sistemas-orientados-a-filas",
       "title": "Resiliência e Escala: Sistemas orientados a Filas de Mensageria",
       "kind": "post",
-      "url": "/publications/2026-04-03-1600-sistemas-orientados-a-filas/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1600-sistemas-orientados-a-filas/"
+    },
+    {
+      "id": "richard-feynman-prazer-descobrir",
+      "title": "Richard Feynman: O Prazer de Descobrir e o Pensamento Quântico",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/"
+    },
+    {
+      "id": "alan-turing-computacao-enigma",
+      "title": "Alan Turing: O Código Enigma e o Nascimento da IA",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/"
+    },
+    {
+      "id": "bill-gates-microsoft-historia",
+      "title": "Bill Gates e a Microsoft: Do Desktop à Ubiquidade",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/"
+    },
+    {
+      "id": "typescript-tipagem-avancada",
+      "title": "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/"
+    },
+    {
+      "id": "tdd-ciclo-vermelho-verde-refactor",
+      "title": "TDD: O Ciclo Red-Green-Refactor como Proteção de Domínio",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/"
+    },
+    {
+      "id": "sistemas-de-tipagem-estatico-vs-dinamico",
+      "title": "Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/"
+    },
+    {
+      "id": "fluxo-pensamento-agentes",
+      "title": "A anatomia do pensamento em agentes: transformando intenção em execução",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1200-fluxo-pensamento-agentes/"
+    },
+    {
+      "id": "redes-neurais-do-zero-python",
+      "title": "Redes Neurais do Zero: Implementação Matemática em Python",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/"
+    },
+    {
+      "id": "performance-dotnet-pre-compilacao",
+      "title": "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/"
+    },
+    {
+      "id": "flutter-arquitetura-dart",
+      "title": "Flutter & Dart: Arquitetura de Estados e Performance Mobile",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/"
+    },
+    {
+      "id": "engenharia-cognitive-agentes-ia",
+      "title": "Engenharia Cognitiva: Como Agentes de IA 'Pensam'",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/"
+    },
+    {
+      "id": "design-patterns-gang-of-four-moderno",
+      "title": "Design Patterns: O que ainda é Relevante no C# Moderno?",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/"
+    },
+    {
+      "id": "boas-praticas-clean-code-solid",
+      "title": "Clean Code & SOLID: O Custo da Dívida Técnica",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/"
+    },
+    {
+      "id": "dapper-vs-efcore-performance",
+      "title": "Dapper vs EF Core: Quando a Performance Supera a Abstração",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/"
     },
     {
       "id": "poc-minerando-logs",
       "title": "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)",
       "kind": "post",
-      "url": "/publications/2026-04-03-1100-poc-minerando-logs/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1100-poc-minerando-logs/"
     },
     {
       "id": "neuroplasticidade-agentes",
       "title": "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua",
       "kind": "post",
-      "url": "/publications/2026-04-03-1000-neuroplasticidade-agentes/"
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1000-neuroplasticidade-agentes/"
+    },
+    {
+      "id": "orquestrador-agentes-ddd",
+      "title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0900-orquestrador-agentes-ddd/"
+    },
+    {
+      "id": "ddd-boundaries-for-agent-systems",
+      "title": "DDD boundaries for agent systems",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/20260402-203000-ddd-boundaries-for-agent-systems/"
     },
     {
       "id": "gis-pipelines-with-event-driven-services",
       "title": "GIS pipelines with event-driven services",
       "kind": "post",
-      "url": "/publications/20260401-184500-gis-pipelines-with-event-driven-services/"
+      "url": "https://nhmatsumoto.github.io/publications/20260401-184500-gis-pipelines-with-event-driven-services/"
+    },
+    {
+      "id": "primeiro-post",
+      "title": "Bem-vindo ao meu novo blog",
+      "kind": "post",
+      "url": "https://nhmatsumoto.github.io/publications/20260312-090000-primeiro-post/"
     },
     {
       "id": "sos-location",
       "title": "SOS Location",
       "kind": "project",
-      "url": "/projects/sos-location/"
+      "url": "https://nhmatsumoto.github.io/projects/sos-location/"
     },
     {
       "id": "splitcosts",
       "title": "SplitCosts",
       "kind": "project",
-      "url": "/projects/splitcosts/"
+      "url": "https://nhmatsumoto.github.io/projects/splitcosts/"
     },
     {
       "id": "gis-incident-lab",
       "title": "GIS Incident Lab",
       "kind": "project",
-      "url": "/projects/gis-incident-lab/"
+      "url": "https://nhmatsumoto.github.io/projects/gis-incident-lab/"
     },
     {
       "id": "apollo-11",
       "title": "Apollo-11",
       "kind": "project",
-      "url": "/projects/apollo-11/"
+      "url": "https://nhmatsumoto.github.io/projects/apollo-11/"
     },
     {
       "id": "automapper",
       "title": "AutoMapper",
       "kind": "project",
-      "url": "/projects/automapper/"
+      "url": "https://nhmatsumoto.github.io/projects/automapper/"
     },
     {
       "id": "brumadinho-location",
       "title": "brumadinho_location",
       "kind": "project",
-      "url": "/projects/brumadinho-location/"
+      "url": "https://nhmatsumoto.github.io/projects/brumadinho-location/"
     },
     {
       "id": "chess",
       "title": "chess",
       "kind": "project",
-      "url": "/projects/chess/"
+      "url": "https://nhmatsumoto.github.io/projects/chess/"
     },
     {
       "id": "claw-code",
       "title": "claw-code",
       "kind": "project",
-      "url": "/projects/claw-code/"
+      "url": "https://nhmatsumoto.github.io/projects/claw-code/"
     },
     {
       "id": "deepseek-v3",
       "title": "DeepSeek-V3",
       "kind": "project",
-      "url": "/projects/deepseek-v3/"
+      "url": "https://nhmatsumoto.github.io/projects/deepseek-v3/"
     },
     {
       "id": "financial",
       "title": "Financial",
       "kind": "project",
-      "url": "/projects/financial/"
+      "url": "https://nhmatsumoto.github.io/projects/financial/"
     },
     {
       "id": "gaussian-splatting",
       "title": "gaussian-splatting",
       "kind": "project",
-      "url": "/projects/gaussian-splatting/"
+      "url": "https://nhmatsumoto.github.io/projects/gaussian-splatting/"
     },
     {
       "id": "gemini-cli",
       "title": "gemini-cli",
       "kind": "project",
-      "url": "/projects/gemini-cli/"
+      "url": "https://nhmatsumoto.github.io/projects/gemini-cli/"
     },
     {
       "id": "java-servlet-pages",
       "title": "Java-Servlet-Pages",
       "kind": "project",
-      "url": "/projects/java-servlet-pages/"
+      "url": "https://nhmatsumoto.github.io/projects/java-servlet-pages/"
     },
     {
       "id": "leaflet",
       "title": "Leaflet",
       "kind": "project",
-      "url": "/projects/leaflet/"
+      "url": "https://nhmatsumoto.github.io/projects/leaflet/"
     },
     {
       "id": "macos",
       "title": "macos",
       "kind": "project",
-      "url": "/projects/macos/"
+      "url": "https://nhmatsumoto.github.io/projects/macos/"
     },
     {
       "id": "maplebr",
       "title": "MapleBR",
       "kind": "project",
-      "url": "/projects/maplebr/"
-    },
-    {
-      "id": "mermaid",
-      "title": "mermaid",
-      "kind": "project",
-      "url": "/projects/mermaid/"
+      "url": "https://nhmatsumoto.github.io/projects/maplebr/"
     },
     {
       "id": "mermaid-live-editor",
       "title": "mermaid-live-editor",
       "kind": "project",
-      "url": "/projects/mermaid-live-editor/"
+      "url": "https://nhmatsumoto.github.io/projects/mermaid-live-editor/"
+    },
+    {
+      "id": "mermaid",
+      "title": "mermaid",
+      "kind": "project",
+      "url": "https://nhmatsumoto.github.io/projects/mermaid/"
     },
     {
       "id": "nhmatsumoto-exception-middleware",
       "title": "nhmatsumoto.exception.middleware",
       "kind": "project",
-      "url": "/projects/nhmatsumoto-exception-middleware/"
+      "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-exception-middleware/"
     },
     {
       "id": "nhmatsumoto-github-io",
       "title": "nhmatsumoto.github.io",
       "kind": "project",
-      "url": "/projects/nhmatsumoto-github-io/"
+      "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-github-io/"
     },
     {
       "id": "playground-fe",
       "title": "Playground-FE",
       "kind": "project",
-      "url": "/projects/playground-fe/"
+      "url": "https://nhmatsumoto.github.io/projects/playground-fe/"
     },
     {
       "id": "prog-lib",
       "title": "prog_lib",
       "kind": "project",
-      "url": "/projects/prog-lib/"
+      "url": "https://nhmatsumoto.github.io/projects/prog-lib/"
     },
     {
       "id": "quickreaderv1",
       "title": "QuickReaderv1",
       "kind": "project",
-      "url": "/projects/quickreaderv1/"
+      "url": "https://nhmatsumoto.github.io/projects/quickreaderv1/"
     },
     {
       "id": "react-data-grid",
       "title": "react-data-grid",
       "kind": "project",
-      "url": "/projects/react-data-grid/"
+      "url": "https://nhmatsumoto.github.io/projects/react-data-grid/"
     },
     {
       "id": "responsemiddleware",
       "title": "ResponseMiddleware",
       "kind": "project",
-      "url": "/projects/responsemiddleware/"
+      "url": "https://nhmatsumoto.github.io/projects/responsemiddleware/"
     },
     {
       "id": "ronaldinho-agent",
       "title": "ronaldinho-agent",
       "kind": "project",
-      "url": "/projects/ronaldinho-agent/"
+      "url": "https://nhmatsumoto.github.io/projects/ronaldinho-agent/"
     },
     {
       "id": "security-jwt",
       "title": "Security.Jwt",
       "kind": "project",
-      "url": "/projects/security-jwt/"
+      "url": "https://nhmatsumoto.github.io/projects/security-jwt/"
     },
     {
       "id": "sos",
       "title": "sos",
       "kind": "project",
-      "url": "/projects/sos/"
+      "url": "https://nhmatsumoto.github.io/projects/sos/"
     },
     {
       "id": "splitcost-backend",
       "title": "SplitCost-Backend",
       "kind": "project",
-      "url": "/projects/splitcost-backend/"
+      "url": "https://nhmatsumoto.github.io/projects/splitcost-backend/"
     },
     {
       "id": "splitcosts-fe",
       "title": "SplitCosts-FE",
       "kind": "project",
-      "url": "/projects/splitcosts-fe/"
+      "url": "https://nhmatsumoto.github.io/projects/splitcosts-fe/"
     },
     {
       "id": "system-prompts-and-models-of-ai-tools",
       "title": "system-prompts-and-models-of-ai-tools",
       "kind": "project",
-      "url": "/projects/system-prompts-and-models-of-ai-tools/"
+      "url": "https://nhmatsumoto.github.io/projects/system-prompts-and-models-of-ai-tools/"
     },
     {
       "id": "user-auth",
       "title": "User-Auth",
       "kind": "project",
-      "url": "/projects/user-auth/"
-    },
-    {
-      "id": "adr-versioned-memory",
-      "title": "ADR 003 - Versioned Memory",
-      "kind": "document",
-      "url": "/documents/adr-versioned-memory/"
-    },
-    {
-      "id": "ronaldinho-architecture-overview",
-      "title": "Ronaldinho Architecture Overview",
-      "kind": "document",
-      "url": "/documents/ronaldinho-architecture-overview/"
-    },
-    {
-      "id": "agent-integration-surface",
-      "title": "Agent Integration Surface",
-      "kind": "document",
-      "url": "/documents/agent-integration-surface/"
-    },
-    {
-      "id": "system-architecture",
-      "title": "System Architecture",
-      "kind": "document",
-      "url": "/documents/system-architecture/"
+      "url": "https://nhmatsumoto.github.io/projects/user-auth/"
     },
     {
       "id": "technical-knowledge-os",
       "title": "Technical Knowledge OS",
       "kind": "document",
-      "url": "/documents/technical-knowledge-os/"
+      "url": "https://nhmatsumoto.github.io/documents/technical-knowledge-os/"
+    },
+    {
+      "id": "system-architecture",
+      "title": "System Architecture",
+      "kind": "document",
+      "url": "https://nhmatsumoto.github.io/documents/system-architecture/"
+    },
+    {
+      "id": "adr-versioned-memory",
+      "title": "ADR 003 - Versioned Memory",
+      "kind": "document",
+      "url": "https://nhmatsumoto.github.io/documents/adr-versioned-memory/"
+    },
+    {
+      "id": "agent-integration-surface",
+      "title": "Agent Integration Surface",
+      "kind": "document",
+      "url": "https://nhmatsumoto.github.io/documents/agent-integration-surface/"
+    },
+    {
+      "id": "ronaldinho-architecture-overview",
+      "title": "Ronaldinho Architecture Overview",
+      "kind": "document",
+      "url": "https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/"
     }
   ],
   "links": []

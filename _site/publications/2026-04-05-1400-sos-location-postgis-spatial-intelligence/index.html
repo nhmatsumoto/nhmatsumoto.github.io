@@ -1,99 +1,65 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
-  <head>
+<html lang="pt-BR">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <title>SOS Location: PostGIS e inteligência espacial para resposta a desastres | nhmatsumoto-blog-engine</title>
     <meta name="description" content="PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/">
-    <link rel="stylesheet" href="/assets/styles.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        lucide.createIcons();
-      });
-    </script>
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/index.css">
     
-  </head>
-  <body class="page-post" data-has-math="false" data-default-locale="pt-BR">
-    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
+    <script src="https://nhmatsumoto.github.io/assets/i18n-engine.js" defer></script>
     
-    
-    <nav class="nav-shell" data-nav-shell>
-      <div class="nav-brand">
-        <a class="nav-title" href="/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
-      </div>
-
-      <div class="nav-menu desktop-only">
-        <a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
-      </div>
-
-      <div class="nav-actions">
-        <div class="nav-divider desktop-only"></div>
-        <button class="nav-button" type="button" data-open-palette aria-label="palette de comandos">
-          <i data-lucide="search"></i>
-        </button>
-        <button class="nav-button" type="button" data-theme-toggle aria-label="Toggle theme">
-          <i data-lucide="moon" class="theme-icon-moon"></i>
-          <i data-lucide="sun" class="theme-icon-sun hidden"></i>
-        </button>
-        <button class="nav-button mobile-only" type="button" data-nav-toggle aria-label="Toggle menu">
-          <i data-lucide="menu" class="nav-icon-menu"></i>
-          <i data-lucide="x" class="nav-icon-close hidden"></i>
-        </button>
-      </div>
-
-      <div class="nav-drawer" data-nav-menu hidden>
-        <div class="drawer-backdrop" data-nav-toggle></div>
-        <div class="drawer-content">
-          <div class="drawer-header">
-            <span class="nav-title"><span class="brand-accent">NHM</span>ATSUMOTO</span>
-            <button class="nav-button" type="button" data-nav-toggle>
-              <i data-lucide="x"></i>
-            </button>
-          </div>
-          <div class="drawer-links">
-            <a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
-          </div>
-          <div class="drawer-footer">
-            <div class="drawer-social">
-              <a class="drawer-social-link" href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github"></i><span>GitHub</span></a><a class="drawer-social-link" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i><span>LinkedIn</span></a>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body class="page-post">
+    <header class="main-nav">
+        <div class="nav-container">
+            <a href="https://nhmatsumoto.github.io/" class="nav-brand">
+                <span class="brand-glyph">TK</span>
+                <span class="brand-name">OS.</span>
+            </a>
+            <nav class="nav-menu">
+                <a class="nav-link" href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a>
+<a class="nav-link active" href="https://nhmatsumoto.github.io/publications/" aria-current="page" data-i18n="nav.posts">publicações</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/documents/" data-i18n="nav.documents">documentos</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/about/" data-i18n="nav.about">sobre</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="icon-button" id="search-toggle" aria-label="Search" data-i18n-aria-label="actions.search">
+                   <i data-lucide="search"></i>
+                </button>
+                <div class="locale-selector">
+                    <button class="icon-button" id="locale-toggle" aria-label="Language">
+                        <i data-lucide="languages"></i>
+                    </button>
+                    <div class="locale-dropdown" id="locale-dropdown">
+                        <button class="locale-option" data-locale="pt-BR">Português (Brasil)</button>
+<button class="locale-option" data-locale="en-US">English (US)</button>
+                    </div>
+                </div>
             </div>
-          </div>
+            <button class="mobile-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
         </div>
-      </div>
-    </nav>
-    
+    </header>
 
-    <div class="site-shell">
-      <main class="site-main" id="content">
-        
-    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">SOS Location: PostGIS e inteligência espacial para resposta a desastres</span></li></ol></nav>
-        <section class="page-grid">
-          <article class="post-shell prose">
+    <main id="content">
+        <div class="content-container">
+            
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a> / <a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a> / <span>SOS Location: PostGIS e inteligência espacial para resposta a desastres</span></nav>
+        <article class="post-shell prose">
             <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
-              <h1>SOS Location: PostGIS e inteligência espacial para resposta a desastres</h1>
-              <p class="post-summary">PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.</p>
-              <div class="post-meta">
-                <time datetime="2026-04-05T14:00:00+09:00" data-localize-date="long">5 de abril de 2026</time>
-                <span data-reading-time="1">1 min de leitura</span>
-              </div>
-              <div class="post-actions">
-                <a class="subtle-button" href="/publications/" data-i18n="pages.post.back">Voltar para publicações</a>
-                <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
-              </div>
+                <h1>SOS Location: PostGIS e inteligência espacial para resposta a desastres</h1>
+                <div class="post-meta"><time datetime="2026-04-05T14:00:00+09:00">5 de abril de 2026</time></div>
             </header>
             <h1>PostGIS: o motor geoespacial do SOS Location</h1>
 <p>PostgreSQL é excelente. Com PostGIS, ele se torna um sistema de informação geográfica completo dentro do seu banco de dados. No SOS Location, todas as decisões táticas passam por consultas espaciais — e a diferença entre 200ms e 2s numa query pode definir se uma equipe chega a tempo.</p>
 <h2>Schema espacial</h2>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Incidents com geometria PostGIS
+<pre class="glass-terminal" data-lang="sql"><code>
+-- Incidents com geometria PostGIS
 CREATE TABLE incidents (
   id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   event_id     TEXT UNIQUE NOT NULL,
@@ -120,10 +86,12 @@ CREATE TABLE resources (
   updated_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_resources_location ON resources USING GIST (location);</code></pre></div>
+CREATE INDEX idx_resources_location ON resources USING GIST (location);
+</code></pre>
 <h2>Consultas espaciais críticas</h2>
 <h3>1. Busca de recursos no raio de um incidente</h3>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Todos os recursos disponíveis em raio de 10km do incidente
+<pre class="glass-terminal" data-lang="sql"><code>
+-- Todos os recursos disponíveis em raio de 10km do incidente
 SELECT
   r.id,
   r.type,
@@ -143,10 +111,12 @@ WHERE i.id = $1
     10000  -- 10km em metros
   )
 ORDER BY distance_km ASC
-LIMIT 20;</code></pre></div>
+LIMIT 20;
+</code></pre>
 <p>O cast <code>::geography</code> é essencial: garante que a distância seja em <strong>metros reais</strong> sobre a superfície da Terra, não graus de arco.</p>
 <h3>2. Intersecção entre área afetada e zonas de risco</h3>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Quais zonas de risco catalogadas se intersectam com a área afetada?
+<pre class="glass-terminal" data-lang="sql"><code>
+-- Quais zonas de risco catalogadas se intersectam com a área afetada?
 SELECT
   rz.id,
   rz.name,
@@ -156,10 +126,12 @@ FROM risk_zones rz
 JOIN incidents i ON i.id = $1
 WHERE ST_Intersects(i.affected_area, rz.boundary)
   AND rz.active = true
-ORDER BY overlap_km2 DESC;</code></pre></div>
+ORDER BY overlap_km2 DESC;
+</code></pre>
 <h3>3. Line of sight para watchpoints</h3>
 <p>A visibilidade de linha direta entre um watchpoint (câmera, sensor) e um incidente é crítica para alocação de recursos de monitoramento:</p>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Verifica se existe obstáculo entre watchpoint e incidente usando DEM
+<pre class="glass-terminal" data-lang="sql"><code>
+-- Verifica se existe obstáculo entre watchpoint e incidente usando DEM
 -- (simplificado — a implementação real usa uma função PL/pgSQL customizada)
 CREATE OR REPLACE FUNCTION line_of_sight(
   observer_geom  GEOMETRY(Point, 4326),
@@ -185,9 +157,11 @@ BEGIN
   RETURN COALESCE(max_obstr, 0) &lt;= LEAST(observer_elev, target_elev)
            + (ABS(observer_elev - target_elev) / 2);
 END;
-$$ LANGUAGE plpgsql;</code></pre></div>
+$$ LANGUAGE plpgsql;
+</code></pre>
 <h3>4. Clustering de incidentes para o mapa tático</h3>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Agrupa incidentes próximos (&lt; 500m) para evitar sobreposição no mapa
+<pre class="glass-terminal" data-lang="sql"><code>
+-- Agrupa incidentes próximos (&lt; 500m) para evitar sobreposição no mapa
 SELECT
   ST_AsGeoJSON(ST_Centroid(ST_Collect(location))) AS centroid,
   COUNT(*) AS incident_count,
@@ -197,10 +171,12 @@ FROM incidents
 WHERE status = &#x27;active&#x27;
   AND occurred_at &gt; NOW() - INTERVAL &#x27;24 hours&#x27;
 GROUP BY ST_SnapToGrid(location, 0.005)  -- grid de ~500m
-ORDER BY max_severity DESC;</code></pre></div>
+ORDER BY max_severity DESC;
+</code></pre>
 <h2>Benchmark e indexação</h2>
 <p>Sem GIST index, uma busca <code>ST_DWithin</code> em 50.000 registros demora ~800ms. Com o índice: <strong>&lt; 8ms</strong>.</p>
-<div class="code-shell" data-language="sql">  <div class="code-shell-header">    <span class="code-shell-label">sql</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-sql">-- Análise de performance
+<pre class="glass-terminal" data-lang="sql"><code>
+-- Análise de performance
 EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
 SELECT * FROM incidents
 WHERE ST_DWithin(location::geography, ST_Point(-43.9, -19.9)::geography, 5000);
@@ -208,10 +184,12 @@ WHERE ST_DWithin(location::geography, ST_Point(-43.9, -19.9)::geography, 5000);
 -- Output com GIST:
 -- Index Scan using idx_incidents_location on incidents
 -- Planning Time: 0.3 ms
--- Execution Time: 7.2 ms</code></pre></div>
+-- Execution Time: 7.2 ms
+</code></pre>
 <h2>EF Core + Npgsql + NetTopologySuite</h2>
 <p>No .NET, o mapeamento de tipos PostGIS usa <code>NetTopologySuite</code>:</p>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">// SosDbContext.cs
+<pre class="glass-terminal" data-lang="csharp"><code>
+// SosDbContext.cs
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {
     optionsBuilder.UseNpgsql(connectionString, o =&gt;
@@ -227,69 +205,50 @@ public class Incident
     public Point Location { get; private set; }       // NTS Point
     public Polygon? AffectedArea { get; private set; } // NTS Polygon
     // ...
-}</code></pre></div>
+}
+</code></pre>
 <p>A combinação PostGIS + NetTopologySuite + EF Core permite escrever queries LINQ com operações espaciais que compilam para SQL otimizado:</p>
-<div class="code-shell" data-language="csharp">  <div class="code-shell-header">    <span class="code-shell-label">csharp</span>    <button class="code-shell-copy" aria-label="Copy code">      <i data-lucide="copy"></i>    </button>  </div>  <pre><code class="language-csharp">var nearbyIncidents = await _db.Incidents
+<pre class="glass-terminal" data-lang="csharp"><code>
+var nearbyIncidents = await _db.Incidents
     .Where(i =&gt; i.Location.IsWithinDistance(searchPoint, radiusMeters))
     .OrderByDescending(i =&gt; i.Severity)
     .ToListAsync();
-// Gera: WHERE ST_DWithin(location, $1, $2) ORDER BY severity DESC</code></pre></div>
+// Gera: WHERE ST_DWithin(location, $1, $2) ORDER BY severity DESC
+</code></pre>
 <p>PostGIS é a diferença entre um sistema GIS de verdade e um sistema que apenas armazena coordenadas. No SOS Location, ele é o coração de todas as decisões táticas.</p>
-            <footer class="post-author">
-              <p><strong>Autor:</strong> Hiro Matsumoto</p>
-            </footer>
-          </article>
-          
-    <aside class="sidebar-panel">
-      <h2 data-i18n="pages.post.metadata">Metadados</h2>
-      <div class="card-metrics"><span class="metric"><time datetime="2026-04-05T14:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
-      <div class="badge-list"><span class="badge">engineering</span><span class="badge">production</span></div>
-      <div class="tag-list"><span class="tag">gis</span><span class="tag">postgis</span><span class="tag">postgresql</span><span class="tag">spatial</span><span class="tag">backend</span></div>
-      <div class="sidebar-actions">
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener" data-i18n="actions.repo">repo</a>
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener" data-i18n="actions.code">code</a>
-      </div>
-    </aside>
-    
-        </section>
-    
-    <nav class="post-pager" aria-label="Navegação da publicação" data-i18n-aria-label="pages.post.navigation">
-      <a class="pager-link" href="/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/">← SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</a>
-      <a class="pager-link" href="/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/">SOS Location: Clean Architecture + CQRS em .NET 10 →</a>
-    </nav>
-    
-    
-      </main>
-      
-    <footer class="site-footer">
-      <div>
-        <p class="footer-label">nhmatsumoto-blog-engine</p>
-        <p>nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
-      </div>
-      <div class="footer-meta">
-        <div class="footer-pills"><span class="tag">clarity</span><span class="tag">depth</span><span class="tag">no distraction</span></div>
-        <div class="footer-pills"><span class="tag">engineering docs</span><span class="tag">light dashboards</span><span class="tag">structured README</span></div>
-      </div>
-    </footer>
-    
-    </div>
-    
-    <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
-      <div class="palette-backdrop" data-close-palette></div>
-      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
-        <div class="palette-head">
-          <input class="palette-input" type="search" placeholder="Buscar publicações, projetos e documentos" data-palette-input data-i18n-placeholder="palette.placeholder">
-          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">Fechar</button>
+            <nav class="post-pager"><a href="https://nhmatsumoto.github.io/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/">← SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</a> <a href="https://nhmatsumoto.github.io/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/">SOS Location: Clean Architecture + CQRS em .NET 10 →</a></nav>
+        </article>
+        
         </div>
-        <p class="palette-hint" data-i18n="palette.hint">Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.</p>
-        <ul class="palette-results" data-palette-results></ul>
-      </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <p>&copy; 2026 Hiro Matsumoto. nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
+                <p class="footer-meta" data-i18n="common.generated">Built with custom SSG v2.</p>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-modal">
+            <div class="search-header">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Search knowledge..." data-i18n-placeholder="actions.search_placeholder">
+                <button id="search-close" class="close-button">ESC</button>
+            </div>
+            <div id="search-results" class="search-results"></div>
+        </div>
     </div>
-    
-    <script id="site-i18n" type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "en-US"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語", "en-US": "English (US)"}, "aliases": {"pt": "pt-BR", "pt-br": "pt-BR", "pt-pt": "pt-PT", "ja": "ja-JP", "ja-jp": "ja-JP", "en": "en-US", "en-us": "en-US"}, "timezones": {"America/Sao_Paulo": "pt-BR", "America/Fortaleza": "pt-BR", "America/Manaus": "pt-BR"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "palette de comandos", "cta": "trabalho aberto / contato", "graph": "mapa cerebral", "language": "idioma", "language_action": "trocar idioma", "theme": "alternar tema"}, "palette": {"placeholder": "Buscar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal.", "brain_map_title": "Mapa cerebral vivo", "brain_map_copy": "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos.", "welcome_message": "SO de Conhecimento Técnico"}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Sistemas centrais", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap.", "flow_hint": "Clique em um nó para explorar. Nós conectados compartilham stack."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda."}, "actions": {"copy": "copiar", "copied": "copiado", "repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço", "view_project": "Ver projeto", "close": "Fechar"}, "status": {"research": "pesquisa", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento", "developer": "desenvolvedor"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grade"}}, "en-US": {"accessibility": {"skip_to_content": "Skip to content", "primary_navigation": "Primary navigation", "breadcrumbs": "You are here", "language_switcher": "Select language", "command_palette": "Command palette"}, "nav": {"home": "home", "posts": "posts", "projects": "projects", "documents": "documents", "about": "about", "search": "command palette", "cta": "open work / contact", "graph": "brain map", "language": "language", "language_action": "switch language", "theme": "toggle theme"}, "palette": {"placeholder": "Search posts, projects and documents", "close": "Close", "hint": "Use Ctrl/⌘ K to open, Enter to open first result and Esc to close.", "empty": "No results found."}, "home": {"highlight_main_project": "main project", "highlight_recent_article": "recent article"}, "sections": {"posts_title": "Recent posts", "posts_copy": "Articles with reading time, tags, badges and direct repository links when applicable.", "projects_title": "Core systems", "projects_copy": "Projects managed as long-term assets: architecture, stack, status, roadmap and support docs.", "documents_title": "Documentation system", "documents_copy": "Markdown notes organized by domain, architecture, agents and APIs, with versioning and agent-generated markers.", "about_copy": "The site is organized more like a codebase than a personal landing page.", "brain_map_title": "Living brain map", "brain_map_copy": "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain.", "welcome_message": "Technical Knowledge OS"}, "pages": {"archive": {"title": "All posts", "description": "Writing flow on architecture, experiments, domain modeling and operational heuristics."}, "projects": {"title": "Core systems", "description": "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap.", "flow_hint": "Click a node to explore. Connected nodes share stack."}, "documents": {"title": "Document system", "description": "Documents grouped by domain, architecture, agents and APIs to keep decisions accessible."}, "about": {"title": "Minimalist engineering notebook", "operating_model": "Operating model", "structure": "Structure", "next_steps": "Next steps", "future_frontend": "Future frontend options"}, "post": {"kicker": "post", "metadata": "Metadata", "back": "Back to posts", "copy_link": "Copy link", "navigation": "Post navigation", "newer_empty": "No newer posts", "older_empty": "No older posts"}, "project": {"kicker": "project", "status": "Status", "stack": "Stack", "actions": "Actions", "overview": "Overview", "problem_solution": "Problem and solution", "architecture": "Architecture", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "document", "meta": "Document metadata", "version": "Version", "category": "Category"}}, "common": {"preview": "preview", "content_in_preparation": "Content in preparation.", "agent_generated": "agent generated"}, "empty": {"posts": "No posts published yet.", "projects": "No projects available.", "documents": "No documents indexed yet."}, "actions": {"copy": "copy", "copied": "copied", "repo": "repo", "code": "code", "view_architecture": "view architecture", "view_code": "view code", "open_docs": "open docs", "link_copied": "Link copied", "copy_from_address": "Copy from address bar", "view_project": "View project", "close": "Close"}, "status": {"research": "research", "in_progress": "in progress", "production": "production"}, "kinds": {"home": "home", "about": "about", "post": "post", "project": "project", "document": "document", "developer": "developer"}, "templates": {"reading_time": "{minutes} min read"}, "view": {"list": "list", "grid": "grid", "navigation_kicker": "navigation", "navigation_title": "Sitemap & categories", "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories."}}}}</script>
-    <script src="/assets/blog.js" defer></script>
-    <script src="/assets/graphview.js" defer></script>
-    <script src="/assets/btree-view.js" defer></script>
-    
-  </body>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>lucide.createIcons();</script>
+    <script src="https://nhmatsumoto.github.io/assets/main.js" defer></script>
+</body>
 </html>

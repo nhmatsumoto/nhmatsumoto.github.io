@@ -140,6 +140,22 @@
       })
     }
 
+    repulse(others) {
+      const minDist = 120 // Distance threshold for repulsion
+      for (const other of others) {
+        if (other === this) continue
+        const dx = this.bx - other.bx
+        const dy = this.by - other.by
+        const d2 = dx*dx + dy*dy
+        if (d2 < minDist * minDist) {
+          const d = Math.sqrt(d2) || 1
+          const force = (minDist - d) / d * 0.02
+          this.bx += dx * force
+          this.by += dy * force
+        }
+      }
+    }
+
     draw(ctx, t, dimmed) {
       const alpha = dimmed ? 0.2 : 1
       const r = this.radius * this.scale
@@ -158,15 +174,35 @@
         ctx.stroke()
       }
 
+      // ── Neon Atmosphere (Dotted Rings) ─────────────────────────
+      const atmosAlpha = this.hover ? 0.35 : 0.15
+      ctx.setLineDash([2, 4])
+      ctx.strokeStyle = `${this.color}${Math.floor(atmosAlpha * 255).toString(16).padStart(2, '0')}`
+      ctx.lineWidth = 1
+      
+      // Rotating atmosphere rings
+      ctx.rotate(t * 0.2)
+      ctx.beginPath()
+      ctx.arc(0, 0, this.radius * 2.5, 0, Math.PI * 2)
+      ctx.stroke()
+      
+      ctx.rotate(-t * 0.4)
+      ctx.beginPath()
+      ctx.arc(0, 0, this.radius * 3.5, 0, Math.PI * 2)
+      ctx.stroke()
+      
+      ctx.setLineDash([])
+      ctx.rotate(t * 0.2) // Reset rotation
+
       // ── Outer glow ──────────────────────────────────────────────
       if (this.glow > 0.01) {
-        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, this.radius * 6)
-        const gAlpha = Math.floor(this.glow * 0.3 * alpha * 255).toString(16).padStart(2, '0')
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, this.radius * 7)
+        const gAlpha = Math.floor(this.glow * 0.4 * alpha * 255).toString(16).padStart(2, '0')
         g.addColorStop(0, `${this.color}${gAlpha}`)
         g.addColorStop(1, `${this.color}00`)
         ctx.fillStyle = g
         ctx.beginPath()
-        ctx.arc(0, 0, this.radius * 6, 0, Math.PI * 2)
+        ctx.arc(0, 0, this.radius * 7, 0, Math.PI * 2)
         ctx.fill()
       }
 
@@ -409,6 +445,7 @@
 
       // Nodes
       for (const n of nodes) {
+        n.repulse(nodes)
         n.update(t, mouseX, mouseY)
         n.draw(ctx, t, selected && selected !== n)
       }

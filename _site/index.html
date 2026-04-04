@@ -1,295 +1,189 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
-  <head>
+<html lang="pt-BR">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <title>nhmatsumoto-blog-engine | Technical Knowledge OS</title>
+    <title>nhmatsumoto-blog-engine</title>
     <meta name="description" content="Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/">
-    <link rel="stylesheet" href="/assets/styles.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        lucide.createIcons();
-      });
-    </script>
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/index.css">
     
-  </head>
-  <body class="page-home" data-has-math="false" data-default-locale="pt-BR">
-    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
+    <script src="https://nhmatsumoto.github.io/assets/i18n-engine.js" defer></script>
     
-    
-    <nav class="nav-shell" data-nav-shell>
-      <div class="nav-brand">
-        <a class="nav-title" href="/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
-      </div>
-
-      <div class="nav-menu desktop-only">
-        <a class="nav-pill" href="/publications/"  data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
-      </div>
-
-      <div class="nav-actions">
-        <div class="nav-divider desktop-only"></div>
-        <button class="nav-button" type="button" data-open-palette aria-label="palette de comandos">
-          <i data-lucide="search"></i>
-        </button>
-        <button class="nav-button" type="button" data-theme-toggle aria-label="Toggle theme">
-          <i data-lucide="moon" class="theme-icon-moon"></i>
-          <i data-lucide="sun" class="theme-icon-sun hidden"></i>
-        </button>
-        <button class="nav-button mobile-only" type="button" data-nav-toggle aria-label="Toggle menu">
-          <i data-lucide="menu" class="nav-icon-menu"></i>
-          <i data-lucide="x" class="nav-icon-close hidden"></i>
-        </button>
-      </div>
-
-      <div class="nav-drawer" data-nav-menu hidden>
-        <div class="drawer-backdrop" data-nav-toggle></div>
-        <div class="drawer-content">
-          <div class="drawer-header">
-            <span class="nav-title"><span class="brand-accent">NHM</span>ATSUMOTO</span>
-            <button class="nav-button" type="button" data-nav-toggle>
-              <i data-lucide="x"></i>
-            </button>
-          </div>
-          <div class="drawer-links">
-            <a class="nav-pill" href="/publications/"  data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
-          </div>
-          <div class="drawer-footer">
-            <div class="drawer-social">
-              <a class="drawer-social-link" href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github"></i><span>GitHub</span></a><a class="drawer-social-link" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i><span>LinkedIn</span></a>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body class="page-home">
+    <header class="main-nav">
+        <div class="nav-container">
+            <a href="https://nhmatsumoto.github.io/" class="nav-brand">
+                <span class="brand-glyph">TK</span>
+                <span class="brand-name">OS.</span>
+            </a>
+            <nav class="nav-menu">
+                <a class="nav-link active" href="https://nhmatsumoto.github.io/" aria-current="page" data-i18n="nav.home">início</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/documents/" data-i18n="nav.documents">documentos</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/about/" data-i18n="nav.about">sobre</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="icon-button" id="search-toggle" aria-label="Search" data-i18n-aria-label="actions.search">
+                   <i data-lucide="search"></i>
+                </button>
+                <div class="locale-selector">
+                    <button class="icon-button" id="locale-toggle" aria-label="Language">
+                        <i data-lucide="languages"></i>
+                    </button>
+                    <div class="locale-dropdown" id="locale-dropdown">
+                        <button class="locale-option" data-locale="pt-BR">Português (Brasil)</button>
+<button class="locale-option" data-locale="en-US">English (US)</button>
+                    </div>
+                </div>
             </div>
-          </div>
+            <button class="mobile-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
         </div>
-      </div>
-    </nav>
-    
+    </header>
 
-    <div class="site-shell">
-      <main class="site-main" id="content">
+    <main id="content">
+        <div class="content-container">
+            
+        <section class="home-hero">
+            <h1 class="hero-title">building scalable systems and autonomous agents</h1>
+            <p class="hero-intro">Este espaço agora funciona como um sistema vivo de documentação técnica: posts, projetos, ADRs e notas operacionais compartilhando a mesma superfície.
+
+O objetivo é clareza com profundidade. Tudo continua simples no deploy, mas a experiência passa a refletir o tipo de software que construo: sistemas distribuídos, agentes, GIS e arquitetura orientada a domínio.
+</p>
+        </section>
         
-    
-    <section class="hero-panel">
-      <div class="hero-copy">
-        <p class="hero-eyebrow">nhmatsumoto-blog-engine</p>
-        <h1 class="hero-title" data-i18n="sections.welcome_message">
-          building scalable systems and autonomous agents
-        </h1>
-        <p class="hero-description">
-          Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva.
-        </p>
-        <div class="hero-pills">
-          <span class="hero-pill">focus</span><span class="hero-pill">precision</span><span class="hero-pill">technical depth</span>
-        </div>
+        <div class="home-grid">
+            <section class="home-posts">
+                <h2 class="section-title" data-i18n="nav.posts">publicações</h2>
+                <div class="posts-list">
+    <div class="post-item">
+      <div class="post-item-meta">
+        <time datetime="2026-04-05T15:00:00+09:00">05 abr 2026</time>
+        <div class="tag-list"><span class="tag-item">#ml</span></div>
       </div>
-      <div class="hero-highlights">
-        <article class="highlight-card profile-card">
-      <p class="card-type" data-i18n="kinds.developer">desenvolvedor</p>
-      <div class="profile-identity">
-        <div class="profile-avatar-block">
-          <div class="profile-initials">HI</div>
+      <h3 class="post-item-title"><a href="https://nhmatsumoto.github.io/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/">SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</a></h3>
+      <p class="post-item-summary">O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.</p>
+    </div>
+    
+    <div class="post-item">
+      <div class="post-item-meta">
+        <time datetime="2026-04-05T14:00:00+09:00">05 abr 2026</time>
+        <div class="tag-list"><span class="tag-item">#gis</span></div>
+      </div>
+      <h3 class="post-item-title"><a href="https://nhmatsumoto.github.io/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/">SOS Location: PostGIS e inteligência espacial para resposta a desastres</a></h3>
+      <p class="post-item-summary">PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.</p>
+    </div>
+    
+    <div class="post-item">
+      <div class="post-item-meta">
+        <time datetime="2026-04-05T13:00:00+09:00">05 abr 2026</time>
+        <div class="tag-list"><span class="tag-item">#dotnet</span></div>
+      </div>
+      <h3 class="post-item-title"><a href="https://nhmatsumoto.github.io/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/">SOS Location: Clean Architecture + CQRS em .NET 10</a></h3>
+      <p class="post-item-summary">Arquitetura limpa, CQRS com MediatR e domain events no backend do SOS Location. Como estruturamos o código para resiliência em cenários de crise.</p>
+    </div>
+    
+    <div class="post-item">
+      <div class="post-item-meta">
+        <time datetime="2026-04-05T12:00:00+09:00">05 abr 2026</time>
+        <div class="tag-list"><span class="tag-item">#webgl</span></div>
+      </div>
+      <h3 class="post-item-title"><a href="https://nhmatsumoto.github.io/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/">SOS Location: Motor WebGL 3D de visualização de cidades em tempo real</a></h3>
+      <p class="post-item-summary">Como construímos um motor WebGL 2.0 com Three.js para renderizar cidades completas com terreno, edificações 3D e camadas de desastre ao vivo.</p>
+    </div>
+    
+    <div class="post-item">
+      <div class="post-item-meta">
+        <time datetime="2026-04-05T11:00:00+09:00">05 abr 2026</time>
+        <div class="tag-list"><span class="tag-item">#gis</span></div>
+      </div>
+      <h3 class="post-item-title"><a href="https://nhmatsumoto.github.io/publications/2026-04-05-1100-sos-location-stack/">SOS Location: Tecnologias, ferramentas e exemplos</a></h3>
+      <p class="post-item-summary">Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location.</p>
+    </div>
+    
+    <div class="post-item">
+      <div class="post-item-meta">
+        <time datetime="2026-04-05T10:00:00+09:00">05 abr 2026</time>
+        <div class="tag-list"><span class="tag-item">#gis</span></div>
+      </div>
+      <h3 class="post-item-title"><a href="https://nhmatsumoto.github.io/publications/2026-04-05-1000-sos-location-flow-architecture/">SOS Location: Fluxos, arquitetura e diagramas</a></h3>
+      <p class="post-item-summary">Descrição dos pipelines do SOS Location, diagramas e exemplos de código.</p>
+    </div>
+    </div>
+                <div class="section-actions">
+                    <a href="https://nhmatsumoto.github.io/publications/" class="subtle-link" data-i18n="actions.view_all_posts">Ver todas as publicações →</a>
+                </div>
+            </section>
+            
+            <aside class="home-sidebar">
+                <section class="home-projects">
+                    <h2 class="section-title" data-i18n="nav.projects">projetos</h2>
+                    <div class="projects-featured-list">
+    <div class="project-featured-card">
+      <div class="project-card-header">
+        <span class="status-badge status-research" data-i18n="status.research">pesquisa</span>
+        <h3 class="project-card-title"><a href="https://nhmatsumoto.github.io/projects/sos-location/">SOS Location</a></h3>
+      </div>
+      <p class="project-card-summary">Open-source platform for monitoring, mapping, and coordinating natural disaster response.</p>
+      <div class="stack-list"><span class="stack-item">TypeScript</span><span class="stack-item">Node.js</span><span class="stack-item">GIS</span></div>
+    </div>
+    </div>
+                </section>
+                
+    <div class="developer-profile">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <span class="avatar-initials">H</span>
         </div>
         <div class="profile-info">
-          <h2 class="profile-name">Hiro Matsumoto</h2>
-          <span class="profile-handle">@nhmatsumoto</span>
+          <p class="profile-name">Hiro Matsumoto</p>
+          <p class="profile-role" data-i18n="common.role">Technical Architecture & Engineering</p>
         </div>
       </div>
-      <p class="profile-role">Software Engineer</p>
-      <p class="profile-location"><i data-lucide="map-pin"></i>Brasil / Remote</p>
-      <div class="stack-list"><span class="stack-chip">c#</span><span class="stack-chip">.net</span><span class="stack-chip">distributed systems</span><span class="stack-chip">ai agents</span><span class="stack-chip">gis</span></div>
-      <div class="profile-social"><a class="profile-social-link" href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github"></i><span>GitHub</span><i data-lucide="arrow-up-right" class="link-arrow"></i></a> <a class="profile-social-link" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i><span>LinkedIn</span><i data-lucide="arrow-up-right" class="link-arrow"></i></a></div>
-    </article><article class="highlight-card h-full">
-              <p class="card-type" data-i18n="home.highlight_main_project">projeto principal</p>
-              <h2 class="text-3xl font-bold tracking-tighter mb-2"><a href="/projects/sos-location/">SOS Location</a></h2>
-              <p class="text-muted text-sm leading-relaxed">Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real.</p>
-              <div class="mt-auto pt-4 flex gap-2">
-                <div class="stack-list"><span class="stack-chip">TypeScript</span><span class="stack-chip">Node.js</span><span class="stack-chip">GIS</span></div>
-              </div>
-            </article><article class="highlight-card h-full">
-              <p class="card-type" data-i18n="home.highlight_recent_article">artigo recente</p>
-              <h2 class="text-3xl font-bold tracking-tighter mb-2"><a href="/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/">Daniel Kahneman: Rápido e Devagar - A Economia Comportamental</a></h2>
-              <p class="text-muted text-sm leading-relaxed">Uma homenagem ao psicólogo que ganhou o Nobel de Economia ao provar que o ser humano não é tão racional quanto gosta de acreditar.</p>
-              <div class="mt-auto pt-4 flex items-center justify-between">
-                <time datetime="2026-04-03T15:00:00+09:00" data-localize-date="short">03 abr 2026</time>
-                <span class="text-xs font-mono opacity-50">1m</span>
-              </div>
-            </article>
+      <div class="profile-links">
+        <a href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener">GitHub</a>
       </div>
-    </section>
+    </div>
     
-    
-    <section class="section-panel navigation-grid" aria-labelledby="nav-grid-title">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="sections.navigation_kicker">navegação</p>
-          <h2 id="nav-grid-title" data-i18n="sections.navigation_title">Sitemap e categorias</h2>
+            </aside>
         </div>
-        <p data-i18n="sections.navigation_copy">Links diretos para publicações, projetos, documentos e categorias mais relevantes.</p>
-      </header>
-      <div class="navigation-grid-links">
-        <a class="nav-link" href="/publications/" data-i18n="nav.posts">publicações</a>
-<a class="nav-link" href="/projects/" data-i18n="nav.projects">projetos</a>
-<a class="nav-link" href="/documents/" data-i18n="nav.documents">documentos</a>
-<a class="nav-link" href="/about/" data-i18n="nav.about">sobre</a>
-<a class="nav-link" href="/documents/?category=agents" data-i18n="sections.category_agents">category agents</a>
-<a class="nav-link" href="/documents/?category=apis" data-i18n="sections.category_apis">category apis</a>
-<a class="nav-link" href="/documents/?category=architecture" data-i18n="sections.category_architecture">category architecture</a>
-<a class="nav-link" href="/documents/?category=domain" data-i18n="sections.category_domain">category domain</a>
-      </div>
-    </section>
-    
-    
-    <section class="section-panel" aria-labelledby="pubs-title">
-      <header class="section-header">
-        <p class="section-kicker" data-i18n="nav.posts">publicações</p>
-        <h2 id="pubs-title" data-i18n="sections.publications_title">Technical Knowledge OS</h2>
-        <p class="section-copy" data-i18n="sections.publications_copy">Unified stream of architecture documents, technical articles and research notes.</p>
-      </header>
-      <div class="publications-grid">
-        <p class="empty-state">No publications found.</p>
-      </div>
-    </section>
-    
-    
-    <section class="section-panel brain-map-panel" aria-labelledby="brain-map-title">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="nav.graph">mapa cerebral</p>
-          <h2 id="brain-map-title" data-i18n="sections.brain_map_title">Mapa cerebral vivo</h2>
+        
         </div>
-        <p data-i18n="sections.brain_map_copy">Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos.</p>
-      </header>
-      <div class="brain-map-shell">
-        <div class="brain-map-links" aria-label="Mapa cerebral">
-          <a class="brain-map-link" href="/projects/" data-i18n="nav.projects">projetos</a><a class="brain-map-link" href="/publications/" data-i18n="nav.posts">publicações</a><a class="brain-map-link" href="/documents/" data-i18n="nav.documents">documentos</a><a class="brain-map-link" href="/about/" data-i18n="nav.about">sobre</a>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <p>&copy; 2026 Hiro Matsumoto. nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
+                <p class="footer-meta" data-i18n="common.generated">Built with custom SSG v2.</p>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
         </div>
-        <div class="brain-map-canvas" data-knowledge-graph data-brain-map data-full-screen="false"></div>
-      </div>
-    </section>
-    
-    
-    <section class="section-panel" aria-labelledby="projects-title">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="nav.projects">projetos</p>
-          <h2 id="projects-title" data-i18n="sections.projects_title">Sistemas centrais</h2>
-        </div>
-        <p class="section-copy" data-i18n="sections.projects_copy">Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.</p>
-      </header>
-      <ol class="resource-list project-collection">
-        <li>
-      <article class="resource-card project-card">
-        <header class="card-headline">
-          <span class="card-type" data-i18n="kinds.project">projeto</span>
-          <div class="card-state"><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></div>
-        </header>
-        <div class="card-content">
-          <h3><a href="/projects/sos-location/">SOS Location</a></h3>
-          <p class="card-summary">Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real.</p>
-          <div class="stack-list"><span class="stack-chip">TypeScript</span><span class="stack-chip">Node.js</span><span class="stack-chip">GIS</span><span class="stack-chip">Event-Driven</span></div>
-          <div class="badge-list"><span class="badge">social-good</span><span class="badge">gis</span><span class="badge">open-source</span></div>
-          <div class="card-preview"><code>ingest -&gt; normalize -&gt; geocode
-   |         |          |
-events -&gt; risk map -&gt; ops view</code></div>
-        </div>
-      </article>
-    </li>
-<li>
-      <article class="resource-card project-card">
-        <header class="card-headline">
-          <span class="card-type" data-i18n="kinds.project">projeto</span>
-          <div class="card-state"><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></div>
-        </header>
-        <div class="card-content">
-          <h3><a href="/projects/splitcosts/">SplitCosts</a></h3>
-          <p class="card-summary">Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional.</p>
-          <div class="stack-list"><span class="stack-chip">.NET</span><span class="stack-chip">React</span><span class="stack-chip">PostgreSQL</span><span class="stack-chip">multi-tenant architecture</span></div>
-          <div class="badge-list"><span class="badge">production</span><span class="badge">architecture</span></div>
-          <div class="card-preview"><code>api -&gt; domain -&gt; projections
- |       |          |
-ui &lt;-- tenancy --&gt; db</code></div>
-        </div>
-      </article>
-    </li>
-<li>
-      <article class="resource-card project-card">
-        <header class="card-headline">
-          <span class="card-type" data-i18n="kinds.project">projeto</span>
-          <div class="card-state"><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></div>
-        </header>
-        <div class="card-content">
-          <h3><a href="/projects/gis-incident-lab/">GIS Incident Lab</a></h3>
-          <p class="card-summary">Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta.</p>
-          <div class="stack-list"><span class="stack-chip">Python</span><span class="stack-chip">.NET</span><span class="stack-chip">GIS</span><span class="stack-chip">event-driven services</span></div>
-          <div class="badge-list"><span class="badge">production</span></div>
-          <div class="card-preview"><code>ingest -&gt; normalize -&gt; geocode
-   |         |          |
-events -&gt; risk map -&gt; ops view</code></div>
-        </div>
-      </article>
-    </li>
-      </ol>
-    </section>
-    
-    
-    <section class="section-panel about-teaser" aria-labelledby="about-title">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="nav.about">sobre</p>
-          <h2 id="about-title">a living technical documentation system</h2>
-        </div>
-        <p class="section-copy" data-i18n="sections.about_copy">O site é organizado mais como uma base de código do que como uma landing page pessoal.</p>
-      </header>
-      <div class="about-grid">
-        <pre class="tree-block"><code>/blog/posts
-/blog/projects
-/blog/docs
-/blog/components
-/blog/domain
-/blog/application
-/blog/infra</code></pre>
-        <ul class="next-step-list"><li>generate react + tailwind template</li><li>create mdx structure</li><li>integrate with agent system</li></ul>
-      </div>
-    </section>
-    
-    
-      </main>
-      
-    <footer class="site-footer">
-      <div>
-        <p class="footer-label">nhmatsumoto-blog-engine</p>
-        <p>nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
-      </div>
-      <div class="footer-meta">
-        <div class="footer-pills"><span class="tag">clarity</span><span class="tag">depth</span><span class="tag">no distraction</span></div>
-        <div class="footer-pills"><span class="tag">engineering docs</span><span class="tag">light dashboards</span><span class="tag">structured README</span></div>
-      </div>
     </footer>
-    
-    </div>
-    
-    <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
-      <div class="palette-backdrop" data-close-palette></div>
-      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
-        <div class="palette-head">
-          <input class="palette-input" type="search" placeholder="Buscar publicações, projetos e documentos" data-palette-input data-i18n-placeholder="palette.placeholder">
-          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">Fechar</button>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-modal">
+            <div class="search-header">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Search knowledge..." data-i18n-placeholder="actions.search_placeholder">
+                <button id="search-close" class="close-button">ESC</button>
+            </div>
+            <div id="search-results" class="search-results"></div>
         </div>
-        <p class="palette-hint" data-i18n="palette.hint">Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.</p>
-        <ul class="palette-results" data-palette-results></ul>
-      </div>
     </div>
-    
-    <script id="site-i18n" type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "en-US"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語", "en-US": "English (US)"}, "aliases": {"pt": "pt-BR", "pt-br": "pt-BR", "pt-pt": "pt-PT", "ja": "ja-JP", "ja-jp": "ja-JP", "en": "en-US", "en-us": "en-US"}, "timezones": {"America/Sao_Paulo": "pt-BR", "America/Fortaleza": "pt-BR", "America/Manaus": "pt-BR"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "palette de comandos", "cta": "trabalho aberto / contato", "graph": "mapa cerebral", "language": "idioma", "language_action": "trocar idioma", "theme": "alternar tema"}, "palette": {"placeholder": "Buscar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal.", "brain_map_title": "Mapa cerebral vivo", "brain_map_copy": "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos.", "welcome_message": "SO de Conhecimento Técnico"}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Sistemas centrais", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap.", "flow_hint": "Clique em um nó para explorar. Nós conectados compartilham stack."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda."}, "actions": {"copy": "copiar", "copied": "copiado", "repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço", "view_project": "Ver projeto", "close": "Fechar"}, "status": {"research": "pesquisa", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento", "developer": "desenvolvedor"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grade"}}, "en-US": {"accessibility": {"skip_to_content": "Skip to content", "primary_navigation": "Primary navigation", "breadcrumbs": "You are here", "language_switcher": "Select language", "command_palette": "Command palette"}, "nav": {"home": "home", "posts": "posts", "projects": "projects", "documents": "documents", "about": "about", "search": "command palette", "cta": "open work / contact", "graph": "brain map", "language": "language", "language_action": "switch language", "theme": "toggle theme"}, "palette": {"placeholder": "Search posts, projects and documents", "close": "Close", "hint": "Use Ctrl/⌘ K to open, Enter to open first result and Esc to close.", "empty": "No results found."}, "home": {"highlight_main_project": "main project", "highlight_recent_article": "recent article"}, "sections": {"posts_title": "Recent posts", "posts_copy": "Articles with reading time, tags, badges and direct repository links when applicable.", "projects_title": "Core systems", "projects_copy": "Projects managed as long-term assets: architecture, stack, status, roadmap and support docs.", "documents_title": "Documentation system", "documents_copy": "Markdown notes organized by domain, architecture, agents and APIs, with versioning and agent-generated markers.", "about_copy": "The site is organized more like a codebase than a personal landing page.", "brain_map_title": "Living brain map", "brain_map_copy": "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain.", "welcome_message": "Technical Knowledge OS"}, "pages": {"archive": {"title": "All posts", "description": "Writing flow on architecture, experiments, domain modeling and operational heuristics."}, "projects": {"title": "Core systems", "description": "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap.", "flow_hint": "Click a node to explore. Connected nodes share stack."}, "documents": {"title": "Document system", "description": "Documents grouped by domain, architecture, agents and APIs to keep decisions accessible."}, "about": {"title": "Minimalist engineering notebook", "operating_model": "Operating model", "structure": "Structure", "next_steps": "Next steps", "future_frontend": "Future frontend options"}, "post": {"kicker": "post", "metadata": "Metadata", "back": "Back to posts", "copy_link": "Copy link", "navigation": "Post navigation", "newer_empty": "No newer posts", "older_empty": "No older posts"}, "project": {"kicker": "project", "status": "Status", "stack": "Stack", "actions": "Actions", "overview": "Overview", "problem_solution": "Problem and solution", "architecture": "Architecture", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "document", "meta": "Document metadata", "version": "Version", "category": "Category"}}, "common": {"preview": "preview", "content_in_preparation": "Content in preparation.", "agent_generated": "agent generated"}, "empty": {"posts": "No posts published yet.", "projects": "No projects available.", "documents": "No documents indexed yet."}, "actions": {"copy": "copy", "copied": "copied", "repo": "repo", "code": "code", "view_architecture": "view architecture", "view_code": "view code", "open_docs": "open docs", "link_copied": "Link copied", "copy_from_address": "Copy from address bar", "view_project": "View project", "close": "Close"}, "status": {"research": "research", "in_progress": "in progress", "production": "production"}, "kinds": {"home": "home", "about": "about", "post": "post", "project": "project", "document": "document", "developer": "developer"}, "templates": {"reading_time": "{minutes} min read"}, "view": {"list": "list", "grid": "grid", "navigation_kicker": "navigation", "navigation_title": "Sitemap & categories", "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories."}}}}</script>
-    <script src="/assets/blog.js" defer></script>
-    <script src="/assets/graphview.js" defer></script>
-    <script src="/assets/btree-view.js" defer></script>
-    
-  </body>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>lucide.createIcons();</script>
+    <script src="https://nhmatsumoto.github.io/assets/main.js" defer></script>
+</body>
 </html>

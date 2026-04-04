@@ -4,26 +4,6 @@
     "pt-BR",
     "en-US"
   ],
-  "languageNames": {
-    "pt-BR": "Português (Brasil)",
-    "pt-PT": "Português",
-    "ja-JP": "日本語",
-    "en-US": "English (US)"
-  },
-  "aliases": {
-    "pt": "pt-BR",
-    "pt-br": "pt-BR",
-    "pt-pt": "pt-PT",
-    "ja": "ja-JP",
-    "ja-jp": "ja-JP",
-    "en": "en-US",
-    "en-us": "en-US"
-  },
-  "timezones": {
-    "America/Sao_Paulo": "pt-BR",
-    "America/Fortaleza": "pt-BR",
-    "America/Manaus": "pt-BR"
-  },
   "strings": {
     "pt-BR": {
       "accessibility": {

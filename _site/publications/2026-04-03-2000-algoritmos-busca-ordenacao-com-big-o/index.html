@@ -1,170 +1,121 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
-  <head>
+<html lang="pt-BR">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <title>Algoritmos e Big O: Entendendo a Eficiência do Código | nhmatsumoto-blog-engine</title>
     <meta name="description" content="Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/">
-    <link rel="stylesheet" href="/assets/styles.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-        lucide.createIcons();
-      });
-    </script>
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/index.css">
     
     <meta name="x-asciimath-inline" content="%%">
     <meta name="x-asciimath-block" content="%%%">
-    <meta name="x-asciimath-script" content="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" async></script>
     
-  </head>
-  <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
-    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
+    <script src="https://nhmatsumoto.github.io/assets/i18n-engine.js" defer></script>
     
-    
-    <nav class="nav-shell" data-nav-shell>
-      <div class="nav-brand">
-        <a class="nav-title" href="/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
-      </div>
-
-      <div class="nav-menu desktop-only">
-        <a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
-      </div>
-
-      <div class="nav-actions">
-        <div class="nav-divider desktop-only"></div>
-        <button class="nav-button" type="button" data-open-palette aria-label="palette de comandos">
-          <i data-lucide="search"></i>
-        </button>
-        <button class="nav-button" type="button" data-theme-toggle aria-label="Toggle theme">
-          <i data-lucide="moon" class="theme-icon-moon"></i>
-          <i data-lucide="sun" class="theme-icon-sun hidden"></i>
-        </button>
-        <button class="nav-button mobile-only" type="button" data-nav-toggle aria-label="Toggle menu">
-          <i data-lucide="menu" class="nav-icon-menu"></i>
-          <i data-lucide="x" class="nav-icon-close hidden"></i>
-        </button>
-      </div>
-
-      <div class="nav-drawer" data-nav-menu hidden>
-        <div class="drawer-backdrop" data-nav-toggle></div>
-        <div class="drawer-content">
-          <div class="drawer-header">
-            <span class="nav-title"><span class="brand-accent">NHM</span>ATSUMOTO</span>
-            <button class="nav-button" type="button" data-nav-toggle>
-              <i data-lucide="x"></i>
-            </button>
-          </div>
-          <div class="drawer-links">
-            <a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
-          </div>
-          <div class="drawer-footer">
-            <div class="drawer-social">
-              <a class="drawer-social-link" href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github"></i><span>GitHub</span></a><a class="drawer-social-link" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i><span>LinkedIn</span></a>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body class="page-post">
+    <header class="main-nav">
+        <div class="nav-container">
+            <a href="https://nhmatsumoto.github.io/" class="nav-brand">
+                <span class="brand-glyph">TK</span>
+                <span class="brand-name">OS.</span>
+            </a>
+            <nav class="nav-menu">
+                <a class="nav-link" href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a>
+<a class="nav-link active" href="https://nhmatsumoto.github.io/publications/" aria-current="page" data-i18n="nav.posts">publicações</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/projects/" data-i18n="nav.projects">projetos</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/documents/" data-i18n="nav.documents">documentos</a>
+<a class="nav-link" href="https://nhmatsumoto.github.io/about/" data-i18n="nav.about">sobre</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="icon-button" id="search-toggle" aria-label="Search" data-i18n-aria-label="actions.search">
+                   <i data-lucide="search"></i>
+                </button>
+                <div class="locale-selector">
+                    <button class="icon-button" id="locale-toggle" aria-label="Language">
+                        <i data-lucide="languages"></i>
+                    </button>
+                    <div class="locale-dropdown" id="locale-dropdown">
+                        <button class="locale-option" data-locale="pt-BR">Português (Brasil)</button>
+<button class="locale-option" data-locale="en-US">English (US)</button>
+                    </div>
+                </div>
             </div>
-          </div>
+            <button class="mobile-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
         </div>
-      </div>
-    </nav>
-    
+    </header>
 
-    <div class="site-shell">
-      <main class="site-main" id="content">
-        
-    <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Algoritmos e Big O: Entendendo a Eficiência do Código</span></li></ol></nav>
-        <section class="page-grid">
-          <article class="post-shell prose">
+    <main id="content">
+        <div class="content-container">
+            
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a> / <a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a> / <span>Algoritmos e Big O: Entendendo a Eficiência do Código</span></nav>
+        <article class="post-shell prose">
             <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
-              <h1>Algoritmos e Big O: Entendendo a Eficiência do Código</h1>
-              <p class="post-summary">Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade.</p>
-              <div class="post-meta">
-                <time datetime="2026-04-03T17:00:00+09:00" data-localize-date="long">3 de abril de 2026</time>
-                <span data-reading-time="1">1 min de leitura</span>
-              </div>
-              <div class="post-actions">
-                <a class="subtle-button" href="/publications/" data-i18n="pages.post.back">Voltar para publicações</a>
-                <button class="subtle-button" type="button" data-copy-link data-i18n="pages.post.copy_link">Copiar link</button>
-              </div>
+                <h1>Algoritmos e Big O: Entendendo a Eficiência do Código</h1>
+                <div class="post-meta"><time datetime="2026-04-03T17:00:00+09:00">3 de abril de 2026</time></div>
             </header>
             <p>Escrever código que funciona é o primeiro passo. Escrever código que escala é o segundo. A notação <strong>Big O</strong> é a linguagem que usamos para descrever quão rápido um algoritmo cresce à medida que os dados aumentam.</p>
 <h2>O Que é Notação Big O?</h2>
 <p>O Big O foca no <strong>pior cenário</strong>. Ele ignora constantes e foca na curva de crescimento.</p>
-<ul><li><strong>O(1)</strong> - Constante: O tempo não muda (ex: acessar um item em um array pelo índice).</li><li><strong>O(log n)</strong> - Logarítmico: A eficiência máxima (ex: Busca Binária).</li><li><strong>O(n)</strong> - Linear: O tempo cresce proporcionalmente aos dados (ex: percorrer uma lista).</li><li><strong>O(n log n)</strong> - Linearitmo: O padrão para ordenação eficiente (ex: Merge Sort, Quick Sort).</li><li><strong>O(n^2)</strong> - Quadrático: O perigo dos loops aninhados.</li></ul>
-<div class="mermaid">graph TD
-    A[O(1) - Excelente] --> B[O(log n) - Muito Bom]
-    B --> C[O(n) - Justo]
-    C --> D[O(n log n) - Razoável]
-    D --> E[O(n^2) - Ruim]
-    E --> F[O(2^n) - Horrível]</div>
+<ul>
+<li>**O(1)** - Constante: O tempo não muda (ex: acessar um item em um array pelo índice).</li>
+<li>**O(log n)** - Logarítmico: A eficiência máxima (ex: Busca Binária).</li>
+<li>**O(n)** - Linear: O tempo cresce proporcionalmente aos dados (ex: percorrer uma lista).</li>
+<li>**O(n log n)** - Linearitmo: O padrão para ordenação eficiente (ex: Merge Sort, Quick Sort).</li>
+<li>**O(n^2)** - Quadrático: O perigo dos loops aninhados.</li>
+</ul>
+<pre class="glass-terminal" data-lang="mermaid"><code>
+graph TD
+    A[O(1) - Excelente] --&gt; B[O(log n) - Muito Bom]
+    B --&gt; C[O(n) - Justo]
+    C --&gt; D[O(n log n) - Razoável]
+    D --&gt; E[O(n^2) - Ruim]
+    E --&gt; F[O(2^n) - Horrível]
+</code></pre>
 <h3>Busca Binária: A Mágica do Logaritmo</h3>
 <p>Imagine procurar um nome em uma lista telefônica de 1 milhão de páginas. Uma busca linear (página por página) levaria até 1 milhão de passos. Uma <strong>Busca Binária</strong> (dividindo ao meio) levaria apenas <strong>20 passos</strong>.</p>
 <h3>Por que se Importar?</h3>
 <p>Em sistemas com poucos dados, qualquer algoritmo serve. Mas em sistemas de produção com milhões de registros, a diferença entre O(n) e O(n^2) é a diferença entre uma resposta instantânea e um servidor travado.</p>
 <h2>Conclusão</h2>
 <p>Entender complexidade de algoritmos transforma você de um &quot;escritor de código&quot; em um &quot;engenheiro de software&quot;. Antes de cada loop, pergunte-se: &quot;Qual é o Big O disso?&quot;.</p>
-            <footer class="post-author">
-              <p><strong>Autor:</strong> Hiro Matsumoto</p>
-            </footer>
-          </article>
-          
-    <aside class="sidebar-panel">
-      <h2 data-i18n="pages.post.metadata">Metadados</h2>
-      <div class="card-metrics"><span class="metric"><time datetime="2026-04-03T17:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
-      <div class="badge-list"><span class="badge">computer-science</span><span class="badge">efficiency</span><span class="badge">foundations</span></div>
-      <div class="tag-list"><span class="tag">algoritmos</span><span class="tag">computacao</span><span class="tag">big-o</span><span class="tag">performance</span></div>
-      <div class="sidebar-actions">
-        <a class="sidebar-link" href="" target="_blank" rel="noopener" data-i18n="actions.repo">repo</a>
-        <a class="sidebar-link" href="" target="_blank" rel="noopener" data-i18n="actions.code">code</a>
-      </div>
-    </aside>
-    
-        </section>
-    
-    <nav class="post-pager" aria-label="Navegação da publicação" data-i18n-aria-label="pages.post.navigation">
-      <a class="pager-link" href="/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/">← Excelência em Dados: Pilhas, Filas e Árvores</a>
-      <a class="pager-link" href="/publications/2026-04-03-1600-sistemas-orientados-a-filas/">Resiliência e Escala: Sistemas orientados a Filas de Mensageria →</a>
-    </nav>
-    
-    
-      </main>
-      
-    <footer class="site-footer">
-      <div>
-        <p class="footer-label">nhmatsumoto-blog-engine</p>
-        <p>nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
-      </div>
-      <div class="footer-meta">
-        <div class="footer-pills"><span class="tag">clarity</span><span class="tag">depth</span><span class="tag">no distraction</span></div>
-        <div class="footer-pills"><span class="tag">engineering docs</span><span class="tag">light dashboards</span><span class="tag">structured README</span></div>
-      </div>
-    </footer>
-    
-    </div>
-    
-    <div class="palette-shell" hidden data-command-palette data-search-index="/assets/search-index.json">
-      <div class="palette-backdrop" data-close-palette></div>
-      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
-        <div class="palette-head">
-          <input class="palette-input" type="search" placeholder="Buscar publicações, projetos e documentos" data-palette-input data-i18n-placeholder="palette.placeholder">
-          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">Fechar</button>
+            <nav class="post-pager"><a href="https://nhmatsumoto.github.io/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/">← Excelência em Dados: Pilhas, Filas e Árvores</a> <a href="https://nhmatsumoto.github.io/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/">Daniel Kahneman: Rápido e Devagar - A Economia Comportamental →</a></nav>
+        </article>
+        
         </div>
-        <p class="palette-hint" data-i18n="palette.hint">Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.</p>
-        <ul class="palette-results" data-palette-results></ul>
-      </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <p>&copy; 2026 Hiro Matsumoto. nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
+                <p class="footer-meta" data-i18n="common.generated">Built with custom SSG v2.</p>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-modal">
+            <div class="search-header">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Search knowledge..." data-i18n-placeholder="actions.search_placeholder">
+                <button id="search-close" class="close-button">ESC</button>
+            </div>
+            <div id="search-results" class="search-results"></div>
+        </div>
     </div>
-    
-    <script id="site-i18n" type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "en-US"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語", "en-US": "English (US)"}, "aliases": {"pt": "pt-BR", "pt-br": "pt-BR", "pt-pt": "pt-PT", "ja": "ja-JP", "ja-jp": "ja-JP", "en": "en-US", "en-us": "en-US"}, "timezones": {"America/Sao_Paulo": "pt-BR", "America/Fortaleza": "pt-BR", "America/Manaus": "pt-BR"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "palette de comandos", "cta": "trabalho aberto / contato", "graph": "mapa cerebral", "language": "idioma", "language_action": "trocar idioma", "theme": "alternar tema"}, "palette": {"placeholder": "Buscar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal.", "brain_map_title": "Mapa cerebral vivo", "brain_map_copy": "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos.", "welcome_message": "SO de Conhecimento Técnico"}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Sistemas centrais", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap.", "flow_hint": "Clique em um nó para explorar. Nós conectados compartilham stack."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda."}, "actions": {"copy": "copiar", "copied": "copiado", "repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço", "view_project": "Ver projeto", "close": "Fechar"}, "status": {"research": "pesquisa", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento", "developer": "desenvolvedor"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grade"}}, "en-US": {"accessibility": {"skip_to_content": "Skip to content", "primary_navigation": "Primary navigation", "breadcrumbs": "You are here", "language_switcher": "Select language", "command_palette": "Command palette"}, "nav": {"home": "home", "posts": "posts", "projects": "projects", "documents": "documents", "about": "about", "search": "command palette", "cta": "open work / contact", "graph": "brain map", "language": "language", "language_action": "switch language", "theme": "toggle theme"}, "palette": {"placeholder": "Search posts, projects and documents", "close": "Close", "hint": "Use Ctrl/⌘ K to open, Enter to open first result and Esc to close.", "empty": "No results found."}, "home": {"highlight_main_project": "main project", "highlight_recent_article": "recent article"}, "sections": {"posts_title": "Recent posts", "posts_copy": "Articles with reading time, tags, badges and direct repository links when applicable.", "projects_title": "Core systems", "projects_copy": "Projects managed as long-term assets: architecture, stack, status, roadmap and support docs.", "documents_title": "Documentation system", "documents_copy": "Markdown notes organized by domain, architecture, agents and APIs, with versioning and agent-generated markers.", "about_copy": "The site is organized more like a codebase than a personal landing page.", "brain_map_title": "Living brain map", "brain_map_copy": "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain.", "welcome_message": "Technical Knowledge OS"}, "pages": {"archive": {"title": "All posts", "description": "Writing flow on architecture, experiments, domain modeling and operational heuristics."}, "projects": {"title": "Core systems", "description": "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap.", "flow_hint": "Click a node to explore. Connected nodes share stack."}, "documents": {"title": "Document system", "description": "Documents grouped by domain, architecture, agents and APIs to keep decisions accessible."}, "about": {"title": "Minimalist engineering notebook", "operating_model": "Operating model", "structure": "Structure", "next_steps": "Next steps", "future_frontend": "Future frontend options"}, "post": {"kicker": "post", "metadata": "Metadata", "back": "Back to posts", "copy_link": "Copy link", "navigation": "Post navigation", "newer_empty": "No newer posts", "older_empty": "No older posts"}, "project": {"kicker": "project", "status": "Status", "stack": "Stack", "actions": "Actions", "overview": "Overview", "problem_solution": "Problem and solution", "architecture": "Architecture", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "document", "meta": "Document metadata", "version": "Version", "category": "Category"}}, "common": {"preview": "preview", "content_in_preparation": "Content in preparation.", "agent_generated": "agent generated"}, "empty": {"posts": "No posts published yet.", "projects": "No projects available.", "documents": "No documents indexed yet."}, "actions": {"copy": "copy", "copied": "copied", "repo": "repo", "code": "code", "view_architecture": "view architecture", "view_code": "view code", "open_docs": "open docs", "link_copied": "Link copied", "copy_from_address": "Copy from address bar", "view_project": "View project", "close": "Close"}, "status": {"research": "research", "in_progress": "in progress", "production": "production"}, "kinds": {"home": "home", "about": "about", "post": "post", "project": "project", "document": "document", "developer": "developer"}, "templates": {"reading_time": "{minutes} min read"}, "view": {"list": "list", "grid": "grid", "navigation_kicker": "navigation", "navigation_title": "Sitemap & categories", "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories."}}}}</script>
-    <script src="/assets/blog.js" defer></script>
-    <script src="/assets/graphview.js" defer></script>
-    <script src="/assets/btree-view.js" defer></script>
-    
-  </body>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>lucide.createIcons();</script>
+    <script src="https://nhmatsumoto.github.io/assets/main.js" defer></script>
+</body>
 </html>
