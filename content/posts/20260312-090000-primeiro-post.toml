@@ -1,34 +1,34 @@
 id = "20260312-090000"
 slug = "primeiro-post"
 title = "Bem-vindo ao meu novo blog"
-summary = "O ponto de partida de um blog estático simples, versionado por Git e editado localmente."
+summary = "O ponto de partida do Technical Knowledge OS: um notebook de engenharia versionado, focado em arquitetura, sistemas distribuídos e documentação viva."
 published_at = "2026-03-12T09:00:00+09:00"
-updated_at = "2026-04-03T00:00:00+09:00"
+updated_at = "2026-04-04T10:00:00+09:00"
 status = "published"
-tags = ["pessoal", "anuncio"]
-badges = ["architecture"]
+tags = ["pessoal", "anuncio", "projeto"]
+badges = ["architecture", "modernization"]
 repo_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io"
-code_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io/tree/master/content/posts"
-featured = false
+code_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io"
+featured = true
 has_asciimath = false
 
-body = """
-# Olá, mundo!
+body = '''
+# Bem-vindo ao Technical Knowledge OS v2
 
-Este é o primeiro post do novo formato do blog. A proposta continua simples no runtime, mas agora a superfície do site passa a ser organizada como um notebook técnico: posts, projetos, documentos e decisões vivendo lado a lado.
+Este é o primeiro post do novo formato do blog. A proposta continua simples no runtime, mas agora a superfície do site é organizada como um **notebook técnico**: publicações, projetos, documentos e decisões arquiteturais (ADRs) vivendo em um ecossistema integrado.
 
-## O que muda neste projeto
+## O que muda nesta versão
 
-- O conteúdo passa a viver em arquivos TOML.
-- O site público é gerado como HTML estático.
-- O fluxo de publicação acontece por `git commit`, `git push` e deploy automático no GitHub Pages.
-- O blog passa a refletir melhor arquitetura, projetos e documentação técnica.
+- **Sistemas como Ativos**: Projetos agora possuem fluxos de arquitetura interativos e leitores de seção dedicados.
+- **SSG Otimizado**: Carregamento condicional de scripts pesados (Canvas/D3) para manter a performance em 100/100.
+- **Identidade Moderna**: Design system baseado em tokens HSL, tipografia premium e suporte nativo a internacionalização (PT-BR/EN-US).
+- **Notebook de Engenharia**: O conteúdo reflete o fluxo real de desenvolvimento, não apenas textos isolados.
 
-## O que esperar daqui
+## Roadmap de Conteúdo
 
-1. Notas sobre arquitetura e produto.
-2. Publicações sobre agentes, .NET, DDD, GIS e sistemas distribuídos.
-3. Documentação viva dos projetos que importam.
+1. Notas profundas sobre **arquitetura de software** e modelagem de domínio (DDD).
+2. Publicações sobre **agentes inteligentes**, ecossistemas .NET e sistemas geoespaciais (GIS).
+3. Documentação viva e experimental de sistemas em produção.
 
-Este espaço existe para durar com baixa manutenção.
-"""
+Este espaço foi construído para ser a minha memória técnica externa — organizada, versionada e sempre acessível.
+'''

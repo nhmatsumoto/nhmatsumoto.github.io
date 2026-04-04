@@ -64,8 +64,9 @@ title = "Todas as publicações"
 description = "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."
 
 [strings."pt-BR".pages.projects]
-title = "Seção central"
+title = "Sistemas centrais"
 description = "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."
+flow_hint = "Clique em um nó para explorar. Nós conectados compartilham stack."
 
 [strings."pt-BR".pages.documents]
 title = "Sistema de documentos"
@@ -124,6 +125,8 @@ view_code = "ver código"
 open_docs = "abrir docs"
 link_copied = "Link copiado"
 copy_from_address = "Copie pela barra de endereço"
+view_project = "Ver projeto"
+close = "Fechar"
 
 [strings."pt-BR".status]
 research = "pesquisa"
@@ -136,6 +139,7 @@ about = "sobre"
 post = "publicação"
 project = "projeto"
 document = "documento"
+developer = "desenvolvedor"
 
 [strings."pt-BR".templates]
 reading_time = "{minutes} min de leitura"
@@ -192,8 +196,9 @@ title = "All posts"
 description = "Writing flow on architecture, experiments, domain modeling and operational heuristics."
 
 [strings."en-US".pages.projects]
-title = "Core section"
+title = "Core systems"
 description = "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap."
+flow_hint = "Click a node to explore. Connected nodes share stack."
 
 [strings."en-US".pages.documents]
 title = "Document system"
@@ -252,6 +257,8 @@ view_code = "view code"
 open_docs = "open docs"
 link_copied = "Link copied"
 copy_from_address = "Copy from address bar"
+view_project = "View project"
+close = "Close"
 
 [strings."en-US".status]
 research = "research"
@@ -264,6 +271,7 @@ about = "about"
 post = "post"
 project = "project"
 document = "document"
+developer = "developer"
 
 [strings."en-US".templates]
 reading_time = "{minutes} min read"

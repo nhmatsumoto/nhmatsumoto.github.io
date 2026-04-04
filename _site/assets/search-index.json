@@ -308,6 +308,66 @@
     ]
   },
   {
+    "title": "SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica",
+    "url": "/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/",
+    "kind": "post",
+    "summary": "O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.",
+    "keywords": [
+      "ml",
+      "pytorch",
+      "python",
+      "gis",
+      "risk-analysis",
+      "experiment",
+      "production"
+    ]
+  },
+  {
+    "title": "SOS Location: PostGIS e inteligência espacial para resposta a desastres",
+    "url": "/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/",
+    "kind": "post",
+    "summary": "PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.",
+    "keywords": [
+      "gis",
+      "postgis",
+      "postgresql",
+      "spatial",
+      "backend",
+      "engineering",
+      "production"
+    ]
+  },
+  {
+    "title": "SOS Location: Clean Architecture + CQRS em .NET 10",
+    "url": "/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/",
+    "kind": "post",
+    "summary": "Arquitetura limpa, CQRS com MediatR e domain events no backend do SOS Location. Como estruturamos o código para resiliência em cenários de crise.",
+    "keywords": [
+      "dotnet",
+      "clean-architecture",
+      "cqrs",
+      "backend",
+      "architecture",
+      "architecture",
+      "production"
+    ]
+  },
+  {
+    "title": "SOS Location: Motor WebGL 3D de visualização de cidades em tempo real",
+    "url": "/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/",
+    "kind": "post",
+    "summary": "Como construímos um motor WebGL 2.0 com Three.js para renderizar cidades completas com terreno, edificações 3D e camadas de desastre ao vivo.",
+    "keywords": [
+      "webgl",
+      "threejs",
+      "gis",
+      "3d",
+      "typescript",
+      "engineering",
+      "production"
+    ]
+  },
+  {
     "title": "SOS Location: Tecnologias, ferramentas e exemplos",
     "url": "/publications/2026-04-05-1100-sos-location-stack/",
     "kind": "post",

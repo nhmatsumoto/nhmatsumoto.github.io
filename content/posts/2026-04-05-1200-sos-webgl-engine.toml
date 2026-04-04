@@ -1,0 +1,177 @@
+id = "2026-04-05-1200"
+slug = "sos-location-webgl-3d-city-engine"
+title = "SOS Location: Motor WebGL 3D de visualização de cidades em tempo real"
+summary = "Como construímos um motor WebGL 2.0 com Three.js para renderizar cidades completas com terreno, edificações 3D e camadas de desastre ao vivo."
+published_at = "2026-04-05T12:00:00+09:00"
+updated_at = "2026-04-05T12:00:00+09:00"
+status = "published"
+tags = ["webgl", "threejs", "gis", "3d", "typescript"]
+badges = ["engineering", "production"]
+repo_url = "https://github.com/nhmatsumoto/sos_location"
+code_url = "https://github.com/nhmatsumoto/sos_location"
+project_url = "/projects/sos-location/"
+featured = false
+has_asciimath = false
+
+body = """
+# Motor WebGL 3D: reconstruindo cidades para salvar vidas
+
+O SOS Location v2.0 precisava responder a uma pergunta simples com uma resposta extremamente difícil: *como dar a um comandante de operações uma visão tática de alta definição de uma cidade inteira, em tempo real, durante uma catástrofe?*
+
+A resposta foi construir um **motor WebGL 2.0 do zero**, usando Three.js como base e dados abertos para reconstruir a malha urbana.
+
+## Fontes de dados para o mundo 3D
+
+Antes de qualquer shader, o problema é de dados:
+
+| Fonte | O que oferece | API |
+|---|---|---|
+| OpenTopography (SRTMGL1) | DEM 30m global | REST |
+| OpenStreetMap / Overpass | Edificações 3D, ruas | Overpass QL |
+| Open-Meteo | Clima em tempo real | REST |
+| IBGE | Dados populacionais | REST |
+
+O fluxo de ingestão começa com uma query Overpass para buscar todas as edificações dentro de um bounding box:
+
+```typescript
+const overpassQuery = `
+  [out:json][timeout:60];
+  (
+    way["building"](${bbox});
+    relation["building"](${bbox});
+  );
+  out body;
+  >;
+  out skel qt;
+`;
+
+const buildings = await fetchOverpass(overpassQuery);
+const meshes = buildings.elements
+  .filter(el => el.type === 'way' && el.nodes)
+  .map(el => buildingToMesh(el, demElevation));
+```
+
+## Construindo o terreno
+
+O DEM (Digital Elevation Model) é um grid de elevações. A conversão para `PlaneGeometry` Three.js:
+
+```typescript
+function demToTerrain(dem: Float32Array, width: number, height: number): THREE.Mesh {
+  const geometry = new THREE.PlaneGeometry(
+    TILE_SIZE_METERS, TILE_SIZE_METERS,
+    width - 1, height - 1
+  );
+
+  const positions = geometry.attributes.position.array as Float32Array;
+  for (let i = 0; i < dem.length; i++) {
+    // Z está no índice 2 de cada vértice (x, y, z)
+    positions[i * 3 + 2] = dem[i] * ELEVATION_SCALE;
+  }
+  geometry.computeVertexNormals();
+
+  const material = new THREE.MeshStandardMaterial({
+    map: terrainTexture,
+    displacementMap: demTexture,
+    wireframe: false,
+  });
+
+  return new THREE.Mesh(geometry, material);
+}
+```
+
+## Edificações 3D com telhados
+
+Cada edificação OSM vira um `ExtrudeGeometry`. O desafio é que o polígono OSM é 2D; a altura vem do tag `building:levels` ou `height`:
+
+```typescript
+function buildingToMesh(way: OsmWay, dem: DemProvider): THREE.Mesh {
+  const coords = way.nodes.map(id => nodeMap[id]);
+  const shape = new THREE.Shape(
+    coords.map(c => new THREE.Vector2(c.lon * SCALE, c.lat * SCALE))
+  );
+
+  const levels  = parseInt(way.tags?.['building:levels'] ?? '2', 10);
+  const height  = parseFloat(way.tags?.height ?? String(levels * 3.2));
+  const baseElev = dem.getElevationAt(way.center.lat, way.center.lon);
+
+  const geometry = new THREE.ExtrudeGeometry(shape, {
+    depth: height,
+    bevelEnabled: false,
+  });
+
+  const material = buildingMaterialByType(way.tags?.building || 'yes');
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.z = baseElev * ELEVATION_SCALE;
+  return mesh;
+}
+```
+
+## Camadas de desastre ao vivo
+
+O que diferencia o SOS Location de um simples visualizador 3D é a **sobreposição de camadas de risco em tempo real**. Cada camada é um shader personalizado.
+
+### Shader de inundação (FragmentShader)
+
+```glsl
+uniform float u_waterLevel;
+uniform float u_time;
+uniform sampler2D u_elevation;
+
+varying vec2 v_uv;
+varying float v_elevation;
+
+void main() {
+  float distToWater = u_waterLevel - v_elevation;
+
+  if (distToWater > 0.0) {
+    // Água: animação ondular baseada em sin/cos
+    float wave = sin(v_uv.x * 40.0 + u_time * 2.0) * 0.5
+               + cos(v_uv.y * 40.0 + u_time * 1.7) * 0.5;
+    float depth = clamp(distToWater / 5.0, 0.0, 1.0);
+    vec3 waterColor = mix(vec3(0.1, 0.4, 0.8), vec3(0.0, 0.1, 0.5), depth);
+    gl_FragColor = vec4(waterColor + wave * 0.05, 0.75);
+  } else {
+    discard;
+  }
+}
+```
+
+### Integração das camadas no pipeline
+
+```typescript
+class DisasterLayerManager {
+  private layers = new Map<DisasterType, THREE.Mesh>();
+
+  addLayer(type: DisasterType, params: LayerParams) {
+    const geometry = new THREE.PlaneGeometry(TILE_SIZE, TILE_SIZE, 128, 128);
+    const material = this.shaderForType(type, params);
+    const mesh = new THREE.Mesh(geometry, material);
+    this.scene.add(mesh);
+    this.layers.set(type, mesh);
+  }
+
+  update(deltaT: number, realTimeData: RealTimePayload) {
+    this.layers.forEach((mesh, type) => {
+      const mat = mesh.material as THREE.ShaderMaterial;
+      mat.uniforms.u_time.value += deltaT;
+      if (type === 'flood') {
+        mat.uniforms.u_waterLevel.value = realTimeData.waterLevel;
+      }
+    });
+  }
+}
+```
+
+## Resultado operacional
+
+O motor renderiza cidades completas a 60fps num navegador desktop moderno:
+- **Curitiba (BR)**: ~12.000 edificações, DEM 30m → carregamento em ~3s
+- **Shimane (JP)**: testado com dados do GSI/MLIT
+- Camadas ativas: inundação, incêndio, deslizamento, terremoto (vibração por shader)
+
+O próximo passo (Fase 9) é o **Full WebGL City Component** com Keycloak-gated access para centros de comando reais.
+
+## Link com o projeto
+
+Esse motor é o coração do [SOS Location](/projects/sos-location/). Os posts de arquitetura descrevem como as camadas de dados chegam até ele.
+"""

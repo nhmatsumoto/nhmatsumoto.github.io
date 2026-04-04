@@ -1074,6 +1074,7 @@ def render_layout(
     active_nav: str,
     i18n: dict[str, Any],
     locale: str,
+    extra_scripts: list[str] | None = None,
 ) -> str:
     config = load_blog_config()
     math = config["math"]
@@ -1097,6 +1098,8 @@ def render_layout(
         ensure_ascii=False,
     ).replace("<", "\\u003c")
 
+    scripts_html = "\n    ".join(f'<script src="{site_href(site, f"/assets/{s}")}" defer></script>' for s in (extra_scripts or []))
+    
     return f"""<!DOCTYPE html>
 <html lang="{html.escape(locale, quote=True)}" data-theme="dark">
   <head>
@@ -1135,8 +1138,7 @@ def render_layout(
     <script id="site-i18n" type="application/json">{i18n_payload}</script>
     <script src="{site_href(site, '/assets/blog.js')}" defer></script>
     <script src="{site_href(site, '/assets/graphview.js')}" defer></script>
-    <script src="{site_href(site, '/assets/projects.js')}" defer></script>
-    <script src="{site_href(site, '/assets/canvas-reader.js')}" defer></script>
+    {scripts_html}
   </body>
 </html>
 """
@@ -1832,6 +1834,7 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pro
         active_nav="projects",
         i18n=i18n,
         locale=locale,
+        extra_scripts=["projects.js"],
     )
 
 
@@ -2148,6 +2151,7 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
         active_nav="projects",
         i18n=i18n,
         locale=locale,
+        extra_scripts=["canvas-reader.js"],
     )
 
 

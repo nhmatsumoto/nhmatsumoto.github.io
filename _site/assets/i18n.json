@@ -74,8 +74,9 @@
           "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."
         },
         "projects": {
-          "title": "Seção central",
-          "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."
+          "title": "Sistemas centrais",
+          "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap.",
+          "flow_hint": "Clique em um nó para explorar. Nós conectados compartilham stack."
         },
         "documents": {
           "title": "Sistema de documentos",
@@ -134,7 +135,9 @@
         "view_code": "ver código",
         "open_docs": "abrir docs",
         "link_copied": "Link copiado",
-        "copy_from_address": "Copie pela barra de endereço"
+        "copy_from_address": "Copie pela barra de endereço",
+        "view_project": "Ver projeto",
+        "close": "Fechar"
       },
       "status": {
         "research": "pesquisa",
@@ -146,7 +149,8 @@
         "about": "sobre",
         "post": "publicação",
         "project": "projeto",
-        "document": "documento"
+        "document": "documento",
+        "developer": "desenvolvedor"
       },
       "templates": {
         "reading_time": "{minutes} min de leitura"
@@ -205,8 +209,9 @@
           "description": "Writing flow on architecture, experiments, domain modeling and operational heuristics."
         },
         "projects": {
-          "title": "Core section",
-          "description": "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap."
+          "title": "Core systems",
+          "description": "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap.",
+          "flow_hint": "Click a node to explore. Connected nodes share stack."
         },
         "documents": {
           "title": "Document system",
@@ -265,7 +270,9 @@
         "view_code": "view code",
         "open_docs": "open docs",
         "link_copied": "Link copied",
-        "copy_from_address": "Copy from address bar"
+        "copy_from_address": "Copy from address bar",
+        "view_project": "View project",
+        "close": "Close"
       },
       "status": {
         "research": "research",
@@ -277,7 +284,8 @@
         "about": "about",
         "post": "post",
         "project": "project",
-        "document": "document"
+        "document": "document",
+        "developer": "developer"
       },
       "templates": {
         "reading_time": "{minutes} min read"
