@@ -1,7 +1,7 @@
 name = "Apollo-11"
 slug = "apollo-11"
 headline = "Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules."
-summary = "Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules."
+summary = "Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar — referência histórica de engenharia de software embarcado."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,32 @@ repo_url = "https://github.com/nhmatsumoto/Apollo-11"
 code_url = "https://github.com/nhmatsumoto/Apollo-11"
 published_at = "2024-01-19T20:32:17Z"
 tags = ["fork"]
+stack = ["Assembly", "AGC", "Embedded Systems"]
 view_engine = "binary-tree"
 
 overview = """
-Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.
+Fork do código-fonte original do Apollo 11 Guidance Computer (AGC), escrito em assembly para o computador de bordo que levou a humanidade à Lua em 1969.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+O AGC foi um dos primeiros sistemas de computação embarcada a operar em tempo real com restrições extremas de memória e processamento. O código é dividido entre o módulo de comando (Comanche055) e o módulo lunar (Luminary099).
+
+## Relevância técnica
+
+Este repositório serve como referência histórica para estudo de:
+
+- **Arquitetura de software embarcado** sob restrições severas de hardware
+- **Sistemas de tempo real** com prioridade de tarefas e preempção
+- **Tolerância a falhas** — o famoso alarme 1202 durante o pouso é um exemplo clássico de design resiliente
+- **Engenharia de missão crítica** onde bugs podem ter consequências irreversíveis
+
+## Contexto
+
+O AGC tinha apenas 74KB de memória ROM e 4KB de RAM. Todo o software de navegação, controle de atitude e interface com astronautas cabia nesse espaço. A arquitetura de prioridades do AGC influenciou gerações de sistemas operacionais de tempo real.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+O código original estava disperso em documentos históricos e microfilmes. A digitalização e publicação no GitHub permitiu que engenheiros modernos estudassem as decisões de design que tornaram possível a navegação lunar com hardware extremamente limitado.
+"""
+
+architecture = """
+O AGC utiliza uma arquitetura de execução baseada em jobs com prioridades, onde tarefas críticas (como controle de atitude) podem interromper tarefas de menor prioridade. O sistema operacional embarcado gerencia filas de execução, I/O com sensores inerciais e interface DSKY (Display & Keyboard).
+"""

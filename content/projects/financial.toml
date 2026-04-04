@@ -1,7 +1,7 @@
 name = "Financial"
 slug = "financial"
-headline = "Monolito para gestão financeira pessoal."
-summary = "Monolito para gestão financeira pessoal."
+headline = "Monolito para gestão financeira pessoal em C#/.NET."
+summary = "Aplicação monolítica de gestão financeira pessoal desenvolvida em C#/.NET, com foco em controle de despesas, categorização e relatórios."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,31 @@ repo_url = "https://github.com/nhmatsumoto/Financial"
 code_url = "https://github.com/nhmatsumoto/Financial"
 published_at = "2024-01-07T09:37:21Z"
 tags = ["C#"]
+stack = ["C#", ".NET", "Entity Framework", "SQL Server"]
 view_engine = "binary-tree"
 
 overview = """
-Monolito para gestão financeira pessoal.
+Aplicação monolítica de gestão financeira pessoal, desenvolvida como exercício de arquitetura em .NET com Entity Framework e SQL Server.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Funcionalidades
+
+- Cadastro e categorização de receitas e despesas
+- Relatórios por período e categoria
+- Controle de saldos e projeções simples
+
+## Relação com o ecossistema
+
+Este projeto é o predecessor direto do **SplitCosts** — a evolução natural de um monolito financeiro pessoal para uma aplicação multi-tenant de compartilhamento de despesas. Muitas das decisões de domínio do SplitCosts foram refinadas a partir das limitações encontradas aqui.
+
+## Lições aprendidas
+
+O formato monolítico funcionou para o escopo inicial, mas revelou limitações quando o domínio cresceu: acoplamento entre regras de negócio e infraestrutura, dificuldade de testar cenários complexos e falta de separação entre contextos de leitura e escrita.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Gestão financeira pessoal precisa ser simples o suficiente para uso diário, mas estruturada o suficiente para gerar relatórios úteis. O desafio foi equilibrar praticidade com modelagem correta do domínio financeiro.
+"""
+
+architecture = """
+Monolito em camadas: Controllers → Services → Repository → Entity Framework → SQL Server. A simplicidade da arquitetura é adequada ao escopo, mas o acoplamento entre camadas motivou a adoção de uma abordagem mais modular no SplitCosts.
+"""

@@ -1,7 +1,7 @@
-name = "chess"
+name = "Chess"
 slug = "chess"
-headline = "Repositório chess sincronizado via GitHub."
-summary = "Repositório chess sincronizado via GitHub."
+headline = "Implementação de xadrez em C# com modelagem de domínio orientada a regras."
+summary = "Jogo de xadrez implementado em C# com foco em modelagem de domínio, validação de movimentos e representação do tabuleiro."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,31 @@ repo_url = "https://github.com/nhmatsumoto/chess"
 code_url = "https://github.com/nhmatsumoto/chess"
 published_at = "2026-03-11T01:32:49Z"
 tags = ["C#"]
+stack = ["C#", ".NET", "OOP", "Domain Modeling"]
 view_engine = "binary-tree"
 
 overview = """
-Repositório chess sincronizado via GitHub.
+Implementação de um jogo de xadrez completo em C#, com modelagem de domínio que trata cada peça como entidade com regras próprias de movimentação.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Modelagem de domínio
+
+O tabuleiro é representado como uma matriz 8x8 onde cada célula pode conter uma peça. Cada tipo de peça (Rei, Rainha, Torre, Bispo, Cavalo, Peão) implementa suas próprias regras de movimentação, incluindo:
+
+- Movimentos válidos considerando o estado atual do tabuleiro
+- Detecção de xeque e xeque-mate
+- Movimentos especiais: roque, en passant, promoção de peão
+
+## Decisões de design
+
+- **Value Objects** para posições no tabuleiro
+- **Strategy pattern** para regras de movimentação por tipo de peça
+- **Imutabilidade** do estado do jogo para facilitar undo/redo
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Xadrez é um exercício clássico de modelagem de domínio: regras complexas que interagem entre si, validações que dependem do estado global e lógica que precisa ser expressa de forma clara. O projeto aplica princípios de DDD para manter as regras legíveis e testáveis.
+"""
+
+architecture = """
+Arquitetura em camadas simples: domínio (peças, tabuleiro, regras), aplicação (controle de jogo, turnos) e interface de console. O domínio é completamente independente da camada de apresentação.
+"""

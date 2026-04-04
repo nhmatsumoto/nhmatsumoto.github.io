@@ -67,14 +67,36 @@ def _safe_truncate(text: str, limit: int = 1200) -> str:
         return cut[:line].rstrip() + "\n..."
     return cut.rstrip() + "..."
 
+def _build_project_body(item: dict[str, Any]) -> str:
+    """Assemble a markdown body from project fields for rich rendering."""
+    parts = []
+    ov = (item.get("overview") or "").strip()
+    if ov:
+        parts.append(ov)
+    ps = (item.get("problem_solution") or "").strip()
+    if ps and ps != "Sincronizado via Technical Knowledge OS build engine.":
+        parts.append(f"## Problema & Solução\n\n{ps}")
+    arch = (item.get("architecture") or "").strip()
+    if arch and arch != "Repositório público no GitHub.":
+        parts.append(f"## Arquitetura\n\n{arch}")
+    dp = (item.get("diagram_preview") or "").strip()
+    if dp:
+        parts.append(f"```\n{dp}\n```")
+    sn = (item.get("stack_notes") or "").strip()
+    if sn:
+        parts.append(f"## Stack & Tecnologias\n\n{sn}")
+    adr = item.get("adr") or []
+    if adr:
+        parts.append("## Decisões Arquiteturais\n\n" + "\n".join(f"- {a}" for a in adr))
+    rm = item.get("roadmap") or []
+    if rm:
+        parts.append("## Roadmap\n\n" + "\n".join(f"- {r}" for r in rm))
+    return "\n\n".join(parts) if parts else item.get("summary", "")
+
 def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]]) -> str:
     unified_items = []
-    
+
     for item in posts:
-        sections = [
-            {"id": "overview", "title": "Overview", "content": item["summary"], "type": "intro", "animation": "typewriter", "children": ["content"]},
-            {"id": "content", "title": "Conteúdo", "content": _safe_truncate(item["body"]), "type": "text", "animation": "fade", "children": []}
-        ]
         unified_items.append({
             "id": f"post-{item['slug']}",
             "kind": "post",
@@ -84,15 +106,14 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
             "status": "production",
             "stack": item["tags"],
             "url": item["url"],
-            "sections": sections
+            "resolved_url": item.get("resolved_url", ""),
+            "repo_url": item.get("repo_url", ""),
+            "has_math": item.get("has_math", False),
+            "body_html": render_markdown(item.get("body", "") or item["summary"]),
         })
 
     for item in projects:
-        sections = [
-            {"id": "overview", "title": "Visão Geral", "content": item["overview"] or item["summary"], "type": "intro", "animation": "typewriter", "children": ["arch", "stack"]},
-            {"id": "arch", "title": "Arquitetura", "content": item["architecture"] or "Detalhes técnicos em desenvolvimento.", "type": "architecture", "animation": "slide_right", "children": []},
-            {"id": "stack", "title": "Tecnologias", "content": item["stack_notes"] or ", ".join(item["stack"]), "type": "stack", "animation": "zoom", "children": []}
-        ]
+        body_md = _build_project_body(item)
         unified_items.append({
             "id": f"project-{item['slug']}",
             "kind": "project",
@@ -102,14 +123,13 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
             "status": item["status"],
             "stack": item["stack"],
             "url": item["url"],
-            "sections": sections
+            "resolved_url": item.get("resolved_url", ""),
+            "repo_url": item.get("repo_url", ""),
+            "has_math": item.get("has_math", False),
+            "body_html": render_markdown(body_md),
         })
 
     for item in documents:
-        sections = [
-            {"id": "overview", "title": "Doc Overview", "content": item["summary"], "type": "intro", "animation": "typewriter", "children": ["body"]},
-            {"id": "body", "title": "Especificação", "content": _safe_truncate(item["body"]), "type": "text", "animation": "fade", "children": []}
-        ]
         unified_items.append({
             "id": f"document-{item['slug']}",
             "kind": "document",
@@ -119,7 +139,10 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
             "status": "production",
             "stack": item["tags"],
             "url": item["url"],
-            "sections": sections
+            "resolved_url": item.get("resolved_url", ""),
+            "repo_url": "",
+            "has_math": False,
+            "body_html": render_markdown(item.get("body", "") or item["summary"]),
         })
 
     return json.dumps(unified_items, ensure_ascii=False).replace("<", "\\u003c")

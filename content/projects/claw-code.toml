@@ -1,7 +1,7 @@
 name = "claw-code"
 slug = "claw-code"
-headline = "Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust."
-summary = "Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust."
+headline = "Better Harness Tools — ferramentas para análise e experimentação com Claude Code, em reescrita para Rust."
+summary = "Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade."
 status = "published"
 featured = false
 order = 999
@@ -9,13 +9,33 @@ repo_url = "https://github.com/nhmatsumoto/claw-code"
 code_url = "https://github.com/nhmatsumoto/claw-code"
 published_at = "2026-03-31T19:21:01Z"
 tags = ["fork"]
+stack = ["Rust", "CLI", "AI Agents"]
 view_engine = "binary-tree"
 
 overview = """
-Better Harness Tools, not merely storing the archive of leaked Claude Code but also make real things done. Now rewriting in Rust.
+Fork do projeto Claw Code, focado em criar ferramentas úteis para análise e experimentação com a arquitetura de agentes de código como Claude Code.
 
-Este projeto foi sincronizado automaticamente do GitHub.
+## Motivação
+
+Entender como agentes de código funcionam internamente — seus system prompts, tool loops, decisão de contexto — é fundamental para quem trabalha com automação de engenharia. Este projeto vai além do arquivo: transforma referência em ferramenta.
+
+## Reescrita em Rust
+
+A versão atual está sendo reescrita em Rust para:
+
+- **Performance** — parsing e análise de prompts grandes sem overhead de runtime
+- **Portabilidade** — binário único sem dependências
+- **CLI ergonômico** — interface de terminal com output formatado
+
+## Relação com o ecossistema
+
+Complementa o repositório **system-prompts-and-models-of-ai-tools** como referência de engenharia de prompts e arquitetura de agentes.
 """
 
-problem_solution = "Sincronizado via Technical Knowledge OS build engine."
-architecture = "Repositório público no GitHub."
+problem_solution = """
+Agentes de código são caixas-pretas poderosas, mas entender sua arquitetura interna permite usá-los de forma mais eficiente. Este projeto constrói ferramentas para inspecionar, comparar e experimentar com essas arquiteturas.
+"""
+
+architecture = """
+CLI em Rust com subcomandos para parsing de prompts, comparação entre versões e análise de tool definitions. Estruturado como workspace Cargo com crates separados para parsing, rendering e CLI.
+"""
