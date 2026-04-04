@@ -1708,29 +1708,49 @@ button, input, select {
 
 /* ─── Project Flow Canvas ───────────────────────────────────────────────── */
 
-.flow-heading {
-  padding-bottom: var(--space-4);
+/* Full-bleed shell — breaks out of the container gutter */
+.project-flow-shell {
+  position: relative;
+  /* Break out of .site-shell max-width */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-10);
+  background: var(--bg);
+}
+
+/* Slim toolbar above the canvas */
+.flow-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-2)
+    max(var(--container-gutter), calc((100vw - var(--container-width)) / 2 + var(--container-gutter)));
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.flow-kicker {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 .flow-hint {
   font-family: var(--font-code);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--muted);
-  letter-spacing: 0.06em;
-  margin: 0;
-}
-
-.project-flow-shell {
-  position: relative;
-  width: 100%;
-  margin-bottom: var(--space-12);
+  letter-spacing: 0.05em;
 }
 
 .project-flow-wrapper {
   width: 100%;
-  height: clamp(480px, calc(100svh - 14rem), 820px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  height: clamp(520px, calc(100svh - 8rem), 900px);
   overflow: hidden;
   background: var(--bg);
   cursor: crosshair;
@@ -1742,7 +1762,8 @@ button, input, select {
   height: 100%;
 }
 
-/* Detail panel — slides up from bottom of the shell */
+/* Detail panel — slides in from the right (desktop) or bottom (mobile) */
+/* Contained by overflow:hidden on .project-flow-shell                   */
 .project-detail-panel {
   position: absolute;
   bottom: 0;
@@ -1750,7 +1771,6 @@ button, input, select {
   right: 0;
   background: var(--surface);
   border-top: 1px solid var(--border);
-  border-radius: 0 0 var(--radius-md) var(--radius-md);
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
@@ -1759,7 +1779,7 @@ button, input, select {
   transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
   z-index: 10;
-  max-height: 55%;
+  max-height: 52%;
   overflow-y: auto;
 }
 
@@ -1828,27 +1848,28 @@ button, input, select {
 .panel-actions {
   display: flex;
   gap: var(--space-3);
-  margin-top: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
 }
 
 .panel-cta {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  flex: 1;
+  justify-content: center;
 }
 
 @media (min-width: 769px) {
   .project-detail-panel {
-    left: auto;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    width: min(380px, 40%);
+    /* Slide in from the right side of the shell */
+    inset: 0 0 0 auto;           /* top:0 right:0 bottom:0 left:auto */
+    width: min(400px, 36%);
+    max-height: 100%;
     border-top: none;
     border-left: 1px solid var(--border);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    max-height: 100%;
-    transform: translateX(102%);
+    transform: translateX(100%);  /* start fully off to the right */
   }
   .project-detail-panel[data-open="true"] {
     transform: translateX(0);
@@ -1927,4 +1948,14 @@ button, input, select {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+/* ── Projects page overrides ─────────────────────────────────────────────── */
+/* Prevent horizontal scrollbar from full-bleed canvas shell */
+.page-projects {
+  overflow-x: hidden;
+}
+
+.page-projects .breadcrumbs {
+  margin-bottom: var(--space-2);
 }

@@ -1782,15 +1782,18 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pro
 
     flow_data = render_projects_flow_data(projects)
 
+    flow_hint = html.escape(translate(i18n, locale, "pages.projects.flow_hint", "Click a node to explore. Connected nodes share stack."))
+    kicker    = html.escape(translate(i18n, locale, "nav.projects", "projects"))
+
     content = f"""
     {breadcrumbs}
-    <section class="page-heading flow-heading">
-      <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
-      <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Core systems"))}</h1>
-      <p class="flow-hint" data-i18n="pages.projects.flow_hint">{html.escape(translate(i18n, locale, "pages.projects.flow_hint", "Click a node to explore. Connected nodes share stack."))}</p>
-    </section>
 
     <div class="project-flow-shell">
+      <div class="flow-toolbar">
+        <span class="flow-kicker" data-i18n="nav.projects">{kicker}</span>
+        <span class="flow-hint" data-i18n="pages.projects.flow_hint">{flow_hint}</span>
+      </div>
+
       <div class="project-flow-wrapper" data-project-flow></div>
 
       <aside class="project-detail-panel" data-project-panel data-open="false" aria-hidden="true">
