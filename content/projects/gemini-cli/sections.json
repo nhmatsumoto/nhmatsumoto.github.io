@@ -1,0 +1,50 @@
+[
+  {
+    "id": 0,
+    "type": "intro",
+    "title": "Gemini CLI",
+    "content": "An open-source AI agent that brings the power of Gemini directly into your terminal. Built in Go, designed for developers who live in the command line.",
+    "animation": "fade",
+    "children": [1, 2]
+  },
+  {
+    "id": 1,
+    "type": "problem",
+    "title": "The Problem",
+    "content": "Context switching between the editor and AI chat breaks flow. Every file lookup, every code question costs a context switch. Developers need intelligence where they already work.",
+    "animation": "slide_right",
+    "children": [3]
+  },
+  {
+    "id": 2,
+    "type": "architecture",
+    "title": "Architecture",
+    "content": "CLI → Planner → Tool Executor → Models. The planner decomposes tasks into atomic tool calls. Each tool is isolated and composable. The core runtime never changes — only skills grow.",
+    "animation": "matrix_rain",
+    "children": [3]
+  },
+  {
+    "id": 3,
+    "type": "solution",
+    "title": "The Solution",
+    "content": "Gemini CLI acts as a local agent with full filesystem access. It reads context, plans changes, executes tools, and streams feedback — all without leaving the terminal.",
+    "animation": "zoom",
+    "children": [4]
+  },
+  {
+    "id": 4,
+    "type": "stack",
+    "title": "Stack",
+    "content": "Go for performance and single-binary distribution. Gemini API for multimodal reasoning. Streaming output for instant feedback. Modular skill system for extensibility.",
+    "animation": "expand_node",
+    "children": [5]
+  },
+  {
+    "id": 5,
+    "type": "text",
+    "title": "Roadmap",
+    "content": "Parallel subagents. Long-term contextual memory. Screenshot support via multimodal Gemini. Plugin marketplace for community skills.",
+    "animation": "typewriter",
+    "children": []
+  }
+]

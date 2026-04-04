@@ -1136,6 +1136,7 @@ def render_layout(
     <script src="{site_href(site, '/assets/blog.js')}" defer></script>
     <script src="{site_href(site, '/assets/graphview.js')}" defer></script>
     <script src="{site_href(site, '/assets/projects.js')}" defer></script>
+    <script src="{site_href(site, '/assets/canvas-reader.js')}" defer></script>
   </body>
 </html>
 """
@@ -2010,6 +2011,53 @@ def render_post_page(
     )
 
 
+def load_project_sections(slug: str) -> list[dict[str, Any]]:
+    """Load canvas sections for a project from content/projects/<slug>/sections.json."""
+    json_path = ROOT / "content" / "projects" / slug / "sections.json"
+    if json_path.exists():
+        try:
+            return json.loads(json_path.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    # TOML fallback
+    toml_path = ROOT / "content" / "projects" / slug / "sections.toml"
+    if toml_path.exists():
+        try:
+            with open(toml_path, "rb") as f:
+                data = tomllib.load(f)
+            return data.get("section", [])
+        except Exception:
+            pass
+    return []
+
+
+def render_canvas_reader_section(project: dict[str, Any], sections: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    if not sections:
+        return ""
+    sections_json = json.dumps(sections, ensure_ascii=False).replace("<", "\\u003c")
+    explore_label = html.escape(translate(i18n, locale, "pages.project.explore_canvas", "Explore on Canvas"))
+    static_label  = html.escape(translate(i18n, locale, "pages.project.read_article",   "Read as article"))
+    return f"""
+    <section class="canvas-reader-section">
+      <div class="canvas-reader-header">
+        <div class="canvas-reader-tabs">
+          <button class="canvas-tab active" data-tab="canvas" type="button">{explore_label}</button>
+          <button class="canvas-tab" data-tab="static" type="button">{static_label}</button>
+        </div>
+        <div class="canvas-reader-controls">
+          <button class="nav-button" id="reader-back-btn" data-reader-back hidden type="button"
+                  aria-label="Back">
+            <i data-lucide="arrow-left"></i>
+          </button>
+          <span class="reader-progress" data-reader-progress></span>
+        </div>
+      </div>
+      <div class="canvas-reader-shell" data-section-reader></div>
+    </section>
+    <script id="sections-data" type="application/json">{sections_json}</script>
+    """
+
+
 def render_project_page(site: dict[str, str], system: dict[str, Any], project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     adr_list = "".join(f"<li>{html.escape(item)}</li>" for item in project["adr"]) or "<li>ADR list in progress.</li>"
     roadmap_list = "".join(f"<li>{html.escape(item)}</li>" for item in project["roadmap"]) or "<li>Roadmap in progress.</li>"
@@ -2040,8 +2088,12 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
       </div>
     </aside>
     """
+    sections = load_project_sections(project["slug"])
+    canvas_reader = render_canvas_reader_section(project, sections, i18n, locale)
+
     content = f"""
     {breadcrumbs}
+    {canvas_reader}
     <section class="page-grid">
       <article class="project-shell prose">
         <header class="post-header">
