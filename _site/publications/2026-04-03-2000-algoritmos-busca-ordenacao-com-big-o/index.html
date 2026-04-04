@@ -6,79 +6,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>Algoritmos e Big O: Entendendo a Eficiência do Código | nhmatsumoto-blog-engine</title>
     <meta name="description" content="Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade.">
     <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/">
     <link rel="stylesheet" href="/assets/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              accent: '#00C2FF',
-              surface: '#121821',
-              background: '#0B0F14',
-            },
-            fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
-              serif: ['Inter', 'serif'],
-              mono: ['JetBrains Mono', 'monospace'],
-            }
-          }
-        }
-      }
-    </script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         lucide.createIcons();
       });
     </script>
-    
-    <style>
-      :root {
-        --bg: #0B0F14;
-        --surface: #121821;
-        --surface-strong: #121821; /* Adjusted for dark mode default */
-        --surface-soft: #121821;
-        --border: rgba(255, 255, 255, 0.08);
-        --accent: #00C2FF;
-        --accent-secondary: #7C5CFF;
-        --accent-soft: #00C2FF1a;
-        --text: #E6EDF3;
-        --muted: #9DA7B3;
-        --font-heading: "Inter", "Satoshi", system-ui, sans-serif;
-        --font-body: "Inter", system-ui, sans-serif;
-        --font-ui: "Inter", system-ui, sans-serif;
-        --font-code: "JetBrains Mono", monospace;
-        --reading-width: 680px;
-        --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
-        --shadow-md: 0 8px 32px rgba(0,0,0,0.6);
-        --shadow-lg: 0 24px 64px rgba(0,0,0,0.8);
-        --radius: 24px;
-        --glass-bg: rgba(11, 15, 20, 0.8);
-        --glass-border: rgba(255, 255, 255, 0.1);
-      }
-
-      /* Default to dark mode aesthetics based on system.toml */
-      [data-theme="light"] :root {
-        --bg: #ffffff;
-        --surface: #f8f9fa;
-        --text: #1a1a1a;
-        --muted: #666666;
-        --border: rgba(0, 0, 0, 0.08);
-        --glass-bg: rgba(255, 255, 255, 0.8);
-        --glass-border: rgba(0, 0, 0, 0.1);
-      }
-    </style>
-    
     
     <meta name="x-asciimath-inline" content="%%">
     <meta name="x-asciimath-block" content="%%%">
@@ -89,51 +29,44 @@
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     
     
-    <nav class="nav-shell" data-nav-shell>
+    <nav class="nav-shell">
       <div class="nav-brand">
         <a class="nav-title" href="/">nhmatsumoto-blog-engine</a>
       </div>
       
-      <ul class="nav-menu desktop-only">
-        <li><a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a></li> <li><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a></li> <li><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a></li> <li><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a></li>
-      </ul>
+      <div class="nav-menu desktop-only">
+        <a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
+      </div>
 
       <div class="nav-actions">
         <button class="nav-button" type="button" data-open-palette aria-label="palette de comandos">
-          <i data-lucide="search" class="w-4 h-4"></i>
+          <i data-lucide="command"></i>
         </button>
         <button class="nav-button" type="button" data-theme-toggle aria-label="Toggle theme">
-          <i data-lucide="moon" class="theme-icon-moon w-4 h-4"></i>
-          <i data-lucide="sun" class="theme-icon-sun hidden w-4 h-4"></i>
-        </button>
-        <button class="nav-button" type="button" data-locale-toggle aria-label="Toggle language">
-          <i data-lucide="languages" class="w-4 h-4"></i>
+          <i data-lucide="moon" class="theme-icon-moon"></i>
+          <i data-lucide="sun" class="theme-icon-sun hidden"></i>
         </button>
         <button class="nav-button mobile-only" type="button" data-nav-toggle aria-label="Toggle menu">
-          <i data-lucide="menu" class="nav-icon-menu w-4 h-4"></i>
-          <i data-lucide="x" class="nav-icon-close hidden w-4 h-4"></i>
+          <i data-lucide="menu" class="nav-icon-menu"></i>
+          <i data-lucide="x" class="nav-icon-close hidden"></i>
         </button>
-        <a class="nav-cta desktop-only" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">
-          trabalho aberto / contato
-          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        <a class="nav-cta desktop-only" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer">
+          <span data-i18n="nav.cta">trabalho aberto / contato</span>
+          <i data-lucide="arrow-up-right"></i>
         </a>
       </div>
 
       <div class="nav-mobile-menu" data-nav-menu hidden>
-        <ul class="nav-mobile-links">
-          <li><a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a></li> <li><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a></li> <li><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a></li> <li><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a></li>
-        </ul>
-        <div class="nav-mobile-actions">
-          <a class="nav-mobile-cta" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">
-            trabalho aberto / contato
-            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-          </a>
-        </div>
+        <a class="nav-pill" href="/publications/" aria-current="page" data-i18n="nav.posts">publicações</a><a class="nav-pill" href="/projects/"  data-i18n="nav.projects">projetos</a><a class="nav-pill" href="/documents/"  data-i18n="nav.documents">documentos</a><a class="nav-pill" href="/about/"  data-i18n="nav.about">sobre</a>
+        <a class="nav-cta" href="https://www.linkedin.com/in/nhmatsumoto/" target="_blank" rel="noopener noreferrer">
+          <span data-i18n="nav.cta">trabalho aberto / contato</span>
+          <i data-lucide="arrow-up-right"></i>
+        </a>
       </div>
     </nav>
     
 
-    <div class="site-shell" style="padding-top: 8rem;">
+    <div class="site-shell">
       <main class="site-main" id="content">
         
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="/" data-i18n="nav.home">início</a></li><li><a href="/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Algoritmos e Big O: Entendendo a Eficiência do Código</span></li></ol></nav>
@@ -175,10 +108,13 @@
           
     <aside class="sidebar-panel">
       <h2 data-i18n="pages.post.metadata">Metadados</h2>
-      <ul class="metric-list"><li><time datetime="2026-04-03T17:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></li><li><span data-reading-time="1">1 min de leitura</span></li></ul>
-      <ul class="badge-list"><li class="badge">computer-science</li><li class="badge">efficiency</li><li class="badge">foundations</li></ul>
-      <ul class="tag-list"><li>algoritmos</li><li>computacao</li><li>big-o</li><li>performance</li></ul>
-      
+      <div class="card-metrics"><span class="metric"><time datetime="2026-04-03T17:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
+      <div class="badge-list"><span class="badge">computer-science</span><span class="badge">efficiency</span><span class="badge">foundations</span></div>
+      <div class="tag-list"><span class="tag">algoritmos</span><span class="tag">computacao</span><span class="tag">big-o</span><span class="tag">performance</span></div>
+      <div class="sidebar-actions">
+        <a class="sidebar-link" href="" target="_blank" rel="noopener" data-i18n="actions.repo">repo</a>
+        <a class="sidebar-link" href="" target="_blank" rel="noopener" data-i18n="actions.code">code</a>
+      </div>
     </aside>
     
         </section>
@@ -197,8 +133,8 @@
         <p>nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas.</p>
       </div>
       <div class="footer-meta">
-        <ul class="footer-pills"><li>clarity</li><li>depth</li><li>no distraction</li></ul>
-        <ul class="footer-pills"><li>engineering docs</li><li>light dashboards</li><li>structured README</li></ul>
+        <div class="footer-pills"><span class="tag">clarity</span><span class="tag">depth</span><span class="tag">no distraction</span></div>
+        <div class="footer-pills"><span class="tag">engineering docs</span><span class="tag">light dashboards</span><span class="tag">structured README</span></div>
       </div>
     </footer>
     
