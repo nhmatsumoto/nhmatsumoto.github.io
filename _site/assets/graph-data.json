@@ -37,566 +37,6 @@
       "size": 15
     },
     {
-      "id": "topic-fisica",
-      "title": "física",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-machine-learning",
-      "title": "machine-learning",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-domain",
-      "title": "domain",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-radiation",
-      "title": "radiation",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-ciencia",
-      "title": "ciência",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-engenharia",
-      "title": "engenharia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-computacao",
-      "title": "computação",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-ddd",
-      "title": "ddd",
-      "kind": "topic",
-      "color": "#7C5CFF",
-      "size": 10
-    },
-    {
-      "id": "topic-docker",
-      "title": "docker",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-postgis",
-      "title": "postgis",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-java",
-      "title": "java",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-svelte",
-      "title": "svelte",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-techstack",
-      "title": "techstack",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-multi-tenant-architecture",
-      "title": "multi-tenant architecture",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-integration",
-      "title": "integration",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-net",
-      "title": ".net",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-spatial",
-      "title": "spatial",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-manutenibilidade",
-      "title": "manutenibilidade",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-parsing",
-      "title": "parsing",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-log-mining",
-      "title": "log-mining",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-psicologia",
-      "title": "psicologia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-llm",
-      "title": "llm",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-typescript",
-      "title": "typescript",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-rest-api",
-      "title": "rest api",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-bits-vs-qubits",
-      "title": "bits-vs-qubits",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-monte-carlo",
-      "title": "monte-carlo",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-algorithms",
-      "title": "algorithms",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-risk-analysis",
-      "title": "risk-analysis",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-geolocation",
-      "title": "geolocation",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-event-driven-services",
-      "title": "event-driven services",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-agentes-ia",
-      "title": "agentes-ia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-cuda",
-      "title": "cuda",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-entity-framework",
-      "title": "entity framework",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-linguagens",
-      "title": "linguagens",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-electronics",
-      "title": "electronics",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-biografia",
-      "title": "biografia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-anuncio",
-      "title": "anuncio",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-resilience",
-      "title": "resilience",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-computacao",
-      "title": "computacao",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-reflection",
-      "title": "reflection",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-pytorch",
-      "title": "pytorch",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-memory",
-      "title": "memory",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-dotnet",
-      "title": "dotnet",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-distribuido",
-      "title": "distribuido",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-operations",
-      "title": "operations",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-cli",
-      "title": "cli",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-meta",
-      "title": "meta",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-fisica",
-      "title": "fisica",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-quantica",
-      "title": "quantica",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-criptografia",
-      "title": "criptografia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-transformers",
-      "title": "transformers",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-backend",
-      "title": "backend",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-html",
-      "title": "html",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-diagrams",
-      "title": "diagrams",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-qualidade",
-      "title": "qualidade",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-sos",
-      "title": "sos",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-event-driven",
-      "title": "event-driven",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-webgl",
-      "title": "webgl",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-qemu",
-      "title": "qemu",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-agc",
-      "title": "agc",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-particulas",
-      "title": "particulas",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-feynman",
-      "title": "feynman",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-estruturas-de-dados",
-      "title": "estruturas-de-dados",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-inovacao",
-      "title": "inovação",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-kvm",
-      "title": "kvm",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-gemini-api",
-      "title": "gemini api",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-github-pages",
-      "title": "github pages",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-system",
-      "title": "system",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-mermaid",
-      "title": "mermaid",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-tecnologia",
-      "title": "tecnologia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-chain-of-thought",
-      "title": "chain-of-thought",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-tomcat",
-      "title": "tomcat",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-physics",
-      "title": "physics",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-cognicao",
-      "title": "cognição",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-svg",
-      "title": "svg",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-pessoal",
-      "title": "pessoal",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-kahneman",
-      "title": "kahneman",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-nobel",
-      "title": "nobel",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-moe",
-      "title": "moe",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-mensageria",
-      "title": "mensageria",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
       "id": "topic-cqrs",
       "title": "cqrs",
       "kind": "topic",
@@ -604,57 +44,15 @@
       "size": 10
     },
     {
-      "id": "topic-networking",
-      "title": "networking",
+      "id": "topic-domain-modeling",
+      "title": "domain modeling",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-monaco-editor",
-      "title": "monaco editor",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-c",
-      "title": "c#",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-d3js",
-      "title": "d3js",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-embeddings",
-      "title": "embeddings",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-guerra",
-      "title": "guerra",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-solid",
-      "title": "solid",
-      "kind": "topic",
-      "color": "#7C5CFF",
-      "size": 10
-    },
-    {
-      "id": "topic-testes",
-      "title": "testes",
+      "id": "topic-ciencia",
+      "title": "ciencia",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -667,43 +65,22 @@
       "size": 10
     },
     {
-      "id": "topic-big-o",
-      "title": "big-o",
+      "id": "topic-tomcat",
+      "title": "tomcat",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-three-js",
-      "title": "three.js",
+      "id": "topic-meta",
+      "title": "meta",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-graphs",
-      "title": "graphs",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-electromagnetism",
-      "title": "electromagnetism",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-apis",
-      "title": "apis",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-sql-server",
-      "title": "sql server",
+      "id": "topic-banco-de-dados",
+      "title": "banco-de-dados",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -716,55 +93,6 @@
       "size": 10
     },
     {
-      "id": "topic-historia",
-      "title": "história",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-science",
-      "title": "science",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-metacognicao",
-      "title": "metacognicao",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-maps",
-      "title": "maps",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-defense",
-      "title": "defense",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-software",
-      "title": "software",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-virtualization",
-      "title": "virtualization",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
       "id": "topic-pulse-power",
       "title": "pulse-power",
       "kind": "topic",
@@ -772,71 +100,43 @@
       "size": 10
     },
     {
-      "id": "topic-visual-computing",
-      "title": "visual-computing",
+      "id": "topic-distribuido",
+      "title": "distribuido",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-python",
-      "title": "python",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-ai",
-      "title": "ai",
-      "kind": "topic",
-      "color": "#3DFFBA",
-      "size": 10
-    },
-    {
-      "id": "topic-knowledge",
-      "title": "knowledge",
+      "id": "topic-fisica",
+      "title": "fisica",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-jsp",
-      "title": "jsp",
+      "id": "topic-cognicao",
+      "title": "cognição",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-orm",
-      "title": "orm",
+      "id": "topic-lgpd",
+      "title": "lgpd",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-runtime",
-      "title": "runtime",
+      "id": "topic-simulacao",
+      "title": "simulacao",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-middleware",
-      "title": "middleware",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-oauth2",
-      "title": "oauth2",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-makefile",
-      "title": "makefile",
+      "id": "topic-llm",
+      "title": "llm",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -849,6 +149,377 @@
       "size": 10
     },
     {
+      "id": "topic-particulas",
+      "title": "particulas",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-arquitetura",
+      "title": "arquitetura",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-assembly",
+      "title": "assembly",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-monaco-editor",
+      "title": "monaco editor",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-net-core",
+      "title": ".net core",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-space-weather",
+      "title": "space-weather",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-astrophysics",
+      "title": "astrophysics",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-manutenibilidade",
+      "title": "manutenibilidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agentes-ia",
+      "title": "agentes-ia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-defense",
+      "title": "defense",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agents",
+      "title": "agents",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-teoria",
+      "title": "teoria",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-react",
+      "title": "react",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-embedded-systems",
+      "title": "embedded systems",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-rabbitmq",
+      "title": "rabbitmq",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-kvm",
+      "title": "kvm",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-psicologia",
+      "title": "psicologia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-multi-tenant",
+      "title": "multi-tenant",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-criptografia",
+      "title": "criptografia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-visual-computing",
+      "title": "visual-computing",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-html",
+      "title": "html",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-techstack",
+      "title": "techstack",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-event-driven",
+      "title": "event-driven",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-transformers",
+      "title": "transformers",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-reflection",
+      "title": "reflection",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-jwt",
+      "title": "jwt",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-engineering",
+      "title": "engineering",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-feynman",
+      "title": "feynman",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-net",
+      "title": ".net",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-system",
+      "title": "system",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-networking",
+      "title": "networking",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-anuncio",
+      "title": "anuncio",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-postgis",
+      "title": "postgis",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ia",
+      "title": "ia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-knowledge-os",
+      "title": "knowledge-os",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-jsp",
+      "title": "jsp",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-geolocation",
+      "title": "geolocation",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-python",
+      "title": "python",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-java",
+      "title": "java",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-spatial",
+      "title": "spatial",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-inteligencia-artificial",
+      "title": "inteligência-artificial",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-big-o",
+      "title": "big-o",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-macos",
+      "title": "macos",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-multi-tenant-architecture",
+      "title": "multi-tenant architecture",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-speed-reading",
+      "title": "speed reading",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-risk-analysis",
+      "title": "risk-analysis",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-science",
+      "title": "science",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-oauth2",
+      "title": "oauth2",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-rest-api",
+      "title": "rest api",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-keycloak",
+      "title": "keycloak",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-linguagens",
+      "title": "linguagens",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agentes",
+      "title": "agentes",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-operations",
+      "title": "operations",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
       "id": "topic-ml",
       "title": "ml",
       "kind": "topic",
@@ -856,8 +527,400 @@
       "size": 10
     },
     {
-      "id": "topic-simulacao",
-      "title": "simulacao",
+      "id": "topic-inovacao",
+      "title": "inovação",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-virtualization",
+      "title": "virtualization",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-knowledge",
+      "title": "knowledge",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-monte-carlo",
+      "title": "monte-carlo",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-nobel",
+      "title": "nobel",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-threejs",
+      "title": "threejs",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-cuda",
+      "title": "cuda",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-desempenho",
+      "title": "desempenho",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-pytorch",
+      "title": "pytorch",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-solid",
+      "title": "solid",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-domain",
+      "title": "domain",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-postgresql",
+      "title": "postgresql",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-qualidade",
+      "title": "qualidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-teoria-da-computacao",
+      "title": "teoria-da-computação",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-mermaid",
+      "title": "mermaid",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-backend",
+      "title": "backend",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-guerra",
+      "title": "guerra",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-turing",
+      "title": "turing",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-computacao",
+      "title": "computação",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-c",
+      "title": "c++",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-design-patterns",
+      "title": "design-patterns",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-makefile",
+      "title": "makefile",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-maps",
+      "title": "maps",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-middleware",
+      "title": "middleware",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-electromagnetism",
+      "title": "electromagnetism",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-biografia",
+      "title": "biografia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-electronics",
+      "title": "electronics",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-pessoal",
+      "title": "pessoal",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-computacao",
+      "title": "computacao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-entity-framework",
+      "title": "entity framework",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-sos",
+      "title": "sos",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-parsing",
+      "title": "parsing",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-event-driven-services",
+      "title": "event-driven services",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-matematica",
+      "title": "matemática",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-d3js",
+      "title": "d3js",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-algorithms",
+      "title": "algorithms",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-security",
+      "title": "security",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-tdd",
+      "title": "tdd",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ciencia",
+      "title": "ciência",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-node-js",
+      "title": "node.js",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-webgl",
+      "title": "webgl",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-log-mining",
+      "title": "log-mining",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-dart",
+      "title": "dart",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-chain-of-thought",
+      "title": "chain-of-thought",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-prompt-engineering",
+      "title": "prompt engineering",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-resilience",
+      "title": "resilience",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ddd",
+      "title": "ddd",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-privacidade",
+      "title": "privacidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-cli",
+      "title": "cli",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-cryptography",
+      "title": "cryptography",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-neuroplasticidade",
+      "title": "neuroplasticidade",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-c",
+      "title": "c#",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-tecnologia",
+      "title": "tecnologia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-flutter",
+      "title": "flutter",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-javascript",
+      "title": "javascript",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-memory",
+      "title": "memory",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-svelte",
+      "title": "svelte",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -877,407 +940,29 @@
       "size": 10
     },
     {
-      "id": "topic-dart",
-      "title": "dart",
+      "id": "topic-quantica",
+      "title": "quantica",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-agents",
-      "title": "agents",
+      "id": "topic-engenharia",
+      "title": "engenharia",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-ai-agents",
-      "title": "ai agents",
+      "id": "topic-fisica",
+      "title": "física",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-css",
-      "title": "css",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-multi-tenant",
-      "title": "multi-tenant",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-oop",
-      "title": "oop",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-tdd",
-      "title": "tdd",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-knowledge-os",
-      "title": "knowledge-os",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-performance",
-      "title": "performance",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-c",
-      "title": "c++",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-engineering",
-      "title": "engineering",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-entropia",
-      "title": "entropia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-frontend",
-      "title": "frontend",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-net-core",
-      "title": ".net core",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-jwt",
-      "title": "jwt",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-projeto-manhattan",
-      "title": "projeto-manhattan",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-tomada-de-decisao",
-      "title": "tomada-de-decisão",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-turing",
-      "title": "turing",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-postgresql",
-      "title": "postgresql",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-speed-reading",
-      "title": "speed reading",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-lgpd",
-      "title": "lgpd",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-gc",
-      "title": "gc",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-astrophysics",
-      "title": "astrophysics",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-rabbitmq",
-      "title": "rabbitmq",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-prompt-engineering",
-      "title": "prompt engineering",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-threejs",
-      "title": "threejs",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-neuroplasticidade",
-      "title": "neuroplasticidade",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-desempenho",
-      "title": "desempenho",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-projeto",
-      "title": "projeto",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-design-patterns",
-      "title": "design-patterns",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-javascript",
-      "title": "javascript",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-inteligencia-artificial",
-      "title": "inteligência-artificial",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-space-weather",
-      "title": "space-weather",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-cryptography",
-      "title": "cryptography",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-keycloak",
-      "title": "keycloak",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-security",
-      "title": "security",
-      "kind": "topic",
-      "color": "#7C5CFF",
-      "size": 10
-    },
-    {
-      "id": "topic-flutter",
-      "title": "flutter",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-rust",
-      "title": "rust",
-      "kind": "topic",
-      "color": "#00C2FF",
-      "size": 10
-    },
-    {
-      "id": "topic-servlets",
-      "title": "servlets",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-filas",
-      "title": "filas",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-banco-de-dados",
-      "title": "banco-de-dados",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-agentes",
-      "title": "agentes",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-node-js",
-      "title": "node.js",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-teoria-da-computacao",
-      "title": "teoria-da-computação",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-teoria",
-      "title": "teoria",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-matematica",
-      "title": "matemática",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-redes-neurais",
-      "title": "redes-neurais",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-feedback",
-      "title": "feedback",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-domain-modeling",
-      "title": "domain modeling",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-adr",
-      "title": "adr",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-algoritmos",
-      "title": "algoritmos",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-macos",
-      "title": "macos",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-arquitetura",
-      "title": "arquitetura",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-architecture",
-      "title": "architecture",
-      "kind": "topic",
-      "color": "#7C5CFF",
-      "size": 10
-    },
-    {
-      "id": "topic-hiro",
-      "title": "hiro",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-ciencia",
-      "title": "ciencia",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-assembly",
-      "title": "assembly",
-      "kind": "topic",
-      "color": "#64748b",
-      "size": 10
-    },
-    {
-      "id": "topic-embedded-systems",
-      "title": "embedded systems",
+      "id": "topic-runtime",
+      "title": "runtime",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -1290,22 +975,64 @@
       "size": 10
     },
     {
-      "id": "topic-diffusao",
-      "title": "diffusao",
+      "id": "topic-github-pages",
+      "title": "github pages",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-tipagem",
-      "title": "tipagem",
+      "id": "topic-ai-agents",
+      "title": "ai agents",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-react",
-      "title": "react",
+      "id": "topic-hiro",
+      "title": "hiro",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-oop",
+      "title": "oop",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-gemini-api",
+      "title": "gemini api",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-adr",
+      "title": "adr",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-architecture",
+      "title": "architecture",
+      "kind": "topic",
+      "color": "#7C5CFF",
+      "size": 10
+    },
+    {
+      "id": "topic-embeddings",
+      "title": "embeddings",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-sql-server",
+      "title": "sql server",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
@@ -1318,17 +1045,290 @@
       "size": 10
     },
     {
-      "id": "topic-privacidade",
-      "title": "privacidade",
+      "id": "topic-projeto-manhattan",
+      "title": "projeto-manhattan",
       "kind": "topic",
       "color": "#64748b",
       "size": 10
     },
     {
-      "id": "topic-ia",
-      "title": "ia",
+      "id": "topic-software",
+      "title": "software",
       "kind": "topic",
       "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-gc",
+      "title": "gc",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-integration",
+      "title": "integration",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-performance",
+      "title": "performance",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-historia",
+      "title": "história",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-machine-learning",
+      "title": "machine-learning",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-moe",
+      "title": "moe",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-graphs",
+      "title": "graphs",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-radiation",
+      "title": "radiation",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-tomada-de-decisao",
+      "title": "tomada-de-decisão",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-apis",
+      "title": "apis",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-feedback",
+      "title": "feedback",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-estruturas-de-dados",
+      "title": "estruturas-de-dados",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-servlets",
+      "title": "servlets",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-ai",
+      "title": "ai",
+      "kind": "topic",
+      "color": "#3DFFBA",
+      "size": 10
+    },
+    {
+      "id": "topic-diffusao",
+      "title": "diffusao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-svg",
+      "title": "svg",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-typescript",
+      "title": "typescript",
+      "kind": "topic",
+      "color": "#00C2FF",
+      "size": 10
+    },
+    {
+      "id": "topic-entropia",
+      "title": "entropia",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-bits-vs-qubits",
+      "title": "bits-vs-qubits",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-tipagem",
+      "title": "tipagem",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-projeto",
+      "title": "projeto",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-metacognicao",
+      "title": "metacognicao",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-three-js",
+      "title": "three.js",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-kahneman",
+      "title": "kahneman",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-testes",
+      "title": "testes",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-filas",
+      "title": "filas",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-redes-neurais",
+      "title": "redes-neurais",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-frontend",
+      "title": "frontend",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-agc",
+      "title": "agc",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-orm",
+      "title": "orm",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-physics",
+      "title": "physics",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-algoritmos",
+      "title": "algoritmos",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-dotnet",
+      "title": "dotnet",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-mensageria",
+      "title": "mensageria",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-docker",
+      "title": "docker",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-qemu",
+      "title": "qemu",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-css",
+      "title": "css",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-diagrams",
+      "title": "diagrams",
+      "kind": "topic",
+      "color": "#64748b",
+      "size": 10
+    },
+    {
+      "id": "topic-rust",
+      "title": "rust",
+      "kind": "topic",
+      "color": "#00C2FF",
       "size": 10
     },
     {
@@ -1914,13 +1914,53 @@
       "value": 3
     },
     {
+      "source": "tech_skills",
+      "target": "topic-net",
+      "value": 2
+    },
+    {
+      "source": "tech_skills",
+      "target": "topic-python",
+      "value": 2
+    },
+    {
+      "source": "engineering",
+      "target": "topic-solid",
+      "value": 2
+    },
+    {
+      "source": "engineering",
+      "target": "topic-security",
+      "value": 2
+    },
+    {
       "source": "engineering",
       "target": "topic-ddd",
       "value": 2
     },
     {
       "source": "tech_skills",
-      "target": "topic-net",
+      "target": "topic-c",
+      "value": 2
+    },
+    {
+      "source": "tech_skills",
+      "target": "topic-javascript",
+      "value": 2
+    },
+    {
+      "source": "labs",
+      "target": "topic-gis",
+      "value": 2
+    },
+    {
+      "source": "engineering",
+      "target": "topic-architecture",
+      "value": 2
+    },
+    {
+      "source": "labs",
+      "target": "topic-ai",
       "value": 2
     },
     {
@@ -1930,47 +1970,7 @@
     },
     {
       "source": "tech_skills",
-      "target": "topic-c",
-      "value": 2
-    },
-    {
-      "source": "engineering",
-      "target": "topic-solid",
-      "value": 2
-    },
-    {
-      "source": "tech_skills",
-      "target": "topic-python",
-      "value": 2
-    },
-    {
-      "source": "labs",
-      "target": "topic-ai",
-      "value": 2
-    },
-    {
-      "source": "labs",
-      "target": "topic-gis",
-      "value": 2
-    },
-    {
-      "source": "tech_skills",
-      "target": "topic-javascript",
-      "value": 2
-    },
-    {
-      "source": "engineering",
-      "target": "topic-security",
-      "value": 2
-    },
-    {
-      "source": "tech_skills",
       "target": "topic-rust",
-      "value": 2
-    },
-    {
-      "source": "engineering",
-      "target": "topic-architecture",
       "value": 2
     },
     {
