@@ -125,22 +125,50 @@ class ProjectMap3D {
   }
 
   buildAraucariaTree() {
-    const trunkH = 850, baseR = 14
-    for (let i = 0; i < 10; i++) {
-        const h = trunkH / 10, r1 = baseR * Math.pow(1 - i/10, 0.75), r2 = baseR * Math.pow(1 - (i+1)/10, 0.75)
-        const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1, h, 12), new THREE.MeshStandardMaterial({ color: 0x222222, emissive: 0x00C2FF, emissiveIntensity: 0.08 }))
+    this.araucariaGroup = new THREE.Group(); this.araucariaGroup.visible = false; this.scene.add(this.araucariaGroup)
+    
+    // 1. Trunk (Discrete Segments)
+    const trunkH = 900, baseR = 15
+    const numSegments = 12
+    for (let i = 0; i < numSegments; i++) {
+        const h = trunkH / numSegments, r1 = baseR * Math.pow(1 - i/numSegments, 0.7), r2 = baseR * Math.pow(1 - (i+1)/numSegments, 0.7)
+        const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1, h, 12), new THREE.MeshStandardMaterial({ color: 0x1a1a1a, emissive: 0x00C2FF, emissiveIntensity: 0.1 }))
         seg.position.y = i * h + h/2; this.araucariaGroup.add(seg)
     }
-    const items = this.nodes.slice(1), whorls = 7, itemsPerWhorl = Math.ceil(items.length/whorls), GA = 137.5 * (Math.PI/180)
-    items.forEach((node, i) => {
-        const wIdx = Math.floor(i/itemsPerWhorl), wPos = i%itemsPerWhorl, h = (0.35 + (wIdx/whorls)*0.65) * trunkH
-        const dist = 280 + (wIdx/whorls)*180, angle = wPos * (Math.PI*2/itemsPerWhorl) + (wIdx*GA)
-        const pos = new THREE.Vector3(Math.cos(angle)*dist, h + Math.pow(dist/350, 2)*60, Math.sin(angle)*dist)
+
+    // 2. Whorls (Verticilos)
+    const items = this.nodes.slice(1)
+    const whorlSpacing = 110, startH = 250
+    const b0 = 5 // Average branches per whorl
+    
+    let itemIdx = 0
+    let whorlIdx = 0
+    
+    while (itemIdx < items.length) {
+      const h_n = startH + whorlIdx * whorlSpacing
+      const b_n = Math.min(b0 + Math.floor(Math.random() * 2), items.length - itemIdx)
+      const q = 0.88 // Reduction factor
+      const L_n = 400 * Math.pow(q, whorlIdx)
+      
+      for (let m = 0; m < b_n; m++) {
+        const node = items[itemIdx]
+        const theta = (m * Math.PI * 2) / b_n + (whorlIdx * 0.5) // Angular symmetry + whorl offset
+        
+        // Characteristic curved pos
+        const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n/300, 2) * 60, Math.sin(theta) * L_n)
         node.userData.treePos = pos
-        const start = new THREE.Vector3(0, h, 0), mid = start.clone().lerp(pos, 0.5); mid.y += 45
-        const branch = new THREE.Line(new THREE.BufferGeometry().setFromPoints(new THREE.QuadraticBezierCurve3(start, mid, pos).getPoints(24)), new THREE.LineBasicMaterial({ color: 0x7C5CFF, transparent: true, opacity: 0.2 }))
+        
+        // Branch Curve (Upward tension)
+        const start = new THREE.Vector3(0, h_n, 0)
+        const mid = start.clone().lerp(pos, 0.5); mid.y += 50 // Curve peak
+        const curve = new THREE.QuadraticBezierCurve3(start, mid, pos)
+        const branch = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(24)), new THREE.LineBasicMaterial({ color: 0x00DBFF, transparent: true, opacity: 0.25 }))
         this.araucariaGroup.add(branch)
-    })
+        
+        itemIdx++
+      }
+      whorlIdx++
+    }
   }
 
   createNodes() {
