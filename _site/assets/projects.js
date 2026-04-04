@@ -374,13 +374,226 @@ class ProjectMap3D {
   }
 }
 
-// ── Panel ───────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+//  ARAUCÁRIA TREE — 2D hierarchical visualization (inverted, canopy shape)
+// ══════════════════════════════════════════════════════════════════════════
+
+class AraucariaTree {
+  constructor(wrapper, data, onSelect) {
+    this.wrapper = wrapper; this.data = data; this.onSelect = onSelect
+    this.canvas = document.createElement('canvas')
+    this.canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:none;'
+    this.ctx = this.canvas.getContext('2d')
+    this.wrapper.appendChild(this.canvas)
+    this.nodes = []; this.edges = []; this.root = null
+    this.panX = 0; this.panY = 0; this.zoom = 1
+    this.drag = null; this.dragMoved = false; this.selected = null; this.hovered = null
+    this._raf = null; this.t = 0; this._centered = false
+    this.build()
+  }
+
+  build() {
+    const groups = {}
+    for (const d of this.data) (groups[d.kind] ??= []).push(d)
+    const root = { id: '_root', label: 'Knowledge OS', kind: 'central', depth: 0, children: [], item: null, x: 0, y: 0 }
+    this.nodes.push(root); this.root = root
+    for (const [kind, label] of [['project','Projetos'],['post','Publicações'],['document','Documentos']]) {
+      const items = groups[kind]; if (!items?.length) continue
+      const cat = { id: `_${kind}`, label: `${label} (${items.length})`, kind, depth: 1, children: [], item: null, x: 0, y: 0 }
+      root.children.push(cat); this.nodes.push(cat); this.edges.push([root, cat])
+      for (const d of items) {
+        const leaf = { id: d.id, label: d.name || d.title, kind, depth: 2, item: d, x: 0, y: 0 }
+        cat.children.push(leaf); this.nodes.push(leaf); this.edges.push([cat, leaf])
+      }
+    }
+  }
+
+  resize() {
+    const dpr = Math.min(devicePixelRatio, 2)
+    const W = this.wrapper.clientWidth, H = this.wrapper.clientHeight
+    this.canvas.width = W * dpr; this.canvas.height = H * dpr
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    this.W = W; this.H = H; this.layout()
+  }
+
+  layout() {
+    const cats = this.root.children; if (!cats.length) return
+    const nodeGap = 130
+    let col = 0
+    for (const cat of cats) { cat._s = col; cat._n = cat.children.length; for (const c of cat.children) c._col = col++ }
+    const totalCols = col; const cw = (totalCols - 1) * nodeGap; const ox = -cw / 2
+    this.root.x = 0; this.root.y = 500
+    for (const cat of cats) { cat.x = ox + (cat._s + (cat._n - 1) / 2) * nodeGap; cat.y = 250 }
+    for (const cat of cats) {
+      for (const item of cat.children) {
+        item.x = ox + item._col * nodeGap
+        const t = cat._n > 1 ? (item._col - cat._s) / (cat._n - 1) : 0.5
+        item.y = 50 - Math.sin(t * Math.PI) * 70
+      }
+    }
+    if (!this._centered) {
+      const xs = this.nodes.map(n => n.x), ys = this.nodes.map(n => n.y)
+      const bx = Math.min(...xs) - 120, by = Math.min(...ys) - 120
+      const bw = Math.max(...xs) - bx + 240, bh = Math.max(...ys) - by + 240
+      this.zoom = Math.min(this.W / bw, this.H / bh) * 0.82
+      this.panX = this.W / 2 - (bx + bw / 2) * this.zoom
+      this.panY = this.H / 2 - (by + bh / 2) * this.zoom
+      this._centered = true
+    }
+  }
+
+  sx(wx) { return wx * this.zoom + this.panX }
+  sy(wy) { return wy * this.zoom + this.panY }
+  wx(sx) { return (sx - this.panX) / this.zoom }
+  wy(sy) { return (sy - this.panY) / this.zoom }
+
+  hitTest(screenX, screenY) {
+    const mx = this.wx(screenX), my = this.wy(screenY)
+    for (let i = this.nodes.length - 1; i >= 0; i--) {
+      const n = this.nodes[i], r = [28, 20, 14][n.depth] || 14
+      if (Math.hypot(mx - n.x, my - n.y) < r + 10) return n
+    }
+    return null
+  }
+
+  draw() {
+    const { ctx, W, H, zoom } = this; this.t += 0.016
+    ctx.fillStyle = '#020408'; ctx.fillRect(0, 0, W, H)
+
+    // Ground glow at root
+    const rx = this.sx(this.root.x), ry = this.sy(this.root.y)
+    const rg = ctx.createRadialGradient(rx, ry, 0, rx, ry, 320 * zoom)
+    rg.addColorStop(0, 'rgba(0,194,255,0.07)'); rg.addColorStop(1, 'transparent')
+    ctx.fillStyle = rg; ctx.fillRect(0, 0, W, H)
+
+    // Dot grid
+    const step = 40 * zoom
+    if (step > 6) {
+      ctx.fillStyle = 'rgba(255,255,255,0.02)'
+      const mx = this.panX % step, my = this.panY % step
+      for (let x = mx; x < W; x += step) for (let y = my; y < H; y += step) { ctx.beginPath(); ctx.arc(x, y, 0.7, 0, 6.28); ctx.fill() }
+    }
+
+    // Edges
+    for (const [from, to] of this.edges) {
+      const sel = this.selected
+      const active = sel && (from === sel || to === sel || from.children?.includes(sel))
+      const c = KIND_HEX[to.kind] || '#64748b'
+      const x1 = this.sx(from.x), y1 = this.sy(from.y), x2 = this.sx(to.x), y2 = this.sy(to.y)
+      let cx2, cy2
+      if (from.depth === 0) { cx2 = x1 + (x2 - x1) * 0.15; cy2 = y1 + (y2 - y1) * 0.65 }
+      else { cx2 = x1 + (x2 - x1) * 0.5; cy2 = y1 + (y2 - y1) * 0.15 }
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.quadraticCurveTo(cx2, cy2, x2, y2)
+      ctx.strokeStyle = active ? c + 'bb' : c + '1a'; ctx.lineWidth = from.depth === 0 ? 2.5 : 1.5; ctx.stroke()
+    }
+
+    // Nodes
+    for (const n of [...this.nodes].sort((a, b) => b.depth - a.depth)) {
+      const x = this.sx(n.x), y = this.sy(n.y)
+      const baseR = [28, 20, 14][n.depth]; const r = baseR * zoom
+      const c = KIND_HEX[n.kind] || '#ffffff'
+      const isSel = n === this.selected, isHov = n === this.hovered
+      const pulse = isSel ? 1 + Math.sin(this.t * 3) * 0.06 : 1
+
+      // Glow
+      if (isSel || n.depth === 0) {
+        const g = ctx.createRadialGradient(x, y, r * pulse, x, y, r * 3.5 * pulse)
+        g.addColorStop(0, c + '44'); g.addColorStop(1, c + '00')
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * 3.5 * pulse, 0, 6.28); ctx.fill()
+      }
+      // Ring on hover/select
+      if (isHov || isSel) {
+        ctx.beginPath(); ctx.arc(x, y, r * pulse + 4, 0, 6.28)
+        ctx.strokeStyle = c + (isSel ? 'cc' : '55'); ctx.lineWidth = 2; ctx.stroke()
+      }
+      // Body
+      ctx.beginPath(); ctx.arc(x, y, r * pulse, 0, 6.28)
+      const gr = ctx.createRadialGradient(x - r * 0.25, y - r * 0.25, 0, x, y, r * pulse)
+      gr.addColorStop(0, c + 'ee'); gr.addColorStop(1, c + '77')
+      ctx.fillStyle = gr; ctx.fill()
+
+      // Label
+      const fs = [13, 11.5, 9.5][n.depth] * Math.min(zoom, 1.6)
+      if (fs > 4.5) {
+        ctx.font = `${n.depth < 2 ? '700' : '500'} ${fs}px "Inter",system-ui,sans-serif`
+        ctx.textAlign = 'center'; ctx.textBaseline = 'top'
+        ctx.fillStyle = isSel ? '#fff' : 'rgba(255,255,255,0.6)'
+        const lb = n.label.length > 28 ? n.label.slice(0, 26) + '..' : n.label
+        ctx.fillText(lb, x, y + r * pulse + 6)
+      }
+    }
+  }
+
+  bindEvents() {
+    const c = this.canvas
+    c.addEventListener('pointerdown', e => { this.drag = { x: e.clientX, y: e.clientY, px: this.panX, py: this.panY }; this.dragMoved = false; c.setPointerCapture(e.pointerId) })
+    c.addEventListener('pointermove', e => {
+      const rect = c.getBoundingClientRect()
+      if (this.drag) { const dx = e.clientX - this.drag.x, dy = e.clientY - this.drag.y; if (Math.abs(dx) + Math.abs(dy) > 4) this.dragMoved = true; this.panX = this.drag.px + dx; this.panY = this.drag.py + dy }
+      this.hovered = this.hitTest(e.clientX - rect.left, e.clientY - rect.top)
+      c.style.cursor = this.drag ? 'grabbing' : this.hovered ? 'pointer' : 'grab'
+    })
+    c.addEventListener('pointerup', e => {
+      const wasDrag = this.dragMoved; this.drag = null; if (wasDrag) return
+      const rect = c.getBoundingClientRect()
+      const hit = this.hitTest(e.clientX - rect.left, e.clientY - rect.top)
+      if (hit) {
+        this.selected = hit === this.selected ? null : hit
+        if (this.selected) { if (hit.item) this.onSelect?.(hit.item, this.data); else this.onSelect?.({ kind: 'central', name: hit.depth === 0 ? 'Hiro' : hit.label }, this.data) }
+        else window.hidePanel?.()
+      } else { this.selected = null; window.hidePanel?.() }
+    })
+    c.addEventListener('wheel', e => {
+      e.preventDefault(); const rect = c.getBoundingClientRect()
+      const mx = e.clientX - rect.left, my = e.clientY - rect.top
+      const worldX = this.wx(mx), worldY = this.wy(my)
+      this.zoom = Math.max(0.12, Math.min(5, this.zoom * (e.deltaY < 0 ? 1.12 : 0.89)))
+      this.panX = mx - worldX * this.zoom; this.panY = my - worldY * this.zoom
+    }, { passive: false })
+    this._onResize = () => this.resize(); window.addEventListener('resize', this._onResize)
+  }
+
+  _loop() { this.draw(); this._raf = requestAnimationFrame(() => this._loop()) }
+  show() { this.canvas.style.display = ''; this._centered = false; this.resize(); this.bindEvents(); this._loop() }
+  hide() { this.canvas.style.display = 'none'; cancelAnimationFrame(this._raf); if (this._onResize) { window.removeEventListener('resize', this._onResize); this._onResize = null } }
+  destroy() { this.hide(); this.canvas.remove() }
+}
+
+// ── Panel + View Toggle ────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('[data-project-flow]')
   const jsonEl = document.getElementById('projects-data')
   if (!container || !jsonEl) return
   const data = JSON.parse(jsonEl.textContent)
+
+  // ── Initialize visualizations ──
+  let mode = '3d'
   window.projectMap = new ProjectMap3D(container, data)
+  const araucaria = new AraucariaTree(container, data, (item, allData) => window.showPanel(item, allData))
+
+  // ── View toggle button ──
+  const shell = container.closest('.project-flow-shell')
+  if (shell) {
+    const toggle = document.createElement('button')
+    toggle.className = 'view-mode-toggle'; toggle.title = 'Alternar visualização'
+    const setToggleIcon = (m) => { toggle.innerHTML = m === '3d' ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 10.5V7c0-1.38-4.03-2.5-7-2.5S3 5.62 3 7v10c0 1.38 4.03 2.5 7 2.5"/><path d="M3 7c0 1.38 4.03 2.5 7 2.5S17 8.38 17 7"/><path d="M3 12c0 1.38 4.03 2.5 7 2.5"/><path d="M19 22l3-3"/><circle cx="19" cy="19" r="3"/></svg><span>Araucária</span>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3m0 12v3m-7.8-4.2 2.1-2.1m11.4-5.4 2.1-2.1M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1"/></svg><span>3D</span>' }
+    setToggleIcon('3d'); shell.prepend(toggle)
+    toggle.addEventListener('click', () => {
+      if (mode === '3d') {
+        mode = 'tree'; setToggleIcon('tree')
+        window.projectMap.renderer.domElement.style.display = 'none'
+        window.projectMap.controls.enabled = false; window.projectMap.controls.autoRotate = false
+        if (window.projectMap.readerActive) window.projectMap.exitReader()
+        araucaria.show(); window.hidePanel()
+      } else {
+        mode = '3d'; setToggleIcon('3d')
+        araucaria.hide()
+        window.projectMap.renderer.domElement.style.display = ''
+        window.projectMap.controls.enabled = true; window.projectMap.controls.autoRotate = true
+        window.hidePanel()
+      }
+    })
+  }
 
   window.showPanel = (item, allData) => {
     const pnl = document.querySelector('[data-project-panel]'); if (!pnl) return

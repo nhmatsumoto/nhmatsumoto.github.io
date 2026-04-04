@@ -344,6 +344,8 @@
 
   // ── Engine ──────────────────────────────────────────────────────────────────
   async function init(searchIndexUrl) {
+    // Skip on projects page — araucária mode replaces btree there
+    if (document.body.classList.contains('page-projects')) return
     let rawItems = []
     try {
       const res = await fetch(searchIndexUrl)

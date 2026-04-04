@@ -116,7 +116,7 @@
         "open_docs": "abrir docs",
         "link_copied": "Link copiado",
         "copy_from_address": "Copie pela barra de endereço",
-        "view_project": "Ver projeto",
+        "view_project": "Ver",
         "close": "Fechar"
       },
       "status": {
@@ -251,7 +251,7 @@
         "open_docs": "open docs",
         "link_copied": "Link copied",
         "copy_from_address": "Copy from address bar",
-        "view_project": "View project",
+        "view_project": "View",
         "close": "Close"
       },
       "status": {

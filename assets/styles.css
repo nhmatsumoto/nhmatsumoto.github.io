@@ -1981,6 +1981,50 @@ button, input, select {
   max-width: 100% !important;
 }
 
+/* View mode toggle (3D ↔ Araucária) */
+.view-mode-toggle {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: hsla(var(--bg-h), var(--bg-s), var(--bg-l), 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.view-mode-toggle:hover {
+  background: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.view-mode-toggle svg {
+  flex-shrink: 0;
+}
+
+.view-mode-toggle span {
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .view-mode-toggle span { display: none; }
+  .view-mode-toggle { padding: var(--space-2); }
+}
+
 /* Slim toolbar above the canvas */
 .flow-toolbar {
   display: flex;
