@@ -335,20 +335,17 @@ class ProjectMap3D {
 
   addFoliageData(curve, pos, col) {
     const points = curve.getPoints(10) // Reduced from 20 to 10
-    const dir = new THREE.Vector3(), side1 = new THREE.Vector3(), side2 = new THREE.Vector3(), s = new THREE.Vector3()
-    const upVec = new THREE.Vector3(0, 1, 0)
     points.forEach((p, i) => {
       if (i === 0) return
-      dir.copy(p).sub(points[i - 1]).normalize()
-      side1.crossVectors(dir, upVec).normalize()
-      side2.crossVectors(dir, side1).normalize()
+      const dir = p.clone().sub(points[i - 1]).normalize()
+      const side1 = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize()
+      const side2 = new THREE.Vector3().crossVectors(dir, side1).normalize()
       const l_mult = i / points.length
       const tier = this.getNodeTier({ stack: [] }) // Default check
       const d_mult = l_mult > 0.6 ? 6 : 3 // Reduced density
       for (let j = 0; j < d_mult; j++) {
         const ang = (j / d_mult) * Math.PI * 2 + i * 0.5
-        const cos_ang = Math.cos(ang), sin_ang = Math.sin(ang)
-        s.copy(side1).multiplyScalar(cos_ang).add(side2.clone().multiplyScalar(sin_ang))
+        const s = side1.clone().multiplyScalar(Math.cos(ang)).add(side2.clone().multiplyScalar(Math.sin(ang)))
         const reach = (3 + l_mult * 10) * (0.8 + Math.random() * 0.4)
         const start = p.clone().add(s.clone().multiplyScalar(reach * 0.5)), end = start.clone().add(dir.clone().multiplyScalar(18)).add(s.clone().multiplyScalar(reach))
         pos.push(start.x, start.y, start.z, end.x, end.y, end.z)
@@ -573,6 +570,7 @@ class ProjectMap3D {
 
   createConnections() {
     // 1. Atom Center Links
+    const ctr = this.nodes[0].position
     this.nodes.slice(1).forEach(n => {
       const t = n.position, cc = KIND_COLOR[n.userData.item.kind]
       const mid = ctr.clone().lerp(t, 0.5); mid.y += 40 + Math.random() * 60
