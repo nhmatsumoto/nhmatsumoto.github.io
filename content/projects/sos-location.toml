@@ -1,7 +1,11 @@
 slug = "sos-location"
-name = "SOS Location"
+name_en = "SOS Location"
+name_ja = "SOSロケーション"
 headline = "Open-source platform for monitoring, mapping, and coordinating natural disaster response."
+headline_ja = "自然災害の監視、マッピング、対応調整のためのオープンソースプラットフォーム。"
 summary = "Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real."
+summary_en = "Disaster management platform integrating geospatial data, weather, and humanitarian resources in real-time."
+summary_ja = "地理空間データ、気象、人道資源をリアルタイムで統合する災害管理プラットフォーム。"
 status = "published"
 stack = ["TypeScript", "Node.js", "GIS", "Event-Driven"]
 badges = ["social-good", "gis", "open-source"]
@@ -18,6 +22,12 @@ events -> risk map -> ops view
 view_engine = "binary-tree"
 overview = """
 SOS Location é uma iniciativa de resposta humanitária focada no uso de tecnologia geoespacial para acelerar a tomada de decisão em cenários de crise. O projeto organiza camadas de dados complexas em uma interface operacional simples.
+"""
+overview_en = """
+SOS Location is a humanitarian response initiative focused on using geospatial technology to accelerate decision-making in crisis scenarios. The project organizes complex data layers into a simple operational interface.
+"""
+overview_ja = """
+SOSロケーションは、危機シナリオにおける意思決定を加速するために地理空間技術を使用することに焦点を当てた人道支援イニシアチブです。このプロジェクトは、複雑なデータレイヤーをシンプルな操作インターフェースに整理します。
 """
 problem_solution = """
 Em desastres, a fragmentação da informação custa vidas. A solução centraliza feeds de clima, áreas de risco e recursos disponíveis, utilizando processamento assíncrono para manter a atualização constante sem sobrecarregar o sistema.

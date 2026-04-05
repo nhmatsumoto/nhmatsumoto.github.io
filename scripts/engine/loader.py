@@ -39,7 +39,7 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
     config = load_blog_config()
     publications_dir = config["build"]["publications_dir"]
 
-    return {
+    res = {
         "id": post_id,
         "slug": slug,
         "kind": "article",
@@ -70,6 +70,12 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
         "lessons": normalize_string_list(raw.get("lessons", [])),
     }
 
+    # Add localized fields
+    for k, v in raw.items():
+        if any(k.startswith(p) for p in ["title_", "summary_", "body_"]):
+            res[k] = v
+    return res
+
 def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
     name = str(raw.get("name", "") or "").strip() or "Untitled Project"
     slug = slugify(str(raw.get("slug", "") or "").strip() or name)
@@ -78,7 +84,7 @@ def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> d
         status = "research"
     
     config = load_blog_config()
-    return {
+    res = {
         "slug": slug,
         "name": name,
         "headline": str(raw.get("headline", "") or "").strip(),
@@ -110,6 +116,12 @@ def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> d
         or any(config["math"]["inline_delimiter"] in str(raw.get(f, "")) for f in ["overview", "problem_solution", "architecture", "stack_notes"])
         or any(config["math"]["block_delimiter"] in str(raw.get(f, "")) for f in ["overview", "problem_solution", "architecture", "stack_notes"]),
     }
+
+    # Add localized fields
+    for k, v in raw.items():
+        if any(k.startswith(p) for p in ["name_", "headline_", "summary_", "overview_", "problem_solution_", "architecture_"]):
+            res[k] = v
+    return res
 
 def normalise_document(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
     slug = slugify(str(raw.get("slug", "") or "").strip() or str(raw.get("title", "") or "document"))

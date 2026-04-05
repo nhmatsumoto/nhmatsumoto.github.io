@@ -28,7 +28,7 @@ const ZELDA_PALETTE = {
   sun: 0xFFF9C4,
   flower: 0xff1744 // Red Flower
 }
-const KIND_LABEL = {
+let KIND_LABEL = {
   post: 'Publicação', project: 'Projeto', document: 'Documento',
 }
 
@@ -67,6 +67,13 @@ function createGlowTexture(size = 128) {
   g.addColorStop(0.4, 'rgba(255,255,255,0.15)'); g.addColorStop(1, 'rgba(255,255,255,0)')
   ctx.fillStyle = g; ctx.fillRect(0, 0, size, size)
   return new THREE.CanvasTexture(c)
+}
+
+function getLocalizedElement(i, loc) {
+  const item = PERIODIC_TABLE[i % PERIODIC_TABLE.length];
+  if (!loc) return item;
+  const key = `elements.${item.symbol.toLowerCase()}`;
+  return { ...item, name: loc.translate(key, item.name) };
 }
 
 
@@ -114,6 +121,7 @@ class ProjectMap3D {
     this.buildAraucariaBase() // New Pedestal
     this.buildReaderDOM()
     this.addEventHandlers()
+    this.loc = null; // To be set by initKnowledgeGraph
     this.initStoreSync()
 
     // Initial Hierarchy: nodesGroup starts in atomGroup
@@ -134,12 +142,43 @@ class ProjectMap3D {
 
     // Subscribe to future mode changes
     let lastMode = initialMode;
+    let lastLocale = useStore.getState().locale;
+
     useStore.subscribe((state) => {
+      // 1. Vis Mode
       if (state.visMode !== lastMode) {
         lastMode = state.visMode;
         this.setLayout(lastMode);
       }
+
+      // 2. Locale
+      if (state.locale !== lastLocale) {
+        lastLocale = state.locale;
+        this.updateLabelsForLocale();
+      }
     });
+
+    this.updateLabelsForLocale();
+  }
+
+  updateLabelsForLocale() {
+    if (!this.loc) return;
+    
+    // Update Kind Labels
+    KIND_LABEL.post = this.loc.translate('kinds.post', 'Publicação');
+    KIND_LABEL.project = this.loc.translate('kinds.project', 'Projeto');
+    KIND_LABEL.document = this.loc.translate('kinds.document', 'Documento');
+
+    // Update Node Headings/Tooltips
+    this.nodes.forEach((n, i) => {
+      if (n.userData.kind === 'central') return;
+      const elem = getLocalizedElement(i, this.loc);
+      n.userData.elementName = elem.name;
+    });
+
+    if (this.selected) {
+      // Update Legend if panel open? (Already handled by intelligence panel Reactivity)
+    }
   }
 
   initScene() {
@@ -926,11 +965,13 @@ class ProjectMap3D {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+window.initKnowledgeGraph = (loc) => {
   const container = document.querySelector('[data-project-flow]'), jsonEl = document.getElementById('projects-data')
   if (!container || !jsonEl) return
   const data = JSON.parse(jsonEl.textContent)
   window.projectMap = new ProjectMap3D(container, data)
+  window.projectMap.loc = loc
+  window.projectMap.updateLabelsForLocale()
 
   document.querySelector('[data-panel-close]')?.addEventListener('click', () => window.projectMap?.deselectNode())
 
@@ -941,4 +982,4 @@ document.addEventListener('DOMContentLoaded', () => {
       if (n) window.projectMap.handleNodeClick(n)
     }, 800)
   }
-})
+}

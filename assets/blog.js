@@ -169,24 +169,31 @@ const initIntelligencePanel = (loc) => {
 
   const updatePanelUI = (data) => {
     if (!data) return;
+    const locale = useStore.getState().locale;
+    const suffix = locale.split("-")[0]; // e.g. "en", "ja"
+
+    const getName = (d) => d[`name_${suffix}`] || d[`title_${suffix}`] || d.name || d.title || "";
+    const getHeadline = (d) => d[`headline_${suffix}`] || d.headline || "";
+    const getSummary = (d) => d[`summary_${suffix}`] || d.summary || "";
+    const getBody = (d) => d[`body_html_${suffix}`] || d.body_html || getSummary(d);
 
     if (elements.role) {
       const kind = data.kind || "knowledge";
       elements.role.textContent = loc?.translate(`kinds.${kind}`, kind) || kind;
     }
     
-    if (elements.name) elements.name.textContent = data.name || data.title || "";
-    if (elements.headline) elements.headline.textContent = data.headline || "";
+    if (elements.name) elements.name.textContent = getName(data);
+    if (elements.headline) elements.headline.textContent = getHeadline(data);
     
     if (elements.summary) {
-      if (data.body_html) {
-        elements.summary.innerHTML = data.body_html;
-        // Store original code for Mermaid re-triggering if needed
+      const body = getBody(data);
+      if (typeof body === 'string' && (body.includes('<') || data.body_html)) {
+        elements.summary.innerHTML = body;
         elements.summary.querySelectorAll(".mermaid").forEach(m => {
           if (!m.getAttribute("data-original-code")) m.setAttribute("data-original-code", m.innerHTML);
         });
       } else {
-        elements.summary.textContent = data.summary || "";
+        elements.summary.textContent = body;
       }
     }
 
@@ -196,7 +203,6 @@ const initIntelligencePanel = (loc) => {
 
     if (elements.metaRow) {
       const meta = [];
-      const locale = useStore.getState().locale;
       if (data.published_dt) {
         const date = new Date(data.published_dt);
         meta.push(`<span>${new Intl.DateTimeFormat(locale, { day: "2-digit", month: "long", year: "numeric" }).format(date)}</span>`);
@@ -209,7 +215,7 @@ const initIntelligencePanel = (loc) => {
     if (elements.link) {
       elements.link.href = data.resolved_url || data.url || "#";
       const actionKey = data.kind === "project" ? "actions.view_project" : "actions.read_article";
-      elements.link.innerHTML = `<i data-lucide="eye"></i> ${loc?.translate(actionKey, "Ver")} <i data-lucide="arrow-right"></i>`;
+      elements.link.innerHTML = `<i data-lucide="eye"></i> ${loc?.translate(actionKey, "View")} <i data-lucide="arrow-right"></i>`;
     }
 
     if (typeof lucide !== 'undefined') lucide.createIcons();

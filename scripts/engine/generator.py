@@ -202,7 +202,8 @@ def build_graph_data(posts, projects, documents):
         slug = res.get("slug")
         tags = res.get("tags", []) if kind != "project" else res.get("stack", [])
         
-        node_map[slug] = {
+        # Core fields
+        node_data = {
             "id": slug, 
             "title": res.get("title") or res.get("name"), 
             "kind": kind,
@@ -215,6 +216,13 @@ def build_graph_data(posts, projects, documents):
             "stack": res.get("stack") if kind == "project" else res.get("tags"),
             "size": 8 if kind == "project" else 6
         }
+        
+        # Merge all other metadata (including localized fields)
+        for k, v in res.items():
+            if k not in node_data and isinstance(v, (str, list, int, float, bool)):
+                node_data[k] = v
+                
+        node_map[slug] = node_data
         nodes.append(node_map[slug])
         
         # Link topics to publications
