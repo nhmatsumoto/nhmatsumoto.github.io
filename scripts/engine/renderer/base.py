@@ -106,6 +106,16 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
         for s in (extra_scripts or [])
     )
 
+    import_map = {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+            "@tweenjs/tween.js": "https://unpkg.com/@tweenjs/tween.js@23.0.0/dist/tween.esm.js",
+            "zustand": "https://unpkg.com/zustand@4.4.1/esm/vanilla.mjs"
+        }
+    }
+    import_map_html = f'<script type="importmap">{json.dumps(import_map)}</script>'
+
     return f"""<!DOCTYPE html>
 <html lang="{html.escape(locale)}" data-theme="dark">
   <head>
@@ -120,6 +130,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => {{ mermaid.initialize({{ startOnLoad: true, theme: 'dark' }}); lucide.createIcons(); }});</script>
     {math_meta}
+    {import_map_html}
   </head>
   <body class="{html.escape(body_class)}" data-has-math="{str(has_math).lower()}" data-default-locale="{html.escape(locale)}">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">{html.escape(translate(i18n, locale, "accessibility.skip_to_content", "Ir para o conteúdo"))}</a>
@@ -132,7 +143,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     {render_palette(site, i18n, locale)}
     <div class="sidebar-backdrop" data-sidebar-toggle></div>
     <script id="site-i18n" type="application/json">{i18n_payload}</script>
-    <script src="{site_href(site, '/assets/blog.js')}" defer></script>
+    <script src="{site_href(site, '/assets/blog.js')}" type="module"></script>
     <script src="{site_href(site, '/assets/graphview.js')}" defer></script>
     <script src="{site_href(site, '/assets/btree-view.js')}" defer></script>
     {scripts_html}

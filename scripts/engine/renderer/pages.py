@@ -168,15 +168,6 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.projects", "projects"), "url": "", "key": "nav.projects"}], i18n, locale)
     flow_data = render_projects_flow_data(posts, projects, documents)
     content = f"""
-    <script type="importmap">
-    {{
-      "imports": {{
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
-        "@tweenjs/tween.js": "https://unpkg.com/@tweenjs/tween.js@23.0.0/dist/tween.esm.js"
-      }}
-    }}
-    </script>
     <div class="project-flow-shell">
       <div class="project-flow-wrapper" data-project-flow></div>
     </div>
