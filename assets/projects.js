@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import TWEEN from '@tweenjs/tween.js'
+import useStore from './store.js'
 
 /**
  * Technical Knowledge OS — 3D Project Flow (V9 — Atom & Araucária)
@@ -113,13 +114,30 @@ class ProjectMap3D {
     this.buildAraucariaBase() // New Pedestal
     this.buildReaderDOM()
     this.addEventHandlers()
+    this.initStoreSync()
 
     // Initial Hierarchy: nodesGroup starts in atomGroup
     this.atomGroup.add(this.nodesGroup)
 
     // Initial Visibility
-    this.araucariaGroup.visible = false
+    this.araucariaGroup.visible = this.layoutMode === 'arvore'
+    this.atomGroup.visible = this.layoutMode === 'atomo'
     this.animate()
+  }
+
+  initStoreSync() {
+    // Sync initial mode from store
+    const initialMode = useStore.getState().visMode;
+    if (initialMode !== this.layoutMode) {
+      this.setLayout(initialMode);
+    }
+
+    // Subscribe to future mode changes
+    useStore.subscribe((state, prevState) => {
+      if (state.visMode !== prevState.visMode) {
+        this.setLayout(state.visMode);
+      }
+    });
   }
 
   initScene() {
@@ -601,8 +619,13 @@ class ProjectMap3D {
   }
 
   setLayout(mode) {
-    if (this.layoutMode === mode) return
+    if (this.layoutMode === mode && this.transitioning) return
     this.layoutMode = mode; const isTree = mode === 'arvore'
+    
+    // Sync store if changed locally
+    if (useStore.getState().visMode !== mode) {
+      useStore.getState().setVisMode(mode);
+    }
     this.atomGroup.visible = !isTree; this.araucariaGroup.visible = isTree
     this.transitioning = true
 
@@ -616,7 +639,7 @@ class ProjectMap3D {
     if (isTree) {
       this.scene.attach(this.nodesGroup)
       // Start Above Tree
-      new TWEEN.Tween(this.camera.position).to({ x: 0, y: 2200, z: 2000 }, 2000).easing(TWEEN.Easing.Cubic.Out).start()
+      new TWEEN.Tween(this.camera.position).to({ x: 0, y: 1800, z: 2200 }, 2000).easing(TWEEN.Easing.Cubic.Out).onComplete(() => { this.transitioning = false }).start()
       new TWEEN.Tween(this.controls.target).to({ x: 0, y: 1200, z: 0 }, 2000).start()
 
       // Zelda Environment Active
@@ -627,7 +650,7 @@ class ProjectMap3D {
     } else {
       this.atomGroup.attach(this.nodesGroup)
       // Space Reset
-      new TWEEN.Tween(this.camera.position).to({ x: 0, y: 400, z: 1000 }, 1500).easing(TWEEN.Easing.Cubic.Out).start()
+      new TWEEN.Tween(this.camera.position).to({ x: 0, y: 400, z: 1200 }, 1500).easing(TWEEN.Easing.Cubic.Out).onComplete(() => { this.transitioning = false }).start()
       new TWEEN.Tween(this.controls.target).to({ x: 0, y: 0, z: 0 }, 1500).start()
 
       new TWEEN.Tween(this.sunLight).to({ intensity: 0 }, 1000).start()
@@ -904,22 +927,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const data = JSON.parse(jsonEl.textContent)
   window.projectMap = new ProjectMap3D(container, data)
 
-  const shell = container.closest('.project-flow-shell') || container.parentElement
-  if (shell) {
-    shell.querySelectorAll('.view-mode-toggle').forEach(el => el.remove())
-    const toggle = document.createElement('button'); toggle.className = 'view-mode-toggle'; toggle.style.zIndex = '9999'
-    let current = 'atomo'
-    const updateLabel = (m) => {
-      toggle.innerHTML = m === 'atomo'
-        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Árvore</span>'
-        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2m-8-10H2m20 0h-2m-2.1-6.9l-1.4 1.4m-9 9l-1.4 1.4m0-11.8l1.4 1.4m9 9l1.4 1.4"/></svg><span>Átomo</span>'
-    }
-    updateLabel(current); shell.prepend(toggle)
-    toggle.onclick = () => { current = (current === 'atomo' ? 'arvore' : 'atomo'); updateLabel(current); window.projectMap.setLayout(current) }
-  }
-
   document.querySelector('[data-panel-close]')?.addEventListener('click', () => window.projectMap?.deselectNode())
 
   const params = new URLSearchParams(window.location.search), sid = params.get('select')
-  if (sid) setTimeout(() => { const n = window.projectMap.nodes.find(v => v.userData.item?.id === sid); if (n) window.projectMap.handleNodeClick(n) }, 800)
+  if (sid) {
+    setTimeout(() => {
+      const n = window.projectMap.nodes.find(v => v.userData.item?.id === sid)
+      if (n) window.projectMap.handleNodeClick(n)
+    }, 800)
+  }
 })

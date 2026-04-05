@@ -1,3 +1,5 @@
+import useStore from './store.js';
+
 const parseJsonScript = (id) => {
   const node = document.getElementById(id);
   if (!node) return null;
@@ -24,136 +26,105 @@ const formatTemplate = (template, values) => {
   }, template);
 };
 
-const createLocalization = () => {
+// --- Initialization Functions ---
+
+const initLocalization = () => {
   const config = parseJsonScript("site-i18n");
   if (!config) return null;
 
   const supportedLocales = Array.isArray(config.supportedLocales) ? config.supportedLocales : [];
-  const aliases = config.aliases ?? {};
   const strings = config.strings ?? {};
-  const defaultLocale = config.defaultLocale ?? document.body.dataset.defaultLocale ?? "pt-BR";
-  const storageKey = "site-locale";
+  const defaultLocale = config.defaultLocale ?? "pt-BR";
 
-  const resolveLocale = (candidate) => {
-    if (!candidate) return null;
-    const raw = String(candidate).trim();
-    if (!raw) return null;
-    if (supportedLocales.includes(raw)) return raw;
-    const lowered = raw.toLowerCase();
-    const aliased = aliases[lowered];
-    if (aliased && supportedLocales.includes(aliased)) return aliased;
-    const base = lowered.split("-")[0];
-    const baseAlias = aliases[base];
-    if (baseAlias && supportedLocales.includes(baseAlias)) return baseAlias;
-    const supportedMatch = supportedLocales.find((locale) => locale.toLowerCase() === lowered);
-    if (supportedMatch) return supportedMatch;
-    return null;
-  };
-
-  const detectLocale = () => {
-    const stored = resolveLocale(window.localStorage.getItem(storageKey));
-    if (stored) return stored;
-    const browserLocales = Array.isArray(navigator.languages) && navigator.languages.length
-      ? navigator.languages
-      : [navigator.language].filter(Boolean);
-    for (const browserLocale of browserLocales) {
-      const resolved = resolveLocale(browserLocale);
-      if (resolved) return resolved;
-    }
-    return resolveLocale(defaultLocale) ?? "pt-BR";
-  };
-
-  let currentLocale = detectLocale();
-
-  const translate = (key, fallback = "") => {
-    const primary = resolvePath(strings[currentLocale], key);
+  const translate = (key, fallback = "", locale = useStore.getState().locale) => {
+    const primary = resolvePath(strings[locale], key);
     if (typeof primary === "string") return primary;
     const secondary = resolvePath(strings[defaultLocale], key);
     if (typeof secondary === "string") return secondary;
     return fallback;
   };
 
-  const applyTranslations = () => {
-    document.documentElement.lang = currentLocale;
-    document.body.dataset.locale = currentLocale;
+  const applyTranslations = (locale) => {
+    document.documentElement.lang = locale;
+    document.body.dataset.locale = locale;
 
     document.querySelectorAll("[data-i18n]").forEach(element => {
       const key = element.dataset.i18n;
       if (!element.dataset.i18nFallback) element.dataset.i18nFallback = element.textContent || "";
-      element.textContent = translate(key, element.dataset.i18nFallback);
+      element.textContent = translate(key, element.dataset.i18nFallback, locale);
     });
 
     document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
       const key = element.dataset.i18nPlaceholder;
       if (!element.dataset.i18nPlaceholderFallback) element.dataset.i18nPlaceholderFallback = element.getAttribute("placeholder") || "";
-      element.setAttribute("placeholder", translate(key, element.dataset.i18nPlaceholderFallback));
+      element.setAttribute("placeholder", translate(key, element.dataset.i18nPlaceholderFallback, locale));
     });
 
     document.querySelectorAll("[data-i18n-aria-label]").forEach(element => {
       const key = element.dataset.i18nAriaLabel;
       if (!element.dataset.i18nAriaFallback) element.dataset.i18nAriaFallback = element.getAttribute("aria-label") || "";
-      element.setAttribute("aria-label", translate(key, element.dataset.i18nAriaFallback));
+      element.setAttribute("aria-label", translate(key, element.dataset.i18nAriaFallback, locale));
     });
 
-    // Dates, Reading Times, Statuses
-    const shortFormatter = new Intl.DateTimeFormat(currentLocale, { day: "2-digit", month: "short", year: "numeric" });
-    const longFormatter = new Intl.DateTimeFormat(currentLocale, { day: "numeric", month: "long", year: "numeric" });
+    // Formatting Helpers
+    const shortFormatter = new Intl.DateTimeFormat(locale, { day: "2-digit", month: "short", year: "numeric" });
+    const longFormatter = new Intl.DateTimeFormat(locale, { day: "numeric", month: "long", year: "numeric" });
+    
     document.querySelectorAll("[data-localize-date]").forEach(el => {
       const date = new Date(el.getAttribute("datetime"));
       if (!isNaN(date)) el.textContent = (el.dataset.localizeDate === "short" ? shortFormatter : longFormatter).format(date);
     });
 
-    const rtTemplate = translate("templates.reading_time", "{minutes} min read");
+    const rtTemplate = translate("templates.reading_time", "{minutes} min read", locale);
     document.querySelectorAll("[data-reading-time]").forEach(el => {
       el.textContent = formatTemplate(rtTemplate, { minutes: el.dataset.readingTime });
     });
 
     document.querySelectorAll("[data-status-key]").forEach(el => {
       if (!el.dataset.i18nFallback) el.dataset.i18nFallback = el.textContent || "";
-      el.textContent = translate(el.dataset.statusKey, el.dataset.i18nFallback);
+      el.textContent = translate(el.dataset.statusKey, el.dataset.i18nFallback, locale);
     });
+    
+    // Update locale label in navbar
+    const short = locale.split("-")[0].toUpperCase();
+    document.querySelectorAll("[data-locale-label]").forEach(el => el.textContent = short);
   };
 
-  const setLocale = (locale) => {
-    currentLocale = resolveLocale(locale) ?? currentLocale;
-    window.localStorage.setItem(storageKey, currentLocale);
-    applyTranslations();
-    window.dispatchEvent(new CustomEvent("site:localechange", { detail: { locale: currentLocale } }));
-  };
+  // Subscribe to locale changes
+  useStore.subscribe((state, prevState) => {
+    if (state.locale !== prevState.locale) {
+      applyTranslations(state.locale);
+    }
+  });
 
-  return { translate, setLocale, applyTranslations, getLocale: () => currentLocale, getSupportedLocales: () => supportedLocales };
+  // Initial apply
+  applyTranslations(useStore.getState().locale);
+
+  return { translate, getSupportedLocales: () => supportedLocales };
 };
 
 const initThemeManager = () => {
-  const html = document.documentElement;
-  const storageKey = "site-theme";
-  const getStored = () => localStorage.getItem(storageKey);
-  const getSystem = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  
-  const updateThemeIcons = (theme) => {
+  const updateThemeUI = (theme) => {
+    document.documentElement.dataset.theme = theme;
     document.querySelectorAll(".theme-icon-moon").forEach(el => el.classList.toggle("hidden", theme === "light"));
     document.querySelectorAll(".theme-icon-sun").forEach(el => el.classList.toggle("hidden", theme === "dark"));
   };
 
-  const setTheme = (theme, transition = true) => {
-    if (!transition) html.classList.add("no-transitions");
-    html.dataset.theme = theme;
-    localStorage.setItem(storageKey, theme);
-    updateThemeIcons(theme);
-    if (!transition) {
-      html.offsetHeight;
-      html.classList.remove("no-transitions");
+  useStore.subscribe((state, prevState) => {
+    if (state.theme !== prevState.theme) {
+      updateThemeUI(state.theme);
     }
-  };
+  });
 
-  setTheme(getStored() || getSystem(), false);
+  // Initial UI state
+  updateThemeUI(useStore.getState().theme);
 
   const toggle = document.querySelector("[data-theme-toggle]");
   if (toggle) {
     toggle.addEventListener("click", () => {
-      const next = html.dataset.theme === "dark" ? "light" : "dark";
-      setTheme(next);
-
+      const current = useStore.getState().theme;
+      useStore.getState().setTheme(current === "dark" ? "light" : "dark");
+      
       toggle.animate([
         { transform: "rotate(0) scale(1)" },
         { transform: "rotate(15deg) scale(1.2)", offset: 0.5 },
@@ -161,53 +132,128 @@ const initThemeManager = () => {
       ], { duration: 300, easing: "ease-out" });
     });
   }
+};
 
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-    if (!getStored()) setTheme(e.matches ? "dark" : "light");
+const initIntelligencePanel = (loc) => {
+  const panel = document.querySelector("[data-intelligence-panel]");
+  const content = panel?.querySelector(".panel-content");
+  if (!panel || !content) return;
+
+  const elements = {
+    role: panel.querySelector("[data-panel-role]"),
+    name: panel.querySelector("[data-panel-name]"),
+    headline: panel.querySelector("[data-panel-headline]"),
+    summary: panel.querySelector("[data-panel-summary]"),
+    stack: panel.querySelector("[data-panel-stack]"),
+    metaRow: panel.querySelector("[data-panel-meta-row]"),
+    link: panel.querySelector("[data-panel-link]")
+  };
+
+  const syncTechnicalContent = () => {
+    if (window.mermaid) {
+      try {
+        // Find existing svgs and remove them to avoid duplication if re-rendering
+        panel.querySelectorAll(".mermaid[data-processed]").forEach(el => {
+          el.removeAttribute("data-processed");
+          el.innerHTML = el.getAttribute("data-original-code") || el.innerHTML;
+        });
+        window.mermaid.init(undefined, panel.querySelectorAll(".mermaid"));
+      } catch (err) {
+        console.error("Mermaid error:", err);
+      }
+    }
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise([panel]).catch(err => console.error("MathJax error:", err));
+    }
+  };
+
+  const updatePanelUI = (data) => {
+    if (!data) return;
+
+    if (elements.role) {
+      const kind = data.kind || "knowledge";
+      elements.role.textContent = loc?.translate(`kinds.${kind}`, kind) || kind;
+    }
+    
+    if (elements.name) elements.name.textContent = data.name || data.title || "";
+    if (elements.headline) elements.headline.textContent = data.headline || "";
+    
+    if (elements.summary) {
+      if (data.body_html) {
+        elements.summary.innerHTML = data.body_html;
+        // Store original code for Mermaid re-triggering if needed
+        elements.summary.querySelectorAll(".mermaid").forEach(m => {
+          if (!m.getAttribute("data-original-code")) m.setAttribute("data-original-code", m.innerHTML);
+        });
+      } else {
+        elements.summary.textContent = data.summary || "";
+      }
+    }
+
+    if (elements.stack) {
+      elements.stack.innerHTML = (data.stack || []).map(s => `<span class="stack-chip">${s}</span>`).join("");
+    }
+
+    if (elements.metaRow) {
+      const meta = [];
+      const locale = useStore.getState().locale;
+      if (data.published_dt) {
+        const date = new Date(data.published_dt);
+        meta.push(`<span>${new Intl.DateTimeFormat(locale, { day: "2-digit", month: "long", year: "numeric" }).format(date)}</span>`);
+      }
+      if (data.reading_time) meta.push(`<span>${data.reading_time} min</span>`);
+      if (data.category) meta.push(`<span>${data.category}</span>`);
+      elements.metaRow.innerHTML = meta.join(" &middot; ");
+    }
+
+    if (elements.link) {
+      elements.link.href = data.resolved_url || data.url || "#";
+      const actionKey = data.kind === "project" ? "actions.view_project" : "actions.read_article";
+      elements.link.innerHTML = `<i data-lucide="eye"></i> ${loc?.translate(actionKey, "Ver")} <i data-lucide="arrow-right"></i>`;
+    }
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    
+    // Trigger rendering after a short delay to ensure DOM is ready
+    setTimeout(syncTechnicalContent, 50);
+  };
+
+  useStore.subscribe((state, prevState) => {
+    // Detect open/close
+    if (state.panelOpen !== prevState.panelOpen) {
+      panel.dataset.open = String(state.panelOpen);
+      panel.setAttribute("aria-hidden", String(!state.panelOpen));
+    }
+
+    // Detect data changes
+    if (state.panelData !== prevState.panelData && state.panelData) {
+      updatePanelUI(state.panelData);
+    }
+  });
+
+  // Export globals for non-module legacy support
+  window.showIntelligencePanel = (data) => useStore.getState().togglePanel(true, data);
+  window.hideIntelligencePanel = () => useStore.getState().togglePanel(false);
+
+  panel.querySelectorAll("[data-panel-close], .panel-backdrop").forEach(el => {
+    el.addEventListener("click", () => window.hideIntelligencePanel());
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") window.hideIntelligencePanel();
   });
 };
 
-const initNavToggle = () => {
-  const toggles = document.querySelectorAll("[data-nav-toggle]");
-  const menu = document.querySelector("[data-nav-menu]");
-  const shell = document.querySelector("[data-nav-shell]");
-  if (!menu || !shell) return;
-
-  const setNavOpen = (open) => {
-    shell.dataset.navOpen = String(open);
-    menu.hidden = !open;
-    document.body.style.overflow = open ? "hidden" : "";
-  };
-
-  toggles.forEach(t => t.addEventListener("click", () => setNavOpen(menu.hidden)));
-  menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setNavOpen(false)));
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") setNavOpen(false); });
-  window.addEventListener("resize", () => { if (window.innerWidth >= 768) setNavOpen(false); });
-};
-
 const initLocaleToggle = (loc) => {
-  if (!loc) return;
   const btns = document.querySelectorAll("[data-locale-toggle]");
-  if (!btns.length) return;
-
-  const supported = loc.getSupportedLocales();
-  if (supported.length < 2) return;
-
-  const updateLabels = () => {
-    const current = loc.getLocale();
-    const short = current.split("-")[0].toUpperCase();
-    document.querySelectorAll("[data-locale-label]").forEach(el => el.textContent = short);
-  };
-
-  updateLabels();
+  const supported = loc?.getSupportedLocales() || [];
+  if (!btns.length || supported.length < 2) return;
 
   btns.forEach(btn => btn.addEventListener("click", () => {
-    const current = loc.getLocale();
+    const current = useStore.getState().locale;
     const idx = supported.indexOf(current);
     const next = supported[(idx + 1) % supported.length];
-    loc.setLocale(next);
-    loc.applyTranslations();
-    updateLabels();
+    useStore.getState().setLocale(next);
 
     btn.animate([
       { transform: "scale(1)" },
@@ -215,6 +261,35 @@ const initLocaleToggle = (loc) => {
       { transform: "scale(1)" }
     ], { duration: 250, easing: "ease-out" });
   }));
+};
+
+const initVisualizationToggle = () => {
+  const navBtn = document.querySelector("[data-vis-toggle]");
+  if (!navBtn) return;
+
+  navBtn.addEventListener("click", () => {
+    // Sync store
+    const currentMode = useStore.getState().visMode;
+    const nextMode = currentMode === 'atomo' ? 'arvore' : 'atomo';
+    useStore.getState().setVisMode(nextMode);
+
+    // Update UI icons
+    document.querySelectorAll(".vis-icon-atom").forEach(el => el.classList.toggle("hidden", nextMode === 'arvore'));
+    document.querySelectorAll(".vis-icon-tree").forEach(el => el.classList.toggle("hidden", nextMode === 'atomo'));
+
+    // Trigger existing engine logic
+    if (window.projectMap) {
+      window.projectMap.setLayout(nextMode);
+    } else {
+      const btvTrigger = document.getElementById("btv-trigger");
+      if (btvTrigger) btvTrigger.click();
+    }
+  });
+
+  // Sync initial icons
+  const initialMode = useStore.getState().visMode;
+  document.querySelectorAll(".vis-icon-atom").forEach(el => el.classList.toggle("hidden", initialMode === 'arvore'));
+  document.querySelectorAll(".vis-icon-tree").forEach(el => el.classList.toggle("hidden", initialMode === 'atomo'));
 };
 
 const initCommandPalette = (loc) => {
@@ -226,7 +301,7 @@ const initCommandPalette = (loc) => {
   let index = null;
   const loadIndex = async () => {
     if (index) return index;
-    const res = await fetch(palette.dataset.searchIndex);
+    const res = await fetch(palette.dataset.searchIndex || "https://nhmatsumoto.github.io/search-index.json");
     index = res.ok ? await res.json() : [];
     return index;
   };
@@ -242,7 +317,7 @@ const initCommandPalette = (loc) => {
       ? filtered.slice(0, 10).map(it => `
         <li>
           <a href="${it.url}" class="palette-result">
-            <span class="result-kind">${loc?.translate(`kinds.${it.kind}`, it.kind) ?? it.kind}</span>
+            <span class="result-kind">${loc?.translate(`kinds.${it.kind}`, it.kind)}</span>
             <div class="result-info">
               <strong class="result-title">${it.title}</strong>
               <small class="result-summary">${it.summary}</small>
@@ -293,175 +368,26 @@ const initInteractiveGlow = () => {
     card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
     card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
   };
-  document.querySelectorAll(".resource-card, .nav-glass, .palette-shell").forEach(el => {
+  document.querySelectorAll(".resource-card, .project-card-premium, .post-card, .document-card").forEach(el => {
     el.addEventListener("mousemove", updateCoords);
   });
 };
 
-
-const initIntelligencePanel = (loc) => {
-  const panel = document.querySelector("[data-intelligence-panel]");
-  const content = panel?.querySelector(".panel-content");
-  if (!panel || !content) return;
-
-  const elements = {
-    role: panel.querySelector("[data-panel-role]"),
-    name: panel.querySelector("[data-panel-name]"),
-    headline: panel.querySelector("[data-panel-headline]"),
-    summary: panel.querySelector("[data-panel-summary]"),
-    stack: panel.querySelector("[data-panel-stack]"),
-    metrics: panel.querySelector("[data-panel-metrics]"),
-    link: panel.querySelector("[data-panel-link]"),
-    metaRow: panel.querySelector("[data-panel-meta-row]")
-  };
-
-  const setOpen = (open) => {
-    panel.dataset.open = String(open);
-    panel.setAttribute("aria-hidden", String(!open));
-    if (open) {
-      document.body.style.overflow = "hidden";
-      setTimeout(() => content.dataset.revealed = "true", 100);
-    } else {
-      document.body.style.overflow = "";
-      content.dataset.revealed = "false";
-    }
-  };
-
-  const show = (data) => {
-    if (!data) return;
-
-    // Reset animations
-    content.dataset.revealed = "false";
-
-    // Populate data
-    if (elements.role) {
-      const kind = data.kind || "knowledge";
-      elements.role.textContent = loc?.translate(`kinds.${kind}`, kind) || kind;
-      elements.role.dataset.i18n = `kinds.${kind}`;
-    }
-    
-    if (elements.name) elements.name.textContent = data.name || data.title || "";
-    if (elements.headline) elements.headline.textContent = data.headline || "";
-    
-    if (elements.summary) {
-      // If summary is HTML (from project flow), use innerHTML, else textContent
-      if (data.body_html) {
-        elements.summary.innerHTML = data.body_html;
-      } else {
-        elements.summary.textContent = data.summary || "";
-      }
-    }
-
-    if (elements.stack) {
-      elements.stack.innerHTML = (data.stack || []).map(s => `<span class="stack-chip">${s}</span>`).join("");
-    }
-
-    if (elements.metaRow) {
-      const meta = [];
-      if (data.published_dt) {
-        const date = new Date(data.published_dt);
-        meta.push(`<span>${new Intl.DateTimeFormat(loc?.getLocale() || "pt-BR", { day: "2-digit", month: "long", year: "numeric" }).format(date)}</span>`);
-      }
-      if (data.reading_time) meta.push(`<span>${data.reading_time} min</span>`);
-      if (data.category) meta.push(`<span>${data.category}</span>`);
-      elements.metaRow.innerHTML = meta.join(" &middot; ");
-    }
-
-    if (elements.link) {
-      elements.link.href = data.resolved_url || data.url || "#";
-      const actionKey = data.kind === "project" ? "actions.view_project" : "actions.read_article";
-      elements.link.innerHTML = `<i data-lucide="eye"></i> ${loc?.translate(actionKey, "Ver")} <i data-lucide="arrow-right"></i>`;
-      if (typeof lucide !== 'undefined') lucide.createIcons();
-    }
-
-    // Re-render Mermaid and MathJax
-    if (window.mermaid) {
-      try {
-        window.mermaid.init(undefined, panel.querySelectorAll(".mermaid"));
-      } catch (err) {
-        console.error("Mermaid error:", err);
-      }
-    }
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      window.MathJax.typesetPromise([panel]).catch(err => console.error("MathJax error:", err));
-    }
-
-    setOpen(true);
-  };
-
-  window.showIntelligencePanel = show;
-  window.hideIntelligencePanel = () => setOpen(false);
-
-  panel.querySelectorAll("[data-panel-close]").forEach(el => {
-    el.addEventListener("click", () => setOpen(false));
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setOpen(false);
-  });
-
-  if (typeof lucide !== 'undefined') lucide.createIcons();
-};
-
-const initSidebarToggle = () => {
-  const toggles = document.querySelectorAll("[data-sidebar-toggle]");
-  const setOpen = (open) => {
-    document.body.dataset.sidebarOpen = String(open);
-    document.body.style.overflow = open ? "hidden" : "";
-  };
-
-  toggles.forEach(t => t.addEventListener("click", () => {
-    const isOpen = document.body.dataset.sidebarOpen === "true";
-    setOpen(!isOpen);
-  }));
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setOpen(false);
-  });
-};
+// --- DOM Content Loaded ---
 
 document.addEventListener("DOMContentLoaded", () => {
-  const loc = createLocalization();
-  loc?.applyTranslations();
+  const loc = initLocalization();
   initThemeManager();
-  initNavToggle();
   initLocaleToggle(loc);
+  initVisualizationToggle();
   initCommandPalette(loc);
+  initIntelligencePanel(loc);
   initCodeBlocks();
   initInteractiveGlow();
-  initIntelligencePanel(loc);
-  initSidebarToggle();
-  initVisualizationToggle();
+  
+  // Cleanup old sidebar if exists
+  document.body.removeAttribute('data-sidebar-open');
+  
+  if (typeof lucide !== 'undefined') lucide.createIcons();
   if (window.initKnowledgeGraph) window.initKnowledgeGraph();
 });
-
-const initVisualizationToggle = () => {
-  const navBtn = document.querySelector("[data-vis-toggle]");
-  if (!navBtn) return;
-
-  navBtn.addEventListener("click", () => {
-    // 1. Try 3D Engine (Projects Page)
-    if (window.projectMap) {
-      const currentMode = window.projectMap.layoutMode;
-      const nextMode = currentMode === "atomo" ? "arvore" : "atomo";
-      window.projectMap.setLayout(nextMode);
-      return;
-    }
-
-    // 2. Try Global BTree Overlay (Other pages)
-    const btvTrigger = document.getElementById("btv-trigger");
-    if (btvTrigger) {
-      btvTrigger.click();
-    }
-  });
-
-  // Check if we should hide the original floating trigger to avoid redundancy
-  const observer = new MutationObserver(() => {
-    const btvTrigger = document.getElementById("btv-trigger");
-    if (btvTrigger && btvTrigger.style.display !== 'none') {
-      btvTrigger.style.display = 'none';
-      observer.disconnect();
-    }
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-};
