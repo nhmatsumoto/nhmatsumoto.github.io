@@ -229,10 +229,16 @@ const initIntelligencePanel = (loc) => {
     if (state.panelOpen !== prevState.panelOpen) {
       panel.dataset.open = String(state.panelOpen);
       panel.setAttribute("aria-hidden", String(!state.panelOpen));
+      if (content) content.dataset.revealed = String(state.panelOpen);
+      
+      // Ensure UI is updated when opening
+      if (state.panelOpen && state.panelData) {
+        updatePanelUI(state.panelData);
+      }
     }
 
-    // Detect data changes
-    if (state.panelData !== prevState.panelData && state.panelData) {
+    // Detect data changes specifically
+    if (state.panelData !== prevState.panelData && state.panelData && state.panelOpen) {
       updatePanelUI(state.panelData);
     }
   });
