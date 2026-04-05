@@ -133,9 +133,11 @@ class ProjectMap3D {
     }
 
     // Subscribe to future mode changes
-    useStore.subscribe((state, prevState) => {
-      if (state.visMode !== prevState.visMode) {
-        this.setLayout(state.visMode);
+    let lastMode = initialMode;
+    useStore.subscribe((state) => {
+      if (state.visMode !== lastMode) {
+        lastMode = state.visMode;
+        this.setLayout(lastMode);
       }
     });
   }
@@ -147,16 +149,19 @@ class ProjectMap3D {
     this.scene.fog = new THREE.Fog(0x87CEEB, 1500, 15000)
     // Initially hide fog
     this.scene.fog.near = 100000; this.scene.fog.far = 200000
-    const w = this.container.clientWidth, h = this.container.clientHeight
+    let w = this.container.clientWidth, h = this.container.clientHeight
+    if (w < 100) w = window.innerWidth; // Fallback for hidden or initial zero-size
+    if (h < 100) h = window.innerHeight;
+
     this.camera = new THREE.PerspectiveCamera(60, w / h, 1, 20000)
     this.camera.position.set(0, 400, 1000)
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' })
     this.renderer.setClearColor(0x020408, 1)
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)) // Reduce pixel ratio for better performance
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
     this.renderer.setSize(w, h)
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
-    this.renderer.shadowMap.enabled = false // Disable shadows for better performance
+    this.renderer.shadowMap.enabled = false
     this.container.appendChild(this.renderer.domElement)
     this.renderer.domElement.style.pointerEvents = 'auto'
 
