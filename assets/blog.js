@@ -400,8 +400,24 @@ const initIntelligencePanel = (loc) => {
     if (e.key === "Escape") setOpen(false);
   });
 
-  // Initial icon check
   if (typeof lucide !== 'undefined') lucide.createIcons();
+};
+
+const initSidebarToggle = () => {
+  const toggles = document.querySelectorAll("[data-sidebar-toggle]");
+  const setOpen = (open) => {
+    document.body.dataset.sidebarOpen = String(open);
+    document.body.style.overflow = open ? "hidden" : "";
+  };
+
+  toggles.forEach(t => t.addEventListener("click", () => {
+    const isOpen = document.body.dataset.sidebarOpen === "true";
+    setOpen(!isOpen);
+  }));
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
+  });
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -414,5 +430,38 @@ document.addEventListener("DOMContentLoaded", () => {
   initCodeBlocks();
   initInteractiveGlow();
   initIntelligencePanel(loc);
+  initSidebarToggle();
+  initVisualizationToggle();
   if (window.initKnowledgeGraph) window.initKnowledgeGraph();
 });
+
+const initVisualizationToggle = () => {
+  const navBtn = document.querySelector("[data-vis-toggle]");
+  if (!navBtn) return;
+
+  navBtn.addEventListener("click", () => {
+    // 1. Try 3D Engine (Projects Page)
+    if (window.projectMap) {
+      const currentMode = window.projectMap.layoutMode;
+      const nextMode = currentMode === "atomo" ? "arvore" : "atomo";
+      window.projectMap.setLayout(nextMode);
+      return;
+    }
+
+    // 2. Try Global BTree Overlay (Other pages)
+    const btvTrigger = document.getElementById("btv-trigger");
+    if (btvTrigger) {
+      btvTrigger.click();
+    }
+  });
+
+  // Check if we should hide the original floating trigger to avoid redundancy
+  const observer = new MutationObserver(() => {
+    const btvTrigger = document.getElementById("btv-trigger");
+    if (btvTrigger && btvTrigger.style.display !== 'none') {
+      btvTrigger.style.display = 'none';
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+};

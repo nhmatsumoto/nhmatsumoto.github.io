@@ -7,10 +7,41 @@ post: 0x00C2FF, project: 0x7C5CFF, document: 0x10B981, central: 0xFFFFFF,
 const KIND_HEX = {
 post: '#00C2FF', project: '#7C5CFF', document: '#10B981', central: '#FFFFFF',
 }
+const ZELDA_PALETTE = {
+sky: 0x87CEEB,
+grass: 0x4CAF50,
+wood: 0x4E342E,
+leaf_deep: 0x1B5E20,
+leaf_vibrant: 0x66BB6A,
+sun: 0xFFF9C4,
+}
 const KIND_LABEL = {
 post: 'Publicação', project: 'Projeto', document: 'Documento',
 }
-const esc = (s) => (s||'').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const PERIODIC_TABLE = [
+{ symbol: 'H', name: 'Hidrogênio', shells: [1], color: 0x00C2FF },
+{ symbol: 'He', name: 'Hélio', shells: [2], color: 0xFFD700 },
+{ symbol: 'Li', name: 'Lítio', shells: [2, 1], color: 0xFF4500 },
+{ symbol: 'Be', name: 'Berílio', shells: [2, 2], color: 0x32CD32 },
+{ symbol: 'B', name: 'Boro', shells: [2, 3], color: 0x8B4513 },
+{ symbol: 'C', name: 'Carbono', shells: [2, 4], color: 0xAAAAAA },
+{ symbol: 'N', name: 'Nitrogênio', shells: [2, 5], color: 0x4169E1 },
+{ symbol: 'O', name: 'Oxigênio', shells: [2, 6], color: 0xFFffff },
+{ symbol: 'F', name: 'Flúor', shells: [2, 7], color: 0xDA70D6 },
+{ symbol: 'Ne', name: 'Neônio', shells: [2, 8], color: 0xFF00FF },
+{ symbol: 'Na', name: 'Sódio', shells: [2, 8, 1], color: 0xFF8C00 },
+{ symbol: 'Mg', name: 'Magnésio', shells: [2, 8, 2], color: 0x556B2F },
+{ symbol: 'Al', name: 'Alumínio', shells: [2, 8, 3], color: 0xBDB76B },
+{ symbol: 'Si', name: 'Silício', shells: [2, 8, 4], color: 0x708090 },
+{ symbol: 'P', name: 'Fósforo', shells: [2, 8, 5], color: 0xFFA07A },
+{ symbol: 'S', name: 'Enxofre', shells: [2, 8, 6], color: 0xFFFF00 },
+{ symbol: 'Cl', name: 'Cloro', shells: [2, 8, 7], color: 0x00FF00 },
+{ symbol: 'Ar', name: 'Argônio', shells: [2, 8, 8], color: 0x00FFFF },
+{ symbol: 'K', name: 'Potássio', shells: [2, 8, 8, 1], color: 0x9400D3 },
+{ symbol: 'Ca', name: 'Cálcio', shells: [2, 8, 8, 2], color: 0x3CB371 },
+]
+const getElementForNode = (i) => PERIODIC_TABLE[i % PERIODIC_TABLE.length]
+const esc = (s) => (s || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 function createGlowTexture(size = 128) {
 const c = document.createElement('canvas'); c.width = c.height = size
 const ctx = c.getContext('2d'), h = size / 2, g = ctx.createRadialGradient(h, h, 0, h, h, h)
@@ -42,6 +73,7 @@ this.createNebula()
 this.createAtomOrbits()
 this.createNodes()
 this.createConnections()
+this.createClouds()
 this.buildAraucariaTree()
 this.buildAraucariaBase()
 this.buildReaderDOM()
@@ -52,9 +84,11 @@ this.animate()
 initScene() {
 this.container.innerHTML = ''
 this.scene = new THREE.Scene()
-this.scene.fog = new THREE.FogExp2(0x020408, 0.0003)
+this.scene.background = new THREE.Color(0x020408)
+this.scene.fog = new THREE.Fog(0x87CEEB, 1500, 15000)
+this.scene.fog.near = 100000; this.scene.fog.far = 200000
 const w = this.container.clientWidth, h = this.container.clientHeight
-this.camera = new THREE.PerspectiveCamera(60, w / h, 1, 10000)
+this.camera = new THREE.PerspectiveCamera(60, w / h, 1, 20000)
 this.camera.position.set(0, 400, 1000)
 this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false })
 this.renderer.setClearColor(0x020408, 1); this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -65,26 +99,30 @@ this.controls = new OrbitControls(this.camera, this.renderer.domElement)
 Object.assign(this.controls, {
 enableDamping: true, dampingFactor: 0.06, autoRotate: true, autoRotateSpeed: 0.25,
 enablePan: true, screenSpacePanning: true,
-minDistance: 150, maxDistance: 6000
+minDistance: 150, maxDistance: 10000
 })
 this.controls.addEventListener('start', () => {
 this.controls.autoRotate = false
 })
-this.scene.add(new THREE.AmbientLight(0x1a1a2e, 0.8))
+this.scene.add(new THREE.AmbientLight(0x404040, 1.2))
 const p1 = new THREE.PointLight(0x00C2FF, 3, 2000); p1.position.set(500, 500, 500); this.scene.add(p1)
 const p2 = new THREE.PointLight(0x7C5CFF, 2, 1500); p2.position.set(-500, -200, 0); this.scene.add(p2)
 this.scene.add(this.atomGroup); this.scene.add(this.araucariaGroup)
-this.pedestalLight = new THREE.SpotLight(0x00C2FF, 0, 1000, Math.PI/6, 0.5, 1)
-this.pedestalLight.position.set(200, 600, 200)
+this.sunLight = new THREE.DirectionalLight(ZELDA_PALETTE.sun, 0)
+this.sunLight.position.set(1000, 2000, 1000)
+this.scene.add(this.sunLight)
+this.scene.add(this.sunLight.target)
+this.pedestalLight = new THREE.PointLight(0x00C2FF, 0, 1000)
+this.pedestalLight.position.set(0, 500, 0)
 this.scene.add(this.pedestalLight)
 this.raycaster = new THREE.Raycaster(); this.mouse = new THREE.Vector2()
 }
 createStarfield() {
 const N = 5000, pos = new Float32Array(N * 3), col = new Float32Array(N * 3)
 for (let i = 0; i < N; i++) {
-const r = 2000 + Math.random() * 4000, t = Math.random()*Math.PI*2, p = Math.acos(2*Math.random()-1)
-pos[i*3] = r*Math.sin(p)*Math.cos(t); pos[i*3+1] = r*Math.sin(p)*Math.sin(t); pos[i*3+2] = r*Math.cos(p)
-col[i*3] = col[i*3+1] = col[i*3+2] = 0.5 + Math.random()*0.5
+const r = 2000 + Math.random() * 4000, t = Math.random() * Math.PI * 2, p = Math.acos(2 * Math.random() - 1)
+pos[i * 3] = r * Math.sin(p) * Math.cos(t); pos[i * 3 + 1] = r * Math.sin(p) * Math.sin(t); pos[i * 3 + 2] = r * Math.cos(p)
+col[i * 3] = col[i * 3 + 1] = col[i * 3 + 2] = 0.5 + Math.random() * 0.5
 }
 const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.setAttribute('color', new THREE.BufferAttribute(col, 3))
 const stars = new THREE.Points(geo, new THREE.PointsMaterial({ size: 4, map: this.glowTex, transparent: true, vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false }))
@@ -92,7 +130,7 @@ this.atomGroup.add(stars)
 }
 createNebula() {
 [0x0a1628, 0x120a30].forEach((c, i) => {
-const m = new THREE.Mesh(new THREE.SphereGeometry(1200+i*400, 32, 32), new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.05, side: THREE.BackSide, blending: THREE.AdditiveBlending, depthWrite: false }))
+const m = new THREE.Mesh(new THREE.SphereGeometry(1200 + i * 400, 32, 32), new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.05, side: THREE.BackSide, blending: THREE.AdditiveBlending, depthWrite: false }))
 this.atomGroup.add(m)
 })
 }
@@ -109,20 +147,47 @@ orbit.rotation.y = (idx * 0.3)
 this.atomGroup.add(orbit)
 })
 }
+createClouds() {
+this.cloudGroup = new THREE.Group()
+this.cloudGroup.visible = false
+this.scene.add(this.cloudGroup)
+const numClouds = 12
+for (let i = 0; i < numClouds; i++) {
+const cloud = new THREE.Group()
+const x = (Math.random() - 0.5) * 8000
+const y = 2000 + Math.random() * 1000
+const z = (Math.random() - 0.5) * 8000
+cloud.position.set(x, y, z)
+const numBlobs = 3 + Math.floor(Math.random() * 4)
+const cloudMat = new THREE.MeshToonMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 })
+for (let j = 0; j < numBlobs; j++) {
+const blob = new THREE.Mesh(new THREE.SphereGeometry(100 + Math.random() * 150, 12, 12), cloudMat)
+blob.position.set((j - numBlobs / 2) * 150, (Math.random() - 0.5) * 100, (Math.random() - 0.5) * 100)
+blob.scale.set(1, 0.6, 1)
+cloud.add(blob)
+}
+cloud.userData.speed = 0.5 + Math.random() * 1.5
+this.cloudGroup.add(cloud)
+}
+}
 buildAraucariaTree() {
 this.araucariaGroup = new THREE.Group(); this.araucariaGroup.visible = false; this.scene.add(this.araucariaGroup)
-const trunkH = 1500, baseR = 28
-const numSegments = 20
+const trunkH = 1500, baseR = 35
+const numSegments = 25
+const woodMat = new THREE.MeshToonMaterial({
+color: ZELDA_PALETTE.wood,
+flatShading: true
+})
 for (let i = 0; i < numSegments; i++) {
-const r1 = baseR * Math.pow(1 - i / numSegments, 0.7)
-const r2 = baseR * Math.pow(1 - (i + 1) / numSegments, 0.7)
-const isWhorlBase = i > (numSegments * 0.6) && i % 2 === 0
-const m = isWhorlBase ? 1.08 : 1.0
-const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1 * m, trunkH / numSegments, 12), new THREE.MeshStandardMaterial({ color: 0x0a0a0a, metalness: 0.2, roughness: 0.8 }))
-seg.position.y = (i * (trunkH / numSegments)) + (trunkH / numSegments / 2) + 125
+const r1 = baseR * Math.pow(1 - i / numSegments, 0.65)
+const r2 = baseR * Math.pow(1 - (i + 1) / numSegments, 0.65)
+const isWhorlBase = i > (numSegments * 0.4) && i % 2 === 0
+const m = isWhorlBase ? 1.15 : 1.0
+const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1 * m, trunkH / numSegments, 8), woodMat)
+seg.position.y = (i * (trunkH / numSegments)) + (trunkH / numSegments / 2) + 10
 this.araucariaGroup.add(seg)
 }
-const items = [...this.data].sort((a,b) => this.getNodeTier(a) - this.getNodeTier(b))
+const items = [...this.data].sort((a, b) => this.getNodeTier(a) - this.getNodeTier(b))
 const startH = trunkH * 0.6 + 125
 const whorlSpacing = 80, b0 = 5
 let itemIdx = 0, whorlIdx = 0
@@ -140,13 +205,13 @@ const item = items[itemIdx]
 const node = this.nodes.find(n => n.userData.item === item)
 if (!node) { itemIdx++; continue }
 const theta = (m * Math.PI * 2) / b_n + (whorlIdx * 1.1)
-const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n/400, 2.5) * 180, Math.sin(theta) * L_n)
+const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n / 400, 2.5) * 180, Math.sin(theta) * L_n)
 node.userData.treePos = pos
 const start = new THREE.Vector3(0, h_n, 0), mid = start.clone().lerp(pos, 0.7); mid.y += 20
 const curve = new THREE.QuadraticBezierCurve3(start, mid, pos)
 const pts = curve.getPoints(24)
-for (let i = 0; i < pts.length-1; i++) {
-bPos.push(pts[i].x, pts[i].y, pts[i].z, pts[i+1].x, pts[i+1].y, pts[i+1].z)
+for (let i = 0; i < pts.length - 1; i++) {
+bPos.push(pts[i].x, pts[i].y, pts[i].z, pts[i + 1].x, pts[i + 1].y, pts[i + 1].z)
 const bClr = tier === 0 ? [0, 0.8, 1] : [0, 0.66, 1]
 bCol.push(...bClr, ...bClr)
 }
@@ -161,13 +226,13 @@ itemIdx++
 whorlIdx++
 }
 const bGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(bPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(bCol), 3))
-this.mergedBranches = new THREE.LineSegments(bGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.2 }))
+this.mergedBranches = new THREE.LineSegments(bGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.15 }))
 this.araucariaGroup.add(this.mergedBranches)
 const fGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(fPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(fCol), 3))
-this.mergedFoliage = new THREE.LineSegments(fGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }))
+this.mergedFoliage = new THREE.LineSegments(fGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.7, blending: THREE.NormalBlending }))
 this.araucariaGroup.add(this.mergedFoliage)
 const pGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(pPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(pCol), 3))
-const pMat = new THREE.MeshStandardMaterial({ vertexColors: true, metalness: 0.8, roughness: 0.2, emissiveIntensity: 0.5 })
+const pMat = new THREE.MeshToonMaterial({ vertexColors: true, emissive: 0x4caf50, emissiveIntensity: 0.2 })
 this.mergedFruits = new THREE.Mesh(pGeo, pMat)
 this.araucariaGroup.add(this.mergedFruits)
 }
@@ -175,7 +240,7 @@ addFruitData(pos, vertices, colors) {
 const geo = new THREE.IcosahedronGeometry(12, 0)
 const vArr = geo.attributes.position.array
 for (let i = 0; i < vArr.length; i += 3) {
-vertices.push(vArr[i] + pos.x, vArr[i+1] + pos.y, vArr[i+2] + pos.z)
+vertices.push(vArr[i] + pos.x, vArr[i + 1] + pos.y, vArr[i + 2] + pos.z)
 colors.push(0, 0.7, 1)
 }
 }
@@ -183,8 +248,8 @@ addFoliageData(curve, pos, col) {
 const points = curve.getPoints(20)
 points.forEach((p, i) => {
 if (i === 0) return
-const dir = p.clone().sub(points[i-1]).normalize()
-const side1 = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0,1,0)).normalize()
+const dir = p.clone().sub(points[i - 1]).normalize()
+const side1 = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize()
 const side2 = new THREE.Vector3().crossVectors(dir, side1).normalize()
 const l_mult = i / points.length
 const tier = this.getNodeTier({ stack: [] })
@@ -192,72 +257,135 @@ const d_mult = l_mult > 0.6 ? 8 : 4
 for (let j = 0; j < d_mult; j++) {
 const ang = (j / d_mult) * Math.PI * 2 + i * 0.5
 const s = side1.clone().multiplyScalar(Math.cos(ang)).add(side2.clone().multiplyScalar(Math.sin(ang)))
-const reach = (3 + l_mult * 10) * (0.8 + Math.random()*0.4)
-const start = p.clone().add(s.clone().multiplyScalar(reach*0.5)), end = start.clone().add(dir.clone().multiplyScalar(18)).add(s.clone().multiplyScalar(reach))
+const reach = (3 + l_mult * 10) * (0.8 + Math.random() * 0.4)
+const start = p.clone().add(s.clone().multiplyScalar(reach * 0.5)), end = start.clone().add(dir.clone().multiplyScalar(18)).add(s.clone().multiplyScalar(reach))
 pos.push(start.x, start.y, start.z, end.x, end.y, end.z)
-col.push(0, 0.4, 0.35, 0, 0.25, 0.18)
+const c1 = new THREE.Color(ZELDA_PALETTE.leaf_deep); const c2 = new THREE.Color(ZELDA_PALETTE.leaf_vibrant)
+col.push(c1.r, c1.g, c1.b, c2.r, c2.g, c2.b)
 }
 })
 }
 getNodeTier(item) {
-const fnd = ['solid','filas','estruturas-de-dados','ddd','arquitetura','architecture','clean-architecture','oop','algorithms','patterns','teoria','computacao']
+const fnd = ['solid', 'filas', 'estruturas-de-dados', 'ddd', 'arquitetura', 'architecture', 'clean-architecture', 'oop', 'algorithms', 'patterns', 'teoria', 'computacao']
 const stk = (item.stack || []).map(s => s.toLowerCase())
 if (stk.some(s => fnd.includes(s))) return 0
 return item.kind === 'project' ? 1 : 2
 }
 buildAraucariaBase() {
 const baseGroup = new THREE.Group(); this.araucariaGroup.add(baseGroup)
-const blockGeo = new THREE.BoxGeometry(100, 30, 100)
-const blockMat = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.1, roughness: 0.9 })
-const positions = [[-60, 15, -35], [60, 15, -35], [0, 45, 60]]
-positions.forEach(p => {
-const b = new THREE.Mesh(blockGeo, blockMat); b.position.set(...p); baseGroup.add(b)
-const edges = new THREE.EdgesGeometry(blockGeo); const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x00C2FF, transparent: true, opacity: 0.3 }))
-line.position.copy(b.position); baseGroup.add(line)
+const terrainSize = 8000, segments = 64
+const terrainGeo = new THREE.PlaneGeometry(terrainSize, terrainSize, segments, segments)
+const pos = terrainGeo.attributes.position.array
+for (let i = 0; i < pos.length; i += 3) {
+const x = pos[i], y = pos[i + 1]
+const dist = Math.sqrt(x * x + y * y)
+if (dist < 3500) {
+pos[i + 2] = (Math.sin(x * 0.002) * Math.cos(y * 0.002) * 200) + (Math.sin(x * 0.01) * 30)
+} else {
+pos[i + 2] = -500
+}
+}
+terrainGeo.computeVertexNormals()
+const terrainMat = new THREE.MeshToonMaterial({
+color: ZELDA_PALETTE.grass,
+flatShading: true
 })
-const potGeo = new THREE.CylinderGeometry(55, 40, 80, 32)
-const potMat = new THREE.MeshPhysicalMaterial({ color: 0x111111, metalness: 0.9, roughness: 0.05, clearcoat: 1 })
-const pot = new THREE.Mesh(potGeo, potMat); pot.position.set(0, 85, 0); baseGroup.add(pot)
-const rim = new THREE.Mesh(new THREE.TorusGeometry(55, 1, 16, 100), new THREE.MeshBasicMaterial({ color: 0x00C2FF, transparent: true, opacity: 0.5 }))
-rim.rotation.x = Math.PI/2; rim.position.set(0, 125, 0); baseGroup.add(rim)
-this.araucariaGroup.position.y = -100
+const terrain = new THREE.Mesh(terrainGeo, terrainMat)
+terrain.rotation.x = -Math.PI / 2
+terrain.position.y = -50
+baseGroup.add(terrain)
+const numClumps = 1200, gPos = [], gCol = []
+for (let i = 0; i < numClumps; i++) {
+const r = 200 + Math.random() * 2500, t = Math.random() * Math.PI * 2
+const x = Math.cos(t) * r, z = Math.sin(t) * r
+const h = 10 + Math.random() * 35
+gPos.push(x, 0, z, x + (Math.random() - 0.5) * 12, h, z + (Math.random() - 0.5) * 12)
+gCol.push(0.3, 0.7, 0.4, 0.4, 0.9, 0.5)
+}
+const grassGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(gPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(gCol), 3))
+const grassMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.6 })
+this.grassMesh = new THREE.LineSegments(grassGeo, grassMat)
+baseGroup.add(this.grassMesh)
+const moundGeo = new THREE.CylinderGeometry(150, 400, 60, 32)
+const moundMat = new THREE.MeshStandardMaterial({ color: ZELDA_PALETTE.grass, roughness: 1 })
+const mound = new THREE.Mesh(moundGeo, moundMat); mound.position.y = 30; baseGroup.add(mound)
+this.araucariaGroup.position.y = 0
 }
 createNodes() {
 const central = { kind: 'central', name: 'Hiro' }; this.nodes = []
-this.addNode(central, new THREE.Vector3(0,0,0), true)
+this.addNode(central, new THREE.Vector3(0, 0, 0), true)
 const items = this.data, R = 450, GA = Math.PI * (3 - Math.sqrt(5))
 items.forEach((item, i) => {
-const y = 1-(i/(items.length-1))*2, r = Math.sqrt(1-y*y), t = GA*i
-const pos = new THREE.Vector3(Math.cos(t)*r*R + (Math.random()-0.5)*20, y*R, Math.sin(t)*r*R)
+const y = 1 - (i / (items.length - 1)) * 2, r = Math.sqrt(1 - y * y), t = GA * i
+const pos = new THREE.Vector3(Math.cos(t) * r * R + (Math.random() - 0.5) * 20, y * R, Math.sin(t) * r * R)
 const n = this.addNode(item, pos); n.userData.atomPos = pos.clone()
 })
 }
 addNode(item, pos, isCentral = false) {
-const cc = KIND_COLOR[item.kind] || 0x64748b, g = new THREE.Group(); g.position.copy(pos)
-g.userData = { item, isCentral, rings: [], pulsePhase: Math.random()*Math.PI*2 }
-const sz = isCentral ? 18 : 12
-g.add(new THREE.Mesh(new THREE.SphereGeometry(sz, 32, 24), new THREE.MeshPhysicalMaterial({ color: cc, emissive: cc, emissiveIntensity: isCentral ? 2.5 : 1.8, transmission: 0.9, transparent: true })))
-const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: this.glowTex, color: cc, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending }))
-glow.scale.set(sz*6, sz*6, 1); g.add(glow); g.userData.glow = glow
-for (let r = 0; r < (isCentral ? 3 : 1); r++) {
-const ring = new THREE.Mesh(new THREE.TorusGeometry(sz*1.8+r*8, 0.4, 8, 50), new THREE.MeshBasicMaterial({ color: cc, transparent: true, opacity: 0.4-r*0.1, blending: THREE.AdditiveBlending }))
-ring.rotation.set(Math.random()*3, Math.random()*3, 0); g.add(ring)
-g.userData.rings.push({ mesh: ring, rx: (Math.random()-0.5)*0.012, ry: (Math.random()-0.5)*0.018 })
+const el = isCentral ? { symbol: 'Hiro', color: 0xFFFFFF, shells: [2, 8, 18, 32] } : getElementForNode(this.nodes.length)
+const cc = el.color || KIND_COLOR[item.kind] || 0x64748b
+const g = new THREE.Group(); g.position.copy(pos)
+g.userData = { item, isCentral, element: el, orbits: [], electrons: [], pulsePhase: Math.random() * Math.PI * 2 }
+const sz = isCentral ? 22 : 14
+const nucGeo = new THREE.SphereGeometry(sz, 32, 24)
+const nucMat = new THREE.MeshPhysicalMaterial({
+color: cc, emissive: cc, emissiveIntensity: isCentral ? 4 : 2,
+metalness: 0.9, roughness: 0.1, transmission: 0.5, thickness: 2, transparent: true
+})
+const nucleus = new THREE.Mesh(nucGeo, nucMat)
+g.add(nucleus)
+const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: this.glowTex, color: cc, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending }))
+glow.scale.set(sz * 8, sz * 8, 1); g.add(glow); g.userData.glow = glow
+el.shells.forEach((count, sIdx) => {
+const orbitRadius = sz * (2.2 + sIdx * 1.2)
+const orbitGeo = new THREE.TorusGeometry(orbitRadius, 0.4, 16, 100)
+const orbitMat = new THREE.MeshBasicMaterial({ color: cc, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending })
+const orbit = new THREE.Mesh(orbitGeo, orbitMat)
+orbit.rotation.x = Math.random() * Math.PI
+orbit.rotation.y = Math.random() * Math.PI
+g.add(orbit)
+const orbitObj = { mesh: orbit, speed: (0.008 / (sIdx + 1)) * (isCentral ? 2 : 1) }
+g.userData.orbits.push(orbitObj)
+for (let e = 0; e < count; e++) {
+const eGeo = new THREE.SphereGeometry(isCentral ? 3 : 2, 8, 8)
+const eMat = new THREE.MeshBasicMaterial({ color: cc, emissive: cc, emissiveIntensity: 5 })
+const electron = new THREE.Mesh(eGeo, eMat)
+const angle = (e / count) * Math.PI * 2
+electron.position.x = Math.cos(angle) * orbitRadius
+electron.position.y = Math.sin(angle) * orbitRadius
+orbit.add(electron)
+g.userData.electrons.push(electron)
 }
-const txt = (item.name || item.title || '').toUpperCase(); if (txt) {
-const cv = document.createElement('canvas'); cv.width = 512; cv.height = 100
-const cx = cv.getContext('2d'); cx.font = isCentral ? 'bold 42px "JetBrains Mono"' : '600 30px "JetBrains Mono"'
-cx.textAlign = 'center'; cx.fillStyle = '#fff'; cx.fillText(txt.length > 24 ? txt.slice(0, 22)+'..' : txt, 256, 50)
-const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, opacity: 0.9 }));
-sp.position.y = sz + 25; sp.scale.set(isCentral ? 90 : 150, isCentral ? 30 : 28, 1); g.add(sp)
+})
+const name = (item.name || item.title || '').toUpperCase()
+const symbol = el.symbol.toUpperCase()
+const labelGroup = new THREE.Group()
+const symCv = document.createElement('canvas'); symCv.width = 128; symCv.height = 128
+const symCx = symCv.getContext('2d'); symCx.font = '900 80px "JetBrains Mono"'; symCx.textAlign = 'center'
+symCx.fillStyle = '#fff'; symCx.fillText(symbol, 64, 85)
+const symSp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(symCv), transparent: true, opacity: 0.8 }))
+symSp.scale.set(25, 25, 1); symSp.position.set(0, 0, 0)
+labelGroup.add(symSp)
+if (name) {
+const nameCv = document.createElement('canvas'); nameCv.width = 512; nameCv.height = 80
+const nameCx = nameCv.getContext('2d')
+nameCx.fillStyle = 'rgba(0, 0, 0, 0.4)'
+nameCx.beginPath(); nameCx.roundRect(40, 5, 432, 70, 20); nameCx.fill()
+nameCx.font = '700 32px "JetBrains Mono"'; nameCx.textAlign = 'center'
+nameCx.fillStyle = '#fff'; nameCx.fillText(name.length > 25 ? name.slice(0, 23) + '..' : name, 256, 50)
+const nameSp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(nameCv), transparent: true, opacity: 0.6 }))
+nameSp.scale.set(120, 20, 1); nameSp.position.y = sz + 45
+labelGroup.add(nameSp)
+g.userData.titleLabel = nameSp
 }
+g.add(labelGroup)
 this.scene.add(g); this.nodes.push(g); return g
 }
 createConnections() {
 this.atomConnections = new THREE.Group(); const ctr = this.nodes[0].position
 this.nodes.slice(1).forEach(n => {
 const t = n.position, cc = KIND_COLOR[n.userData.item.kind]
-const mid = ctr.clone().lerp(t, 0.5); mid.y += 40 + Math.random()*60
+const mid = ctr.clone().lerp(t, 0.5); mid.y += 40 + Math.random() * 60
 const link = new THREE.Line(new THREE.BufferGeometry().setFromPoints(new THREE.QuadraticBezierCurve3(ctr, mid, t).getPoints(30)), new THREE.LineBasicMaterial({ color: cc, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending }))
 n.userData.atomLink = link
 this.atomConnections.add(link)
@@ -270,32 +398,33 @@ this.layoutMode = mode; const isTree = mode === 'arvore'
 this.atomGroup.visible = !isTree; this.araucariaGroup.visible = isTree
 this.transitioning = true
 this.nodes.forEach(n => {
-const target = isTree ? (n.userData.isCentral ? new THREE.Vector3(0,0,0) : n.userData.treePos) : n.userData.atomPos
+const target = isTree ? (n.userData.isCentral ? new THREE.Vector3(0, 0, 0) : n.userData.treePos) : n.userData.atomPos
 if (target) new TWEEN.Tween(n.position).to({ x: target.x, y: target.y, z: target.z }, 1800).easing(TWEEN.Easing.Cubic.InOut).start()
 })
 if (isTree) {
-new TWEEN.Tween(this.camera.position).to({ x: 500, y: 150, z: 500 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
-.chain(
-new TWEEN.Tween(this.camera.position).to({ x: 2200, y: 1500, z: 2200 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
-).start()
-new TWEEN.Tween(this.controls.target).to({ x: 0, y: 100, z: 0 }, 1000).easing(TWEEN.Easing.Quadratic.InOut)
-.chain(
-new TWEEN.Tween(this.controls.target).to({ x: 0, y: 500, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut)
-).start()
-new TWEEN.Tween(this.pedestalLight).to({ intensity: 6 }, 1500).start()
+new TWEEN.Tween(this.camera.position).to({ x: 1200, y: 800, z: 1200 }, 2000).easing(TWEEN.Easing.Cubic.InOut).start()
+new TWEEN.Tween(this.controls.target).to({ x: 0, y: 700, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut).start()
+new TWEEN.Tween(this.sunLight).to({ intensity: 4 }, 1500).start()
+new TWEEN.Tween(this.scene.background).to({ r: 0.529, g: 0.808, b: 0.922 }, 1500).start()
+new TWEEN.Tween(this.scene.fog).to({ near: 1500, far: 15000 }, 1500).start()
+this.cloudGroup.visible = true
 } else {
-new TWEEN.Tween(this.camera.position).to({ x: 0, y: 100, z: 400 }, 1000).easing(TWEEN.Easing.Cubic.In)
-.chain(
-new TWEEN.Tween(this.camera.position).to({ x: 0, y: 400, z: 1000 }, 1200).easing(TWEEN.Easing.Cubic.Out)
-).start()
+new TWEEN.Tween(this.camera.position).to({ x: 0, y: 400, z: 1000 }, 1500).easing(TWEEN.Easing.Cubic.Out).start()
 new TWEEN.Tween(this.controls.target).to({ x: 0, y: 0, z: 0 }, 1500).start()
-new TWEEN.Tween(this.pedestalLight).to({ intensity: 0 }, 1000).start()
+new TWEEN.Tween(this.sunLight).to({ intensity: 0 }, 1000).start()
+new TWEEN.Tween(this.scene.background).to({ r: 0.007, g: 0.015, b: 0.031 }, 1000).start()
+new TWEEN.Tween(this.scene.fog).to({ near: 100000, far: 200000 }, 1000).start()
+this.cloudGroup.visible = false
 }
 }
 focusOnNode(node) {
-const p = node.position.clone(), dist = 450
-this.cameraGoal = p.clone().add(this.camera.position.clone().sub(this.controls.target).normalize().multiplyScalar(dist))
-this.cameraTarget = p.clone(); this.transitioning = true
+const p = node.position.clone()
+const offset = new THREE.Vector3(180, 0, 0)
+const isTree = this.layoutMode === 'arvore'
+const dist = isTree ? 600 : 450
+this.cameraGoal = p.clone().add(offset).add(this.camera.position.clone().sub(this.controls.target).normalize().multiplyScalar(dist))
+this.cameraTarget = p.clone().add(offset)
+this.transitioning = true
 }
 deselectNode() { this.selected = null; this.controls.autoRotate = true; this.restoreNodeVisibility(); this.resetCameraFocus(); if (window.hideIntelligencePanel) window.hideIntelligencePanel() }
 resetCameraFocus() {
@@ -306,9 +435,23 @@ this.transitioning = true
 }
 highlightNode(sel) {
 const isTree = this.layoutMode === 'arvore'
-this.nodes.forEach(n => { const s = n === sel; n.traverse(c => { if (c.material) { c.material._os = c.material._os ?? c.material.opacity; c.material.opacity = s ? c.material._os : c.material._os * 0.2; if (c.material.emissiveIntensity) c.material.emissiveIntensity = s ? 3 : 0.5 } }) })
+this.nodes.forEach(n => {
+const s = n === sel
+n.traverse(c => {
+if (c.material) {
+c.material._os = c.material._os ?? c.material.opacity
+c.material.opacity = s ? c.material._os : c.material._os * 0.15
+if (c.material.emissiveIntensity) c.material.emissiveIntensity = s ? 5 : 0.5
+}
+})
+})
 if (!isTree) {
-this.nodes.slice(1).forEach(n => { if (n.userData.atomLink) n.userData.atomLink.material.opacity = (n === sel) ? 0.8 : 0.05 })
+this.nodes.slice(1).forEach(n => {
+if (n.userData.atomLink) {
+n.userData.atomLink.material.opacity = (n === sel) ? 1.0 : 0.03
+n.userData.atomLink.material.linewidth = (n === sel) ? 3 : 1
+}
+})
 } else {
 this.mergedBranches.material.opacity = 0.05; this.mergedFoliage.material.opacity = 0.2
 const range = this.foliageRanges.get(sel)
@@ -316,22 +459,38 @@ if (range) {
 const colors = this.mergedFoliage.geometry.attributes.color.array
 for (let i = 0; i < colors.length / 3; i++) {
 const active = i >= range.start && i < (range.start + range.count)
-const base = active ? [0, 0.8, 0.6] : [0, 0.2, 0.15]
-colors[i*3] = base[0]; colors[i*3+1] = base[1]; colors[i*3+2] = base[2]
+const base = active ? [0.6, 1.0, 0.6] : [0.05, 0.15, 0.05]
+colors[i * 3] = base[0]; colors[i * 3 + 1] = base[1]; colors[i * 3 + 2] = base[2]
 }
 this.mergedFoliage.geometry.attributes.color.needsUpdate = true
 }
 }
-if (sel) new TWEEN.Tween(sel.scale).to({ x: 1.4, y: 1.4, z: 1.4 }, 300).easing(TWEEN.Easing.Back.Out).start()
+if (sel) {
+new TWEEN.Tween(sel.scale).to({ x: 1.5, y: 1.5, z: 1.5 }, 400).easing(TWEEN.Easing.Elastic.Out).start()
+if (sel.userData.titleLabel) {
+new TWEEN.Tween(sel.userData.titleLabel.material).to({ opacity: 1.0 }, 300).start()
+}
+}
 }
 restoreNodeVisibility() {
-this.nodes.forEach(n => { n.traverse(c => { if (c.material?._os !== undefined) c.material.opacity = c.material._os; if (c.material?.emissiveIntensity) c.material.emissiveIntensity = 1.8 }); new TWEEN.Tween(n.scale).to({ x: 1, y: 1, z: 1 }, 200).start() })
-if (this.mergedBranches) this.mergedBranches.material.opacity = 0.2
+this.nodes.forEach(n => {
+n.traverse(c => {
+if (c.material?._os !== undefined) c.material.opacity = c.material._os;
+if (c.material?.emissiveIntensity) c.material.emissiveIntensity = 2.0
+});
+new TWEEN.Tween(n.scale).to({ x: 1, y: 1, z: 1 }, 200).start()
+if (n.userData.titleLabel) n.userData.titleLabel.material.opacity = 0.6
+})
+if (this.mergedBranches) this.mergedBranches.material.opacity = 0.15
 if (this.mergedFoliage) {
-this.mergedFoliage.material.opacity = 0.45
+this.mergedFoliage.material.opacity = 0.7
 const colors = this.mergedFoliage.geometry.attributes.color.array
-for (let i = 0; i < colors.length / 3; i++) { colors[i*3] = 0; colors[i*3+1] = 0.33; colors[i*3+2] = 0.26 }
+for (let i = 0; i < colors.length / 3; i++) {
+colors[i * 3] = 0.1; colors[i * 3 + 1] = 0.35; colors[i * 3 + 2] = 0.15
+}
 this.mergedFoliage.geometry.attributes.color.needsUpdate = true
+}
+this.nodes.slice(1).forEach(n => { if (n.userData.atomLink) n.userData.atomLink.material.opacity = 0.15 })
 }
 this.nodes.slice(1).forEach(n => { if (n.userData.atomLink) n.userData.atomLink.material.opacity = 0.15 })
 }
@@ -357,15 +516,15 @@ this.renderer.domElement.addEventListener('mousemove', e => this.onMouseMove(e))
 this.renderer.domElement.addEventListener('click', () => this.onClick())
 window.addEventListener('keydown', e => { if (e.key === 'Escape') this.selected ? this.deselectNode() : (this.readerActive && this.exitReader()) })
 }
-onResize() { const w = this.container.clientWidth, h = this.container.clientHeight; this.camera.aspect = w/h; this.camera.updateProjectionMatrix(); this.renderer.setSize(w, h) }
+onResize() { const w = this.container.clientWidth, h = this.container.clientHeight; this.camera.aspect = w / h; this.camera.updateProjectionMatrix(); this.renderer.setSize(w, h) }
 onMouseMove(e) {
 if (this.readerActive) return
 const r = this.renderer.domElement.getBoundingClientRect()
-this.mouse.x = ((e.clientX-r.left)/r.width)*2-1; this.mouse.y = -((e.clientY-r.top)/r.height)*2+1
+this.mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1; this.mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1
 this.raycaster.setFromCamera(this.mouse, this.camera)
 const hits = this.raycaster.intersectObjects(this.nodes, true)
-this.nodes.forEach(n => n.scale.lerp(new THREE.Vector3(1,1,1), 0.1))
-if (hits.length) { document.body.style.cursor = 'pointer'; let t = hits[0].object; while (t.parent && !t.userData.item) t = t.parent; if (t.userData.item) t.scale.set(1.2,1.2,1.2) }
+this.nodes.forEach(n => n.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1))
+if (hits.length) { document.body.style.cursor = 'pointer'; let t = hits[0].object; while (t.parent && !t.userData.item) t = t.parent; if (t.userData.item) t.scale.set(1.2, 1.2, 1.2) }
 else document.body.style.cursor = 'default'
 }
 handleNodeClick(node) {
@@ -387,14 +546,45 @@ this.deselectNode()
 }
 animate() {
 requestAnimationFrame(() => this.animate()); TWEEN.update()
-if (this.transitioning) { this.camera.position.lerp(this.cameraGoal, 0.05); this.controls.target.lerp(this.cameraTarget, 0.05); if (this.camera.position.distanceTo(this.cameraGoal) < 1) this.transitioning = false }
-this.controls.update(); const t = performance.now()*0.001
+if (this.transitioning) {
+this.camera.position.lerp(this.cameraGoal, 0.06)
+this.controls.target.lerp(this.cameraTarget, 0.06)
+if (this.camera.position.distanceTo(this.cameraGoal) < 0.5) this.transitioning = false
+}
+this.controls.update(); const t = performance.now() * 0.001
 if (!this.readerActive) {
-this.atomGroup.rotation.y = t * 0.02
+this.atomGroup.rotation.y = t * 0.015
+if (this.layoutMode === 'arvore') {
+if (this.grassMesh) {
+this.grassMesh.rotation.z = Math.sin(t * 1.5) * 0.02
+this.grassMesh.rotation.x = Math.cos(t * 1.2) * 0.01
+}
+if (this.cloudGroup) {
+this.cloudGroup.children.forEach(c => {
+c.position.x += c.userData.speed
+if (c.position.x > 4000) c.position.x = -4000
+})
+}
+if (this.mergedFoliage) {
+this.mergedFoliage.material.opacity = 0.5 + Math.sin(t * 0.5) * 0.1
+}
+}
 this.nodes.forEach((n, i) => {
-if (i > 0) n.position.y += Math.sin(t*1.1+i)*0.03
-n.userData.rings?.forEach(r => { r.mesh.rotation.x += r.rx; r.mesh.rotation.y += r.ry })
-if (n.userData.glow) n.userData.glow.material.opacity = 0.35 + Math.sin(t*1.5+n.userData.pulsePhase)*0.1
+if (i > 0 && !this.selected) {
+n.position.y += Math.sin(t * 0.8 + i) * 0.04
+}
+n.userData.orbits?.forEach(r => {
+r.mesh.rotation.z += r.speed
+r.mesh.rotation.y += r.speed * 0.5
+})
+if (n.userData.glow) {
+const s = (n === this.selected) ? 1.2 : 1.0
+n.userData.glow.material.opacity = (0.4 + Math.sin(t * 2 + n.userData.pulsePhase) * 0.15) * s
+}
+if (n === this.selected && n.userData.atomLink) {
+const dash = (Math.sin(t * 5) + 1) * 0.5
+n.userData.atomLink.material.opacity = 0.5 + dash * 0.5
+}
 })
 }
 this.renderer.render(this.scene, this.camera)

@@ -312,7 +312,17 @@ if (elements.link) {
 elements.link.href = data.resolved_url || data.url || "#";
 const actionKey = data.kind === "project" ? "actions.view_project" : "actions.read_article";
 elements.link.innerHTML = `<i data-lucide="eye"></i> ${loc?.translate(actionKey, "Ver")} <i data-lucide="arrow-right"></i>`;
-lucide.createIcons();
+if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+if (window.mermaid) {
+try {
+window.mermaid.init(undefined, panel.querySelectorAll(".mermaid"));
+} catch (err) {
+console.error("Mermaid error:", err);
+}
+}
+if (window.MathJax && window.MathJax.typesetPromise) {
+window.MathJax.typesetPromise([panel]).catch(err => console.error("MathJax error:", err));
 }
 setOpen(true);
 };
@@ -321,6 +331,21 @@ window.hideIntelligencePanel = () => setOpen(false);
 panel.querySelectorAll("[data-panel-close]").forEach(el => {
 el.addEventListener("click", () => setOpen(false));
 });
+document.addEventListener("keydown", (e) => {
+if (e.key === "Escape") setOpen(false);
+});
+if (typeof lucide !== 'undefined') lucide.createIcons();
+};
+const initSidebarToggle = () => {
+const toggles = document.querySelectorAll("[data-sidebar-toggle]");
+const setOpen = (open) => {
+document.body.dataset.sidebarOpen = String(open);
+document.body.style.overflow = open ? "hidden" : "";
+};
+toggles.forEach(t => t.addEventListener("click", () => {
+const isOpen = document.body.dataset.sidebarOpen === "true";
+setOpen(!isOpen);
+}));
 document.addEventListener("keydown", (e) => {
 if (e.key === "Escape") setOpen(false);
 });
@@ -335,5 +360,31 @@ initCommandPalette(loc);
 initCodeBlocks();
 initInteractiveGlow();
 initIntelligencePanel(loc);
+initSidebarToggle();
+initVisualizationToggle();
 if (window.initKnowledgeGraph) window.initKnowledgeGraph();
 });
+const initVisualizationToggle = () => {
+const navBtn = document.querySelector("[data-vis-toggle]");
+if (!navBtn) return;
+navBtn.addEventListener("click", () => {
+if (window.projectMap) {
+const currentMode = window.projectMap.layoutMode;
+const nextMode = currentMode === "atomo" ? "arvore" : "atomo";
+window.projectMap.setLayout(nextMode);
+return;
+}
+const btvTrigger = document.getElementById("btv-trigger");
+if (btvTrigger) {
+btvTrigger.click();
+}
+});
+const observer = new MutationObserver(() => {
+const btvTrigger = document.getElementById("btv-trigger");
+if (btvTrigger && btvTrigger.style.display !== 'none') {
+btvTrigger.style.display = 'none';
+observer.disconnect();
+}
+});
+observer.observe(document.body, { childList: true, subtree: true });
+};

@@ -328,11 +328,30 @@ button, input, select {
   height: 2.5rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--surface-soft);
   color: var(--muted);
   cursor: pointer;
-  transition: var(--transition-base);
+  transition: all var(--transition-base-speed) var(--ease-out);
   position: relative;
+  overflow: hidden;
+}
+
+.nav-btn-vis {
+  color: var(--accent) !important;
+  border-color: var(--accent-soft) !important;
+  background: var(--surface-strong) !important;
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.nav-btn-vis:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px var(--accent-soft);
+  border-color: var(--accent) !important;
+}
+
+.nav-btn-vis svg {
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
 .nav-btn-icon svg {
@@ -1114,10 +1133,22 @@ button, input, select {
 /* ── Page Grid (article + sidebar) ──────────────────────────────────────── */
 
 .page-grid {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: var(--space-10);
-  align-items: start;
+  display: block;
+  max-width: var(--reading-width);
+  margin: 0 auto;
+}
+
+.nav-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.header-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .page-grid > article,
@@ -1129,15 +1160,50 @@ button, input, select {
 /* ── Sidebar Panel ──────────────────────────────────────────────────────── */
 
 .sidebar-panel {
-  position: sticky;
-  top: 5rem;
-  padding: var(--space-6);
-  background: var(--surface-soft);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(400px, 100vw);
+  z-index: 1500;
+  padding: var(--space-8);
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid var(--glass-border);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-6);
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+}
+
+body[data-sidebar-open="true"] .sidebar-panel {
+  transform: translate3d(0, 0, 0);
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+body[data-sidebar-open="true"] .sidebar-backdrop {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
 }
 
 .sidebar-panel h2 {
@@ -1488,8 +1554,18 @@ button, input, select {
   }
 
   .page-grid .sidebar-panel {
-    position: static;
-    order: -1;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--glass-border);
+    transform: translate3d(0, 100%, 0);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    height: auto;
+    max-height: 85vh;
+    top: auto;
+  }
+
+  body[data-sidebar-open="true"] .page-grid .sidebar-panel {
+    transform: translate3d(0, 0, 0);
   }
 
   .resource-list,
@@ -2152,6 +2228,7 @@ button, input, select {
   margin: 0;
   background: linear-gradient(to right, #fff, rgba(255,255,255,0.6));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
