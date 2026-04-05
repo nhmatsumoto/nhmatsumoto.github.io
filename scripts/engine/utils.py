@@ -116,6 +116,14 @@ def resolve_url(site: dict[str, str], url: str) -> str:
 def resolve_optional_url(site: dict[str, str], url: str) -> str:
     return resolve_url(site, url) if str(url or "").strip() else ""
 
+def md5_of_content(content: str) -> str:
+    import hashlib
+    return hashlib.md5(content.encode("utf-8")).hexdigest()[:8]
+
+def format_rfc822(dt: datetime) -> str:
+    from email.utils import format_datetime
+    return format_datetime(dt)
+
 def minify_js(content: str) -> str:
     """Safely remove comments and redundant whitespace."""
     # Remove multi-line comments

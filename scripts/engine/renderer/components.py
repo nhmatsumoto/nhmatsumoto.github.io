@@ -457,6 +457,20 @@ def render_evidence_highlights(posts: list[dict[str, Any]], projects: list[dict[
     </section>
     """
 
+def render_related_posts(posts: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    if not posts:
+        return ""
+    title = translate(i18n, locale, "sections.related_posts", "Posts relacionados")
+    cards = "\n".join(render_post_card(p, i18n, locale) for p in posts)
+    return f"""
+    <section class="section-panel related-posts-panel">
+      <header class="section-header">
+        <h2 data-i18n="sections.related_posts">{html.escape(title)}</h2>
+      </header>
+      <ul class="resource-list">{cards}</ul>
+    </section>
+    """
+
 def render_documents_section(system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str, *, limit: int | None = None, grouped: bool = False) -> str:
     items = documents[:limit] if limit is not None else documents
     if grouped:

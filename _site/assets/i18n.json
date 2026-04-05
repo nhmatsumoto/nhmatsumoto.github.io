@@ -2,7 +2,8 @@
   "defaultLocale": "pt-BR",
   "supportedLocales": [
     "pt-BR",
-    "en-US"
+    "en-US",
+    "ja-JP"
   ],
   "strings": {
     "pt-BR": {
@@ -280,6 +281,146 @@
         "navigation_kicker": "navigation",
         "navigation_title": "Sitemap & categories",
         "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories."
+      }
+    },
+    "ja-JP": {
+      "accessibility": {
+        "skip_to_content": "コンテンツへ移動",
+        "primary_navigation": "メインナビゲーション",
+        "breadcrumbs": "現在位置",
+        "language_switcher": "言語を切り替える",
+        "command_palette": "コマンドパレット"
+      },
+      "nav": {
+        "home": "ホーム",
+        "posts": "記事",
+        "projects": "プロジェクト",
+        "documents": "ドキュメント",
+        "about": "プロフィール",
+        "search": "コマンドパレット",
+        "cta": "お問い合わせ",
+        "graph": "ブレーンマップ",
+        "language": "言語",
+        "language_action": "言語切替",
+        "theme": "テーマ切替",
+        "vis_tree": "ツリー",
+        "vis_atom": "アトム"
+      },
+      "palette": {
+        "placeholder": "記事、プロジェクト、ドキュメントを検索",
+        "close": "閉じる",
+        "hint": "Ctrl/⌘ K で開き、Enter で最初の結果を表示、Esc で閉じます。",
+        "empty": "結果が見つかりませんでした。"
+      },
+      "home": {
+        "highlight_main_project": "主要プロジェクト",
+        "highlight_recent_article": "最近の記事"
+      },
+      "sections": {
+        "posts_title": "最近の記事",
+        "posts_copy": "読了時間、タグ、リポジトリリンクを備えたテクニカルな記事。",
+        "projects_title": "主要システム",
+        "projects_copy": "長期資産としてのプロジェクト：アーキテクチャ、スタック、ロードマップ、補足資料。",
+        "documents_title": "ドキュメントシステム",
+        "documents_copy": "ドメイン、アーキテクチャ、エージェント、APIごとに分類されたMarkdownドキュメント。",
+        "about_copy": "このサイトは、個人のウェブサイトというよりも、コードベースのように構成されています。",
+        "brain_map_title": "ダイナミック・ナレッジマップ",
+        "brain_map_copy": " nhmatsumoto の思考、プロジェクト、ドキュメントがどのように繋がっているかを確認できます。",
+        "welcome_message": "技術ナレッジ OS"
+      },
+      "pages": {
+        "archive": {
+          "title": "すべての記事",
+          "description": "アーキテクチャ、実験、ドメインモデリング、運用に関する書き込みのフロー。"
+        },
+        "projects": {
+          "title": "主要システム",
+          "description": "システムとしてのプロジェクト：課題、解決策、アーキテクチャ、スタック、ADR、ロードマップ。",
+          "flow_hint": "ノードをクリックして探索してください。繋がったノードはスタックを共有しています。"
+        },
+        "documents": {
+          "title": "ドキュメントシステム",
+          "description": "意思決定を容易にするために、ドメイン、アーキテクチャ、エージェント、APIごとにグループ化された文書。"
+        },
+        "about": {
+          "title": "ミニマリスト・エンジニアリング・ノート",
+          "operating_model": "運用モデル",
+          "structure": "構造",
+          "next_steps": "今後のステップ",
+          "future_frontend": "フロントエンドの将来的な選択肢"
+        },
+        "post": {
+          "kicker": "記事",
+          "metadata": "メタデータ",
+          "back": "記事一覧に戻る",
+          "copy_link": "リンクをコピー",
+          "navigation": "記事ナビゲーション",
+          "newer_empty": "新しい記事はありません",
+          "older_empty": "古い記事はありません"
+        },
+        "project": {
+          "kicker": "プロジェクト",
+          "status": "ステータス",
+          "stack": "スタック",
+          "actions": "アクション",
+          "overview": "概要",
+          "problem_solution": "課題と解決策",
+          "architecture": "アーキテクチャ",
+          "adr": "ADRs",
+          "roadmap": "ロードマップ"
+        },
+        "document": {
+          "kicker": "ドキュメント",
+          "meta": "ドキュメント・メタデータ",
+          "version": "バージョン",
+          "category": "カテゴリー"
+        }
+      },
+      "common": {
+        "preview": "プレビュー",
+        "content_in_preparation": "準備中のコンテンツ。",
+        "agent_generated": "エージェント生成済み"
+      },
+      "empty": {
+        "posts": "まだ公開された記事はありません。",
+        "projects": "利用可能なプロジェクトはありません。",
+        "documents": "まだ索引付けされたドキュメントはありません。"
+      },
+      "actions": {
+        "copy": "コピー",
+        "copied": "コピー済み",
+        "repo": "リポ",
+        "code": "コード",
+        "view_architecture": "アーキテクチャを表示",
+        "view_code": "コードを表示",
+        "open_docs": "ドキュメントを開く",
+        "link_copied": "リンクをコピーしました",
+        "copy_from_address": "アドレスバーからコピーしてください",
+        "view_project": "表示",
+        "close": "閉じる"
+      },
+      "status": {
+        "research": "研究中",
+        "in_progress": "進行中",
+        "production": "プロダクション"
+      },
+      "kinds": {
+        "home": "ホーム",
+        "about": "プロフィール",
+        "post": "記事",
+        "project": "プロジェクト",
+        "document": "ドキュメント",
+        "developer": "開発者"
+      },
+      "templates": {
+        "reading_time": "読了時間 {minutes} 分"
+      },
+      "view": {
+        "list": "リスト",
+        "grid": "グリッド",
+        "navigation_kicker": "ナビゲーション",
+        "navigation_title": "サイトマップ & カテゴリー",
+        "navigation_copy": "記事、プロジェクト、ドキュメント、および最も関連性の高いカテゴリーへの直接リンク。"
       }
     }
   }

@@ -80,7 +80,24 @@ def render_intelligence_panel(site: dict[str, str], i18n: dict[str, Any], locale
     </aside>
     """
 
-def render_layout(*, page_title: str, page_description: str, site: dict[str, str], system: dict[str, Any], body_class: str, canonical_path: str, has_math: bool, content: str, active_nav: str, i18n: dict[str, Any], locale: str, extra_scripts: list[str] | None = None) -> str:
+def render_og_tags(og: dict[str, str]) -> str:
+    tags = [
+        f'<meta property="og:title" content="{html.escape(og["title"])}">',
+        f'<meta property="og:description" content="{html.escape(og["description"])}">',
+        f'<meta property="og:url" content="{html.escape(og["url"])}">',
+        f'<meta property="og:type" content="{html.escape(og.get("type", "article"))}">',
+        f'<meta name="twitter:card" content="{html.escape(og.get("twitter_card", "summary"))}">',
+        f'<meta name="twitter:title" content="{html.escape(og["title"])}">',
+        f'<meta name="twitter:description" content="{html.escape(og["description"])}">',
+    ]
+    if og.get("image"):
+        tags += [
+            f'<meta property="og:image" content="{html.escape(og["image"])}">',
+            f'<meta name="twitter:image" content="{html.escape(og["image"])}">',
+        ]
+    return "\n    ".join(tags)
+
+def render_layout(*, page_title: str, page_description: str, site: dict[str, str], system: dict[str, Any], body_class: str, canonical_path: str, has_math: bool, content: str, active_nav: str, i18n: dict[str, Any], locale: str, extra_scripts: list[str] | None = None, og: dict[str, str] | None = None) -> str:
     from ..utils import load_blog_config
     config = load_blog_config()
     math_config = config.get("math", {})
@@ -101,10 +118,21 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
         "languageNames": i18n.get("language_names", {}),
         "strings": i18n.get("strings", {}),
     }, ensure_ascii=False).replace("<", "\\u003c")
+
+    asset_manifest: dict[str, str] = system.get("asset_manifest", {})
+
+    def hashed(name: str) -> str:
+        return asset_manifest.get(name, name)
+
     scripts_html = "\n    ".join(
-        f'<script src="{site_href(site, f"/assets/{s.split("?")[0]}")}" {"type=\"module\"" if "?module=true" in s else "defer"}></script>'
+        f'<script src="{site_href(site, f"/assets/{hashed(s.split(chr(63))[0])}")}" {"type=\"module\"" if "?module=true" in s else "defer"}></script>'
         for s in (extra_scripts or [])
     )
+
+    rss_file = config.get("build", {}).get("rss_file", "feed.xml")
+    rss_link = f'<link rel="alternate" type="application/rss+xml" title="{html.escape(site.get("title", ""))} RSS" href="{html.escape(site_href(site, "/" + rss_file))}">'
+
+    og_html = f"\n    {render_og_tags(og)}" if og else ""
 
     import_map = {
         "imports": {
@@ -124,7 +152,9 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <title>{html.escape(page_title)}</title><meta name="description" content="{html.escape(page_description)}">
     <link rel="canonical" href="{html.escape(site_href(site, canonical_path))}">
-    <link rel="stylesheet" href="{site_href(site, '/assets/styles.css')}">
+    {rss_link}
+    {og_html}
+    <link rel="stylesheet" href="{site_href(site, '/assets/' + hashed('styles.css'))}">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -143,9 +173,9 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     {render_palette(site, i18n, locale)}
     <div class="sidebar-backdrop" data-sidebar-toggle></div>
     <script id="site-i18n" type="application/json">{i18n_payload}</script>
-    <script src="{site_href(site, '/assets/blog.js')}" type="module"></script>
-    <script src="{site_href(site, '/assets/graphview.js')}" defer></script>
-    <script src="{site_href(site, '/assets/btree-view.js')}" defer></script>
+    <script src="{site_href(site, '/assets/' + hashed('blog.js'))}" type="module"></script>
+    <script src="{site_href(site, '/assets/' + hashed('graphview.js'))}" defer></script>
+    <script src="{site_href(site, '/assets/' + hashed('btree-view.js'))}" defer></script>
     {scripts_html}
   </body>
 </html>

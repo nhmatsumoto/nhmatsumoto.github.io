@@ -24,6 +24,10 @@ DEFAULT_BUILD_CONFIG = {
     "posts_on_home": 6,
     "projects_on_home": 3,
     "documents_on_home": 4,
+    "sitemap_file": "sitemap.xml",
+    "rss_file": "feed.xml",
+    "rss_items": 20,
+    "cleanup_dirs": ["_astro"],
 }
 
 DEFAULT_MATH_CONFIG = {

@@ -6,8 +6,8 @@ from pathlib import Path
 from typing import Any
 from .constants import ROOT, MANAGED_GIT_PATHS, WIKILINK_RE
 from .utils import (
-    load_blog_config, write_text, write_json, site_href, 
-    resolve_optional_url, now_local, minify_js, minify_css
+    load_blog_config, write_text, write_json, site_href,
+    resolve_optional_url, now_local, minify_js, minify_css, md5_of_content
 )
 from .loader import load_site, load_system, load_posts, load_projects, load_documents
 from .i18n import load_i18n, default_locale
@@ -34,6 +34,20 @@ def clean_output_directory(path: Path) -> None:
     for child in path.iterdir():
         if child.is_dir(): shutil.rmtree(child)
         else: child.unlink()
+
+def find_related_posts(current: dict[str, Any], all_posts: list[dict[str, Any]], max_count: int = 3) -> list[dict[str, Any]]:
+    current_tags = {t.lower() for t in current.get("tags", [])}
+    if not current_tags:
+        return []
+    scored = []
+    for other in all_posts:
+        if other["slug"] == current["slug"]:
+            continue
+        overlap = len(current_tags & {t.lower() for t in other.get("tags", [])})
+        if overlap > 0:
+            scored.append((overlap, other))
+    scored.sort(key=lambda x: (-x[0], -x[1]["published_dt"].timestamp()))
+    return [post for _, post in scored[:max_count]]
 
 def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     config = load_blog_config()["build"]
@@ -62,31 +76,47 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     for d in documents:
         d["resolved_url"] = site_href(site, d["url"])
 
+    # Clean legacy directories (e.g. _astro/ from old Astro migration)
+    for dname in config.get("cleanup_dirs", []):
+        legacy_dir = target_root / dname
+        if legacy_dir.exists() and legacy_dir.is_dir():
+            shutil.rmtree(legacy_dir)
+
     # Clean directories
     for dname in [config["publications_dir"], config["projects_output_dir"], config["documents_output_dir"], Path(config["about_file"]).parent]:
         clean_output_directory(target_root / dname)
 
-    # Mirror assets
+    # Mirror assets with cache-busting for JS/CSS
     src_assets = ROOT / "assets"
     dst_assets = target_root / "assets"
+    asset_manifest: dict[str, str] = {}
     if src_assets.exists() and src_assets.resolve() != dst_assets.resolve():
+        # Clean old hashed files to avoid accumulation
+        if dst_assets.exists():
+            for old in dst_assets.iterdir():
+                if old.is_file() and old.suffix in [".js", ".css"]:
+                    old.unlink()
         dst_assets.mkdir(parents=True, exist_ok=True)
         for item in src_assets.iterdir():
             if item.is_dir():
-                # For directories like images/ thumbnails/, copy tree
                 d_dst = dst_assets / item.name
                 if d_dst.exists(): shutil.rmtree(d_dst)
                 shutil.copytree(item, d_dst)
             else:
-                # Minify JS/CSS on the fly, copy others
                 if item.suffix in [".js", ".css"]:
                     try:
                         content = item.read_text(encoding="utf-8")
                         minified = minify_js(content) if item.suffix == ".js" else minify_css(content)
-                        (dst_assets / item.name).write_text(minified, encoding="utf-8")
+                        file_hash = md5_of_content(minified)
+                        hashed_name = f"{item.stem}.{file_hash}{item.suffix}"
+                        (dst_assets / hashed_name).write_text(minified, encoding="utf-8")
+                        asset_manifest[item.name] = hashed_name
                         continue
-                    except Exception: pass
+                    except Exception:
+                        pass
                 shutil.copy2(item, dst_assets / item.name)
+                asset_manifest[item.name] = item.name
+    system["asset_manifest"] = asset_manifest
 
     generated_paths: list[str] = []
     
@@ -109,7 +139,8 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     # Render items
     for idx, post in enumerate(posts):
         dest = target_root / config["publications_dir"] / post["output_dir_name"] / "index.html"
-        write_text(dest, render_post_page(site, system, post, posts[idx-1] if idx > 0 else None, posts[idx+1] if idx+1 < len(posts) else None, i18n, locale))
+        related = find_related_posts(post, posts)
+        write_text(dest, render_post_page(site, system, post, posts[idx-1] if idx > 0 else None, posts[idx+1] if idx+1 < len(posts) else None, i18n, locale, related_posts=related))
     for p in projects: write_text(target_root / config["projects_output_dir"] / p["slug"] / "index.html", render_project_page(site, system, p, i18n, locale))
     for d in documents: write_text(target_root / config["documents_output_dir"] / d["slug"] / "index.html", render_document_page(site, system, d, i18n, locale))
 
@@ -121,6 +152,15 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         "supportedLocales": i18n.get("supported_locales", []),
         "strings": i18n.get("strings", {}),
     })
+
+    # SEO: Sitemap and RSS feed
+    from .renderer.feeds import generate_sitemap, generate_rss_feed
+    sitemap_xml = generate_sitemap(site, posts, projects, documents, total_pages, config)
+    if sitemap_xml:
+        write_text(target_root / config.get("sitemap_file", "sitemap.xml"), sitemap_xml)
+    rss_xml = generate_rss_feed(site, posts, config)
+    if rss_xml:
+        write_text(target_root / config.get("rss_file", "feed.xml"), rss_xml)
 
     return {
         "published_posts": len(posts),
