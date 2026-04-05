@@ -29,10 +29,10 @@ Podemos classificar as linguagens em quatro quadrantes de acordo com a força e 
 graph TD
     A[Sistemas de Tipagem] --> B[Estático]
     A --> C[Dinâmico]
-    B --> D[Forte (Rust, C#)]
-    B --> E[Fraca (C++)]
-    C --> F[Forte (Python, Ruby)]
-    C --> G[Fraca (JavaScript, PHP)]
+    B --> D["Forte (Rust, C#)"]
+    B --> E["Fraca (C++)"]
+    C --> F["Forte (Python, Ruby)"]
+    C --> G["Fraca (JavaScript, PHP)"]
 ```
 
 ### O Custo da Incerteza (\\(U\\))

@@ -371,7 +371,19 @@ const initIntelligencePanel = (loc) => {
       elements.link.href = data.resolved_url || data.url || "#";
       const actionKey = data.kind === "project" ? "actions.view_project" : "actions.read_article";
       elements.link.innerHTML = `<i data-lucide="eye"></i> ${loc?.translate(actionKey, "Ver")} <i data-lucide="arrow-right"></i>`;
-      lucide.createIcons();
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    // Re-render Mermaid and MathJax
+    if (window.mermaid) {
+      try {
+        window.mermaid.init(undefined, panel.querySelectorAll(".mermaid"));
+      } catch (err) {
+        console.error("Mermaid error:", err);
+      }
+    }
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise([panel]).catch(err => console.error("MathJax error:", err));
     }
 
     setOpen(true);

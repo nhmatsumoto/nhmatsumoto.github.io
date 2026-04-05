@@ -69,7 +69,7 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     # Mirror assets
     src_assets = ROOT / "assets"
     dst_assets = target_root / "assets"
-    if src_assets.exists():
+    if src_assets.exists() and src_assets.resolve() != dst_assets.resolve():
         dst_assets.mkdir(parents=True, exist_ok=True)
         for item in src_assets.iterdir():
             if item.is_dir():

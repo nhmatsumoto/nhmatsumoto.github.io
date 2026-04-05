@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>IA Inspirada pela Física: Entropia e Energia nas Redes Neurais | nhmatsumoto-blog-engine</title><meta name="description" content="Como conceitos térmicos e de mecânica estatística moldam o treinamento de IAs modernas, de Hopfield Networks a Diffusion Models.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, asciimath: { delimiters: [["`", "`"]] }, loader: { load: ["input/tex", "input/asciimath", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
+  </head>
+  <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
+    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
+    
+    <nav class="nav-shell" data-nav-shell>
+      <div class="nav-brand">
+        <a class="nav-title" href="https://nhmatsumoto.github.io/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="palette de comandos"><i data-lucide="search"></i></button>
+        <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="Toggle language"><i data-lucide="languages"></i><span class="locale-label" data-locale-label>PT</span></button>
+        <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
+      </div>
+    </nav>
+    
+    <div class="site-shell">
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">IA Inspirada pela Física: Entropia e Energia nas Redes Neurais</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><a href="https://nhmatsumoto.github.io/projects/?select=post-ia-inspirada-pela-fisica-redes-neurais" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div><h1>IA Inspirada pela Física: Entropia e Energia nas Redes Neurais</h1><p class="post-summary">Como conceitos térmicos e de mecânica estatística moldam o treinamento de IAs modernas, de Hopfield Networks a Diffusion Models.</p><div class="post-meta"><time datetime="2026-04-03T23:00:00+09:00" data-localize-date="long">3 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>A inteligência artificial não nasceu apenas de algoritmos matemáticos puros, ela bebeu da fonte da <strong>Física Estatística</strong>. Muitos dos modelos que usamos hoje tratam a informação como se fosse energia em um sistema físico.</p>
+<h2>Entropia e a Busca pela Ordem</h2>
+<p>Na física, a entropia mede a desordem. Na IA, usamos a <strong>Entropia Cruzada</strong> (Cross-Entropy) para medir quão longe nossa rede está da resposta correta. Treinar uma rede é, essencialmente, reduzir a desordem da sua predição.</p>
+<h2>Redes de Hopfield e a Energia de um Sistema</h2>
+<p>John Hopfield, físico de formação, criou uma rede neural onde a memória é um estado de <strong>Mínima Energia</strong>. Imagine uma bola rolando em uma paisagem de montanhas; a memória é o fundo do vale.</p>
+<div class="mermaid">graph TD
+    A[Estado de Alta Energia - Desordenado] --&gt;|Descida do Gradiente| B[Estado de Baixa Energia - Estável]
+    B --&gt; C[Memória Recuperada]
+    style B fill:#dfd,stroke:#333</div>
+<h3>Diffusion Models: Criando do Caos</h3>
+<p>Os modelos de imagem modernos (como Midjourney ou Stable Diffusion) usam um processo físico inverso. Eles adicionam ruído (caos/entropia) a uma imagem até que ela vire chiado puro e, então, ensinam a rede a <strong>reverter a difusão</strong>, extraindo ordem do caos.</p>
+<h2>A Matemática do Aprendizado</h2>
+<p>Muitos algoritmos de otimização usam o conceito de <strong>Simulated Annealing</strong> (Recozimento Simulado), inspirado na forma como os metais são resfriados lentamente para atingir uma estrutura cristalina perfeita (o mínimo global).</p>
+<h2>Conclusão</h2>
+<p>A IA está se aproximando cada vez mais de uma &quot;Física da Informação&quot;. Entender as leis da termodinâmica e da energia nos dá uma intuição poderosa sobre por que as redes neurais funcionam e como podemos torná-las mais eficientes.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T23:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">ai-theory</span><span class="badge">physics</span><span class="badge">deep-learning</span></div><div class="tag-list"><span class="tag">ia</span><span class="tag">fisica</span><span class="tag">entropia</span><span class="tag">redes-neurais</span><span class="tag">diffusao</span></div><div class="sidebar-actions"></div></aside></section></main>
+      
+    <footer class="site-footer">
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
+    </footer>
+    
+      
+    <aside class="intelligence-panel" data-intelligence-panel data-open="false" aria-hidden="true">
+      <div class="panel-backdrop" data-panel-close></div>
+      <div class="panel-content">
+        <div class="panel-header" data-reveal>
+          <div class="panel-title-group">
+            <span class="panel-role card-type" data-panel-role></span>
+            <h2 class="panel-name" data-panel-name></h2>
+            <div class="panel-meta-row" data-panel-meta-row></div>
+          </div>
+          <button class="nav-button panel-close" type="button" data-panel-close aria-label="Fechar">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="panel-scroll-body">
+          <p class="panel-headline" data-panel-headline data-reveal></p>
+          <div class="panel-summary prose" data-panel-summary data-reveal></div>
+          <div class="panel-stack" data-panel-stack data-reveal></div>
+          <div class="panel-metrics" data-panel-metrics data-reveal></div>
+        </div>
+        <div class="panel-actions" data-reveal>
+          <a class="panel-cta nav-cta" href="#" data-panel-link>
+            <i data-lucide="eye"></i> Ver conteúdo <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </aside>
+    
+    </div>
+    
+    <div class="palette-shell" hidden data-command-palette data-search-index="https://nhmatsumoto.github.io/assets/search-index.json">
+      <div class="palette-backdrop" data-close-palette></div>
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
+        <div class="palette-head">
+          <input class="palette-input" type="search" placeholder="Buscar publicações, projetos e documentos" data-palette-input data-i18n-placeholder="palette.placeholder">
+          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">Fechar</button>
+        </div>
+        <p class="palette-hint" data-i18n="palette.hint">Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.</p>
+        <ul class="palette-results" data-palette-results></ul>
+      </div>
+    </div>
+    
+    <script id="site-i18n" type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "en-US"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語", "en-US": "English (US)"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "palette de comandos", "cta": "trabalho aberto / contato", "graph": "mapa cerebral", "language": "idioma", "language_action": "trocar idioma", "theme": "alternar tema"}, "palette": {"placeholder": "Buscar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal.", "brain_map_title": "Mapa cerebral vivo", "brain_map_copy": "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos.", "welcome_message": "SO de Conhecimento Técnico"}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Sistemas centrais", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap.", "flow_hint": "Clique em um nó para explorar. Nós conectados compartilham stack."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda."}, "actions": {"copy": "copiar", "copied": "copiado", "repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço", "view_project": "Ver", "close": "Fechar"}, "status": {"research": "pesquisa", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento", "developer": "desenvolvedor"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grade"}}, "en-US": {"accessibility": {"skip_to_content": "Skip to content", "primary_navigation": "Primary navigation", "breadcrumbs": "You are here", "language_switcher": "Select language", "command_palette": "Command palette"}, "nav": {"home": "home", "posts": "posts", "projects": "projects", "documents": "documents", "about": "about", "search": "command palette", "cta": "open work / contact", "graph": "brain map", "language": "language", "language_action": "switch language", "theme": "toggle theme"}, "palette": {"placeholder": "Search posts, projects and documents", "close": "Close", "hint": "Use Ctrl/⌘ K to open, Enter to open first result and Esc to close.", "empty": "No results found."}, "home": {"highlight_main_project": "main project", "highlight_recent_article": "recent article"}, "sections": {"posts_title": "Recent posts", "posts_copy": "Articles with reading time, tags, badges and direct repository links when applicable.", "projects_title": "Core systems", "projects_copy": "Projects managed as long-term assets: architecture, stack, status, roadmap and support docs.", "documents_title": "Documentation system", "documents_copy": "Markdown notes organized by domain, architecture, agents and APIs, with versioning and agent-generated markers.", "about_copy": "The site is organized more like a codebase than a personal landing page.", "brain_map_title": "Living brain map", "brain_map_copy": "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain.", "welcome_message": "Technical Knowledge OS"}, "pages": {"archive": {"title": "All posts", "description": "Writing flow on architecture, experiments, domain modeling and operational heuristics."}, "projects": {"title": "Core systems", "description": "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap.", "flow_hint": "Click a node to explore. Connected nodes share stack."}, "documents": {"title": "Document system", "description": "Documents grouped by domain, architecture, agents and APIs to keep decisions accessible."}, "about": {"title": "Minimalist engineering notebook", "operating_model": "Operating model", "structure": "Structure", "next_steps": "Next steps", "future_frontend": "Future frontend options"}, "post": {"kicker": "post", "metadata": "Metadata", "back": "Back to posts", "copy_link": "Copy link", "navigation": "Post navigation", "newer_empty": "No newer posts", "older_empty": "No older posts"}, "project": {"kicker": "project", "status": "Status", "stack": "Stack", "actions": "Actions", "overview": "Overview", "problem_solution": "Problem and solution", "architecture": "Architecture", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "document", "meta": "Document metadata", "version": "Version", "category": "Category"}}, "common": {"preview": "preview", "content_in_preparation": "Content in preparation.", "agent_generated": "agent generated"}, "empty": {"posts": "No posts published yet.", "projects": "No projects available.", "documents": "No documents indexed yet."}, "actions": {"copy": "copy", "copied": "copied", "repo": "repo", "code": "code", "view_architecture": "view architecture", "view_code": "view code", "open_docs": "open docs", "link_copied": "Link copied", "copy_from_address": "Copy from address bar", "view_project": "View", "close": "Close"}, "status": {"research": "research", "in_progress": "in progress", "production": "production"}, "kinds": {"home": "home", "about": "about", "post": "post", "project": "project", "document": "document", "developer": "developer"}, "templates": {"reading_time": "{minutes} min read"}, "view": {"list": "list", "grid": "grid", "navigation_kicker": "navigation", "navigation_title": "Sitemap & categories", "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories."}}}}</script>
+    <script src="https://nhmatsumoto.github.io/assets/blog.js" defer></script>
+    <script src="https://nhmatsumoto.github.io/assets/graphview.js" defer></script>
+    <script src="https://nhmatsumoto.github.io/assets/btree-view.js" defer></script>
+    
+  </body>
+</html>

@@ -21,12 +21,11 @@ O pipeline do SOS Location conecta ingestão, enriquecimento e visualização. A
 
 ```mermaid
 flowchart LR
-    Sources -->|Kafka| Ingest[Ingestão]
-    Ingest -->|Normalize| Processor[Normalizador]
-    Processor -->|Event Store| Repository[(PostgreSQL)]
-    Processor --> Visualizer[Visualização (GIS)]
-    Visualizer -->|API| Frontend[Dashboard SOS]
-    Repository -->|API| Ops[Operational Map (WebSocket)]
+    Ingest["Ingestão"] -->|Normalize| Processor["Normalizador"]
+    Processor -->|Event Store| Repository[("PostgreSQL")]
+    Processor --> Visualizer["Visualização (GIS)"]
+    Visualizer -->|API| Frontend["Dashboard SOS"]
+    Repository -->|API| Ops["Operational Map (WebSocket)"]
 ```
 
 ## Componentes principais

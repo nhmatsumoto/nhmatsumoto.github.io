@@ -1,125 +1,99 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Introdução Intuitiva à Física Quântica | Hiro Matsumoto</title>
-    <link rel="stylesheet" href="/assets/styles.css?v=1775169888">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>O Universo Quântico: Além da Lógica Clássica | nhmatsumoto-blog-engine</title><meta name="description" content="Uma jornada intuitiva pela física quântica. Superposição, entrelaçamento e por que o observador muda a realidade.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#00C2FF' } });
-        lucide.createIcons();
-      });
-    </script>
-    <style>
-      :root {
-        --reading-width: 840px;
-        --accent: #00C2FF;
-      }
-    </style>
+    <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, asciimath: { delimiters: [["`", "`"]] }, loader: { load: ["input/tex", "input/asciimath", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
   </head>
-  <body class="page-post">
-    <header class="fixed top-0 left-0 right-0 z-[250] bg-white border-b border-slate-100 flex items-center justify-center h-12 px-6">
-      <div class="w-full max-w-[1000px] flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs">HM</div>
-          <a class="text-slate-900 font-bold" href="/">Hiro Matsumoto</a>
+  <body class="page-post" data-has-math="true" data-default-locale="pt-BR">
+    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
+    
+    <nav class="nav-shell" data-nav-shell>
+      <div class="nav-brand">
+        <a class="nav-title" href="https://nhmatsumoto.github.io/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="palette de comandos"><i data-lucide="search"></i></button>
+        <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="Toggle language"><i data-lucide="languages"></i><span class="locale-label" data-locale-label>PT</span></button>
+        <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
+      </div>
+    </nav>
+    
+    <div class="site-shell">
+      <main class="site-main" id="content"><nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/publications/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">O Universo Quântico: Além da Lógica Clássica</span></li></ol></nav><section class="page-grid"><article class="post-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.post.kicker">publicação</p><a href="https://nhmatsumoto.github.io/projects/?select=post-introducao-intuitiva-fisica-quantica" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div><h1>O Universo Quântico: Além da Lógica Clássica</h1><p class="post-summary">Uma jornada intuitiva pela física quântica. Superposição, entrelaçamento e por que o observador muda a realidade.</p><div class="post-meta"><time datetime="2026-04-03T21:00:00+09:00" data-localize-date="long">3 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div></header><p>Esqueça tudo o que você sabe sobre como o mundo funciona. Na escala subatômica, um objeto não está em apenas um lugar, mas em muitos ao mesmo tempo. Bem-vindo à <strong>Mecânica Quântica</strong>.</p>
+<h2>Superposição: O Lado A e o Lado B Simultâneos</h2>
+<p>Diferente de um interruptor que está ligado ou desligado, uma partícula quântica pode estar em uma <strong>Superposição</strong> de ambos os estados. Só sabemos o estado real quando medimos.</p>
+<div class="mermaid">graph TD
+  A[Qubit] --&gt;|Colapso| B[Estado 0]
+  A --&gt;|Colapso| C[Estado 1]
+  A -.-&gt;|Antes da Medição| D[Superposição de 0 e 1]</div>
+<h3>Entrelaçamento: A &quot;Ação Fantasmagórica à Distância&quot;</h3>
+<p>O <strong>Entrelaçamento Quântico</strong> é o fenômeno onde duas partículas ficam tão conectadas que o estado de uma afeta instantaneamente o estado da outra, não importa a distância. Einstein chamou isso de &quot;ação fantasmagórica&quot;.</p>
+<ul><li>  <strong>Princípio de Incerteza de Heisenberg</strong>: Você não pode saber a posição exata e a velocidade exata de uma partícula ao mesmo tempo. Quanto mais você sabe de uma, menos sabe da outra.</li></ul>
+<h2>Por Que Isso é Importante?</h2>
+<p>Não é apenas filosofia. A física quântica é a base para:</p>
+<ul><li>  <strong>Transistores</strong>: Que fazem o seu computador funcionar.</li> <li>  <strong>Lasers</strong>: Que transmitem a internet por fibra ótica.</li> <li>  <strong>Ressonância Magnética</strong>: Que salva vidas em hospitais.</li></ul>
+<h2>Conclusão</h2>
+<p>O universo quântico nos ensina que a realidade é fundamentalmente baseada em <strong>probabilidades</strong>, não em certezas. Para nós, engenheiros, isso abre as portas para uma nova era de processamento de informação que estamos apenas começando a entender.</p><footer class="post-author"><p><strong>Autor:</strong> Hiro Matsumoto</p></footer></article><aside class="sidebar-panel"><h2 data-i18n="pages.post.metadata">Metadados</h2><div class="card-metrics"><span class="metric"><time datetime="2026-04-03T21:00:00+09:00" data-localize-date="long">3 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div><div class="badge-list"><span class="badge">quantum</span><span class="badge">science</span><span class="badge">theoretical</span></div><div class="tag-list"><span class="tag">fisica</span><span class="tag">quantica</span><span class="tag">ciencia</span><span class="tag">teoria</span></div><div class="sidebar-actions"></div></aside></section></main>
+      
+    <footer class="site-footer">
+      <p>desenvolvido por <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="https://github.com/nhmatsumoto/nhmatsumoto-blog-engine" target="_blank" rel="noopener noreferrer">blog engine</a></p>
+    </footer>
+    
+      
+    <aside class="intelligence-panel" data-intelligence-panel data-open="false" aria-hidden="true">
+      <div class="panel-backdrop" data-panel-close></div>
+      <div class="panel-content">
+        <div class="panel-header" data-reveal>
+          <div class="panel-title-group">
+            <span class="panel-role card-type" data-panel-role></span>
+            <h2 class="panel-name" data-panel-name></h2>
+            <div class="panel-meta-row" data-panel-meta-row></div>
+          </div>
+          <button class="nav-button panel-close" type="button" data-panel-close aria-label="Fechar">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="panel-scroll-body">
+          <p class="panel-headline" data-panel-headline data-reveal></p>
+          <div class="panel-summary prose" data-panel-summary data-reveal></div>
+          <div class="panel-stack" data-panel-stack data-reveal></div>
+          <div class="panel-metrics" data-panel-metrics data-reveal></div>
+        </div>
+        <div class="panel-actions" data-reveal>
+          <a class="panel-cta nav-cta" href="#" data-panel-link>
+            <i data-lucide="eye"></i> Ver conteúdo <i data-lucide="arrow-right"></i>
+          </a>
         </div>
       </div>
-    </header>
-
-    <div class="site-shell" style="margin-top: 5rem;">
-      <main class="site-main">
-        <article class="post-shell prose mx-auto">
-          <header class="post-header text-center mb-12">
-            <p class="section-kicker">ciência & física</p>
-            <h1 class="text-4xl font-extrabold tracking-tight">Introdução Intuitiva à Física Quântica</h1>
-            <p class="text-xl text-slate-500 mt-4">Do Colapso da Função de Onda ao Entrelaçamento: uma jornada visual.</p>
-          </header>
-
-          <section class="post-content">
-            <p>A física quântica é frequentemente descrita como "estranha" ou "impossível de entender". No entanto, se abandonarmos a intuição clássica de objetos como "bolinhas de gude" e passarmos a enxergá-los como <strong>ondas de probabilidade</strong>, as peças começam a se encaixar.</p>
-
-            <div class="tech-card border-l-4 border-accent bg-slate-50 p-6 my-8 rounded-r-xl">
-              <h4 class="font-bold text-accent mb-2">Conceito Chave: Superposição</h4>
-              <p class="text-sm m-0">Um sistema quântico não está em um estado "A" ou "B", mas em uma combinação linear de ambos até que uma medição seja realizada.</p>
-            </div>
-
-            <h2>O Experimento da Dupla Fenda</h2>
-            <p>Este é o coração da mecânica quântica. Se dispararmos elétrons contra duas fendas, eles não se comportam como partículas (criando duas pilhas), mas como ondas (criando um padrão de interferência).</p>
-
-            <div class="mermaid py-8">
-            graph LR
-              Source[Fonte de Elétrons] --> Fendas{Dupla Fenda}
-              Fendas --> P1[Caminho A]
-              Fendas --> P2[Caminho B]
-              P1 & P2 --> Screen[Tela de Detecção]
-              Screen --> Result(Padrão de Interferência)
-              style Result fill:#00C2FF,color:#fff
-            </div>
-
-            <h2>O Colapso da Função de Onda</h2>
-            <p>O ato de <strong>observar</strong> (interagir com o sistema) força o elétron a "escolher" uma posição. A onda de probabilidade se torna um ponto definido.</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-10">
-              <div class="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
-                <h5 class="font-bold border-b pb-2 mb-4">Antes da Medição</h5>
-                <div class="h-24 bg-gradient-to-r from-blue-100 via-purple-100 to-blue-100 rounded-full animate-pulse flex items-center justify-center">
-                  <span class="text-xs font-mono text-slate-400">Nuvem de Probabilidade</span>
-                </div>
-              </div>
-              <div class="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
-                <h5 class="font-bold border-b pb-2 mb-4">Após a Medição</h5>
-                <div class="h-24 flex items-center justify-center">
-                  <div class="w-4 h-4 bg-accent rounded-full ring-8 ring-accent/20"></div>
-                </div>
-              </div>
-            </div>
-
-            <h2>Entrelaçamento: "Ação Fantasmagórica"</h2>
-            <p>Duas partículas podem se tornar tão conectadas que o estado de uma determina instantaneamente o estado da outra, não importa a distância entre elas.</p>
-
-            <div class="mermaid py-8">
-            sequenceDiagram
-              participant P1 as Partícula A
-              participant P2 as Partícula B
-              Note over P1, P2: Estado Entrelaçado (Superposição)
-              Note right of P1: Medição realizada em A
-              P1->>P2: Colapso Instantâneo
-              Note over P1, P2: Estados definidos (opostos)
-            </div>
-
-            <p>Este fenômeno é a base da <strong>Computação Quântica</strong> e do teletransporte de informação.</p>
-          </section>
-
-          <footer class="post-footer-metadata mt-20 p-8 bg-slate-50 rounded-3xl border border-slate-100">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div>
-                <h3 class="font-bold text-slate-900 mb-2">Metadados</h3>
-                <p class="text-sm text-slate-500">Publicado em 3 de Abril, 2026</p>
-                <p class="text-sm text-slate-500">Tempo de leitura: 5 min</p>
-              </div>
-              <div>
-                <h3 class="font-bold text-slate-900 mb-2">Tags</h3>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-white border rounded-full text-xs">física</span>
-                  <span class="px-3 py-1 bg-white border rounded-full text-xs">quântica</span>
-                </div>
-              </div>
-              <div>
-                <h3 class="font-bold text-slate-900 mb-2">Ações</h3>
-                <a href="/publications/" class="text-sm text-accent font-bold">← Voltar para Posts</a>
-              </div>
-            </div>
-          </footer>
-        </article>
-      </main>
+    </aside>
+    
     </div>
+    
+    <div class="palette-shell" hidden data-command-palette data-search-index="https://nhmatsumoto.github.io/assets/search-index.json">
+      <div class="palette-backdrop" data-close-palette></div>
+      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
+        <div class="palette-head">
+          <input class="palette-input" type="search" placeholder="Buscar publicações, projetos e documentos" data-palette-input data-i18n-placeholder="palette.placeholder">
+          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">Fechar</button>
+        </div>
+        <p class="palette-hint" data-i18n="palette.hint">Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.</p>
+        <ul class="palette-results" data-palette-results></ul>
+      </div>
+    </div>
+    
+    <script id="site-i18n" type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "en-US"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語", "en-US": "English (US)"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos"}, "nav": {"home": "início", "posts": "publicações", "projects": "projetos", "documents": "documentos", "about": "sobre", "search": "palette de comandos", "cta": "trabalho aberto / contato", "graph": "mapa cerebral", "language": "idioma", "language_action": "trocar idioma", "theme": "alternar tema"}, "palette": {"placeholder": "Buscar publicações, projetos e documentos", "close": "Fechar", "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente"}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal.", "brain_map_title": "Mapa cerebral vivo", "brain_map_copy": "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos.", "welcome_message": "SO de Conhecimento Técnico"}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Sistemas centrais", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap.", "flow_hint": "Clique em um nó para explorar. Nós conectados compartilham stack."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Caderno de engenharia minimalista", "operating_model": "Modelo operacional", "structure": "Estrutura", "next_steps": "Próximos passos", "future_frontend": "Opções futuras de frontend"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda."}, "actions": {"copy": "copiar", "copied": "copiado", "repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço", "view_project": "Ver", "close": "Fechar"}, "status": {"research": "pesquisa", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "project": "projeto", "document": "documento", "developer": "desenvolvedor"}, "templates": {"reading_time": "{minutes} min de leitura"}, "view": {"list": "lista", "grid": "grade"}}, "en-US": {"accessibility": {"skip_to_content": "Skip to content", "primary_navigation": "Primary navigation", "breadcrumbs": "You are here", "language_switcher": "Select language", "command_palette": "Command palette"}, "nav": {"home": "home", "posts": "posts", "projects": "projects", "documents": "documents", "about": "about", "search": "command palette", "cta": "open work / contact", "graph": "brain map", "language": "language", "language_action": "switch language", "theme": "toggle theme"}, "palette": {"placeholder": "Search posts, projects and documents", "close": "Close", "hint": "Use Ctrl/⌘ K to open, Enter to open first result and Esc to close.", "empty": "No results found."}, "home": {"highlight_main_project": "main project", "highlight_recent_article": "recent article"}, "sections": {"posts_title": "Recent posts", "posts_copy": "Articles with reading time, tags, badges and direct repository links when applicable.", "projects_title": "Core systems", "projects_copy": "Projects managed as long-term assets: architecture, stack, status, roadmap and support docs.", "documents_title": "Documentation system", "documents_copy": "Markdown notes organized by domain, architecture, agents and APIs, with versioning and agent-generated markers.", "about_copy": "The site is organized more like a codebase than a personal landing page.", "brain_map_title": "Living brain map", "brain_map_copy": "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain.", "welcome_message": "Technical Knowledge OS"}, "pages": {"archive": {"title": "All posts", "description": "Writing flow on architecture, experiments, domain modeling and operational heuristics."}, "projects": {"title": "Core systems", "description": "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap.", "flow_hint": "Click a node to explore. Connected nodes share stack."}, "documents": {"title": "Document system", "description": "Documents grouped by domain, architecture, agents and APIs to keep decisions accessible."}, "about": {"title": "Minimalist engineering notebook", "operating_model": "Operating model", "structure": "Structure", "next_steps": "Next steps", "future_frontend": "Future frontend options"}, "post": {"kicker": "post", "metadata": "Metadata", "back": "Back to posts", "copy_link": "Copy link", "navigation": "Post navigation", "newer_empty": "No newer posts", "older_empty": "No older posts"}, "project": {"kicker": "project", "status": "Status", "stack": "Stack", "actions": "Actions", "overview": "Overview", "problem_solution": "Problem and solution", "architecture": "Architecture", "adr": "ADRs", "roadmap": "Roadmap"}, "document": {"kicker": "document", "meta": "Document metadata", "version": "Version", "category": "Category"}}, "common": {"preview": "preview", "content_in_preparation": "Content in preparation.", "agent_generated": "agent generated"}, "empty": {"posts": "No posts published yet.", "projects": "No projects available.", "documents": "No documents indexed yet."}, "actions": {"copy": "copy", "copied": "copied", "repo": "repo", "code": "code", "view_architecture": "view architecture", "view_code": "view code", "open_docs": "open docs", "link_copied": "Link copied", "copy_from_address": "Copy from address bar", "view_project": "View", "close": "Close"}, "status": {"research": "research", "in_progress": "in progress", "production": "production"}, "kinds": {"home": "home", "about": "about", "post": "post", "project": "project", "document": "document", "developer": "developer"}, "templates": {"reading_time": "{minutes} min read"}, "view": {"list": "list", "grid": "grid", "navigation_kicker": "navigation", "navigation_title": "Sitemap & categories", "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories."}}}}</script>
+    <script src="https://nhmatsumoto.github.io/assets/blog.js" defer></script>
+    <script src="https://nhmatsumoto.github.io/assets/graphview.js" defer></script>
+    <script src="https://nhmatsumoto.github.io/assets/btree-view.js" defer></script>
+    
   </body>
 </html>

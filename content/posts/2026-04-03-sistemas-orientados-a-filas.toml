@@ -22,10 +22,10 @@ Imagine um serviço de processamento de vídeos. Receber milhares de uploads sim
 
 ```mermaid
 graph LR
-  P[Produtor - API] -->|Envia Mensagem| B((Message Broker))
-  B -->|Fila de Tarefas| C1[Consumidor 1]
-  B -->|Fila de Tarefas| C2[Consumidor 2]
-  C1 --> D[(Banco de Dados)]
+  P["Produtor - API"] -->|Envia Mensagem| B(("Message Broker"))
+  B -->|"Fila de Tarefas"| C1["Consumidor 1"]
+  B -->|"Fila de Tarefas"| C2["Consumidor 2"]
+  C1 --> D[("Banco de Dados")]
   C2 --> D
 ```
 

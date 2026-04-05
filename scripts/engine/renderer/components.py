@@ -32,6 +32,8 @@ def render_markdown(text: str) -> str:
         s = re.sub(r"(\$)(.+?)(\$)", r'<span class="math-inline">\1\2\3</span>', s)
         # Inline Math: \(...\) -> <span class="math-inline">\(...\)</span>
         s = re.sub(r"(\\)\((.+?)\\(\))", r'<span class="math-inline">\1(\2\\\3</span>', s)
+        # AsciiMath: `am: ...` -> <span class="math-asciimath">`...`</span>
+        s = re.sub(r"(`am:)(.+?)(`)", r'<span class="math-asciimath">`\2`</span>', s)
         s = STRONG_RE.sub(r"<strong>\1</strong>", s)
         s = EMPHASIS_RE.sub(r"<em>\1</em>", s)
         s = INLINE_CODE_RE.sub(r"<code>\1</code>", s)

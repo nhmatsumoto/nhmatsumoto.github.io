@@ -88,7 +88,8 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
         math_meta = (
             '<script>window.MathJax = { '
             'tex: { inlineMath: [["\\\\(", "\\\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, '
-            'loader: { load: ["input/tex", "output/chtml"] } '
+            'asciimath: { delimiters: [["`", "`"]] }, '
+            'loader: { load: ["input/tex", "input/asciimath", "output/chtml"] } '
             '};</script>'
             f'<script src="{html.escape(math_config.get("script_url", ""))}" id="MathJax-script" async></script>'
         )
