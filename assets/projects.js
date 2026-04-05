@@ -15,6 +15,33 @@ const KIND_HEX = {
 const KIND_LABEL = {
   post: 'Publicação', project: 'Projeto', document: 'Documento',
 }
+
+/**
+ * Periodic Table Essentials for Visual Representation
+ */
+const PERIODIC_TABLE = [
+  { symbol: 'H', name: 'Hidrogênio', shells: [1], color: 0x00C2FF },
+  { symbol: 'He', name: 'Hélio', shells: [2], color: 0xFFD700 }, // Noble
+  { symbol: 'Li', name: 'Lítio', shells: [2, 1], color: 0xFF4500 }, // Alkali
+  { symbol: 'Be', name: 'Berílio', shells: [2, 2], color: 0x32CD32 },
+  { symbol: 'B', name: 'Boro', shells: [2, 3], color: 0x8B4513 },
+  { symbol: 'C', name: 'Carbono', shells: [2, 4], color: 0xAAAAAA },
+  { symbol: 'N', name: 'Nitrogênio', shells: [2, 5], color: 0x4169E1 },
+  { symbol: 'O', name: 'Oxigênio', shells: [2, 6], color: 0xFFffff },
+  { symbol: 'F', name: 'Flúor', shells: [2, 7], color: 0xDA70D6 },
+  { symbol: 'Ne', name: 'Neônio', shells: [2, 8], color: 0xFF00FF }, // Noble
+  { symbol: 'Na', name: 'Sódio', shells: [2, 8, 1], color: 0xFF8C00 },
+  { symbol: 'Mg', name: 'Magnésio', shells: [2, 8, 2], color: 0x556B2F },
+  { symbol: 'Al', name: 'Alumínio', shells: [2, 8, 3], color: 0xBDB76B },
+  { symbol: 'Si', name: 'Silício', shells: [2, 8, 4], color: 0x708090 },
+  { symbol: 'P', name: 'Fósforo', shells: [2, 8, 5], color: 0xFFA07A },
+  { symbol: 'S', name: 'Enxofre', shells: [2, 8, 6], color: 0xFFFF00 },
+  { symbol: 'Cl', name: 'Cloro', shells: [2, 8, 7], color: 0x00FF00 },
+  { symbol: 'Ar', name: 'Argônio', shells: [2, 8, 8], color: 0x00FFFF }, // Noble
+  { symbol: 'K', name: 'Potássio', shells: [2, 8, 8, 1], color: 0x9400D3 },
+  { symbol: 'Ca', name: 'Cálcio', shells: [2, 8, 8, 2], color: 0x3CB371 },
+]
+const getElementForNode = (i) => PERIODIC_TABLE[i % PERIODIC_TABLE.length]
 const esc = (s) => (s||'').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 function createGlowTexture(size = 128) {
@@ -299,27 +326,79 @@ class ProjectMap3D {
   }
 
   addNode(item, pos, isCentral = false) {
-    const cc = KIND_COLOR[item.kind] || 0x64748b, g = new THREE.Group(); g.position.copy(pos)
-    g.userData = { item, isCentral, rings: [], pulsePhase: Math.random()*Math.PI*2 }
-    const sz = isCentral ? 18 : 12
-    g.add(new THREE.Mesh(new THREE.SphereGeometry(sz, 32, 24), new THREE.MeshPhysicalMaterial({ color: cc, emissive: cc, emissiveIntensity: isCentral ? 2.5 : 1.8, transmission: 0.9, transparent: true })))
-    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: this.glowTex, color: cc, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending }))
-    glow.scale.set(sz*6, sz*6, 1); g.add(glow); g.userData.glow = glow
+    const el = isCentral ? { symbol: 'Hiro', color: 0xFFFFFF, shells: [2, 8, 18, 32] } : getElementForNode(this.nodes.length)
+    const cc = el.color || KIND_COLOR[item.kind] || 0x64748b
+    const g = new THREE.Group(); g.position.copy(pos)
+    g.userData = { item, isCentral, element: el, orbits: [], electrons: [], pulsePhase: Math.random()*Math.PI*2 }
     
-    for (let r = 0; r < (isCentral ? 3 : 1); r++) {
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(sz*1.8+r*8, 0.4, 8, 50), new THREE.MeshBasicMaterial({ color: cc, transparent: true, opacity: 0.4-r*0.1, blending: THREE.AdditiveBlending }))
-      ring.rotation.set(Math.random()*3, Math.random()*3, 0); g.add(ring)
-      g.userData.rings.push({ mesh: ring, rx: (Math.random()-0.5)*0.012, ry: (Math.random()-0.5)*0.018 })
+    // 1. Nucleus (The Central Power)
+    const sz = isCentral ? 22 : 14
+    const nucGeo = new THREE.SphereGeometry(sz, 32, 24)
+    const nucMat = new THREE.MeshPhysicalMaterial({ 
+      color: cc, emissive: cc, emissiveIntensity: isCentral ? 4 : 2,
+      metalness: 0.9, roughness: 0.1, transmission: 0.5, thickness: 2, transparent: true
+    })
+    const nucleus = new THREE.Mesh(nucGeo, nucMat)
+    g.add(nucleus)
+    
+    // Core Glow
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: this.glowTex, color: cc, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending }))
+    glow.scale.set(sz*8, sz*8, 1); g.add(glow); g.userData.glow = glow
+
+    // 2. Electron Shells (Sub-orbits)
+    el.shells.forEach((count, sIdx) => {
+      const orbitRadius = sz * (2.2 + sIdx * 1.2)
+      const orbitGeo = new THREE.TorusGeometry(orbitRadius, 0.4, 16, 100)
+      const orbitMat = new THREE.MeshBasicMaterial({ color: cc, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending })
+      const orbit = new THREE.Mesh(orbitGeo, orbitMat)
+      
+      // Random tilt for the shell
+      orbit.rotation.x = Math.random() * Math.PI
+      orbit.rotation.y = Math.random() * Math.PI
+      g.add(orbit)
+      
+      const orbitObj = { mesh: orbit, speed: (0.008 / (sIdx + 1)) * (isCentral ? 2 : 1) }
+      g.userData.orbits.push(orbitObj)
+
+      // Electrons on this shell
+      for (let e = 0; e < count; e++) {
+        const eGeo = new THREE.SphereGeometry(isCentral ? 3 : 2, 8, 8)
+        const eMat = new THREE.MeshBasicMaterial({ color: cc, emissive: cc, emissiveIntensity: 5 })
+        const electron = new THREE.Mesh(eGeo, eMat)
+        
+        const angle = (e / count) * Math.PI * 2
+        electron.position.x = Math.cos(angle) * orbitRadius
+        electron.position.y = Math.sin(angle) * orbitRadius
+        orbit.add(electron)
+        g.userData.electrons.push(electron)
+      }
+    })
+    
+    // 3. 3D Label (HUD Style)
+    const name = (item.name || item.title || '').toUpperCase()
+    const symbol = el.symbol.toUpperCase()
+    const labelGroup = new THREE.Group()
+    
+    // Atomic Symbol Label
+    const symCv = document.createElement('canvas'); symCv.width = 128; symCv.height = 128
+    const symCx = symCv.getContext('2d'); symCx.font = '900 80px "JetBrains Mono"'; symCx.textAlign = 'center'
+    symCx.fillStyle = '#fff'; symCx.fillText(symbol, 64, 85)
+    const symSp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(symCv), transparent: true, opacity: 0.8 }))
+    symSp.scale.set(25, 25, 1); symSp.position.set(0, 0, 0)
+    labelGroup.add(symSp)
+    
+    // Content Name Label
+    if (name) {
+      const nameCv = document.createElement('canvas'); nameCv.width = 512; nameCv.height = 80
+      const nameCx = nameCv.getContext('2d'); nameCx.font = '700 32px "JetBrains Mono"'; nameCx.textAlign = 'center'
+      nameCx.fillStyle = '#fff'; nameCx.fillText(name.length > 25 ? name.slice(0, 23)+'..' : name, 256, 40)
+      const nameSp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(nameCv), transparent: true, opacity: 0.6 }))
+      nameSp.scale.set(120, 20, 1); nameSp.position.y = sz + 45
+      labelGroup.add(nameSp)
+      g.userData.titleLabel = nameSp
     }
     
-    // Label
-    const txt = (item.name || item.title || '').toUpperCase(); if (txt) {
-      const cv = document.createElement('canvas'); cv.width = 512; cv.height = 100
-      const cx = cv.getContext('2d'); cx.font = isCentral ? 'bold 42px "JetBrains Mono"' : '600 30px "JetBrains Mono"'
-      cx.textAlign = 'center'; cx.fillStyle = '#fff'; cx.fillText(txt.length > 24 ? txt.slice(0, 22)+'..' : txt, 256, 50)
-      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, opacity: 0.9 })); 
-      sp.position.y = sz + 25; sp.scale.set(isCentral ? 90 : 150, isCentral ? 30 : 28, 1); g.add(sp)
-    }
+    g.add(labelGroup)
     this.scene.add(g); this.nodes.push(g); return g
   }
 
@@ -378,9 +457,14 @@ class ProjectMap3D {
   }
 
   focusOnNode(node) {
-    const p = node.position.clone(), dist = 450
-    this.cameraGoal = p.clone().add(this.camera.position.clone().sub(this.controls.target).normalize().multiplyScalar(dist))
-    this.cameraTarget = p.clone(); this.transitioning = true
+    const p = node.position.clone()
+    // Offset camera target to the right (X+), keeping node on the Left-Half of viewport
+    const offset = new THREE.Vector3(180, 0, 0)
+    const isTree = this.layoutMode === 'arvore'
+    const dist = isTree ? 600 : 450
+    this.cameraGoal = p.clone().add(offset).add(this.camera.position.clone().sub(this.controls.target).normalize().multiplyScalar(dist))
+    this.cameraTarget = p.clone().add(offset)
+    this.transitioning = true
   }
   deselectNode() { this.selected = null; this.controls.autoRotate = true; this.restoreNodeVisibility(); this.resetCameraFocus(); if (window.hideIntelligencePanel) window.hideIntelligencePanel() }
   resetCameraFocus() { 
@@ -392,9 +476,24 @@ class ProjectMap3D {
   
   highlightNode(sel) {
     const isTree = this.layoutMode === 'arvore'
-    this.nodes.forEach(n => { const s = n === sel; n.traverse(c => { if (c.material) { c.material._os = c.material._os ?? c.material.opacity; c.material.opacity = s ? c.material._os : c.material._os * 0.2; if (c.material.emissiveIntensity) c.material.emissiveIntensity = s ? 3 : 0.5 } }) })
+    this.nodes.forEach(n => { 
+      const s = n === sel
+      n.traverse(c => { 
+        if (c.material) { 
+          c.material._os = c.material._os ?? c.material.opacity
+          c.material.opacity = s ? c.material._os : c.material._os * 0.15
+          if (c.material.emissiveIntensity) c.material.emissiveIntensity = s ? 5 : 0.5 
+        } 
+      }) 
+    })
+    
     if (!isTree) {
-        this.nodes.slice(1).forEach(n => { if (n.userData.atomLink) n.userData.atomLink.material.opacity = (n === sel) ? 0.8 : 0.05 })
+        this.nodes.slice(1).forEach(n => { 
+          if (n.userData.atomLink) {
+            n.userData.atomLink.material.opacity = (n === sel) ? 1.0 : 0.03 
+            n.userData.atomLink.material.linewidth = (n === sel) ? 3 : 1
+          }
+        })
     } else {
         this.mergedBranches.material.opacity = 0.05; this.mergedFoliage.material.opacity = 0.2
         const range = this.foliageRanges.get(sel)
@@ -402,17 +501,29 @@ class ProjectMap3D {
             const colors = this.mergedFoliage.geometry.attributes.color.array
             for (let i = 0; i < colors.length / 3; i++) {
                 const active = i >= range.start && i < (range.start + range.count)
-                const base = active ? [0, 0.8, 0.6] : [0, 0.2, 0.15]
+                const base = active ? [0, 1, 0.8] : [0, 0.1, 0.05]
                 colors[i*3] = base[0]; colors[i*3+1] = base[1]; colors[i*3+2] = base[2]
             }
             this.mergedFoliage.geometry.attributes.color.needsUpdate = true
         }
     }
-    if (sel) new TWEEN.Tween(sel.scale).to({ x: 1.4, y: 1.4, z: 1.4 }, 300).easing(TWEEN.Easing.Back.Out).start()
+    if (sel) {
+      new TWEEN.Tween(sel.scale).to({ x: 1.5, y: 1.5, z: 1.5 }, 400).easing(TWEEN.Easing.Elastic.Out).start()
+      if (sel.userData.titleLabel) {
+        new TWEEN.Tween(sel.userData.titleLabel.material).to({ opacity: 1.0 }, 300).start()
+      }
+    }
   }
   
   restoreNodeVisibility() {
-    this.nodes.forEach(n => { n.traverse(c => { if (c.material?._os !== undefined) c.material.opacity = c.material._os; if (c.material?.emissiveIntensity) c.material.emissiveIntensity = 1.8 }); new TWEEN.Tween(n.scale).to({ x: 1, y: 1, z: 1 }, 200).start() })
+    this.nodes.forEach(n => { 
+      n.traverse(c => { 
+        if (c.material?._os !== undefined) c.material.opacity = c.material._os; 
+        if (c.material?.emissiveIntensity) c.material.emissiveIntensity = 2.0 
+      }); 
+      new TWEEN.Tween(n.scale).to({ x: 1, y: 1, z: 1 }, 200).start() 
+      if (n.userData.titleLabel) n.userData.titleLabel.material.opacity = 0.6
+    })
     if (this.mergedBranches) this.mergedBranches.material.opacity = 0.2
     if (this.mergedFoliage) {
         this.mergedFoliage.material.opacity = 0.45
@@ -480,14 +591,36 @@ class ProjectMap3D {
 
   animate() {
     requestAnimationFrame(() => this.animate()); TWEEN.update()
-    if (this.transitioning) { this.camera.position.lerp(this.cameraGoal, 0.05); this.controls.target.lerp(this.cameraTarget, 0.05); if (this.camera.position.distanceTo(this.cameraGoal) < 1) this.transitioning = false }
+    if (this.transitioning) { 
+      this.camera.position.lerp(this.cameraGoal, 0.06)
+      this.controls.target.lerp(this.cameraTarget, 0.06)
+      if (this.camera.position.distanceTo(this.cameraGoal) < 0.5) this.transitioning = false 
+    }
     this.controls.update(); const t = performance.now()*0.001
+    
     if (!this.readerActive) {
-      this.atomGroup.rotation.y = t * 0.02
+      this.atomGroup.rotation.y = t * 0.015
       this.nodes.forEach((n, i) => { 
-        if (i > 0) n.position.y += Math.sin(t*1.1+i)*0.03
-        n.userData.rings?.forEach(r => { r.mesh.rotation.x += r.rx; r.mesh.rotation.y += r.ry })
-        if (n.userData.glow) n.userData.glow.material.opacity = 0.35 + Math.sin(t*1.5+n.userData.pulsePhase)*0.1
+        if (i > 0 && !this.selected) {
+          n.position.y += Math.sin(t*0.8+i)*0.04
+        }
+        
+        // Animate Atomic Orbits (Shells)
+        n.userData.orbits?.forEach(r => { 
+          r.mesh.rotation.z += r.speed
+          r.mesh.rotation.y += r.speed * 0.5
+        })
+
+        if (n.userData.glow) {
+          const s = (n === this.selected) ? 1.2 : 1.0
+          n.userData.glow.material.opacity = (0.4 + Math.sin(t*2+n.userData.pulsePhase)*0.15) * s
+        }
+
+        // Selection Pulse for Connections
+        if (n === this.selected && n.userData.atomLink) {
+           const dash = (Math.sin(t * 5) + 1) * 0.5
+           n.userData.atomLink.material.opacity = 0.5 + dash * 0.5
+        }
       })
     }
     this.renderer.render(this.scene, this.camera)
