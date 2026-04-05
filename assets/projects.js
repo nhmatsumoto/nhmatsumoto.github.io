@@ -222,8 +222,7 @@ class ProjectMap3D {
     const trunkH = 1500, baseR = 35
     const numSegments = 25
     const woodMat = new THREE.MeshToonMaterial({
-      color: ZELDA_PALETTE.wood,
-      flatShading: true
+      color: ZELDA_PALETTE.wood
     })
     for (let i = 0; i < numSegments; i++) {
       const r1 = baseR * Math.pow(1 - i / numSegments, 0.65)
@@ -388,7 +387,7 @@ class ProjectMap3D {
     // 2. Rocky Mesas (Canion Effect)
     const addMesa = (mx, mz, scale = 1) => {
       const h = 800 + Math.random() * 1200
-      const mesh = new THREE.Mesh(new THREE.CylinderGeometry(400 * scale, 600 * scale, h, 8), new THREE.MeshToonMaterial({ color: ZELDA_PALETTE.rock, flatShading: true }))
+      const mesh = new THREE.Mesh(new THREE.CylinderGeometry(400 * scale, 600 * scale, h, 8), new THREE.MeshToonMaterial({ color: ZELDA_PALETTE.rock }))
       mesh.position.set(mx, h / 2 - 50, mz); mesh.rotation.y = Math.random() * Math.PI
       baseGroup.add(mesh)
       // Green mossy top
@@ -402,12 +401,12 @@ class ProjectMap3D {
     const fPos = [], fCol = []
     const fC = new THREE.Color(ZELDA_PALETTE.flower)
     for (let i = 0; i < 2000; i++) {
-        const x = (Math.random() - 0.5) * 6000, z = (Math.random() - 0.5) * 6000
-        const dist = Math.sqrt(x * x + z * z)
-        if (dist < 3000 && Math.abs(x - Math.sin(z * 0.001) * 800) > 400) {
-            fPos.push(x, 20, z)
-            fCol.push(fC.r, fC.g, fC.b)
-        }
+      const x = (Math.random() - 0.5) * 6000, z = (Math.random() - 0.5) * 6000
+      const dist = Math.sqrt(x * x + z * z)
+      if (dist < 3000 && Math.abs(x - Math.sin(z * 0.001) * 800) > 400) {
+        fPos.push(x, 20, z)
+        fCol.push(fC.r, fC.g, fC.b)
+      }
     }
     const fGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(fPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(fCol), 3))
     const fDots = new THREE.Points(fGeo, new THREE.PointsMaterial({ size: 15, vertexColors: true, sizeAttenuation: true }))
@@ -487,7 +486,7 @@ class ProjectMap3D {
       // Electrons on this shell
       for (let e = 0; e < count; e++) {
         const eGeo = new THREE.SphereGeometry(isCentral ? 3 : 2, 8, 8)
-        const eMat = new THREE.MeshBasicMaterial({ color: cc, emissive: cc, emissiveIntensity: 5 })
+        const eMat = new THREE.MeshStandardMaterial({ color: cc, emissive: cc, emissiveIntensity: 5 })
         const electron = new THREE.Mesh(eGeo, eMat)
 
         const angle = (e / count) * Math.PI * 2
@@ -662,23 +661,23 @@ class ProjectMap3D {
     this.nodes.slice(1).forEach(n => { if (n.userData.atomLink) n.userData.atomLink.material.opacity = 0.15 })
   }
 
-buildReaderDOM() {
-  this.readerEl = document.createElement('div'); this.readerEl.className = 'reader-article'
-  this.readerEl.innerHTML = `<header class="reader-article-bar"><div class="reader-article-bar-left"><button class="reader-article-back" data-r-close><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>Voltar</button></div><div class="reader-article-bar-center"><span class="reader-article-kind" data-r-kind></span><span class="reader-article-bar-title" data-r-bar-title></span></div><div class="reader-article-bar-right"><a class="reader-article-link" data-r-fullpage href="#" target="_blank">Página completa</a></div></header><main class="reader-article-body"><article class="reader-article-content prose" data-r-content></article></main>`
-  this.container.appendChild(this.readerEl); this.readerEl.querySelector('[data-r-close]').onclick = () => this.exitReader()
-}
+  buildReaderDOM() {
+    this.readerEl = document.createElement('div'); this.readerEl.className = 'reader-article'
+    this.readerEl.innerHTML = `<header class="reader-article-bar"><div class="reader-article-bar-left"><button class="reader-article-back" data-r-close><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>Voltar</button></div><div class="reader-article-bar-center"><span class="reader-article-kind" data-r-kind></span><span class="reader-article-bar-title" data-r-bar-title></span></div><div class="reader-article-bar-right"><a class="reader-article-link" data-r-fullpage href="#" target="_blank">Página completa</a></div></header><main class="reader-article-body"><article class="reader-article-content prose" data-r-content></article></main>`
+    this.container.appendChild(this.readerEl); this.readerEl.querySelector('[data-r-close]').onclick = () => this.exitReader()
+  }
 
-enterReader(item) {
-  this.readerActive = true; this.atomGroup.visible = this.araucariaGroup.visible = false; this.nodes.forEach(n => n.visible = false)
-  this.controls.autoRotate = false; this.controls.enabled = false; if (window.hideIntelligencePanel) window.hideIntelligencePanel(); this.readerEl.classList.add('open')
-  const cnt = this.readerEl.querySelector('[data-r-content]')
-  cnt.innerHTML = `<h1>${esc(item.name || item.title)}</h1><div class="reader-article-divider"></div><section>${item.body_html || item.summary}</section>`
-}
-exitReader() {
-  this.readerActive = false; this.readerEl.classList.remove('open'); this.nodes.forEach(n => n.visible = true)
-  this.atomGroup.visible = (this.layoutMode === 'atomo'); this.araucariaGroup.visible = (this.layoutMode === 'arvore')
-  this.controls.enabled = true; this.controls.autoRotate = true; this.resetCameraFocus(); this.selected = null
-}
+  enterReader(item) {
+    this.readerActive = true; this.atomGroup.visible = this.araucariaGroup.visible = false; this.nodes.forEach(n => n.visible = false)
+    this.controls.autoRotate = false; this.controls.enabled = false; if (window.hideIntelligencePanel) window.hideIntelligencePanel(); this.readerEl.classList.add('open')
+    const cnt = this.readerEl.querySelector('[data-r-content]')
+    cnt.innerHTML = `<h1>${esc(item.name || item.title)}</h1><div class="reader-article-divider"></div><section>${item.body_html || item.summary}</section>`
+  }
+  exitReader() {
+    this.readerActive = false; this.readerEl.classList.remove('open'); this.nodes.forEach(n => n.visible = true)
+    this.atomGroup.visible = (this.layoutMode === 'atomo'); this.araucariaGroup.visible = (this.layoutMode === 'arvore')
+    this.controls.enabled = true; this.controls.autoRotate = true; this.resetCameraFocus(); this.selected = null
+  }
 
   addEventHandlers() {
     window.addEventListener('resize', () => this.onResize())
@@ -717,35 +716,35 @@ exitReader() {
     }
   }
 
-onResize() { const w = this.container.clientWidth, h = this.container.clientHeight; this.camera.aspect = w / h; this.camera.updateProjectionMatrix(); this.renderer.setSize(w, h) }
-onMouseMove(e) {
-  if (this.readerActive) return
-  const r = this.renderer.domElement.getBoundingClientRect()
-  this.mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1; this.mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1
-  this.raycaster.setFromCamera(this.mouse, this.camera)
-  const hits = this.raycaster.intersectObjects(this.nodes, true)
-  this.nodes.forEach(n => n.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1))
-  if (hits.length) { document.body.style.cursor = 'pointer'; let t = hits[0].object; while (t.parent && !t.userData.item) t = t.parent; if (t.userData.item) t.scale.set(1.2, 1.2, 1.2) }
-  else document.body.style.cursor = 'default'
-}
-handleNodeClick(node) {
-  if (this.selected === node) return
-  this.selected = node; this.focusOnNode(node); this.highlightNode(node)
-  if (window.showIntelligencePanel) {
-    window.showIntelligencePanel(node.userData.item);
+  onResize() { const w = this.container.clientWidth, h = this.container.clientHeight; this.camera.aspect = w / h; this.camera.updateProjectionMatrix(); this.renderer.setSize(w, h) }
+  onMouseMove(e) {
+    if (this.readerActive) return
+    const r = this.renderer.domElement.getBoundingClientRect()
+    this.mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1; this.mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1
+    this.raycaster.setFromCamera(this.mouse, this.camera)
+    const hits = this.raycaster.intersectObjects(this.nodes, true)
+    this.nodes.forEach(n => n.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1))
+    if (hits.length) { document.body.style.cursor = 'pointer'; let t = hits[0].object; while (t.parent && !t.userData.item) t = t.parent; if (t.userData.item) t.scale.set(1.2, 1.2, 1.2) }
+    else document.body.style.cursor = 'default'
   }
-}
+  handleNodeClick(node) {
+    if (this.selected === node) return
+    this.selected = node; this.focusOnNode(node); this.highlightNode(node)
+    if (window.showIntelligencePanel) {
+      window.showIntelligencePanel(node.userData.item);
+    }
+  }
 
-onClick() {
-  if (this.readerActive) return
-  this.raycaster.setFromCamera(this.mouse, this.camera)
-  const hits = this.raycaster.intersectObjects(this.nodes, true).filter(h => h.object.type === 'Mesh')
-  if (hits.length) {
-    let t = hits[0].object; while (t.parent && !t.userData.item) t = t.parent
-    if (t.userData.item) { this.handleNodeClick(t); return }
+  onClick() {
+    if (this.readerActive) return
+    this.raycaster.setFromCamera(this.mouse, this.camera)
+    const hits = this.raycaster.intersectObjects(this.nodes, true).filter(h => h.object.type === 'Mesh')
+    if (hits.length) {
+      let t = hits[0].object; while (t.parent && !t.userData.item) t = t.parent
+      if (t.userData.item) { this.handleNodeClick(t); return }
+    }
+    this.deselectNode()
   }
-  this.deselectNode()
-}
 
   animate() {
     requestAnimationFrame(() => this.animate())
