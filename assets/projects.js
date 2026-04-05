@@ -99,6 +99,7 @@ class ProjectMap3D {
     // Structure Groups
     this.atomGroup = new THREE.Group()
     this.araucariaGroup = new THREE.Group()
+    this.atomConnections = new THREE.Group()
 
     this.nodesGroup = new THREE.Group() // For collective movement/rotation
     this.initScene()
