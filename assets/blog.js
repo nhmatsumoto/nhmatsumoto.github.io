@@ -389,5 +389,5 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.removeAttribute('data-sidebar-open');
   
   if (typeof lucide !== 'undefined') lucide.createIcons();
-  if (window.initKnowledgeGraph) window.initKnowledgeGraph();
+  if (typeof window.initKnowledgeGraph === 'function') window.initKnowledgeGraph(loc);
 });

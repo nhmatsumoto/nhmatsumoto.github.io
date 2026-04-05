@@ -1,19 +1,19 @@
 [
   {
     "title": "nhmatsumoto-blog-engine",
-    "url": "https://nhmatsumoto.github.io/",
+    "url": "/",
     "kind": "home",
     "summary": "Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva."
   },
   {
     "title": "sobre",
-    "url": "https://nhmatsumoto.github.io/about/",
+    "url": "/about/",
     "kind": "about",
     "summary": "Sou engenheiro de software e trato este espaço como um caderno operacional: menos marketing, mais contexto técnico. O blog deixou de ser apenas uma coleção de posts e passou a fun…"
   },
   {
     "title": "SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/",
+    "url": "/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/",
     "kind": "post",
     "summary": "O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.",
     "keywords": [
@@ -26,7 +26,7 @@
   },
   {
     "title": "SOS Location: PostGIS e inteligência espacial para resposta a desastres",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/",
+    "url": "/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/",
     "kind": "post",
     "summary": "PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.",
     "keywords": [
@@ -39,7 +39,7 @@
   },
   {
     "title": "SOS Location: Clean Architecture + CQRS em .NET 10",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/",
+    "url": "/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/",
     "kind": "post",
     "summary": "Arquitetura limpa, CQRS com MediatR e domain events no backend do SOS Location. Como estruturamos o código para resiliência em cenários de crise.",
     "keywords": [
@@ -52,7 +52,7 @@
   },
   {
     "title": "SOS Location: Motor WebGL 3D de visualização de cidades em tempo real",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/",
+    "url": "/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/",
     "kind": "post",
     "summary": "Como construímos um motor WebGL 2.0 com Three.js para renderizar cidades completas com terreno, edificações 3D e camadas de desastre ao vivo.",
     "keywords": [
@@ -65,7 +65,7 @@
   },
   {
     "title": "SOS Location: Tecnologias, ferramentas e exemplos",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1100-sos-location-stack/",
+    "url": "/publications/2026-04-05-1100-sos-location-stack/",
     "kind": "post",
     "summary": "Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location.",
     "keywords": [
@@ -76,7 +76,7 @@
   },
   {
     "title": "SOS Location: Fluxos, arquitetura e diagramas",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-05-1000-sos-location-flow-architecture/",
+    "url": "/publications/2026-04-05-1000-sos-location-flow-architecture/",
     "kind": "post",
     "summary": "Descrição dos pipelines do SOS Location, diagramas e exemplos de código.",
     "keywords": [
@@ -87,7 +87,7 @@
   },
   {
     "title": "SOS Location: Regras de negócio, contratos e operação",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-05-0900-sos-location-business-rules/",
+    "url": "/publications/2026-04-05-0900-sos-location-business-rules/",
     "kind": "post",
     "summary": "Catálogo completo das regras de negócio que sustentam o SOS Location.",
     "keywords": [
@@ -98,7 +98,7 @@
   },
   {
     "title": "A Bio-matemática da Araucária: Modelagem e Simetria",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/",
+    "url": "/publications/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/",
     "kind": "post",
     "summary": "Uma exploração sobre os padrões matemáticos que regem a estrutura da Araucaria angustifolia, de verticilos a séries exponenciais de crescimento.",
     "keywords": [
@@ -110,7 +110,7 @@
   },
   {
     "title": "Tecnologia de Pulso: Do HEMP ao Micro-ondas de Alta Potência",
-    "url": "https://nhmatsumoto.github.io/publications/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/",
+    "url": "/publications/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/",
     "kind": "post",
     "summary": "Uma análise técnica sobre a geração artificial de pulsos eletromagnéticos, do Efeito Compton ao Gerador de Compressão de Fluxo.",
     "keywords": [
@@ -122,7 +122,7 @@
   },
   {
     "title": "Sopros Estelares: De Supernovas a Space Weather",
-    "url": "https://nhmatsumoto.github.io/publications/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/",
+    "url": "/publications/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/",
     "kind": "post",
     "summary": "Anatomia dos fenômenos astrofísicos que geram emissões eletromagnéticas extremas e seu impacto nos sistemas tecnológicos.",
     "keywords": [
@@ -134,7 +134,7 @@
   },
   {
     "title": "Engenharia de Resiliência Eletromagnética e Acoplamento",
-    "url": "https://nhmatsumoto.github.io/publications/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/",
+    "url": "/publications/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/",
     "kind": "post",
     "summary": "Do ponto zero à ruptura de junções: como circuitos reais falham sob transientes de alta intensidade.",
     "keywords": [
@@ -146,7 +146,7 @@
   },
   {
     "title": "A Física dos Pulsos Dispersos: Além do EMP Convencional",
-    "url": "https://nhmatsumoto.github.io/publications/20260404-demp-physics-fisica-demp-pulsos-dispersos/",
+    "url": "/publications/20260404-demp-physics-fisica-demp-pulsos-dispersos/",
     "kind": "post",
     "summary": "Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos.",
     "keywords": [
@@ -158,7 +158,7 @@
   },
   {
     "title": "Topologias de Conhecimento: O Grafo Hiro",
-    "url": "https://nhmatsumoto.github.io/publications/20260404-brain-map-topology-brain-map-topology-hiro/",
+    "url": "/publications/20260404-brain-map-topology-brain-map-topology-hiro/",
     "kind": "post",
     "summary": "Explorando a implementação de uma hierarquia D3.js para visualizar a inteligência técnica de forma não-linear.",
     "keywords": [
@@ -170,7 +170,7 @@
   },
   {
     "title": "O Despertar do Technical Knowledge OS v2",
-    "url": "https://nhmatsumoto.github.io/publications/20260404-knowledge-os-v2-technical-knowledge-os-v2/",
+    "url": "/publications/20260404-knowledge-os-v2-technical-knowledge-os-v2/",
     "kind": "post",
     "summary": "Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico.",
     "keywords": [
@@ -182,7 +182,7 @@
   },
   {
     "title": "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/",
+    "url": "/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/",
     "kind": "post",
     "summary": "Como conceitos térmicos e de mecânica estatística moldam o treinamento de IAs modernas, de Hopfield Networks a Diffusion Models.",
     "keywords": [
@@ -195,7 +195,7 @@
   },
   {
     "title": "Computação Quântica: O Poder Além dos Bits",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2500-computacao-quantica-qbits-vs-bits/",
+    "url": "/publications/2026-04-03-2500-computacao-quantica-qbits-vs-bits/",
     "kind": "post",
     "summary": "Uma visão clara sobre os Qubits, superposição e como o poder quântico pode resolver problemas impossíveis para computadores clássicos.",
     "keywords": [
@@ -207,7 +207,7 @@
   },
   {
     "title": "O Universo Quântico: Além da Lógica Clássica",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/",
+    "url": "/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/",
     "kind": "post",
     "summary": "Uma jornada intuitiva pela física quântica. Superposição, entrelaçamento e por que o observador muda a realidade.",
     "keywords": [
@@ -219,7 +219,7 @@
   },
   {
     "title": "Simulação de Partículas: O poder dos Métodos de Monte Carlo",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/",
+    "url": "/publications/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/",
     "kind": "post",
     "summary": "Explorando a simulação do universo e sistemas complexos usando estatística, caminhos aleatórios e leis da física codificadas.",
     "keywords": [
@@ -232,7 +232,7 @@
   },
   {
     "title": "Excelência em Dados: Pilhas, Filas e Árvores",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/",
+    "url": "/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/",
     "kind": "post",
     "summary": "Por que a escolha da estrutura de dados correta é mais importante do que o próprio algoritmo para a performance de sistemas complexos.",
     "keywords": [
@@ -244,7 +244,7 @@
   },
   {
     "title": "Algoritmos e Big O: Entendendo a Eficiência do Código",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/",
+    "url": "/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/",
     "kind": "post",
     "summary": "Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade.",
     "keywords": [
@@ -256,7 +256,7 @@
   },
   {
     "title": "Daniel Kahneman: Rápido e Devagar - A Economia Comportamental",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/",
+    "url": "/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/",
     "kind": "post",
     "summary": "Uma homenagem ao psicólogo que ganhou o Nobel de Economia ao provar que o ser humano não é tão racional quanto gosta de acreditar.",
     "keywords": [
@@ -269,7 +269,7 @@
   },
   {
     "title": "Projeto Manhattan: A Ciência da Bomba",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/",
+    "url": "/publications/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/",
     "kind": "post",
     "summary": "Uma análise sobre o maior esforço científico-militar da história, de Einstein e Oppenheimer aos testes de Trinity.",
     "keywords": [
@@ -281,7 +281,7 @@
   },
   {
     "title": "Segunda Guerra Mundial: O Motor da Inovação Tecnológica",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/",
+    "url": "/publications/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/",
     "kind": "post",
     "summary": "Uma análise sobre como o maior conflito da história forçou o nascimento do radar, computadores digitais e motores a jato.",
     "keywords": [
@@ -293,7 +293,7 @@
   },
   {
     "title": "Resiliência e Escala: Sistemas orientados a Filas de Mensageria",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1600-sistemas-orientados-a-filas/",
+    "url": "/publications/2026-04-03-1600-sistemas-orientados-a-filas/",
     "kind": "post",
     "summary": "Por que desacoplar sistemas com filas (RabbitMQ, Azure Service Bus) é o segredo para arquiteturas distribuídas inquebráveis.",
     "keywords": [
@@ -306,7 +306,7 @@
   },
   {
     "title": "Richard Feynman: O Prazer de Descobrir e o Pensamento Quântico",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/",
+    "url": "/publications/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/",
     "kind": "post",
     "summary": "Uma homenagem ao gênio que ensinou o mundo a pensar a partir dos primeiros princípios, da física de partículas à nanotecnologia.",
     "keywords": [
@@ -319,7 +319,7 @@
   },
   {
     "title": "Alan Turing: O Código Enigma e o Nascimento da IA",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/",
+    "url": "/publications/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/",
     "kind": "post",
     "summary": "Uma homenagem ao pai da computação moderna, desde a quebra do Enigma à fundação teórica da Inteligência Artificial.",
     "keywords": [
@@ -332,7 +332,7 @@
   },
   {
     "title": "Bill Gates e a Microsoft: Do Desktop à Ubiquidade",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/",
+    "url": "/publications/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/",
     "kind": "post",
     "summary": "Uma análise sobre a visão de Gates de 'um computador em cada mesa' e como a Microsoft moldou a indústria do software moderno.",
     "keywords": [
@@ -344,7 +344,7 @@
   },
   {
     "title": "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/",
+    "url": "/publications/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/",
     "kind": "post",
     "summary": "Uma análise profunda sobre o sistema de tipos Turing-complete do TypeScript, explorando tipos condicionais, inferência e utilitários de transformação.",
     "keywords": [
@@ -356,7 +356,7 @@
   },
   {
     "title": "TDD: O Ciclo Red-Green-Refactor como Proteção de Domínio",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/",
+    "url": "/publications/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/",
     "kind": "post",
     "summary": "Uma análise técnica sobre o Test-Driven Development, de como testes falhos garantem que o código realmente funciona ao refactor seguro.",
     "keywords": [
@@ -368,7 +368,7 @@
   },
   {
     "title": "Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/",
+    "url": "/publications/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/",
     "kind": "post",
     "summary": "Uma análise sobre a segurança de tempo de compilação versus a agilidade de tempo de execução, explorando tipagem forte, fraca e duck typing.",
     "keywords": [
@@ -380,7 +380,7 @@
   },
   {
     "title": "A anatomia do pensamento em agentes: transformando intenção em execução",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1200-fluxo-pensamento-agentes/",
+    "url": "/publications/2026-04-03-1200-fluxo-pensamento-agentes/",
     "kind": "post",
     "summary": "Uma análise sobre como o 'Chain of Thought' e a estruturação de planos permitem que agentes de IA resolvam tarefas complexas com precisão.",
     "keywords": [
@@ -392,7 +392,7 @@
   },
   {
     "title": "Redes Neurais do Zero: Implementação Matemática em Python",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/",
+    "url": "/publications/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/",
     "kind": "post",
     "summary": "Uma jornada do neurônio de McCulloch-Pitts ao Backpropagation, implementando uma rede neural densa usando apenas NumPy.",
     "keywords": [
@@ -404,7 +404,7 @@
   },
   {
     "title": "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/",
+    "url": "/publications/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/",
     "kind": "post",
     "summary": "Uma análise profunda sobre o runtime do .NET, focando em Garbage Collector (GC), Just-In-Time compilation e Native AOT para microsserviços.",
     "keywords": [
@@ -416,7 +416,7 @@
   },
   {
     "title": "Flutter & Dart: Arquitetura de Estados e Performance Mobile",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/",
+    "url": "/publications/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/",
     "kind": "post",
     "summary": "Uma análise técnica sobre a renderização do Skia/Impeller e como padrões como Riverpod e Bloc afetam o ciclo de vida do widget.",
     "keywords": [
@@ -428,7 +428,7 @@
   },
   {
     "title": "Engenharia Cognitiva: Como Agentes de IA 'Pensam'",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/",
+    "url": "/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/",
     "kind": "post",
     "summary": "Uma análise sobre a orquestração de pensamento em LLMs, do ciclo Percepção-Ação à estrutura de memória de curto e longo prazo (RAG).",
     "keywords": [
@@ -440,7 +440,7 @@
   },
   {
     "title": "Design Patterns: O que ainda é Relevante no C# Moderno?",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/",
+    "url": "/publications/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/",
     "kind": "post",
     "summary": "Uma revisão crítica dos padrões GoF, analisando como o C# 12 e 13 tornaram alguns obsoletos através de registros e correspondência de padrões.",
     "keywords": [
@@ -452,7 +452,7 @@
   },
   {
     "title": "Clean Code & SOLID: O Custo da Dívida Técnica",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/",
+    "url": "/publications/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/",
     "kind": "post",
     "summary": "Uma análise sobre a manutenibilidade de longo prazo, de nomes de variáveis expressivos aos cinco princípios de arquitetura de classes.",
     "keywords": [
@@ -464,7 +464,7 @@
   },
   {
     "title": "Dapper vs EF Core: Quando a Performance Supera a Abstração",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/",
+    "url": "/publications/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/",
     "kind": "post",
     "summary": "Uma análise comparativa sobre ORMs no ecossistema .NET, focando em ciclos de vida de objetos, rastreamento e overhead de consulta.",
     "keywords": [
@@ -476,7 +476,7 @@
   },
   {
     "title": "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1100-poc-minerando-logs/",
+    "url": "/publications/2026-04-03-1100-poc-minerando-logs/",
     "kind": "post",
     "summary": "Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável.",
     "keywords": [
@@ -489,7 +489,7 @@
   },
   {
     "title": "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-1000-neuroplasticidade-agentes/",
+    "url": "/publications/2026-04-03-1000-neuroplasticidade-agentes/",
     "kind": "post",
     "summary": "Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada.",
     "keywords": [
@@ -501,7 +501,7 @@
   },
   {
     "title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
-    "url": "https://nhmatsumoto.github.io/publications/2026-04-03-0900-orquestrador-agentes-ddd/",
+    "url": "/publications/2026-04-03-0900-orquestrador-agentes-ddd/",
     "kind": "post",
     "summary": "Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.",
     "keywords": [
@@ -513,7 +513,7 @@
   },
   {
     "title": "DDD boundaries for agent systems",
-    "url": "https://nhmatsumoto.github.io/publications/20260402-203000-ddd-boundaries-for-agent-systems/",
+    "url": "/publications/20260402-203000-ddd-boundaries-for-agent-systems/",
     "kind": "post",
     "summary": "Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.",
     "keywords": [
@@ -524,7 +524,7 @@
   },
   {
     "title": "GIS pipelines with event-driven services",
-    "url": "https://nhmatsumoto.github.io/publications/20260401-184500-gis-pipelines-with-event-driven-services/",
+    "url": "/publications/20260401-184500-gis-pipelines-with-event-driven-services/",
     "kind": "post",
     "summary": "Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.",
     "keywords": [
@@ -535,7 +535,7 @@
   },
   {
     "title": "Bem-vindo ao meu novo blog",
-    "url": "https://nhmatsumoto.github.io/publications/20260312-090000-primeiro-post/",
+    "url": "/publications/20260312-090000-primeiro-post/",
     "kind": "post",
     "summary": "O ponto de partida do Technical Knowledge OS: um notebook de engenharia versionado, focado em arquitetura, sistemas distribuídos e documentação viva.",
     "keywords": [
@@ -546,7 +546,7 @@
   },
   {
     "title": "SOS Location",
-    "url": "https://nhmatsumoto.github.io/projects/sos-location/",
+    "url": "/projects/sos-location/",
     "kind": "project",
     "summary": "Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real.",
     "keywords": [
@@ -558,7 +558,7 @@
   },
   {
     "title": "nhmatsumoto.github.io",
-    "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-github-io/",
+    "url": "/projects/nhmatsumoto-github-io/",
     "kind": "project",
     "summary": "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, visualização 3D interativa com Three.js, sistema de grafo de conhecimento e deploy via GitHub Pages.",
     "keywords": [
@@ -571,7 +571,7 @@
   },
   {
     "title": "SplitCosts",
-    "url": "https://nhmatsumoto.github.io/projects/splitcosts/",
+    "url": "/projects/splitcosts/",
     "kind": "project",
     "summary": "Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional.",
     "keywords": [
@@ -583,7 +583,7 @@
   },
   {
     "title": "GIS Incident Lab",
-    "url": "https://nhmatsumoto.github.io/projects/gis-incident-lab/",
+    "url": "/projects/gis-incident-lab/",
     "kind": "project",
     "summary": "Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta.",
     "keywords": [
@@ -595,7 +595,7 @@
   },
   {
     "title": "brumadinho_location",
-    "url": "https://nhmatsumoto.github.io/projects/brumadinho-location/",
+    "url": "/projects/brumadinho-location/",
     "kind": "project",
     "summary": "Conjunto de ferramentas geoespaciais para apoiar o resgate e localização de vítimas do desastre de Brumadinho/MG, utilizando dados públicos e coordenadas de referência.",
     "keywords": [
@@ -606,7 +606,7 @@
   },
   {
     "title": "ronaldinho-agent",
-    "url": "https://nhmatsumoto.github.io/projects/ronaldinho-agent/",
+    "url": "/projects/ronaldinho-agent/",
     "kind": "project",
     "summary": "Agente autônomo em Python com personalidade inspirada em Ronaldinho Gaúcho — arquitetura de decisão baseada em contexto, memória e interação conversacional.",
     "keywords": [
@@ -618,7 +618,7 @@
   },
   {
     "title": "Apollo-11",
-    "url": "https://nhmatsumoto.github.io/projects/apollo-11/",
+    "url": "/projects/apollo-11/",
     "kind": "project",
     "summary": "Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar — referência histórica de engenharia de software embarcado.",
     "keywords": [
@@ -629,7 +629,7 @@
   },
   {
     "title": "AutoMapper",
-    "url": "https://nhmatsumoto.github.io/projects/automapper/",
+    "url": "/projects/automapper/",
     "kind": "project",
     "summary": "Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET — elimina boilerplate de transformação entre camadas.",
     "keywords": [
@@ -640,7 +640,7 @@
   },
   {
     "title": "Chess",
-    "url": "https://nhmatsumoto.github.io/projects/chess/",
+    "url": "/projects/chess/",
     "kind": "project",
     "summary": "Jogo de xadrez implementado em C# com foco em modelagem de domínio, validação de movimentos e representação do tabuleiro.",
     "keywords": [
@@ -652,7 +652,7 @@
   },
   {
     "title": "claw-code",
-    "url": "https://nhmatsumoto.github.io/projects/claw-code/",
+    "url": "/projects/claw-code/",
     "kind": "project",
     "summary": "Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade.",
     "keywords": [
@@ -663,7 +663,7 @@
   },
   {
     "title": "DeepSeek-V3",
-    "url": "https://nhmatsumoto.github.io/projects/deepseek-v3/",
+    "url": "/projects/deepseek-v3/",
     "kind": "project",
     "summary": "Fork do DeepSeek-V3, modelo de linguagem com arquitetura Mixture-of-Experts (MoE) e Multi-head Latent Attention para inferência eficiente em larga escala.",
     "keywords": [
@@ -675,7 +675,7 @@
   },
   {
     "title": "Financial",
-    "url": "https://nhmatsumoto.github.io/projects/financial/",
+    "url": "/projects/financial/",
     "kind": "project",
     "summary": "Aplicação monolítica de gestão financeira pessoal desenvolvida em C#/.NET, com foco em controle de despesas, categorização e relatórios.",
     "keywords": [
@@ -687,7 +687,7 @@
   },
   {
     "title": "gaussian-splatting",
-    "url": "https://nhmatsumoto.github.io/projects/gaussian-splatting/",
+    "url": "/projects/gaussian-splatting/",
     "kind": "project",
     "summary": "Fork da implementação original de 3D Gaussian Splatting — técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real.",
     "keywords": [
@@ -699,7 +699,7 @@
   },
   {
     "title": "gemini-cli",
-    "url": "https://nhmatsumoto.github.io/projects/gemini-cli/",
+    "url": "/projects/gemini-cli/",
     "kind": "project",
     "summary": "Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem.",
     "keywords": [
@@ -711,7 +711,7 @@
   },
   {
     "title": "Java-Servlet-Pages",
-    "url": "https://nhmatsumoto.github.io/projects/java-servlet-pages/",
+    "url": "/projects/java-servlet-pages/",
     "kind": "project",
     "summary": "Projeto de estudo com Java Servlets e JSP, cobrindo ciclo de vida de requisições HTTP, sessões, filtros e padrão MVC no servidor.",
     "keywords": [
@@ -723,7 +723,7 @@
   },
   {
     "title": "Leaflet",
-    "url": "https://nhmatsumoto.github.io/projects/leaflet/",
+    "url": "/projects/leaflet/",
     "kind": "project",
     "summary": "Fork do Leaflet, a biblioteca JavaScript mais popular para mapas interativos, utilizada como base nos projetos de GIS do ecossistema.",
     "keywords": [
@@ -735,7 +735,7 @@
   },
   {
     "title": "macos",
-    "url": "https://nhmatsumoto.github.io/projects/macos/",
+    "url": "/projects/macos/",
     "kind": "project",
     "summary": "Fork do projeto Docker-OSX: virtualização de macOS dentro de containers Docker para testes de compatibilidade e desenvolvimento cross-platform.",
     "keywords": [
@@ -747,7 +747,7 @@
   },
   {
     "title": "MapleBR",
-    "url": "https://nhmatsumoto.github.io/projects/maplebr/",
+    "url": "/projects/maplebr/",
     "kind": "project",
     "summary": "Projeto com ferramentas e configurações para servidores MapleStory, incluindo scripts de build e automação via Makefile.",
     "keywords": [
@@ -758,7 +758,7 @@
   },
   {
     "title": "mermaid-live-editor",
-    "url": "https://nhmatsumoto.github.io/projects/mermaid-live-editor/",
+    "url": "/projects/mermaid-live-editor/",
     "kind": "project",
     "summary": "Fork do Mermaid Live Editor — aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação.",
     "keywords": [
@@ -770,7 +770,7 @@
   },
   {
     "title": "mermaid",
-    "url": "https://nhmatsumoto.github.io/projects/mermaid/",
+    "url": "/projects/mermaid/",
     "kind": "project",
     "summary": "Fork do Mermaid.js — ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual.",
     "keywords": [
@@ -782,7 +782,7 @@
   },
   {
     "title": "nhmatsumoto.exception.middleware",
-    "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-exception-middleware/",
+    "url": "/projects/nhmatsumoto-exception-middleware/",
     "kind": "project",
     "summary": "Middleware de tratamento global de exceções para ASP.NET Core, padronizando respostas de erro e logging em aplicações web.",
     "keywords": [
@@ -794,7 +794,7 @@
   },
   {
     "title": "Playground-FE",
-    "url": "https://nhmatsumoto.github.io/projects/playground-fe/",
+    "url": "/projects/playground-fe/",
     "kind": "project",
     "summary": "Projeto frontend em React e TypeScript com integração ao Keycloak para autenticação, servindo como base para futuros desenvolvimentos com controle de acesso.",
     "keywords": [
@@ -806,7 +806,7 @@
   },
   {
     "title": "prog_lib",
-    "url": "https://nhmatsumoto.github.io/projects/prog-lib/",
+    "url": "/projects/prog-lib/",
     "kind": "project",
     "summary": "Coleção de implementações de algoritmos e estruturas de dados clássicos, organizada como biblioteca de referência para estudo e consulta rápida.",
     "keywords": [
@@ -816,7 +816,7 @@
   },
   {
     "title": "QuickReaderv1",
-    "url": "https://nhmatsumoto.github.io/projects/quickreaderv1/",
+    "url": "/projects/quickreaderv1/",
     "kind": "project",
     "summary": "Aplicação de speed reading em TypeScript que apresenta texto em chunks otimizados para leitura rápida, com controle de velocidade e tracking de progresso.",
     "keywords": [
@@ -827,7 +827,7 @@
   },
   {
     "title": "react-data-grid",
-    "url": "https://nhmatsumoto.github.io/projects/react-data-grid/",
+    "url": "/projects/react-data-grid/",
     "kind": "project",
     "summary": "Fork do react-data-grid — componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados.",
     "keywords": [
@@ -838,7 +838,7 @@
   },
   {
     "title": "ResponseMiddleware",
-    "url": "https://nhmatsumoto.github.io/projects/responsemiddleware/",
+    "url": "/projects/responsemiddleware/",
     "kind": "project",
     "summary": "Middleware ASP.NET Core para padronização de respostas HTTP, envolvendo resultados de controllers em um envelope consistente com metadados de sucesso/erro.",
     "keywords": [
@@ -850,7 +850,7 @@
   },
   {
     "title": "Security.Jwt",
-    "url": "https://nhmatsumoto.github.io/projects/security-jwt/",
+    "url": "/projects/security-jwt/",
     "kind": "project",
     "summary": "Biblioteca .NET para gerenciamento completo de JWT: rotação automática de chaves, endpoint JWKS, suporte a múltiplos algoritmos e armazenamento seguro de material criptográfico.",
     "keywords": [
@@ -863,7 +863,7 @@
   },
   {
     "title": "SOS",
-    "url": "https://nhmatsumoto.github.io/projects/sos/",
+    "url": "/projects/sos/",
     "kind": "project",
     "summary": "Módulo auxiliar do ecossistema SOS Location com componentes compartilhados, utilitários e contratos de integração para os serviços de resposta a desastres.",
     "keywords": [
@@ -874,7 +874,7 @@
   },
   {
     "title": "SplitCost-Backend",
-    "url": "https://nhmatsumoto.github.io/projects/splitcost-backend/",
+    "url": "/projects/splitcost-backend/",
     "kind": "project",
     "summary": "Backend do SplitCosts em .NET/C# com arquitetura multi-tenant, domain events, separação de contextos de leitura/escrita e projeções operacionais.",
     "keywords": [
@@ -887,7 +887,7 @@
   },
   {
     "title": "SplitCosts-FE",
-    "url": "https://nhmatsumoto.github.io/projects/splitcosts-fe/",
+    "url": "/projects/splitcosts-fe/",
     "kind": "project",
     "summary": "Frontend do SplitCosts em React/TypeScript com Keycloak auth, visualização de despesas, saldos e reconciliação, consumindo o SplitCost-Backend via REST API.",
     "keywords": [
@@ -899,7 +899,7 @@
   },
   {
     "title": "system-prompts-and-models-of-ai-tools",
-    "url": "https://nhmatsumoto.github.io/projects/system-prompts-and-models-of-ai-tools/",
+    "url": "/projects/system-prompts-and-models-of-ai-tools/",
     "kind": "project",
     "summary": "Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros — referência para engenharia de prompts.",
     "keywords": [
@@ -910,7 +910,7 @@
   },
   {
     "title": "User-Auth",
-    "url": "https://nhmatsumoto.github.io/projects/user-auth/",
+    "url": "/projects/user-auth/",
     "kind": "project",
     "summary": "Serviço de autenticação e autorização em TypeScript/Node.js com gestão de usuários, sessões e integração com provedores de identidade como Keycloak.",
     "keywords": [
@@ -922,7 +922,7 @@
   },
   {
     "title": "Technical Knowledge OS",
-    "url": "https://nhmatsumoto.github.io/documents/technical-knowledge-os/",
+    "url": "/documents/technical-knowledge-os/",
     "kind": "document",
     "summary": "A definição operacional do blog como sistema vivo de documentação técnica.",
     "keywords": [
@@ -932,7 +932,7 @@
   },
   {
     "title": "System Architecture",
-    "url": "https://nhmatsumoto.github.io/documents/system-architecture/",
+    "url": "/documents/system-architecture/",
     "kind": "document",
     "summary": "Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.",
     "keywords": [
@@ -942,7 +942,7 @@
   },
   {
     "title": "ADR 003 - Versioned Memory",
-    "url": "https://nhmatsumoto.github.io/documents/adr-versioned-memory/",
+    "url": "/documents/adr-versioned-memory/",
     "kind": "document",
     "summary": "Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.",
     "keywords": [
@@ -953,7 +953,7 @@
   },
   {
     "title": "Agent Integration Surface",
-    "url": "https://nhmatsumoto.github.io/documents/agent-integration-surface/",
+    "url": "/documents/agent-integration-surface/",
     "kind": "document",
     "summary": "Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes.",
     "keywords": [
@@ -964,7 +964,7 @@
   },
   {
     "title": "Ronaldinho Architecture Overview",
-    "url": "https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/",
+    "url": "/documents/ronaldinho-architecture-overview/",
     "kind": "document",
     "summary": "Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.",
     "keywords": [
