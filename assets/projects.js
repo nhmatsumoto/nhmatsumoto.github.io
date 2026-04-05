@@ -93,6 +93,8 @@ class ProjectMap3D {
     this.textureCache = {}
     this.lastMouseHit = null
     this.hoveredNode = null
+    this.linksNeedUpdate = true
+    this.linkUpdateCounter = 0
 
     // Structure Groups
     this.atomGroup = new THREE.Group()
@@ -284,10 +286,10 @@ class ProjectMap3D {
         // Branch Curve (Stronger profile)
         const start = new THREE.Vector3(0, h_n, 0), mid = start.clone().lerp(pos, 0.7); mid.y += 20
         const curve = new THREE.QuadraticBezierCurve3(start, mid, pos)
-        const pts = curve.getPoints(24)
+        const pts = curve.getPoints(12) // Reduced from 24 to 12
+        const bClr = tier === 0 ? [0, 0.8, 1] : [0, 0.66, 1]
         for (let i = 0; i < pts.length - 1; i++) {
           bPos.push(pts[i].x, pts[i].y, pts[i].z, pts[i + 1].x, pts[i + 1].y, pts[i + 1].z)
-          const bClr = tier === 0 ? [0, 0.8, 1] : [0, 0.66, 1]
           bCol.push(...bClr, ...bClr)
         }
 
@@ -332,18 +334,21 @@ class ProjectMap3D {
   }
 
   addFoliageData(curve, pos, col) {
-    const points = curve.getPoints(20)
+    const points = curve.getPoints(10) // Reduced from 20 to 10
+    const dir = new THREE.Vector3(), side1 = new THREE.Vector3(), side2 = new THREE.Vector3(), s = new THREE.Vector3()
+    const upVec = new THREE.Vector3(0, 1, 0)
     points.forEach((p, i) => {
       if (i === 0) return
-      const dir = p.clone().sub(points[i - 1]).normalize()
-      const side1 = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize()
-      const side2 = new THREE.Vector3().crossVectors(dir, side1).normalize()
+      dir.copy(p).sub(points[i - 1]).normalize()
+      side1.crossVectors(dir, upVec).normalize()
+      side2.crossVectors(dir, side1).normalize()
       const l_mult = i / points.length
       const tier = this.getNodeTier({ stack: [] }) // Default check
-      const d_mult = l_mult > 0.6 ? 8 : 4 // More density at tips
+      const d_mult = l_mult > 0.6 ? 6 : 3 // Reduced density
       for (let j = 0; j < d_mult; j++) {
         const ang = (j / d_mult) * Math.PI * 2 + i * 0.5
-        const s = side1.clone().multiplyScalar(Math.cos(ang)).add(side2.clone().multiplyScalar(Math.sin(ang)))
+        const cos_ang = Math.cos(ang), sin_ang = Math.sin(ang)
+        s.copy(side1).multiplyScalar(cos_ang).add(side2.clone().multiplyScalar(sin_ang))
         const reach = (3 + l_mult * 10) * (0.8 + Math.random() * 0.4)
         const start = p.clone().add(s.clone().multiplyScalar(reach * 0.5)), end = start.clone().add(dir.clone().multiplyScalar(18)).add(s.clone().multiplyScalar(reach))
         pos.push(start.x, start.y, start.z, end.x, end.y, end.z)
@@ -476,7 +481,7 @@ class ProjectMap3D {
     // 1. Nucleus (The Central Power)
     const sz = isCentral ? 22 : 14
     const geoKey = `sphere-${sz}`
-    const nucGeo = this.geoCache[geoKey] || (this.geoCache[geoKey] = new THREE.SphereGeometry(sz, 32, 24))
+    const nucGeo = this.geoCache[geoKey] || (this.geoCache[geoKey] = new THREE.SphereGeometry(sz, 16, 16)) // Reduced segments from 32,24 to 16,16
     const matKey = `nuclear-${cc}-${isCentral}`
     const nucMat = this.matCache[matKey] || (this.matCache[matKey] = new THREE.MeshPhysicalMaterial({
       color: cc, emissive: cc, emissiveIntensity: isCentral ? 4 : 2,
@@ -509,7 +514,7 @@ class ProjectMap3D {
       // Electrons on this shell
       const eSize = isCentral ? 3 : 2
       const eGeoKey = `electron-${eSize}`
-      const eGeo = this.geoCache[eGeoKey] || (this.geoCache[eGeoKey] = new THREE.SphereGeometry(eSize, 8, 8))
+      const eGeo = this.geoCache[eGeoKey] || (this.geoCache[eGeoKey] = new THREE.SphereGeometry(eSize, 4, 4)) // Reduced from 8,8 to 4,4
       const eMatKey = `electron-${cc}`
       const eMat = this.matCache[eMatKey] || (this.matCache[eMatKey] = new THREE.MeshStandardMaterial({ color: cc, emissive: cc, emissiveIntensity: 5 }))
       for (let e = 0; e < count; e++) {
@@ -580,14 +585,18 @@ class ProjectMap3D {
   }
 
   updateAtomLinks() {
-    if (!this.nodes[0]) return
+    if (!this.nodes[0] || this.layoutMode === 'arvore') return // Skip in tree mode
+    // Only update every 5 frames to reduce load
+    if (this.linkUpdateCounter++ % 5 !== 0) return
+
     const ctr = this.nodes[0].position
+    const midVec = new THREE.Vector3() // Reuse vector
     this.nodes.slice(1).forEach(n => {
       if (n.userData.atomLink && n.userData.atomCurve) {
         const t = n.position
-        const mid = ctr.clone().lerp(t, 0.5); mid.y += 50
-        n.userData.atomCurve.v0.copy(ctr); n.userData.atomCurve.v1.copy(mid); n.userData.atomCurve.v2.copy(t)
-        n.userData.atomLink.geometry.setFromPoints(n.userData.atomCurve.getPoints(24))
+        midVec.copy(ctr).lerp(t, 0.5); midVec.y += 50
+        n.userData.atomCurve.v0.copy(ctr); n.userData.atomCurve.v1.copy(midVec); n.userData.atomCurve.v2.copy(t)
+        n.userData.atomLink.geometry.setFromPoints(n.userData.atomCurve.getPoints(12)) // Reduced from 24 to 12 points
       }
     })
   }
