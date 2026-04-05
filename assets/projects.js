@@ -18,11 +18,14 @@ const KIND_HEX = {
  */
 const ZELDA_PALETTE = {
   sky: 0x87CEEB,
-  grass: 0x4CAF50,
+  grass: 0x76ff03, // Vibrant Lime
+  rock: 0x37474f,  // Dark Slate
+  sand: 0xf5f5dc,  // Sandy Beige
   wood: 0x4E342E,
   leaf_deep: 0x1B5E20,
   leaf_vibrant: 0x66BB6A,
   sun: 0xFFF9C4,
+  flower: 0xff1744 // Red Flower
 }
 const KIND_LABEL = {
   post: 'Publicação', project: 'Projeto', document: 'Documento',
@@ -202,9 +205,9 @@ class ProjectMap3D {
       const numBlobs = 3 + Math.floor(Math.random() * 4)
       const cloudMat = new THREE.MeshToonMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 })
       for (let j = 0; j < numBlobs; j++) {
-        const blob = new THREE.Mesh(new THREE.SphereGeometry(100 + Math.random() * 150, 12, 12), cloudMat)
-        blob.position.set((j - numBlobs / 2) * 150, (Math.random() - 0.5) * 100, (Math.random() - 0.5) * 100)
-        blob.scale.set(1, 0.6, 1)
+        const blob = new THREE.Mesh(new THREE.SphereGeometry(100 + Math.random() * 150, 8, 8), cloudMat)
+        blob.position.set((j - numBlobs / 2) * 250, (Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50)
+        blob.scale.set(4, 0.2, 1.2) // Horizontal wispy look
         cloud.add(blob)
       }
       cloud.userData.speed = 0.5 + Math.random() * 1.5
@@ -342,32 +345,75 @@ class ProjectMap3D {
   buildAraucariaBase() {
     const baseGroup = new THREE.Group(); this.araucariaGroup.add(baseGroup)
 
-    // 1. Hilly Terrain (Subdivided Plane)
-    const terrainSize = 8000, segments = 64
+    // 1. Hilly Terrain (Subdivided Plane with Vertex Colors)
+    const terrainSize = 10000, segments = 80
     const terrainGeo = new THREE.PlaneGeometry(terrainSize, terrainSize, segments, segments)
     const pos = terrainGeo.attributes.position.array
-    for (let i = 0; i < pos.length; i += 3) {
-      const x = pos[i], y = pos[i + 1]
-      const dist = Math.sqrt(x * x + y * y)
-      // Natural hills using sine/cosine + falloff
-      if (dist < 3500) {
-        pos[i + 2] = (Math.sin(x * 0.002) * Math.cos(y * 0.002) * 200) + (Math.sin(x * 0.01) * 30)
-      } else {
-        pos[i + 2] = -500 // Sink edges
+    const colors = new Float32Array((segments + 1) * (segments + 1) * 3)
+    const terrainGrassCol = new THREE.Color(ZELDA_PALETTE.grass), terrainSandCol = new THREE.Color(ZELDA_PALETTE.sand)
+
+    for (let i = 0; i <= segments; i++) {
+      for (let j = 0; j <= segments; j++) {
+        const idx = (i * (segments + 1) + j) * 3
+        const x = pos[idx], y = pos[idx + 1]
+        const dist = Math.sqrt(x * x + y * y)
+
+        // Path logic (S-Curve path)
+        const pathX = Math.sin(y * 0.001) * 800
+        const onPath = Math.abs(x - pathX) < 300
+
+        if (onPath) {
+          colors[idx] = terrainSandCol.r; colors[idx + 1] = terrainSandCol.g; colors[idx + 2] = terrainSandCol.b
+        } else {
+          colors[idx] = terrainGrassCol.r; colors[idx + 1] = terrainGrassCol.g; colors[idx + 2] = terrainGrassCol.b
+        }
+
+        // Hills
+        if (dist < 4500) {
+          pos[idx + 2] = (Math.sin(x * 0.002) * Math.cos(y * 0.002) * 200) + (Math.sin(x * 0.01) * 30)
+        } else {
+          pos[idx + 2] = -500
+        }
       }
     }
+    terrainGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3))
     terrainGeo.computeVertexNormals()
 
-    const terrainMat = new THREE.MeshToonMaterial({
-      color: ZELDA_PALETTE.grass,
-      flatShading: true
-    })
+    const terrainMat = new THREE.MeshToonMaterial({ vertexColors: true, flatShading: true })
     const terrain = new THREE.Mesh(terrainGeo, terrainMat)
     terrain.rotation.x = -Math.PI / 2
     terrain.position.y = -50
     baseGroup.add(terrain)
 
-    // 2. Grassy Clumps (Scattered Grass Blades)
+    // 2. Rocky Mesas (Canion Effect)
+    const addMesa = (mx, mz, scale = 1) => {
+      const h = 800 + Math.random() * 1200
+      const mesh = new THREE.Mesh(new THREE.CylinderGeometry(400 * scale, 600 * scale, h, 8), new THREE.MeshToonMaterial({ color: ZELDA_PALETTE.rock, flatShading: true }))
+      mesh.position.set(mx, h / 2 - 50, mz); mesh.rotation.y = Math.random() * Math.PI
+      baseGroup.add(mesh)
+      // Green mossy top
+      const top = new THREE.Mesh(new THREE.CircleGeometry(420 * scale, 8), new THREE.MeshToonMaterial({ color: ZELDA_PALETTE.grass }))
+      top.position.set(mx, h - 45, mz); top.rotation.x = -Math.PI / 2
+      baseGroup.add(top)
+    }
+    addMesa(3500, 2000, 1.5); addMesa(-3000, -1000, 2); addMesa(2000, -3500, 1.2); addMesa(-4000, 3000, 1.8)
+
+    // 3. Wildflowers
+    const fPos = [], fCol = []
+    const fC = new THREE.Color(ZELDA_PALETTE.flower)
+    for (let i = 0; i < 2000; i++) {
+        const x = (Math.random() - 0.5) * 6000, z = (Math.random() - 0.5) * 6000
+        const dist = Math.sqrt(x * x + z * z)
+        if (dist < 3000 && Math.abs(x - Math.sin(z * 0.001) * 800) > 400) {
+            fPos.push(x, 20, z)
+            fCol.push(fC.r, fC.g, fC.b)
+        }
+    }
+    const fGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(fPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(fCol), 3))
+    const fDots = new THREE.Points(fGeo, new THREE.PointsMaterial({ size: 15, vertexColors: true, sizeAttenuation: true }))
+    baseGroup.add(fDots)
+
+    // 4. Grassy Clumps (Modified)
     const numClumps = 1200, gPos = [], gCol = []
     for (let i = 0; i < numClumps; i++) {
       const r = 200 + Math.random() * 2500, t = Math.random() * Math.PI * 2
@@ -513,19 +559,22 @@ class ProjectMap3D {
 
     // Cinematic Camera Sequences
     if (isTree) {
-      new TWEEN.Tween(this.camera.position).to({ x: 1200, y: 800, z: 1200 }, 2000).easing(TWEEN.Easing.Cubic.InOut).start()
-      new TWEEN.Tween(this.controls.target).to({ x: 0, y: 700, z: 0 }, 2000).easing(TWEEN.Easing.Cubic.InOut).start()
+      // Start Above Tree
+      new TWEEN.Tween(this.camera.position).to({ x: 0, y: 2200, z: 2000 }, 2000).easing(TWEEN.Easing.Cubic.Out).start()
+      new TWEEN.Tween(this.controls.target).to({ x: 0, y: 1200, z: 0 }, 2000).start()
 
+      // Zelda Environment Active
       new TWEEN.Tween(this.sunLight).to({ intensity: 4 }, 1500).start()
       new TWEEN.Tween(this.scene.background).to({ r: 0.529, g: 0.808, b: 0.922 }, 1500).start() // Sky Blue
       new TWEEN.Tween(this.scene.fog).to({ near: 1500, far: 15000 }, 1500).start()
       this.cloudGroup.visible = true
     } else {
+      // Space Reset
       new TWEEN.Tween(this.camera.position).to({ x: 0, y: 400, z: 1000 }, 1500).easing(TWEEN.Easing.Cubic.Out).start()
       new TWEEN.Tween(this.controls.target).to({ x: 0, y: 0, z: 0 }, 1500).start()
 
       new TWEEN.Tween(this.sunLight).to({ intensity: 0 }, 1000).start()
-      new TWEEN.Tween(this.scene.background).to({ r: 0.007, g: 0.015, b: 0.031 }, 1000).start() // Reset to Space
+      new TWEEN.Tween(this.scene.background).to({ r: 0.007, g: 0.015, b: 0.031 }, 1000).start() // Space
       new TWEEN.Tween(this.scene.fog).to({ near: 100000, far: 200000 }, 1000).start()
       this.cloudGroup.visible = false
     }
@@ -631,12 +680,42 @@ exitReader() {
   this.controls.enabled = true; this.controls.autoRotate = true; this.resetCameraFocus(); this.selected = null
 }
 
-addEventHandlers() {
-  window.addEventListener('resize', () => this.onResize())
-  this.renderer.domElement.addEventListener('mousemove', e => this.onMouseMove(e))
-  this.renderer.domElement.addEventListener('click', () => this.onClick())
-  window.addEventListener('keydown', e => { if (e.key === 'Escape') this.selected ? this.deselectNode() : (this.readerActive && this.exitReader()) })
-}
+  addEventHandlers() {
+    window.addEventListener('resize', () => this.onResize())
+    window.addEventListener('keydown', e => {
+      this.keys[e.code] = true
+      if (e.key === 'Escape') this.selected ? this.deselectNode() : (this.readerActive && this.exitReader())
+    })
+    window.addEventListener('keyup', e => { this.keys[e.code] = false })
+
+    this.renderer.domElement.addEventListener('mousemove', e => this.onMouseMove(e))
+    this.renderer.domElement.addEventListener('click', () => this.onClick())
+  }
+
+  updateCameraMovement() {
+    const moveSpeed = 20
+    const vector = new THREE.Vector3()
+    const dir = new THREE.Vector3()
+    this.camera.getWorldDirection(dir)
+    dir.y = 0; dir.normalize() // Keep it horizontal
+
+    const side = new THREE.Vector3().crossVectors(this.camera.up, dir).negate().normalize()
+
+    if (this.keys['KeyW'] || this.keys['ArrowUp']) vector.add(dir)
+    if (this.keys['KeyS'] || this.keys['ArrowDown']) vector.sub(dir)
+    if (this.keys['KeyA'] || this.keys['ArrowLeft']) vector.sub(side)
+    if (this.keys['KeyD'] || this.keys['ArrowRight']) vector.add(side)
+    if (this.keys['ControlLeft'] || this.keys['ControlRight'] || this.keys['KeyC']) vector.y -= 1
+    if (this.keys['Space']) vector.y += 1
+
+    if (vector.lengthSq() > 0) {
+      vector.normalize().multiplyScalar(moveSpeed)
+      this.camera.position.add(vector)
+      this.controls.target.add(vector)
+      // Stop auto-rotation if the user moves
+      if (this.controls.autoRotate) this.controls.autoRotate = false
+    }
+  }
 
 onResize() { const w = this.container.clientWidth, h = this.container.clientHeight; this.camera.aspect = w / h; this.camera.updateProjectionMatrix(); this.renderer.setSize(w, h) }
 onMouseMove(e) {
@@ -668,60 +747,70 @@ onClick() {
   this.deselectNode()
 }
 
-animate() {
-  requestAnimationFrame(() => this.animate()); TWEEN.update()
-  if (this.transitioning) {
-    this.camera.position.lerp(this.cameraGoal, 0.06)
-    this.controls.target.lerp(this.cameraTarget, 0.06)
-    if (this.camera.position.distanceTo(this.cameraGoal) < 0.5) this.transitioning = false
-  }
-  this.controls.update(); const t = performance.now() * 0.001
+  animate() {
+    requestAnimationFrame(() => this.animate())
+    TWEEN.update()
+    const t = performance.now() * 0.001
 
-  if (!this.readerActive) {
-    this.atomGroup.rotation.y = t * 0.015
-
-    // Zelda Environment Animations
-    if (this.layoutMode === 'arvore') {
-      if (this.grassMesh) {
-        this.grassMesh.rotation.z = Math.sin(t * 1.5) * 0.02
-        this.grassMesh.rotation.x = Math.cos(t * 1.2) * 0.01
-      }
-      if (this.cloudGroup) {
-        this.cloudGroup.children.forEach(c => {
-          c.position.x += c.userData.speed
-          if (c.position.x > 4000) c.position.x = -4000
-        })
-      }
-      if (this.mergedFoliage) {
-        this.mergedFoliage.material.opacity = 0.5 + Math.sin(t * 0.5) * 0.1
-      }
+    if (this.layoutMode === 'arvore' && !this.readerActive) {
+      this.updateCameraMovement()
     }
 
-    this.nodes.forEach((n, i) => {
-      if (i > 0 && !this.selected) {
-        n.position.y += Math.sin(t * 0.8 + i) * 0.04
+    if (this.controls) this.controls.update()
+
+    if (this.transitioning) {
+      this.camera.position.lerp(this.cameraGoal, 0.06)
+      this.controls.target.lerp(this.cameraTarget, 0.06)
+      if (this.camera.position.distanceTo(this.cameraGoal) < 0.5) this.transitioning = false
+    }
+
+    if (!this.readerActive) {
+      this.atomGroup.rotation.y = t * 0.015
+      this.atomGroup.rotation.z = t * 0.005
+      this.atomGroup.children.forEach((orbit, i) => { orbit.rotation.y = t * (0.1 + i * 0.02) })
+
+      // Zelda Environment Animations
+      if (this.layoutMode === 'arvore') {
+        if (this.grassMesh) {
+          this.grassMesh.rotation.z = Math.sin(t * 1.5) * 0.02
+          this.grassMesh.rotation.x = Math.cos(t * 1.2) * 0.01
+        }
+        if (this.cloudGroup) {
+          this.cloudGroup.children.forEach(c => {
+            c.position.x += c.userData.speed
+            if (c.position.x > 4000) c.position.x = -4000
+          })
+        }
+        if (this.mergedFoliage) {
+          this.mergedFoliage.material.opacity = 0.5 + Math.sin(t * 0.5) * 0.1
+        }
       }
 
-      // Animate Atomic Orbits (Shells) - only in Atom mode or subtle
-      n.userData.orbits?.forEach(r => {
-        r.mesh.rotation.z += r.speed
-        r.mesh.rotation.y += r.speed * 0.5
+      this.nodes.forEach((n, i) => {
+        if (i > 0 && !this.selected) {
+          n.position.y += Math.sin(t * 0.8 + i) * 0.04
+        }
+
+        // Animate Atomic Orbits (Shells)
+        n.userData.orbits?.forEach(r => {
+          r.mesh.rotation.z += r.speed
+          r.mesh.rotation.y += r.speed * 0.5
+        })
+
+        if (n.userData.glow) {
+          const s = (n === this.selected) ? 1.2 : 1.0
+          n.userData.glow.material.opacity = (0.4 + Math.sin(t * 2 + n.userData.pulsePhase) * 0.15) * s
+        }
+
+        // Selection Pulse for Connections
+        if (n === this.selected && n.userData.atomLink) {
+          const dash = (Math.sin(t * 5) + 1) * 0.5
+          n.userData.atomLink.material.opacity = 0.5 + dash * 0.5
+        }
       })
-
-      if (n.userData.glow) {
-        const s = (n === this.selected) ? 1.2 : 1.0
-        n.userData.glow.material.opacity = (0.4 + Math.sin(t * 2 + n.userData.pulsePhase) * 0.15) * s
-      }
-
-      // Selection Pulse for Connections
-      if (n === this.selected && n.userData.atomLink) {
-        const dash = (Math.sin(t * 5) + 1) * 0.5
-        n.userData.atomLink.material.opacity = 0.5 + dash * 0.5
-      }
-    })
+    }
+    this.renderer.render(this.scene, this.camera)
   }
-  this.renderer.render(this.scene, this.camera)
-}
 }
 
 document.addEventListener('DOMContentLoaded', () => {
