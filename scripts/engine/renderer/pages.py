@@ -73,45 +73,49 @@ def _safe_truncate(text: str, limit: int = 1200) -> str:
         return cut[:line].rstrip() + "\n..."
     return cut.rstrip() + "..."
 
-def _build_project_body(item: dict[str, Any]) -> str:
+def _build_project_body(item: dict[str, Any], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     """Assemble a markdown body from project fields for rich rendering."""
+    from ..i18n import translate as _t
+    def h(key: str, fallback: str) -> str:
+        return _t(i18n or {}, locale, key, fallback) if i18n else fallback
+
     parts = []
     ov = (item.get("overview") or "").strip()
     if ov:
         parts.append(ov)
     ps = (item.get("problem_solution") or "").strip()
     if ps and ps != "Sincronizado via Technical Knowledge OS build engine.":
-        parts.append(f"## Problema & Solução\n\n{ps}")
+        parts.append(f"## {h('pages.project.problem_solution', 'Problema & Solução')}\n\n{ps}")
     arch = (item.get("architecture") or "").strip()
     if arch and arch != "Repositório público no GitHub.":
-        parts.append(f"## Arquitetura\n\n{arch}")
+        parts.append(f"## {h('pages.project.architecture', 'Arquitetura')}\n\n{arch}")
     dp = (item.get("diagram_preview") or "").strip()
     if dp:
         parts.append(f"```\n{dp}\n```")
     sn = (item.get("stack_notes") or "").strip()
     if sn:
-        parts.append(f"## Stack & Tecnologias\n\n{sn}")
+        parts.append(f"## {h('pages.project.stack_notes', 'Stack & Tecnologias')}\n\n{sn}")
     adr = item.get("adr") or []
     if adr:
-        parts.append("## Decisões Arquiteturais\n\n" + "\n".join(f"- {a}" for a in adr))
+        parts.append(f"## {h('pages.project.adr', 'ADRs')}\n\n" + "\n".join(f"- {a}" for a in adr))
     rm = item.get("roadmap") or []
     if rm:
-        parts.append("## Roadmap\n\n" + "\n".join(f"- {r}" for r in rm))
+        parts.append(f"## {h('pages.project.roadmap', 'Roadmap')}\n\n" + "\n".join(f"- {r}" for r in rm))
     impact = item.get("impact") or []
     if impact:
-        parts.append("## Impacto & Resultados\n\n" + "\n".join(f"- {m}" for m in impact))
+        parts.append(f"## {h('pages.project.impact', 'Impacto & Resultados')}\n\n" + "\n".join(f"- {m}" for m in impact))
     trade_offs = item.get("trade_offs") or []
     if trade_offs:
-        parts.append("## Trade-offs & Decisões\n\n" + "\n".join(f"- {t}" for t in trade_offs))
+        parts.append(f"## {h('pages.project.trade_offs', 'Trade-offs & Decisões')}\n\n" + "\n".join(f"- {t}" for t in trade_offs))
     lessons = item.get("lessons") or []
     if lessons:
-        parts.append("## Lições Aprendidas\n\n" + "\n".join(f"- {le}" for le in lessons))
+        parts.append(f"## {h('pages.project.lessons', 'Lições Aprendidas')}\n\n" + "\n".join(f"- {le}" for le in lessons))
     pn = (item.get("production_notes") or "").strip()
     if pn:
-        parts.append(f"## Notas de Produção\n\n{pn}")
+        parts.append(f"## {h('pages.project.production_notes', 'Notas de Produção')}\n\n{pn}")
     return "\n\n".join(parts) if parts else item.get("summary", "")
 
-def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]]) -> str:
+def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     unified_items = []
 
     for item in posts:
@@ -131,7 +135,7 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
         })
 
     for item in projects:
-        body_md = _build_project_body(item)
+        body_md = _build_project_body(item, i18n, locale)
         unified_items.append({
             "id": f"project-{item['slug']}",
             "kind": "project",
@@ -167,7 +171,7 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
 
 def render_projects_index_page(site: dict[str, str], system: dict[str, Any], posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.projects", "projects"), "url": "", "key": "nav.projects"}], i18n, locale)
-    flow_data = render_projects_flow_data(posts, projects, documents)
+    flow_data = render_projects_flow_data(posts, projects, documents, i18n, locale)
     content = f"""
     <div class="project-flow-shell">
       <div class="project-flow-wrapper" data-project-flow></div>
@@ -207,7 +211,7 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
 
 def render_project_page(site: dict[str, str], system: dict[str, Any], project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.projects", "projects"), "url": site_href(site, "/projects/"), "key": "nav.projects"}, {"label": project["name"], "url": ""}], i18n, locale)
-    production_html = f'<section><h2>Notas de Produção</h2>{render_markdown(project["production_notes"])}</section>' if project.get("production_notes") else ""
+    production_html = f'<section><h2 data-i18n="pages.project.production_notes">{html.escape(translate(i18n, locale, "pages.project.production_notes", "Production Notes"))}</h2>{render_markdown(project["production_notes"])}</section>' if project.get("production_notes") else ""
     sidebar = f"""<aside class="sidebar-panel"><div class="sidebar-header"><h2 data-i18n="pages.project.status">{html.escape(translate(i18n, locale, "pages.project.status", "Status"))}</h2><button class="nav-button sidebar-close" type="button" data-sidebar-toggle><i data-lucide="x"></i></button></div><p>{render_status_badge(project['status'], i18n, locale)}</p><h3 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h3>{render_stack_list(project['stack'])}{render_impact_bar(project.get("impact", []))}<div class="sidebar-actions">{f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">architecture</a>' if project.get("resolved_architecture_url") else ""}{f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if project.get("resolved_code_url") else ""}</div></aside>"""
     back_url = site_href(site, f"/projects/?select=project-{project['slug']}")
     content = f"""{breadcrumbs}<section class="page-grid"><article class="project-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p><div class="nav-group"><button class="nav-button sidebar-toggle" type="button" data-sidebar-toggle title="Mais informações"><i data-lucide="info"></i></button><a href="{back_url}" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div></div><h1>{html.escape(project['name'])}</h1><p class="post-summary">{html.escape(project['headline'] or project['summary'])}</p>{render_badge_list(project.get('badges', []))}</header><section><h2 data-i18n="pages.project.overview">{html.escape(translate(i18n, locale, "pages.project.overview", "Overview"))}</h2>{render_markdown(project.get('overview', ""))}</section><section><h2 data-i18n="pages.project.architecture">{html.escape(translate(i18n, locale, "pages.project.architecture", "Architecture"))}</h2>{render_markdown(project.get('architecture', ""))}{f'<pre class="diagram-preview large"><code>{html.escape(project["diagram_preview"])}</code></pre>' if project.get("diagram_preview") else ""}</section>{production_html}{render_trade_offs_section(project.get("trade_offs", []))}{render_lessons_section(project.get("lessons", []))}</article>{sidebar}</section>"""

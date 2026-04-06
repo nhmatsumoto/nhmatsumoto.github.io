@@ -61,7 +61,7 @@ def render_markdown(text: str) -> str:
             
             content = "\n".join(block)
             if language == "mermaid":
-                parts.append(f'<div class="mermaid">{html.escape(content)}</div>')
+                parts.append(f'<div class="mermaid">{content}</div>')
             else:
                 parts.append(
                     f'<div class="code-shell" data-language="{html.escape(language)}">'
@@ -85,7 +85,7 @@ def render_markdown(text: str) -> str:
                     i += 1
             else:
                 i += 1
-            parts.append(f'<div class="math-block">{" ".join(block)}</div>')
+            parts.append(f'<div class="math-block">{chr(10).join(block)}</div>')
             continue
 
         # 3. Headings
