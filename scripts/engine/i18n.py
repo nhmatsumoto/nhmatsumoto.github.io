@@ -67,14 +67,28 @@ def translate(i18n: dict[str, Any], locale: str, key: str, fallback: str = "") -
         return resolved
     return fallback
 
+MONTHS_EN = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+]
+
+MONTHS_SHORT_EN = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+]
+
 def format_long_date_for_locale(value: datetime, locale: str) -> str:
     if locale == "ja-JP":
         return f"{value.year}年{value.month}月{value.day}日"
+    if locale == "en-US":
+        return f"{MONTHS_EN[value.month - 1]} {value.day}, {value.year}"
     return f"{value.day} de {MONTHS_PT[value.month - 1]} de {value.year}"
 
 def format_short_date_for_locale(value: datetime, locale: str) -> str:
     if locale == "ja-JP":
         return f"{value.year}/{value.month:02d}/{value.day:02d}"
+    if locale == "en-US":
+        return f"{MONTHS_SHORT_EN[value.month - 1]} {value.day:02d}, {value.year}"
     return f"{value.day:02d} {MONTHS_SHORT_PT[value.month - 1]} {value.year}"
 
 def render_localized_date(dt: datetime, locale: str, style: str = "long") -> str:

@@ -86,11 +86,25 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     for dname in [config["publications_dir"], config["projects_output_dir"], config["documents_output_dir"], Path(config["about_file"]).parent]:
         clean_output_directory(target_root / dname)
 
-    # Mirror assets with cache-busting for JS/CSS
+    # Mirror assets with cache-busting for JS/CSS entry points only.
+    # Files imported by other JS modules via relative paths must NOT be hashed,
+    # since the import statements inside the source files cannot be rewritten.
     src_assets = ROOT / "assets"
     dst_assets = target_root / "assets"
     asset_manifest: dict[str, str] = {}
     if src_assets.exists() and src_assets.resolve() != dst_assets.resolve():
+        # Detect which JS files are imported by other JS files (internal modules)
+        import re as _re
+        _import_re = _re.compile(r"""(?:import|from)\s+['"]\.\/([^'"]+\.js)['"]""")
+        _internal_modules: set[str] = set()
+        for js_file in src_assets.glob("*.js"):
+            try:
+                _src = js_file.read_text(encoding="utf-8")
+                for match in _import_re.finditer(_src):
+                    _internal_modules.add(match.group(1))
+            except Exception:
+                pass
+
         # Clean old hashed files to avoid accumulation
         if dst_assets.exists():
             for old in dst_assets.iterdir():
@@ -107,10 +121,15 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
                     try:
                         content = item.read_text(encoding="utf-8")
                         minified = minify_js(content) if item.suffix == ".js" else minify_css(content)
-                        file_hash = md5_of_content(minified)
-                        hashed_name = f"{item.stem}.{file_hash}{item.suffix}"
-                        (dst_assets / hashed_name).write_text(minified, encoding="utf-8")
-                        asset_manifest[item.name] = hashed_name
+                        # Only hash entry-point files, not modules imported by other JS
+                        if item.suffix == ".js" and item.name in _internal_modules:
+                            (dst_assets / item.name).write_text(minified, encoding="utf-8")
+                            asset_manifest[item.name] = item.name
+                        else:
+                            file_hash = md5_of_content(minified)
+                            hashed_name = f"{item.stem}.{file_hash}{item.suffix}"
+                            (dst_assets / hashed_name).write_text(minified, encoding="utf-8")
+                            asset_manifest[item.name] = hashed_name
                         continue
                     except Exception:
                         pass

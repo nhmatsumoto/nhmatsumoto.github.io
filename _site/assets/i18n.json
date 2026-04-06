@@ -49,7 +49,13 @@
         "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal.",
         "brain_map_title": "Mapa cerebral vivo",
         "brain_map_copy": "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos.",
-        "welcome_message": "SO de Conhecimento Técnico"
+        "welcome_message": "SO de Conhecimento Técnico",
+        "navigation_kicker": "navegação",
+        "navigation_title": "Sitemap e categorias",
+        "navigation_copy": "Links diretos para publicações, projetos, documentos e as categorias mais relevantes.",
+        "publications_title": "Publicações",
+        "publications_copy": "Fluxo unificado de documentos de arquitetura, artigos técnicos e notas de pesquisa.",
+        "related_posts": "Posts relacionados"
       },
       "pages": {
         "archive": {
@@ -107,7 +113,8 @@
       "empty": {
         "posts": "Nenhuma publicação publicada ainda.",
         "projects": "Nenhum projeto disponível.",
-        "documents": "Nenhum documento indexado ainda."
+        "documents": "Nenhum documento indexado ainda.",
+        "publications": "Nenhuma publicação encontrada."
       },
       "actions": {
         "copy": "copiar",
@@ -137,6 +144,10 @@
       },
       "templates": {
         "reading_time": "{minutes} min de leitura"
+      },
+      "pagination": {
+        "prev": "anterior",
+        "next": "próxima"
       },
       "view": {
         "list": "lista",
@@ -186,7 +197,13 @@
         "about_copy": "The site is organized more like a codebase than a personal landing page.",
         "brain_map_title": "Living brain map",
         "brain_map_copy": "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain.",
-        "welcome_message": "Technical Knowledge OS"
+        "welcome_message": "Technical Knowledge OS",
+        "navigation_kicker": "navigation",
+        "navigation_title": "Sitemap & categories",
+        "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories.",
+        "publications_title": "Publications",
+        "publications_copy": "Unified stream of architecture documents, technical articles and research notes.",
+        "related_posts": "Related posts"
       },
       "pages": {
         "archive": {
@@ -241,10 +258,15 @@
         "content_in_preparation": "Content in preparation.",
         "agent_generated": "agent generated"
       },
+      "pagination": {
+        "prev": "previous",
+        "next": "next"
+      },
       "empty": {
         "posts": "No posts published yet.",
         "projects": "No projects available.",
-        "documents": "No documents indexed yet."
+        "documents": "No documents indexed yet.",
+        "publications": "No publications found."
       },
       "actions": {
         "copy": "copy",
@@ -277,10 +299,7 @@
       },
       "view": {
         "list": "list",
-        "grid": "grid",
-        "navigation_kicker": "navigation",
-        "navigation_title": "Sitemap & categories",
-        "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories."
+        "grid": "grid"
       }
     },
     "ja-JP": {
@@ -326,7 +345,13 @@
         "about_copy": "このサイトは、個人のウェブサイトというよりも、コードベースのように構成されています。",
         "brain_map_title": "ダイナミック・ナレッジマップ",
         "brain_map_copy": " nhmatsumoto の思考、プロジェクト、ドキュメントがどのように繋がっているかを確認できます。",
-        "welcome_message": "技術ナレッジ OS"
+        "welcome_message": "技術ナレッジ OS",
+        "navigation_kicker": "ナビゲーション",
+        "navigation_title": "サイトマップ & カテゴリー",
+        "navigation_copy": "記事、プロジェクト、ドキュメント、および最も関連性の高いカテゴリーへの直接リンク。",
+        "publications_title": "公開記事",
+        "publications_copy": "アーキテクチャドキュメント、技術記事、研究メモの統合ストリーム。",
+        "related_posts": "関連記事"
       },
       "pages": {
         "archive": {
@@ -381,10 +406,15 @@
         "content_in_preparation": "準備中のコンテンツ。",
         "agent_generated": "エージェント生成済み"
       },
+      "pagination": {
+        "prev": "前へ",
+        "next": "次へ"
+      },
       "empty": {
         "posts": "まだ公開された記事はありません。",
         "projects": "利用可能なプロジェクトはありません。",
-        "documents": "まだ索引付けされたドキュメントはありません。"
+        "documents": "まだ索引付けされたドキュメントはありません。",
+        "publications": "公開記事が見つかりませんでした。"
       },
       "actions": {
         "copy": "コピー",
@@ -417,10 +447,7 @@
       },
       "view": {
         "list": "リスト",
-        "grid": "グリッド",
-        "navigation_kicker": "ナビゲーション",
-        "navigation_title": "サイトマップ & カテゴリー",
-        "navigation_copy": "記事、プロジェクト、ドキュメント、および最も関連性の高いカテゴリーへの直接リンク。"
+        "grid": "グリッド"
       }
     }
   }
