@@ -4,7 +4,6 @@ locale: localStorage.getItem('site-locale') || 'pt-BR',
 theme: localStorage.getItem('site-theme') || 'dark',
 panelOpen: false,
 panelData: null,
-visMode: 'atomo',
 setLocale: (locale) => {
 localStorage.setItem('site-locale', locale)
 document.documentElement.setAttribute('lang', locale)
@@ -23,8 +22,5 @@ document.body.style.overflow = ''
 }
 set({ panelOpen: open, panelData: data })
 },
-setVisMode: (mode) => {
-set({ visMode: mode })
-}
 }))
 export default useStore

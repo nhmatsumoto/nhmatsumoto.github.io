@@ -74,7 +74,7 @@ if (!container) return
 this.container = container; this.data = data
 this.nodes = []; this.connections = []; this.selected = null
 this.cameraGoal = null; this.cameraTarget = null; this.transitioning = false
-this.glowTex = createGlowTexture(256); this.readerActive = false; this.layoutMode = 'atomo'
+this.glowTex = createGlowTexture(256); this.readerActive = false
 this.keys = {}
 this.geoCache = {}
 this.matCache = {}
@@ -84,7 +84,6 @@ this.hoveredNode = null
 this.linksNeedUpdate = true
 this.linkUpdateCounter = 0
 this.atomGroup = new THREE.Group()
-this.araucariaGroup = new THREE.Group()
 this.atomConnections = new THREE.Group()
 this.nodesGroup = new THREE.Group()
 this.initScene()
@@ -94,29 +93,16 @@ this.createAtomOrbits()
 this.createNodes()
 this.createConnections()
 this.createClouds()
-this.buildAraucariaTree()
-this.buildAraucariaBase()
 this.buildReaderDOM()
 this.addEventHandlers()
 this.loc = null;
 this.initStoreSync()
 this.atomGroup.add(this.nodesGroup)
-this.araucariaGroup.visible = this.layoutMode === 'arvore'
-this.atomGroup.visible = this.layoutMode === 'atomo'
 this.animate()
 }
 initStoreSync() {
-const initialMode = useStore.getState().visMode;
-if (initialMode !== this.layoutMode) {
-this.setLayout(initialMode);
-}
-let lastMode = initialMode;
 let lastLocale = useStore.getState().locale;
 useStore.subscribe((state) => {
-if (state.visMode !== lastMode) {
-lastMode = state.visMode;
-this.setLayout(lastMode);
-}
 if (state.locale !== lastLocale) {
 lastLocale = state.locale;
 this.updateLabelsForLocale();
@@ -168,7 +154,7 @@ this.controls.autoRotate = false
 this.scene.add(new THREE.AmbientLight(0x404040, 1.2))
 const p1 = new THREE.PointLight(0x00C2FF, 3, 2000); p1.position.set(500, 500, 500); this.scene.add(p1)
 const p2 = new THREE.PointLight(0x7C5CFF, 2, 1500); p2.position.set(-500, -200, 0); this.scene.add(p2)
-this.scene.add(this.atomGroup); this.scene.add(this.araucariaGroup)
+this.scene.add(this.atomGroup)
 this.sunLight = new THREE.DirectionalLight(ZELDA_PALETTE.sun, 0)
 this.sunLight.position.set(1000, 2000, 1000)
 this.scene.add(this.sunLight)
@@ -232,179 +218,6 @@ cloud.add(blob)
 cloud.userData.speed = 0.5 + Math.random() * 1.5
 this.cloudGroup.add(cloud)
 }
-}
-buildAraucariaTree() {
-this.araucariaGroup = new THREE.Group(); this.araucariaGroup.visible = false; this.scene.add(this.araucariaGroup)
-const trunkH = 1500, baseR = 35
-const numSegments = 25
-const woodMat = new THREE.MeshToonMaterial({
-color: ZELDA_PALETTE.wood
-})
-for (let i = 0; i < numSegments; i++) {
-const r1 = baseR * Math.pow(1 - i / numSegments, 0.65)
-const r2 = baseR * Math.pow(1 - (i + 1) / numSegments, 0.65)
-const isWhorlBase = i > (numSegments * 0.4) && i % 2 === 0
-const m = isWhorlBase ? 1.15 : 1.0
-const seg = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1 * m, trunkH / numSegments, 8), woodMat)
-seg.position.y = (i * (trunkH / numSegments)) + (trunkH / numSegments / 2) + 10
-this.araucariaGroup.add(seg)
-}
-const items = [...this.data].sort((a, b) => this.getNodeTier(a) - this.getNodeTier(b))
-const startH = trunkH * 0.6 + 125
-const whorlSpacing = 80, b0 = 5
-let itemIdx = 0, whorlIdx = 0
-const numWhorls = Math.ceil(items.length / b0)
-const fPos = [], fCol = [], bPos = [], bCol = [], pPos = [], pCol = []
-this.foliageRanges = new Map()
-while (itemIdx < items.length) {
-const tier = this.getNodeTier(items[itemIdx])
-const h_progress = whorlIdx / numWhorls
-const h_n = startH + (whorlIdx * whorlSpacing * (0.8 + Math.pow(h_progress, 1.5) * 0.4))
-const b_n = Math.min(b0 + Math.floor(h_progress * 6), items.length - itemIdx)
-const L_n = (320 + tier * 80 + h_progress * 450)
-for (let m = 0; m < b_n; m++) {
-const item = items[itemIdx]
-const node = this.nodes.find(n => n.userData.item === item)
-if (!node) { itemIdx++; continue }
-const theta = (m * Math.PI * 2) / b_n + (whorlIdx * 1.1)
-const pos = new THREE.Vector3(Math.cos(theta) * L_n, h_n + Math.pow(L_n / 400, 2.5) * 180, Math.sin(theta) * L_n)
-node.userData.treePos = pos
-const start = new THREE.Vector3(0, h_n, 0), mid = start.clone().lerp(pos, 0.7); mid.y += 20
-const curve = new THREE.QuadraticBezierCurve3(start, mid, pos)
-const pts = curve.getPoints(12)
-const bClr = tier === 0 ? [0, 0.8, 1] : [0, 0.66, 1]
-for (let i = 0; i < pts.length - 1; i++) {
-bPos.push(pts[i].x, pts[i].y, pts[i].z, pts[i + 1].x, pts[i + 1].y, pts[i + 1].z)
-bCol.push(...bClr, ...bClr)
-}
-if (item.kind === 'project') {
-this.addFruitData(pos, pPos, pCol)
-}
-const fStart = fPos.length / 3
-this.addFoliageData(curve, fPos, fCol)
-this.foliageRanges.set(node, { start: fStart, count: (fPos.length / 3) - fStart })
-itemIdx++
-}
-whorlIdx++
-}
-const bGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(bPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(bCol), 3))
-this.mergedBranches = new THREE.LineSegments(bGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.15 }))
-this.araucariaGroup.add(this.mergedBranches)
-const fGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(fPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(fCol), 3))
-this.mergedFoliage = new THREE.LineSegments(fGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.7, blending: THREE.NormalBlending }))
-this.araucariaGroup.add(this.mergedFoliage)
-const pGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(pPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(pCol), 3))
-const pMat = new THREE.MeshStandardMaterial({ vertexColors: true, emissive: 0x4caf50, emissiveIntensity: 0.2 })
-this.mergedFruits = new THREE.Mesh(pGeo, pMat)
-this.araucariaGroup.add(this.mergedFruits)
-}
-addFruitData(pos, vertices, colors) {
-const geo = new THREE.IcosahedronGeometry(12, 0)
-const vArr = geo.attributes.position.array
-for (let i = 0; i < vArr.length; i += 3) {
-vertices.push(vArr[i] + pos.x, vArr[i + 1] + pos.y, vArr[i + 2] + pos.z)
-colors.push(0, 0.7, 1)
-}
-}
-addFoliageData(curve, pos, col) {
-const points = curve.getPoints(10)
-points.forEach((p, i) => {
-if (i === 0) return
-const dir = p.clone().sub(points[i - 1]).normalize()
-const side1 = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize()
-const side2 = new THREE.Vector3().crossVectors(dir, side1).normalize()
-const l_mult = i / points.length
-const tier = this.getNodeTier({ stack: [] })
-const d_mult = l_mult > 0.6 ? 6 : 3
-for (let j = 0; j < d_mult; j++) {
-const ang = (j / d_mult) * Math.PI * 2 + i * 0.5
-const s = side1.clone().multiplyScalar(Math.cos(ang)).add(side2.clone().multiplyScalar(Math.sin(ang)))
-const reach = (3 + l_mult * 10) * (0.8 + Math.random() * 0.4)
-const start = p.clone().add(s.clone().multiplyScalar(reach * 0.5)), end = start.clone().add(dir.clone().multiplyScalar(18)).add(s.clone().multiplyScalar(reach))
-pos.push(start.x, start.y, start.z, end.x, end.y, end.z)
-const c1 = new THREE.Color(ZELDA_PALETTE.leaf_deep); const c2 = new THREE.Color(ZELDA_PALETTE.leaf_vibrant)
-col.push(c1.r, c1.g, c1.b, c2.r, c2.g, c2.b)
-}
-})
-}
-getNodeTier(item) {
-const fnd = ['solid', 'filas', 'estruturas-de-dados', 'ddd', 'arquitetura', 'architecture', 'clean-architecture', 'oop', 'algorithms', 'patterns', 'teoria', 'computacao']
-const stk = (item.stack || []).map(s => s.toLowerCase())
-if (stk.some(s => fnd.includes(s))) return 0
-return item.kind === 'project' ? 1 : 2
-}
-buildAraucariaBase() {
-const baseGroup = new THREE.Group(); this.araucariaGroup.add(baseGroup)
-const terrainSize = 10000, segments = 80
-const terrainGeo = new THREE.PlaneGeometry(terrainSize, terrainSize, segments, segments)
-const pos = terrainGeo.attributes.position.array
-const colors = new Float32Array((segments + 1) * (segments + 1) * 3)
-const terrainGrassCol = new THREE.Color(ZELDA_PALETTE.grass), terrainSandCol = new THREE.Color(ZELDA_PALETTE.sand)
-for (let i = 0; i <= segments; i++) {
-for (let j = 0; j <= segments; j++) {
-const idx = (i * (segments + 1) + j) * 3
-const x = pos[idx], y = pos[idx + 1]
-const dist = Math.sqrt(x * x + y * y)
-const pathX = Math.sin(y * 0.001) * 800
-const onPath = Math.abs(x - pathX) < 300
-if (onPath) {
-colors[idx] = terrainSandCol.r; colors[idx + 1] = terrainSandCol.g; colors[idx + 2] = terrainSandCol.b
-} else {
-colors[idx] = terrainGrassCol.r; colors[idx + 1] = terrainGrassCol.g; colors[idx + 2] = terrainGrassCol.b
-}
-if (dist < 4500) {
-pos[idx + 2] = (Math.sin(x * 0.002) * Math.cos(y * 0.002) * 200) + (Math.sin(x * 0.01) * 30)
-} else {
-pos[idx + 2] = -500
-}
-}
-}
-terrainGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3))
-terrainGeo.computeVertexNormals()
-const terrainMat = new THREE.MeshToonMaterial({ vertexColors: true })
-const terrain = new THREE.Mesh(terrainGeo, terrainMat)
-terrain.rotation.x = -Math.PI / 2
-terrain.position.y = -50
-baseGroup.add(terrain)
-const addMesa = (mx, mz, scale = 1) => {
-const h = 800 + Math.random() * 1200
-const mesh = new THREE.Mesh(new THREE.CylinderGeometry(400 * scale, 600 * scale, h, 8), new THREE.MeshToonMaterial({ color: ZELDA_PALETTE.rock }))
-mesh.position.set(mx, h / 2 - 50, mz); mesh.rotation.y = Math.random() * Math.PI
-baseGroup.add(mesh)
-const top = new THREE.Mesh(new THREE.CircleGeometry(420 * scale, 8), new THREE.MeshToonMaterial({ color: ZELDA_PALETTE.grass }))
-top.position.set(mx, h - 45, mz); top.rotation.x = -Math.PI / 2
-baseGroup.add(top)
-}
-addMesa(3500, 2000, 1.5); addMesa(-3000, -1000, 2); addMesa(2000, -3500, 1.2); addMesa(-4000, 3000, 1.8)
-const fPos = [], fCol = []
-const fC = new THREE.Color(ZELDA_PALETTE.flower)
-for (let i = 0; i < 2000; i++) {
-const x = (Math.random() - 0.5) * 6000, z = (Math.random() - 0.5) * 6000
-const dist = Math.sqrt(x * x + z * z)
-if (dist < 3000 && Math.abs(x - Math.sin(z * 0.001) * 800) > 400) {
-fPos.push(x, 20, z)
-fCol.push(fC.r, fC.g, fC.b)
-}
-}
-const fGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(fPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(fCol), 3))
-const fDots = new THREE.Points(fGeo, new THREE.PointsMaterial({ size: 15, vertexColors: true, sizeAttenuation: true }))
-baseGroup.add(fDots)
-const numClumps = 1200, gPos = [], gCol = []
-for (let i = 0; i < numClumps; i++) {
-const r = 200 + Math.random() * 2500, t = Math.random() * Math.PI * 2
-const x = Math.cos(t) * r, z = Math.sin(t) * r
-const h = 10 + Math.random() * 35
-gPos.push(x, 0, z, x + (Math.random() - 0.5) * 12, h, z + (Math.random() - 0.5) * 12)
-gCol.push(0.3, 0.7, 0.4, 0.4, 0.9, 0.5)
-}
-const grassGeo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(gPos), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(gCol), 3))
-const grassMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.6 })
-this.grassMesh = new THREE.LineSegments(grassGeo, grassMat)
-baseGroup.add(this.grassMesh)
-const moundGeo = new THREE.CylinderGeometry(150, 400, 60, 32)
-const moundMat = new THREE.MeshStandardMaterial({ color: ZELDA_PALETTE.grass, roughness: 1 })
-const mound = new THREE.Mesh(moundGeo, moundMat); mound.position.y = 30; baseGroup.add(mound)
-this.araucariaGroup.position.y = 0
 }
 createNodes() {
 const central = { kind: 'central', name: 'Hiro' }; this.nodes = []
@@ -509,7 +322,7 @@ this.atomConnections.add(link)
 this.atomGroup.add(this.atomConnections)
 }
 updateAtomLinks() {
-if (!this.nodes[0] || this.layoutMode === 'arvore') return
+if (!this.nodes[0]) return
 if (this.linkUpdateCounter++ % 5 !== 0) return
 const ctr = this.nodes[0].position
 const midVec = new THREE.Vector3()
@@ -522,41 +335,10 @@ n.userData.atomLink.geometry.setFromPoints(n.userData.atomCurve.getPoints(12))
 }
 })
 }
-setLayout(mode) {
-if (this.layoutMode === mode && this.transitioning) return
-this.layoutMode = mode; const isTree = mode === 'arvore'
-if (useStore.getState().visMode !== mode) {
-useStore.getState().setVisMode(mode);
-}
-this.atomGroup.visible = !isTree; this.araucariaGroup.visible = isTree
-this.transitioning = true
-this.nodes.forEach(n => {
-const target = isTree ? (n.userData.isCentral ? new THREE.Vector3(0, 0, 0) : n.userData.treePos) : n.userData.atomPos
-if (target) new TWEEN.Tween(n.position).to({ x: target.x, y: target.y, z: target.z }, 1800).easing(TWEEN.Easing.Cubic.InOut).start()
-})
-if (isTree) {
-this.scene.attach(this.nodesGroup)
-new TWEEN.Tween(this.camera.position).to({ x: 0, y: 1800, z: 2200 }, 2000).easing(TWEEN.Easing.Cubic.Out).onComplete(() => { this.transitioning = false }).start()
-new TWEEN.Tween(this.controls.target).to({ x: 0, y: 1200, z: 0 }, 2000).start()
-new TWEEN.Tween(this.sunLight).to({ intensity: 4 }, 1500).start()
-new TWEEN.Tween(this.scene.background).to({ r: 0.529, g: 0.808, b: 0.922 }, 1500).start()
-new TWEEN.Tween(this.scene.fog).to({ near: 1500, far: 15000 }, 1500).start()
-this.cloudGroup.visible = true
-} else {
-this.atomGroup.attach(this.nodesGroup)
-new TWEEN.Tween(this.camera.position).to({ x: 0, y: 400, z: 1200 }, 1500).easing(TWEEN.Easing.Cubic.Out).onComplete(() => { this.transitioning = false }).start()
-new TWEEN.Tween(this.controls.target).to({ x: 0, y: 0, z: 0 }, 1500).start()
-new TWEEN.Tween(this.sunLight).to({ intensity: 0 }, 1000).start()
-new TWEEN.Tween(this.scene.background).to({ r: 0.007, g: 0.015, b: 0.031 }, 1000).start()
-new TWEEN.Tween(this.scene.fog).to({ near: 100000, far: 200000 }, 1000).start()
-this.cloudGroup.visible = false
-}
-}
 focusOnNode(node) {
 const p = node.position.clone()
 const offset = new THREE.Vector3(180, 0, 0)
-const isTree = this.layoutMode === 'arvore'
-const dist = isTree ? 600 : 450
+const dist = 450
 const goal = p.clone().add(offset).add(this.camera.position.clone().sub(this.controls.target).normalize().multiplyScalar(dist))
 const tgt = p.clone().add(offset)
 new TWEEN.Tween(this.camera.position).to({ x: goal.x, y: goal.y, z: goal.z }, 1000).easing(TWEEN.Easing.Cubic.Out).start()
@@ -564,14 +346,10 @@ new TWEEN.Tween(this.controls.target).to({ x: tgt.x, y: tgt.y, z: tgt.z }, 1000)
 }
 deselectNode() { this.selected = null; this.controls.autoRotate = true; this.restoreNodeVisibility(); this.resetCameraFocus(); if (window.hideIntelligencePanel) window.hideIntelligencePanel() }
 resetCameraFocus() {
-const isTree = this.layoutMode === 'arvore'
-const goal = isTree ? new THREE.Vector3(2200, 1500, 2200) : new THREE.Vector3(0, 400, 1000)
-const tgt = isTree ? new THREE.Vector3(0, 500, 0) : new THREE.Vector3(0, 0, 0)
-new TWEEN.Tween(this.camera.position).to({ x: goal.x, y: goal.y, z: goal.z }, 1000).easing(TWEEN.Easing.Cubic.Out).start()
-new TWEEN.Tween(this.controls.target).to({ x: tgt.x, y: tgt.y, z: tgt.z }, 1000).start()
+new TWEEN.Tween(this.camera.position).to({ x: 0, y: 400, z: 1000 }, 1000).easing(TWEEN.Easing.Cubic.Out).start()
+new TWEEN.Tween(this.controls.target).to({ x: 0, y: 0, z: 0 }, 1000).start()
 }
 highlightNode(sel) {
-const isTree = this.layoutMode === 'arvore'
 this.nodes.forEach(n => {
 const s = n === sel
 n.traverse(c => {
@@ -582,26 +360,12 @@ if (c.material.emissiveIntensity) c.material.emissiveIntensity = s ? 5 : 0.5
 }
 })
 })
-if (!isTree) {
 this.nodes.slice(1).forEach(n => {
 if (n.userData.atomLink) {
 n.userData.atomLink.material.opacity = (n === sel) ? 1.0 : 0.03
 n.userData.atomLink.material.linewidth = (n === sel) ? 3 : 1
 }
 })
-} else {
-this.mergedBranches.material.opacity = 0.05; this.mergedFoliage.material.opacity = 0.2
-const range = this.foliageRanges.get(sel)
-if (range) {
-const colors = this.mergedFoliage.geometry.attributes.color.array
-for (let i = 0; i < colors.length / 3; i++) {
-const active = i >= range.start && i < (range.start + range.count)
-const base = active ? [0.6, 1.0, 0.6] : [0.05, 0.15, 0.05]
-colors[i * 3] = base[0]; colors[i * 3 + 1] = base[1]; colors[i * 3 + 2] = base[2]
-}
-this.mergedFoliage.geometry.attributes.color.needsUpdate = true
-}
-}
 if (sel) {
 new TWEEN.Tween(sel.scale).to({ x: 1.5, y: 1.5, z: 1.5 }, 400).easing(TWEEN.Easing.Elastic.Out).start()
 if (sel.userData.titleLabel) {
@@ -618,15 +382,6 @@ if (c.material?.emissiveIntensity) c.material.emissiveIntensity = 2.0
 new TWEEN.Tween(n.scale).to({ x: 1, y: 1, z: 1 }, 200).start()
 if (n.userData.titleLabel) n.userData.titleLabel.material.opacity = 0.6
 })
-if (this.mergedBranches) this.mergedBranches.material.opacity = 0.15
-if (this.mergedFoliage) {
-this.mergedFoliage.material.opacity = 0.7
-const colors = this.mergedFoliage.geometry.attributes.color.array
-for (let i = 0; i < colors.length / 3; i++) {
-colors[i * 3] = 0.1; colors[i * 3 + 1] = 0.35; colors[i * 3 + 2] = 0.15
-}
-this.mergedFoliage.geometry.attributes.color.needsUpdate = true
-}
 this.nodes.slice(1).forEach(n => { if (n.userData.atomLink) n.userData.atomLink.material.opacity = 0.15 })
 }
 buildReaderDOM() {
@@ -635,14 +390,14 @@ this.readerEl.innerHTML = `<header class="reader-article-bar"><div class="reader
 this.container.appendChild(this.readerEl); this.readerEl.querySelector('[data-r-close]').onclick = () => this.exitReader()
 }
 enterReader(item) {
-this.readerActive = true; this.atomGroup.visible = this.araucariaGroup.visible = false; this.nodes.forEach(n => n.visible = false)
+this.readerActive = true; this.atomGroup.visible = false; this.nodes.forEach(n => n.visible = false)
 this.controls.autoRotate = false; this.controls.enabled = false; if (window.hideIntelligencePanel) window.hideIntelligencePanel(); this.readerEl.classList.add('open')
 const cnt = this.readerEl.querySelector('[data-r-content]')
 cnt.innerHTML = `<h1>${esc(item.name || item.title)}</h1><div class="reader-article-divider"></div><section>${item.body_html || item.summary}</section>`
 }
 exitReader() {
 this.readerActive = false; this.readerEl.classList.remove('open'); this.nodes.forEach(n => n.visible = true)
-this.atomGroup.visible = (this.layoutMode === 'atomo'); this.araucariaGroup.visible = (this.layoutMode === 'arvore')
+this.atomGroup.visible = true
 this.controls.enabled = true; this.controls.autoRotate = true; this.resetCameraFocus(); this.selected = null
 }
 addEventHandlers() {
@@ -721,36 +476,14 @@ animate() {
 requestAnimationFrame(() => this.animate())
 TWEEN.update()
 const t = performance.now() * 0.001
-if (this.layoutMode === 'arvore' && !this.readerActive) {
-this.updateCameraMovement()
-}
 if (this.controls) this.controls.update()
 if (!this.readerActive) {
 this.atomGroup.rotation.y = t * 0.015
 this.atomGroup.rotation.z = t * 0.005
 this.updateAtomLinks()
-if (this.layoutMode === 'atomo') {
-const sin_t_0_1 = Math.sin(t * 0.1); const cos_t_0_1 = Math.cos(t * 0.1)
 for (let i = 0; i < 3; i++) {
 const orb = this.atomGroup.children[i]
 if (orb?.rotation !== undefined) orb.rotation.y = t * (0.1 + i * 0.02)
-}
-} else if (this.layoutMode === 'arvore') {
-if (this.grassMesh) {
-const sinV = Math.sin(t * 1.5)
-const cosV = Math.cos(t * 1.2)
-this.grassMesh.rotation.z = sinV * 0.02
-this.grassMesh.rotation.x = cosV * 0.01
-}
-if (this.cloudGroup) {
-this.cloudGroup.children.forEach(c => {
-c.position.x += c.userData.speed
-if (c.position.x > 4000) c.position.x = -4000
-})
-}
-if (this.mergedFoliage) {
-this.mergedFoliage.material.opacity = 0.5 + Math.sin(t * 0.5) * 0.1
-}
 }
 const sinT2 = Math.sin(t * 2)
 const sinT5 = Math.sin(t * 5)

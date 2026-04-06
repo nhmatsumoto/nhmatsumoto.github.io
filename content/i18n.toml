@@ -38,8 +38,6 @@ graph = "mapa cerebral"
 language = "idioma"
 language_action = "trocar idioma"
 theme = "alternar tema"
-vis_tree = "Árvore"
-vis_atom = "Átomo"
 
 [strings."pt-BR".palette]
 placeholder = "Buscar publicações, projetos e documentos"
@@ -183,8 +181,6 @@ graph = "brain map"
 language = "language"
 language_action = "switch language"
 theme = "toggle theme"
-vis_tree = "Tree"
-vis_atom = "Atom"
 
 [strings."en-US".palette]
 placeholder = "Search posts, projects and documents"
@@ -328,8 +324,6 @@ graph = "ブレーンマップ"
 language = "言語"
 language_action = "言語切替"
 theme = "テーマ切替"
-vis_tree = "ツリー"
-vis_atom = "アトム"
 
 [strings."ja-JP".palette]
 placeholder = "記事、プロジェクト、ドキュメントを検索"

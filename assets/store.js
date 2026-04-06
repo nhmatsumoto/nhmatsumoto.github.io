@@ -6,7 +6,6 @@ const useStore = createStore((set) => ({
   theme: localStorage.getItem('site-theme') || 'dark',
   panelOpen: false,
   panelData: null,
-  visMode: 'atomo', // atomo | arvore
 
   // Actions
   setLocale: (locale) => {
@@ -14,7 +13,7 @@ const useStore = createStore((set) => ({
     document.documentElement.setAttribute('lang', locale)
     set({ locale })
   },
-  
+
   setTheme: (theme) => {
     localStorage.setItem('site-theme', theme)
     document.documentElement.setAttribute('data-theme', theme)
@@ -29,10 +28,6 @@ const useStore = createStore((set) => ({
     }
     set({ panelOpen: open, panelData: data })
   },
-
-  setVisMode: (mode) => {
-    set({ visMode: mode })
-  }
 }))
 
 export default useStore

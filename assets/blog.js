@@ -275,34 +275,6 @@ const initLocaleToggle = (loc) => {
   }));
 };
 
-const initVisualizationToggle = () => {
-  const navBtn = document.querySelector("[data-vis-toggle]");
-  if (!navBtn) return;
-
-  navBtn.addEventListener("click", () => {
-    // Sync store
-    const currentMode = useStore.getState().visMode;
-    const nextMode = currentMode === 'atomo' ? 'arvore' : 'atomo';
-    useStore.getState().setVisMode(nextMode);
-
-    // Update UI icons
-    document.querySelectorAll(".vis-icon-atom").forEach(el => el.classList.toggle("hidden", nextMode === 'arvore'));
-    document.querySelectorAll(".vis-icon-tree").forEach(el => el.classList.toggle("hidden", nextMode === 'atomo'));
-
-    // Trigger existing engine logic
-    if (window.projectMap) {
-      window.projectMap.setLayout(nextMode);
-    } else {
-      const btvTrigger = document.getElementById("btv-trigger");
-      if (btvTrigger) btvTrigger.click();
-    }
-  });
-
-  // Sync initial icons
-  const initialMode = useStore.getState().visMode;
-  document.querySelectorAll(".vis-icon-atom").forEach(el => el.classList.toggle("hidden", initialMode === 'arvore'));
-  document.querySelectorAll(".vis-icon-tree").forEach(el => el.classList.toggle("hidden", initialMode === 'atomo'));
-};
 
 const initCommandPalette = (loc) => {
   const palette = document.querySelector("[data-command-palette]");
@@ -391,7 +363,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const loc = initLocalization();
   initThemeManager();
   initLocaleToggle(loc);
-  initVisualizationToggle();
   initCommandPalette(loc);
   initIntelligencePanel(loc);
   initCodeBlocks();
