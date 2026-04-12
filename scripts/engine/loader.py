@@ -3,7 +3,8 @@ from typing import Any
 from .constants import ROOT, DEFAULT_SITE, SITE_FIELD_ORDER, STATUS_LABELS
 from .utils import (
     load_blog_config, load_toml, parse_datetime, parse_int, slugify, 
-    summarize_body, reading_time_minutes, now_local, normalize_string_list
+    summarize_body, reading_time_minutes, now_local, normalize_string_list,
+    localized_field_entries
 )
 
 
@@ -27,10 +28,16 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
     published_dt = parse_datetime(str(raw.get("published_at", "") or ""))
     updated_dt = parse_datetime(str(raw.get("updated_at", "") or ""))
     post_id = str(raw.get("id", "") or "").strip() or published_dt.strftime("%Y%m%d-%H%M%S")
-    title = str(raw.get("title", "") or "").strip() or "Sem título"
+    title = str(raw.get("title", "") or "").strip()
+    if not title:
+        title = str(next((value for _, value in localized_field_entries(raw, "title")), "") or "").strip() or "Sem título"
     slug = slugify(str(raw.get("slug", "") or "").strip() or title)
     body = str(raw.get("body", "") or "")
-    summary = str(raw.get("summary", "") or "").strip() or summarize_body(body)
+    if not body:
+        body = str(next((value for _, value in localized_field_entries(raw, "body")), "") or "")
+    summary = str(raw.get("summary", "") or "").strip()
+    if not summary:
+        summary = str(next((value for _, value in localized_field_entries(raw, "summary")), "") or "").strip() or summarize_body(body)
     status = str(raw.get("status", "") or "draft").strip().lower()
     tags = normalize_string_list(raw.get("tags", []))
     badges = normalize_string_list(raw.get("badges", []))
@@ -77,18 +84,28 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
     return res
 
 def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
-    name = str(raw.get("name", "") or "").strip() or "Untitled Project"
+    name = str(raw.get("name", "") or "").strip()
+    if not name:
+        name = str(next((value for _, value in localized_field_entries(raw, "name")), "") or "").strip() or "Untitled Project"
     slug = slugify(str(raw.get("slug", "") or "").strip() or name)
     status = str(raw.get("status", "") or "research").strip().lower()
     if status not in STATUS_LABELS:
         status = "research"
     
+    headline = str(raw.get("headline", "") or "").strip()
+    if not headline:
+        headline = str(next((value for _, value in localized_field_entries(raw, "headline")), "") or "").strip()
+
+    summary = str(raw.get("summary", "") or "").strip()
+    if not summary:
+        summary = str(next((value for _, value in localized_field_entries(raw, "summary")), "") or "").strip() or headline
+
     config = load_blog_config()
     res = {
         "slug": slug,
         "name": name,
-        "headline": str(raw.get("headline", "") or "").strip(),
-        "summary": str(raw.get("summary", "") or "").strip(),
+        "headline": headline,
+        "summary": summary,
         "status": status,
         "status_label": STATUS_LABELS[status],
         "stack": normalize_string_list(raw.get("stack", [])),
@@ -131,14 +148,22 @@ def normalise_document(raw: dict[str, Any], source_path: Path | None = None) -> 
         source_file = ROOT / source_relative
         if source_file.exists():
             body = source_file.read_text(encoding="utf-8")
+    if not body:
+        body = str(next((value for _, value in localized_field_entries(raw, "body")), "") or "")
 
     category = str(raw.get("category", "") or "architecture").strip().lower()
     published_dt = parse_datetime(str(raw.get("published_at", "") or "")) or now_local()
+    title = str(raw.get("title", "") or "").strip()
+    if not title:
+        title = str(next((value for _, value in localized_field_entries(raw, "title")), "") or "").strip() or "Untitled Document"
+    summary = str(raw.get("summary", "") or "").strip()
+    if not summary:
+        summary = str(next((value for _, value in localized_field_entries(raw, "summary")), "") or "").strip() or summarize_body(body)
     return {
         "slug": slug,
         "kind": "document",
-        "title": str(raw.get("title", "") or "").strip() or "Untitled Document",
-        "summary": str(raw.get("summary", "") or "").strip() or summarize_body(body),
+        "title": title,
+        "summary": summary,
         "category": category,
         "version": str(raw.get("version", "") or "").strip() or "v1",
         "tags": normalize_string_list(raw.get("tags", [])),

@@ -545,7 +545,7 @@
     ]
   },
   {
-    "title": "Untitled Project",
+    "title": "SOS Location",
     "url": "https://nhmatsumoto.github.io/projects/sos-location/",
     "kind": "project",
     "summary": "Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real.",
@@ -554,7 +554,11 @@
       "Node.js",
       "GIS",
       "Event-Driven"
-    ]
+    ],
+    "title_en": "SOS Location",
+    "title_ja": "SOSロケーション",
+    "summary_en": "Disaster management platform integrating geospatial data, weather, and humanitarian resources in real-time.",
+    "summary_ja": "地理空間データ、気象、人道資源をリアルタイムで統合する災害管理プラットフォーム。"
   },
   {
     "title": "nhmatsumoto.github.io",

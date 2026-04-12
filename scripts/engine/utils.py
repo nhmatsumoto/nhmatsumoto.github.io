@@ -2,11 +2,11 @@ import html
 import json
 import re
 import unicodedata
+from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 from .constants import ROOT, CONFIG_PATH, DEFAULT_BUILD_CONFIG, DEFAULT_MATH_CONFIG
-import re
 
 HEADING_RE = re.compile(r"^(?P<level>#{1,6})\s+(?P<content>.+)$")
 UNORDERED_LIST_RE = re.compile(r"^[*\-+]\s+(.+)$")
@@ -77,6 +77,32 @@ def slugify(value: str) -> str:
     ascii_only = normalized.encode("ascii", "ignore").decode("ascii")
     slug = re.sub(r"[^a-zA-Z0-9]+", "-", ascii_only.lower()).strip("-")
     return slug or "item"
+
+def localized_field_entries(source: dict[str, Any], field: str) -> list[tuple[str, Any]]:
+    prefix = f"{field}_"
+    entries: list[tuple[str, Any]] = []
+    for key, value in source.items():
+        if not key.startswith(prefix):
+            continue
+        suffix = key[len(prefix):].strip()
+        if not suffix or value is None:
+            continue
+        if isinstance(value, str) and not value.strip():
+            continue
+        entries.append((suffix, value))
+    return entries
+
+def copy_localized_fields(
+    source: dict[str, Any],
+    target: dict[str, Any],
+    source_field: str,
+    *,
+    target_field: str | None = None,
+    transform: Callable[[Any], Any] | None = None,
+) -> None:
+    output_field = target_field or source_field
+    for suffix, value in localized_field_entries(source, source_field):
+        target[f"{output_field}_{suffix}"] = transform(value) if transform else value
 
 def plain_text_from_markdown(text: str) -> str:
     plain = text

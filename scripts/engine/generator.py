@@ -7,7 +7,8 @@ from typing import Any
 from .constants import ROOT, MANAGED_GIT_PATHS, WIKILINK_RE
 from .utils import (
     load_blog_config, write_text, write_json, site_href,
-    resolve_optional_url, now_local, minify_js, minify_css, md5_of_content
+    resolve_optional_url, now_local, minify_js, minify_css, md5_of_content,
+    copy_localized_fields
 )
 from .loader import load_site, load_system, load_posts, load_projects, load_documents
 from .i18n import load_i18n, default_locale
@@ -17,6 +18,20 @@ from .renderer.pages import (
     render_project_page, render_document_page
 )
 
+def _copy_localized_alias(
+    source: dict[str, Any],
+    target: dict[str, Any],
+    source_field: str,
+    target_field: str,
+    *,
+    overwrite: bool = True,
+) -> None:
+    localized: dict[str, Any] = {}
+    copy_localized_fields(source, localized, source_field, target_field=target_field)
+    for key, value in localized.items():
+        if overwrite or key not in target:
+            target[key] = value
+
 def build_search_index(site: dict[str, str], posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> list[dict[str, Any]]:
     from .utils import summarize_body
     from .i18n import translate
@@ -24,9 +39,22 @@ def build_search_index(site: dict[str, str], posts: list[dict[str, Any]], projec
         {"title": site["title"], "url": site_href(site, "/"), "kind": "home", "summary": site["description"]},
         {"title": translate(i18n, locale, "nav.about", "About"), "url": site_href(site, "/about/"), "kind": "about", "summary": summarize_body(site["about"])}
     ]
-    for p in posts: items.append({"title": p["title"], "url": p["resolved_url"], "kind": "post", "summary": p["summary"], "keywords": p["tags"]})
-    for p in projects: items.append({"title": p["name"], "url": p["resolved_url"], "kind": "project", "summary": p["summary"], "keywords": p["stack"]})
-    for d in documents: items.append({"title": d["title"], "url": d["resolved_url"], "kind": "document", "summary": d["summary"], "keywords": d["tags"]})
+    for p in posts:
+        entry = {"title": p["title"], "url": p["resolved_url"], "kind": "post", "summary": p["summary"], "keywords": p["tags"]}
+        _copy_localized_alias(p, entry, "title", "title")
+        _copy_localized_alias(p, entry, "summary", "summary")
+        items.append(entry)
+    for p in projects:
+        entry = {"title": p["name"], "url": p["resolved_url"], "kind": "project", "summary": p["summary"], "keywords": p["stack"]}
+        _copy_localized_alias(p, entry, "name", "title")
+        _copy_localized_alias(p, entry, "summary", "summary")
+        _copy_localized_alias(p, entry, "headline", "summary", overwrite=False)
+        items.append(entry)
+    for d in documents:
+        entry = {"title": d["title"], "url": d["resolved_url"], "kind": "document", "summary": d["summary"], "keywords": d["tags"]}
+        _copy_localized_alias(d, entry, "title", "title")
+        _copy_localized_alias(d, entry, "summary", "summary")
+        items.append(entry)
     return items
 
 def clean_output_directory(path: Path) -> None:

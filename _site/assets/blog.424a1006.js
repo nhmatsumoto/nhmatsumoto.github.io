@@ -22,6 +22,57 @@ return Object.entries(values).reduce((result, [key, value]) => {
 return result.replaceAll(`{${key}}`, String(value));
 }, template);
 };
+const localeFieldKeys = (locale) => {
+const normalized = String(locale || "").trim().replaceAll("_", "-").toLowerCase();
+if (!normalized) return [];
+const keys = [];
+const add = (value) => {
+if (value && !keys.includes(value)) keys.push(value);
+};
+add(normalized.replaceAll("-", "_"));
+add(normalized.split("-")[0]);
+return keys;
+};
+const resolveLocalizedField = (data, fields, locale, fallback = "") => {
+if (!data) return fallback;
+const candidates = Array.isArray(fields) ? fields : [fields];
+for (const field of candidates) {
+for (const suffix of localeFieldKeys(locale)) {
+const value = data[`${field}_${suffix}`];
+if (typeof value === "string" && value.trim()) return value;
+}
+}
+for (const field of candidates) {
+const value = data[field];
+if (typeof value === "string" && value.trim()) return value;
+}
+return fallback;
+};
+const syncRichContent = (root) => {
+if (!root) return;
+if (window.mermaid) {
+try {
+root.querySelectorAll(".mermaid[data-processed]").forEach(el => {
+el.removeAttribute("data-processed");
+el.innerHTML = el.getAttribute("data-original-code") || el.innerHTML;
+});
+root.querySelectorAll(".mermaid").forEach(el => {
+if (!el.getAttribute("data-original-code")) {
+el.setAttribute("data-original-code", el.innerHTML);
+}
+});
+window.mermaid.init(undefined, root.querySelectorAll(".mermaid"));
+} catch (err) {
+console.error("Mermaid error:", err);
+}
+}
+if (window.MathJax && window.MathJax.typesetPromise) {
+window.MathJax.typesetPromise([root]).catch(err => console.error("MathJax error:", err));
+}
+if (typeof lucide !== "undefined") {
+lucide.createIcons();
+}
+};
 const initLocalization = () => {
 const config = parseJsonScript("site-i18n");
 if (!config) return null;
@@ -103,6 +154,65 @@ toggle.animate([
 });
 }
 };
+const initPageContentLocalization = () => {
+const data = parseJsonScript("page-content-data");
+if (!data) return;
+const elements = {
+title: document.querySelector("[data-page-title]"),
+summary: document.querySelector("[data-page-summary]"),
+body: document.querySelector("[data-page-body]"),
+breadcrumb: document.querySelector(".breadcrumbs [aria-current='page']"),
+description: document.querySelector('meta[name="description"]')
+};
+const originalDocumentTitle = document.title;
+const siteTitle = originalDocumentTitle.includes(" | ")
+? originalDocumentTitle.split(" | ").slice(1).join(" | ")
+: "";
+const applyPageContent = (locale) => {
+const title = resolveLocalizedField(data, "title", locale, elements.title?.dataset.pageFallback || "");
+const summary = resolveLocalizedField(data, "summary", locale, elements.summary?.dataset.pageFallback || "");
+const bodyHtml = resolveLocalizedField(data, "body_html", locale, elements.body?.dataset.pageFallbackHtml || "");
+if (elements.title) {
+if (!elements.title.dataset.pageFallback) {
+elements.title.dataset.pageFallback = elements.title.textContent || "";
+}
+elements.title.textContent = title || elements.title.dataset.pageFallback;
+}
+if (elements.summary) {
+if (!elements.summary.dataset.pageFallback) {
+elements.summary.dataset.pageFallback = elements.summary.textContent || "";
+}
+elements.summary.textContent = summary || elements.summary.dataset.pageFallback;
+}
+if (elements.body) {
+if (!elements.body.dataset.pageFallbackHtml) {
+elements.body.dataset.pageFallbackHtml = elements.body.innerHTML;
+}
+elements.body.innerHTML = bodyHtml || elements.body.dataset.pageFallbackHtml;
+setTimeout(() => syncRichContent(elements.body), 50);
+}
+if (elements.breadcrumb) {
+if (!elements.breadcrumb.dataset.pageFallback) {
+elements.breadcrumb.dataset.pageFallback = elements.breadcrumb.textContent || "";
+}
+elements.breadcrumb.textContent = title || elements.breadcrumb.dataset.pageFallback;
+}
+if (elements.description && summary) {
+elements.description.setAttribute("content", summary);
+}
+if (title) {
+document.title = siteTitle ? `${title} | ${siteTitle}` : title;
+} else {
+document.title = originalDocumentTitle;
+}
+};
+useStore.subscribe((state, prevState) => {
+if (state.locale !== prevState.locale) {
+applyPageContent(state.locale);
+}
+});
+applyPageContent(useStore.getState().locale);
+};
 const initIntelligencePanel = (loc) => {
 const panel = document.querySelector("[data-intelligence-panel]");
 const content = panel?.querySelector(".panel-content");
@@ -116,30 +226,13 @@ stack: panel.querySelector("[data-panel-stack]"),
 metaRow: panel.querySelector("[data-panel-meta-row]"),
 link: panel.querySelector("[data-panel-link]")
 };
-const syncTechnicalContent = () => {
-if (window.mermaid) {
-try {
-panel.querySelectorAll(".mermaid[data-processed]").forEach(el => {
-el.removeAttribute("data-processed");
-el.innerHTML = el.getAttribute("data-original-code") || el.innerHTML;
-});
-window.mermaid.init(undefined, panel.querySelectorAll(".mermaid"));
-} catch (err) {
-console.error("Mermaid error:", err);
-}
-}
-if (window.MathJax && window.MathJax.typesetPromise) {
-window.MathJax.typesetPromise([panel]).catch(err => console.error("MathJax error:", err));
-}
-};
 const updatePanelUI = (data) => {
 if (!data) return;
 const locale = useStore.getState().locale;
-const suffix = locale.split("-")[0];
-const getName = (d) => d[`name_${suffix}`] || d[`title_${suffix}`] || d.name || d.title || "";
-const getHeadline = (d) => d[`headline_${suffix}`] || d.headline || "";
-const getSummary = (d) => d[`summary_${suffix}`] || d.summary || "";
-const getBody = (d) => d[`body_html_${suffix}`] || d.body_html || getSummary(d);
+const getName = (d) => resolveLocalizedField(d, ["name", "title"], locale, d.name || d.title || "");
+const getHeadline = (d) => resolveLocalizedField(d, "headline", locale, d.headline || "");
+const getSummary = (d) => resolveLocalizedField(d, "summary", locale, d.summary || getHeadline(d));
+const getBody = (d) => resolveLocalizedField(d, "body_html", locale, d.body_html || getSummary(d));
 if (elements.role) {
 const kind = data.kind || "knowledge";
 elements.role.textContent = loc?.translate(`kinds.${kind}`, kind) || kind;
@@ -176,7 +269,7 @@ const actionKey = data.kind === "project" ? "actions.view_project" : "actions.re
 elements.link.innerHTML = `<i data-lucide="eye"></i> ${loc?.translate(actionKey, "View")} <i data-lucide="arrow-right"></i>`;
 }
 if (typeof lucide !== 'undefined') lucide.createIcons();
-setTimeout(syncTechnicalContent, 50);
+setTimeout(() => syncRichContent(panel), 50);
 };
 useStore.subscribe((state, prevState) => {
 if (state.panelOpen !== prevState.panelOpen) {
@@ -228,23 +321,47 @@ const res = await fetch(palette.dataset.searchIndex || "https://nhmatsumoto.gith
 index = res.ok ? await res.json() : [];
 return index;
 };
+const localizeEntry = (item, locale) => ({
+title: resolveLocalizedField(item, "title", locale, item.title || ""),
+summary: resolveLocalizedField(item, ["summary", "headline"], locale, item.summary || "")
+});
+const searchableText = (item, locale) => {
+const localized = localizeEntry(item, locale);
+const values = [
+localized.title,
+localized.summary,
+item.title,
+item.summary,
+...(item.keywords || [])
+];
+Object.entries(item).forEach(([key, value]) => {
+if (/^(title|summary|headline)_/.test(key) && typeof value === "string") {
+values.push(value);
+}
+});
+return values.filter(Boolean).join(" ").toLowerCase();
+};
 const search = async (q) => {
 const items = await loadIndex();
+const locale = useStore.getState().locale;
 const query = q.trim().toLowerCase();
 const filtered = query
-? items.filter(it => (it.title + it.summary + (it.keywords?.join(" ") ?? "")).toLowerCase().includes(query))
+? items.filter(it => searchableText(it, locale).includes(query))
 : items;
 results.innerHTML = filtered.length
-? filtered.slice(0, 10).map(it => `
+? filtered.slice(0, 10).map(it => {
+const localized = localizeEntry(it, locale);
+return `
 <li>
 <a href="${it.url}" class="palette-result">
 <span class="result-kind">${loc?.translate(`kinds.${it.kind}`, it.kind)}</span>
 <div class="result-info">
-<strong class="result-title">${it.title}</strong>
-<small class="result-summary">${it.summary}</small>
+<strong class="result-title">${localized.title}</strong>
+<small class="result-summary">${localized.summary}</small>
 </div>
 </a>
-</li>`).join("")
+</li>`;
+}).join("")
 : `<li class="palette-empty">${loc?.translate("palette.empty", "No results found.")}</li>`;
 };
 const setOpen = (open) => {
@@ -258,6 +375,11 @@ search(input.value);
 document.querySelectorAll("[data-open-palette]").forEach(b => b.addEventListener("click", () => setOpen(true)));
 document.querySelectorAll("[data-close-palette]").forEach(b => b.addEventListener("click", () => setOpen(false)));
 input.addEventListener("input", (e) => search(e.target.value));
+useStore.subscribe((state, prevState) => {
+if (state.locale !== prevState.locale && !palette.hidden) {
+search(input.value);
+}
+});
 document.addEventListener("keydown", (e) => {
 if ((e.ctrlKey || e.metaKey) && e.key === "k") { e.preventDefault(); setOpen(palette.hidden); }
 if (e.key === "Escape") setOpen(false);
@@ -289,6 +411,7 @@ el.addEventListener("mousemove", updateCoords);
 };
 document.addEventListener("DOMContentLoaded", () => {
 const loc = initLocalization();
+initPageContentLocalization();
 initThemeManager();
 initLocaleToggle(loc);
 initCommandPalette(loc);

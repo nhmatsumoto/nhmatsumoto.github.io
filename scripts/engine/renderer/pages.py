@@ -25,8 +25,8 @@ from .components import (
     render_evidence_highlights,
     render_related_posts,
 )
-from ..utils import site_href, normalize_string_list, load_blog_config
-from ..i18n import translate
+from ..utils import site_href, normalize_string_list, load_blog_config, copy_localized_fields
+from ..i18n import translate, localized_value, locale_suffixes
 
 def render_home_page(site: dict[str, str], system: dict[str, Any], posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     config = load_blog_config()["build"]
@@ -73,6 +73,17 @@ def _safe_truncate(text: str, limit: int = 1200) -> str:
         return cut[:line].rstrip() + "\n..."
     return cut.rstrip() + "..."
 
+def _build_post_localization_payload(post: dict[str, Any]) -> str:
+    payload = {
+        "title": post["title"],
+        "summary": post["summary"],
+        "body_html": render_markdown(post.get("body", "")),
+    }
+    copy_localized_fields(post, payload, "title")
+    copy_localized_fields(post, payload, "summary")
+    copy_localized_fields(post, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
+    return json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
+
 def _build_project_body(item: dict[str, Any], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     """Assemble a markdown body from project fields for rich rendering."""
     from ..i18n import translate as _t
@@ -80,19 +91,19 @@ def _build_project_body(item: dict[str, Any], i18n: dict[str, Any] | None = None
         return _t(i18n or {}, locale, key, fallback) if i18n else fallback
 
     parts = []
-    ov = (item.get("overview") or "").strip()
+    ov = str(localized_value(item, "overview", locale, i18n, "") or "").strip()
     if ov:
         parts.append(ov)
-    ps = (item.get("problem_solution") or "").strip()
+    ps = str(localized_value(item, "problem_solution", locale, i18n, "") or "").strip()
     if ps and ps != "Sincronizado via Technical Knowledge OS build engine.":
         parts.append(f"## {h('pages.project.problem_solution', 'Problema & Solução')}\n\n{ps}")
-    arch = (item.get("architecture") or "").strip()
+    arch = str(localized_value(item, "architecture", locale, i18n, "") or "").strip()
     if arch and arch != "Repositório público no GitHub.":
         parts.append(f"## {h('pages.project.architecture', 'Arquitetura')}\n\n{arch}")
     dp = (item.get("diagram_preview") or "").strip()
     if dp:
         parts.append(f"```\n{dp}\n```")
-    sn = (item.get("stack_notes") or "").strip()
+    sn = str(localized_value(item, "stack_notes", locale, i18n, "") or "").strip()
     if sn:
         parts.append(f"## {h('pages.project.stack_notes', 'Stack & Tecnologias')}\n\n{sn}")
     adr = item.get("adr") or []
@@ -110,16 +121,17 @@ def _build_project_body(item: dict[str, Any], i18n: dict[str, Any] | None = None
     lessons = item.get("lessons") or []
     if lessons:
         parts.append(f"## {h('pages.project.lessons', 'Lições Aprendidas')}\n\n" + "\n".join(f"- {le}" for le in lessons))
-    pn = (item.get("production_notes") or "").strip()
+    pn = str(localized_value(item, "production_notes", locale, i18n, "") or "").strip()
     if pn:
         parts.append(f"## {h('pages.project.production_notes', 'Notas de Produção')}\n\n{pn}")
     return "\n\n".join(parts) if parts else item.get("summary", "")
 
 def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     unified_items = []
+    supported_locales = (i18n or {}).get("supported_locales", [])
 
     for item in posts:
-        unified_items.append({
+        post_payload = {
             "id": f"post-{item['slug']}",
             "kind": "post",
             "name": item["title"],
@@ -132,11 +144,15 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
             "repo_url": item.get("repo_url", ""),
             "has_math": item.get("has_math", False),
             "body_html": render_markdown(item.get("body", "") or item["summary"]),
-        })
+        }
+        copy_localized_fields(item, post_payload, "title")
+        copy_localized_fields(item, post_payload, "summary")
+        copy_localized_fields(item, post_payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
+        unified_items.append(post_payload)
 
     for item in projects:
         body_md = _build_project_body(item, i18n, locale)
-        unified_items.append({
+        project_payload = {
             "id": f"project-{item['slug']}",
             "kind": "project",
             "name": item["name"],
@@ -149,10 +165,20 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
             "repo_url": item.get("repo_url", ""),
             "has_math": item.get("has_math", False),
             "body_html": render_markdown(body_md),
-        })
+        }
+        copy_localized_fields(item, project_payload, "name")
+        copy_localized_fields(item, project_payload, "headline")
+        copy_localized_fields(item, project_payload, "summary")
+        for supported_locale in supported_locales:
+            localized_body = render_markdown(_build_project_body(item, i18n, supported_locale))
+            for suffix in locale_suffixes(supported_locale, i18n):
+                key = f"body_html_{suffix}"
+                if key not in project_payload:
+                    project_payload[key] = localized_body
+        unified_items.append(project_payload)
 
     for item in documents:
-        unified_items.append({
+        document_payload = {
             "id": f"document-{item['slug']}",
             "kind": "document",
             "name": item["title"],
@@ -165,7 +191,11 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
             "repo_url": "",
             "has_math": False,
             "body_html": render_markdown(item.get("body", "") or item["summary"]),
-        })
+        }
+        copy_localized_fields(item, document_payload, "title")
+        copy_localized_fields(item, document_payload, "summary")
+        copy_localized_fields(item, document_payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
+        unified_items.append(document_payload)
 
     return json.dumps(unified_items, ensure_ascii=False).replace("<", "\\u003c")
 
@@ -199,7 +229,8 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
     sidebar = f"""<aside class="sidebar-panel"><div class="sidebar-header"><h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2><button class="nav-button sidebar-close" type="button" data-sidebar-toggle><i data-lucide="x"></i></button></div>{render_metric_list([render_localized_date(post["published_dt"], locale, "long"), render_reading_time(post["reading_time"], i18n, locale)], escape_items=False)}{render_badge_list(post.get('badges', []))}{render_tag_list(post.get('tags', []))}{render_impact_bar(post.get("impact", []))}<div class="sidebar-actions">{f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">repo</a>' if post.get("resolved_repo_url") else ""}{f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if post.get("resolved_code_url") else ""}</div></aside>"""
     back_url = site_href(site, f"/projects/?select=post-{post['slug']}")
     related_html = render_related_posts(related_posts or [], i18n, locale)
-    content = f"""{breadcrumbs}<section class="page-grid"><article class="post-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p><div class="nav-group"><button class="nav-button sidebar-toggle" type="button" data-sidebar-toggle title="Mais informações"><i data-lucide="info"></i></button><a href="{back_url}" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div></div><h1>{html.escape(post['title'])}</h1><p class="post-summary">{html.escape(post['summary'])}</p><div class="post-meta">{render_localized_date(post['published_dt'], locale, "long")}{render_reading_time(post['reading_time'], i18n, locale)}</div></header>{render_markdown(post['body'])}{render_trade_offs_section(post.get("trade_offs", []))}{render_lessons_section(post.get("lessons", []))}<footer class="post-author"><p><strong>Autor:</strong> {html.escape(str(site.get('author') or 'Hiro Matsumoto'))}</p></footer></article>{sidebar}</section>{related_html}"""
+    page_payload = _build_post_localization_payload(post)
+    content = f"""{breadcrumbs}<section class="page-grid"><article class="post-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p><div class="nav-group"><button class="nav-button sidebar-toggle" type="button" data-sidebar-toggle title="Mais informações"><i data-lucide="info"></i></button><a href="{back_url}" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div></div><h1 data-page-title>{html.escape(post['title'])}</h1><p class="post-summary" data-page-summary>{html.escape(post['summary'])}</p><div class="post-meta">{render_localized_date(post['published_dt'], locale, "long")}{render_reading_time(post['reading_time'], i18n, locale)}</div></header><div data-page-body>{render_markdown(post['body'])}</div>{render_trade_offs_section(post.get("trade_offs", []))}{render_lessons_section(post.get("lessons", []))}<footer class="post-author"><p><strong>Autor:</strong> {html.escape(str(site.get('author') or 'Hiro Matsumoto'))}</p></footer></article>{sidebar}</section><script id="page-content-data" type="application/json">{page_payload}</script>{related_html}"""
     og = {
         "title": post["title"],
         "description": post["summary"],

@@ -67,6 +67,56 @@ def translate(i18n: dict[str, Any], locale: str, key: str, fallback: str = "") -
         return resolved
     return fallback
 
+def locale_suffixes(locale: str, i18n: dict[str, Any] | None = None) -> list[str]:
+    aliases = (i18n or {}).get("aliases", {})
+    seen: list[str] = []
+
+    def add(value: str | None) -> None:
+        normalized = str(value or "").strip().replace("_", "-").lower()
+        if not normalized:
+            return
+
+        full = normalized.replace("-", "_")
+        if full not in seen:
+            seen.append(full)
+
+        language = normalized.split("-")[0]
+        if language and language not in seen:
+            seen.append(language)
+
+    raw_locale = str(locale or "").strip()
+    add(raw_locale)
+    add(aliases.get(raw_locale.lower()))
+    add(aliases.get(raw_locale.split("-")[0].lower()))
+    return seen
+
+def localized_value(
+    source: dict[str, Any],
+    field: str,
+    locale: str,
+    i18n: dict[str, Any] | None = None,
+    fallback: Any = "",
+) -> Any:
+    for suffix in locale_suffixes(locale, i18n):
+        key = f"{field}_{suffix}"
+        if key not in source:
+            continue
+        value = source.get(key)
+        if isinstance(value, str):
+            if value.strip():
+                return value
+            continue
+        if value is not None:
+            return value
+
+    if field in source:
+        value = source.get(field)
+        if isinstance(value, str):
+            return value if value.strip() else fallback
+        return value if value is not None else fallback
+
+    return fallback
+
 MONTHS_EN = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
