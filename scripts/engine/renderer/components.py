@@ -24,6 +24,9 @@ def render_markdown(text: str) -> str:
     lines = text.replace("\r\n", "\n").split("\n")
     parts: list[str] = []
     i = 0
+    ordered_list_re = re.compile(r"^(\d+)\.\s+(.+)$")
+    image_re = re.compile(r'^!\[(.*?)\]\((\S+?)(?:\s+"(.*?)")?\)$')
+    rule_re = re.compile(r"^([-*_])\1{2,}$")
 
     def render_inline(s: str) -> str:
         # Preserve math delimiters during inline rendering
@@ -88,6 +91,12 @@ def render_markdown(text: str) -> str:
             parts.append(f'<div class="math-block">{chr(10).join(block)}</div>')
             continue
 
+        # 2.5. Horizontal Rules
+        if rule_re.match(stripped):
+            parts.append('<hr class="prose-divider">')
+            i += 1
+            continue
+
         # 3. Headings
         if stripped.startswith("#"):
             match = re.match(r"^(#+)\s+(.+)$", stripped)
@@ -96,6 +105,43 @@ def render_markdown(text: str) -> str:
                 parts.append(f"<h{level}>{render_inline(match.group(2))}</h{level}>")
                 i += 1
                 continue
+
+        # 3.5. Blockquotes
+        if stripped.startswith(">"):
+            quote_lines: list[str] = []
+            while i < len(lines) and lines[i].strip().startswith(">"):
+                quote_lines.append(lines[i].strip()[1:].lstrip())
+                i += 1
+
+            quote_paragraphs: list[str] = []
+            current_quote: list[str] = []
+            for quote_line in quote_lines:
+                if quote_line:
+                    current_quote.append(quote_line)
+                    continue
+                if current_quote:
+                    quote_paragraphs.append(" ".join(current_quote))
+                    current_quote = []
+            if current_quote:
+                quote_paragraphs.append(" ".join(current_quote))
+
+            inner = "".join(f"<p>{render_inline(paragraph)}</p>" for paragraph in quote_paragraphs if paragraph)
+            parts.append(f"<blockquote>{inner}</blockquote>")
+            continue
+
+        # 3.6. Standalone Images
+        image_match = image_re.match(stripped)
+        if image_match:
+            alt_text, src, title = image_match.groups()
+            caption = (title or alt_text).strip()
+            figcaption = f"<figcaption>{render_inline(caption)}</figcaption>" if caption else ""
+            parts.append(
+                f'<figure class="post-figure">'
+                f'<img src="{html.escape(src, quote=True)}" alt="{html.escape(alt_text, quote=True)}" loading="lazy" decoding="async">'
+                f"{figcaption}</figure>"
+            )
+            i += 1
+            continue
 
         # 4. Tables
         if "|" in stripped and i + 1 < len(lines) and re.match(r"^[\s|:-]+$", lines[i+1].strip()):
@@ -127,6 +173,21 @@ def render_markdown(text: str) -> str:
                 list_items.append(f"<li>{render_inline(lines[i].strip()[2:])}</li>")
                 i += 1
             parts.append(f"<ul>{' '.join(list_items)}</ul>")
+            continue
+
+        # 5.5. Ordered Lists
+        ordered_match = ordered_list_re.match(stripped)
+        if ordered_match:
+            list_items = []
+            start = int(ordered_match.group(1))
+            while i < len(lines):
+                current_match = ordered_list_re.match(lines[i].strip())
+                if not current_match:
+                    break
+                list_items.append(f"<li>{render_inline(current_match.group(2))}</li>")
+                i += 1
+            start_attr = f' start="{start}"' if start != 1 else ""
+            parts.append(f"<ol{start_attr}>{' '.join(list_items)}</ol>")
             continue
 
         # 6. Paragraph (Default)

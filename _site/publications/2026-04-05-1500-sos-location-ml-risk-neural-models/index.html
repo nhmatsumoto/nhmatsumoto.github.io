@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica">
     <meta name="twitter:description" content="O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.1401c8f6.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.50316183.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -42,15 +42,17 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/posts/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</span></li></ol></nav>
-    <section class="page-grid notebook-two-column">
-      <article class="post-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+    <section class="page-grid notebook-two-column post-reading-layout">
+      <article class="post-shell prose notebook-sheet post-reading-article">
+        <header class="post-header post-reading-header">
+          <div class="post-header-meta">
+            <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+            <div class="post-meta post-meta-hero"><time datetime="2026-04-05T15:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          </div>
           <h1 data-page-title>SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</h1>
-          <p class="post-summary" data-page-summary>O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.</p>
-          <div class="post-meta"><time datetime="2026-04-05T15:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          <p class="post-summary post-deck" data-page-summary>O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.</p>
         </header>
-        <div data-page-body><h1>Modelos neurais de risco: o SOSLocation.ML</h1>
+        <div class="post-body" data-page-body><h1>Modelos neurais de risco: o SOSLocation.ML</h1>
 <p>Em Março de 2026, o commit <code>feat(ml+tests): SOSLocation.ML .NET project + 40 unit/integration tests</code> formalizou o que já estava sendo construído: uma unidade de ML dedicada ao SOS Location. O objetivo é simples mas ambicioso — <strong>prever quais áreas serão afetadas</strong> antes que a crise se torne incontrolável.</p>
 <h2>Arquitetura do ML Unit</h2>
 <div class="code-shell" data-language="">  <div class="code-shell-header"><span class="code-shell-label">text</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>risk-analysis-unit/
@@ -203,16 +205,15 @@ public async Task&lt;RiskAnalysis&gt; RequestAnalysisAsync(
         
       </article>
       
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
-      <div class="card-metrics"><span class="metric"><time datetime="2026-04-05T15:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
-      <div class="badge-list"><span class="badge">experiment</span><span class="badge">production</span></div>
-      <div class="tag-list"><span class="tag">ml</span><span class="tag">pytorch</span><span class="tag">python</span><span class="tag">gis</span><span class="tag">risk-analysis</span></div>
-      
-      <div class="sidebar-actions">
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">repo</a>
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">code</a>
+    <aside class="sidebar-panel notebook-meta-panel post-meta-panel">
+      <div class="post-sidebar-section post-sidebar-section-meta">
+        <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
+        <div class="card-metrics"><span class="metric"><time datetime="2026-04-05T15:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
       </div>
+      <div class="post-sidebar-section"><div class="badge-list"><span class="badge">experiment</span><span class="badge">production</span></div></div>
+      <div class="post-sidebar-section"><div class="tag-list"><span class="tag">ml</span><span class="tag">pytorch</span><span class="tag">python</span><span class="tag">gis</span><span class="tag">risk-analysis</span></div></div>
+      
+      <div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">repo</a><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">code</a></div>
     </aside>
     
     </section>

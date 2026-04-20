@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="SOS Location: PostGIS e inteligência espacial para resposta a desastres">
     <meta name="twitter:description" content="PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.1401c8f6.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.50316183.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -42,15 +42,17 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/posts/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">SOS Location: PostGIS e inteligência espacial para resposta a desastres</span></li></ol></nav>
-    <section class="page-grid notebook-two-column">
-      <article class="post-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+    <section class="page-grid notebook-two-column post-reading-layout">
+      <article class="post-shell prose notebook-sheet post-reading-article">
+        <header class="post-header post-reading-header">
+          <div class="post-header-meta">
+            <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+            <div class="post-meta post-meta-hero"><time datetime="2026-04-05T14:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          </div>
           <h1 data-page-title>SOS Location: PostGIS e inteligência espacial para resposta a desastres</h1>
-          <p class="post-summary" data-page-summary>PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.</p>
-          <div class="post-meta"><time datetime="2026-04-05T14:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          <p class="post-summary post-deck" data-page-summary>PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.</p>
         </header>
-        <div data-page-body><h1>PostGIS: o motor geoespacial do SOS Location</h1>
+        <div class="post-body" data-page-body><h1>PostGIS: o motor geoespacial do SOS Location</h1>
 <p>PostgreSQL é excelente. Com PostGIS, ele se torna um sistema de informação geográfica completo dentro do seu banco de dados. No SOS Location, todas as decisões táticas passam por consultas espaciais — e a diferença entre 200ms e 2s numa query pode definir se uma equipe chega a tempo.</p>
 <h2>Schema espacial</h2>
 <div class="code-shell" data-language="sql">  <div class="code-shell-header"><span class="code-shell-label">sql</span>  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>  <pre><code>-- Incidents com geometria PostGIS
@@ -199,16 +201,15 @@ public class Incident
         
       </article>
       
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
-      <div class="card-metrics"><span class="metric"><time datetime="2026-04-05T14:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
-      <div class="badge-list"><span class="badge">engineering</span><span class="badge">production</span></div>
-      <div class="tag-list"><span class="tag">gis</span><span class="tag">postgis</span><span class="tag">postgresql</span><span class="tag">spatial</span><span class="tag">backend</span></div>
-      
-      <div class="sidebar-actions">
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">repo</a>
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">code</a>
+    <aside class="sidebar-panel notebook-meta-panel post-meta-panel">
+      <div class="post-sidebar-section post-sidebar-section-meta">
+        <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
+        <div class="card-metrics"><span class="metric"><time datetime="2026-04-05T14:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
       </div>
+      <div class="post-sidebar-section"><div class="badge-list"><span class="badge">engineering</span><span class="badge">production</span></div></div>
+      <div class="post-sidebar-section"><div class="tag-list"><span class="tag">gis</span><span class="tag">postgis</span><span class="tag">postgresql</span><span class="tag">spatial</span><span class="tag">backend</span></div></div>
+      
+      <div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">repo</a><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">code</a></div>
     </aside>
     
     </section>

@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Pipelines GIS com serviços orientados a eventos">
     <meta name="twitter:description" content="Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.1401c8f6.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.50316183.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -42,15 +42,17 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/posts/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">Pipelines GIS com serviços orientados a eventos</span></li></ol></nav>
-    <section class="page-grid notebook-two-column">
-      <article class="post-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+    <section class="page-grid notebook-two-column post-reading-layout">
+      <article class="post-shell prose notebook-sheet post-reading-article">
+        <header class="post-header post-reading-header">
+          <div class="post-header-meta">
+            <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+            <div class="post-meta post-meta-hero"><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="long">1 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          </div>
           <h1 data-page-title>Pipelines GIS com serviços orientados a eventos</h1>
-          <p class="post-summary" data-page-summary>Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.</p>
-          <div class="post-meta"><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="long">1 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          <p class="post-summary post-deck" data-page-summary>Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.</p>
         </header>
-        <div data-page-body><h1>GIS não precisa virar um sistema opaco</h1>
+        <div class="post-body" data-page-body><h1>GIS não precisa virar um sistema opaco</h1>
 <p>Sistemas geoespaciais costumam acumular parsing, transformação, regras de negócio, projeção de coordenadas e relatórios operacionais em um mesmo serviço. Isso funciona por pouco tempo.</p>
 <h2>Pipeline melhor que endpoint gigante</h2>
 <p>Uma abordagem mais sustentável é separar o fluxo em etapas:</p>
@@ -64,16 +66,15 @@
         <section class="evidence-section"><h2 class="evidence-title">Lições Aprendidas</h2><ul class="lesson-list"><li class="lesson-item"><i data-lucide="lightbulb"></i><span>Separar cálculo espacial de regra de negócio evitou 3 incidentes de regressão em 6 meses</span></li><li class="lesson-item"><i data-lucide="lightbulb"></i><span>Contratos entre estágios devem ser versionados desde o dia 1 — migração retroativa é cara</span></li><li class="lesson-item"><i data-lucide="lightbulb"></i><span>Monitorar cada estágio individualmente revelou que 80% do tempo era gasto em geocoding externo</span></li></ul></section>
       </article>
       
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
-      <div class="card-metrics"><span class="metric"><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="long">1 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
-      <div class="badge-list"><span class="badge">production</span></div>
-      <div class="tag-list"><span class="tag">gis</span><span class="tag">dotnet</span><span class="tag">architecture</span></div>
-      <aside class="evidence-impact"><h3 class="evidence-title">Impacto & Resultados</h3><ul class="impact-list"><li class="impact-metric"><i data-lucide="trending-up"></i><span>Pipeline em 5 estágios reduziu tempo de ingestão de 45min para 8min em datasets de 200k pontos</span></li><li class="impact-metric"><i data-lucide="trending-up"></i><span>Isolamento de falhas: erro em geocoding não bloqueia mais a cadeia de ingestão</span></li><li class="impact-metric"><i data-lucide="trending-up"></i><span>Dashboard operacional atualizado em near real-time (&lt;30s) mesmo durante ingestão pesada</span></li></ul></aside>
-      <div class="sidebar-actions">
-        
-        
+    <aside class="sidebar-panel notebook-meta-panel post-meta-panel">
+      <div class="post-sidebar-section post-sidebar-section-meta">
+        <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
+        <div class="card-metrics"><span class="metric"><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="long">1 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
       </div>
+      <div class="post-sidebar-section"><div class="badge-list"><span class="badge">production</span></div></div>
+      <div class="post-sidebar-section"><div class="tag-list"><span class="tag">gis</span><span class="tag">dotnet</span><span class="tag">architecture</span></div></div>
+      <div class="post-sidebar-section"><aside class="evidence-impact"><h3 class="evidence-title">Impacto & Resultados</h3><ul class="impact-list"><li class="impact-metric"><i data-lucide="trending-up"></i><span>Pipeline em 5 estágios reduziu tempo de ingestão de 45min para 8min em datasets de 200k pontos</span></li><li class="impact-metric"><i data-lucide="trending-up"></i><span>Isolamento de falhas: erro em geocoding não bloqueia mais a cadeia de ingestão</span></li><li class="impact-metric"><i data-lucide="trending-up"></i><span>Dashboard operacional atualizado em near real-time (&lt;30s) mesmo durante ingestão pesada</span></li></ul></aside></div>
+      
     </aside>
     
     </section>

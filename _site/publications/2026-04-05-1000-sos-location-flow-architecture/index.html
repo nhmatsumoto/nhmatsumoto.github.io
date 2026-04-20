@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="SOS Location: Fluxos, arquitetura e diagramas">
     <meta name="twitter:description" content="Descrição dos pipelines do SOS Location, diagramas e exemplos de código.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.1401c8f6.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.50316183.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -42,15 +42,17 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/posts/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">SOS Location: Fluxos, arquitetura e diagramas</span></li></ol></nav>
-    <section class="page-grid notebook-two-column">
-      <article class="post-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+    <section class="page-grid notebook-two-column post-reading-layout">
+      <article class="post-shell prose notebook-sheet post-reading-article">
+        <header class="post-header post-reading-header">
+          <div class="post-header-meta">
+            <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+            <div class="post-meta post-meta-hero"><time datetime="2026-04-05T10:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          </div>
           <h1 data-page-title>SOS Location: Fluxos, arquitetura e diagramas</h1>
-          <p class="post-summary" data-page-summary>Descrição dos pipelines do SOS Location, diagramas e exemplos de código.</p>
-          <div class="post-meta"><time datetime="2026-04-05T10:00:00+09:00" data-localize-date="long">5 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          <p class="post-summary post-deck" data-page-summary>Descrição dos pipelines do SOS Location, diagramas e exemplos de código.</p>
         </header>
-        <div data-page-body><h1>Arquitetura e fluxo do SOS Location</h1>
+        <div class="post-body" data-page-body><h1>Arquitetura e fluxo do SOS Location</h1>
 <p>O pipeline do SOS Location conecta ingestão, enriquecimento e visualização. Abaixo está o diagrama de fluxo principal:</p>
 <div class="mermaid">flowchart LR
     Ingest["Ingestão"] -->|Normalize| Processor["Normalizador"]
@@ -73,16 +75,15 @@
         
       </article>
       
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
-      <div class="card-metrics"><span class="metric"><time datetime="2026-04-05T10:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
-      <div class="badge-list"><span class="badge">engineering</span><span class="badge">diagram</span></div>
-      <div class="tag-list"><span class="tag">gis</span><span class="tag">architecture</span><span class="tag">sos</span></div>
-      
-      <div class="sidebar-actions">
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">repo</a>
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">code</a>
+    <aside class="sidebar-panel notebook-meta-panel post-meta-panel">
+      <div class="post-sidebar-section post-sidebar-section-meta">
+        <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
+        <div class="card-metrics"><span class="metric"><time datetime="2026-04-05T10:00:00+09:00" data-localize-date="long">5 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
       </div>
+      <div class="post-sidebar-section"><div class="badge-list"><span class="badge">engineering</span><span class="badge">diagram</span></div></div>
+      <div class="post-sidebar-section"><div class="tag-list"><span class="tag">gis</span><span class="tag">architecture</span><span class="tag">sos</span></div></div>
+      
+      <div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">repo</a><a class="sidebar-link" href="https://github.com/nhmatsumoto/sos_location" target="_blank" rel="noopener">code</a></div>
     </aside>
     
     </section>

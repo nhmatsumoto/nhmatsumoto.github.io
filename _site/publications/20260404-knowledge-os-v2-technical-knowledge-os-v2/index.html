@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="O Despertar do Technical Knowledge OS v2">
     <meta name="twitter:description" content="Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.1401c8f6.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.50316183.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -42,15 +42,17 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/" data-i18n="nav.home">início</a></li><li><a href="https://nhmatsumoto.github.io/posts/" data-i18n="nav.posts">publicações</a></li><li><span aria-current="page">O Despertar do Technical Knowledge OS v2</span></li></ol></nav>
-    <section class="page-grid notebook-two-column">
-      <article class="post-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+    <section class="page-grid notebook-two-column post-reading-layout">
+      <article class="post-shell prose notebook-sheet post-reading-article">
+        <header class="post-header post-reading-header">
+          <div class="post-header-meta">
+            <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+            <div class="post-meta post-meta-hero"><time datetime="2026-04-04T22:15:00+09:00" data-localize-date="long">4 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          </div>
           <h1 data-page-title>O Despertar do Technical Knowledge OS v2</h1>
-          <p class="post-summary" data-page-summary>Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico.</p>
-          <div class="post-meta"><time datetime="2026-04-04T22:15:00+09:00" data-localize-date="long">4 de abril de 2026</time><span data-reading-time="1">1 min de leitura</span></div>
+          <p class="post-summary post-deck" data-page-summary>Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico.</p>
         </header>
-        <div data-page-body><p>O conceito de <strong>Technical Knowledge OS</strong> não é apenas uma metáfora visual; é um manifesto sobre como interagimos com as informações que acumulamos. Recentemente, iniciamos uma refatoração profunda no motor original (<code>blog_engine.py</code>) para algo mais robusto e modular em <code>scripts/engine/</code>.</p>
+        <div class="post-body" data-page-body><p>O conceito de <strong>Technical Knowledge OS</strong> não é apenas uma metáfora visual; é um manifesto sobre como interagimos com as informações que acumulamos. Recentemente, iniciamos uma refatoração profunda no motor original (<code>blog_engine.py</code>) para algo mais robusto e modular em <code>scripts/engine/</code>.</p>
 <h3>Do Monólito ao Componente</h3>
 <p>O antigo motor era um gigante que tentava fazer tudo: carregar dados, processar imagens, renderizar HTML e gerenciar traduções em um único arquivo de 2000 linhas. Através de princípios de <strong>SOLID</strong> e <strong>DDD</strong>, quebramos essa estrutura em pedaços atômicos:</p>
 <ul><li><code>loader.py</code>: A única fonte de verdade para normalização de metadados.</li> <li><code>i18n.py</code>: Orquestração semântica de idiomas.</li> <li><code>renderer/components.py</code>: A biblioteca de UI que define o DNA visual do site.</li></ul>
@@ -61,16 +63,15 @@
         
       </article>
       
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
-      <div class="card-metrics"><span class="metric"><time datetime="2026-04-04T22:15:00+09:00" data-localize-date="long">4 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
-      <div class="badge-list"><span class="badge">SSG</span><span class="badge">Refactor</span></div>
-      <div class="tag-list"><span class="tag">meta</span><span class="tag">architecture</span><span class="tag">knowledge-os</span><span class="tag">hiro</span></div>
-      
-      <div class="sidebar-actions">
-        
-        
+    <aside class="sidebar-panel notebook-meta-panel post-meta-panel">
+      <div class="post-sidebar-section post-sidebar-section-meta">
+        <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
+        <div class="card-metrics"><span class="metric"><time datetime="2026-04-04T22:15:00+09:00" data-localize-date="long">4 de abril de 2026</time></span> &middot; <span class="metric"><span data-reading-time="1">1 min de leitura</span></span></div>
       </div>
+      <div class="post-sidebar-section"><div class="badge-list"><span class="badge">SSG</span><span class="badge">Refactor</span></div></div>
+      <div class="post-sidebar-section"><div class="tag-list"><span class="tag">meta</span><span class="tag">architecture</span><span class="tag">knowledge-os</span><span class="tag">hiro</span></div></div>
+      
+      
     </aside>
     
     </section>

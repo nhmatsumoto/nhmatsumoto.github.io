@@ -598,32 +598,48 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
         i18n,
         locale,
     )
+    metrics_html = render_metric_list(
+        [render_localized_date(post["published_dt"], locale, "long"), render_reading_time(post["reading_time"], i18n, locale)],
+        escape_items=False,
+    )
+    badges_html = render_badge_list(post.get("badges", []))
+    tags_html = render_tag_list(post.get("tags", []))
+    impact_html = render_impact_bar(post.get("impact", []))
+    actions_html = "".join(
+        link
+        for link in [
+            f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">repo</a>' if post.get("resolved_repo_url") else "",
+            f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if post.get("resolved_code_url") else "",
+        ]
+        if link
+    )
     sidebar = f"""
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2></div>
-      {render_metric_list([render_localized_date(post["published_dt"], locale, "long"), render_reading_time(post["reading_time"], i18n, locale)], escape_items=False)}
-      {render_badge_list(post.get("badges", []))}
-      {render_tag_list(post.get("tags", []))}
-      {render_impact_bar(post.get("impact", []))}
-      <div class="sidebar-actions">
-        {f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">repo</a>' if post.get("resolved_repo_url") else ""}
-        {f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if post.get("resolved_code_url") else ""}
+    <aside class="sidebar-panel notebook-meta-panel post-meta-panel">
+      <div class="post-sidebar-section post-sidebar-section-meta">
+        <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2></div>
+        {metrics_html}
       </div>
+      {f'<div class="post-sidebar-section">{badges_html}</div>' if badges_html else ""}
+      {f'<div class="post-sidebar-section">{tags_html}</div>' if tags_html else ""}
+      {f'<div class="post-sidebar-section">{impact_html}</div>' if impact_html else ""}
+      {f'<div class="sidebar-actions">{actions_html}</div>' if actions_html else ""}
     </aside>
     """
     related_html = render_related_posts(related_posts or [], i18n, locale)
     page_payload = json.dumps(_build_post_localization_payload(post), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <section class="page-grid notebook-two-column">
-      <article class="post-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
+    <section class="page-grid notebook-two-column post-reading-layout">
+      <article class="post-shell prose notebook-sheet post-reading-article">
+        <header class="post-header post-reading-header">
+          <div class="post-header-meta">
+            <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
+            <div class="post-meta post-meta-hero">{render_localized_date(post['published_dt'], locale, 'long')}{render_reading_time(post['reading_time'], i18n, locale)}</div>
+          </div>
           <h1 data-page-title>{html.escape(post['title'])}</h1>
-          <p class="post-summary" data-page-summary>{html.escape(post['summary'])}</p>
-          <div class="post-meta">{render_localized_date(post['published_dt'], locale, 'long')}{render_reading_time(post['reading_time'], i18n, locale)}</div>
+          <p class="post-summary post-deck" data-page-summary>{html.escape(post['summary'])}</p>
         </header>
-        <div data-page-body>{render_markdown(post['body'])}</div>
+        <div class="post-body" data-page-body>{render_markdown(post['body'])}</div>
         {render_trade_offs_section(post.get("trade_offs", []))}
         {render_lessons_section(post.get("lessons", []))}
       </article>
