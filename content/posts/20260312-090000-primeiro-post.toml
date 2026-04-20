@@ -1,7 +1,11 @@
 id = "20260312-090000"
 slug = "primeiro-post"
 title = "Bem-vindo ao meu novo blog"
+title_en_us = "Welcome to My New Blog"
+title_ja_jp = "新しいブログへようこそ"
 summary = "O ponto de partida do Technical Knowledge OS: um notebook de engenharia versionado, focado em arquitetura, sistemas distribuídos e documentação viva."
+summary_en_us = "The starting point of Technical Knowledge OS: a versioned engineering notebook focused on architecture, distributed systems and living documentation."
+summary_ja_jp = "Technical Knowledge OS の出発点：アーキテクチャ、分散システム、生きたドキュメンテーションに焦点を当てた、バージョン管理されたエンジニアリング・ノートブック。"
 published_at = "2026-03-12T09:00:00+09:00"
 updated_at = "2026-04-04T10:00:00+09:00"
 status = "published"
@@ -33,3 +37,43 @@ Este é o primeiro post do novo formato do blog. A proposta continua simples no 
 
 Este espaço foi construído para ser a minha memória técnica externa — organizada, versionada e sempre acessível.
 '''
+body_en_us = """
+# Welcome to Technical Knowledge OS v2
+
+This is the first post in the blog's new format. The runtime remains deliberately simple, but the site surface is now organized as a **technical notebook**: publications, projects, documents and architectural decisions (ADRs) living inside one integrated ecosystem.
+
+## What changes in this version
+
+- **Systems as Assets**: projects now have interactive architecture flows and dedicated section readers.
+- **Optimized SSG**: conditional loading of heavy scripts (Canvas/D3) to keep performance at 100/100.
+- **Modern Identity**: design system based on HSL tokens, premium typography and native internationalization support (PT-BR/EN-US).
+- **Engineering Notebook**: content reflects the real development flow, not just isolated texts.
+
+## Content roadmap
+
+1. Deep notes on **software architecture** and domain modeling (DDD).
+2. Publications about **intelligent agents**, the .NET ecosystem and geospatial systems (GIS).
+3. Living and experimental documentation for systems in production.
+
+This space was built to be my external technical memory: organized, versioned and always accessible.
+"""
+body_ja_jp = """
+# Technical Knowledge OS v2 へようこそ
+
+これはブログ新フォーマットでの最初の投稿です。ランタイムは引き続き意図的にシンプルなままですが、サイト全体は **技術ノートブック** として再構成されました。publications、projects、documents、そして architectural decisions (ADR) が、ひとつの統合されたエコシステムの中で共存します。
+
+## このバージョンで変わること
+
+- **Systems as Assets**: プロジェクトにインタラクティブなアーキテクチャフローと専用セクションリーダーを追加。
+- **Optimized SSG**: 重いスクリプト（Canvas/D3）を条件付きで読み込み、性能を 100/100 に維持。
+- **Modern Identity**: HSL トークン、上質なタイポグラフィ、ネイティブな国際化サポート（PT-BR/EN-US）を備えたデザインシステム。
+- **Engineering Notebook**: コンテンツが孤立した文章ではなく、実際の開発フローを反映する。
+
+## コンテンツのロードマップ
+
+1. **ソフトウェアアーキテクチャ** とドメインモデリング（DDD）に関する深いノート。
+2. **知的エージェント**、.NET エコシステム、地理空間システム（GIS）に関する公開記事。
+3. 本番システムに対する生きた実験的ドキュメンテーション。
+
+この場所は、私の外部技術記憶として作られました。整理され、バージョン管理され、いつでも参照できます。
+"""

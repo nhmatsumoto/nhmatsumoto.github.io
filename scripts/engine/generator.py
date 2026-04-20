@@ -168,7 +168,7 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     generated_paths: list[str] = []
     
     # Render static pages
-    write_text(target_root / config["home_file"], render_projects_index_page(site, system, posts, projects, documents, i18n, locale))
+    write_text(target_root / config["home_file"], render_home_page(site, system, posts, projects, documents, i18n, locale))
     write_text(target_root / config["project_index_file"], render_projects_index_page(site, system, posts, projects, documents, i18n, locale))
     write_text(target_root / config["documents_index_file"], render_documents_index_page(site, system, documents, i18n, locale))
     write_text(target_root / config["about_file"], render_about_page(site, system, i18n, locale))

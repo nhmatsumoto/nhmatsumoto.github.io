@@ -1,7 +1,11 @@
 name = "mermaid"
 slug = "mermaid"
 headline = "Geração de diagramas como fluxogramas e diagramas de sequência a partir de texto, similar a markdown."
+headline_en_us = "Generation of diagrams (flowcharts, sequence diagrams, etc.) from text, similar to markdown."
+headline_ja_jp = "Markdown のようにテキストからフローチャートやシーケンス図などのダイアグラムを生成。"
 summary = "Fork do Mermaid.js — ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual."
+summary_en_us = "Fork of Mermaid.js — a text-based diagram generator used extensively across the Technical Knowledge OS for visual documentation."
+summary_ja_jp = "Mermaid.js のフォーク。Technical Knowledge OS の可視的ドキュメンテーション全体で広く使われる、テキストベースのダイアグラム生成ツール。"
 status = "published"
 featured = false
 order = 999
@@ -41,11 +45,73 @@ graph LR
 
 É renderizado como um diagrama de fluxo interativo diretamente na página.
 """
+overview_en_us = """
+Fork of Mermaid.js, the text-to-diagram library integrated natively into Technical Knowledge OS.
+
+## Use inside the ecosystem
+
+Mermaid is used across posts, documents and project pages to render technical diagrams directly from markdown content:
+
+- **Flowcharts** — processing flows and pipelines
+- **Sequence diagrams** — interactions between services
+- **Class diagrams** — domain modeling
+- **ER diagrams** — database schemas
+- **Gantt charts** — project schedules
+
+## Integration
+
+The blog rendering engine detects fenced code blocks marked as `mermaid` and renders them automatically to SVG on the client. The library is loaded via CDN with theming adapted to the site's design.
+
+## Example
+
+A block such as:
+
+```
+graph LR
+  A[Input] --> B[Process]
+  B --> C[Output]
+```
+
+is rendered directly as an interactive flow diagram in the page.
+"""
+overview_ja_jp = """
+Technical Knowledge OS にネイティブ統合されているテキストベース図表ライブラリ Mermaid.js のフォークです。
+
+## エコシステム内での利用
+
+Mermaid は記事、文書、プロジェクト・ページ全体で使われ、markdown から技術図を直接描画します。
+
+- **Flowcharts** — 処理フローとパイプライン
+- **Sequence diagrams** — サービス間相互作用
+- **Class diagrams** — ドメインモデリング
+- **ER diagrams** — DB スキーマ
+- **Gantt charts** — プロジェクト日程
+
+## 統合方法
+
+ブログのレンダリングエンジンは `mermaid` と付いた fenced code block を検出し、クライアント側で自動的に SVG として描画します。ライブラリは CDN 経由で読み込み、テーマはサイトのデザインに合わせて調整しています。
+
+## 例
+
+次のようなブロックは:
+
+```
+graph LR
+  A[Input] --> B[Process]
+  B --> C[Output]
+```
+
+ページ上でそのままインタラクティブなフローダイアグラムとして表示されます。
+"""
 
 problem_solution = """
 Documentação técnica com diagramas estáticos (imagens) é difícil de manter e versionar. Mermaid resolve isso tratando diagramas como código: versionáveis, diff-friendly e atualizados automaticamente quando o texto muda.
 """
+problem_solution_en_us = "Technical documentation based on static diagram images is hard to maintain and diff. Mermaid solves that by treating diagrams as code: versionable, reviewable and updated automatically when the text changes."
+problem_solution_ja_jp = "静的画像に依存する技術ドキュメントは保守しづらく、差分も追いにくいものです。Mermaid は図をコードとして扱うことでそれを解決します。バージョン管理でき、レビューしやすく、テキスト変更に合わせて自動更新されます。"
 
 architecture = """
 Parser PEG.js que converte sintaxe textual em AST, renderer que transforma AST em SVG via D3.js. Suporta temas customizáveis e integração com markdown parsers via blocos de código fenced.
 """
+architecture_en_us = "A PEG.js parser converts textual syntax into an AST, and the renderer turns that AST into SVG through D3.js. The library supports custom themes and integration with markdown parsers through fenced code blocks."
+architecture_ja_jp = "PEG.js parser がテキスト構文を AST に変換し、renderer がその AST を D3.js 経由で SVG に変換します。カスタムテーマや fenced code block を通じた markdown parser 連携もサポートしています。"

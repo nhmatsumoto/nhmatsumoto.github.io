@@ -1,7 +1,11 @@
 id = "2026-04-03-1600"
 slug = "sistemas-orientados-a-filas"
 title = "Resiliência e Escala: Sistemas orientados a Filas de Mensageria"
+title_en_us = "Resilience and Scale: Queue-Oriented Systems"
+title_ja_jp = "レジリエンスとスケール：キュー指向システム"
 summary = "Por que desacoplar sistemas com filas (RabbitMQ, Azure Service Bus) é o segredo para arquiteturas distribuídas inquebráveis."
+summary_en_us = "Why decoupling systems with queues (RabbitMQ, Azure Service Bus) is the secret to unbreakable distributed architectures."
+summary_ja_jp = "キュー（RabbitMQ、Azure Service Bus）による疎結合が、壊れない分散アーキテクチャの秘訣である理由。"
 published_at = "2026-04-03T13:00:00+09:00"
 updated_at = "2026-04-03T13:00:00+09:00"
 status = "published"
@@ -44,4 +48,68 @@ graph LR
 ## Conclusão
 
 Filas são a base de qualquer sistema escalável moderno. Elas transformam uma arquitetura frágil em um sistema distribuído resiliente, capaz de absorver picos de carga e falhas temporárias sem perder dados.
+"""
+body_en_us = """
+Synchronous systems such as HTTP/REST are simple, but fragile. If service B goes down, service A often fails with it. **Message queues** solve that by introducing an intermediary, a message broker, that guarantees the work will eventually be done even if not right now.
+
+## The broker as a shock absorber
+
+Imagine a video-processing service. Receiving thousands of uploads simultaneously via HTTP can blow up memory usage. With queues, the upload request only places the job at the end of the line and a processor consumes it at its own pace.
+
+```mermaid
+graph LR
+  P["Producer - API"] -->|Send Message| B(("Message Broker"))
+  B -->|"Task Queue"| C1["Consumer 1"]
+  B -->|"Task Queue"| C2["Consumer 2"]
+  C1 --> D[("Database")]
+  C2 --> D
+```
+
+### Essential queue patterns
+
+1.  **Idempotency**: the consumer must be able to process the same message twice without side effects.
+2.  **Dead Letter Queue (DLQ)**: messages that fail N times go to a separate queue for manual inspection instead of blocking the whole system.
+3.  **Acknowledge (ACK)**: the broker only removes the message after the consumer confirms successful processing.
+
+## Messaging tools
+
+*   **RabbitMQ**: the classic choice, excellent for rich routing and robust queueing.
+*   **Azure Service Bus**: ideal for cloud ecosystems with native support for transactions and sessions.
+*   **Kafka**: designed for massive streaming throughput, where order and historical persistence matter.
+
+## Conclusion
+
+Queues are the foundation of any modern scalable system. They turn a fragile architecture into a resilient distributed system capable of absorbing traffic spikes and temporary failures without losing data.
+"""
+body_ja_jp = """
+HTTP/REST のような同期システムは単純ですが壊れやすいものです。サービス B が落ちると、しばしばサービス A も巻き込まれます。**メッセージキュー** は、その間にメッセージブローカーという仲介者を入れることで、この問題を解きます。今すぐでなくても、仕事は最終的に必ず実行されるようにするのです。
+
+## ブローカーはショックアブソーバー
+
+動画処理サービスを想像してください。何千ものアップロードを同時に HTTP で受けると、メモリは簡単に破綻します。キューを使えば、アップロードはジョブを行列の末尾に置くだけで、処理側は自分の速度でそれを消化できます。
+
+```mermaid
+graph LR
+  P["Producer - API"] -->|メッセージ送信| B(("Message Broker"))
+  B -->|"タスクキュー"| C1["Consumer 1"]
+  B -->|"タスクキュー"| C2["Consumer 2"]
+  C1 --> D[("データベース")]
+  C2 --> D
+```
+
+### 重要なキューパターン
+
+1.  **冪等性**: 同じメッセージを二度処理しても副作用が出ないこと。
+2.  **Dead Letter Queue (DLQ)**: N 回失敗したメッセージを別キューへ移し、全体を止めないようにすること。
+3.  **Acknowledge (ACK)**: consumer が成功を確認した後にのみ broker がメッセージを削除すること。
+
+## メッセージング・ツール
+
+*   **RabbitMQ**: 王道。複雑なルーティングと堅牢なキュー処理に向く。
+*   **Azure Service Bus**: トランザクションやセッションをネイティブに扱える cloud 環境向け。
+*   **Kafka**: 順序と履歴保持が重要な大規模ストリーミング向け。
+
+## 結論
+
+キューは現代的なスケーラブルシステムの土台です。脆い構成を、データを失わずピーク負荷や一時障害を吸収できるレジリエントな分散システムへ変えてくれます。
 """

@@ -1,7 +1,11 @@
 id = "2026-04-05-1400"
 slug = "sos-location-postgis-spatial-intelligence"
 title = "SOS Location: PostGIS e inteligência espacial para resposta a desastres"
+title_en_us = "SOS Location: PostGIS and Spatial Intelligence for Disaster Response"
+title_ja_jp = "SOS Location：災害対応のための PostGIS と空間インテリジェンス"
 summary = "PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real."
+summary_en_us = "PostGIS turns PostgreSQL into a geospatial engine. How we use GIST indexes, ST_DWithin and line-of-sight for real-time tactical decisions."
+summary_ja_jp = "PostGIS は PostgreSQL を地理空間エンジンへと変える。GIST インデックス、ST_DWithin、見通し線をリアルタイム戦術判断にどう活かすか。"
 published_at = "2026-04-05T14:00:00+09:00"
 updated_at = "2026-04-05T14:00:00+09:00"
 status = "published"
@@ -199,4 +203,376 @@ var nearbyIncidents = await _db.Incidents
 ```
 
 PostGIS é a diferença entre um sistema GIS de verdade e um sistema que apenas armazena coordenadas. No SOS Location, ele é o coração de todas as decisões táticas.
+"""
+body_en_us = """
+# PostGIS: the geospatial engine behind SOS Location
+
+PostgreSQL is excellent. With PostGIS, it becomes a full geographic information system inside your database. In SOS Location, every tactical decision flows through spatial queries, and the difference between 200 ms and 2 s on a query can determine whether a field team arrives in time.
+
+## Spatial schema
+
+```sql
+-- Incidents with PostGIS geometry
+CREATE TABLE incidents (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  event_id     TEXT UNIQUE NOT NULL,
+  type         incident_type NOT NULL,
+  severity     SMALLINT CHECK (severity BETWEEN 1 AND 10),
+  location     GEOMETRY(Point, 4326) NOT NULL,  -- WGS84
+  affected_area GEOMETRY(Polygon, 4326),
+  occurred_at  TIMESTAMPTZ NOT NULL,
+  status       TEXT NOT NULL DEFAULT 'active',
+  trace_id     TEXT NOT NULL
+);
+
+-- GIST index: mandatory for spatial-query performance
+CREATE INDEX idx_incidents_location ON incidents USING GIST (location);
+CREATE INDEX idx_incidents_area     ON incidents USING GIST (affected_area);
+
+-- Resources (field teams, vehicles, shelters)
+CREATE TABLE resources (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  type         resource_type NOT NULL,
+  status       TEXT NOT NULL DEFAULT 'available',
+  location     GEOMETRY(Point, 4326) NOT NULL,
+  capacity     INT,
+  updated_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_resources_location ON resources USING GIST (location);
+```
+
+## Critical spatial queries
+
+### 1. Search for resources within the incident radius
+
+```sql
+-- All available resources within 10 km of the incident
+SELECT
+  r.id,
+  r.type,
+  r.capacity,
+  ST_Distance(
+    r.location::geography,
+    i.location::geography
+  ) / 1000 AS distance_km,
+  ST_Azimuth(i.location, r.location) * 180 / PI() AS bearing_degrees
+FROM resources r
+CROSS JOIN incidents i
+WHERE i.id = $1
+  AND r.status = 'available'
+  AND ST_DWithin(
+    r.location::geography,
+    i.location::geography,
+    10000  -- 10 km in meters
+  )
+ORDER BY distance_km ASC
+LIMIT 20;
+```
+
+The `::geography` cast is essential: it guarantees that distance is measured in **real meters** over the Earth's surface, not in arc degrees.
+
+### 2. Intersection between affected area and risk zones
+
+```sql
+-- Which cataloged risk zones intersect the affected area?
+SELECT
+  rz.id,
+  rz.name,
+  rz.risk_level,
+  ST_Area(ST_Intersection(i.affected_area, rz.boundary)::geography) / 1e6 AS overlap_km2
+FROM risk_zones rz
+JOIN incidents i ON i.id = $1
+WHERE ST_Intersects(i.affected_area, rz.boundary)
+  AND rz.active = true
+ORDER BY overlap_km2 DESC;
+```
+
+### 3. Line of sight for watchpoints
+
+Direct visibility between a watchpoint (camera, sensor) and an incident is critical when allocating monitoring resources:
+
+```sql
+-- Checks whether an obstacle exists between watchpoint and incident using DEM
+-- (simplified — the real implementation uses a custom PL/pgSQL function)
+CREATE OR REPLACE FUNCTION line_of_sight(
+  observer_geom  GEOMETRY(Point, 4326),
+  observer_elev  FLOAT,
+  target_geom    GEOMETRY(Point, 4326),
+  target_elev    FLOAT
+) RETURNS BOOLEAN AS $$
+DECLARE
+  los_line  GEOMETRY;
+  max_obstr FLOAT;
+BEGIN
+  -- Line between observer and target
+  los_line := ST_MakeLine(observer_geom, target_geom);
+
+  -- Highest elevation along the line (DEM via PostGIS raster)
+  SELECT MAX(ST_Value(dem.rast, ST_PointN(los_line, gs.n)))
+  INTO max_obstr
+  FROM dem_tiles dem
+  CROSS JOIN generate_series(1, ST_NumPoints(los_line)) AS gs(n)
+  WHERE ST_Intersects(dem.rast::geometry, los_line);
+
+  -- If no intermediate point is higher than the line of sight, LOS exists
+  RETURN COALESCE(max_obstr, 0) <= LEAST(observer_elev, target_elev)
+           + (ABS(observer_elev - target_elev) / 2);
+END;
+$$ LANGUAGE plpgsql;
+```
+
+### 4. Incident clustering for the tactical map
+
+```sql
+-- Groups nearby incidents (< 500 m) to avoid overlap on the map
+SELECT
+  ST_AsGeoJSON(ST_Centroid(ST_Collect(location))) AS centroid,
+  COUNT(*) AS incident_count,
+  MAX(severity) AS max_severity,
+  ARRAY_AGG(id) AS incident_ids
+FROM incidents
+WHERE status = 'active'
+  AND occurred_at > NOW() - INTERVAL '24 hours'
+GROUP BY ST_SnapToGrid(location, 0.005)  -- ~500 m grid
+ORDER BY max_severity DESC;
+```
+
+## Benchmark and indexing
+
+Without a GIST index, an `ST_DWithin` search over 50,000 records takes around 800 ms. With the index: **under 8 ms**.
+
+```sql
+-- Performance analysis
+EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
+SELECT * FROM incidents
+WHERE ST_DWithin(location::geography, ST_Point(-43.9, -19.9)::geography, 5000);
+
+-- Output with GIST:
+-- Index Scan using idx_incidents_location on incidents
+-- Planning Time: 0.3 ms
+-- Execution Time: 7.2 ms
+```
+
+## EF Core + Npgsql + NetTopologySuite
+
+In .NET, PostGIS type mapping uses `NetTopologySuite`:
+
+```csharp
+// SosDbContext.cs
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    optionsBuilder.UseNpgsql(connectionString, o =>
+        o.UseNetTopologySuite()
+         .SetPostgresVersion(15, 0)
+    );
+}
+
+// Incident.cs (Entity)
+public class Incident
+{
+    public Guid Id { get; private set; }
+    public Point Location { get; private set; }       // NTS Point
+    public Polygon? AffectedArea { get; private set; } // NTS Polygon
+    // ...
+}
+```
+
+The combination of PostGIS + NetTopologySuite + EF Core lets you write LINQ queries with spatial operations that compile into optimized SQL:
+
+```csharp
+var nearbyIncidents = await _db.Incidents
+    .Where(i => i.Location.IsWithinDistance(searchPoint, radiusMeters))
+    .OrderByDescending(i => i.Severity)
+    .ToListAsync();
+// Generates: WHERE ST_DWithin(location, $1, $2) ORDER BY severity DESC
+```
+
+PostGIS is the difference between a real GIS system and a system that merely stores coordinates. In SOS Location, it sits at the heart of every tactical decision.
+"""
+body_ja_jp = """
+# PostGIS: SOS Location を支える地理空間エンジン
+
+PostgreSQL は優れたデータベースです。PostGIS を加えると、データベース内部で完結する本格的な地理情報システムになります。SOS Location では、あらゆる戦術判断が空間クエリを通過します。クエリが 200 ms で返るか 2 秒かで、現場チームが間に合うかどうかが変わることさえあります。
+
+## 空間スキーマ
+
+```sql
+-- PostGIS ジオメトリを持つインシデント
+CREATE TABLE incidents (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  event_id     TEXT UNIQUE NOT NULL,
+  type         incident_type NOT NULL,
+  severity     SMALLINT CHECK (severity BETWEEN 1 AND 10),
+  location     GEOMETRY(Point, 4326) NOT NULL,  -- WGS84
+  affected_area GEOMETRY(Polygon, 4326),
+  occurred_at  TIMESTAMPTZ NOT NULL,
+  status       TEXT NOT NULL DEFAULT 'active',
+  trace_id     TEXT NOT NULL
+);
+
+-- GIST インデックス: 空間検索の性能に必須
+CREATE INDEX idx_incidents_location ON incidents USING GIST (location);
+CREATE INDEX idx_incidents_area     ON incidents USING GIST (affected_area);
+
+-- リソース（現場チーム、車両、避難所）
+CREATE TABLE resources (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  type         resource_type NOT NULL,
+  status       TEXT NOT NULL DEFAULT 'available',
+  location     GEOMETRY(Point, 4326) NOT NULL,
+  capacity     INT,
+  updated_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_resources_location ON resources USING GIST (location);
+```
+
+## 重要な空間クエリ
+
+### 1. インシデント半径内のリソース検索
+
+```sql
+-- インシデントから半径 10 km 以内にある利用可能な全リソース
+SELECT
+  r.id,
+  r.type,
+  r.capacity,
+  ST_Distance(
+    r.location::geography,
+    i.location::geography
+  ) / 1000 AS distance_km,
+  ST_Azimuth(i.location, r.location) * 180 / PI() AS bearing_degrees
+FROM resources r
+CROSS JOIN incidents i
+WHERE i.id = $1
+  AND r.status = 'available'
+  AND ST_DWithin(
+    r.location::geography,
+    i.location::geography,
+    10000  -- 10 km をメートルで指定
+  )
+ORDER BY distance_km ASC
+LIMIT 20;
+```
+
+`::geography` へのキャストは重要です。これにより、地球表面上の距離が角度ではなく **実際のメートル単位** で計算されます。
+
+### 2. 被災エリアとリスクゾーンの交差判定
+
+```sql
+-- 登録済みのリスクゾーンのうち、被災エリアと交差するものはどれか？
+SELECT
+  rz.id,
+  rz.name,
+  rz.risk_level,
+  ST_Area(ST_Intersection(i.affected_area, rz.boundary)::geography) / 1e6 AS overlap_km2
+FROM risk_zones rz
+JOIN incidents i ON i.id = $1
+WHERE ST_Intersects(i.affected_area, rz.boundary)
+  AND rz.active = true
+ORDER BY overlap_km2 DESC;
+```
+
+### 3. watchpoint 向け line of sight
+
+watchpoint（カメラやセンサー）とインシデントの間に直線視界があるかどうかは、監視リソースの配備で重要になります。
+
+```sql
+-- DEM を使って watchpoint とインシデントの間に障害物があるか確認
+-- （簡略版。実装本体ではカスタム PL/pgSQL 関数を使う）
+CREATE OR REPLACE FUNCTION line_of_sight(
+  observer_geom  GEOMETRY(Point, 4326),
+  observer_elev  FLOAT,
+  target_geom    GEOMETRY(Point, 4326),
+  target_elev    FLOAT
+) RETURNS BOOLEAN AS $$
+DECLARE
+  los_line  GEOMETRY;
+  max_obstr FLOAT;
+BEGIN
+  -- observer と target を結ぶ線
+  los_line := ST_MakeLine(observer_geom, target_geom);
+
+  -- 線上で最も高い標高（PostGIS raster 経由の DEM）
+  SELECT MAX(ST_Value(dem.rast, ST_PointN(los_line, gs.n)))
+  INTO max_obstr
+  FROM dem_tiles dem
+  CROSS JOIN generate_series(1, ST_NumPoints(los_line)) AS gs(n)
+  WHERE ST_Intersects(dem.rast::geometry, los_line);
+
+  -- 中間点が視線より高くなければ LOS が成立
+  RETURN COALESCE(max_obstr, 0) <= LEAST(observer_elev, target_elev)
+           + (ABS(observer_elev - target_elev) / 2);
+END;
+$$ LANGUAGE plpgsql;
+```
+
+### 4. 戦術マップ向けインシデント・クラスタリング
+
+```sql
+-- 地図上の重なりを避けるため、近接したインシデント（500 m 未満）をまとめる
+SELECT
+  ST_AsGeoJSON(ST_Centroid(ST_Collect(location))) AS centroid,
+  COUNT(*) AS incident_count,
+  MAX(severity) AS max_severity,
+  ARRAY_AGG(id) AS incident_ids
+FROM incidents
+WHERE status = 'active'
+  AND occurred_at > NOW() - INTERVAL '24 hours'
+GROUP BY ST_SnapToGrid(location, 0.005)  -- 約 500 m グリッド
+ORDER BY max_severity DESC;
+```
+
+## ベンチマークとインデックス
+
+GIST インデックスなしでは、50,000 件に対する `ST_DWithin` 検索は約 800 ms かかります。インデックスありなら **8 ms 未満** です。
+
+```sql
+-- パフォーマンス分析
+EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
+SELECT * FROM incidents
+WHERE ST_DWithin(location::geography, ST_Point(-43.9, -19.9)::geography, 5000);
+
+-- GIST 使用時の出力:
+-- Index Scan using idx_incidents_location on incidents
+-- Planning Time: 0.3 ms
+-- Execution Time: 7.2 ms
+```
+
+## EF Core + Npgsql + NetTopologySuite
+
+.NET では、PostGIS 型のマッピングに `NetTopologySuite` を使います。
+
+```csharp
+// SosDbContext.cs
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    optionsBuilder.UseNpgsql(connectionString, o =>
+        o.UseNetTopologySuite()
+         .SetPostgresVersion(15, 0)
+    );
+}
+
+// Incident.cs (Entity)
+public class Incident
+{
+    public Guid Id { get; private set; }
+    public Point Location { get; private set; }       // NTS Point
+    public Polygon? AffectedArea { get; private set; } // NTS Polygon
+    // ...
+}
+```
+
+PostGIS + NetTopologySuite + EF Core の組み合わせにより、空間演算を含む LINQ クエリを書いて、それを最適化された SQL に変換できます。
+
+```csharp
+var nearbyIncidents = await _db.Incidents
+    .Where(i => i.Location.IsWithinDistance(searchPoint, radiusMeters))
+    .OrderByDescending(i => i.Severity)
+    .ToListAsync();
+// 生成される SQL: WHERE ST_DWithin(location, $1, $2) ORDER BY severity DESC
+```
+
+PostGIS は、本物の GIS システムと、単に座標を保存しているだけのシステムを分ける境界です。SOS Location では、あらゆる戦術判断の中心にあります。
 """

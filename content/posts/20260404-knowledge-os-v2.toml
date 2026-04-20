@@ -1,7 +1,11 @@
 id = "20260404-knowledge-os-v2"
 slug = "technical-knowledge-os-v2"
 title = "O Despertar do Technical Knowledge OS v2"
+title_en_us = "The Awakening of Technical Knowledge OS v2"
+title_ja_jp = "Technical Knowledge OS v2 の覚醒"
 summary = "Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico."
+summary_en_us = "A journey through the modularization of the rendering engine and the concept of an operating system for technical intellect."
+summary_ja_jp = "レンダリングエンジンのモジュール化と、技術的知性のための OS という構想を巡る旅。"
 published_at = "2026-04-04T22:15:00+09:00"
 updated_at = "2026-04-04T22:15:00+09:00"
 status = "published"
@@ -21,4 +25,32 @@ O antigo motor era um gigante que tentava fazer tudo: carregar dados, processar 
 Nesta versão v2, o objetivo é que o site agisse como uma camada de consulta rápida e visualização. Não estamos apenas postando artigos, estamos registrando **Nós de Conhecimento** em um sistema que entende as conexões entre eles.
 
 A transição para um layout **Glass Terminal** reforça essa ideia: o software não deve ser apenas funcional, ele deve ser esteticamente denso e inspirador.
+"""
+body_en_us = """
+The **Technical Knowledge OS** concept is not just a visual metaphor. It is a manifesto about how we interact with the information we accumulate. Recently, we began a deep refactor of the original engine (`blog_engine.py`) into something more robust and modular under `scripts/engine/`.
+
+### From monolith to component
+The old engine was a giant that tried to do everything: load data, process images, render HTML and manage translations inside a single 2,000-line file. By applying **SOLID** and **DDD** principles, we broke that structure into smaller atomic pieces:
+- `loader.py`: the single source of truth for metadata normalization.
+- `i18n.py`: semantic language orchestration.
+- `renderer/components.py`: the UI library that defines the visual DNA of the site.
+
+### The interface as an extension of the brain
+In this v2 version, the goal is for the site to act as a fast consultation and visualization layer. We are not merely posting articles; we are registering **Knowledge Nodes** in a system that understands the connections between them.
+
+The transition to a **Glass Terminal** layout reinforces that idea: software should not be merely functional, it should also be aesthetically dense and inspiring.
+"""
+body_ja_jp = """
+**Technical Knowledge OS** という概念は、単なる視覚メタファーではありません。私たちが蓄積した情報とどう関わるかについてのマニフェストです。最近、元のエンジン (`blog_engine.py`) を、`scripts/engine/` 配下のより堅牢でモジュール化された構造へ大きくリファクタリングし始めました。
+
+### モノリスからコンポーネントへ
+旧エンジンは、データ読み込み、画像処理、HTML レンダリング、翻訳管理を 2,000 行の単一ファイルに詰め込んだ巨大な存在でした。**SOLID** と **DDD** の原則を適用し、その構造をより小さく原子的な単位へ分割しました。
+- `loader.py`: メタデータ正規化の single source of truth
+- `i18n.py`: 言語の意味的オーケストレーション
+- `renderer/components.py`: サイトの視覚 DNA を定義する UI ライブラリ
+
+### 脳の拡張としてのインターフェース
+v2 の目標は、サイトを高速な参照層かつ可視化層として機能させることです。単に記事を公開しているのではなく、それらのつながりを理解するシステムに **Knowledge Nodes** を記録しています。
+
+**Glass Terminal** レイアウトへの移行は、その考えをさらに強化します。ソフトウェアは機能的であるだけでなく、美的にも密度が高く、人を刺激するものであるべきです。
 """

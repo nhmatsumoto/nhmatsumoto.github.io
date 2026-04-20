@@ -1,7 +1,11 @@
 name = "ronaldinho-agent"
 slug = "ronaldinho-agent"
 headline = "Agente autônomo em Python com personalidade e capacidade de decisão baseada em contexto."
+headline_en_us = "Autonomous Python agent with personality and context-based decision-making."
+headline_ja_jp = "パーソナリティと文脈に基づく意思決定能力を備えた Python 製自律エージェント。"
 summary = "Agente autônomo em Python com personalidade inspirada em Ronaldinho Gaúcho — arquitetura de decisão baseada em contexto, memória e interação conversacional."
+summary_en_us = "Autonomous Python agent with a personality inspired by Ronaldinho Gaúcho — decision architecture based on context, memory and conversational interaction."
+summary_ja_jp = "ロナウジーニョ・ガウーショに着想を得たパーソナリティを持つ Python 自律エージェント。文脈・記憶・会話的対話に基づく意思決定アーキテクチャ。"
 status = "published"
 featured = false
 order = 15
@@ -38,26 +42,112 @@ O loop principal segue o padrão ReAct (Reasoning + Acting):
 
 Este projeto é documentado no **ronaldinho-architecture-overview** e conecta-se ao trabalho de pesquisa em agentes de IA presente nos posts do blog.
 """
+overview_en_us = """
+Autonomous Python agent with personality and context-based decision-making. "Daqui pra frente é só pra trás."
+
+## Concept
+
+`ronaldinho-agent` is an agent-engineering experiment that explores how personality and tone change the user-agent interaction. The architecture combines:
+
+- **A personality-driven system prompt** — informal tone, cultural references and humor
+- **Conversation memory** — accumulated context across interactions
+- **Context-based decisions** — the agent chooses actions based on history and detected intent
+- **Tool use** — external tools for task execution
+
+## Agent architecture
+
+The main loop follows the ReAct pattern:
+
+1. Receive user input
+2. Reason over context and intent
+3. Decide between answering directly or using a tool
+4. Execute and observe the result
+5. Formulate the answer with the agent personality
+
+## Relationship with the ecosystem
+
+This project is documented in **ronaldinho-architecture-overview** and connects to the broader AI-agent research published in the blog.
+"""
+overview_ja_jp = """
+パーソナリティと文脈ベースの意思決定を備えた Python 製自律エージェントです。"Daqui pra frente é só pra trás."
+
+## コンセプト
+
+`ronaldinho-agent` は、パーソナリティや口調がユーザーとエージェントの対話にどう影響するかを探るエージェント工学の実験です。アーキテクチャは次を組み合わせます。
+
+- **人格を持つ system prompt** — 砕けた口調、文化的参照、ユーモア
+- **会話メモリ** — 対話をまたいで蓄積される文脈
+- **文脈ベースの判断** — 履歴と意図に基づいて行動を選ぶ
+- **tool use** — 外部ツールによるタスク実行
+
+## エージェント・アーキテクチャ
+
+メインループは ReAct パターンに従います。
+
+1. ユーザー入力を受け取る
+2. 文脈と意図をもとに推論する
+3. 直接応答するか tool を使うか決める
+4. 実行して結果を観測する
+5. パーソナリティを保って回答を組み立てる
+
+## エコシステムとの関係
+
+このプロジェクトは **ronaldinho-architecture-overview** に文書化されており、ブログ全体の AI エージェント研究とも接続しています。
+"""
 
 problem_solution = """
 Agentes de IA genéricos são eficientes mas impessoais. O ronaldinho-agent explora como a adição de personalidade e tom conversacional afeta a adoção e a experiência do usuário, mantendo a capacidade técnica do agente.
 """
+problem_solution_en_us = "Generic AI agents can be effective but impersonal. `ronaldinho-agent` explores whether adding personality and conversational tone improves adoption and user experience without sacrificing technical capability."
+problem_solution_ja_jp = "汎用 AI エージェントは有能でも無個性になりがちです。`ronaldinho-agent` は、パーソナリティと会話トーンを加えることで、技術力を落とさず採用性と体験が改善するかを探ります。"
 
 architecture = """
 Python com loop ReAct: prompt engineering para personalidade, LLM para raciocínio, dispatcher para tools, memória de curto prazo via conversation history. Documentação arquitetural disponível em /documents/ronaldinho-architecture-overview/.
 """
+architecture_en_us = "Python implementation with a ReAct loop: prompt engineering for personality, an LLM for reasoning, a tool dispatcher for actions and short-term memory via conversation history. The detailed design lives under `/documents/ronaldinho-architecture-overview/`."
+architecture_ja_jp = "Python 実装で、ReAct ループを中心に構成されています。人格用 prompt engineering、推論のための LLM、行動用 tool dispatcher、会話履歴による短期メモリを備えます。詳細設計は `/documents/ronaldinho-architecture-overview/` にあります。"
 impact = [
   "Arquitetura de agente com personalidade contextual — resposta coerente em 94% dos testes de interação",
   "Sistema de memória de curto prazo mantém contexto por até 12 turnos sem degradação perceptível",
   "Base para exploração de DDD aplicado a agentes — validou separação domínio/orquestração/tools",
+]
+impact_en_us = [
+  "Contextual personality architecture — coherent responses in 94% of interaction tests",
+  "Short-term memory system preserves context for up to 12 turns without noticeable degradation",
+  "Base for applying DDD to agents — validated the separation between domain, orchestration and tools",
+]
+impact_ja_jp = [
+  "文脈的パーソナリティ・アーキテクチャにより、対話テストの 94% で一貫した応答を実現",
+  "短期メモリ・システムが、顕著な劣化なく最大 12 ターンまで文脈を維持",
+  "DDD をエージェントへ適用する基盤として、domain / orchestration / tools の分離を検証",
 ]
 trade_offs = [
   "Python vs .NET para agente: Python pela velocidade de iteração e ecossistema LLM, mas sem tipagem forte do C#",
   "Personalidade via prompt vs fine-tuning: prompt engineering é mais flexível e barato, mas menos consistente em edge cases",
   "Memória por conversation history vs vector store: history é simples e auditável, mas não escala para contextos longos",
 ]
+trade_offs_en_us = [
+  "Python vs .NET for the agent: Python wins on iteration speed and LLM ecosystem, but lacks C#'s stronger typing",
+  "Prompt-based personality vs fine-tuning: prompt engineering is cheaper and more flexible, but less consistent at the edges",
+  "Conversation history vs vector store for memory: history is simple and auditable, but does not scale to long contexts",
+]
+trade_offs_ja_jp = [
+  "エージェント実装で Python を選ぶか .NET を選ぶか: Python は反復速度と LLM エコシステムで有利だが、C# の強い型は得られない",
+  "人格を prompt で与えるか fine-tuning するか: prompt engineering は安価で柔軟だが、境界ケースでは一貫性が弱い",
+  "メモリを会話履歴で持つか vector store で持つか: 履歴は単純で監査しやすいが、長文脈にはスケールしにくい",
+]
 lessons = [
   "Personalidade de agente funciona melhor como constraint no system prompt do que como instrução explícita",
   "Tool dispatcher precisa de fallback explícito — agentes sem fallback travam silenciosamente em tools desconhecidas",
   "Testes de agentes devem validar comportamento, não output textual — testes por regex são frágeis demais",
+]
+lessons_en_us = [
+  "Agent personality works better as a system-prompt constraint than as an explicit instruction repeated every turn",
+  "Tool dispatchers need explicit fallbacks — agents without them fail silently on unknown tools",
+  "Agent tests should validate behavior, not exact wording — regex-only assertions are too brittle",
+]
+lessons_ja_jp = [
+  "エージェントの人格は、毎ターン繰り返す明示命令より system prompt の制約として置くほうがうまく機能した",
+  "tool dispatcher には明示的 fallback が必要で、ないと未知ツールで黙って失敗しやすい",
+  "エージェントのテストは文言ではなく振る舞いを検証すべきで、regex だけの検証は脆すぎる",
 ]

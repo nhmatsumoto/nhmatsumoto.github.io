@@ -1,7 +1,11 @@
 name = "Financial"
 slug = "financial"
 headline = "Monolito para gestão financeira pessoal em C#/.NET."
+headline_en_us = "Personal finance management monolith in C#/.NET."
+headline_ja_jp = "C#/.NET による個人家計管理モノリス。"
 summary = "Aplicação monolítica de gestão financeira pessoal desenvolvida em C#/.NET, com foco em controle de despesas, categorização e relatórios."
+summary_en_us = "Monolithic personal finance application developed in C#/.NET, focused on expense control, categorization and reporting."
+summary_ja_jp = "C#/.NET で開発されたモノリシックな個人家計アプリ。支出管理、分類、レポーティングに注力。"
 status = "published"
 featured = false
 order = 999
@@ -29,11 +33,49 @@ Este projeto é o predecessor direto do **SplitCosts** — a evolução natural 
 
 O formato monolítico funcionou para o escopo inicial, mas revelou limitações quando o domínio cresceu: acoplamento entre regras de negócio e infraestrutura, dificuldade de testar cenários complexos e falta de separação entre contextos de leitura e escrita.
 """
+overview_en_us = """
+Monolithic personal-finance application, developed as an architecture exercise in .NET with Entity Framework and SQL Server.
+
+## Features
+
+- Registration and categorization of income and expenses
+- Reports by period and category
+- Balance tracking and simple projections
+
+## Relationship with the ecosystem
+
+This project is the direct predecessor of **SplitCosts** — the natural evolution from a personal-finance monolith to a multi-tenant expense-sharing system. Several domain decisions later used in SplitCosts were refined from the limitations identified here.
+
+## Lessons learned
+
+The monolithic format worked for the initial scope, but its limits became obvious as the domain grew: business rules coupled to infrastructure, difficulty testing complex scenarios and no clear separation between read and write concerns.
+"""
+overview_ja_jp = """
+Entity Framework と SQL Server を用いた .NET アーキテクチャ演習として開発した、個人家計向けモノリシック・アプリケーションです。
+
+## 機能
+
+- 収入と支出の登録・カテゴリ分類
+- 期間別・カテゴリ別レポート
+- 残高管理と簡易予測
+
+## エコシステムとの関係
+
+このプロジェクトは **SplitCosts** の直接の前身です。個人家計モノリスから、マルチテナントの支出共有アプリへと進化する出発点でした。SplitCosts で洗練されたドメイン上の判断の多くは、ここで見つかった限界から生まれています。
+
+## 学び
+
+モノリス構成は初期スコープには十分でしたが、ドメインが広がると限界が明確になりました。ビジネスルールとインフラの結合、複雑シナリオのテスト困難、読み書き責務の未分離です。
+"""
 
 problem_solution = """
 Gestão financeira pessoal precisa ser simples o suficiente para uso diário, mas estruturada o suficiente para gerar relatórios úteis. O desafio foi equilibrar praticidade com modelagem correta do domínio financeiro.
 """
+problem_solution_en_us = "Personal finance needs to stay simple enough for daily use while remaining structured enough to generate useful reports. The core challenge was balancing practicality with a correct domain model."
+problem_solution_ja_jp = "個人家計管理は、日常利用できるだけの単純さと、有用なレポートを生むだけの構造化の両立が必要です。このプロジェクトの課題は、実用性と正しい金融ドメイン・モデリングのバランスでした。"
 
 architecture = """
 Monolito em camadas: Controllers → Services → Repository → Entity Framework → SQL Server. A simplicidade da arquitetura é adequada ao escopo, mas o acoplamento entre camadas motivou a adoção de uma abordagem mais modular no SplitCosts.
 """
+architecture_en_us = "Layered monolith: Controllers → Services → Repository → Entity Framework → SQL Server. The architecture fits the scope, but coupling between layers later motivated a more modular approach in SplitCosts."
+architecture_ja_jp = "レイヤード・モノリス構成です。Controllers → Services → Repository → Entity Framework → SQL Server。スコープには適していますが、レイヤ間の結合が強く、後に SplitCosts でよりモジュール化された設計へ進む動機になりました。"

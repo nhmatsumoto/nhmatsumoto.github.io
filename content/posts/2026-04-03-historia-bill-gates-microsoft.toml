@@ -1,7 +1,11 @@
 id = "2026-04-03-1000-historia-bill-gates"
 slug = "bill-gates-microsoft-historia"
 title = "Bill Gates e a Microsoft: Do Desktop à Ubiquidade"
+title_en_us = "Bill Gates and Microsoft: From the Desktop to Ubiquity"
+title_ja_jp = "ビル・ゲイツとマイクロソフト：デスクトップから遍在へ"
 summary = "Uma análise sobre a visão de Gates de 'um computador em cada mesa' e como a Microsoft moldou a indústria do software moderno."
+summary_en_us = "An analysis of Gates' vision of 'a computer on every desk' and how Microsoft shaped the modern software industry."
+summary_ja_jp = "「すべての机にコンピュータを」というゲイツのビジョンと、マイクロソフトが現代ソフトウェア産業を形作った歩みの分析。"
 published_at = "2026-04-03T10:00:00+09:00"
 updated_at = "2026-04-03T10:00:00+09:00"
 status = "published"
@@ -30,4 +34,40 @@ O contrato com a IBM foi o ponto de inflexão. Gates não vendeu o MS-DOS; ele o
 
 ## Legado Intelectual
 Bill Gates representa a transição do hobby de garagem para a corporação que define a infraestrutura do mundo. Sua transição para a filantropia com a Fundação Gates mostra como o raciocínio sistêmico pode ser aplicado a problemas globais como saúde e energia.
+"""
+body_en_us = """
+Bill Gates's story is not only about code; it is about **ecosystem strategy**. While others focused on hardware, Gates realized that software was the real engine of scalability.
+
+## The vision of 1975
+The dream Gates and Paul Allen had was audacious: a computer on every desk and in every home. At the time, computers were giant, inaccessible machines.
+
+## The MS-DOS turning point
+The IBM contract changed everything. Gates did not sell MS-DOS; he **licensed** it. That allowed Microsoft to keep control of the software while IBM hardware became the industry standard, creating the clone market that consolidated the PC.
+
+## Lessons in engineering and business
+1. **Open vs closed standards**: by letting other manufacturers use the operating system, Gates created one of the strongest network effects in history.
+2. **Fast iteration**: Windows was not born perfect, but it won through ubiquity and backward compatibility, values that still define Microsoft.
+
+> "Success is a lousy teacher. It seduces smart people into thinking they can't lose." — Bill Gates
+
+## Intellectual legacy
+Bill Gates represents the transition from garage hobby to world-defining infrastructure company. His later move into philanthropy through the Gates Foundation shows how systems thinking can be applied to global problems such as health and energy.
+"""
+body_ja_jp = """
+ビル・ゲイツの物語は、単なるコードの話ではなく **エコシステム戦略** の話です。多くの人がハードウェアに注目していたとき、ゲイツはソフトウェアこそがスケーラビリティの本当の原動力だと見抜きました。
+
+## 1975 年のビジョン
+ゲイツとポール・アレンの夢は大胆でした。すべての机に、すべての家庭にコンピュータを置くこと。当時、コンピュータは巨大で手の届かない機械でした。
+
+## MS-DOS の転換点
+IBM との契約がすべてを変えました。ゲイツは MS-DOS を売ったのではなく **ライセンス** しました。これによって Microsoft はソフトウェアの支配権を維持しつつ、IBM ハードウェアが業界標準になり、その後のクローン市場が PC を確立しました。
+
+## 工学とビジネスの教訓
+1. **オープン標準 vs クローズド標準**: 他社に OS を使わせることで、ゲイツは歴史上最大級のネットワーク効果を作りました。
+2. **高速反復**: Windows は最初から完璧ではなかったが、遍在性と後方互換性で勝利しました。これは今も Microsoft の核心です。
+
+> 「成功はひどい教師だ。賢い人間に、自分は負けないと思い込ませる。」 — ビル・ゲイツ
+
+## 知的遺産
+ビル・ゲイツは、ガレージの趣味から世界インフラを定義する企業への移行を体現する存在です。後年の Gates Foundation を通じた慈善活動は、システム思考が健康やエネルギーのような地球規模課題にも適用できることを示しています。
 """

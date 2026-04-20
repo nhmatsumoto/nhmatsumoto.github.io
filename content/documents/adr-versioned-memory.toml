@@ -1,11 +1,79 @@
 status = "published"
 slug = "adr-versioned-memory"
-title = "ADR 003 - Versioned Memory"
+title = "ADR 003 - Memória Versionada"
+title_en_us = "ADR 003 — Versioned Memory"
+title_ja_jp = "ADR 003 — バージョン管理された記憶"
 summary = "Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes."
+summary_en_us = "Architectural decision on memory snapshots and context persistence in agent-oriented workflows."
+summary_ja_jp = "エージェント指向ワークフローにおける記憶スナップショットとコンテキスト永続化に関するアーキテクチャ決定。"
 category = "agents"
 version = "ADR 003"
 tags = ["agents", "adr", "memory"]
 agent_generated_tag = true
 order = 3
 source_path = "docs/adr/003-versioned-memory.md"
+body_en_us = """
+# Versioned Memory Management for AI Agents
+
+## Overview
+
+The idea is to build a system where AI agents can version their memories using Git. Each context snapshot is stored as a commit, creating a versioned history that the agent can revisit later.
+
+## System Flow
+
+```mermaid
+sequenceDiagram
+    participant Agent
+    participant Snapshot
+    participant GitHub
+
+    Agent->>Snapshot: Create a snapshot of the current context
+    Snapshot->>GitHub: Commit the snapshot to the Git repository
+    GitHub-->>Agent: Return confirmation and preserve the versioned history
+```
+
+## Main Components
+
+- **Agent**: the AI agent executing tasks and preserving context.
+- **Snapshot**: a saved point-in-time representation of the current context.
+- **GitHub (or another Git repository)**: the repository where snapshots are versioned and stored safely.
+
+## Benefits
+
+- **Persistent memory**: the agent can recover old contexts without losing information.
+- **Versioned history**: every change is recorded, improving traceability.
+- **Optimization**: less repeated processing, saving tokens and requests.
+"""
+body_ja_jp = """
+# AI エージェントのためのバージョン管理メモリ
+
+## 概要
+
+AI エージェントが Git を使って自分の記憶をバージョン管理できる仕組みを作る、という考え方です。文脈の各スナップショットを commit として保存し、後から参照できる履歴にします。
+
+## システムフロー
+
+```mermaid
+sequenceDiagram
+    participant Agent as エージェント
+    participant Snapshot as スナップショット
+    participant GitHub
+
+    Agent->>Snapshot: 現在の文脈のスナップショットを作成
+    Snapshot->>GitHub: スナップショットを Git リポジトリへ commit
+    GitHub-->>Agent: 確認を返し、バージョン履歴を保持
+```
+
+## 主要コンポーネント
+
+- **エージェント**: タスクを実行し、文脈を保持したい AI エージェント。
+- **スナップショット**: 現在の文脈を切り出した保存ポイント。
+- **GitHub（または他の Git リポジトリ）**: スナップショットをバージョン管理し、安全に保存する場所。
+
+## 利点
+
+- **永続メモリ**: 情報を失わずに過去の文脈を復元できる。
+- **バージョン履歴**: すべての変更が記録され、追跡しやすい。
+- **最適化**: 再処理を減らし、token と request の消費を抑えられる。
+"""
 view_engine = "binary-tree"

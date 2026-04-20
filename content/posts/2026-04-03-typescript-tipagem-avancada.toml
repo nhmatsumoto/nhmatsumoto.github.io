@@ -1,7 +1,11 @@
 id = "2026-04-03-0930-typescript-avancado"
 slug = "typescript-tipagem-avancada"
 title = "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos"
+title_en_us = "Advanced TypeScript: Type Mapping and Complex Generics"
+title_ja_jp = "上級 TypeScript：型マッピングと複雑なジェネリクス"
 summary = "Uma análise profunda sobre o sistema de tipos Turing-complete do TypeScript, explorando tipos condicionais, inferência e utilitários de transformação."
+summary_en_us = "A deep analysis of TypeScript's Turing-complete type system, covering conditional types, inference and transformation utilities."
+summary_ja_jp = "チューリング完全な TypeScript 型システムの深堀り。条件型、型推論、変換ユーティリティを扱う。"
 published_at = "2026-04-03T09:30:00+09:00"
 updated_at = "2026-04-03T09:30:00+09:00"
 status = "published"
@@ -47,4 +51,74 @@ graph TD
 ```
 
 > **Heurística Operacional**: Se você estiver usando `any` para resolver um problema de tipagem complexo, você não está resolvendo o problema; você está escondendo o bug. Use `unknown` e *type guards* se a tipagem for realmente dinâmica.
+"""
+body_en_us = """
+TypeScript is not just JavaScript with types. The TS type system is **Turing-complete**, which means we can express surprisingly complex computations at compile time only.
+
+## Conditional types and `infer`
+Conditional types let you encode selection logic in the type system:
+```typescript
+type IsString<T> = T extends string ? true : false;
+type Result = IsString<"hello">; // true
+```
+Using `infer` lets you extract parts of complex types, such as the return type of a function or the resolved type of a Promise.
+
+## Mapped types
+You can transform an existing type into a new one by iterating over its properties. That is the foundation of utilities such as `ReadOnly`, `Partial`, or custom key transformations.
+
+### Type complexity (\\(C\\))
+We can think of type complexity (\\(C\\)) as the number of transformations and inferences the compiler must resolve:
+$$C = \\sum_{i=1}^n T_i + I_i$$
+
+If \\(C\\) becomes too high, IntelliSense slows down and compilation time rises.
+
+## Custom type utilities
+*   **Template Literal Types**: combine strings to create highly specific route or event types.
+*   **Discriminated Unions**: the gold standard for modeling UI state safely.
+
+```mermaid
+graph TD
+    A[Base Types] --> B[Generics]
+    B --> C[Conditional Types]
+    C --> D[Mapped Types]
+    D --> E[Template Literals]
+    E --> F[Type Programming]
+```
+
+> **Operational Heuristic**: If you are using `any` to escape a complex typing problem, you are not solving it; you are hiding the bug. Prefer `unknown` plus type guards when dynamic typing is truly required.
+"""
+body_ja_jp = """
+TypeScript は単なる「型付き JavaScript」ではありません。TS の型システムは **チューリング完全** であり、驚くほど複雑な計算をコンパイル時だけで表現できます。
+
+## 条件型と `infer`
+条件型を使うと、型システムの中に選択ロジックを書けます。
+```typescript
+type IsString<T> = T extends string ? true : false;
+type Result = IsString<"hello">; // true
+```
+`infer` を使うと、関数の戻り値型や Promise の解決型のように、複雑な型の一部を抜き出せます。
+
+## Mapped Types
+既存の型のプロパティを走査しながら、新しい型へ変換できます。`ReadOnly`、`Partial`、あるいは独自のキー変換はこの仕組みの上に成り立っています。
+
+### 型の複雑さ (\\(C\\))
+型の複雑さ (\\(C\\)) は、コンパイラが解決しなければならない変換と推論の数として考えられます。
+$$C = \\sum_{i=1}^n T_i + I_i$$
+
+\\(C\\) が高くなりすぎると、IntelliSense は遅くなり、コンパイル時間も伸びます。
+
+## カスタム型ユーティリティ
+*   **Template Literal Types**: 文字列を組み合わせ、ルートやイベントの非常に具体的な型を作る。
+*   **Discriminated Unions**: UI 状態を安全に表現するための定番パターン。
+
+```mermaid
+graph TD
+    A[基本型] --> B[Generics]
+    B --> C[Conditional Types]
+    C --> D[Mapped Types]
+    D --> E[Template Literals]
+    E --> F[型プログラミング]
+```
+
+> **運用ヒューリスティック**: 複雑な型問題から逃げるために `any` を使うなら、それは解決ではなくバグの隠蔽です。本当に動的である必要があるなら、`unknown` と type guard を使うべきです。
 """

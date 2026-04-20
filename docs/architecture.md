@@ -1,30 +1,40 @@
-# Project Architecture
+# Arquitetura do Sistema
 
-Ronaldinho-Agent follows a modern, hyper-converged architecture where a C# NeuralCore orchestrates diverse AI strategies and governance rules.
+O Ronaldinho-Agent segue uma arquitetura moderna e bastante integrada, na qual um `NeuralCore` em C# orquestra estratégias de IA e regras de governança.
 
-## Directory Structure
+## Estrutura de diretórios
 
 ```text
 Ronaldinho-Agent/
 ├── services/
-│   ├── Ronaldinho.NeuralCore/    # .NET 9 Central Brain & API
-│   ├── Ronaldinho.ConfigUI/      # React/Chakra UI Governance Interface
-├── ronaldinho/                   # Core Data & Persistent State
-│   ├── config/                   # SOUL.md and state definitions
-│   ├── data/                     # Encryption keys and vault
-├── dev_scripts/                  # PowerShell automation (Smart Onboarding)
-├── docs/                         # Technical documentation
-├── start_neural.ps1              # Unified Local Entry Point
-└── docker-compose.yml            # Containerized Deployment (Production)
+│   ├── Ronaldinho.NeuralCore/    # Cérebro central e API em .NET 9
+│   ├── Ronaldinho.ConfigUI/      # Interface de governança em React/Chakra UI
+├── ronaldinho/                   # Dados centrais e estado persistente
+│   ├── config/                   # SOUL.md e definições de estado
+│   ├── data/                     # Chaves de criptografia e vault
+├── dev_scripts/                  # Automação em PowerShell
+├── docs/                         # Documentação técnica
+├── start_neural.ps1              # Ponto de entrada local unificado
+└── docker-compose.yml            # Deploy containerizado
 ```
 
-## Key Components
+## Componentes principais
 
-### 1. NeuralCore (The Master Brain)
+### 1. NeuralCore
 
-A high-performance **.NET 9** engine that utilizes **Semantic Kernel** to coordinate multiple LLM strategies. It handles:
+Um motor de alta performance em **.NET 9** que usa **Semantic Kernel** para coordenar múltiplas estratégias de LLM e regras de governança.
 
-- **Provider Rotation**: Implements the **Zero-Block Resilience** chain.
-- **MCP Protocol**: Multi-Agent Coordination for specialized tasks.
+Responsabilidades centrais:
 
-## ... (rest of file omitted for brevity)"
+- **Rotação de providers** com cadeia de resiliência para falhas e limites de cota
+- **Suporte ao protocolo MCP** para coordenação entre agentes especializados
+- **Compressão de contexto** para sessões longas
+- **APIs operacionais** para integração com interfaces externas
+
+### 2. Config UI
+
+Uma superfície de governança para ajustar regras operacionais, prioridades de provider e comportamento de runtime sem alterar o núcleo do agente.
+
+### 3. Estado persistente
+
+Configuração, memória e material sensível ficam fora do código dos serviços para que o runtime possa reiniciar sem perder identidade ou contexto.

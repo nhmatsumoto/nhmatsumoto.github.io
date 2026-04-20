@@ -1,7 +1,11 @@
 id = "20260401-184500"
 slug = "gis-pipelines-with-event-driven-services"
-title = "GIS pipelines with event-driven services"
+title = "Pipelines GIS com serviços orientados a eventos"
+title_en_us = "GIS Pipelines with Event-Driven Services"
+title_ja_jp = "イベント駆動サービスによる GIS パイプライン"
 summary = "Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental."
+summary_en_us = "How to handle geospatial ingestion, async processing and operational reads without turning the backend into an accidental monolith."
+summary_ja_jp = "地理空間データの取り込み、非同期処理、運用向け読み取りを、バックエンドを偶発的なモノリスにせずに扱う方法。"
 published_at = "2026-04-01T18:45:00+09:00"
 updated_at = "2026-04-01T18:45:00+09:00"
 status = "published"
@@ -54,4 +58,58 @@ Com esse desenho, cada etapa tem semântica própria e falhas mais legíveis. O 
 - clareza entre cálculo espacial e regra de negócio.
 
 Essa mesma lógica de separar escrita, leitura e decisão acaba aparecendo em quase todos os sistemas que escalam bem.
+"""
+body_en_us = """
+# GIS does not have to become an opaque system
+
+Geospatial systems tend to accumulate parsing, transformation, business rules, coordinate projection and operational reporting inside the same service. That works for a while.
+
+## A pipeline is better than a giant endpoint
+
+A more sustainable approach is to split the flow into stages:
+
+- data ingestion;
+- normalization and validation;
+- enrichment and geocoding;
+- projection for operational reads;
+- delivery to dashboards, APIs or alerts.
+
+## Why this matters
+
+With this design, each stage has its own semantics and failures are easier to read. The dashboard does not need to understand raw processing, and the read layer can answer quickly even while ingestion is under heavy load.
+
+## What I try to preserve
+
+- data traceability;
+- stable consumption contracts;
+- a clear boundary between spatial computation and business rules.
+
+The same logic of separating write, read and decision-making tends to reappear in almost every system that scales well.
+"""
+body_ja_jp = """
+# GIS を不透明なシステムにする必要はない
+
+地理空間システムは、パース、変換、ビジネスルール、座標投影、運用レポートを同じサービスに積み上げがちです。しばらくは動きますが、長くは持ちません。
+
+## 巨大エンドポイントよりパイプライン
+
+より持続可能なのは、フローを段階に分けることです。
+
+- データ取り込み
+- 正規化と検証
+- エンリッチメントとジオコーディング
+- 運用向け読み取りへの投影
+- ダッシュボード、API、アラートへの配信
+
+## なぜ重要か
+
+この設計では、各段階が独自の意味を持ち、失敗も読みやすくなります。ダッシュボードは生の処理を理解する必要がなく、読み取りレイヤは取り込み負荷が高い間でも高速に応答できます。
+
+## 私が守りたいもの
+
+- データのトレーサビリティ
+- 消費側の安定した契約
+- 空間計算とビジネスルールの明確な境界
+
+書き込み、読み取り、意思決定を分けるという考え方は、うまくスケールするほぼすべてのシステムで繰り返し現れます。
 """

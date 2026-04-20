@@ -1,7 +1,11 @@
 id = "2026-04-03-0830-engenharia-cognitiva"
 slug = "engenharia-cognitive-agentes-ia"
 title = "Engenharia Cognitiva: Como Agentes de IA 'Pensam'"
+title_en_us = "Cognitive Engineering: How AI Agents 'Think'"
+title_ja_jp = "認知エンジニアリング：AI エージェントはどう「考える」のか"
 summary = "Uma análise sobre a orquestração de pensamento em LLMs, do ciclo Percepção-Ação à estrutura de memória de curto e longo prazo (RAG)."
+summary_en_us = "An analysis of thought orchestration in LLMs, from the perception-action loop to short- and long-term memory (RAG)."
+summary_ja_jp = "LLM における思考のオーケストレーション分析。知覚・行動ループから短期・長期記憶（RAG）まで。"
 published_at = "2026-04-03T08:30:00+09:00"
 updated_at = "2026-04-03T08:30:00+09:00"
 status = "published"
@@ -42,4 +46,64 @@ graph LR
 ```
 
 > **Heurística Operacional**: O segredo de uma boa IA não é a inteligência pura, mas a estrutura de controle que evita que ela se perca em alucinações.
+"""
+body_en_us = """
+AI agents are not just language models. They are **cognitive systems** that use models as reasoning engines inside a broader ecosystem of tools and memory.
+
+## The agent lifecycle
+The thought process of an agent, such as the Antigravity model, follows the **PEA** cycle: **Perception**, **Execution** and **Adaptation**.
+
+## The structure of a synthetic mind
+*   **Working Memory (Context)**: Where the agent keeps the immediate state of the problem.
+*   **Long-Term Memory (RAG / Knowledge)**: Where the agent retrieves facts and processed history.
+*   **Planning (Thinking)**: The process of breaking a complex objective into executable micro-tasks.
+
+### Probability of success (\\(P_{success}\\))
+An agent succeeds based on instruction clarity (\\(I\\)) and model capability (\\(M\\)) versus context noise (\\(N\\)):
+$$P_{success} = \\frac{I \\cdot M}{N}$$
+
+## Multi-agent orchestration
+By splitting work across specialist agents, such as a Requirement Agent, Frontend Agent and Code Agent, we raise the ceiling of complexity that AI can manage.
+
+```mermaid
+graph LR
+    A[User] --> B[Orchestrator]
+    B --> C[Planner]
+    C --> D[Specialist 1]
+    C --> E[Specialist 2]
+    D & E --> F[Validator]
+    F --> G[Result]
+```
+
+> **Operational Heuristic**: The secret of a good AI system is not raw intelligence, but the control structure that prevents it from getting lost in hallucinations.
+"""
+body_ja_jp = """
+AI エージェントは単なる言語モデルではありません。モデルを推論エンジンとして使い、周囲にツールとメモリを持つ **認知システム** です。
+
+## エージェントのライフサイクル
+Antigravity のようなエージェントの思考は、**PEA** サイクル、つまり **Perception（知覚）**、**Execution（実行）**、**Adaptation（適応）** に従います。
+
+## 合成された心の構造
+*   **作業記憶（Context）**: 問題の直近状態を保持する場所。
+*   **長期記憶（RAG / Knowledge）**: 事実や処理済み履歴を取り出す場所。
+*   **計画（Thinking）**: 複雑な目標を実行可能な小タスクへ分解する過程。
+
+### 成功確率 (\\(P_{success}\\))
+エージェントの成功は、指示の明瞭さ (\\(I\\)) とモデル能力 (\\(M\\)) が、文脈ノイズ (\\(N\\)) に対してどれだけ勝てるかで決まります。
+$$P_{success} = \\frac{I \\cdot M}{N}$$
+
+## マルチエージェント・オーケストレーション
+Requirement Agent、Frontend Agent、Code Agent のように専門エージェントへ仕事を分割すると、AI が扱える複雑さの上限を引き上げられます。
+
+```mermaid
+graph LR
+    A[ユーザー] --> B[オーケストレーター]
+    B --> C[プランナー]
+    C --> D[専門エージェント 1]
+    C --> E[専門エージェント 2]
+    D & E --> F[バリデーター]
+    F --> G[結果]
+```
+
+> **運用ヒューリスティック**: 良い AI の秘訣は純粋な知能ではなく、幻覚へ迷い込まないよう制御する構造にあります。
 """

@@ -1,7 +1,11 @@
 id = "2026-04-03-0800-dapper-vs-efcore"
 slug = "dapper-vs-efcore-performance"
 title = "Dapper vs EF Core: Quando a Performance Supera a Abstração"
+title_en_us = "Dapper vs EF Core: When Performance Beats Abstraction"
+title_ja_jp = "Dapper vs EF Core：パフォーマンスが抽象化を上回るとき"
 summary = "Uma análise comparativa sobre ORMs no ecossistema .NET, focando em ciclos de vida de objetos, rastreamento e overhead de consulta."
+summary_en_us = "A comparative analysis of ORMs in the .NET ecosystem, focused on object lifecycles, tracking, and query overhead."
+summary_ja_jp = ".NET エコシステムにおける ORM の比較分析。オブジェクトのライフサイクル、トラッキング、クエリオーバーヘッドに注目。"
 published_at = "2026-04-03T08:00:00+09:00"
 updated_at = "2026-04-03T08:00:00+09:00"
 status = "published"
@@ -55,4 +59,60 @@ graph TD
 ```
 
 > **Heurística Operacional**: Use EF Core para comandos (escrita) e Dapper para consultas (leitura) em uma arquitetura de estilo **CQRS**.
+"""
+body_en_us = """
+In the .NET ecosystem, the choice between **Entity Framework Core (EF Core)** and **Dapper** is often reduced to "convenience versus speed", but the architectural reality is deeper than that.
+
+## EF Core: domain abstraction
+EF Core is a full ORM that manages entity state through change tracking. It is ideal for complex write operations where the integrity of the object graph matters.
+
+## Dapper: the high-performance micro-ORM
+Dapper does not try to manage state. It extends `IDbConnection` and focuses on converting raw SQL results into POCOs as quickly as possible.
+
+### Comparing overhead (\\(T\\))
+We can model total execution time (\\(T\\)) as:
+$$T_{total} = T_{sql} + T_{mapping} + T_{tracking}$$
+
+With Dapper, \\(T_{tracking} \\approx 0\\), which makes it extremely strong for read-heavy workloads.
+
+## When to use each one
+
+```mermaid
+graph TD
+    A[New Feature] --> B{Write Complexity?}
+    B -- High --> C[EF Core]
+    B -- Low --> D{Read Volume?}
+    D -- Critical --> E[Dapper]
+    D -- Standard --> C
+```
+
+> **Operational Heuristic**: Use EF Core for commands (writes) and Dapper for queries (reads) in a **CQRS**-style architecture.
+"""
+body_ja_jp = """
+`.NET` エコシステムでは、**Entity Framework Core (EF Core)** と **Dapper** の選択がしばしば「使いやすさ vs 速さ」に還元されますが、アーキテクチャ上の現実はもっと深いものです。
+
+## EF Core: ドメイン抽象化
+EF Core は、change tracking によって entity の状態を管理する完全な ORM です。オブジェクトグラフの整合性が重要な複雑な書き込み処理に向いています。
+
+## Dapper: 高性能な micro-ORM
+Dapper は状態管理をしません。`IDbConnection` を拡張し、生 SQL の結果をできるだけ高速に POCO に変換することへ集中します。
+
+### オーバーヘッドの比較 (\\(T\\))
+総実行時間 (\\(T\\)) は次のように考えられます。
+$$T_{total} = T_{sql} + T_{mapping} + T_{tracking}$$
+
+Dapper では \\(T_{tracking} \\approx 0\\) なので、読み取り中心のワークロードで非常に強力です。
+
+## 使い分けの基準
+
+```mermaid
+graph TD
+    A[新しい機能] --> B{書き込みの複雑さは高いか?}
+    B -- 高い --> C[EF Core]
+    B -- 低い --> D{読み取り量は大きいか?}
+    D -- クリティカル --> E[Dapper]
+    D -- 通常 --> C
+```
+
+> **運用ヒューリスティック**: **CQRS** スタイルのアーキテクチャでは、コマンド（書き込み）に EF Core、クエリ（読み取り）に Dapper を使い分けるとよい。
 """

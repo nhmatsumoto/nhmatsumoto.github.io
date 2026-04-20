@@ -1,7 +1,11 @@
 id = "2026-04-03-1200"
 slug = "fluxo-pensamento-agentes"
 title = "A anatomia do pensamento em agentes: transformando intenção em execução"
+title_en_us = "The Anatomy of Thought in Agents: Turning Intent into Execution"
+title_ja_jp = "エージェントの思考の解剖：意図を実行へと変える"
 summary = "Uma análise sobre como o 'Chain of Thought' e a estruturação de planos permitem que agentes de IA resolvam tarefas complexas com precisão."
+summary_en_us = "An analysis of how Chain of Thought and plan structuring enable AI agents to solve complex tasks with precision."
+summary_ja_jp = "Chain of Thought と計画の構造化によって、AI エージェントが複雑なタスクを正確に解決する仕組みの分析。"
 published_at = "2026-04-03T09:00:00+09:00"
 updated_at = "2026-04-03T09:00:00+09:00"
 status = "published"
@@ -52,4 +56,84 @@ Um pedido vago como este dispara um fluxo estruturado:
 ## Conclusão
 
 O pensamento em agentes não é mágica, é **engenharia de fluxos**. Ao expor esse raciocínio para o usuário (através de planos e logs), criamos um sistema de confiança mútua onde a IA não apenas "faz", mas "explica por que faz".
+"""
+body_en_us = """
+Solving a complex problem is not just about generating text; it is about **decomposition, validation and execution**. In agent systems, chain-of-thought-like flow is what separates a generic answer from a robust engineering solution.
+
+## The cognitive cycle
+
+Unlike a standard chat, an operational agent follows a rigorous cycle so that every step remains grounded in project reality.
+
+1.  **Perception**: read the current state: files, logs and memory.
+2.  **Classification**: identify whether the request is a feature, a bug or a technical question.
+3.  **Modeling**: apply domain principles such as DDD to preserve consistency.
+4.  **Planning**: generate a list of atomic, verifiable steps.
+5.  **Execution**: act through tools.
+
+```mermaid
+graph TD
+  A[User Intent] --> B{Context Analyzer}
+  B --> C[Research and Discovery]
+  C --> D[Implementation Plan]
+  D --> E[Execution by Subagents]
+  E --> F[Validation and Feedback]
+  F --> |Failure| D
+  F --> |Success| G[Final Delivery]
+```
+
+## Why planning is crucial
+
+Without an explicit plan, an agent tends to become reactive. Planning forces the AI to look ahead and consider side effects. If the goal is to add a field to a database, the plan should include the migration, the entity update and the change in read APIs.
+
+## Real example: "Add a phone field to Customer"
+
+A vague request like that triggers a structured flow:
+-   **Entity**: `Customer` (domain)
+-   **Value Object**: `PhoneNumber` (format validation)
+-   **Infrastructure**: add the column to `customers` through a migration
+-   **API**: update both the response DTO and the creation command
+
+## Conclusion
+
+Agent thinking is not magic. It is **flow engineering**. By exposing that reasoning through plans and logs, we build a system of trust in which the AI does not only act, but also explains why it acts.
+"""
+body_ja_jp = """
+複雑な問題を解くことは、単に文章を生成することではありません。重要なのは **分解、検証、実行** です。エージェント・システムでは、この思考フローこそが、ありきたりな答えと堅牢なエンジニアリング解を分けます。
+
+## 認知サイクル
+
+通常のチャットとは異なり、運用エージェントは、各ステップを現実のプロジェクト状態に結びつけるために、厳格なサイクルを踏みます。
+
+1.  **知覚**: ファイル、ログ、メモリから現在状態を読む。
+2.  **分類**: 新機能か、バグか、技術質問かを見分ける。
+3.  **モデリング**: 一貫性のために DDD のようなドメイン原則を適用する。
+4.  **計画**: 原子的で検証可能な手順一覧を作る。
+5.  **実行**: ツールを通じて行動する。
+
+```mermaid
+graph TD
+  A[ユーザー意図] --> B{コンテキスト解析器}
+  B --> C[調査と発見]
+  C --> D[実装プラン]
+  D --> E[サブエージェント実行]
+  E --> F[検証とフィードバック]
+  F --> |失敗| D
+  F --> |成功| G[最終成果]
+```
+
+## なぜ計画が重要なのか
+
+明示的な計画がないと、エージェントは反応的になりがちです。計画は AI に先を見させ、副作用を考えさせます。データベースにフィールドを追加するなら、移行、entity 更新、読み取り API の調整まで含めるべきです。
+
+## 実例: 「顧客に電話番号を追加する」
+
+この曖昧な依頼でも、構造化された流れに分解できます。
+-   **Entity**: `Customer`（ドメイン）
+-   **Value Object**: `PhoneNumber`（形式検証）
+-   **Infrastructure**: migration で `customers` に列を追加
+-   **API**: response DTO と creation command を更新
+
+## 結論
+
+エージェントの思考は魔法ではなく **フローの工学** です。計画やログを通してその推論を可視化することで、AI が「やる」だけでなく「なぜそうするか」を説明する信頼の仕組みができます。
 """

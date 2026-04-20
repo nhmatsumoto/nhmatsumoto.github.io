@@ -1,7 +1,11 @@
 name = "react-data-grid"
 slug = "react-data-grid"
 headline = "Componente React de data grid com funcionalidades avançadas e alta customização."
+headline_en_us = "React data grid component with advanced features and high customization."
+headline_ja_jp = "高度な機能と高いカスタマイズ性を備えた React データグリッドコンポーネント。"
 summary = "Fork do react-data-grid — componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados."
+summary_en_us = "Fork of react-data-grid — React data table component with sorting, filtering, inline editing and virtualization for large datasets."
+summary_ja_jp = "react-data-grid のフォーク。ソート、フィルタ、インライン編集、大規模データの仮想化に対応した React データテーブル・コンポーネント。"
 status = "published"
 featured = false
 order = 999
@@ -32,11 +36,55 @@ Utilizado como referência para componentes de visualização de dados no **Spli
 
 Renderizar 10.000 linhas no DOM degrada a performance do browser. Virtualização resolve isso renderizando apenas o viewport visível (~30 linhas), com scroll suave simulado via CSS transforms.
 """
+overview_en_us = """
+Fork of `react-data-grid`, a high-performance React component for displaying and editing tabular data.
+
+## Features
+
+- **Virtualization** — render only visible rows, supporting millions of records
+- **Sorting** — ordering by multiple columns
+- **Filtering** — per-column filters with customizable operators
+- **Inline editing** — edit cells directly with validation
+- **Column resizing / reordering** — adjustable width and order
+- **Copy / Paste** — clipboard support for bulk operations
+
+## Use inside the ecosystem
+
+It serves as a reference for data-visualization components in **SplitCosts-FE** and other projects that need to render large tables efficiently.
+
+## Why virtualization matters
+
+Rendering 10,000 rows directly in the DOM degrades browser performance. Virtualization solves that by rendering only the visible viewport while simulating smooth scroll behavior.
+"""
+overview_ja_jp = """
+表形式データの表示と編集に特化した高性能 React コンポーネント `react-data-grid` のフォークです。
+
+## 機能
+
+- **Virtualization** — 表示中の行だけを描画し、数百万レコードに対応
+- **Sorting** — 複数列での並び替え
+- **Filtering** — カスタマイズ可能な列単位フィルタ
+- **Inline editing** — 検証付きセル直接編集
+- **Column resizing / reordering** — 幅と順序の調整
+- **Copy / Paste** — 一括操作向け clipboard 対応
+
+## エコシステムでの利用
+
+**SplitCosts-FE** など、大量データ表を高効率に描画したいプロジェクトのための参照実装として使っています。
+
+## なぜ virtualization が重要か
+
+10,000 行をそのまま DOM に描画するとブラウザ性能は大きく落ちます。virtualization は表示中の viewport だけを描画し、滑らかなスクロールを維持します。
+"""
 
 problem_solution = """
 Tabelas HTML nativas não escalam para grandes volumes de dados. O react-data-grid resolve com virtualização de linhas e colunas, mantendo a API familiar de um componente React declarativo.
 """
+problem_solution_en_us = "Native HTML tables do not scale well for large datasets. `react-data-grid` addresses that through row and column virtualization while preserving a familiar declarative React API."
+problem_solution_ja_jp = "ネイティブの HTML table は大規模データにうまくスケールしません。`react-data-grid` は、宣言的な React API を保ったまま、行・列 virtualization によってその問題を解決します。"
 
 architecture = """
 Componente React com virtualização baseada em position: absolute e CSS transforms. O scroll handler calcula quais linhas são visíveis e renderiza apenas essas, reciclando DOM nodes conforme o usuário scrolla.
 """
+architecture_en_us = "React component built around `position: absolute` and CSS-transform-based virtualization. The scroll handler computes visible rows and recycles DOM nodes while the user moves through the grid."
+architecture_ja_jp = "`position: absolute` と CSS transform を用いた virtualization を核にした React コンポーネントです。scroll handler が可視行を計算し、グリッド移動中に DOM node を再利用します。"

@@ -1,7 +1,11 @@
 name = "macos"
 slug = "macos"
 headline = "macOS virtualizado dentro de um container Docker — experimentação com virtualização de sistemas operacionais."
+headline_en_us = "macOS virtualized inside a Docker container — experiments with OS-level virtualization."
+headline_ja_jp = "Docker コンテナ内で仮想化された macOS — OS 仮想化の実験。"
 summary = "Fork do projeto Docker-OSX: virtualização de macOS dentro de containers Docker para testes de compatibilidade e desenvolvimento cross-platform."
+summary_en_us = "Fork of Docker-OSX: macOS virtualization inside Docker containers for compatibility testing and cross-platform development."
+summary_ja_jp = "Docker-OSX のフォーク。Docker コンテナ内で macOS を仮想化し、互換性テストとクロスプラットフォーム開発を可能にする。"
 status = "published"
 featured = false
 order = 999
@@ -31,11 +35,53 @@ O container utiliza QEMU com aceleração KVM para virtualizar o hardware necess
 
 A virtualização de macOS está sujeita aos termos de licenciamento da Apple (EULA), que restringe a execução a hardware Apple genuíno. Este fork é mantido para estudo da tecnologia de virtualização, não para uso em produção.
 """
+overview_en_us = """
+Fork of the project that runs macOS inside a Docker container by using QEMU / KVM for virtualization.
+
+## Motivation
+
+Cross-platform development often requires testing on macOS without access to Apple hardware. This project makes it possible to create ephemeral macOS environments for:
+
+- Compatibility testing
+- Building iOS / macOS projects from Linux CI pipelines
+- Experimenting with macOS-only APIs
+
+## How it works
+
+The container uses QEMU with KVM acceleration to virtualize the required hardware, including Apple-specific device emulation. A macOS image is loaded from a virtual disk inside the container.
+
+## Considerations
+
+macOS virtualization is subject to Apple's licensing terms (EULA), which restrict execution to genuine Apple hardware. This fork is kept for studying virtualization technology, not for production use.
+"""
+overview_ja_jp = """
+QEMU / KVM を用いて Docker コンテナ内で macOS を動かすプロジェクトのフォークです。
+
+## 動機
+
+クロスプラットフォーム開発では、Apple ハードウェアがなくても macOS 上での検証が必要になることがあります。このプロジェクトは、次のための使い捨て macOS 環境を作れるようにします。
+
+- 互換性テスト
+- Linux CI からの iOS / macOS ビルド
+- macOS 専用 API の実験
+
+## 仕組み
+
+コンテナは QEMU と KVM アクセラレーションを用いて必要なハードウェアを仮想化し、Apple デバイスのエミュレーションも含みます。macOS イメージはコンテナ内の仮想ディスクから読み込まれます。
+
+## 注意点
+
+macOS 仮想化は Apple のライセンス規約（EULA）の対象であり、実行は正規 Apple ハードウェアに制限されます。このフォークは本番利用ではなく、仮想化技術の研究目的で保持しています。
+"""
 
 problem_solution = """
 Desenvolvedores que trabalham em Linux/Windows mas precisam testar em macOS enfrentam um gap de acesso. A virtualização via Docker reduz a fricção ao criar ambientes macOS descartáveis, embora com limitações de performance e licenciamento.
 """
+problem_solution_en_us = "Developers working on Linux or Windows but needing macOS testing face an access gap. Containerized virtualization reduces friction by creating disposable macOS environments, albeit with performance and licensing constraints."
+problem_solution_ja_jp = "Linux / Windows で開発しつつ macOS 検証が必要な開発者には、アクセス面のギャップがあります。コンテナ化された仮想化は、性能面とライセンス面の制約はあるものの、使い捨て macOS 環境を作ることで摩擦を下げます。"
 
 architecture = """
 Container Docker com QEMU como hypervisor, KVM para aceleração de hardware e passthrough de GPU quando disponível. A imagem macOS é montada como disco virtual QCOW2 dentro do container.
 """
+architecture_en_us = "Docker container with QEMU as the hypervisor, KVM for hardware acceleration and optional GPU passthrough. The macOS image is mounted as a QCOW2 virtual disk inside the container."
+architecture_ja_jp = "Docker コンテナ内で、QEMU を hypervisor、KVM をハードウェア高速化として使用し、必要に応じて GPU passthrough も利用できます。macOS イメージは QCOW2 仮想ディスクとしてマウントされます。"

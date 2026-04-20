@@ -1,7 +1,11 @@
 name = "ResponseMiddleware"
 slug = "responsemiddleware"
 headline = "Middleware de padronização de respostas HTTP para APIs .NET Core."
+headline_en_us = "HTTP response standardization middleware for .NET Core APIs."
+headline_ja_jp = ".NET Core API のための HTTP レスポンス標準化ミドルウェア。"
 summary = "Middleware ASP.NET Core para padronização de respostas HTTP, envolvendo resultados de controllers em um envelope consistente com metadados de sucesso/erro."
+summary_en_us = "ASP.NET Core middleware that standardizes HTTP responses by wrapping controller results in a consistent envelope with success/error metadata."
+summary_ja_jp = "ASP.NET Core ミドルウェア。コントローラの結果を成功／失敗メタデータを含む一貫したエンベロープで包み、HTTP レスポンスを標準化する。"
 status = "published"
 featured = false
 order = 999
@@ -42,11 +46,75 @@ Intercepta as respostas de controllers e as envolve em um envelope padronizado:
 
 Funciona em conjunto com o **exception middleware**: enquanto o exception middleware trata exceções não capturadas, o response middleware padroniza todas as respostas (sucesso e erro controlado).
 """
+overview_en_us = """
+Response-standardization middleware for ASP.NET Core APIs, designed to complement **nhmatsumoto.exception.middleware**.
+
+## What it does
+
+It intercepts controller responses and wraps them in a standardized envelope:
+
+```json
+{
+  "success": true,
+  "data": { ... },
+  "errors": [],
+  "metadata": {
+    "timestamp": "2026-04-05T00:00:00Z",
+    "requestId": "abc-123"
+  }
+}
+```
+
+## Benefits
+
+- **Consistency** — every endpoint returns the same top-level format
+- **Metadata** — timestamps, request IDs and paging data are added automatically
+- **Error wrapping** — validation failures fit into the same contract
+- **Transparency** — controllers return plain objects while the middleware shapes the envelope
+
+## Combined usage
+
+It works together with the exception middleware: one standardizes uncaught failures, the other normalizes every successful or controlled response.
+"""
+overview_ja_jp = """
+**nhmatsumoto.exception.middleware** を補完する、ASP.NET Core API 向けレスポンス標準化ミドルウェアです。
+
+## 何をするか
+
+controller のレスポンスを横取りし、標準エンベロープで包みます。
+
+```json
+{
+  "success": true,
+  "data": { ... },
+  "errors": [],
+  "metadata": {
+    "timestamp": "2026-04-05T00:00:00Z",
+    "requestId": "abc-123"
+  }
+}
+```
+
+## 利点
+
+- **一貫性** — すべての endpoint が同じトップレベル形式を返す
+- **Metadata** — timestamp、request ID、paging 情報を自動付与
+- **Error wrapping** — validation failure も同一契約に収まる
+- **透明性** — controller は素のオブジェクトを返し、整形は middleware が担当
+
+## 組み合わせ利用
+
+exception middleware が未捕捉例外を扱い、この middleware が成功レスポンスや制御済みエラーを含めた全体の形を統一します。
+"""
 
 problem_solution = """
 APIs sem padronização de respostas forçam o frontend a tratar cada endpoint de forma diferente. O envelope consistente resolve isso, permitindo que o cliente tenha uma única lógica de parsing para todas as chamadas.
 """
+problem_solution_en_us = "Without response standardization, frontend clients must parse each endpoint differently. A consistent envelope removes that branching and centralizes metadata handling."
+problem_solution_ja_jp = "レスポンスの標準化がないと、フロントエンドは endpoint ごとに別の解析ロジックを持つ必要があります。一貫したエンベロープにすることで、その分岐をなくし、metadata 処理を集中化できます。"
 
 architecture = """
 Middleware registrado após o exception middleware no pipeline ASP.NET Core. Intercepta o response body via stream wrapping, deserializa o conteúdo original e re-serializa dentro do envelope padronizado.
 """
+architecture_en_us = "ASP.NET Core middleware registered after the exception middleware. It intercepts the response stream, deserializes the original payload and re-serializes it inside the standard envelope."
+architecture_ja_jp = "exception middleware の後段に登録する ASP.NET Core middleware です。response stream を横取りし、元の payload をデシリアライズして標準エンベロープ内に再シリアライズします。"

@@ -73,7 +73,41 @@ def _safe_truncate(text: str, limit: int = 1200) -> str:
         return cut[:line].rstrip() + "\n..."
     return cut.rstrip() + "..."
 
-def _build_post_localization_payload(post: dict[str, Any]) -> str:
+def _has_complete_localized_coverage(
+    item: dict[str, Any],
+    fields: list[str],
+    locale: str,
+    i18n: dict[str, Any] | None = None,
+) -> bool:
+    present_fields = [
+        field
+        for field in fields
+        if isinstance(item.get(field), str) and str(item.get(field) or "").strip()
+    ]
+    if not present_fields:
+        return False
+
+    for field in present_fields:
+        field_has_locale_value = False
+        for suffix in locale_suffixes(locale, i18n):
+            key = f"{field}_{suffix}"
+            if key not in item:
+                continue
+            value = item.get(key)
+            if isinstance(value, str):
+                if value.strip():
+                    field_has_locale_value = True
+                    break
+                continue
+            if value is not None:
+                field_has_locale_value = True
+                break
+        if not field_has_locale_value:
+            return False
+    return True
+
+
+def _build_post_localization_payload(post: dict[str, Any]) -> dict[str, Any]:
     payload = {
         "title": post["title"],
         "summary": post["summary"],
@@ -82,7 +116,7 @@ def _build_post_localization_payload(post: dict[str, Any]) -> str:
     copy_localized_fields(post, payload, "title")
     copy_localized_fields(post, payload, "summary")
     copy_localized_fields(post, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
-    return json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
+    return payload
 
 def _build_project_body(item: dict[str, Any], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     """Assemble a markdown body from project fields for rich rendering."""
@@ -106,19 +140,19 @@ def _build_project_body(item: dict[str, Any], i18n: dict[str, Any] | None = None
     sn = str(localized_value(item, "stack_notes", locale, i18n, "") or "").strip()
     if sn:
         parts.append(f"## {h('pages.project.stack_notes', 'Stack & Tecnologias')}\n\n{sn}")
-    adr = item.get("adr") or []
+    adr = localized_value(item, "adr", locale, i18n, item.get("adr") or []) or []
     if adr:
         parts.append(f"## {h('pages.project.adr', 'ADRs')}\n\n" + "\n".join(f"- {a}" for a in adr))
-    rm = item.get("roadmap") or []
+    rm = localized_value(item, "roadmap", locale, i18n, item.get("roadmap") or []) or []
     if rm:
         parts.append(f"## {h('pages.project.roadmap', 'Roadmap')}\n\n" + "\n".join(f"- {r}" for r in rm))
-    impact = item.get("impact") or []
+    impact = localized_value(item, "impact", locale, i18n, item.get("impact") or []) or []
     if impact:
         parts.append(f"## {h('pages.project.impact', 'Impacto & Resultados')}\n\n" + "\n".join(f"- {m}" for m in impact))
-    trade_offs = item.get("trade_offs") or []
+    trade_offs = localized_value(item, "trade_offs", locale, i18n, item.get("trade_offs") or []) or []
     if trade_offs:
         parts.append(f"## {h('pages.project.trade_offs', 'Trade-offs & Decisões')}\n\n" + "\n".join(f"- {t}" for t in trade_offs))
-    lessons = item.get("lessons") or []
+    lessons = localized_value(item, "lessons", locale, i18n, item.get("lessons") or []) or []
     if lessons:
         parts.append(f"## {h('pages.project.lessons', 'Lições Aprendidas')}\n\n" + "\n".join(f"- {le}" for le in lessons))
     pn = str(localized_value(item, "production_notes", locale, i18n, "") or "").strip()
@@ -126,9 +160,54 @@ def _build_project_body(item: dict[str, Any], i18n: dict[str, Any] | None = None
         parts.append(f"## {h('pages.project.production_notes', 'Notas de Produção')}\n\n{pn}")
     return "\n\n".join(parts) if parts else item.get("summary", "")
 
+
+def _build_project_localization_payload(project: dict[str, Any], i18n: dict[str, Any], locale: str) -> dict[str, Any]:
+    payload = {
+        "name": project["name"],
+        "headline": project.get("headline", ""),
+        "summary": project["summary"],
+        "body_html": render_markdown(_build_project_body(project, i18n, locale)),
+    }
+    copy_localized_fields(project, payload, "name")
+    copy_localized_fields(project, payload, "headline")
+    copy_localized_fields(project, payload, "summary")
+
+    long_fields = [
+        "overview",
+        "problem_solution",
+        "architecture",
+        "stack_notes",
+        "production_notes",
+        "adr",
+        "roadmap",
+        "impact",
+        "trade_offs",
+        "lessons",
+    ]
+    for supported_locale in i18n.get("supported_locales", []):
+        if not _has_complete_localized_coverage(project, long_fields, supported_locale, i18n):
+            continue
+        localized_body = render_markdown(_build_project_body(project, i18n, supported_locale))
+        for suffix in locale_suffixes(supported_locale, i18n):
+            key = f"body_html_{suffix}"
+            if key not in payload:
+                payload[key] = localized_body
+    return payload
+
+
+def _build_document_localization_payload(document: dict[str, Any]) -> dict[str, Any]:
+    payload = {
+        "title": document["title"],
+        "summary": document["summary"],
+        "body_html": render_markdown(document.get("body", "")),
+    }
+    copy_localized_fields(document, payload, "title")
+    copy_localized_fields(document, payload, "summary")
+    copy_localized_fields(document, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
+    return payload
+
 def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     unified_items = []
-    supported_locales = (i18n or {}).get("supported_locales", [])
 
     for item in posts:
         post_payload = {
@@ -151,30 +230,17 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
         unified_items.append(post_payload)
 
     for item in projects:
-        body_md = _build_project_body(item, i18n, locale)
         project_payload = {
             "id": f"project-{item['slug']}",
             "kind": "project",
-            "name": item["name"],
-            "headline": item.get("headline", ""),
-            "summary": item["summary"],
             "status": item["status"],
             "stack": item["stack"],
             "url": item["url"],
             "resolved_url": item.get("resolved_url", ""),
             "repo_url": item.get("repo_url", ""),
             "has_math": item.get("has_math", False),
-            "body_html": render_markdown(body_md),
         }
-        copy_localized_fields(item, project_payload, "name")
-        copy_localized_fields(item, project_payload, "headline")
-        copy_localized_fields(item, project_payload, "summary")
-        for supported_locale in supported_locales:
-            localized_body = render_markdown(_build_project_body(item, i18n, supported_locale))
-            for suffix in locale_suffixes(supported_locale, i18n):
-                key = f"body_html_{suffix}"
-                if key not in project_payload:
-                    project_payload[key] = localized_body
+        project_payload.update(_build_project_localization_payload(item, i18n or {}, locale))
         unified_items.append(project_payload)
 
     for item in documents:
@@ -189,12 +255,9 @@ def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[s
             "url": item["url"],
             "resolved_url": item.get("resolved_url", ""),
             "repo_url": "",
-            "has_math": False,
-            "body_html": render_markdown(item.get("body", "") or item["summary"]),
+            "has_math": item.get("has_math", False),
         }
-        copy_localized_fields(item, document_payload, "title")
-        copy_localized_fields(item, document_payload, "summary")
-        copy_localized_fields(item, document_payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
+        document_payload.update(_build_document_localization_payload(item))
         unified_items.append(document_payload)
 
     return json.dumps(unified_items, ensure_ascii=False).replace("<", "\\u003c")
@@ -229,7 +292,7 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
     sidebar = f"""<aside class="sidebar-panel"><div class="sidebar-header"><h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2><button class="nav-button sidebar-close" type="button" data-sidebar-toggle><i data-lucide="x"></i></button></div>{render_metric_list([render_localized_date(post["published_dt"], locale, "long"), render_reading_time(post["reading_time"], i18n, locale)], escape_items=False)}{render_badge_list(post.get('badges', []))}{render_tag_list(post.get('tags', []))}{render_impact_bar(post.get("impact", []))}<div class="sidebar-actions">{f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">repo</a>' if post.get("resolved_repo_url") else ""}{f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if post.get("resolved_code_url") else ""}</div></aside>"""
     back_url = site_href(site, f"/projects/?select=post-{post['slug']}")
     related_html = render_related_posts(related_posts or [], i18n, locale)
-    page_payload = _build_post_localization_payload(post)
+    page_payload = json.dumps(_build_post_localization_payload(post), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""{breadcrumbs}<section class="page-grid"><article class="post-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p><div class="nav-group"><button class="nav-button sidebar-toggle" type="button" data-sidebar-toggle title="Mais informações"><i data-lucide="info"></i></button><a href="{back_url}" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div></div><h1 data-page-title>{html.escape(post['title'])}</h1><p class="post-summary" data-page-summary>{html.escape(post['summary'])}</p><div class="post-meta">{render_localized_date(post['published_dt'], locale, "long")}{render_reading_time(post['reading_time'], i18n, locale)}</div></header><div data-page-body>{render_markdown(post['body'])}</div>{render_trade_offs_section(post.get("trade_offs", []))}{render_lessons_section(post.get("lessons", []))}<footer class="post-author"><p><strong>Autor:</strong> {html.escape(str(site.get('author') or 'Hiro Matsumoto'))}</p></footer></article>{sidebar}</section><script id="page-content-data" type="application/json">{page_payload}</script>{related_html}"""
     og = {
         "title": post["title"],
@@ -242,10 +305,11 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
 
 def render_project_page(site: dict[str, str], system: dict[str, Any], project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.projects", "projects"), "url": site_href(site, "/projects/"), "key": "nav.projects"}, {"label": project["name"], "url": ""}], i18n, locale)
-    production_html = f'<section><h2 data-i18n="pages.project.production_notes">{html.escape(translate(i18n, locale, "pages.project.production_notes", "Production Notes"))}</h2>{render_markdown(project["production_notes"])}</section>' if project.get("production_notes") else ""
     sidebar = f"""<aside class="sidebar-panel"><div class="sidebar-header"><h2 data-i18n="pages.project.status">{html.escape(translate(i18n, locale, "pages.project.status", "Status"))}</h2><button class="nav-button sidebar-close" type="button" data-sidebar-toggle><i data-lucide="x"></i></button></div><p>{render_status_badge(project['status'], i18n, locale)}</p><h3 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h3>{render_stack_list(project['stack'])}{render_impact_bar(project.get("impact", []))}<div class="sidebar-actions">{f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">architecture</a>' if project.get("resolved_architecture_url") else ""}{f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if project.get("resolved_code_url") else ""}</div></aside>"""
     back_url = site_href(site, f"/projects/?select=project-{project['slug']}")
-    content = f"""{breadcrumbs}<section class="page-grid"><article class="project-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p><div class="nav-group"><button class="nav-button sidebar-toggle" type="button" data-sidebar-toggle title="Mais informações"><i data-lucide="info"></i></button><a href="{back_url}" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div></div><h1>{html.escape(project['name'])}</h1><p class="post-summary">{html.escape(project['headline'] or project['summary'])}</p>{render_badge_list(project.get('badges', []))}</header><section><h2 data-i18n="pages.project.overview">{html.escape(translate(i18n, locale, "pages.project.overview", "Overview"))}</h2>{render_markdown(project.get('overview', ""))}</section><section><h2 data-i18n="pages.project.architecture">{html.escape(translate(i18n, locale, "pages.project.architecture", "Architecture"))}</h2>{render_markdown(project.get('architecture', ""))}{f'<pre class="diagram-preview large"><code>{html.escape(project["diagram_preview"])}</code></pre>' if project.get("diagram_preview") else ""}</section>{production_html}{render_trade_offs_section(project.get("trade_offs", []))}{render_lessons_section(project.get("lessons", []))}</article>{sidebar}</section>"""
+    page_payload_obj = _build_project_localization_payload(project, i18n, locale)
+    page_payload = json.dumps(page_payload_obj, ensure_ascii=False).replace("<", "\\u003c")
+    content = f"""{breadcrumbs}<section class="page-grid"><article class="project-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p><div class="nav-group"><button class="nav-button sidebar-toggle" type="button" data-sidebar-toggle title="Mais informações"><i data-lucide="info"></i></button><a href="{back_url}" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div></div><h1 data-page-title>{html.escape(project['name'])}</h1><p class="post-summary" data-page-summary>{html.escape(project['headline'] or project['summary'])}</p>{render_badge_list(project.get('badges', []))}</header><div data-page-body>{page_payload_obj["body_html"]}</div></article>{sidebar}</section><script id="page-content-data" type="application/json">{page_payload}</script>"""
     og = {
         "title": project["name"],
         "description": project.get("summary") or project.get("headline", ""),
@@ -259,5 +323,7 @@ def render_document_page(site: dict[str, str], system: dict[str, Any], document:
     breadcrumbs = render_breadcrumbs([{"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"}, {"label": translate(i18n, locale, "nav.documents", "documents"), "url": site_href(site, "/documents/"), "key": "nav.documents"}, {"label": document["title"], "url": ""}], i18n, locale)
     sidebar = f"""<aside class="sidebar-panel"><div class="sidebar-header"><h2 data-i18n="pages.document.meta">{html.escape(translate(i18n, locale, "pages.document.meta", "Document meta"))}</h2><button class="nav-button sidebar-close" type="button" data-sidebar-toggle><i data-lucide="x"></i></button></div><p class="doc-version">{html.escape(document['version'])}</p><p class="doc-category">{html.escape(document['category'])}</p>{render_tag_list(document.get('tags', []))}</aside>"""
     back_url = site_href(site, f"/projects/?select=document-{document['slug']}")
-    content = f"""{breadcrumbs}<section class="page-grid"><article class="document-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p><div class="nav-group"><button class="nav-button sidebar-toggle" type="button" data-sidebar-toggle title="Mais informações"><i data-lucide="info"></i></button><a href="{back_url}" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div></div><h1>{html.escape(document['title'])}</h1><p class="post-summary">{html.escape(document['summary'])}</p></header>{render_markdown(document.get('body', ""))}</article>{sidebar}</section>"""
-    return render_layout(page_title=f"{document['title']} | {site['title']}", page_description=document["summary"], site=site, system=system, body_class="page-document", canonical_path=document["url"], has_math=False, content=content, active_nav="documents", i18n=i18n, locale=locale)
+    page_payload_obj = _build_document_localization_payload(document)
+    page_payload = json.dumps(page_payload_obj, ensure_ascii=False).replace("<", "\\u003c")
+    content = f"""{breadcrumbs}<section class="page-grid"><article class="document-shell prose"><header class="post-header"><div class="header-top-row"><p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p><div class="nav-group"><button class="nav-button sidebar-toggle" type="button" data-sidebar-toggle title="Mais informações"><i data-lucide="info"></i></button><a href="{back_url}" class="nav-button panel-close" title="Voltar ao mapa"><i data-lucide="arrow-left"></i></a></div></div><h1 data-page-title>{html.escape(document['title'])}</h1><p class="post-summary" data-page-summary>{html.escape(document['summary'])}</p></header><div data-page-body>{page_payload_obj["body_html"]}</div></article>{sidebar}</section><script id="page-content-data" type="application/json">{page_payload}</script>"""
+    return render_layout(page_title=f"{document['title']} | {site['title']}", page_description=document["summary"], site=site, system=system, body_class="page-document", canonical_path=document["url"], has_math=document.get("has_math", False), content=content, active_nav="documents", i18n=i18n, locale=locale)

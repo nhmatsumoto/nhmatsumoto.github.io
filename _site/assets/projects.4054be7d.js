@@ -298,9 +298,7 @@ cx.font = '700 32px "JetBrains Mono"'; cx.textAlign = 'center'
 cx.fillStyle = '#fff'; cx.fillText(name.length > 25 ? name.slice(0, 23) + '..' : name, 256, 50)
 return this.textureCache[nameTexKey] = new THREE.CanvasTexture(cv)
 })()
-const nameMatKey = `name-mat`
-const nameMat = this.matCache[nameMatKey] || (this.matCache[nameMatKey] = new THREE.SpriteMaterial({ transparent: true, opacity: 0.6 }))
-nameMat.map = nameTex
+const nameMat = new THREE.SpriteMaterial({ map: nameTex, transparent: true, opacity: 0.6 })
 const nameSp = new THREE.Sprite(nameMat)
 nameSp.scale.set(120, 20, 1); nameSp.position.y = sz + 45
 labelGroup.add(nameSp)

@@ -1,7 +1,11 @@
 name = "prog_lib"
 slug = "prog-lib"
 headline = "Biblioteca de referência com algoritmos e estruturas de dados para estudo e consulta."
+headline_en_us = "Reference library with algorithms and data structures for study and lookup."
+headline_ja_jp = "学習と参照のためのアルゴリズム・データ構造リファレンス・ライブラリ。"
 summary = "Coleção de implementações de algoritmos e estruturas de dados clássicos, organizada como biblioteca de referência para estudo e consulta rápida."
+summary_en_us = "Collection of classic algorithm and data-structure implementations, organized as a reference library for study and quick lookup."
+summary_ja_jp = "古典的なアルゴリズムとデータ構造の実装コレクション。学習と素早い参照のためのライブラリとして整理。"
 status = "published"
 featured = false
 order = 999
@@ -30,11 +34,51 @@ Coleção organizada por categoria:
 
 Servir como material de consulta rápida e estudo, com implementações limpas e comentadas que priorizam clareza sobre otimização.
 """
+overview_en_us = """
+Reference library with implementations of fundamental algorithms and data structures from computer science.
+
+## Content
+
+Collection organized by category:
+
+- **Sorting** — quicksort, mergesort, heapsort and radix sort
+- **Search** — binary search, BFS, DFS and A*
+- **Structures** — lists, stacks, queues, trees, graphs and hash tables
+- **Graphs** — Dijkstra, Bellman-Ford, topological sort and MST
+- **Dynamic programming** — knapsack, LCS and edit distance
+- **Strings** — KMP, Rabin-Karp and suffix arrays
+
+## Purpose
+
+The goal is fast lookup and study, with implementations that favor clarity and annotation over micro-optimization.
+"""
+overview_ja_jp = """
+計算機科学の基本アルゴリズムとデータ構造の実装をまとめたリファレンス・ライブラリです。
+
+## 内容
+
+カテゴリごとに整理されたコレクション:
+
+- **Sorting** — quicksort、mergesort、heapsort、radix sort
+- **Search** — binary search、BFS、DFS、A*
+- **Structures** — list、stack、queue、tree、graph、hash table
+- **Graphs** — Dijkstra、Bellman-Ford、topological sort、MST
+- **Dynamic programming** — knapsack、LCS、edit distance
+- **Strings** — KMP、Rabin-Karp、suffix array
+
+## 目的
+
+狙いは素早い参照と学習であり、実装はマイクロ最適化より明快さと注釈を優先しています。
+"""
 
 problem_solution = """
 Algoritmos e estruturas de dados são fundamentos que precisam ser revisitados periodicamente. Ter uma biblioteca pessoal de implementações facilita a consulta rápida e reforça o entendimento dos conceitos.
 """
+problem_solution_en_us = "Algorithms and data structures are fundamentals that need to be revisited repeatedly. Keeping a personal library of implementations makes quick consultation easier and reinforces conceptual understanding."
+problem_solution_ja_jp = "アルゴリズムとデータ構造は何度も立ち返る必要がある基礎です。個人用の実装ライブラリを持つことで、素早い参照ができ、概念理解も強化されます。"
 
 architecture = """
 Organizada por categoria, cada implementação é auto-contida com documentação inline explicando complexidade temporal e espacial, invariantes e edge cases.
 """
+architecture_en_us = "Organized by category, each implementation is self-contained and documented inline with time and space complexity, invariants and relevant edge cases."
+architecture_ja_jp = "カテゴリごとに整理され、各実装は自己完結しています。時間計算量・空間計算量、invariant、重要な edge case を inline で記述しています。"

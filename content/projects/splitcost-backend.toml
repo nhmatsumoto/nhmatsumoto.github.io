@@ -1,7 +1,11 @@
 name = "SplitCost-Backend"
 slug = "splitcost-backend"
 headline = "Backend do SplitCosts — API .NET com multi-tenant, domain events e projeções de leitura."
+headline_en_us = "SplitCosts backend — .NET API with multi-tenant, domain events and read projections."
+headline_ja_jp = "SplitCosts バックエンド — マルチテナント、ドメインイベント、読み取り投影を備えた .NET API。"
 summary = "Backend do SplitCosts em .NET/C# com arquitetura multi-tenant, domain events, separação de contextos de leitura/escrita e projeções operacionais."
+summary_en_us = "SplitCosts backend in .NET/C# with multi-tenant architecture, domain events, read/write context separation and operational projections."
+summary_ja_jp = ".NET/C# による SplitCosts バックエンド。マルチテナント構造、ドメインイベント、読み書きコンテキストの分離、運用投影を備える。"
 status = "published"
 featured = false
 order = 999
@@ -35,11 +39,61 @@ O modelo de domínio trata despesas como agregados com regras de negócio:
 
 Evolução direta do **Financial** (monolito), agora com separação clara entre contextos, multi-tenancy e projeções de leitura. Consumido pelo **SplitCosts-FE** via REST API.
 """
+overview_en_us = """
+Backend of **SplitCosts** — a .NET / C# API that implements expense-sharing logic with a focus on multi-tenancy and domain modeling.
+
+## Architecture
+
+- **Multi-tenant** — data isolation per group / household, with tenant resolution in middleware
+- **Domain events** — state changes publish events to keep read models updated
+- **Lightweight CQRS** — separation between commands (writes) and queries (read projections)
+- **Repository pattern** — persistence abstraction backed by PostgreSQL and Entity Framework
+
+## Domain
+
+The domain model treats expenses as aggregates governed by business rules:
+
+- Proportional or custom splits among participants
+- Payment history and balances over time
+- Debt reconciliation between group members
+- Categorization and reporting
+
+## Relationship with the ecosystem
+
+This is the direct evolution of **Financial**, now with clearer boundaries, multi-tenancy and dedicated read projections. It is consumed by **SplitCosts-FE** through a REST API.
+"""
+overview_ja_jp = """
+**SplitCosts** のバックエンドであり、マルチテナンシーとドメインモデリングに重点を置いて支出共有ロジックを実装する .NET / C# API です。
+
+## アーキテクチャ
+
+- **Multi-tenant** — middleware の tenant resolution による household / group 単位のデータ分離
+- **Domain events** — 状態変化をイベント公開し、read model を更新
+- **軽量 CQRS** — command（書き込み）と query（読み取り投影）の分離
+- **Repository pattern** — PostgreSQL と Entity Framework を背後に持つ永続化抽象
+
+## ドメイン
+
+ドメインモデルは、業務ルールに従う aggregate として支出を扱います。
+
+- 参加者間の比例またはカスタム分配
+- 支払い履歴と期間ごとの残高
+- グループ内メンバー間の債務精算
+- カテゴリ分類とレポート
+
+## エコシステムとの関係
+
+これは **Financial** の直接的な進化形で、より明確な境界、マルチテナント化、専用 read projection を備えます。**SplitCosts-FE** から REST API で利用されます。
+"""
 
 problem_solution = """
 O Financial original acoplava regras de negócio à infraestrutura e não suportava múltiplos grupos. O backend do SplitCosts resolve isso com fronteiras de domínio explícitas, tenant isolation e projeções dedicadas para cada tela.
 """
+problem_solution_en_us = "The original Financial monolith coupled business rules to infrastructure and could not support multiple groups. SplitCosts backend addresses that with explicit domain boundaries, tenant isolation and read models tailored to each screen."
+problem_solution_ja_jp = "元の Financial モノリスは業務ルールとインフラが結合し、複数グループも扱えませんでした。SplitCosts バックエンドは、明示的なドメイン境界、tenant 分離、画面ごとに最適化された read model によってそれを解決します。"
 
 architecture = """
 API ASP.NET Core em camadas: Controllers → Application Services → Domain → Infrastructure. Multi-tenancy via middleware de tenant resolution. PostgreSQL com Entity Framework Core. Projeções de leitura como queries separadas sobre views materializadas.
 """
+architecture_en_us = "ASP.NET Core layered API: Controllers → Application Services → Domain → Infrastructure. Multi-tenancy is handled in middleware, PostgreSQL is accessed through EF Core and read projections are modeled as dedicated queries over materialized views."
+architecture_ja_jp = "ASP.NET Core のレイヤ API 構成です。Controllers → Application Services → Domain → Infrastructure。multi-tenancy は middleware で処理し、PostgreSQL へは EF Core でアクセスし、read projection は materialized view 上の専用 query として表現します。"

@@ -1,7 +1,11 @@
 slug = "gis-incident-lab"
 name = "GIS Incident Lab"
-headline = "Operational mapping for incident response, risk analysis and spatial pipelines."
+headline = "Mapeamento operacional para resposta a incidentes, análise de risco e pipelines espaciais."
+headline_en_us = "Operational mapping for incident response, risk analysis and spatial pipelines."
+headline_ja_jp = "インシデント対応、リスク分析、空間パイプラインのための運用マッピング。"
 summary = "Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta."
+summary_en_us = "Lab applied to GIS, geospatial data ingestion and operational projections for response teams."
+summary_ja_jp = "GIS、地理空間データの取り込み、対応チーム向け運用投影に特化したラボ。"
 status = "published"
 stack = ["Python", ".NET", "GIS", "event-driven services"]
 badges = ["production"]
@@ -20,38 +24,94 @@ view_engine = "binary-tree"
 overview = """
 Este laboratório consolida uma linha de trabalho com GIS orientada a operação. O foco não é só mapa: é como transformar dado espacial em leitura acionável.
 """
+overview_en_us = "This lab consolidates an operations-first GIS workstream. The focus is not only the map itself, but how to turn spatial data into actionable operational reading."
+overview_ja_jp = "このラボは、運用起点の GIS ワークストリームを集約したものです。焦点は地図そのものではなく、空間データを行動可能な運用情報に変えることにあります。"
 problem_solution = """
 Dados espaciais costumam chegar incompletos, ruidosos e caros de processar. A solução adotada é tratar cada etapa como parte de um pipeline assíncrono, com contratos explícitos entre ingestão, transformação e leitura.
 """
+problem_solution_en_us = "Spatial data usually arrives incomplete, noisy and expensive to process. The adopted solution treats each stage as part of an asynchronous pipeline, with explicit contracts between ingestion, transformation and read models."
+problem_solution_ja_jp = "空間データは、多くの場合、不完全でノイズが多く、処理コストも高い状態で届きます。そこで、取り込み・変換・読み取りモデルの間に明示的な契約を置いた非同期パイプラインとして各段階を扱います。"
 architecture = """
 O desenho privilegia rastreabilidade e projeções operacionais. Serviços de ingestão e enriquecimento escrevem eventos; a camada de leitura consolida visualizações e sinais para equipes de resposta.
 """
+architecture_en_us = "The design prioritizes traceability and operational projections. Ingestion and enrichment services publish events; the read layer consolidates views and signals for response teams."
+architecture_ja_jp = "設計はトレーサビリティと運用向け投影を優先します。取り込み・エンリッチメント・サービスがイベントを書き出し、読み取り層が対応チーム向けのビューとシグナルを統合します。"
 stack_notes = """
 GIS aqui é tratado como parte do produto, não como apêndice visual. Isso muda completamente a forma de modelar contratos, latência aceitável e observabilidade.
 """
+stack_notes_en_us = "GIS is treated here as part of the product, not as a visual appendix. That completely changes how contracts, acceptable latency and observability are modeled."
+stack_notes_ja_jp = "ここでの GIS は可視化の付属物ではなく、製品そのものの一部として扱われます。その前提が、契約、許容レイテンシ、可観測性のモデリングを根本から変えます。"
 adr = [
   "Separar geoprocessamento bruto da camada de leitura operacional.",
   "Modelar eventos de risco como fatos de domínio, não apenas logs técnicos.",
 ]
+adr_en_us = [
+  "Separate raw geoprocessing from the operational read layer.",
+  "Model risk events as domain facts, not only as technical logs.",
+]
+adr_ja_jp = [
+  "生の地理処理を運用向け読み取り層から分離する。",
+  "リスクイベントを技術ログではなくドメイン事実としてモデル化する。",
+]
 roadmap = [
   "Adicionar previews de diagrama por fluxo geoespacial.",
   "Documentar contratos de ingestão em maior detalhe.",
+]
+roadmap_en_us = [
+  "Add diagram previews for geospatial flows.",
+  "Document ingestion contracts in more detail.",
+]
+roadmap_ja_jp = [
+  "地理空間フロー向けの図プレビューを追加する。",
+  "取り込み契約をより詳細に文書化する。",
 ]
 impact = [
   "Pipeline de ingestão processa 200k pontos geoespaciais em <8min (antes: 45min em monólito)",
   "Ops view atualizado em <30s — equipe de campo opera com dados near real-time",
   "3 incidentes de regressão evitados em 6 meses pela separação cálculo espacial / regra de negócio",
 ]
+impact_en_us = [
+  "Ingestion pipeline processes 200k geospatial points in under 8 minutes (previously 45 minutes in a monolith)",
+  "Ops view refreshes in under 30 seconds — field teams operate on near-real-time data",
+  "Three regressions avoided in 6 months by separating spatial computation from business rules",
+]
+impact_ja_jp = [
+  "取り込みパイプラインが 20 万件の地理空間ポイントを 8 分未満で処理（以前はモノリスで 45 分）",
+  "ops view は 30 秒未満で更新され、現場チームはほぼリアルタイムのデータで動ける",
+  "空間計算と業務ルールの分離により、6 か月で 3 件の回帰事故を回避",
+]
 trade_offs = [
   "Pipeline assíncrono vs endpoint síncrono: latência end-to-end maior, mas resiliência e observabilidade superiores",
   "Contratos versionados entre estágios: overhead inicial alto, mas zero breaking changes em 8 meses de operação",
   "Event-driven exige mensageria dedicada: custo operacional +15%, mas desacoplamento total entre ingestão e leitura",
+]
+trade_offs_en_us = [
+  "Asynchronous pipeline vs. synchronous endpoint: higher end-to-end latency, but far better resilience and observability",
+  "Versioned contracts between stages: high upfront overhead, but zero breaking changes across 8 months of operation",
+  "Event-driven design requires dedicated messaging infrastructure: +15% operational cost, but full decoupling between ingestion and reads",
+]
+trade_offs_ja_jp = [
+  "非同期パイプライン vs 同期 endpoint: end-to-end レイテンシは増えるが、レジリエンスと可観測性は大幅に向上",
+  "段階間の versioned contract は初期コストが高いが、8 か月間 breaking change はゼロ",
+  "event-driven 設計には専用メッセージング基盤が必要で運用コストは +15% だが、取り込みと読み取りを完全に疎結合化できた",
 ]
 lessons = [
   "Geocoding externo era 80% do tempo de pipeline — cache agressivo + fallback local resolveu o gargalo",
   "Monitorar cada estágio individualmente foi o investimento com maior ROI — identificou bottlenecks invisíveis no monólito",
   "Em cenários de crise, simplicidade de deploy supera elegância de design — scripts Python diretos salvaram vidas em Brumadinho",
 ]
+lessons_en_us = [
+  "External geocoding consumed 80% of pipeline time — aggressive caching and local fallback removed the bottleneck",
+  "Monitoring each stage individually delivered the highest ROI by exposing bottlenecks that were invisible in the monolith",
+  "In crisis contexts, deployment simplicity beats design elegance — direct Python scripts saved lives in Brumadinho",
+]
+lessons_ja_jp = [
+  "外部 geocoding がパイプライン時間の 80% を占めており、積極的なキャッシュとローカル fallback がボトルネックを解消した",
+  "各段階を個別監視する投資が最も高い ROI を出し、モノリスでは見えなかった詰まりを可視化した",
+  "危機時には設計の美しさよりデプロイの単純さが勝つ — 直接的な Python スクリプトが Brumadinho で実際に役立った",
+]
 production_notes = """
 Pipeline em operação contínua desde 2024. Stack real: .NET para serviços de ingestão e normalização, Python para geoprocessamento pesado. A separação cálculo/regra permitiu que o time de dados iterasse sem impactar a API operacional. Tempo médio de resolução de incidentes GIS caiu de 4h para 45min após adoção da ops view.
 """
+production_notes_en_us = "Pipeline in continuous production use since 2024. Real stack: .NET for ingestion and normalization services, Python for heavy geoprocessing. Separating calculation from business rules allowed the data team to iterate without affecting the operational API. Mean resolution time for GIS incidents dropped from 4 hours to 45 minutes after adopting the ops view."
+production_notes_ja_jp = "2024 年から継続的に運用中のパイプラインです。実スタックは、取り込みと正規化サービスに .NET、重い地理処理に Python を使用。計算処理と業務ルールを分離したことで、データチームは運用 API に影響を与えず改善を回せました。GIS インシデントの平均解決時間は、ops view 採用後に 4 時間から 45 分へ短縮しました。"

@@ -1,8 +1,3 @@
----
-title: Visão Geral da Arquitetura
-description: Como o cérebro do Ronaldinho funciona.
----
-
 # A Estrutura OpenClaw Pro 🏗️
 
 O Ronaldinho Agent não é monolítico. Ele é uma orquestração de microsserviços e camadas de inteligência que garantem autonomia nível L6.

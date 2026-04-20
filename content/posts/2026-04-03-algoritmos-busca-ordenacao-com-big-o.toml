@@ -1,7 +1,11 @@
 id = "2026-04-03-2000"
 slug = "algoritmos-busca-ordenacao-com-big-o"
 title = "Algoritmos e Big O: Entendendo a Eficiência do Código"
+title_en_us = "Algorithms and Big O: Understanding Code Efficiency"
+title_ja_jp = "アルゴリズムと Big O：コード効率の理解"
 summary = "Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade."
+summary_en_us = "An intuitive introduction to algorithmic complexity (time and space) and why Big O is the definitive metric for scalability."
+summary_ja_jp = "アルゴリズムの計算量（時間と空間）への直感的な入門と、Big O がスケーラビリティの決定的な指標である理由。"
 published_at = "2026-04-03T17:00:00+09:00"
 updated_at = "2026-04-03T17:00:00+09:00"
 status = "published"
@@ -46,4 +50,72 @@ Em sistemas com poucos dados, qualquer algoritmo serve. Mas em sistemas de produ
 ## Conclusão
 
 Entender complexidade de algoritmos transforma você de um "escritor de código" em um "engenheiro de software". Antes de cada loop, pergunte-se: "Qual é o Big O disso?".
+"""
+body_en_us = """
+Writing code that works is the first step. Writing code that scales is the second. **Big O** notation is the language we use to describe how fast an algorithm grows as data increases.
+
+## What Big O Notation Is
+
+Big O focuses on the **worst case**. It ignores constants and looks at the growth curve.
+
+*   **O(1)** - Constant: execution time does not change (for example, reading an array element by index).
+*   **O(log n)** - Logarithmic: peak efficiency (for example, Binary Search).
+*   **O(n)** - Linear: time grows in proportion to the amount of data.
+*   **O(n log n)** - Linearithmic: the standard for efficient sorting (Merge Sort, Quick Sort).
+*   **O(n^2)** - Quadratic: the danger zone of nested loops.
+
+```mermaid
+graph TD
+    A[O(1) - Excellent] --> B[O(log n) - Very Good]
+    B --> C[O(n) - Fair]
+    C --> D[O(n log n) - Reasonable]
+    D --> E[O(n^2) - Bad]
+    E --> F[O(2^n) - Terrible]
+```
+
+### Binary Search: the magic of logarithms
+
+Imagine looking for a name in a phone book with 1 million pages. A linear search would take up to 1 million steps. **Binary Search**, by cutting the search space in half repeatedly, would take only **20 steps**.
+
+### Why care?
+
+With small datasets, almost any algorithm works. In production systems with millions of records, though, the gap between O(n) and O(n^2) is the difference between an instant response and a frozen server.
+
+## Conclusion
+
+Understanding algorithmic complexity turns you from a "code writer" into a software engineer. Before every loop, ask yourself: "What is the Big O of this?"
+"""
+body_ja_jp = """
+動くコードを書くことが第一歩なら、スケールするコードを書くことが第二歩です。**Big O** 記法は、データ量が増えたときにアルゴリズムがどのように増大するかを説明するための言語です。
+
+## Big O 記法とは何か
+
+Big O は **最悪ケース** に注目します。定数項は無視し、増加曲線だけを見ます。
+
+*   **O(1)** - 定数時間: 実行時間が変わらない（例: 配列を添字で読む）。
+*   **O(log n)** - 対数時間: 非常に効率がよい（例: 二分探索）。
+*   **O(n)** - 線形時間: データ量に比例して伸びる。
+*   **O(n log n)** - 線形対数時間: 効率的なソートの標準（Merge Sort、Quick Sort）。
+*   **O(n^2)** - 二次時間: ネストループの危険領域。
+
+```mermaid
+graph TD
+    A[O(1) - 優秀] --> B[O(log n) - とても良い]
+    B --> C[O(n) - まずまず]
+    C --> D[O(n log n) - 許容範囲]
+    D --> E[O(n^2) - 悪い]
+    E --> F[O(2^n) - ひどい]
+```
+
+### 二分探索: 対数の魔法
+
+100 万ページの電話帳から名前を探すと想像してください。線形探索なら最大 100 万回めくる必要があります。しかし **二分探索** なら、毎回半分に絞るので、たった **20 回** ほどで済みます。
+
+### なぜ重要なのか
+
+データが少ないシステムでは、どのアルゴリズムでも動くことがあります。しかし、本番で数百万件を扱うなら、O(n) と O(n^2) の差は、即時応答とサーバ停止の差になります。
+
+## 結論
+
+アルゴリズムの計算量を理解すると、単なる「コードを書く人」からソフトウェアエンジニアへ進めます。ループを書くたびに自問すべきです。『これは Big O で何になるか？』
 """

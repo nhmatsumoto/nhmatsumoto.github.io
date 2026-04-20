@@ -1,11 +1,111 @@
 status = "published"
 slug = "ronaldinho-architecture-overview"
-title = "Ronaldinho Architecture Overview"
+title = "Visão Geral da Arquitetura do Ronaldinho"
+title_en_us = "Ronaldinho Architecture Overview"
+title_ja_jp = "Ronaldinho アーキテクチャ概観"
 summary = "Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime."
+summary_en_us = "Overview of the Ronaldinho Agent architecture and runtime modularity choices."
+summary_ja_jp = "Ronaldinho Agent のアーキテクチャとランタイム・モジュラリティ選定の概観。"
 category = "agents"
 version = "v0.1"
 tags = ["agents", "architecture", "runtime"]
 agent_generated_tag = true
 order = 5
 source_path = "docs/ronaldinho/architecture_overview.md"
+body_en_us = """
+# Ronaldinho Architecture Overview
+
+The Ronaldinho Agent is not monolithic. It is an orchestration of services and intelligence layers designed to provide autonomy without losing control over execution.
+
+## Flow diagram
+
+```mermaid
+graph TD
+    User([User]) --> |Telegram| Bridge[Neural Bridge]
+    User --> |Browser| Dashboard[OpenClaw Dashboard]
+
+    subgraph "Intelligence Layer"
+        Bridge <--> Core[Neural Core - FastAPI]
+        Dashboard <--> Core
+        Core --> Skills[Skills Engine]
+        Core --> Memory[Memory Store]
+    end
+
+    subgraph "Autonomous Execution"
+        Core --> Lane[Execution Lane]
+        Core --> Tools[Terminal/File Tools]
+    end
+```
+
+## Key components
+
+### 1. Neural Core (central session)
+
+The brain of the system. Built in FastAPI, it manages requests, compresses context and decides which persona should respond.
+
+### 2. Execution Lanes
+
+A key concept inspired by OpenClaw. Each user gets an execution lane, ensuring the agent does not try to edit the same file in two parallel tasks and reducing I/O conflicts.
+
+### 3. Provider-agnostic design
+
+The core does not depend on a single model. It uses a cascading fallback strategy:
+
+1. Try the primary API.
+2. If quota or availability fails, try fallback providers.
+3. If that also fails, activate browser-based execution.
+4. As a last resort, hand off through the Antigravity bridge.
+
+### 4. Skills Engine
+
+Skills live under `.agent/skills/`. Each skill is an isolated Python module that the agent can load to expand its capabilities without restarting the runtime.
+"""
+body_ja_jp = """
+# Ronaldinho アーキテクチャ概観
+
+Ronaldinho Agent はモノリスではありません。実行制御を失わずに自律性を実現するため、サービス群と知能レイヤを組み合わせたオーケストレーションです。
+
+## フローダイアグラム
+
+```mermaid
+graph TD
+    User([ユーザー]) --> |Telegram| Bridge[Neural Bridge]
+    User --> |Browser| Dashboard[OpenClaw Dashboard]
+
+    subgraph "Intelligence Layer"
+        Bridge <--> Core[Neural Core - FastAPI]
+        Dashboard <--> Core
+        Core --> Skills[Skills Engine]
+        Core --> Memory[Memory Store]
+    end
+
+    subgraph "Autonomous Execution"
+        Core --> Lane[Execution Lane]
+        Core --> Tools[Terminal/File Tools]
+    end
+```
+
+## 主要コンポーネント
+
+### 1. Neural Core（中央セッション）
+
+システムの頭脳です。FastAPI で構築され、リクエスト管理、文脈圧縮、どの persona が応答すべきかの判断を担います。
+
+### 2. Execution Lanes
+
+OpenClaw に着想を得た重要概念です。各ユーザーに専用 lane を与えることで、エージェントが並列タスクで同じファイルを同時編集しようとするのを防ぎ、I/O 競合を減らします。
+
+### 3. Provider 非依存設計
+
+Core は単一モデルに依存しません。段階的 fallback 戦略を用います。
+
+1. まず primary API を試す。
+2. quota や可用性で失敗したら fallback provider を試す。
+3. それでも失敗したら browser ベース実行へ切り替える。
+4. 最後の手段として Antigravity bridge に委譲する。
+
+### 4. Skills Engine
+
+skill は `.agent/skills/` 配下にあり、各 skill は独立した Python module です。ランタイムを再起動せずに能力を拡張できます。
+"""
 view_engine = "binary-tree"

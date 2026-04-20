@@ -1,7 +1,11 @@
 id = "2026-04-03-0850-performance-dotnet"
 slug = "performance-dotnet-pre-compilacao"
 title = "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória"
+title_en_us = ".NET Performance: JIT, AOT and the Cost of Memory Allocation"
+title_ja_jp = ".NET のパフォーマンス：JIT、AOT、メモリ割り当てのコスト"
 summary = "Uma análise profunda sobre o runtime do .NET, focando em Garbage Collector (GC), Just-In-Time compilation e Native AOT para microsserviços."
+summary_en_us = "A deep dive into the .NET runtime focused on the Garbage Collector, Just-In-Time compilation and Native AOT for microservices."
+summary_ja_jp = ".NET ランタイムの深堀り。GC、JIT、マイクロサービス向け Native AOT に焦点を当てて。"
 published_at = "2026-04-03T08:50:00+09:00"
 updated_at = "2026-04-03T08:50:00+09:00"
 status = "published"
@@ -43,4 +47,66 @@ graph LR
 ```
 
 > **Heurística Operacional**: Se o seu serviço leva mais de 500ms para subir no Kubernetes, você deveria considerar Native AOT ou revisar as injeções de dependência pesadas no `Startup`.
+"""
+body_en_us = """
+Modern .NET is no longer the slow framework people remember from 15 years ago. With .NET 8 and 9, Microsoft delivered a platform that rivals C++ and Rust in many latency-sensitive scenarios.
+
+## The Garbage Collector (GC)
+The GC is generational (0, 1 and 2) and optimized for short-lived requests, especially web workloads. The main enemy of performance is the **LOH (Large Object Heap)**.
+
+## JIT vs Native AOT
+*   **JIT (Just-In-Time)**: compiles IL to machine code during execution. Excellent for long-run optimizations via PGO.
+*   **Native AOT (Ahead-Of-Time)**: compiles everything before execution. It produces smaller executables, almost instant cold starts and lower memory usage per instance.
+
+### Allocation rate (\\(A\\))
+System efficiency (\\(E\\)) is inversely proportional to GC pressure (\\(P\\)), which itself depends on allocation rate (\\(A\\)):
+$$E \\propto \\frac{1}{P(A)}$$
+
+## Performance techniques
+*   **Span and ReadOnlySpan**: work with slices of memory without allocating copies.
+*   **ArrayPool**: reuse buffers to avoid LOH fragmentation.
+*   **ValueTask**: reduce heap allocations in frequent async operations.
+
+```mermaid
+graph LR
+    A[C# Code] --> B[IL Compiler]
+    B --> C[DLL / EXE]
+    C --> D{Deployment Type}
+    D -- Standard --> E[JIT Engine]
+    D -- AOT --> F[Native Binary]
+    E & F --> G[Machine Code]
+```
+
+> **Operational Heuristic**: If your service takes more than 500 ms to start in Kubernetes, you should consider Native AOT or revisit the heavy dependency injection work done during startup.
+"""
+body_ja_jp = """
+現代の .NET は、15 年前に語られていた「遅いフレームワーク」ではありません。.NET 8 と 9 によって、Microsoft は多くの低遅延シナリオで C++ や Rust に対抗できるプラットフォームを実現しました。
+
+## Garbage Collector (GC)
+GC は世代別（0、1、2）で、特に Web のような短命リクエストに最適化されています。性能上の大きな敵は **LOH (Large Object Heap)** です。
+
+## JIT vs Native AOT
+*   **JIT (Just-In-Time)**: 実行時に IL を機械語へ変換する。PGO による長期最適化に優れる。
+*   **Native AOT (Ahead-Of-Time)**: 実行前にすべてをコンパイルする。小さな実行ファイル、ほぼ瞬時のコールドスタート、インスタンスあたりの低メモリ使用を実現する。
+
+### アロケーション率 (\\(A\\))
+システム効率 (\\(E\\)) は GC 圧力 (\\(P\\)) に反比例し、その圧力はアロケーション率 (\\(A\\)) に依存します。
+$$E \\propto \\frac{1}{P(A)}$$
+
+## パフォーマンス技法
+*   **Span と ReadOnlySpan**: コピーを作らずメモリの窓を扱う。
+*   **ArrayPool**: バッファを再利用して LOH 断片化を避ける。
+*   **ValueTask**: 頻繁な非同期処理における heap アロケーションを減らす。
+
+```mermaid
+graph LR
+    A[C# Code] --> B[IL Compiler]
+    B --> C[DLL / EXE]
+    C --> D{Deployment Type}
+    D -- Standard --> E[JIT Engine]
+    D -- AOT --> F[Native Binary]
+    E & F --> G[Machine Code]
+```
+
+> **運用ヒューリスティック**: Kubernetes 上でサービス起動に 500 ms 以上かかるなら、Native AOT を検討するか、起動時の重い依存性注入を見直すべきです。
 """

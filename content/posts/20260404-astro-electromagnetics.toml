@@ -1,7 +1,11 @@
 id = "20260404-astro-electromagnetics"
 slug = "sopros-estelares-astrofisica-impulso"
 title = "Sopros Estelares: De Supernovas a Space Weather"
+title_en_us = "Stellar Blasts: From Supernovae to Space Weather"
+title_ja_jp = "星々の息吹：超新星から宇宙天気へ"
 summary = "Anatomia dos fenômenos astrofísicos que geram emissões eletromagnéticas extremas e seu impacto nos sistemas tecnológicos."
+summary_en_us = "Anatomy of astrophysical phenomena that produce extreme electromagnetic emissions and their impact on technological systems."
+summary_ja_jp = "極端な電磁放射を生み出す天体物理学的現象の解剖と、それが技術システムに及ぼす影響。"
 published_at = "2026-04-04T22:45:00+09:00"
 updated_at = "2026-04-04T22:45:00+09:00"
 status = "published"
@@ -32,3 +36,51 @@ No nosso quintal solar, a distinção é vital para a resiliência:
 ### Conclusão
 A compreensão desses fenômenos não é apenas acadêmica; cada um deles define um "envelope de teste" para a resiliência de sistemas espaciais e terrestres.
 '''
+body_en_us = """
+Stars do not generate an "EMP" in the strict sense used in terrestrial electronics engineering, but they do produce extreme electromagnetic emissions, shock waves and magnetized plasma that challenge our infrastructure.
+
+### 1. Core-collapse supernova
+The collapsing core ejects neutrinos and drives a shock wave. The critical moment for any theoretical electronics impact is the **shock breakout**: a short, intense UV/X-ray flash that crosses the stellar surface. It is the perfect model for studying transient impulsive emissions.
+
+### 2. Gamma-ray bursts (GRBs)
+A GRB is the closest cosmological analogue to an extreme electromagnetic pulse. Associated with ultra-relativistic jets, they are ideal for modeling:
+- **Anisotropy**: energy concentrated in collimated beams.
+- **Temporal width**: millisecond pulses carrying galactic-scale energies.
+- **Energy deposition**: how gamma radiation interacts with matter across light-year distances.
+
+### 3. Space weather: flares vs CMEs
+In our own solar neighborhood, this distinction is vital for resilience:
+
+| Phenomenon | Origin | Primary Target | Duration | Impact |
+| :--- | :--- | :--- | :--- | :--- |
+| **Solar Flare** | Magnetic Reconnection | Ionosphere (Radio/GPS) | Minutes | Radio Blackout |
+| **CME** | Magnetized Plasma | High-Voltage Grids | Hours / Days | Induced Currents (GIC) |
+| **GRB** | Relativistic Jets | Ozone Layer | Milliseconds | Atmospheric Extinction |
+
+### Conclusion
+Understanding these phenomena is not merely academic. Each one defines a test envelope for the resilience of space and terrestrial systems.
+"""
+body_ja_jp = """
+恒星は、地上電子工学でいう厳密な意味での「EMP」を発生させるわけではありません。しかし、極端な電磁放射、衝撃波、磁化プラズマを生み出し、私たちのインフラに深い影響を与えます。
+
+### 1. 核崩壊型超新星
+崩壊する核はニュートリノを放出し、衝撃波を駆動します。理論上、電子機器への影響を考えるうえで重要なのが **shock breakout** です。恒星表面を突き抜ける短く強烈な UV/X-ray フラッシュであり、過渡的な衝撃放射を研究する理想モデルです。
+
+### 2. ガンマ線バースト (GRB)
+GRB は、極端な電磁パルスに最も近い宇宙論的アナロジーです。超相対論的ジェットに結びついており、次の点をモデル化するのに適しています。
+- **異方性**: エネルギーが細く絞られたビームに集中すること。
+- **時間幅**: 銀河級のエネルギーをミリ秒で運ぶパルス。
+- **エネルギー沈着**: ガンマ線放射が光年スケールで物質とどう相互作用するか。
+
+### 3. 宇宙天気: flare と CME
+私たちの太陽圏では、この区別がレジリエンスにとって重要です。
+
+| 現象 | 起源 | 主な対象 | 持続時間 | 影響 |
+| :--- | :--- | :--- | :--- | :--- |
+| **Solar Flare** | 磁気リコネクション | 電離層（Radio/GPS） | 分 | 通信途絶 |
+| **CME** | 磁化プラズマ | 高圧送電網 | 時間 / 日 | 誘導電流 (GIC) |
+| **GRB** | 相対論的ジェット | オゾン層 | ミリ秒 | 大気消失級の影響 |
+
+### 結論
+これらの現象を理解することは単なる学問ではありません。それぞれが、宇宙システムと地上システムのレジリエンスを試験するための包絡条件を定義します。
+"""

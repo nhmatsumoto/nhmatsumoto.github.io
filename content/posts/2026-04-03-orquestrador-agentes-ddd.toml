@@ -1,7 +1,11 @@
 id = "2026-04-03-0900"
 slug = "orquestrador-agentes-ddd"
 title = "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua"
+title_en_us = "DDD Agent Orchestrator: Translating Natural Language into Ubiquitous Language"
+title_ja_jp = "DDD エージェント・オーケストレーター：自然言語をユビキタス言語へ"
 summary = "Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA."
+summary_en_us = "Technical note on converting natural language into DDD artifacts via multi-agent AI orchestration."
+summary_ja_jp = "複数の AI エージェントのオーケストレーションを用いて、自然言語を DDD のアーティファクトに変換する技術ノート。"
 published_at = "2026-04-02T21:00:00+09:00"
 updated_at = "2026-04-02T21:00:00+09:00"
 status = "published"
@@ -86,4 +90,152 @@ Quando dois agentes propõem nomes diferentes para o mesmo conceito, o Orquestra
 ## Conclusão
 
 Essa arquitetura não apenas automatiza a tradução de requisitos, mas garante que a **Linguagem Ubíqua** seja o fio condutor de toda a engenharia, reduzindo drasticamente o retrabalho e as falhas de comunicação entre humanos e máquinas.
+"""
+body_en_us = """
+Translating free-form requirements into a consistent **ubiquitous language** is one of the most expensive bottlenecks in products with complex domains. This post describes an agent-orchestration architecture that converts natural language into DDD artifacts such as a glossary, commands, events, invariants and bounded contexts.
+
+## Context and motivation
+
+Documentation, code and conversation often use different words for the same concept, such as "customer", "buyer", "holder" or "account". That creates ambiguity and semantic bugs. In DDD, ubiquitous language is the discipline of building a shared and rigorous vocabulary between business people and engineers, grounded in the domain model.
+
+DDD also decomposes problems by domain and delimits independent areas as *Bounded Contexts*, which in practice often align well with services or microservices.
+
+## The orchestrator architecture
+
+The idea is an **orchestrator** that receives a request in natural language and produces two coupled results:
+
+1. **Language and domain artifacts**: context glossary, forbidden synonyms, canonical definitions, commands, events and invariants.
+2. **Multi-agent execution plan**: tasks for specialized agents in modeling, API, persistence, testing and security, all with structured and traceable output.
+
+```mermaid
+flowchart TD
+  A[Natural-Language Input] --> B[Intent and Context Detection]
+  B --> C[DDD Translator: Ubiquitous Language]
+  C --> D{Task Router}
+  D --> E[Agent: Domain Modeling]
+  D --> F[Agent: Implementation / API]
+  D --> G[Agent: Tests and Invariants]
+  D --> H[Agent: Security and Privacy]
+  E --> I[Feedback and Decision Memory]
+  F --> I
+  G --> I
+  H --> I
+  I --> C
+```
+
+## Implementation steps
+
+The most robust way to keep traceability is to require **structured outputs**. In modern LLM APIs, this is usually done with JSON Schema.
+
+1) **Define the contract of the DDD Translator**. It should return `boundedContext`, `glossario`, `entidades`, `comandos`, `eventos`, `regras` and `termosProibidos`.
+
+```json
+{
+  "type": "object",
+  "required": ["boundedContext", "glossario", "eventos", "regras"],
+  "properties": {
+    "boundedContext": { "type": "string" },
+    "glossario": {
+      "type": "array",
+      "items": { "type": "object", "required": ["termo", "definicao"], "properties": { ... } }
+    },
+    ...
+  }
+}
+```
+
+2) **Route to specialized agents**: each agent consumes the ubiquitous language and returns a focused deliverable.
+3) **Enforce modeling consistency**: entities and aggregates must preserve invariants and expose methods in the domain language.
+
+## Lifecycle of a bounded context
+
+In multi-agent systems, a bounded context is not just a logical division in code; it is the execution environment of a specialized subagent. Its lifecycle follows three critical phases:
+
+1.  **Discovery and isolation**: the orchestrator identifies which domains are affected and isolates the tools and history needed by the corresponding agent.
+2.  **Semantic synchronization**: before writing anything, the agent checks whether the planned term already exists in the glossary or conflicts with a term from another context.
+3.  **Invariant consolidation**: the domain agent ensures that application-level business rules, such as "an order cannot have a negative value", are respected in every generated command.
+
+## Conflict resolution and ubiquitous language
+
+When two agents propose different names for the same concept, the orchestrator acts as a **domain mediator**. It uses a curated shared memory to force convergence.
+
+*   **Example**: if the API agent proposes `userId` and the domain agent proposes `CustomerIdentifier`, the orchestrator consults the canonical glossary and enforces the term defined with the human stakeholders.
+
+## Conclusion
+
+This architecture does not merely automate requirement translation. It ensures that **ubiquitous language** becomes the thread connecting all engineering work, drastically reducing rework and semantic misalignment between humans and machines.
+"""
+body_ja_jp = """
+自由文で書かれた要件を、一貫した **ユビキタス言語** へ変換することは、複雑ドメインを持つ製品における最も高価なボトルネックの一つです。この post では、自然言語を、用語集、コマンド、イベント、不変条件、境界づけられたコンテキストといった DDD アーティファクトへ変換するエージェント・オーケストレーションを説明します。
+
+## 背景と動機
+
+ドキュメント、コード、会話は、しばしば同じ概念に対して異なる言葉、たとえば「顧客」「購入者」「契約者」「account」を使います。そこから曖昧さと意味的バグが生まれます。DDD におけるユビキタス言語とは、ビジネス側と開発側がドメインモデルに基づいて共有する、厳密な語彙を築く実践です。
+
+DDD はまた、問題をドメインごとに分解し、独立領域を *Bounded Context* として区切ります。これは実務上、サービスやマイクロサービスの境界とよく整合します。
+
+## オーケストレーターのアーキテクチャ
+
+ここで考える **オーケストレーター** は、自然言語の要求を受け取り、二つの結びついた成果を返します。
+
+1. **言語・ドメイン成果物**: コンテキストの用語集、禁止同義語、正規定義、コマンド、イベント、不変条件。
+2. **マルチエージェント実行計画**: モデリング、API、永続化、テスト、セキュリティ担当エージェントへのタスク。出力は構造化され、追跡可能であること。
+
+```mermaid
+flowchart TD
+  A[自然言語入力] --> B[意図と文脈の検出]
+  B --> C[DDD 翻訳器: ユビキタス言語]
+  C --> D{タスク・ルーター}
+  D --> E[エージェント: ドメインモデリング]
+  D --> F[エージェント: 実装 / API]
+  D --> G[エージェント: テストと不変条件]
+  D --> H[エージェント: セキュリティとプライバシー]
+  E --> I[フィードバックと意思決定メモリ]
+  F --> I
+  G --> I
+  H --> I
+  I --> C
+```
+
+## 実装ステップ
+
+トレーサビリティを保つ最も堅牢な方法は、**構造化出力** を必須にすることです。現代の LLM API では、通常 JSON Schema を使います。
+
+1) **DDD 翻訳器の契約を定義する**。返すべきは `boundedContext`, `glossario`, `entidades`, `comandos`, `eventos`, `regras`, `termosProibidos` です。
+
+```json
+{
+  "type": "object",
+  "required": ["boundedContext", "glossario", "eventos", "regras"],
+  "properties": {
+    "boundedContext": { "type": "string" },
+    "glossario": {
+      "type": "array",
+      "items": { "type": "object", "required": ["termo", "definicao"], "properties": { ... } }
+    },
+    ...
+  }
+}
+```
+
+2) **専門エージェントへルーティングする**: 各エージェントはユビキタス言語を入力にして、焦点の合った成果物を返す。
+3) **モデリングの一貫性を強制する**: entity や aggregate は不変条件を守り、ドメイン言語で意味のあるメソッドを公開しなければならない。
+
+## Bound Context のライフサイクル
+
+マルチエージェント・システムでは、Bounded Context はコード上の論理区分ではなく、専門 subagent の実行環境でもあります。そのライフサイクルは三つの重要フェーズを持ちます。
+
+1.  **発見と隔離**: オーケストレーターが影響するドメインを特定し、そのエージェントに必要なツールと履歴だけを切り出す。
+2.  **意味同期**: 何かを書き始める前に、使おうとする用語が既存の用語集にあるか、別コンテキストの用語と衝突しないかを確認する。
+3.  **不変条件の統合**: ドメイン・エージェントが、「注文金額は負になれない」のような業務ルールを、生成される各コマンドで保証する。
+
+## 競合解決とユビキタス言語
+
+二つのエージェントが同じ概念に別名を提案した場合、オーケストレーターは **ドメイン・メディエーター** として振る舞います。キュレーションされた共有メモリを使って語彙を収束させます。
+
+*   **例**: API エージェントが `userId` を提案し、ドメイン・エージェントが `CustomerIdentifier` を提案した場合、オーケストレーターは正規用語集を参照し、人間と合意した語を強制します。
+
+## 結論
+
+このアーキテクチャは、要件翻訳を自動化するだけではありません。**ユビキタス言語** を全エンジニアリングの導線にし、人間と機械の間に生まれる再作業と意味のずれを大きく減らします。
 """

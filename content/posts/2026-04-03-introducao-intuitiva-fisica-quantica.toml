@@ -1,7 +1,11 @@
 id = "2026-04-03-2400"
 slug = "introducao-intuitiva-fisica-quantica"
 title = "O Universo Quântico: Além da Lógica Clássica"
+title_en_us = "The Quantum Universe: Beyond Classical Logic"
+title_ja_jp = "量子宇宙：古典論理の先へ"
 summary = "Uma jornada intuitiva pela física quântica. Superposição, entrelaçamento e por que o observador muda a realidade."
+summary_en_us = "An intuitive journey through quantum physics. Superposition, entanglement, and why the observer changes reality."
+summary_ja_jp = "量子物理への直感的な旅。重ね合わせ、もつれ、そして観測者がなぜ現実を変えるのか。"
 published_at = "2026-04-03T21:00:00+09:00"
 updated_at = "2026-04-03T21:00:00+09:00"
 status = "published"
@@ -43,4 +47,66 @@ Não é apenas filosofia. A física quântica é a base para:
 ## Conclusão
 
 O universo quântico nos ensina que a realidade é fundamentalmente baseada em **probabilidades**, não em certezas. Para nós, engenheiros, isso abre as portas para uma nova era de processamento de informação que estamos apenas começando a entender.
+"""
+body_en_us = """
+Forget everything you think you know about how the world works. At the subatomic scale, an object is not in just one place, but in many at once. Welcome to **quantum mechanics**.
+
+## Superposition: side A and side B at the same time
+
+Unlike a switch that is on or off, a quantum particle can exist in a **superposition** of both states. We only discover the realized state when we measure it.
+
+```mermaid
+graph TD
+  A[Qubit] -->|Collapse| B[State 0]
+  A -->|Collapse| C[State 1]
+  A -.->|Before Measurement| D[Superposition of 0 and 1]
+```
+
+### Entanglement: spooky action at a distance
+
+**Quantum entanglement** is the phenomenon in which two particles become so deeply connected that the state of one instantly affects the other, regardless of distance. Einstein called it spooky action at a distance.
+
+*   **Heisenberg's Uncertainty Principle**: you cannot know the exact position and exact velocity of a particle at the same time. The more you know one, the less you know the other.
+
+## Why this matters
+
+This is not just philosophy. Quantum physics is the basis of:
+*   **Transistors**: the reason your computer works.
+*   **Lasers**: the technology that carries the internet through optical fiber.
+*   **MRI scanners**: machines that save lives in hospitals.
+
+## Conclusion
+
+The quantum universe teaches us that reality is fundamentally made of **probabilities**, not certainties. For engineers, that opens the door to a new era of information processing that we are only beginning to understand.
+"""
+body_ja_jp = """
+世界の仕組みについて知っていると思っていることを、いったん忘れてください。亜原子のスケールでは、物体は一つの場所にあるのではなく、同時に多くの状態にあります。ようこそ **量子力学** へ。
+
+## 重ね合わせ: A 面と B 面が同時に存在する
+
+オンかオフかのスイッチとは異なり、量子粒子は両方の状態の **重ね合わせ** に存在できます。私たちが実際の状態を知るのは、測定した瞬間だけです。
+
+```mermaid
+graph TD
+  A[量子ビット] -->|崩壊| B[状態 0]
+  A -->|崩壊| C[状態 1]
+  A -.->|測定前| D[0 と 1 の重ね合わせ]
+```
+
+### 量子もつれ: 遠隔の不気味な作用
+
+**量子もつれ** とは、二つの粒子が極端に深く結びつき、一方の状態が距離に関係なく他方へ即座に影響を与える現象です。アインシュタインはこれを「不気味な遠隔作用」と呼びました。
+
+*   **ハイゼンベルクの不確定性原理**: 粒子の正確な位置と正確な速度を同時には知ることができません。一方を詳しく知るほど、もう一方は不確かになります。
+
+## なぜ重要か
+
+これは単なる哲学ではありません。量子物理は次の基盤です。
+*   **トランジスタ**: あなたのコンピュータを動かしているもの。
+*   **レーザー**: 光ファイバーを通してインターネットを運ぶ技術。
+*   **MRI**: 病院で命を救う装置。
+
+## 結論
+
+量子宇宙は、現実が確実性ではなく **確率** を基礎にしていることを教えてくれます。エンジニアにとってこれは、私たちがようやく理解し始めたばかりの、新しい情報処理の時代への扉です。
 """

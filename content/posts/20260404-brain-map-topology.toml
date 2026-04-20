@@ -1,7 +1,11 @@
 id = "20260404-brain-map-topology"
 slug = "brain-map-topology-hiro"
 title = "Topologias de Conhecimento: O Grafo Hiro"
+title_en_us = "Knowledge Topologies: The Hiro Graph"
+title_ja_jp = "知識のトポロジー：Hiro グラフ"
 summary = "Explorando a implementação de uma hierarquia D3.js para visualizar a inteligência técnica de forma não-linear."
+summary_en_us = "Exploring the implementation of a D3.js hierarchy to visualize technical intelligence in a non-linear way."
+summary_ja_jp = "技術的知性を非線形に可視化するための D3.js ハイアラーキー実装の探求。"
 published_at = "2026-04-04T22:20:00+09:00"
 updated_at = "2026-04-04T22:20:00+09:00"
 status = "published"
@@ -24,4 +28,38 @@ Utilizamos D3.js para implementar uma simulação de forças com três camadas p
 A mente não armazena fatos isolados; ela armazena **grafos de associação**. Ao visualizar o `DDD` conectado a `Engineering` e, consequentemente, a projetos práticos, reforçamos a ideia de que a teoria e a prática são inseparáveis.
 
 A implementação técnica usa um arquivo de configuração centralizado (`config/graph.toml`), permitindo que a topologia mude dinamicamente conforme novas áreas de estudo — como AI, Robotics ou Security — surgem.
+"""
+body_en_us = """
+The **Brain Map** (Knowledge Graph) has evolved. We moved from a flat list of publications to a topology that reflects the structure of the mind.
+
+### The central node: Hiro
+Every operating system has a kernel. In Technical Knowledge OS, the **Hiro** node plays that role: the convergence point for all accumulated intelligence and experience.
+
+### Layers of abstraction
+We use D3.js to implement a force simulation with three main layers:
+1.  **Hiro (Root)**: the central core.
+2.  **Skill groups (Tech Skills, Engineering, Labs)**: semantic aggregators that define broad areas of work.
+3.  **Topics (Tags)**: bridges that connect the groups to the final content.
+
+### Why hierarchy?
+The mind does not store isolated facts; it stores **graphs of association**. When `DDD` is visualized as connected to `Engineering` and, from there, to practical projects, we reinforce the idea that theory and practice are inseparable.
+
+The technical implementation uses a centralized configuration file (`config/graph.toml`), allowing the topology to change dynamically as new study areas such as AI, Robotics or Security emerge.
+"""
+body_ja_jp = """
+**Brain Map**（Knowledge Graph）は進化しました。単なる publication の平面リストから、思考の構造を反映するトポロジーへ移行しています。
+
+### 中央ノード: Hiro
+どんなオペレーティングシステムにも kernel があります。Technical Knowledge OS において、その役割を果たすのが **Hiro** ノードです。蓄積された知性と経験が収束する中心点です。
+
+### 抽象化レイヤ
+D3.js を使い、3 つの主要レイヤを持つ force simulation を実装しています。
+1.  **Hiro (Root)**: 中心核。
+2.  **Skill groups (Tech Skills, Engineering, Labs)**: 大きな活動領域を定義する意味的アグリゲータ。
+3.  **Topics (Tags)**: グループと最終コンテンツをつなぐブリッジ。
+
+### なぜ階層なのか？
+心は孤立した事実を保存するのではなく、**連想のグラフ** を保存します。`DDD` が `Engineering` とつながり、さらに実践的なプロジェクトへつながる形で可視化されると、理論と実践が切り離せないことを強く示せます。
+
+実装面では、中央設定ファイル `config/graph.toml` を使っています。これにより、AI、Robotics、Security のような新しい学習領域が現れても、トポロジーを動的に変えられます。
 """

@@ -1,7 +1,11 @@
 id = "2026-04-03-2300"
 slug = "simulacao-fisica-particulas-monte-carlo"
 title = "Simulação de Partículas: O poder dos Métodos de Monte Carlo"
+title_en_us = "Particle Simulation: The Power of Monte Carlo Methods"
+title_ja_jp = "粒子シミュレーション：モンテカルロ法の威力"
 summary = "Explorando a simulação do universo e sistemas complexos usando estatística, caminhos aleatórios e leis da física codificadas."
+summary_en_us = "Exploring the simulation of the universe and complex systems using statistics, random walks and encoded laws of physics."
+summary_ja_jp = "統計、ランダムウォーク、コード化された物理法則を用いた宇宙と複雑系のシミュレーション探求。"
 published_at = "2026-04-03T20:00:00+09:00"
 updated_at = "2026-04-03T20:00:00+09:00"
 status = "published"
@@ -46,4 +50,72 @@ Muitas técnicas de IA, como **Markov Chain Monte Carlo (MCMC)**, são usadas pa
 ## Conclusão
 
 Simular o mundo físico é o teste máximo para a nossa arquitetura de software. Ela exige precisão matemática, gerenciamento eficiente de memória e, acima de tudo, a compreensão de que a complexidade da natureza pode ser aproximada por regras simples e muita aleatoriedade controlada.
+"""
+body_en_us = """
+Simulating the universe does not require knowing the exact position and speed of every atom. Instead, we use **stochastic simulation**, and the king of that approach is the **Monte Carlo method**.
+
+## What Monte Carlo is
+
+The name comes from the famous casino in Monaco, because the technique depends on **randomness**. If you want to calculate the area of a circle but only know the area of the surrounding square, you can throw random darts into the square. The ratio of darts that land inside the circle gives an approximation of `pi`.
+
+```mermaid
+graph LR
+  A[Random Input] --> B[Physical Process]
+  B --> C[Deterministic Result]
+  C --> D[Statistical Mean]
+  D --> E[Approximation of Reality]
+```
+
+### Particle and fluid simulation
+
+In particle physics, Monte Carlo is used to simulate collisions in accelerators such as CERN. In software, the same laws appear in other guises:
+
+*   **Gravity**: `F = G * (m1 * m2) / r^2`
+*   **Collisions**: conservation of linear momentum and kinetic energy.
+
+## Laws of physics in code
+
+Imagine applying physics to your knowledge graph. Each node, a post or project, has a mass based on the number of connections, while links act as springs trying to keep nodes near each other. That is the principle behind **D3 force layout**.
+
+### The connection with AI
+
+Many AI techniques, such as **Markov Chain Monte Carlo (MCMC)**, are used to approximate complex probability distributions in Bayesian inference systems.
+
+## Conclusion
+
+Simulating the physical world is a maximum test for software architecture. It requires mathematical precision, efficient memory management and the humility to accept that nature's complexity can often be approximated through simple rules and controlled randomness.
+"""
+body_ja_jp = """
+宇宙をシミュレートするのに、すべての原子の位置と速度を正確に知る必要はありません。その代わりに使うのが **確率的シミュレーション** であり、その王様が **モンテカルロ法** です。
+
+## モンテカルロとは何か
+
+この名前はモナコの有名なカジノに由来します。なぜなら、この技法は **ランダム性** に依存するからです。円の面積を知りたいが、外側の正方形の面積しか分からないなら、正方形へランダムにダーツを投げればよい。円の中に入った割合から `pi` を近似できます。
+
+```mermaid
+graph LR
+  A[ランダム入力] --> B[物理過程]
+  B --> C[決定論的結果]
+  C --> D[統計平均]
+  D --> E[現実の近似]
+```
+
+### 粒子と流体のシミュレーション
+
+粒子物理では、CERN のような加速器衝突をシミュレートするためにモンテカルロ法が使われます。ソフトウェアでも同じ法則が別の形で現れます。
+
+*   **重力**: `F = G * (m1 * m2) / r^2`
+*   **衝突**: 運動量保存と運動エネルギー保存。
+
+## コードの中の物理法則
+
+自分の knowledge graph に物理を適用するところを想像してください。各 node（post や project）は接続数に応じた「質量」を持ち、link は node 同士を近づけようとする「ばね」になります。これが **D3 force layout** の原理です。
+
+### AI との接点
+
+**Markov Chain Monte Carlo (MCMC)** のような多くの AI 技法は、ベイズ推論系における複雑な確率分布を近似するために使われます。
+
+## 結論
+
+物理世界のシミュレーションは、ソフトウェア・アーキテクチャにとって最大級の試験です。数学的精密さ、効率的なメモリ管理、そして自然の複雑さは単純ルールと制御されたランダム性で近似できるという理解が求められます。
 """

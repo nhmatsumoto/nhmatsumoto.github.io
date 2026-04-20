@@ -1,7 +1,11 @@
 id = "20260404-electromagnetic-resilience"
 slug = "resiliencia-eletromagnetica-acoplamento"
 title = "Engenharia de Resiliência Eletromagnética e Acoplamento"
+title_en_us = "Electromagnetic Resilience Engineering and Coupling"
+title_ja_jp = "電磁レジリエンス工学と結合"
 summary = "Do ponto zero à ruptura de junções: como circuitos reais falham sob transientes de alta intensidade."
+summary_en_us = "From ground zero to junction breakdown: how real circuits fail under high-intensity transients."
+summary_ja_jp = "グラウンド・ゼロから接合破壊まで：現実の回路が高強度過渡現象下でどう壊れるか。"
 published_at = "2026-04-04T22:40:00+09:00"
 updated_at = "2026-04-04T22:40:00+09:00"
 status = "published"
@@ -50,3 +54,85 @@ Se o objetivo é a resiliência técnica legítima, o caminho é o endurecimento
 
 No fim, dois equipamentos à mesma distância do ponto zero terão resultados totalmente diferentes se um deles for projetado com resiliência em camadas.
 '''
+body_en_us = """
+Electromagnetic "damage" (EMP) is not just the heat of an explosion. It is the fraction of emitted energy that manages to **couple** into your system. A circuit's vulnerability depends directly on its geometry, shielding and filtering.
+
+### The damage equation
+To understand resilience, we do not think in terms of a simple radius of effect. Damage is a transfer function of energy:
+
+$$ Damage = Source \\times Propagation \\times Coupling \\times Vulnerability $$
+
+That means two devices at the same distance from ground zero can have completely different outcomes:
+
+| Component | Description | Impact Factor |
+| :--- | :--- | :--- |
+| **Source** | Intensity and duration of the original pulse | High (E1/E2/E3) |
+| **Propagation** | Losses through the medium and distance | Inverse Square |
+| **Coupling** | Efficiency of the "antenna" (cables, traces) | Target Geometry |
+| **Vulnerability** | Silicon resistance (MOSFETs, ICs) | Thermal Threshold |
+
+1.  A **small device**, disconnected and without long cables, may survive.
+2.  A **grid-connected system** with long wiring or antennas will experience much more coupling and damage.
+
+### The myth of the "radius of effect"
+In technical documents such as FEMA references, the effect on electronics can be locally severe near a detonation, while in high-altitude scenarios it can cover enormous regions. Thinking in terms of "radius" is less effective than focusing on the vulnerability of the individual system.
+
+### Understanding the E1, E2 and E3 components
+The physics of a large-scale nuclear pulse can be separated into three danger phases:
+- **E1 (Fast)**: nanosecond pulse. It is the most problematic for sensitive electronics, inducing transient voltages and currents that exceed chip tolerance.
+- **E2 (Intermediate)**: similar to lightning surges, dangerous for local electrical systems already stressed by E1.
+- **E3 (Slow)**: pulse lasting seconds to minutes that affects long metallic infrastructure such as high-voltage grids, injecting geomagnetically induced currents.
+
+### Failure mechanisms and hardening
+Failure occurs when transients exceed the electrical or thermal tolerance of semiconductor junctions:
+- junction breakdown and oxide-layer burn-through.
+- *Latch-up* and permanent degradation of integrated circuits.
+
+If the goal is legitimate technical resilience, the path is hardening:
+- **Shielding and Continuity**: metallic enclosures and grounding.
+- **Filters and Protectors**: surge suppression on coupling paths.
+- **Critical Isolation**: fewer exposed cables and preference for non-metallic interfaces.
+
+In the end, two devices at the same distance from ground zero can behave completely differently if one of them was designed with layered resilience.
+"""
+body_ja_jp = """
+電磁的な「損傷」(EMP) は、単なる爆発熱ではありません。放出されたエネルギーのうち、どれだけがシステムへ **結合** できたかです。回路の脆弱性は、その幾何形状、遮蔽、フィルタリングに直接依存します。
+
+### 損傷の方程式
+レジリエンスを理解するには、単純な影響半径で考えてはいけません。損傷はエネルギー伝達の関数です。
+
+$$ Damage = Source \\times Propagation \\times Coupling \\times Vulnerability $$
+
+したがって、グラウンド・ゼロから同じ距離にある 2 つの機器でも、結果は完全に異なりえます。
+
+| 要素 | 説明 | 影響係数 |
+| :--- | :--- | :--- |
+| **Source** | 元パルスの強度と持続時間 | 高 (E1/E2/E3) |
+| **Propagation** | 媒質中の損失と距離 | 逆二乗 |
+| **Coupling** | 「アンテナ」（ケーブル、配線）の効率 | 標的の幾何形状 |
+| **Vulnerability** | シリコンの耐性（MOSFET、IC） | 熱的しきい値 |
+
+1.  **小型機器** で、切り離され長いケーブルがなければ生き残る可能性があります。
+2.  **送電網につながったシステム** で、長い配線やアンテナを持つものは、はるかに強い結合と損傷を受けます。
+
+### 「影響半径」という神話
+FEMA のような技術文書でも、電子機器への影響は爆発近傍で局所的に深刻になりうる一方、高高度シナリオでは広大な領域を覆うことがあります。「半径」で考えるより、個々のシステムの脆弱性に注目する方が有効です。
+
+### E1、E2、E3 成分を理解する
+大規模核パルスの物理は、3 つの危険フェーズに分けられます。
+- **E1 (Fast)**: ナノ秒パルス。高感度電子機器に最も厄介で、チップの許容値を超える過渡電圧・電流を誘起します。
+- **E2 (Intermediate)**: 雷サージに近く、E1 ですでに傷んだ局所電力系にとって危険です。
+- **E3 (Slow)**: 数秒から数分続くパルスで、高圧送電網のような長大な金属インフラに影響し、地磁気誘導電流を注入します。
+
+### 故障メカニズムとハードニング
+故障は、過渡現象が半導体接合の電気的または熱的耐性を超えたときに起こります。
+- 接合破壊と酸化膜の焼損
+- *Latch-up* と集積回路の恒久的劣化
+
+正当な技術的レジリエンスを目指すなら、道はハードニングです。
+- **Shielding and Continuity**: 金属筐体と接地
+- **Filters and Protectors**: 結合経路上のサージ抑制
+- **Critical Isolation**: 露出ケーブルを減らし、非金属インターフェースを優先する
+
+結局、同じ距離にある 2 台の機器でも、一方が多層レジリエンスを前提に設計されていれば、挙動は大きく変わります。
+"""

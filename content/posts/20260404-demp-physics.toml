@@ -1,7 +1,11 @@
 id = "20260404-demp-physics"
 slug = "fisica-demp-pulsos-dispersos"
 title = "A Física dos Pulsos Dispersos: Além do EMP Convencional"
+title_en_us = "The Physics of Dispersed Pulses: Beyond Conventional EMP"
+title_ja_jp = "分散パルスの物理学：従来の EMP を超えて"
 summary = "Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos."
+summary_en_us = "A deep exploration of DEMP phenomena, GRBs and the dissipation of electromagnetic pulses in dispersive media."
+summary_ja_jp = "DEMP 現象、ガンマ線バースト、分散性媒質中の電磁パルス減衰の深い考察。"
 published_at = "2026-04-04T22:30:00+09:00"
 updated_at = "2026-04-04T22:30:00+09:00"
 status = "published"
@@ -25,4 +29,40 @@ Podemos separar os fenômenos em três grandes vertentes astrofísicas:
 Diferente das estrelas, a detonação em alta altitude utiliza o **Efeito Compton**, onde raios gama colidem com moléculas de ar, ejetando elétrons acelerados que, submetidos ao campo magnético terrestre, geram o pulso eletromagnético continental (HEMP).
 
 Enquanto a estrela deforma o campo magnético do planeta como um todo, a versão artificial foca em saturar componentes eletrônicos diretamente através do acoplamento rápido e violento.
+"""
+body_en_us = """
+The term **Dispersed Electromagnetic Pulse (DEMP)** is not merely a technical curiosity. It is a fundamental concept for understanding how energy travels through complex media such as the Earth's ionosphere.
+
+### What is dispersion?
+A conventional pulse is a transient perturbation of extremely short duration. However, when that pulse travels through a dispersive medium, its different frequency components propagate at different velocities. The result is that the signal spreads out in time, which is precisely what we call a **dispersed pulse**.
+
+### Sources of irradiance
+We can split the phenomena into three major astrophysical branches:
+
+1.  **Core-collapse supernovae**: when the core collapses, a *shock breakout* occurs, an intense UV/X-ray flash that serves as a theoretical model for transient radiative pulses.
+2.  **Gamma-ray bursts (GRBs)**: the closest analogue to an extreme electromagnetic pulse. Associated with ultra-relativistic jets, they carry colossal energies in gamma radiation across extremely narrow time windows.
+3.  **Solar events (CMEs & flares)**: the stellar "breath" that, when interacting with the magnetosphere, induces currents in industrial infrastructure.
+
+### Anatomy of the nuclear pulse (HEMP)
+Unlike stars, a high-altitude detonation relies on the **Compton Effect**, in which gamma rays collide with air molecules and eject accelerated electrons that, under the Earth's magnetic field, generate a continental-scale electromagnetic pulse (HEMP).
+
+Where a star deforms the magnetic field of the planet as a whole, the artificial version focuses on directly saturating electronic components through fast, violent coupling.
+"""
+body_ja_jp = """
+**分散電磁パルス (DEMP)** という用語は、単なる技術的珍奇ではありません。地球電離圏のような複雑な媒質を通してエネルギーがどう伝わるかを理解するための基本概念です。
+
+### 分散とは何か？
+通常のパルスは、極めて短い時間だけ続く過渡的な擾乱です。しかし、そのパルスが分散性媒質を通過すると、周波数成分ごとに伝播速度が変わります。その結果、信号は時間方向に広がります。これが技術的にいう **分散パルス** です。
+
+### 放射源の分類
+現象は大きく 3 つの天体物理学的系統に分けられます。
+
+1.  **核崩壊型超新星**: 核が崩壊すると *shock breakout* が起こり、強烈な UV/X-ray フラッシュが過渡放射パルスの理論モデルとなる。
+2.  **ガンマ線バースト (GRB)**: 極端な電磁パルスに最も近いアナロジー。超相対論的ジェットに結びつき、ごく短い時間窓に莫大なガンマ線エネルギーを運ぶ。
+3.  **太陽イベント (CME と flare)**: 磁気圏と相互作用し、産業インフラに電流を誘導する恒星の「息吹」。
+
+### 核パルス (HEMP) の解剖
+恒星とは異なり、高高度爆発は **コンプトン効果** に依存します。ガンマ線が大気分子に衝突し、加速電子を放出し、それらが地球磁場のもとで大陸規模の電磁パルス (HEMP) を生み出します。
+
+恒星が惑星全体の磁場を変形させるのに対し、人工版は高速で激しい結合によって電子部品を直接飽和させることに焦点を当てています。
 """

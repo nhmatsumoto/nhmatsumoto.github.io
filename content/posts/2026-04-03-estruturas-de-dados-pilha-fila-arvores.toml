@@ -1,7 +1,11 @@
 id = "2026-04-03-2100"
 slug = "estruturas-de-dados-pilha-fila-arvores"
 title = "Excelência em Dados: Pilhas, Filas e Árvores"
+title_en_us = "Excellence in Data: Stacks, Queues and Trees"
+title_ja_jp = "データの美学：スタック、キュー、ツリー"
 summary = "Por que a escolha da estrutura de dados correta é mais importante do que o próprio algoritmo para a performance de sistemas complexos."
+summary_en_us = "Why choosing the right data structure matters more than the algorithm itself for the performance of complex systems."
+summary_ja_jp = "複雑なシステムのパフォーマンスにおいて、アルゴリズムよりも適切なデータ構造の選択が重要である理由。"
 published_at = "2026-04-03T18:00:00+09:00"
 updated_at = "2026-04-03T18:00:00+09:00"
 status = "published"
@@ -54,4 +58,88 @@ graph TD
 ## Conclusão
 
 Ter um martelo não faz de você um mestre de obras. Saber qual estrutura usar para cada problema é o que separa um programador iniciante de um engenheiro de software profissional.
+"""
+body_en_us = """
+Software systems are, at the end of the day, about managing data in motion and at rest. Learning **data structures** means learning how to organize that data so the computer works less and delivers more.
+
+## Stacks: LIFO (Last-In, First-Out)
+
+The last thing pushed in is the first thing popped out. The classic example is the Undo button in your editor, or the runtime call stack itself.
+
+## Queues: FIFO (First-In, First-Out)
+
+The first thing in is the first thing out. Queues are essential for background processing and messaging systems that must preserve ordering.
+
+## Trees and hierarchical efficiency
+
+Trees, especially binary search trees, allow extremely fast lookup, insertion and deletion. They are the foundation of:
+*   **File systems**: where folders contain subfolders.
+*   **The DOM (Document Object Model)**: the structure of every web page.
+*   **Database indexes**: the secret behind queries that do not lock up.
+
+```mermaid
+graph TD
+    Root((Root))
+    Root --> L1[Left]
+    Root --> R1[Right]
+    L1 --> LL1[Left-left]
+    L1 --> LR1[Left-right]
+    R1 --> RL1[Left-left]
+    R1 --> RR1[Right-right]
+```
+
+### Which one should you choose?
+
+| Problem | Ideal structure |
+| :--- | :--- |
+| Navigation history | Stack |
+| Print management | Queue |
+| Large-scale lookup | Trees (B-Tree, AVL) |
+| Fast relationships | Hash Table |
+
+## Conclusion
+
+Owning a hammer does not make you a master builder. Knowing which structure to use for each problem is what separates a beginner programmer from a professional software engineer.
+"""
+body_ja_jp = """
+ソフトウェアシステムとは、突き詰めれば、動いているデータと静止しているデータをどう管理するかという話です。**データ構造** を学ぶとは、コンピュータの仕事量を減らし、より多くを返せるようにデータを整理する方法を学ぶことです。
+
+## スタック: LIFO（後入れ先出し）
+
+最後に入れたものが最初に出ます。典型例はエディタの Undo ボタンや、ランタイムの call stack です。
+
+## キュー: FIFO（先入れ先出し）
+
+最初に入れたものが最初に出ます。キューはバックグラウンド処理や、順序保証が必要なメッセージングシステムで不可欠です。
+
+## 木構造と階層効率
+
+木構造、とくに二分探索木は、検索・挿入・削除を非常に高速に行えます。これは次の基礎です。
+*   **ファイルシステム**: フォルダがサブフォルダを含む構造。
+*   **DOM (Document Object Model)**: あらゆる Web ページの構造。
+*   **データベース索引**: クエリを止めないための秘密。
+
+```mermaid
+graph TD
+    Root((根))
+    Root --> L1[左]
+    Root --> R1[右]
+    L1 --> LL1[左下]
+    L1 --> LR1[右下]
+    R1 --> RL1[左下]
+    R1 --> RR1[右下]
+```
+
+### どれを選ぶべきか
+
+| 問題 | 最適な構造 |
+| :--- | :--- |
+| 閲覧履歴 | スタック |
+| 印刷管理 | キュー |
+| 大規模検索 | 木構造 (B-Tree, AVL) |
+| 高速な関連参照 | Hash Table |
+
+## 結論
+
+ハンマーを持っているだけでは大工にはなれません。問題ごとにどの構造を使うべきかを理解していることが、初心者のプログラマと職業的なソフトウェアエンジニアを分けます。
 """

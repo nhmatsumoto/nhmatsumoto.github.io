@@ -169,8 +169,8 @@ const siteTitle = originalDocumentTitle.includes(" | ")
 ? originalDocumentTitle.split(" | ").slice(1).join(" | ")
 : "";
 const applyPageContent = (locale) => {
-const title = resolveLocalizedField(data, "title", locale, elements.title?.dataset.pageFallback || "");
-const summary = resolveLocalizedField(data, "summary", locale, elements.summary?.dataset.pageFallback || "");
+const title = resolveLocalizedField(data, ["title", "name"], locale, elements.title?.dataset.pageFallback || "");
+const summary = resolveLocalizedField(data, ["summary", "headline"], locale, elements.summary?.dataset.pageFallback || "");
 const bodyHtml = resolveLocalizedField(data, "body_html", locale, elements.body?.dataset.pageFallbackHtml || "");
 if (elements.title) {
 if (!elements.title.dataset.pageFallback) {

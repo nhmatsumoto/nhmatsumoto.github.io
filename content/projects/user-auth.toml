@@ -1,7 +1,11 @@
 name = "User-Auth"
 slug = "user-auth"
 headline = "Serviço de autenticação em TypeScript — gestão de usuários, sessões e integração com identity providers."
+headline_en_us = "Authentication service in TypeScript — user management, sessions and identity-provider integration."
+headline_ja_jp = "TypeScript 製認証サービス — ユーザー管理、セッション、ID プロバイダー連携。"
 summary = "Serviço de autenticação e autorização em TypeScript/Node.js com gestão de usuários, sessões e integração com provedores de identidade como Keycloak."
+summary_en_us = "Authentication and authorization service in TypeScript/Node.js with user management, sessions and integration with identity providers such as Keycloak."
+summary_ja_jp = "TypeScript/Node.js による認証・認可サービス。ユーザー管理、セッション、Keycloak など ID プロバイダーとの連携を提供。"
 status = "published"
 featured = false
 order = 999
@@ -38,11 +42,67 @@ Componente de autenticação que complementa:
 - Rate limiting em endpoints de autenticação
 - Audit log de eventos de segurança (login, logout, failed attempts)
 """
+overview_en_us = """
+Authentication and authorization service in TypeScript / Node.js, designed to manage users, sessions and integration with identity providers.
+
+## Features
+
+- **Sign up and sign in** — account creation with email validation
+- **JWT management** — issuing and validating access / refresh tokens
+- **Session management** — active-session control with revocation
+- **OAuth2 integration** — login through external providers such as Keycloak and Google
+- **Role-based access** — authorization by user role
+
+## Relationship with the ecosystem
+
+This authentication component complements:
+
+- **Playground-FE** — frontend used to validate auth flows
+- **Security.Jwt** — reference library for JWT key management
+- **SplitCosts** — production authentication via Keycloak
+
+## Design decisions
+
+- Short-lived access tokens (15 minutes) with transparent refresh
+- Password hashing with bcrypt (cost factor 12)
+- Rate limiting on authentication endpoints
+- Audit logs for security events such as login, logout and failed attempts
+"""
+overview_ja_jp = """
+ユーザー、セッション、identity provider 連携を管理するために設計された TypeScript / Node.js 製の認証・認可サービスです。
+
+## 機能
+
+- **Sign up / sign in** — メール検証付きのアカウント作成
+- **JWT management** — access / refresh token の発行と検証
+- **Session management** — revoke 可能なアクティブ・セッション管理
+- **OAuth2 integration** — Keycloak や Google などの外部プロバイダ経由ログイン
+- **Role-based access** — ユーザーロール単位の認可
+
+## エコシステムとの関係
+
+この認証コンポーネントは次を補完します。
+
+- **Playground-FE** — 認証フローを検証するフロントエンド
+- **Security.Jwt** — JWT 鍵管理の参照ライブラリ
+- **SplitCosts** — Keycloak による本番認証
+
+## 設計判断
+
+- 15 分の短命 access token と透過的 refresh
+- bcrypt（cost factor 12）によるパスワード・ハッシュ
+- 認証 endpoint への rate limiting
+- login、logout、failed attempt などのセキュリティ監査ログ
+"""
 
 problem_solution = """
 Autenticação é um componente crítico que precisa ser implementado corretamente desde o início. Este serviço isola a complexidade de auth (hashing, tokens, sessões) em um módulo dedicado e testado.
 """
+problem_solution_en_us = "Authentication is a critical subsystem that must be correct from day one. This service isolates the complexity of hashing, token issuance and session control into a dedicated, testable module."
+problem_solution_ja_jp = "認証は、最初の日から正しくなければならない重要サブシステムです。このサービスは、hashing、token 発行、session 制御の複雑さを、専用かつテスト可能なモジュールに隔離します。"
 
 architecture = """
 API Node.js/TypeScript com endpoints REST para auth. JWT para stateless authentication, com refresh tokens armazenados em banco para revogação. Middleware de autenticação exportável como pacote para outros serviços.
 """
+architecture_en_us = "Node.js / TypeScript API exposing REST endpoints for authentication. JWT enables stateless auth, while refresh tokens remain stored in the database for revocation. The authentication middleware is exportable for reuse in other services."
+architecture_ja_jp = "認証用 REST endpoint を提供する Node.js / TypeScript API です。JWT により stateless auth を実現しつつ、refresh token は revoke 用に DB へ保存します。認証 middleware は他サービスへ再利用可能な形で export されます。"

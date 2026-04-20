@@ -1,7 +1,11 @@
 name = "gemini-cli"
 slug = "gemini-cli"
 headline = "Agente de IA open-source que traz o poder do Gemini direto para o terminal."
+headline_en_us = "Open-source AI agent that brings Gemini's power directly to the terminal."
+headline_ja_jp = "Gemini の力を端末に直接もたらすオープンソース AI エージェント。"
 summary = "Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem."
+summary_en_us = "Fork of Gemini CLI — Google's AI agent that runs directly in the terminal with access to system tools, code editing and filesystem navigation."
+summary_ja_jp = "Gemini CLI のフォーク。Google の AI エージェントが、システムツール・コード編集・ファイルシステム走査を備えて端末内で直接動作する。"
 status = "published"
 featured = false
 order = 999
@@ -36,23 +40,99 @@ Estudo comparativo de arquiteturas de agentes de código. Compara abordagens do 
 - Sandboxing e permissões de execução
 - Streaming de respostas longas
 """
+overview_en_us = """
+Fork of Gemini CLI, Google's open-source AI agent that plugs the Gemini model directly into the terminal with the ability to execute system tools.
+
+## Agent architecture
+
+Gemini CLI implements a classic agent loop:
+
+1. **Input** — receive a user instruction through the terminal
+2. **Reasoning** — the Gemini model evaluates context and chooses the next action
+3. **Tool execution** — run tools such as shell, file read/write or search
+4. **Observation** — feed tool results back into the next cycle
+5. **Output** — produce the final response
+
+## Why this fork
+
+Comparative study of coding-agent architectures. It contrasts Gemini CLI with Claude Code and other agents cataloged in **system-prompts-and-models-of-ai-tools**.
+
+## Topics of interest
+
+- Context and memory management across turns
+- Tool selection and parameter extraction
+- Sandboxing and execution permissions
+- Streaming of long responses
+"""
+overview_ja_jp = """
+Gemini モデルを端末に直接接続し、システムツールを実行できる Google 製オープンソース AI エージェント、Gemini CLI のフォークです。
+
+## エージェント・アーキテクチャ
+
+Gemini CLI は古典的なエージェント・ループを実装しています。
+
+1. **Input** — 端末経由でユーザー指示を受け取る
+2. **Reasoning** — Gemini モデルが文脈を評価し、次の行動を決める
+3. **Tool execution** — shell、ファイル読取/書込、検索などを実行する
+4. **Observation** — ツール結果を次のサイクルへ戻す
+5. **Output** — 最終応答を返す
+
+## このフォークの理由
+
+コードエージェント・アーキテクチャの比較研究です。**system-prompts-and-models-of-ai-tools** に整理された Claude Code などのエージェントと対比できます。
+
+## 注目ポイント
+
+- ターンをまたぐコンテキストとメモリ管理
+- ツール選択とパラメータ抽出
+- サンドボックスと実行権限
+- 長文レスポンスのストリーミング
+"""
 
 problem_solution = """
 Agentes de código no terminal precisam equilibrar autonomia com segurança: executar ferramentas de sistema é poderoso mas arriscado. A análise da implementação do Gemini CLI revela como o Google aborda esse trade-off.
 """
+problem_solution_en_us = "Terminal-based coding agents need to balance autonomy and safety: system-tool execution is powerful but risky. Studying Gemini CLI reveals how Google approaches that trade-off in practice."
+problem_solution_ja_jp = "端末型のコードエージェントは、自律性と安全性の両立が必要です。システムツールの実行は強力ですが危険も伴います。Gemini CLI を分析すると、そのトレードオフに Google がどう向き合っているかが見えてきます。"
 
 architecture = """
 CLI em TypeScript/Node.js com loop de agente baseado em tool-use. Comunica-se com a Gemini API via streaming, mantém histórico de conversação e executa tools locais com confirmação do usuário para operações destrutivas.
 """
+architecture_en_us = "A TypeScript / Node.js CLI built around a tool-using agent loop. It streams data from the Gemini API, keeps conversation history and executes local tools with explicit user confirmation for destructive actions."
+architecture_ja_jp = "TypeScript / Node.js 製 CLI で、tool-use を前提にしたエージェント・ループを中心に構成されています。Gemini API とストリーミング通信し、会話履歴を保持しつつ、破壊的操作には明示的な確認を求めてローカルツールを実行します。"
 impact = [
   "Estudo comparativo de arquiteturas de agentes: loop ReAct vs planner vs tree-of-thought em contexto real de CLI",
   "Fork usado como base de referência para o design do Ronaldinho Agent (agente próprio em .NET)",
+]
+impact_en_us = [
+  "Comparative study of agent architectures: ReAct vs planner vs tree-of-thought in a real CLI context",
+  "Fork used as a reference base for Ronaldinho Agent, the in-house .NET agent design",
+]
+impact_ja_jp = [
+  "実運用 CLI 文脈でのエージェント・アーキテクチャ比較: ReAct vs planner vs tree-of-thought",
+  "自前の .NET エージェントである Ronaldinho Agent 設計の参照ベースとして活用",
 ]
 trade_offs = [
   "Fork vs build from scratch: fork acelerou aprendizado de patterns do Gemini, mas herdou decisões de design do Google",
   "TypeScript/Node.js vs Go: ecossistema JS facilita prototipação, mas overhead de runtime é perceptível em operações de filesystem",
 ]
+trade_offs_en_us = [
+  "Fork vs. greenfield build: forking accelerated learning, but it also inherited Google's design decisions",
+  "TypeScript / Node.js vs. Go: the JS ecosystem speeds up prototyping, but runtime overhead is visible in filesystem-heavy workloads",
+]
+trade_offs_ja_jp = [
+  "fork かゼロから実装するか: fork は学習を加速したが、Google 側の設計判断も引き継ぐことになった",
+  "TypeScript / Node.js vs Go: JS エコシステムは試作が速い一方、filesystem-heavy な処理ではランタイム負荷が見える",
+]
 lessons = [
   "O modelo de permissões do Gemini CLI (allow-list de tools) é mais seguro que o modelo opt-out de outros agentes",
   "Loops de agente em CLI exigem timeout agressivo por step — sem isso, o agente pode travar em I/O indefinidamente",
+]
+lessons_en_us = [
+  "Gemini CLI's permission model, built around an allow-list of tools, is safer than opt-out designs",
+  "CLI agent loops need aggressive per-step timeouts — otherwise they can stall indefinitely on I/O",
+]
+lessons_ja_jp = [
+  "Gemini CLI の権限モデルは allow-list 前提で、opt-out 型の設計より安全だった",
+  "CLI のエージェント・ループにはステップごとの厳しい timeout が必要で、そうしないと I/O で無限停止しやすい",
 ]

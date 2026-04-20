@@ -1,7 +1,11 @@
 id = "2026-04-03-1100-alan-turing"
 slug = "alan-turing-computacao-enigma"
 title = "Alan Turing: O Código Enigma e o Nascimento da IA"
+title_en_us = "Alan Turing: The Enigma Code and the Birth of AI"
+title_ja_jp = "アラン・チューリング：エニグマ暗号と AI の誕生"
 summary = "Uma homenagem ao pai da computação moderna, desde a quebra do Enigma à fundação teórica da Inteligência Artificial."
+summary_en_us = "A tribute to the father of modern computing, from breaking the Enigma to laying the theoretical foundations of Artificial Intelligence."
+summary_ja_jp = "エニグマ解読から人工知能の理論的基盤の構築まで、現代コンピューティングの父へのオマージュ。"
 published_at = "2026-04-03T11:00:00+09:00"
 updated_at = "2026-04-03T11:00:00+09:00"
 status = "published"
@@ -29,4 +33,38 @@ Turing perguntou: *"As máquinas podem pensar?"*. Ao propor o Jogo da Imitação
 
 ## Um Herói Incompreendido
 O legado de Turing foi manchado pela perseguição pessoal e trágica no Reino Unido, mas sua redenção tecnológica é o ar que respiramos hoje. Sem Turing, a computação seria apenas uma calculadora mecânica, não a ferramenta cognitiva que é hoje.
+"""
+body_en_us = """
+Alan Turing did not merely envision the future, he **encoded** it. His life is the meeting point between pure mathematics, world war and philosophy.
+
+## Bletchley Park and the Turing Bombe
+While Germany used the **Enigma Machine** to secure maritime routes, Turing led Hut 8. He did not try to guess keys by hand; he created the **Turing Bombe**, an electromechanical device that automated the search for logical contradictions and shortened World War II by at least two years.
+
+## The Universal Turing Machine
+Before the war, Turing proved that a simple machine with an infinite tape could compute anything computable. That is the foundation of **all** modern computers: hardware as a vessel for software.
+
+## The Turing Test and AI
+Turing asked: *"Can machines think?"*. By proposing the Imitation Game, he shifted the focus from "consciousness" to **behavior**. If we cannot distinguish a machine from a human, then for all practical purposes the machine demonstrates intelligence.
+
+> "Those who can imagine anything can create the impossible." — Alan Turing
+
+## A Misunderstood Hero
+Turing's legacy was scarred by tragic personal persecution in the United Kingdom, but his technological redemption is the air we breathe today. Without Turing, computing would be little more than a mechanical calculator, not the cognitive tool it became.
+"""
+body_ja_jp = """
+アラン・チューリングは未来を思い描いただけではなく、それを**コード化**しました。彼の人生は、純粋数学、世界大戦、そして哲学が交差する地点です。
+
+## ブレッチリー・パークとチューリング・ボンベ
+ドイツが海上輸送路の暗号化に **エニグマ** を使っていた頃、チューリングは Hut 8 を率いていました。彼は鍵を勘で当てようとはせず、論理的矛盾を機械的に探索する電気機械式装置 **チューリング・ボンベ** を生み出し、第二次世界大戦を少なくとも 2 年短縮したとされています。
+
+## 万能チューリング機械
+戦前にチューリングは、無限長のテープを持つ単純な機械が、計算可能なものは何でも計算できることを証明しました。これは **すべて** の現代コンピュータの基礎です。つまり、ハードウェアはソフトウェアを載せる器だという考え方です。
+
+## チューリング・テストと AI
+チューリングは *「機械は思考できるか？」* と問いかけました。模倣ゲームを提案することで、彼は議論の焦点を「意識」から **振る舞い** へと移しました。もし私たちが機械を人間と区別できないなら、実用上その機械は知性を示していると言えます。
+
+> 「あらゆるものを想像できる人は、不可能さえ創造できる。」 — アラン・チューリング
+
+## 誤解された英雄
+チューリングの遺産は、英国で受けた悲劇的な個人迫害によって深く傷つけられました。しかし、彼の技術的救済こそが、いま私たちが吸っている空気のような存在です。チューリングがいなければ、計算機は機械式計算機の延長にとどまり、今日のような認知的ツールにはならなかったでしょう。
 """

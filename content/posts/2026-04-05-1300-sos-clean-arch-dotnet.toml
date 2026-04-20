@@ -1,7 +1,11 @@
 id = "2026-04-05-1300"
 slug = "sos-location-clean-architecture-dotnet10"
 title = "SOS Location: Clean Architecture + CQRS em .NET 10"
+title_en_us = "SOS Location: Clean Architecture + CQRS on .NET 10"
+title_ja_jp = "SOS Location：.NET 10 で Clean Architecture + CQRS"
 summary = "Arquitetura limpa, CQRS com MediatR e domain events no backend do SOS Location. Como estruturamos o código para resiliência em cenários de crise."
+summary_en_us = "Clean Architecture, CQRS with MediatR and domain events in the SOS Location backend. How we structured code for crisis-scenario resilience."
+summary_ja_jp = "SOS Location バックエンドにおける Clean Architecture、MediatR による CQRS、ドメインイベント。危機シナリオに耐える構造化の実践。"
 published_at = "2026-04-05T13:00:00+09:00"
 updated_at = "2026-04-05T13:00:00+09:00"
 status = "published"
@@ -198,4 +202,374 @@ backend-dotnet/
 ```
 
 Essa estrutura suporta o crescimento até a Fase 10 sem acúmulo de débito técnico — cada nova integração tem um lugar definido, e o domínio nunca sabe da infraestrutura.
+"""
+body_en_us = """
+# Clean Architecture + CQRS in the SOS Location backend
+
+In April 2026, the commit `refactor: migrate all page components to the domains/operations directory` marked the completion of a deep backend refactor in SOS Location. It was not just about moving folders around; it was about rethinking how code should *grow* when lives depend on its correctness.
+
+## Why Clean Architecture in a disaster-response system?
+
+Catastrophe-response systems have an unusual profile:
+
+1. **Unpredictable spikes** — a magnitude-7 earthquake can multiply traffic by 10 in seconds.
+2. **Multiple entry agents** — external APIs, CLI agents, SignalR and scheduled jobs.
+3. **Mandatory auditability** — every state mutation needs `trace_id`, `actor` and `reason`.
+4. **Continuous evolution** — phase 8, 9, 10... the system grows with the project.
+
+Clean Architecture separates these concerns into layers with one-way dependencies:
+
+```
+Domain         → business logic only, no infrastructure imports
+Application    → use cases (Commands, Queries, Handlers)
+Infrastructure → EF Core, PostGIS, SignalR, Keycloak
+Presentation   → ASP.NET Core Controllers, Minimal API
+```
+
+## CQRS with MediatR
+
+CQRS (Command Query Responsibility Segregation) splits write operations (Commands) from read operations (Queries).
+
+### Command: create incident
+
+```csharp
+// Application/Commands/CreateIncidentCommand.cs
+public record CreateIncidentCommand(
+    string EventId,
+    IncidentType Type,
+    int Severity,
+    GeoJsonGeometry Location,
+    DateTimeOffset OccurredAt,
+    string ActorId
+) : IRequest<Result<IncidentDto>>;
+
+public class CreateIncidentHandler : IRequestHandler<CreateIncidentCommand, Result<IncidentDto>>
+{
+    private readonly IIncidentRepository _incidents;
+    private readonly IEventBus _eventBus;
+    private readonly IAuditLog _audit;
+
+    public async Task<Result<IncidentDto>> Handle(
+        CreateIncidentCommand cmd, CancellationToken ct)
+    {
+        // Domain validation
+        if (cmd.Severity < 1 || cmd.Severity > 10)
+            return Result.Fail("Severity must be between 1 and 10");
+
+        var incident = Incident.Create(
+            cmd.EventId, cmd.Type, cmd.Severity,
+            cmd.Location, cmd.OccurredAt);
+
+        await _incidents.AddAsync(incident, ct);
+
+        // Audit trail — always
+        await _audit.RecordAsync(new AuditEntry(
+            Actor:   cmd.ActorId,
+            Action:  "incident.created",
+            TraceId: Activity.Current?.TraceId.ToString() ?? Guid.NewGuid().ToString(),
+            Payload: JsonSerializer.Serialize(incident)
+        ), ct);
+
+        // Domain event: notify SignalR, ML and critical ops
+        if (incident.Severity >= 7)
+            _eventBus.Publish(new CriticalIncidentCreated(incident));
+
+        return Result.Ok(incident.ToDto());
+    }
+}
+```
+
+### Query: spatial search with PostGIS
+
+```csharp
+// Application/Queries/GetIncidentsInRadiusQuery.cs
+public record GetIncidentsInRadiusQuery(
+    double Lat, double Lon, double RadiusKm
+) : IRequest<IReadOnlyList<IncidentDto>>;
+
+public class GetIncidentsInRadiusHandler
+    : IRequestHandler<GetIncidentsInRadiusQuery, IReadOnlyList<IncidentDto>>
+{
+    private readonly SosDbContext _db;
+
+    public async Task<IReadOnlyList<IncidentDto>> Handle(
+        GetIncidentsInRadiusQuery q, CancellationToken ct)
+    {
+        var point = new Point(q.Lon, q.Lat) { SRID = 4326 };
+        double radiusMeters = q.RadiusKm * 1000;
+
+        return await _db.Incidents
+            .Where(i => i.Location.IsWithinDistance(point, radiusMeters))
+            .OrderByDescending(i => i.Severity)
+            .ThenByDescending(i => i.OccurredAt)
+            .Select(i => i.ToDto())
+            .ToListAsync(ct);
+    }
+}
+```
+
+## Domain events for critical operations
+
+The domain publishes events without knowing who consumes them. Infrastructure wires the reactions:
+
+```csharp
+// Domain/Events/CriticalIncidentCreated.cs
+public record CriticalIncidentCreated(Incident Incident) : IDomainEvent;
+
+// Infrastructure/EventHandlers/NotifyOpsOnCriticalIncident.cs
+public class NotifyOpsOnCriticalIncident
+    : INotificationHandler<CriticalIncidentCreated>
+{
+    private readonly IHubContext<OpsHub> _hub;
+    private readonly IRiskModelClient _riskModel;
+
+    public async Task Handle(CriticalIncidentCreated e, CancellationToken ct)
+    {
+        // 1. Notify the real-time dashboard via SignalR
+        await _hub.Clients.Group("ops-commanders")
+            .SendAsync("IncidentAlert", e.Incident.ToAlertPayload(), ct);
+
+        // 2. Request risk analysis from the ML Unit (async)
+        await _riskModel.RequestAnalysisAsync(e.Incident.Location, ct);
+    }
+}
+```
+
+## Cross-cutting pipeline behaviors
+
+MediatR lets you attach behaviors that affect all Commands and Queries, such as logging, validation and retry logic:
+
+```csharp
+// Registered in DI before all handlers
+services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+services.AddTransient(typeof(IPipelineBehavior<,>), typeof(DistributedTracingBehavior<,>));
+
+// LoggingBehavior.cs
+public class LoggingBehavior<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse>
+{
+    private readonly ILogger<TRequest> _logger;
+
+    public async Task<TResponse> Handle(
+        TRequest req, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
+    {
+        var sw = Stopwatch.StartNew();
+        _logger.LogInformation("Handling {Request}", typeof(TRequest).Name);
+        var response = await next();
+        _logger.LogInformation("Handled {Request} in {Elapsed}ms",
+            typeof(TRequest).Name, sw.ElapsedMilliseconds);
+        return response;
+    }
+}
+```
+
+## Folder structure after the April/2026 refactor
+
+```
+backend-dotnet/
+  SOSLocation.Domain/
+    Entities/       Incident, Resource, Mission, WatchPoint
+    Events/         CriticalIncidentCreated, ResourceAllocated
+    ValueObjects/   GeoPoint, Severity, IncidentType
+  SOSLocation.Application/
+    Commands/       CreateIncidentCommand, AllocateResourceCommand
+    Queries/        GetIncidentsInRadiusQuery, GetMissionStatusQuery
+    Behaviors/      ValidationBehavior, LoggingBehavior
+  SOSLocation.Infrastructure/
+    Persistence/    SosDbContext (EF Core + Npgsql + PostGIS)
+    SignalR/        OpsHub, NotificationHub
+    ML/             RiskModelClient (FastAPI gRPC)
+    Auth/           KeycloakAuthHandler
+  SOSLocation.API/
+    Endpoints/      IncidentEndpoints (Minimal API)
+    Hubs/           OpsHub registration
+```
+
+This structure supports growth through Phase 10 without accumulating uncontrolled technical debt. Every new integration has a defined place, and the domain never needs to know about infrastructure.
+"""
+body_ja_jp = """
+# SOS Location バックエンドにおける Clean Architecture + CQRS
+
+2026 年 4 月、`refactor: migrate all page components to the domains/operations directory` という commit は、SOS Location バックエンドの大規模リファクタリング完了を示しました。これは単なるフォルダ整理ではなく、命がその正しさに依存するコードが、どう *成長* すべきかを再設計する作業でした。
+
+## なぜ災害対応システムに Clean Architecture が必要なのか
+
+災害対応システムは、かなり特殊な性質を持っています。
+
+1. **予測不能なスパイク** — マグニチュード 7 の地震は数秒でトラフィックを 10 倍にしうる。
+2. **複数の入口** — 外部 API、CLI エージェント、SignalR、定期実行ジョブ。
+3. **監査必須** — すべての状態変更に `trace_id`, `actor`, `reason` が必要。
+4. **継続的進化** — phase 8、9、10 と、システムはプロジェクトと共に成長する。
+
+Clean Architecture は、これらを単方向依存のレイヤへ分離します。
+
+```
+Domain         → 業務ロジックのみ。インフラ import を持たない
+Application    → ユースケース (Commands, Queries, Handlers)
+Infrastructure → EF Core, PostGIS, SignalR, Keycloak
+Presentation   → ASP.NET Core Controllers, Minimal API
+```
+
+## MediatR による CQRS
+
+CQRS（Command Query Responsibility Segregation）は、書き込み (Command) と読み取り (Query) を分離します。
+
+### Command: incident を作る
+
+```csharp
+// Application/Commands/CreateIncidentCommand.cs
+public record CreateIncidentCommand(
+    string EventId,
+    IncidentType Type,
+    int Severity,
+    GeoJsonGeometry Location,
+    DateTimeOffset OccurredAt,
+    string ActorId
+) : IRequest<Result<IncidentDto>>;
+
+public class CreateIncidentHandler : IRequestHandler<CreateIncidentCommand, Result<IncidentDto>>
+{
+    private readonly IIncidentRepository _incidents;
+    private readonly IEventBus _eventBus;
+    private readonly IAuditLog _audit;
+
+    public async Task<Result<IncidentDto>> Handle(
+        CreateIncidentCommand cmd, CancellationToken ct)
+    {
+        // Domain validation
+        if (cmd.Severity < 1 || cmd.Severity > 10)
+            return Result.Fail("Severity must be between 1 and 10");
+
+        var incident = Incident.Create(
+            cmd.EventId, cmd.Type, cmd.Severity,
+            cmd.Location, cmd.OccurredAt);
+
+        await _incidents.AddAsync(incident, ct);
+
+        // Audit trail — 常に記録
+        await _audit.RecordAsync(new AuditEntry(
+            Actor:   cmd.ActorId,
+            Action:  "incident.created",
+            TraceId: Activity.Current?.TraceId.ToString() ?? Guid.NewGuid().ToString(),
+            Payload: JsonSerializer.Serialize(incident)
+        ), ct);
+
+        // Domain event: SignalR, ML, critical ops を通知
+        if (incident.Severity >= 7)
+            _eventBus.Publish(new CriticalIncidentCreated(incident));
+
+        return Result.Ok(incident.ToDto());
+    }
+}
+```
+
+### Query: PostGIS による空間検索
+
+```csharp
+// Application/Queries/GetIncidentsInRadiusQuery.cs
+public record GetIncidentsInRadiusQuery(
+    double Lat, double Lon, double RadiusKm
+) : IRequest<IReadOnlyList<IncidentDto>>;
+
+public class GetIncidentsInRadiusHandler
+    : IRequestHandler<GetIncidentsInRadiusQuery, IReadOnlyList<IncidentDto>>
+{
+    private readonly SosDbContext _db;
+
+    public async Task<IReadOnlyList<IncidentDto>> Handle(
+        GetIncidentsInRadiusQuery q, CancellationToken ct)
+    {
+        var point = new Point(q.Lon, q.Lat) { SRID = 4326 };
+        double radiusMeters = q.RadiusKm * 1000;
+
+        return await _db.Incidents
+            .Where(i => i.Location.IsWithinDistance(point, radiusMeters))
+            .OrderByDescending(i => i.Severity)
+            .ThenByDescending(i => i.OccurredAt)
+            .Select(i => i.ToDto())
+            .ToListAsync(ct);
+    }
+}
+```
+
+## 重要運用のための domain event
+
+ドメインは、誰が消費するかを知らずに event を publish します。反応を配線するのは infrastructure です。
+
+```csharp
+// Domain/Events/CriticalIncidentCreated.cs
+public record CriticalIncidentCreated(Incident Incident) : IDomainEvent;
+
+// Infrastructure/EventHandlers/NotifyOpsOnCriticalIncident.cs
+public class NotifyOpsOnCriticalIncident
+    : INotificationHandler<CriticalIncidentCreated>
+{
+    private readonly IHubContext<OpsHub> _hub;
+    private readonly IRiskModelClient _riskModel;
+
+    public async Task Handle(CriticalIncidentCreated e, CancellationToken ct)
+    {
+        // 1. SignalR 経由でリアルタイム dashboard を通知
+        await _hub.Clients.Group("ops-commanders")
+            .SendAsync("IncidentAlert", e.Incident.ToAlertPayload(), ct);
+
+        // 2. ML Unit へリスク分析を依頼 (async)
+        await _riskModel.RequestAnalysisAsync(e.Incident.Location, ct);
+    }
+}
+```
+
+## 横断 concern のための pipeline behavior
+
+MediatR では、logging、validation、retry のような behavior をすべての Command / Query に適用できます。
+
+```csharp
+// すべての handler より前に DI 登録
+services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+services.AddTransient(typeof(IPipelineBehavior<,>), typeof(DistributedTracingBehavior<,>));
+
+// LoggingBehavior.cs
+public class LoggingBehavior<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse>
+{
+    private readonly ILogger<TRequest> _logger;
+
+    public async Task<TResponse> Handle(
+        TRequest req, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
+    {
+        var sw = Stopwatch.StartNew();
+        _logger.LogInformation("Handling {Request}", typeof(TRequest).Name);
+        var response = await next();
+        _logger.LogInformation("Handled {Request} in {Elapsed}ms",
+            typeof(TRequest).Name, sw.ElapsedMilliseconds);
+        return response;
+    }
+}
+```
+
+## 2026 年 4 月リファクタ後のフォルダ構造
+
+```
+backend-dotnet/
+  SOSLocation.Domain/
+    Entities/       Incident, Resource, Mission, WatchPoint
+    Events/         CriticalIncidentCreated, ResourceAllocated
+    ValueObjects/   GeoPoint, Severity, IncidentType
+  SOSLocation.Application/
+    Commands/       CreateIncidentCommand, AllocateResourceCommand
+    Queries/        GetIncidentsInRadiusQuery, GetMissionStatusQuery
+    Behaviors/      ValidationBehavior, LoggingBehavior
+  SOSLocation.Infrastructure/
+    Persistence/    SosDbContext (EF Core + Npgsql + PostGIS)
+    SignalR/        OpsHub, NotificationHub
+    ML/             RiskModelClient (FastAPI gRPC)
+    Auth/           KeycloakAuthHandler
+  SOSLocation.API/
+    Endpoints/      IncidentEndpoints (Minimal API)
+    Hubs/           OpsHub registration
+```
+
+この構造なら、Phase 10 まで成長しても無秩序な技術的負債を積み上げずに済みます。新しい統合先には必ず置き場があり、ドメインは infrastructure を知る必要がありません。
 """

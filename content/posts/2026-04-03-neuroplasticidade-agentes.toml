@@ -1,7 +1,11 @@
 id = "2026-04-03-1000"
 slug = "neuroplasticidade-agentes"
 title = "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua"
+title_en_us = "'Neuroplasticity' in Agent Systems: Feedback, Memory and Continuous Improvement"
+title_ja_jp = "エージェントシステムにおける「神経可塑性」：フィードバック・記憶・継続的改善"
 summary = "Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada."
+summary_en_us = "An architecture proposal for AI agents that learn and evolve through feedback cycles and curated memory."
+summary_ja_jp = "フィードバック・サイクルとキュレートされた記憶を通じて学習・進化する AI エージェントのアーキテクチャ提案。"
 published_at = "2026-04-02T22:00:00+09:00"
 updated_at = "2026-04-02T22:00:00+09:00"
 status = "published"
@@ -53,4 +57,86 @@ flowchart LR
 ## Conclusão
 
 Implementar "neuroplasticidade" não é deixar a IA livre para aprender qualquer coisa, mas sim criar um **sistema de governança** que captura o aprendizado humano e o transforma em diretrizes operacionais robustas para o agente.
+"""
+body_en_us = """
+When someone asks a system to "learn from repeated corrections", the real requirement is usually this: capture feedback, turn it into an operational rule and prevent regressions. This post proposes a **neuroplasticity** design for agent systems.
+
+## The memory problem in agents
+
+In practice, agent systems fail for three main reasons: (1) they do not remember earlier decisions, (2) they remember everything without curation, or (3) they absorb feedback without evaluation and degrade other tasks.
+
+The **ReAct** approach describes a pattern in which the model alternates reasoning and action, improving traceability and correctness by consulting external sources instead of inventing answers.
+
+## Mechanisms of neuroplasticity
+
+Here, neuroplasticity is a useful metaphor for three concrete mechanisms:
+
+1. **Curated declarative memory**: a versioned repository of decisions, glossary entries, style preferences and constraints.
+2. **Episodic memory with minimal retention**: execution logs and rationales kept for debugging and audit.
+3. **Evaluation and anti-regression cycle**: for every meaningful correction, add a test so that the failure does not come back.
+
+```mermaid
+flowchart LR
+  A[Agent Output] --> B[Human Review / Feedback]
+  B --> C{Classify Feedback}
+  C -->|Factual Correction| D[Update Knowledge Base]
+  C -->|Format Correction| E[Update Schema / Rules]
+  C -->|Policy Correction| F[Update Guardrails]
+  D --> G[Behavior Test Suite]
+  E --> G
+  F --> G
+  G --> H[Deploy Rules / Memory]
+  H --> A
+```
+
+## Practical implementation
+
+1. **Feedback categories**: classify whether the correction is factual, formatting-related, security-related or scope-related.
+2. **Artifact cycle**: convert feedback into concrete system rules, such as a new glossary term.
+3. **Tool calling for verifiable actions**: use function calling so that relevant tasks are tangible and measurable.
+
+## Conclusion
+
+Implementing neuroplasticity does not mean letting the AI learn anything it wants. It means building a **governance system** that captures human learning and turns it into robust operational guidance.
+"""
+body_ja_jp = """
+誰かがシステムに「繰り返しの修正から学んでほしい」と求めるとき、本当の要件はたいていこうです。フィードバックを捕捉し、それを運用ルールへ変換し、回帰を防ぐこと。この post では、エージェント・システムのための **神経可塑性** デザインを提案します。
+
+## エージェントにおける記憶の問題
+
+実際には、エージェント・システムは主に三つの理由で失敗します。(1) 過去の判断を覚えていない、(2) 取捨選択なく何でも覚えてしまう、(3) 評価なしにフィードバックを取り込み、別タスクの品質を落とす。
+
+**ReAct** アプローチは、モデルが推論と行動を交互に行うことで、外部情報を参照しながらトレーサビリティと正確性を高めるパターンです。
+
+## 神経可塑性のメカニズム
+
+ここでいう神経可塑性は、三つの具体的メカニズムを表す便利な比喩です。
+
+1. **キュレーションされた宣言的記憶**: 判断、用語集、スタイル選好、制約を格納するバージョン管理リポジトリ。
+2. **最小保持のエピソード記憶**: デバッグと監査のために残す実行ログと理由説明。
+3. **評価と回帰防止サイクル**: 意味のある修正ごとにテストを追加し、同じ失敗を再発させない。
+
+```mermaid
+flowchart LR
+  A[エージェント出力] --> B[人間レビュー / フィードバック]
+  B --> C{フィードバックを分類}
+  C -->|事実修正| D[知識ベース更新]
+  C -->|形式修正| E[スキーマ / ルール更新]
+  C -->|ポリシー修正| F[ガードレール更新]
+  D --> G[振る舞いテストスイート]
+  E --> G
+  F --> G
+  G --> H[ルール / 記憶をデプロイ]
+  H --> A
+```
+
+## 実装の実際
+
+1. **フィードバック分類**: 修正が事実、形式、安全性、スコープのどれに属するかを決める。
+2. **アーティファクト化**: フィードバックを新しい用語集項目のような具体的ルールへ変換する。
+3. **検証可能な tool calling**: 重要な作業を measurable にするため function calling を使う。
+
+## 結論
+
+神経可塑性を実装するとは、AI に好き勝手学ばせることではありません。人間の学びを取り込み、それを堅牢な運用指針へ変換する **ガバナンス・システム** を作ることです。
 """

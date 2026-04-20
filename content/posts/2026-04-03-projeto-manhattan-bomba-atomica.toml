@@ -1,7 +1,11 @@
 id = "2026-04-03-1400-projeto-manhattan"
 slug = "projeto-manhattan-bomba-atomica"
 title = "Projeto Manhattan: A Ciência da Bomba"
+title_en_us = "The Manhattan Project: The Science of the Bomb"
+title_ja_jp = "マンハッタン計画：爆弾の科学"
 summary = "Uma análise sobre o maior esforço científico-militar da história, de Einstein e Oppenheimer aos testes de Trinity."
+summary_en_us = "An analysis of the largest scientific-military effort in history, from Einstein and Oppenheimer to the Trinity tests."
+summary_ja_jp = "史上最大の科学的・軍事的努力の分析。アインシュタインとオッペンハイマーからトリニティ実験まで。"
 published_at = "2026-04-03T14:00:00+09:00"
 updated_at = "2026-04-03T14:00:00+09:00"
 status = "published"
@@ -32,4 +36,44 @@ O teste de Trinity provou que a teoria estava correta. Mas, como Oppenheimer cit
 
 ## Do Caos à Energia
 Hoje, a tecnologia que criou a bomba sustenta a energia nuclear — uma das fontes de energia mais densas e limpas que temos, provando que a ciência é uma ferramenta cujo valor é definido por como decidimos usá-la.
+"""
+body_en_us = """
+The Manhattan Project was not merely the creation of a weapon. It was the birth of **Big Science**: massive, multidisciplinary, heavily funded research at industrial scale.
+
+## The Einstein-Szilárd letter
+It began with a warning. Leo Szilárd convinced Albert Einstein to warn President Roosevelt that Nazi Germany might be developing uranium-fission bombs.
+
+## Los Alamos: the secret site
+Under the scientific leadership of **Robert Oppenheimer** and the military command of General Leslie Groves, an entire city was built in the New Mexico desert to house some of the brightest minds on Earth.
+
+## Critical mass and fission
+The challenge was to separate **U-235** from the more common **U-238**, or to create **Plutonium-239**. That required giant industrial complexes in Oak Ridge and Hanford, consuming about 1% of all electricity produced in the United States at the time.
+
+## Trinity and the ethical legacy
+The Trinity test proved the theory correct. But, as Oppenheimer would later quote, the world would never be the same again. The Manhattan Project began both the Atomic Age and the Cold War, permanently altering the global balance of power.
+
+> "Now I am become Death, the destroyer of worlds." — Robert Oppenheimer (quoting the Bhagavad Gita)
+
+## From chaos to energy
+Today, the technology that created the bomb also sustains nuclear energy, one of the densest and cleanest energy sources available. Science remains a tool whose value depends on how we choose to use it.
+"""
+body_ja_jp = """
+マンハッタン計画は、単に一つの兵器を作っただけではありません。**Big Science**、すなわち巨大資金・学際・大規模組織による研究の時代を生み出しました。
+
+## アインシュタイン＝シラード書簡
+すべては警告から始まりました。レオ・シラードはアルベルト・アインシュタインを説得し、ナチス・ドイツがウラン核分裂爆弾を開発する可能性をルーズベルト大統領へ伝えさせました。
+
+## ロスアラモス: 秘密都市
+**ロバート・オッペンハイマー** の科学指導と、レスリー・グローヴス将軍の軍事統率のもと、地球上で最も優秀な頭脳を集めるために、ニューメキシコ砂漠に丸ごと一つの都市が建設されました。
+
+## 臨界質量と核分裂
+課題は、より一般的な **U-238** から **U-235** を分離するか、あるいは **プルトニウム-239** を作ることでした。そのためには Oak Ridge や Hanford に巨大複合施設を建てる必要があり、当時の米国電力の約 1% がそこへ注ぎ込まれました。
+
+## Trinity と倫理的遺産
+Trinity 実験は理論が正しかったことを証明しました。しかし、後にオッペンハイマーが引用したように、世界は二度と元には戻りませんでした。マンハッタン計画は、原子力時代と冷戦を同時に始め、世界の力の均衡を永久に変えました。
+
+> 「今や私は死となり、世界の破壊者となった。」 — ロバート・オッペンハイマー（『バガヴァッド・ギーター』より）
+
+## 混沌からエネルギーへ
+今日では、爆弾を生んだ同じ技術が、最も高密度かつ比較的クリーンなエネルギー源の一つである原子力も支えています。科学とは、どう使うかによって価値が決まる道具なのです。
 """

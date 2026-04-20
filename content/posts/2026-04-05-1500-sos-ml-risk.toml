@@ -1,7 +1,11 @@
 id = "2026-04-05-1500"
 slug = "sos-location-ml-risk-neural-models"
 title = "SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica"
+title_en_us = "SOS Location: Neural Risk Models with PyTorch and Semantic Segmentation"
+title_ja_jp = "SOS Location：PyTorch とセマンティックセグメンテーションによるニューラル・リスクモデル"
 summary = "O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS."
+summary_en_us = "SOSLocation.ML uses PyTorch to predict risk in disaster zones. How we train semantic segmentation models to identify critical areas in satellite imagery and GIS data."
+summary_ja_jp = "SOSLocation.ML は PyTorch で災害地域のリスクを予測する。衛星画像と GIS データから重要領域を特定するセマンティックセグメンテーションモデルの訓練方法。"
 published_at = "2026-04-05T15:00:00+09:00"
 updated_at = "2026-04-05T15:00:00+09:00"
 status = "published"
@@ -205,3 +209,385 @@ public async Task<RiskAnalysis> RequestAnalysisAsync(
 
 O resultado da análise é armazenado no banco e transmitido ao dashboard via SignalR — adicionando uma camada de risco preditivo ao mapa tático em menos de 3 segundos após a criação do incidente.
 '''
+body_en_us = """
+# Neural risk models: SOSLocation.ML
+
+In March 2026, the commit `feat(ml+tests): SOSLocation.ML .NET project + 40 unit/integration tests` formalized what had already been taking shape: a dedicated ML unit for SOS Location. The goal is simple but ambitious: **predict which areas will be affected** before the crisis becomes uncontrollable.
+
+## ML Unit architecture
+
+```
+risk-analysis-unit/
+  api/            FastAPI — serves the model through REST and streaming gRPC
+  models/         PyTorch model definitions
+  training/       Training scripts + MLflow tracking
+  data/           Ingestion pipelines (GIS, weather, history)
+  tests/          40 unit and integration tests
+```
+
+The ML Unit is an independent Python microservice that the .NET backend queries over HTTP/gRPC whenever a critical incident (severity >= 7) is created.
+
+## Semantic segmentation model
+
+Identifying risk zones in satellite imagery is a **semantic segmentation** problem: classifying each pixel as "high risk", "medium risk", "safe", "water", and so on.
+
+The selected architecture is a modified U-Net, a classic approach in medical-image and geospatial segmentation:
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class UNetBlock(nn.Module):
+    def __init__(self, in_ch: int, out_ch: int):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv2d(in_ch, out_ch, 3, padding=1, bias=False),
+            nn.BatchNorm2d(out_ch),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(out_ch, out_ch, 3, padding=1, bias=False),
+            nn.BatchNorm2d(out_ch),
+            nn.ReLU(inplace=True),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.conv(x)
+
+
+class SOSRiskSegmenter(nn.Module):
+    \"""U-Net for risk segmentation on multispectral imagery + DEM.\"""
+
+    RISK_CLASSES = ['safe', 'low_risk', 'medium_risk', 'high_risk', 'critical', 'water']
+
+    def __init__(self, in_channels: int = 6, num_classes: int = 6):
+        # in_channels: RGB (3) + DEM (1) + NDVI (1) + moisture index (1)
+        super().__init__()
+        # Encoder
+        self.enc1 = UNetBlock(in_channels, 64)
+        self.enc2 = UNetBlock(64, 128)
+        self.enc3 = UNetBlock(128, 256)
+        self.enc4 = UNetBlock(256, 512)
+        # Bottleneck
+        self.bottleneck = UNetBlock(512, 1024)
+        # Decoder
+        self.up4 = nn.ConvTranspose2d(1024, 512, 2, stride=2)
+        self.dec4 = UNetBlock(1024, 512)
+        self.up3 = nn.ConvTranspose2d(512, 256, 2, stride=2)
+        self.dec3 = UNetBlock(512, 256)
+        self.up2 = nn.ConvTranspose2d(256, 128, 2, stride=2)
+        self.dec2 = UNetBlock(256, 128)
+        self.up1 = nn.ConvTranspose2d(128, 64, 2, stride=2)
+        self.dec1 = UNetBlock(128, 64)
+        # Output
+        self.out = nn.Conv2d(64, num_classes, 1)
+        self.pool = nn.MaxPool2d(2)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        e1 = self.enc1(x)
+        e2 = self.enc2(self.pool(e1))
+        e3 = self.enc3(self.pool(e2))
+        e4 = self.enc4(self.pool(e3))
+        b  = self.bottleneck(self.pool(e4))
+        d4 = self.dec4(torch.cat([self.up4(b),  e4], dim=1))
+        d3 = self.dec3(torch.cat([self.up3(d4), e3], dim=1))
+        d2 = self.dec2(torch.cat([self.up2(d3), e2], dim=1))
+        d1 = self.dec1(torch.cat([self.up1(d2), e1], dim=1))
+        return self.out(d1)  # (B, num_classes, H, W)
+```
+
+## Input features
+
+The model receives 6 channels per tile (256x256 pixels, around 100 m/pixel):
+
+| Channel | Source | Description |
+|---|---|---|
+| R, G, B | Sentinel-2 / Landsat | Optical imagery |
+| DEM | SRTMGL1 | Elevation in meters |
+| NDVI | Derived | Vegetation index |
+| SMI | Derived | Soil Moisture Index |
+
+```python
+def prepare_tile(
+    rgb: np.ndarray,        # (3, 256, 256) float32 [0,1]
+    dem: np.ndarray,        # (256, 256) float32 meters
+    ndvi: np.ndarray,       # (256, 256) float32 [-1, 1]
+    smi: np.ndarray,        # (256, 256) float32 [0, 1]
+) -> torch.Tensor:
+    dem_norm  = (dem - dem.mean()) / (dem.std() + 1e-6)
+    x = np.stack([rgb[0], rgb[1], rgb[2], dem_norm, ndvi, smi], axis=0)
+    return torch.from_numpy(x).unsqueeze(0)  # (1, 6, 256, 256)
+```
+
+## Training data
+
+The `risk_training_data.csv` file in the repository stores metadata for historical tiles with risk annotations derived from:
+- **CEMADEN** (Brazil): historical landslide data
+- **INMET**: correlated historical weather records
+- **Brumadinho (2019)**: the disaster that inspired the project
+
+```python
+class RiskDataset(Dataset):
+    def __init__(self, csv_path: str, tiles_dir: str, augment: bool = True):
+        self.df = pd.read_csv(csv_path)
+        self.tiles_dir = Path(tiles_dir)
+        self.augment = augment
+
+    def __getitem__(self, idx: int):
+        row   = self.df.iloc[idx]
+        tile  = np.load(self.tiles_dir / row['tile_file'])  # (6, 256, 256)
+        mask  = np.load(self.tiles_dir / row['mask_file'])  # (256, 256) int labels
+
+        if self.augment:
+            tile, mask = self._random_flip(tile, mask)
+
+        return torch.from_numpy(tile), torch.from_numpy(mask).long()
+```
+
+## Serving the model with FastAPI
+
+```python
+# api/main.py
+from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
+import torch, io, json
+
+app = FastAPI(title="SOSLocation Risk Model API")
+model = SOSRiskSegmenter().eval()
+model.load_state_dict(torch.load("weights/best_model.pt", map_location="cpu"))
+
+@app.post("/risk/predict")
+async def predict_risk(payload: RiskRequest):
+    tile = prepare_tile(
+        rgb=np.array(payload.rgb), dem=np.array(payload.dem),
+        ndvi=np.array(payload.ndvi), smi=np.array(payload.smi)
+    )
+    with torch.no_grad():
+        logits = model(tile)                  # (1, 6, 256, 256)
+        probs  = torch.softmax(logits, dim=1) # class probabilities
+        pred   = logits.argmax(dim=1)         # most probable class
+
+    return {
+        "prediction":    pred[0].numpy().tolist(),
+        "probabilities": probs[0].numpy().tolist(),
+        "risk_level":    int(pred.max().item()),
+        "critical_pct":  float((pred == 4).float().mean().item()) * 100,
+    }
+```
+
+## Integration with the .NET backend
+
+When the `CriticalIncidentCreated` handler fires, the .NET client calls the ML Unit:
+
+```csharp
+// Infrastructure/ML/RiskModelClient.cs
+public async Task<RiskAnalysis> RequestAnalysisAsync(
+    Geometry incidentLocation, CancellationToken ct)
+{
+    var bbox = incidentLocation.EnvelopeInternal;
+    var tile = await _gisService.FetchTileAsync(bbox, ct);
+
+    var response = await _httpClient.PostAsJsonAsync("/risk/predict", new {
+        rgb  = tile.RGB,
+        dem  = tile.DEM,
+        ndvi = tile.NDVI,
+        smi  = tile.SMI,
+    }, ct);
+
+    return await response.Content.ReadFromJsonAsync<RiskAnalysis>(ct)
+        ?? throw new InvalidOperationException("Empty risk analysis response");
+}
+```
+
+The analysis result is stored in the database and streamed to the dashboard via SignalR, adding a predictive risk layer to the tactical map in under 3 seconds after incident creation.
+"""
+body_ja_jp = """
+# ニューラル・リスクモデル: SOSLocation.ML
+
+2026 年 3 月、コミット `feat(ml+tests): SOSLocation.ML .NET project + 40 unit/integration tests` によって、すでに形になりつつあったものが正式に定義されました。SOS Location 専用の ML ユニットです。目的は単純ですが野心的です。危機が制御不能になる前に、**どのエリアが影響を受けるかを予測する** ことです。
+
+## ML Unit のアーキテクチャ
+
+```
+risk-analysis-unit/
+  api/            FastAPI — REST と streaming gRPC でモデルを提供
+  models/         PyTorch モデル定義
+  training/       学習スクリプト + MLflow トラッキング
+  data/           取り込みパイプライン（GIS、気象、履歴）
+  tests/          40 件の unit / integration test
+```
+
+ML Unit は独立した Python マイクロサービスであり、重大インシデント（severity >= 7）が作成されると .NET バックエンドから HTTP/gRPC で呼び出されます。
+
+## セマンティックセグメンテーション・モデル
+
+衛星画像の中からリスク領域を特定する問題は **セマンティックセグメンテーション** です。各ピクセルを「高リスク」「中リスク」「安全」「水域」などに分類します。
+
+採用したアーキテクチャは、医用画像や地理空間画像の分割で古典的な手法である改良版 U-Net です。
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class UNetBlock(nn.Module):
+    def __init__(self, in_ch: int, out_ch: int):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv2d(in_ch, out_ch, 3, padding=1, bias=False),
+            nn.BatchNorm2d(out_ch),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(out_ch, out_ch, 3, padding=1, bias=False),
+            nn.BatchNorm2d(out_ch),
+            nn.ReLU(inplace=True),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.conv(x)
+
+
+class SOSRiskSegmenter(nn.Module):
+    \"""マルチスペクトル画像 + DEM 上のリスク分割用 U-Net。\"""
+
+    RISK_CLASSES = ['safe', 'low_risk', 'medium_risk', 'high_risk', 'critical', 'water']
+
+    def __init__(self, in_channels: int = 6, num_classes: int = 6):
+        # in_channels: RGB (3) + DEM (1) + NDVI (1) + moisture index (1)
+        super().__init__()
+        # Encoder
+        self.enc1 = UNetBlock(in_channels, 64)
+        self.enc2 = UNetBlock(64, 128)
+        self.enc3 = UNetBlock(128, 256)
+        self.enc4 = UNetBlock(256, 512)
+        # Bottleneck
+        self.bottleneck = UNetBlock(512, 1024)
+        # Decoder
+        self.up4 = nn.ConvTranspose2d(1024, 512, 2, stride=2)
+        self.dec4 = UNetBlock(1024, 512)
+        self.up3 = nn.ConvTranspose2d(512, 256, 2, stride=2)
+        self.dec3 = UNetBlock(512, 256)
+        self.up2 = nn.ConvTranspose2d(256, 128, 2, stride=2)
+        self.dec2 = UNetBlock(256, 128)
+        self.up1 = nn.ConvTranspose2d(128, 64, 2, stride=2)
+        self.dec1 = UNetBlock(128, 64)
+        # Output
+        self.out = nn.Conv2d(64, num_classes, 1)
+        self.pool = nn.MaxPool2d(2)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        e1 = self.enc1(x)
+        e2 = self.enc2(self.pool(e1))
+        e3 = self.enc3(self.pool(e2))
+        e4 = self.enc4(self.pool(e3))
+        b  = self.bottleneck(self.pool(e4))
+        d4 = self.dec4(torch.cat([self.up4(b),  e4], dim=1))
+        d3 = self.dec3(torch.cat([self.up3(d4), e3], dim=1))
+        d2 = self.dec2(torch.cat([self.up2(d3), e2], dim=1))
+        d1 = self.dec1(torch.cat([self.up1(d2), e1], dim=1))
+        return self.out(d1)  # (B, num_classes, H, W)
+```
+
+## 入力特徴量
+
+モデルは 1 タイルあたり 6 チャンネル（256x256 ピクセル、約 100 m / pixel）を受け取ります。
+
+| チャンネル | ソース | 説明 |
+|---|---|---|
+| R, G, B | Sentinel-2 / Landsat | 光学画像 |
+| DEM | SRTMGL1 | 標高（メートル） |
+| NDVI | 算出値 | 植生指数 |
+| SMI | 算出値 | Soil Moisture Index |
+
+```python
+def prepare_tile(
+    rgb: np.ndarray,        # (3, 256, 256) float32 [0,1]
+    dem: np.ndarray,        # (256, 256) float32 meters
+    ndvi: np.ndarray,       # (256, 256) float32 [-1, 1]
+    smi: np.ndarray,        # (256, 256) float32 [0, 1]
+) -> torch.Tensor:
+    dem_norm  = (dem - dem.mean()) / (dem.std() + 1e-6)
+    x = np.stack([rgb[0], rgb[1], rgb[2], dem_norm, ndvi, smi], axis=0)
+    return torch.from_numpy(x).unsqueeze(0)  # (1, 6, 256, 256)
+```
+
+## 学習データ
+
+リポジトリ内の `risk_training_data.csv` には、履歴タイルとリスク注釈のメタデータが入っており、主に次のソースから構成されています。
+- **CEMADEN**（ブラジル）: 過去の地すべりデータ
+- **INMET**: 相関づけられた過去の気象データ
+- **Brumadinho (2019)**: このプロジェクトの着想源となった災害
+
+```python
+class RiskDataset(Dataset):
+    def __init__(self, csv_path: str, tiles_dir: str, augment: bool = True):
+        self.df = pd.read_csv(csv_path)
+        self.tiles_dir = Path(tiles_dir)
+        self.augment = augment
+
+    def __getitem__(self, idx: int):
+        row   = self.df.iloc[idx]
+        tile  = np.load(self.tiles_dir / row['tile_file'])  # (6, 256, 256)
+        mask  = np.load(self.tiles_dir / row['mask_file'])  # (256, 256) int labels
+
+        if self.augment:
+            tile, mask = self._random_flip(tile, mask)
+
+        return torch.from_numpy(tile), torch.from_numpy(mask).long()
+```
+
+## FastAPI でモデルを提供する
+
+```python
+# api/main.py
+from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
+import torch, io, json
+
+app = FastAPI(title="SOSLocation Risk Model API")
+model = SOSRiskSegmenter().eval()
+model.load_state_dict(torch.load("weights/best_model.pt", map_location="cpu"))
+
+@app.post("/risk/predict")
+async def predict_risk(payload: RiskRequest):
+    tile = prepare_tile(
+        rgb=np.array(payload.rgb), dem=np.array(payload.dem),
+        ndvi=np.array(payload.ndvi), smi=np.array(payload.smi)
+    )
+    with torch.no_grad():
+        logits = model(tile)                  # (1, 6, 256, 256)
+        probs  = torch.softmax(logits, dim=1) # 各クラスの確率
+        pred   = logits.argmax(dim=1)         # 最も確率の高いクラス
+
+    return {
+        "prediction":    pred[0].numpy().tolist(),
+        "probabilities": probs[0].numpy().tolist(),
+        "risk_level":    int(pred.max().item()),
+        "critical_pct":  float((pred == 4).float().mean().item()) * 100,
+    }
+```
+
+## .NET バックエンドとの統合
+
+`CriticalIncidentCreated` ハンドラが発火すると、.NET クライアントは ML Unit を呼び出します。
+
+```csharp
+// Infrastructure/ML/RiskModelClient.cs
+public async Task<RiskAnalysis> RequestAnalysisAsync(
+    Geometry incidentLocation, CancellationToken ct)
+{
+    var bbox = incidentLocation.EnvelopeInternal;
+    var tile = await _gisService.FetchTileAsync(bbox, ct);
+
+    var response = await _httpClient.PostAsJsonAsync("/risk/predict", new {
+        rgb  = tile.RGB,
+        dem  = tile.DEM,
+        ndvi = tile.NDVI,
+        smi  = tile.SMI,
+    }, ct);
+
+    return await response.Content.ReadFromJsonAsync<RiskAnalysis>(ct)
+        ?? throw new InvalidOperationException("Empty risk analysis response");
+}
+```
+
+分析結果はデータベースに保存され、SignalR 経由でダッシュボードへ配信されます。これにより、インシデント作成から 3 秒未満で戦術マップに予測リスク層を重ねられます。
+"""

@@ -1,7 +1,11 @@
 id = "2026-04-03-2500"
 slug = "computacao-quantica-qbits-vs-bits"
 title = "Computação Quântica: O Poder Além dos Bits"
+title_en_us = "Quantum Computing: Power Beyond Bits"
+title_ja_jp = "量子コンピューティング：ビットを超えた力"
 summary = "Uma visão clara sobre os Qubits, superposição e como o poder quântico pode resolver problemas impossíveis para computadores clássicos."
+summary_en_us = "A clear view on qubits, superposition, and how quantum power can solve problems impossible for classical computers."
+summary_ja_jp = "量子ビット、重ね合わせ、そして古典コンピュータでは不可能な問題を量子の力がどう解くかについての明瞭な概観。"
 published_at = "2026-04-03T22:00:00+09:00"
 updated_at = "2026-04-03T22:00:00+09:00"
 status = "published"
@@ -42,4 +46,64 @@ Para cada bit clássico que você adiciona, a capacidade dobra linearmente. Com 
 ## Conclusão
 
 Estamos na "infância" da computação quântica. Hoje, ela é cara e instável (precisa de temperaturas próximas ao zero absoluto). Mas quando estabilizarmos essa tecnologia, o que chamamos de "Supercomputador" hoje parecerá uma calculadora de bolso amanhã.
+"""
+body_en_us = """
+While classical computers process information with **bits** (0 or 1), **quantum computing** works with **qubits**. That single difference changes everything we know about processing speed.
+
+## What a qubit is
+
+A qubit can be 0, 1, or a **superposition** of both. That means that while a classical computer explores one path at a time in a maze, a quantum computer explores **all paths simultaneously**.
+
+```mermaid
+graph LR
+  B[Classical Bit] -->|State| B1[0 OR 1]
+  Q[Quantum Qubit] -->|State| Q1[0 AND 1 at the Same Time]
+  Q1 -->|Processing| Q2[Exponential Explosion]
+```
+
+### Why the power is exponential
+
+Each extra classical bit increases capacity linearly. With qubits, representational capacity grows exponentially.
+
+-   300 qubits can represent more values than the number of atoms in the observable universe.
+
+## Applications that could change the world
+
+1.  **Cryptography**: Shor's algorithm can break RSA keys in minutes.
+2.  **Materials discovery**: Simulate complex molecules for new drugs or efficient batteries.
+3.  **AI optimization**: Train giant models in seconds instead of months.
+
+## Conclusion
+
+We are still in the infancy of quantum computing. Today it is expensive and unstable, requiring temperatures close to absolute zero. But once this technology stabilizes, what we now call a supercomputer will look like a pocket calculator.
+"""
+body_ja_jp = """
+古典コンピュータが **ビット**（0 または 1）で情報を処理するのに対し、**量子コンピューティング** は **量子ビット（qubit）** を使います。この違いひとつが、処理速度に関する常識を根本から変えます。
+
+## 量子ビットとは何か
+
+量子ビットは 0、1、あるいはその **重ね合わせ** の状態を取れます。つまり通常のコンピュータが迷路を一つずつ試すのに対し、量子コンピュータは **すべての経路を同時に扱える** ということです。
+
+```mermaid
+graph LR
+  B[古典ビット] -->|状態| B1[0 または 1]
+  Q[量子ビット] -->|状態| Q1[0 と 1 を同時に持つ]
+  Q1 -->|処理| Q2[指数的な広がり]
+```
+
+### なぜ指数的な力になるのか
+
+古典ビットは 1 個増えるごとに表現力が線形に伸びます。量子ビットでは、表現できる状態数が指数的に増えます。
+
+-   300 量子ビットは、観測可能な宇宙の原子数を超える値を表現できます。
+
+## 世界を変える応用
+
+1.  **暗号**: Shor のアルゴリズムは RSA 鍵を短時間で破れる可能性があります。
+2.  **新素材創出**: 新薬や高効率バッテリーのために複雑な分子を正確にシミュレートできる。
+3.  **AI 最適化**: 巨大モデルの訓練を、数か月ではなく数秒の世界に近づける。
+
+## 結論
+
+量子コンピューティングはいまなお幼年期にあります。高価で不安定で、絶対零度近い環境が必要です。しかしこの技術が安定したとき、今の「スーパーコンピュータ」は、未来から見ればポケット計算機のように映るでしょう。
 """
