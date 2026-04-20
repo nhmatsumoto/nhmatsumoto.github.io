@@ -6,14 +6,34 @@ from ..i18n import translate
 
 def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: str, i18n: dict[str, Any], locale: str) -> str:
     search_label = translate(i18n, locale, "nav.search", "command palette")
+    nav_items = [
+        ("about", "nav.about", "/about/"),
+        ("posts", "nav.posts", "/posts/"),
+        ("daily", "nav.daily", "/daily/"),
+        ("contact", "nav.contact", "/contact/"),
+    ]
+    secondary_items = [
+        ("projects", "nav.projects", "/projects/"),
+        ("documents", "nav.documents", "/documents/"),
+    ]
+    primary_links = "".join(
+        f'<a class="nav-link{" is-active" if active_nav == key else ""}" href="{site_href(site, url)}" data-i18n="{html.escape(i18n_key)}">{html.escape(translate(i18n, locale, i18n_key, key))}</a>'
+        for key, i18n_key, url in nav_items
+    )
+    secondary_links = "".join(
+        f'<a class="nav-secondary-link{" is-active" if active_nav == key else ""}" href="{site_href(site, url)}" data-i18n="{html.escape(i18n_key)}">{html.escape(translate(i18n, locale, i18n_key, key))}</a>'
+        for key, i18n_key, url in secondary_items
+    )
     return f"""
     <nav class="nav-shell" data-nav-shell>
       <div class="nav-brand">
         <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
       </div>
+      <div class="nav-primary-links">{primary_links}</div>
       <div class="nav-actions">
+        <div class="nav-secondary-links">{secondary_links}</div>
         <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_label)}"><i data-lucide="search"></i></button>
-<button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action"><i data-lucide="languages"></i><span class="locale-label" data-locale-label>PT</span></button>
+        <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action"><i data-lucide="languages"></i><span class="locale-label" data-locale-label>PT</span></button>
         <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
       </div>
     </nav>
@@ -49,7 +69,7 @@ def render_palette(site: dict[str, str], i18n: dict[str, Any], locale: str) -> s
 
 def render_intelligence_panel(site: dict[str, str], i18n: dict[str, Any], locale: str) -> str:
     close_label = translate(i18n, locale, "actions.close", "Fechar")
-    view_label = translate(i18n, locale, "actions.view_content", "Ver conteúdo")
+    view_label = translate(i18n, locale, "actions.read_article", "Abrir")
     return f"""
     <aside class="intelligence-panel" data-intelligence-panel data-open="false" aria-hidden="true">
       <div class="panel-backdrop" data-panel-close></div>
@@ -148,7 +168,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
   <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <title>{html.escape(page_title)}</title><meta name="description" content="{html.escape(page_description)}">
     <link rel="canonical" href="{html.escape(site_href(site, canonical_path))}">
     {rss_link}

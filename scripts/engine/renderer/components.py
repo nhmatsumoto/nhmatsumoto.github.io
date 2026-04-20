@@ -37,7 +37,7 @@ def render_markdown(text: str) -> str:
         s = STRONG_RE.sub(r"<strong>\1</strong>", s)
         s = EMPHASIS_RE.sub(r"<em>\1</em>", s)
         s = INLINE_CODE_RE.sub(r"<code>\1</code>", s)
-        s = WIKILINK_RE.sub(r'<a class="wikilink" href="/publications/\1/">\2</a>' if r"\2" else r'<a class="wikilink" href="/publications/\1/">\1</a>', s)
+        s = WIKILINK_RE.sub(r'<a class="wikilink" href="/posts/\1/">\2</a>' if r"\2" else r'<a class="wikilink" href="/posts/\1/">\1</a>', s)
         s = LINK_RE.sub(r'<a href="\2">\1</a>', s)
         return s
 
@@ -212,6 +212,33 @@ def render_post_card(post: dict[str, Any], i18n: dict[str, Any], locale: str) ->
     </li>
     """.strip()
 
+def render_daily_card(entry: dict[str, Any], i18n: dict[str, Any], locale: str, *, compact: bool = False) -> str:
+    metrics = render_metric_list([
+        render_localized_date(entry["published_dt"], locale, "short"),
+        render_reading_time(entry["reading_time"], i18n, locale),
+    ], escape_items=False)
+    mood = f'<span class="daily-meta-pill">{html.escape(entry["mood"])}</span>' if entry.get("mood") else ""
+    soundtrack = f'<span class="daily-meta-pill">{html.escape(entry["now_playing"] or entry["soundtrack"])}</span>' if entry.get("now_playing") or entry.get("soundtrack") else ""
+    compact_class = " daily-card-compact" if compact else ""
+    return f"""
+    <li>
+      <article class="resource-card daily-card{compact_class}">
+        <header class="card-headline">
+          <div class="card-meta">
+            <span class="card-type" data-i18n="kinds.daily">{html.escape(translate(i18n, locale, "kinds.daily", "daily"))}</span>
+            {metrics}
+          </div>
+        </header>
+        <div class="card-content">
+          <h3><a href="{html.escape(entry['resolved_url'])}">{html.escape(entry['title'])}</a></h3>
+          <p class="card-summary">{html.escape(entry['summary'])}</p>
+          <div class="daily-meta-row">{mood}{soundtrack}</div>
+        </div>
+        <footer>{render_tag_list(entry["tags"])}</footer>
+      </article>
+    </li>
+    """.strip()
+
 def render_project_card(project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     preview = f'<div class="card-preview"><code>{html.escape(project["diagram_preview"])}</code></div>' if project["diagram_preview"] else ""
     return f"""
@@ -294,11 +321,58 @@ def render_publications_grouped_section(system: dict[str, Any], publications: li
     </section>
     """
 
-def render_brain_map_section(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
-    links = [("nav.projects", site_href(site, "/projects/")), ("nav.posts", site_href(site, "/publications/")), ("nav.documents", site_href(site, "/documents/")), ("nav.about", site_href(site, "/about/"))]
+def render_brain_map_section(
+    site: dict[str, str],
+    system: dict[str, Any],
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    compact: bool = False,
+    counts: dict[str, int] | None = None,
+) -> str:
+    links = [("nav.posts", site_href(site, "/posts/")), ("nav.daily", site_href(site, "/daily/")), ("nav.projects", site_href(site, "/projects/")), ("nav.documents", site_href(site, "/documents/")), ("nav.about", site_href(site, "/about/"))]
     link_rows = "".join(f'<a class="brain-map-link" href="{html.escape(url)}" data-i18n="{html.escape(key)}">{html.escape(translate(i18n, locale, key, key.split(".")[-1]))}</a>' for key, url in links)
+    stats = [
+        ("nav.posts", counts.get("posts", 0) if counts else 0),
+        ("nav.projects", counts.get("projects", 0) if counts else 0),
+        ("nav.documents", counts.get("documents", 0) if counts else 0),
+    ]
+    stats_html = "".join(
+        f'<div class="brain-map-stat"><span class="brain-map-stat-value">{value}</span><span class="brain-map-stat-label" data-i18n="{html.escape(key)}">{html.escape(translate(i18n, locale, key, key.split(".")[-1]))}</span></div>'
+        for key, value in stats
+    )
+    legend_html = """
+        <div class="brain-map-legend" aria-label="Legend">
+          <div class="brain-map-legend-title">Legend</div>
+          <div class="brain-map-legend-grid">
+            <div class="brain-map-legend-item"><span class="brain-map-swatch is-central"></span><span>Hiro</span></div>
+            <div class="brain-map-legend-item"><span class="brain-map-swatch is-group"></span><span>Groups</span></div>
+            <div class="brain-map-legend-item"><span class="brain-map-swatch is-topic"></span><span>Topics</span></div>
+            <div class="brain-map-legend-item"><span class="brain-map-swatch is-project"></span><span>Projects</span></div>
+            <div class="brain-map-legend-item"><span class="brain-map-swatch is-post"></span><span>Posts</span></div>
+            <div class="brain-map-legend-item"><span class="brain-map-swatch is-document"></span><span>Documents</span></div>
+          </div>
+        </div>
+    """
+    aside = ""
+    panel_classes = "section-panel brain-map-panel"
+    canvas_variant = "default"
+    if compact:
+        panel_classes += " brain-map-panel-home"
+        canvas_variant = "home"
+        aside = f"""
+        <aside class="brain-map-aside">
+          <div class="brain-map-stat-grid">
+            {stats_html}
+          </div>
+          {legend_html}
+          <div class="brain-map-links" aria-label="Mapa cerebral">{link_rows}</div>
+        </aside>
+        """
+    else:
+        aside = f'<div class="brain-map-links" aria-label="Mapa cerebral">{link_rows}</div>'
     return f"""
-    <section class="section-panel brain-map-panel" aria-labelledby="brain-map-title">
+    <section class="{panel_classes}" aria-labelledby="brain-map-title">
       <header class="section-header">
         <div>
           <p class="section-kicker" data-i18n="nav.graph">{html.escape(translate(i18n, locale, "nav.graph", "Mapa cerebral"))}</p>
@@ -307,8 +381,8 @@ def render_brain_map_section(site: dict[str, str], system: dict[str, Any], i18n:
         <p data-i18n="sections.brain_map_copy">{html.escape(translate(i18n, locale, "sections.brain_map_copy", "Use este mapa para navegar, ver conexões entre pensamentos e explorar os fluxos que formam o meu cérebro técnico."))}</p>
       </header>
       <div class="brain-map-shell">
-        <div class="brain-map-links" aria-label="Mapa cerebral">{link_rows}</div>
-        <div class="brain-map-canvas" data-knowledge-graph data-brain-map data-full-screen="false"></div>
+        <div class="brain-map-canvas" data-knowledge-graph data-brain-map data-full-screen="false" data-graph-variant="{canvas_variant}"></div>
+        {aside}
       </div>
     </section>
     """
@@ -382,7 +456,7 @@ def render_hero(site: dict[str, str], system: dict[str, Any], posts: list[dict[s
 
 def render_navigation_section(system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     categories = sorted({d["category"] for d in documents if d.get("category")})
-    nav_items = [("nav.posts", "/publications/"), ("nav.projects", "/projects/"), ("nav.documents", "/documents/"), ("nav.about", "/about/")] 
+    nav_items = [("nav.about", "/about/"), ("nav.posts", "/posts/"), ("nav.daily", "/daily/"), ("nav.contact", "/contact/"), ("nav.projects", "/projects/"), ("nav.documents", "/documents/")]
     nav_items += [(f"sections.category_{c}", f"/documents/?category={c}") for c in categories]
     
     links = "\n".join(f'<a class="nav-link" href="{html.escape(url)}" data-i18n="{html.escape(key)}">{html.escape(translate(i18n, locale, key, key.split(".")[-1].replace("_", " ")))}</a>' for key, url in nav_items)

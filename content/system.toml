@@ -1,11 +1,11 @@
 [blog]
-concept = "nhmatsumoto-blog-engine"
-style = "minimalist engineering notebook"
-focus = ["clarity", "depth", "no distraction"]
+concept = "engineering notebook"
+style = "blueprint paper"
+focus = ["clareza", "densidade técnica", "ritmo de leitura"]
 
 [identity]
-feeling = ["focus", "precision", "technical depth"]
-references = ["engineering docs", "light dashboards", "structured README"]
+feeling = ["precisão", "calma operacional", "engenharia aplicada"]
+references = ["engineering notebooks", "blueprint paper", "technical field notes"]
 
 [identity.developer]
 name = "Hiro Matsumoto"
@@ -16,84 +16,80 @@ location = "Brasil / Remote"
 [layout.header]
 type = "fixed"
 logo = "text"
-nav = ["posts", "projects", "documents", "about"]
-cta = "open work / contact"
+nav = ["about", "posts", "daily", "contact"]
+secondary = ["projects", "documents"]
 search = "command palette"
 
 [layout.hero]
-headline = "building scalable systems and autonomous agents"
-stack = ["c#", ".net", "distributed systems", "ai agents", "gis"]
-highlights = ["main project", "recent article"]
-
-[layout.posts]
-view = ["list", "grid"]
-content = ["title", "tags", "reading time", "summary"]
-tags = ["dotnet", "ddd", "ai", "gis"]
-badges = ["architecture", "experiment", "production"]
-links = ["repo", "code"]
-
-[layout.projects]
-type = "core section"
-content = ["name", "stack", "status"]
-status = ["research", "in_progress", "production"]
-actions = ["view_architecture", "view_code", "open_docs"]
-features = ["architecture_docs", "diagram_preview"]
+headline = "engineering notebook para software, agentes e sistemas espaciais"
+stack = ["python", ".net", "ddd", "agents", "gis"]
 
 [layout.documents]
-type = "docs system"
-navigation = ["domain", "architecture", "agents", "apis"]
-content = ["markdown", "diagrams", "code"]
-features = ["versioning", "agent_generated_tag"]
+type = "technical library"
+navigation = ["architecture", "agents", "apis", "domain"]
 
-[layout.project_page]
-sections = ["overview", "problem_solution", "architecture", "stack", "adr", "roadmap"]
+[about]
+lede = "Resumo curto sobre quem eu sou, como penso engenharia e onde concentro energia agora."
 
-[design.colors]
-background = "#0B0F14"
-surface = "#121821"
-accent = ["#00C2FF", "#7C5CFF"]
-text_primary = "#E6EDF3"
-text_secondary = "#9DA7B3"
+[[about.sections]]
+title = "quem sou"
+body = """
+Engenheiro de software com interesse em sistemas onde arquitetura, operação e experiência de leitura importam ao mesmo tempo. Gosto de ambientes em que a complexidade precisa ser organizada com calma, sem teatralidade.
+"""
 
-[design.typography]
-headings = ["Inter", "Satoshi"]
-code = "JetBrains Mono"
+[[about.sections]]
+title = "carreira"
+body = """
+Atuo construindo software de produto, APIs, pipelines e interfaces técnicas. Minha trajetória mistura backend, frontend, integração e infraestrutura, normalmente em cenários onde a clareza da modelagem tem impacto direto no ritmo do time.
+"""
 
-[design.components]
-core = ["card", "tag", "badge", "code_block", "divider", "sidebar"]
+[[about.sections]]
+title = "perfil técnico"
+body = """
+Trabalho com Python, .NET, TypeScript e arquitetura orientada a domínio. Tenho interesse particular por sistemas estáticos bem modelados, workflows com agentes, visualização de dados e aplicações geoespaciais.
+"""
 
-[ux]
-reading_width = "680px"
-priorities = ["readability", "speed", "depth"]
-navigation = ["search", "shortcuts"]
-content_focus = ["diagrams", "code", "architecture_decisions"]
+[[about.sections]]
+title = "visão de engenharia"
+body = """
+Prefiro decisões reversíveis, interfaces explícitas e código que explique a própria intenção. O objetivo não é reduzir tudo ao mínimo, e sim tornar o sistema legível o suficiente para evoluir sem atrito desnecessário.
+"""
 
-[architecture.frontend]
-framework = ["Next.js", "Vite + React"]
-state = "Zustand"
-styling = "TailwindCSS"
-content = "MDX"
-search = ["Lunr", "FlexSearch"]
-deploy = ["Vercel", "Cloudflare"]
+[[about.sections]]
+title = "áreas de interesse"
+body = """
+DDD, agentes com uso de ferramentas, GIS, observabilidade de produto, renderização estática e design de interfaces técnicas que valorizam leitura longa.
+"""
 
-[structure]
-pattern = "DDD-like"
-tree = [
-  "/blog/posts",
-  "/blog/projects",
-  "/blog/docs",
-  "/blog/components",
-  "/blog/domain",
-  "/blog/application",
-  "/blog/infra",
-]
+[[about.sections]]
+title = "foco atual"
+body = """
+Refinar este site como um caderno técnico publicável, consolidar a linha de pesquisa em agentes e aprofundar projetos onde geoespacial, modelagem de domínio e visualização compartilham a mesma arquitetura.
+"""
 
-[key_idea]
-definition = "a living technical documentation system"
+[contact]
+intro = "Canais principais para acompanhar meu trabalho e entrar em contato."
 
-[next_steps]
-options = [
-  "generate react + tailwind template",
-  "create mdx structure",
-  "integrate with agent system",
-]
+[[contact.links]]
+label = "GitHub"
+kind = "code"
+url = "https://github.com/nhmatsumoto"
+description = "Repositórios, experimentos, engine do site e histórico público de implementação."
+
+[[contact.links]]
+label = "LinkedIn"
+kind = "network"
+url = "https://www.linkedin.com/in/nhmatsumoto/"
+description = "Perfil profissional e ponto direto para conversa sobre trabalho."
+
+[[contact.links]]
+label = "Site / Blog"
+kind = "writing"
+url = "https://nhmatsumoto.github.io"
+description = "Entrada principal para posts, projetos, documentos e daily notes."
+
+[[contact.links]]
+label = "RSS"
+kind = "feed"
+url = "https://nhmatsumoto.github.io/feed.xml"
+description = "Feed para acompanhar novas publicações sem depender de rede social."

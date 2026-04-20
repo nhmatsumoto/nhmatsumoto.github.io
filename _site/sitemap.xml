@@ -11,27 +11,32 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/</loc>
+    <loc>https://nhmatsumoto.github.io/contact/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nhmatsumoto.github.io/daily/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nhmatsumoto.github.io/posts/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/page/2/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/page/2/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/page/3/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/page/3/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/page/4/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/publications/page/5/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/page/4/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -46,268 +51,292 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260406-093000-ronaldinho-agent-persona-tooling/</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-05-1100-sos-location-stack/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1100-sos-location-stack/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-05-1000-sos-location-flow-architecture/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1000-sos-location-flow-architecture/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-05-0900-sos-location-business-rules/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-0900-sos-location-business-rules/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/20260404-demp-physics-fisica-demp-pulsos-dispersos/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260404-demp-physics-fisica-demp-pulsos-dispersos/</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/20260404-brain-map-topology-brain-map-topology-hiro/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260404-brain-map-topology-brain-map-topology-hiro/</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/20260404-knowledge-os-v2-technical-knowledge-os-v2/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-2500-computacao-quantica-qbits-vs-bits/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-2500-computacao-quantica-qbits-vs-bits/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-2400-introducao-intuitiva-fisica-quantica/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1600-sistemas-orientados-a-filas/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1600-sistemas-orientados-a-filas/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1200-fluxo-pensamento-agentes/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1200-fluxo-pensamento-agentes/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1100-poc-minerando-logs/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1100-poc-minerando-logs/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-1000-neuroplasticidade-agentes/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1000-neuroplasticidade-agentes/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/2026-04-03-0900-orquestrador-agentes-ddd/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-0900-orquestrador-agentes-ddd/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/20260402-203000-ddd-boundaries-for-agent-systems/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260402-203000-ddd-boundaries-for-agent-systems/</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/20260401-184500-gis-pipelines-with-event-driven-services/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260401-184500-gis-pipelines-with-event-driven-services/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/publications/20260312-090000-primeiro-post/</loc>
+    <loc>https://nhmatsumoto.github.io/posts/20260312-090000-primeiro-post/</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://nhmatsumoto.github.io/daily/20260420-223000-blueprint-refresh/</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nhmatsumoto.github.io/daily/20260419-071500-agent-boundaries-note/</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nhmatsumoto.github.io/daily/20260417-201000-field-notes-gis-reading/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://nhmatsumoto.github.io/projects/sos-location/</loc>
@@ -331,11 +360,6 @@
   </url>
   <url>
     <loc>https://nhmatsumoto.github.io/projects/brumadinho-location/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/projects/ronaldinho-agent/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

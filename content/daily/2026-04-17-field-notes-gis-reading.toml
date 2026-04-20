@@ -1,0 +1,21 @@
+id = "20260417-201000"
+slug = "field-notes-gis-reading"
+title = "Lendo GIS como sistema operacional de decisão"
+summary = "Tenho pensado em GIS menos como mapa bonito e mais como camada operacional para decidir rápido em contextos com muito ruído."
+published_at = "2026-04-17T20:10:00+09:00"
+updated_at = "2026-04-17T20:10:00+09:00"
+status = "published"
+tags = ["gis", "systems", "notes"]
+mood = "observando padrões"
+soundtrack = "post-rock"
+now_playing = "Explosions in the Sky - Your Hand In Mine"
+spotify = "https://open.spotify.com/track/4m7Lz7liuvDwydCm5mQWGG"
+body = """
+Quanto mais trabalho com dados geoespaciais, mais vejo GIS como interface de decisão, não só como visualização.
+
+O ponto central é transformar camadas complexas em perguntas operacionais simples:
+
+- onde está o risco;
+- o que mudou;
+- qual ação tem melhor custo-benefício agora.
+"""

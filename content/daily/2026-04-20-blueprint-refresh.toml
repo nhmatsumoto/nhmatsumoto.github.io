@@ -1,0 +1,21 @@
+id = "20260420-223000"
+slug = "blueprint-refresh"
+title = "Refatorando o shell visual do site"
+summary = "Hoje o foco foi alinhar navegação, tipografia e background para que o site pareça um caderno técnico de verdade, não apenas um blog com grid decorativo."
+published_at = "2026-04-20T22:30:00+09:00"
+updated_at = "2026-04-20T22:30:00+09:00"
+status = "published"
+tags = ["site", "design-system", "css"]
+mood = "concentrado"
+soundtrack = "ambient / downtempo"
+now_playing = "Tycho - Awake"
+spotify = "https://open.spotify.com/track/5elQnH6wu7vJ3ctY2L4eAQ"
+body = """
+Passei boa parte do dia ajustando o ritmo vertical do site. O problema anterior não era falta de identidade, e sim falta de alinhamento entre superfície e conteúdo.
+
+Objetivo prático:
+
+- usar a malha do fundo para orientar leitura;
+- reduzir a sensação de “cards soltos”;
+- fazer headings, parágrafos e metadados parecerem parte do mesmo papel técnico.
+"""

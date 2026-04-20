@@ -12,6 +12,7 @@ def _abs_url(site: dict, path: str) -> str:
 def generate_sitemap(
     site: dict[str, str],
     posts: list[dict[str, Any]],
+    daily_entries: list[dict[str, Any]],
     projects: list[dict[str, Any]],
     documents: list[dict[str, Any]],
     total_pages: int,
@@ -22,6 +23,8 @@ def generate_sitemap(
         return ""
 
     urls: list[str] = []
+    posts_root = str(config.get("publications_dir", "posts")).strip("/") or "posts"
+    daily_root = str(config.get("daily_output_dir", "daily")).strip("/") or "daily"
 
     def entry(loc: str, changefreq: str, priority: str, lastmod: str = "") -> str:
         mod = f"    <lastmod>{html.escape(lastmod)}</lastmod>\n" if lastmod else ""
@@ -36,10 +39,12 @@ def generate_sitemap(
 
     urls.append(entry(f"{base_url}/", "weekly", "1.0"))
     urls.append(entry(f"{base_url}/about/", "monthly", "0.7"))
+    urls.append(entry(f"{base_url}/contact/", "monthly", "0.7"))
+    urls.append(entry(f"{base_url}/{daily_root}/", "weekly", "0.7"))
 
-    # Paginated archive
+    # Paginated posts archive
     for p in range(1, total_pages + 1):
-        path = "/publications/" if p == 1 else f"/publications/page/{p}/"
+        path = f"/{posts_root}/" if p == 1 else f"/{posts_root}/page/{p}/"
         urls.append(entry(f"{base_url}{path}", "weekly", "0.6"))
 
     urls.append(entry(f"{base_url}/projects/", "weekly", "0.8"))
@@ -51,6 +56,13 @@ def generate_sitemap(
         if dt and hasattr(dt, "date"):
             lastmod = dt.date().isoformat()
         urls.append(entry(f"{base_url}{post['url']}", "monthly", "0.9", lastmod))
+
+    for entry_item in daily_entries:
+        lastmod = ""
+        dt = entry_item.get("updated_dt") or entry_item.get("published_dt")
+        if dt and hasattr(dt, "date"):
+            lastmod = dt.date().isoformat()
+        urls.append(entry(f"{base_url}{entry_item['url']}", "weekly", "0.8", lastmod))
 
     for project in projects:
         urls.append(entry(f"{base_url}{project['url']}", "monthly", "0.8"))

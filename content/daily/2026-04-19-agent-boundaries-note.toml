@@ -1,0 +1,21 @@
+id = "20260419-071500"
+slug = "agent-boundaries-note"
+title = "Boundary útil entre agente, domínio e tool layer"
+summary = "Reforcei uma heurística simples: se a decisão precisa sobreviver à troca de provider, ela não deveria morar no prompt."
+published_at = "2026-04-19T07:15:00+09:00"
+updated_at = "2026-04-19T07:15:00+09:00"
+status = "published"
+tags = ["agents", "ddd", "architecture"]
+mood = "analítico"
+soundtrack = "jazz instrumental"
+now_playing = "GoGo Penguin - Raven"
+spotify = "https://open.spotify.com/track/5MGCk5DqR1kTchxMvwS7lX"
+body = """
+Anotei uma regra que continua útil: provider, prompt e ferramenta mudam rápido; política de negócio muda devagar.
+
+Quando essa separação fica explícita:
+
+- o agente deixa de carregar regra escondida;
+- os testes ficam mais honestos;
+- trocar runtime deixa de ser reescrita completa.
+"""

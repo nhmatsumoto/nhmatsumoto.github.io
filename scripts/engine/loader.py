@@ -122,6 +122,60 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
             res[k] = v
     return res
 
+def normalise_daily(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
+    published_dt = parse_datetime(str(raw.get("published_at", "") or ""))
+    updated_dt = parse_datetime(str(raw.get("updated_at", "") or raw.get("published_at", "") or ""))
+    daily_id = str(raw.get("id", "") or "").strip() or published_dt.strftime("%Y%m%d-%H%M%S")
+    title = str(raw.get("title", "") or "").strip()
+    if not title:
+        title = str(next((value for _, value in localized_field_entries(raw, "title")), "") or "").strip() or "Nota"
+    slug = slugify(str(raw.get("slug", "") or "").strip() or title)
+    body = str(raw.get("body", "") or "")
+    if not body:
+        body = str(next((value for _, value in localized_field_entries(raw, "body")), "") or "")
+    summary = str(raw.get("summary", "") or "").strip()
+    if not summary:
+        summary = str(next((value for _, value in localized_field_entries(raw, "summary")), "") or "").strip() or summarize_body(body, limit=120)
+    status = str(raw.get("status", "") or "draft").strip().lower()
+    tags = normalize_string_list(raw.get("tags", []))
+    mood = str(raw.get("mood", "") or "").strip()
+    soundtrack = str(raw.get("soundtrack", "") or "").strip()
+    spotify = str(raw.get("spotify", "") or "").strip()
+    now_playing = str(raw.get("now_playing", "") or "").strip()
+    output_dir_name = f"{daily_id}-{slug}"
+    config = load_blog_config()
+    daily_output_dir = config["build"].get("daily_output_dir", "daily")
+
+    res = {
+        "id": daily_id,
+        "slug": slug,
+        "kind": "daily",
+        "category": "daily",
+        "title": title,
+        "summary": summary,
+        "published_at": published_dt.isoformat(timespec="seconds"),
+        "updated_at": updated_dt.isoformat(timespec="seconds"),
+        "status": status,
+        "tags": tags,
+        "body": body.rstrip() + "\n" if body.strip() else "",
+        "published_dt": published_dt,
+        "updated_dt": updated_dt,
+        "reading_time": reading_time_minutes(body),
+        "source_path": source_path,
+        "output_dir_name": output_dir_name,
+        "url": f"/{daily_output_dir}/{output_dir_name}/",
+        "mood": mood,
+        "soundtrack": soundtrack,
+        "spotify": spotify,
+        "now_playing": now_playing,
+        "has_math": False,
+    }
+
+    for k, v in raw.items():
+        if any(k.startswith(p) for p in ["title_", "summary_", "body_", "mood_", "soundtrack_", "now_playing_"]):
+            res[k] = v
+    return res
+
 def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
     name = str(raw.get("name", "") or "").strip()
     if not name:
@@ -251,6 +305,17 @@ def load_posts(include_drafts: bool = False) -> list[dict[str, Any]]:
             if include_drafts or post["status"] == "published":
                 posts.append(post)
     return sorted(posts, key=lambda x: x["published_dt"], reverse=True)
+
+def load_daily(include_drafts: bool = False) -> list[dict[str, Any]]:
+    config = load_blog_config()
+    daily_dir = ROOT / config["build"].get("daily_dir", "content/daily")
+    entries = []
+    if daily_dir.exists():
+        for path in sorted(daily_dir.glob("*.toml")):
+            entry = normalise_daily(load_toml(path), source_path=path)
+            if include_drafts or entry["status"] == "published":
+                entries.append(entry)
+    return sorted(entries, key=lambda x: x["published_dt"], reverse=True)
 
 def load_projects() -> list[dict[str, Any]]:
     config = load_blog_config()

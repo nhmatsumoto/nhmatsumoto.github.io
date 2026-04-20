@@ -10,11 +10,12 @@ from .utils import (
     resolve_optional_url, now_local, minify_js, minify_css, md5_of_content,
     copy_localized_fields
 )
-from .loader import load_site, load_system, load_posts, load_projects, load_documents
+from .loader import load_site, load_system, load_posts, load_daily, load_projects, load_documents
 from .i18n import load_i18n, default_locale
 from .renderer.pages import (
     render_home_page, render_archive_page, render_projects_index_page,
-    render_documents_index_page, render_about_page, render_post_page,
+    render_documents_index_page, render_about_page, render_contact_page,
+    render_daily_index_page, render_post_page, render_daily_page,
     render_project_page, render_document_page
 )
 
@@ -32,17 +33,23 @@ def _copy_localized_alias(
         if overwrite or key not in target:
             target[key] = value
 
-def build_search_index(site: dict[str, str], posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> list[dict[str, Any]]:
+def build_search_index(site: dict[str, str], posts: list[dict[str, Any]], daily_entries: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> list[dict[str, Any]]:
     from .utils import summarize_body
     from .i18n import translate
     items = [
         {"title": site["title"], "url": site_href(site, "/"), "kind": "home", "summary": site["description"]},
-        {"title": translate(i18n, locale, "nav.about", "About"), "url": site_href(site, "/about/"), "kind": "about", "summary": summarize_body(site["about"])}
+        {"title": translate(i18n, locale, "nav.about", "About"), "url": site_href(site, "/about/"), "kind": "about", "summary": summarize_body(site["about"])},
+        {"title": translate(i18n, locale, "nav.contact", "Contact"), "url": site_href(site, "/contact/"), "kind": "contact", "summary": translate(i18n, locale, "pages.contact.description", "Social links and contact channels.")},
     ]
     for p in posts:
         entry = {"title": p["title"], "url": p["resolved_url"], "kind": "post", "summary": p["summary"], "keywords": p["tags"]}
         _copy_localized_alias(p, entry, "title", "title")
         _copy_localized_alias(p, entry, "summary", "summary")
+        items.append(entry)
+    for entry_source in daily_entries:
+        entry = {"title": entry_source["title"], "url": entry_source["resolved_url"], "kind": "daily", "summary": entry_source["summary"], "keywords": entry_source["tags"]}
+        _copy_localized_alias(entry_source, entry, "title", "title")
+        _copy_localized_alias(entry_source, entry, "summary", "summary")
         items.append(entry)
     for p in projects:
         entry = {"title": p["name"], "url": p["resolved_url"], "kind": "project", "summary": p["summary"], "keywords": p["stack"]}
@@ -86,6 +93,7 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     site["language"] = locale
     
     posts = load_posts(include_drafts=False)
+    daily_entries = load_daily(include_drafts=False)
     projects = load_projects()
     documents = load_documents()
     
@@ -96,6 +104,9 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         p["resolved_url"] = site_href(site, p["url"])
         p["resolved_repo_url"] = resolve_optional_url(site, p["repo_url"])
         p["resolved_code_url"] = resolve_optional_url(site, p["code_url"])
+    for entry in daily_entries:
+        entry["resolved_url"] = site_href(site, entry["url"])
+        entry["resolved_spotify_url"] = resolve_optional_url(site, entry.get("spotify", ""))
     for p in projects:
         p["resolved_url"] = site_href(site, p["url"])
         p["resolved_repo_url"] = resolve_optional_url(site, p["repo_url"])
@@ -111,7 +122,15 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
             shutil.rmtree(legacy_dir)
 
     # Clean directories
-    for dname in [config["publications_dir"], config["projects_output_dir"], config["documents_output_dir"], Path(config["about_file"]).parent]:
+    for dname in [
+        config["publications_dir"],
+        config.get("legacy_publications_dir", "publications"),
+        config.get("daily_output_dir", "daily"),
+        config["projects_output_dir"],
+        config["documents_output_dir"],
+        Path(config["about_file"]).parent,
+        Path(config["contact_file"]).parent,
+    ]:
         clean_output_directory(target_root / dname)
 
     # Mirror assets with cache-busting for JS/CSS entry points only.
@@ -168,32 +187,43 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     generated_paths: list[str] = []
     
     # Render static pages
-    write_text(target_root / config["home_file"], render_home_page(site, system, posts, projects, documents, i18n, locale))
+    write_text(target_root / config["home_file"], render_home_page(site, system, posts, daily_entries, projects, documents, i18n, locale))
     write_text(target_root / config["project_index_file"], render_projects_index_page(site, system, posts, projects, documents, i18n, locale))
     write_text(target_root / config["documents_index_file"], render_documents_index_page(site, system, documents, i18n, locale))
+    write_text(target_root / config["daily_index_file"], render_daily_index_page(site, system, daily_entries, i18n, locale))
     write_text(target_root / config["about_file"], render_about_page(site, system, i18n, locale))
+    write_text(target_root / config["contact_file"], render_contact_page(site, system, i18n, locale))
 
-    # Pagination for Publications (Posts + Documents)
-    all_publications = sorted(posts + documents, key=lambda x: x.get("published_dt", now_local()), reverse=True)
+    # Pagination for posts
     items_per_page = int(config.get("posts_per_page", 12))
-    total_pages = math.ceil(len(all_publications) / items_per_page) if all_publications else 1
+    total_pages = math.ceil(len(posts) / items_per_page) if posts else 1
     
     for p in range(1, total_pages + 1):
-        page_items = all_publications[(p-1)*items_per_page : p*items_per_page]
+        page_items = posts[(p-1)*items_per_page : p*items_per_page]
         dest = target_root / config["archive_file"] if p == 1 else target_root / config["publications_dir"] / "page" / str(p) / "index.html"
-        write_text(dest, render_archive_page(site, system, page_items, i18n, locale, current_page=p, total_pages=total_pages))
+        page_html = render_archive_page(site, system, page_items, i18n, locale, current_page=p, total_pages=total_pages)
+        write_text(dest, page_html)
+        legacy_publications_dir = config.get("legacy_publications_dir", "publications")
+        legacy_dest = target_root / legacy_publications_dir / "index.html" if p == 1 else target_root / legacy_publications_dir / "page" / str(p) / "index.html"
+        write_text(legacy_dest, page_html)
 
     # Render items
     for idx, post in enumerate(posts):
         dest = target_root / config["publications_dir"] / post["output_dir_name"] / "index.html"
         related = find_related_posts(post, posts)
-        write_text(dest, render_post_page(site, system, post, posts[idx-1] if idx > 0 else None, posts[idx+1] if idx+1 < len(posts) else None, i18n, locale, related_posts=related))
+        page_html = render_post_page(site, system, post, posts[idx-1] if idx > 0 else None, posts[idx+1] if idx+1 < len(posts) else None, i18n, locale, related_posts=related)
+        write_text(dest, page_html)
+        legacy_publications_dir = config.get("legacy_publications_dir", "publications")
+        write_text(target_root / legacy_publications_dir / post["output_dir_name"] / "index.html", page_html)
+    for idx, entry in enumerate(daily_entries):
+        dest = target_root / config.get("daily_output_dir", "daily") / entry["output_dir_name"] / "index.html"
+        write_text(dest, render_daily_page(site, system, entry, daily_entries[idx-1] if idx > 0 else None, daily_entries[idx+1] if idx+1 < len(daily_entries) else None, i18n, locale))
     for p in projects: write_text(target_root / config["projects_output_dir"] / p["slug"] / "index.html", render_project_page(site, system, p, i18n, locale))
     for d in documents: write_text(target_root / config["documents_output_dir"] / d["slug"] / "index.html", render_document_page(site, system, d, i18n, locale))
 
     # Assets & Index
     write_json(target_root / "assets/graph-data.json", build_graph_data(posts, projects, documents))
-    write_json(target_root / config["search_index_file"], build_search_index(site, posts, projects, documents, i18n, locale))
+    write_json(target_root / config["search_index_file"], build_search_index(site, posts, daily_entries, projects, documents, i18n, locale))
     write_json(target_root / config["i18n_asset_file"], {
         "defaultLocale": i18n.get("default_locale", locale),
         "supportedLocales": i18n.get("supported_locales", []),
@@ -202,7 +232,7 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
 
     # SEO: Sitemap and RSS feed
     from .renderer.feeds import generate_sitemap, generate_rss_feed
-    sitemap_xml = generate_sitemap(site, posts, projects, documents, total_pages, config)
+    sitemap_xml = generate_sitemap(site, posts, daily_entries, projects, documents, total_pages, config)
     if sitemap_xml:
         write_text(target_root / config.get("sitemap_file", "sitemap.xml"), sitemap_xml)
     rss_xml = generate_rss_feed(site, posts, config)

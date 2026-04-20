@@ -1,20 +1,20 @@
-title = "nhmatsumoto-blog-engine"
-headline = "technical knowledge OS for scalable systems and autonomous agents."
-description = "Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva."
+title = "nhmatsumoto.github.io"
+headline = "engenharia de software para sistemas distribuídos, agentes e produtos com forte densidade técnica."
+description = "Caderno de engenharia em pt-BR sobre arquitetura, agentes, GIS, software de produto e o processo de construir sistemas estáticos, legíveis e duráveis."
 language = "pt-BR"
 author = "Hiro Matsumoto"
 base_url = "https://nhmatsumoto.github.io"
 github_url = "https://github.com/nhmatsumoto"
 linkedin_url = "https://www.linkedin.com/in/nhmatsumoto/"
-home_title = "building scalable systems and autonomous agents"
+home_title = "engineering notebook para software, agentes e sistemas espaciais"
 home_intro = """
-Este espaço agora funciona como um sistema vivo de documentação técnica: posts, projetos, ADRs e notas operacionais compartilhando a mesma superfície.
+Este site funciona como um caderno técnico publicado: artigos longos quando a ideia pede contexto, notas curtas quando o valor está no registro do processo, e páginas de projeto quando a engenharia precisa ser vista como sistema.
 
-O objetivo é clareza com profundidade. Tudo continua simples no deploy, mas a experiência passa a refletir o tipo de software que construo: sistemas distribuídos, agentes, GIS e arquitetura orientada a domínio.
+A escolha por HTML estático, TOML versionado e um gerador em Python não é nostalgia. É uma decisão de arquitetura: conteúdo previsível, build simples, deploy barato e total controle sobre a experiência de leitura.
 """
 about = """
-Sou engenheiro de software e trato este espaço como um caderno operacional: menos marketing, mais contexto técnico. O blog deixou de ser apenas uma coleção de posts e passou a funcionar como uma camada de documentação viva sobre projetos, decisões de arquitetura e experimentos de produto.
+Sou engenheiro de software e trato este espaço como uma superfície de trabalho, não como uma landing page. Meu interesse está em sistemas que precisam permanecer claros mesmo quando crescem: pipelines geoespaciais, arquitetura orientada a domínio, agentes e produtos com bastante integração.
 
-Quando uma ideia amadurece, ela vira projeto. Quando uma decisão precisa durar, ela vira documento. Quando um aprendizado merece ser compartilhado, ele vira publicação.
+Escrevo para registrar decisões, limites e heurísticas úteis. Quando algo merece mais profundidade, vira post. Quando precisa durar, vira documento. Quando é parte do dia a dia, entra em daily.
 """
-footer_note = "nhmatsumoto-blog-engine: Technical knowledge OS publicado com HTML estático, TOML versionado e um gerador local sem dependências externas."
+footer_note = "Publicado com um gerador estático em Python, conteúdo em TOML e um design system pensado para leitura longa em ritmo de notebook técnico."
