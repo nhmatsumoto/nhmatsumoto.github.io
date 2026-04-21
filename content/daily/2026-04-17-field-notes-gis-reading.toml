@@ -1,7 +1,11 @@
 id = "20260417-201000"
 slug = "field-notes-gis-reading"
 title = "Lendo GIS como sistema operacional de decisão"
+title_en_us = "Reading GIS as a decision operating system"
+title_ja_jp = "意思決定のオペレーティングシステムとして GIS を読む"
 summary = "Tenho pensado em GIS menos como mapa bonito e mais como camada operacional para decidir rápido em contextos com muito ruído."
+summary_en_us = "I have been thinking of GIS less as a beautiful map and more as an operational layer for making fast decisions in noisy contexts."
+summary_ja_jp = "GIS を美しい地図としてではなく、ノイズの多い状況で素早く判断するための運用レイヤーとして考えるようになっている。"
 published_at = "2026-04-17T20:10:00+09:00"
 updated_at = "2026-04-17T20:10:00+09:00"
 status = "published"
@@ -18,4 +22,24 @@ O ponto central é transformar camadas complexas em perguntas operacionais simpl
 - onde está o risco;
 - o que mudou;
 - qual ação tem melhor custo-benefício agora.
+"""
+
+body_en_us = """
+The more I work with geospatial data, the more I see GIS as a decision interface, not only as visualization.
+
+The central point is to turn complex layers into simple operational questions:
+
+- where the risk is;
+- what changed;
+- which action has the best cost-benefit right now.
+"""
+
+body_ja_jp = """
+地理空間データを扱うほど、GIS は単なる可視化ではなく、意思決定のインターフェースだと感じる。
+
+中心にあるのは、複雑なレイヤーをシンプルな運用上の問いに変換することだ。
+
+- リスクはどこにあるのか。
+- 何が変わったのか。
+- 今もっとも費用対効果の高い行動は何か。
 """

@@ -1125,7 +1125,11 @@
       "site",
       "design-system",
       "css"
-    ]
+    ],
+    "title_en_us": "Refactoring the site's visual shell",
+    "title_ja_jp": "サイトのビジュアルシェルをリファクタリングする",
+    "summary_en_us": "Today's focus was aligning navigation, typography and background so the site feels like a real technical notebook, not just a blog with a decorative grid.",
+    "summary_ja_jp": "今日は、ナビゲーション、タイポグラフィ、背景をそろえ、装飾的なグリッド付きブログではなく、本物の技術ノートのように感じられるサイトにすることへ集中した。"
   },
   {
     "title": "Boundary útil entre agente, domínio e tool layer",
@@ -1136,7 +1140,11 @@
       "agents",
       "ddd",
       "architecture"
-    ]
+    ],
+    "title_en_us": "A useful boundary between agent, domain and tool layer",
+    "title_ja_jp": "エージェント、ドメイン、tool layer の有用な境界",
+    "summary_en_us": "I reinforced a simple heuristic: if a decision needs to survive a provider change, it should not live in the prompt.",
+    "summary_ja_jp": "シンプルなヒューリスティックを再確認した。provider を変えても残るべき判断は、prompt の中に置くべきではない。"
   },
   {
     "title": "Lendo GIS como sistema operacional de decisão",
@@ -1147,7 +1155,11 @@
       "gis",
       "systems",
       "notes"
-    ]
+    ],
+    "title_en_us": "Reading GIS as a decision operating system",
+    "title_ja_jp": "意思決定のオペレーティングシステムとして GIS を読む",
+    "summary_en_us": "I have been thinking of GIS less as a beautiful map and more as an operational layer for making fast decisions in noisy contexts.",
+    "summary_ja_jp": "GIS を美しい地図としてではなく、ノイズの多い状況で素早く判断するための運用レイヤーとして考えるようになっている。"
   },
   {
     "title": "SOS Location",

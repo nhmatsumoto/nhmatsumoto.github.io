@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://nhmatsumoto.github.io/daily/20260419-071500-agent-boundaries-note/">
     <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
     
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.8cee940f.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.15092107.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -57,7 +57,7 @@
         <div class="sidebar-actions"><a class="sidebar-link" href="https://open.spotify.com/track/5MGCk5DqR1kTchxMvwS7lX" target="_blank" rel="noopener">spotify</a></div>
       </aside>
     </section>
-    <script id="page-content-data" type="application/json">{"title": "Boundary útil entre agente, domínio e tool layer", "summary": "Reforcei uma heurística simples: se a decisão precisa sobreviver à troca de provider, ela não deveria morar no prompt.", "body_html": "\u003cp>Anotei uma regra que continua útil: provider, prompt e ferramenta mudam rápido; política de negócio muda devagar.\u003c/p>\n\u003cp>Quando essa separação fica explícita:\u003c/p>\n\u003cul>\u003cli>o agente deixa de carregar regra escondida;\u003c/li> \u003cli>os testes ficam mais honestos;\u003c/li> \u003cli>trocar runtime deixa de ser reescrita completa.\u003c/li>\u003c/ul>"}</script>
+    <script id="page-content-data" type="application/json">{"title": "Boundary útil entre agente, domínio e tool layer", "summary": "Reforcei uma heurística simples: se a decisão precisa sobreviver à troca de provider, ela não deveria morar no prompt.", "body_html": "\u003cp>Anotei uma regra que continua útil: provider, prompt e ferramenta mudam rápido; política de negócio muda devagar.\u003c/p>\n\u003cp>Quando essa separação fica explícita:\u003c/p>\n\u003cul>\u003cli>o agente deixa de carregar regra escondida;\u003c/li> \u003cli>os testes ficam mais honestos;\u003c/li> \u003cli>trocar runtime deixa de ser reescrita completa.\u003c/li>\u003c/ul>", "title_en_us": "A useful boundary between agent, domain and tool layer", "title_ja_jp": "エージェント、ドメイン、tool layer の有用な境界", "summary_en_us": "I reinforced a simple heuristic: if a decision needs to survive a provider change, it should not live in the prompt.", "summary_ja_jp": "シンプルなヒューリスティックを再確認した。provider を変えても残るべき判断は、prompt の中に置くべきではない。", "body_html_en_us": "\u003cp>I wrote down a rule that remains useful: provider, prompt and tool change quickly; business policy changes slowly.\u003c/p>\n\u003cp>When that separation becomes explicit:\u003c/p>\n\u003cul>\u003cli>the agent stops carrying hidden rules;\u003c/li> \u003cli>the tests become more honest;\u003c/li> \u003cli>changing runtime stops being a full rewrite.\u003c/li>\u003c/ul>", "body_html_ja_jp": "\u003cp>今でも役に立つルールをメモした。provider、prompt、tool は速く変わる。ビジネスポリシーはゆっくり変わる。\u003c/p>\n\u003cp>この分離が明示されると、次のことが起きる。\u003c/p>\n\u003cul>\u003cli>エージェントが隠れたルールを背負わなくなる。\u003c/li> \u003cli>テストがより正直になる。\u003c/li> \u003cli>runtime の変更が全面的な書き直しではなくなる。\u003c/li>\u003c/ul>"}</script>
     </main>
       
     <footer class="site-footer">

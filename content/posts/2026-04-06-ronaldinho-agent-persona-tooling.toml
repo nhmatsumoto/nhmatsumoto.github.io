@@ -59,3 +59,67 @@ O documento [Ronaldinho Architecture Overview](/documents/ronaldinho-architectur
 
 Quando algo funciona mais como estudo de caso do que como ativo principal de portfolio, a melhor estrutura é transformá-lo em publicação. Isso preserva contexto, melhora navegação e evita competir com projetos que hoje representam melhor minha direção atual.
 """
+
+body_en_us = """
+# Why Ronaldinho Agent left the projects area
+
+`ronaldinho-agent` started as an experiment to test three questions at the same time:
+
+1. how much a persona changes the perceived usefulness of an agent;
+2. how to keep short-term memory without overcomplicating the architecture;
+3. where the orchestration layer ends and the real domain of the system begins.
+
+Over time, it became clear that the main value of the project was not treating it as a featured product, but using it as a laboratory for engineering decisions. That is why it now lives here as a publication connected to the rest of the site.
+
+## What the experiment validated
+
+- **Persona as an interface constraint**: using personality in the system prompt changed the experience, but only worked well while the architecture remained technical underneath.
+- **Short-term memory sufficient for objective sessions**: conversation history handled small interactions well, especially when combined with more deterministic answers.
+- **Tool use with an explicit dispatcher**: the boundary between reasoning and execution became more readable when external calls were treated as contracts.
+
+## Where it fits today
+
+Today the project makes more sense as reference material for:
+
+- posts about boundaries in agent systems;
+- architecture documents related to runtime, tools and modularity;
+- decisions about how this site itself organizes technical knowledge.
+
+The [Ronaldinho Architecture Overview](/documents/ronaldinho-architecture-overview/) document remains available as a complementary note, but the dedicated project route is gone to reduce noise in the information architecture.
+
+## Editorial decision
+
+When something works more as a case study than as a main portfolio asset, the best structure is to turn it into a publication. That preserves context, improves navigation and avoids competing with projects that now represent my current direction more clearly.
+"""
+
+body_ja_jp = """
+# Ronaldinho Agent をプロジェクト領域から外した理由
+
+`ronaldinho-agent` は、次の三つの問いを同時に試すための実験として始まった。
+
+1. persona がエージェントの有用性の感じ方をどれだけ変えるのか。
+2. アーキテクチャを複雑にしすぎずに短期記憶をどう保つのか。
+3. オーケストレーション層はどこで終わり、システムの本当のドメインはどこから始まるのか。
+
+時間が経つにつれて、このプロジェクトの主な価値は、目立つプロダクトとして扱うことではなく、エンジニアリング判断の実験室として使うことにあると分かった。そのため、今はサイト全体とつながる公開記事としてここに置いている。
+
+## この実験で検証できたこと
+
+- **インターフェース制約としての persona**: system prompt に人格を入れると体験は変わる。ただし、内部のアーキテクチャが技術的に保たれている場合にだけうまく機能した。
+- **目的が明確なセッションには十分な短期記憶**: 会話履歴は小さなやり取りにはよく効いた。特に、より決定的な回答と組み合わせたときに扱いやすかった。
+- **明示的な dispatcher を使った tool use**: 外部呼び出しを契約として扱うと、推論と実行の境界が読みやすくなった。
+
+## 現在の位置づけ
+
+今のこのプロジェクトは、次のための参照資料としてのほうが自然だ。
+
+- エージェントシステムにおける boundary についての記事。
+- runtime、tools、modularity に関するアーキテクチャ文書。
+- このサイト自体が技術知識をどう整理するかという判断。
+
+[Ronaldinho Architecture Overview](/documents/ronaldinho-architecture-overview/) は補足ノートとして残している。ただし、情報設計上のノイズを減らすため、専用のプロジェクトルートはなくした。
+
+## 編集上の判断
+
+あるものがポートフォリオの主要資産というよりケーススタディとして機能するなら、公開記事にするのがいちばん整理しやすい。文脈を残し、ナビゲーションを改善し、今の方向性をよりよく表すプロジェクトと競合しない形にできる。
+"""

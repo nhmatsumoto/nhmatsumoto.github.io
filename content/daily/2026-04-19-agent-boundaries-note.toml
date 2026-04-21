@@ -1,7 +1,11 @@
 id = "20260419-071500"
 slug = "agent-boundaries-note"
 title = "Boundary útil entre agente, domínio e tool layer"
+title_en_us = "A useful boundary between agent, domain and tool layer"
+title_ja_jp = "エージェント、ドメイン、tool layer の有用な境界"
 summary = "Reforcei uma heurística simples: se a decisão precisa sobreviver à troca de provider, ela não deveria morar no prompt."
+summary_en_us = "I reinforced a simple heuristic: if a decision needs to survive a provider change, it should not live in the prompt."
+summary_ja_jp = "シンプルなヒューリスティックを再確認した。provider を変えても残るべき判断は、prompt の中に置くべきではない。"
 published_at = "2026-04-19T07:15:00+09:00"
 updated_at = "2026-04-19T07:15:00+09:00"
 status = "published"
@@ -18,4 +22,24 @@ Quando essa separação fica explícita:
 - o agente deixa de carregar regra escondida;
 - os testes ficam mais honestos;
 - trocar runtime deixa de ser reescrita completa.
+"""
+
+body_en_us = """
+I wrote down a rule that remains useful: provider, prompt and tool change quickly; business policy changes slowly.
+
+When that separation becomes explicit:
+
+- the agent stops carrying hidden rules;
+- the tests become more honest;
+- changing runtime stops being a full rewrite.
+"""
+
+body_ja_jp = """
+今でも役に立つルールをメモした。provider、prompt、tool は速く変わる。ビジネスポリシーはゆっくり変わる。
+
+この分離が明示されると、次のことが起きる。
+
+- エージェントが隠れたルールを背負わなくなる。
+- テストがより正直になる。
+- runtime の変更が全面的な書き直しではなくなる。
 """
