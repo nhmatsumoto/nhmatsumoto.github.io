@@ -158,6 +158,26 @@ toggle.animate([
 });
 }
 };
+const initContactCardsLocalization = () => {
+const cards = document.querySelectorAll("[data-contact-card]");
+if (!cards.length) return;
+const apply = (locale) => {
+cards.forEach(card => {
+const script = card.querySelector("[data-contact-card-data]");
+const target = card.querySelector("[data-contact-description]");
+if (!script || !target) return;
+let data;
+try { data = JSON.parse(script.textContent || "{}"); } catch { return; }
+if (!target.dataset.fallback) target.dataset.fallback = target.textContent || "";
+const value = resolveLocalizedField(data, "description", locale, target.dataset.fallback);
+target.textContent = value || target.dataset.fallback;
+});
+};
+useStore.subscribe((state, prevState) => {
+if (state.locale !== prevState.locale) apply(state.locale);
+});
+apply(useStore.getState().locale);
+};
 const initPageContentLocalization = () => {
 const data = parseJsonScript("page-content-data");
 if (!data) return;
@@ -346,6 +366,7 @@ el.addEventListener("mousemove", updateCoords);
 document.addEventListener("DOMContentLoaded", () => {
 const loc = initLocalization();
 initPageContentLocalization();
+initContactCardsLocalization();
 initThemeManager();
 initLocaleToggle(loc);
 initCommandPalette(loc);

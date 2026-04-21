@@ -162,27 +162,37 @@ body_ja_jp = """
 
 [contact]
 intro = "Canais principais para acompanhar meu trabalho e entrar em contato."
+intro_en_us = "Primary channels to follow my work and get in touch."
+intro_ja_jp = "仕事を追いかけ、連絡を取るための主要チャネル。"
 
 [[contact.links]]
 label = "GitHub"
 kind = "code"
 url = "https://github.com/nhmatsumoto"
 description = "Repositórios, experimentos, engine do site e histórico público de implementação."
+description_en_us = "Repositories, experiments, site engine and public implementation history."
+description_ja_jp = "リポジトリ、実験、サイトエンジン、実装の公開履歴。"
 
 [[contact.links]]
 label = "LinkedIn"
 kind = "network"
-url = "https://www.linkedin.com/in/nhmatsumoto/"
+url = "https://www.linkedin.com/in/hiroyukims/"
 description = "Perfil profissional e ponto direto para conversa sobre trabalho."
+description_en_us = "Professional profile and direct entry point for work conversations."
+description_ja_jp = "プロフェッショナルプロフィール、仕事に関する連絡先。"
 
 [[contact.links]]
 label = "Site / Blog"
 kind = "writing"
 url = "https://nhmatsumoto.github.io"
 description = "Entrada principal para posts, projetos, documentos e daily notes."
+description_en_us = "Main entry point for posts, projects, documents and daily notes."
+description_ja_jp = "記事、プロジェクト、ドキュメント、デイリーノートへのメインエントリー。"
 
 [[contact.links]]
 label = "RSS"
 kind = "feed"
 url = "https://nhmatsumoto.github.io/feed.xml"
 description = "Feed para acompanhar novas publicações sem depender de rede social."
+description_en_us = "Feed to follow new publications without relying on social networks."
+description_ja_jp = "SNSに依存せず新しい公開記事を追うためのフィード。"

@@ -478,19 +478,30 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
 def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     links = system.get("contact", {}).get("links", [])
     cards = []
-    for item in links:
+    for idx, item in enumerate(links):
         label = str(item.get("label", "") or "").strip()
         url = str(item.get("url", "") or "").strip()
-        description = str(item.get("description", "") or "").strip()
+        description = str(localized_value(item, "description", locale, i18n, item.get("description", "")) or "").strip()
         if not label or not url:
             continue
+        desc_payload: dict[str, Any] = {"description": description}
+        for supported_locale in i18n.get("supported_locales", []):
+            if supported_locale == locale:
+                continue
+            suffixes = locale_suffixes(supported_locale, i18n)
+            if not suffixes:
+                continue
+            suffix = suffixes[0]
+            desc_payload[f"description_{suffix}"] = str(localized_value(item, "description", supported_locale, i18n, description) or "").strip()
+        payload_json = json.dumps(desc_payload, ensure_ascii=False).replace("<", "\\u003c")
         cards.append(
             f"""
-            <article class="resource-card contact-card">
+            <article class="resource-card contact-card" data-contact-card>
               <p class="card-type">{html.escape(str(item.get("kind", "link") or "link"))}</p>
               <h2><a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer">{html.escape(label)}</a></h2>
-              <p class="card-summary">{html.escape(description)}</p>
+              <p class="card-summary" data-contact-description>{html.escape(description)}</p>
               <p class="contact-url">{html.escape(url)}</p>
+              <script type="application/json" data-contact-card-data>{payload_json}</script>
             </article>
             """
         )
@@ -517,7 +528,7 @@ def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict
     </section>
     """
     return render_layout(
-        page_title=f"Contact | {site['title']}",
+        page_title=f"{translate(i18n, locale, 'pages.contact.title', 'Contato')} | {site['title']}",
         page_description=translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."),
         site=site,
         system=system,

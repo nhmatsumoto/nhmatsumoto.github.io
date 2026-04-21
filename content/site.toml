@@ -5,7 +5,7 @@ language = "pt-BR"
 author = "Hiro Matsumoto"
 base_url = "https://nhmatsumoto.github.io"
 github_url = "https://github.com/nhmatsumoto"
-linkedin_url = "https://www.linkedin.com/in/nhmatsumoto/"
+linkedin_url = "https://www.linkedin.com/in/hiroyukims/"
 home_title = "engineering notebook para software, agentes e sistemas espaciais"
 home_intro = """
 Este site funciona como um caderno técnico publicado: artigos longos quando a ideia pede contexto, notas curtas quando o valor está no registro do processo, e páginas de projeto quando a engenharia precisa ser vista como sistema.
