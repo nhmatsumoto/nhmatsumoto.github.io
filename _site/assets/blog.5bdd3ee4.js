@@ -51,20 +51,24 @@ return fallback;
 const syncRichContent = (root) => {
 if (!root) return;
 if (window.mermaid) {
-try {
-root.querySelectorAll(".mermaid[data-processed]").forEach(el => {
+root.querySelectorAll(".mermaid").forEach(async el => {
+const original = el.getAttribute("data-original-code") || el.textContent || "";
+el.setAttribute("data-original-code", original);
 el.removeAttribute("data-processed");
-el.innerHTML = el.getAttribute("data-original-code") || el.innerHTML;
-});
-root.querySelectorAll(".mermaid").forEach(el => {
-if (!el.getAttribute("data-original-code")) {
-el.setAttribute("data-original-code", el.innerHTML);
+el.removeAttribute("data-mermaid-error");
+el.textContent = original;
+try {
+if (window.mermaid.run) {
+await window.mermaid.run({ nodes: [el] });
+} else {
+window.mermaid.init(undefined, el);
 }
-});
-window.mermaid.init(undefined, root.querySelectorAll(".mermaid"));
 } catch (err) {
 console.error("Mermaid error:", err);
+el.dataset.mermaidError = "true";
+el.textContent = original;
 }
+});
 }
 if (window.MathJax && window.MathJax.typesetPromise) {
 window.MathJax.typesetPromise([root]).catch(err => console.error("MathJax error:", err));

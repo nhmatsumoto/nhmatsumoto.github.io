@@ -137,7 +137,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     <link rel="stylesheet" href="{site_href(site, '/assets/' + hashed('styles.css'))}">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>document.addEventListener('DOMContentLoaded', () => {{ mermaid.initialize({{ startOnLoad: true, theme: 'dark' }}); lucide.createIcons(); }});</script>
+    <script>document.addEventListener('DOMContentLoaded', () => {{ mermaid.initialize({{ startOnLoad: false, theme: 'dark' }}); lucide.createIcons(); }});</script>
     {math_meta}
     {import_map_html}
   </head>

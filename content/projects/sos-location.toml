@@ -16,10 +16,14 @@ code_url = "https://github.com/nhmatsumoto/sos_location"
 docs_url = "/posts/20260401-184500-gis-pipelines-with-event-driven-services/"
 featured = true
 order = 0
+diagram_format = "mermaid"
 diagram_preview = """
-ingest -> normalize -> geocode
-   |         |          |
-events -> risk map -> ops view
+flowchart LR
+    Ingest["Ingestão"] --> Normalize["Normalização"]
+    Normalize --> Geocode["Geocodificação"]
+    Events["Eventos externos"] --> Risk["Mapa de risco"]
+    Geocode --> Risk
+    Risk --> Ops["Visão operacional"]
 """
 overview = """
 SOS Location é uma iniciativa de resposta humanitária focada no uso de tecnologia geoespacial para acelerar a tomada de decisão em cenários de crise. O projeto organiza camadas de dados complexas em uma interface operacional simples.
@@ -33,9 +37,11 @@ problem_solution_en_us = "In disasters, fragmented information costs lives. The 
 problem_solution_ja_jp = "災害時には、情報の分断がそのまま命の損失につながります。このプラットフォームは、気象フィード、危険領域、利用可能リソースを集中化し、非同期処理によってシステムを過負荷にせず更新を維持します。"
 architecture = """
 Baseado em pipelines de eventos, o sistema separa a ingestão de dados (sensores, APIs externas) do processamento geoespacial e da camada de visualização em tempo real (WebSockets/Leaflet).
+
+Modelo operacional simplificado: `am: risk = severity * exposure * vulnerability`.
 """
-architecture_en_us = "Built on event pipelines, the system separates data ingestion (sensors and external APIs), geospatial processing and the real-time visualization layer based on WebSockets and Leaflet."
-architecture_ja_jp = "イベント・パイプラインを基盤にし、データ取り込み（センサー・外部 API）、地理空間処理、WebSockets / Leaflet によるリアルタイム可視化レイヤを分離しています。"
+architecture_en_us = "Built on event pipelines, the system separates data ingestion (sensors and external APIs), geospatial processing and the real-time visualization layer based on WebSockets and Leaflet.\n\nSimplified operational model: `am: risk = severity * exposure * vulnerability`."
+architecture_ja_jp = "イベント・パイプラインを基盤にし、データ取り込み（センサー・外部 API）、地理空間処理、WebSockets / Leaflet によるリアルタイム可視化レイヤを分離しています。\n\n単純化した運用モデル: `am: risk = severity * exposure * vulnerability`。"
 adr = [
   "Uso de GeoJSON como padrão de intercâmbio de dados.",
   "Arquitetura orientada a eventos para garantir escalabilidade em picos de uso.",

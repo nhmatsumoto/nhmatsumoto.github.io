@@ -29,20 +29,41 @@ def render_markdown(text: str) -> str:
     rule_re = re.compile(r"^([-*_])\1{2,}$")
 
     def render_inline(s: str) -> str:
-        # Preserve math delimiters during inline rendering
         s = html.escape(s)
-        # Inline Math: $...$ -> <span class="math-inline">$...$</span>
-        s = re.sub(r"(\$)(.+?)(\$)", r'<span class="math-inline">\1\2\3</span>', s)
-        # Inline Math: \(...\) -> <span class="math-inline">\(...\)</span>
-        s = re.sub(r"(\\)\((.+?)\\(\))", r'<span class="math-inline">\1(\2\\\3</span>', s)
-        # AsciiMath: `am: ...` -> <span class="math-asciimath">`...`</span>
-        s = re.sub(r"(`am:)(.+?)(`)", r'<span class="math-asciimath">`\2`</span>', s)
+        protected_math: list[str] = []
+
+        def stash_math(fragment: str) -> str:
+            protected_math.append(fragment)
+            return f"\x00MATH{len(protected_math) - 1}\x00"
+
+        def restore_math(value: str) -> str:
+            for index, fragment in enumerate(protected_math):
+                value = value.replace(f"\x00MATH{index}\x00", fragment)
+            return value
+
+        # Protect math before inline-code parsing so AsciiMath backticks remain
+        # visible to MathJax instead of becoming <code> elements.
+        s = re.sub(
+            r"`am:\s*(.+?)`",
+            lambda match: stash_math(f'<span class="math-asciimath">`{match.group(1).strip()}`</span>'),
+            s,
+        )
+        s = re.sub(
+            r"\\\((.+?)\\\)",
+            lambda match: stash_math(f'<span class="math-inline">\\({match.group(1)}\\)</span>'),
+            s,
+        )
+        s = re.sub(
+            r"(?<!\$)\$(?!\$)(.+?)(?<!\\)\$(?!\$)",
+            lambda match: stash_math(f'<span class="math-inline">${match.group(1)}$</span>'),
+            s,
+        )
         s = STRONG_RE.sub(r"<strong>\1</strong>", s)
         s = EMPHASIS_RE.sub(r"<em>\1</em>", s)
         s = INLINE_CODE_RE.sub(r"<code>\1</code>", s)
         s = WIKILINK_RE.sub(r'<a class="wikilink" href="/posts/\1/">\2</a>' if r"\2" else r'<a class="wikilink" href="/posts/\1/">\1</a>', s)
         s = LINK_RE.sub(r'<a href="\2">\1</a>', s)
-        return s
+        return restore_math(s)
 
     while i < len(lines):
         line = lines[i]
@@ -64,7 +85,7 @@ def render_markdown(text: str) -> str:
             
             content = "\n".join(block)
             if language == "mermaid":
-                parts.append(f'<div class="mermaid">{content}</div>')
+                parts.append(f'<div class="mermaid">{html.escape(content)}</div>')
             else:
                 parts.append(
                     f'<div class="code-shell" data-language="{html.escape(language)}">'

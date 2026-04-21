@@ -41,7 +41,11 @@ def _has_math_content(values: list[str], config: dict[str, Any]) -> bool:
     inline = config["math"]["inline_delimiter"]
     block = config["math"]["block_delimiter"]
     return any(
-        inline in value or block in value or "\\(" in value
+        inline in value
+        or block in value
+        or "\\(" in value
+        or "\\[" in value
+        or "`am:" in value
         for value in values
     )
 
@@ -210,6 +214,7 @@ def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> d
         "featured": bool(raw.get("featured", False)),
         "order": parse_int(raw.get("order", 999)),
         "diagram_preview": str(raw.get("diagram_preview", "") or "").rstrip(),
+        "diagram_format": str(raw.get("diagram_format", "") or "").strip().lower(),
         "overview": str(raw.get("overview", "") or "").strip(),
         "problem_solution": str(raw.get("problem_solution", "") or "").strip(),
         "architecture": str(raw.get("architecture", "") or "").strip(),

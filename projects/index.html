@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: true, theme: 'dark' }); lucide.createIcons(); });</script>
-    
+    <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
+    <script>window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]], displayMath: [["$$", "$$"]] }, asciimath: { delimiters: [["`", "`"]] }, loader: { load: ["input/tex", "input/asciimath", "output/chtml"] } };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script" async></script>
     <script type="importmap">{"imports": {"zustand": "https://unpkg.com/zustand@4.4.1/esm/vanilla.mjs"}}</script>
   </head>
-  <body class="page-projects" data-has-math="false" data-default-locale="pt-BR">
+  <body class="page-projects" data-has-math="true" data-default-locale="pt-BR">
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     
     <nav class="nav-shell" data-nav-shell>
@@ -51,9 +51,12 @@
           <p class="card-summary">Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real.</p>
           <div class="stack-list"><span class="stack-chip">TypeScript</span><span class="stack-chip">Node.js</span><span class="stack-chip">GIS</span><span class="stack-chip">Event-Driven</span></div>
           <div class="badge-list"><span class="badge">social-good</span><span class="badge">gis</span><span class="badge">open-source</span></div>
-          <div class="card-preview"><code>ingest -&gt; normalize -&gt; geocode
-   |         |          |
-events -&gt; risk map -&gt; ops view</code></div>
+          <div class="card-preview"><code>flowchart LR
+    Ingest[&quot;Ingestão&quot;] --&gt; Normalize[&quot;Normalização&quot;]
+    Normalize --&gt; Geocode[&quot;Geocodificação&quot;]
+    Events[&quot;Eventos externos&quot;] --&gt; Risk[&quot;Mapa de risco&quot;]
+    Geocode --&gt; Risk
+    Risk --&gt; Ops[&quot;Visão operacional&quot;]</code></div>
         </div>
       </article>
     </li><li>

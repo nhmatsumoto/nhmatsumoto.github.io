@@ -105,7 +105,8 @@ def _build_project_body(item: dict[str, Any], i18n: dict[str, Any] | None = None
 
     diagram_preview = (item.get("diagram_preview") or "").strip()
     if diagram_preview:
-        parts.append(f"```\n{diagram_preview}\n```")
+        diagram_language = "mermaid" if item.get("diagram_format") == "mermaid" else ""
+        parts.append(f"```{diagram_language}\n{diagram_preview}\n```")
 
     stack_notes = str(localized_value(item, "stack_notes", locale, i18n, "") or "").strip()
     if stack_notes:
