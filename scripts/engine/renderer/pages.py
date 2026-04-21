@@ -218,7 +218,7 @@ def render_home_page(
     <section class="notebook-hero section-panel" aria-labelledby="home-title">
       <div class="notebook-hero-grid">
         <div class="notebook-hero-copy">
-          <p class="section-kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
+          <p class="section-kicker" data-i18n="home.kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
           <h1 id="home-title" class="notebook-hero-title">{html.escape(site.get("home_title") or site.get("headline") or site["title"])}</h1>
           <p class="notebook-hero-summary">{html.escape(site["description"])}</p>
           <div class="prose notebook-intro">{render_markdown(intro)}</div>
@@ -227,7 +227,7 @@ def render_home_page(
         <aside class="notebook-hero-aside">
           <div class="notebook-stat-grid">{hero_metrics_html}</div>
           <div class="notebook-status-card">
-            <p class="section-kicker">{html.escape(translate(i18n, locale, "home.focus_kicker", "foco atual"))}</p>
+            <p class="section-kicker" data-i18n="home.focus_kicker">{html.escape(translate(i18n, locale, "home.focus_kicker", "foco atual"))}</p>
             <p>{html.escape(system.get("identity", {}).get("developer", {}).get("role", "Software Engineer"))}</p>
             <p class="muted-copy">{html.escape(site.get("headline", ""))}</p>
           </div>
@@ -240,9 +240,9 @@ def render_home_page(
         <h2 id="posts-title" data-i18n="sections.posts_title">{html.escape(translate(i18n, locale, "sections.posts_title", "Publicações recentes"))}</h2>
         <p class="section-copy" data-i18n="sections.posts_copy">{html.escape(translate(i18n, locale, "sections.posts_copy", "Ensaios técnicos, decisões de arquitetura e aprendizado aplicado."))}</p>
       </header>
-      <ul class="resource-list post-collection notebook-card-grid">
+      <ol class="entry-list">
         {"".join(render_post_card(post, i18n, locale) for post in posts[:posts_limit])}
-      </ul>
+      </ol>
     </section>
     <section class="section-panel" aria-labelledby="daily-title">
       <header class="section-header">
@@ -250,7 +250,7 @@ def render_home_page(
         <h2 id="daily-title" data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h2>
         <p class="section-copy" data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Notas curtas de progresso, ideias e trilha sonora de trabalho."))}</p>
       </header>
-      <ol class="resource-list daily-collection timeline-collection">
+      <ol class="entry-list">
         {"".join(render_daily_card(entry, i18n, locale, compact=True) for entry in daily_entries[:daily_limit])}
       </ol>
     </section>
@@ -260,7 +260,7 @@ def render_home_page(
         <h2 id="projects-title" data-i18n="sections.projects_title">{html.escape(translate(i18n, locale, "sections.projects_title", "Projetos relevantes"))}</h2>
         <p class="section-copy" data-i18n="sections.projects_copy">{html.escape(translate(i18n, locale, "sections.projects_copy", "Sistemas que concentram arquitetura, trade-offs e execução prática."))}</p>
       </header>
-      <ol class="resource-list project-collection notebook-card-grid">
+      <ol class="entry-list">
         {"".join(render_project_card(project, i18n, locale) for project in projects[:projects_limit])}
       </ol>
     </section>
@@ -299,9 +299,9 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
       <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Escrita técnica organizada por clareza, ritmo e utilidade prática."))}</p>
     </section>
     <section class="section-panel">
-      <ul class="resource-list post-collection notebook-card-grid">
+      <ol class="entry-list">
         {"".join(render_post_card(post, i18n, locale) for post in posts)}
-      </ul>
+      </ol>
     </section>
     {pagination}
     """
@@ -328,9 +328,9 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
       <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."))}</p>
     </section>
     <section class="section-panel">
-      <ul class="resource-list project-collection notebook-card-grid">
+      <ol class="entry-list">
         {"".join(render_project_card(project, i18n, locale) for project in projects)}
-      </ul>
+      </ol>
     </section>
     """
     has_math = any(project.get("has_math") for project in projects)
@@ -450,18 +450,18 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
         {page_data["body_html"]}
       </article>
       <aside class="sidebar-panel notebook-meta-panel about-snapshot-card">
-        <div class="sidebar-header"><h2>{html.escape(translate(i18n, locale, "pages.about.facts", "Snapshot"))}</h2></div>
+        <div class="sidebar-header"><h2 data-i18n="pages.about.facts">{html.escape(translate(i18n, locale, "pages.about.facts", "Snapshot"))}</h2></div>
         <div class="meta-stack">
-          <p><strong>{html.escape(translate(i18n, locale, "pages.about.location", "Base"))}:</strong> <span data-page-field="location">{html.escape(developer_location)}</span></p>
-          <p><strong>{html.escape(translate(i18n, locale, "pages.about.role", "Atuação"))}:</strong> <span data-page-field="role">{html.escape(developer_role)}</span></p>
-          <p><strong>{html.escape(translate(i18n, locale, "pages.about.focus", "Foco"))}:</strong> <span data-page-field="focus">{html.escape(snapshot_focus)}</span></p>
+          <p><strong data-i18n="pages.about.location">{html.escape(translate(i18n, locale, "pages.about.location", "Base"))}</strong>: <span data-page-field="location">{html.escape(developer_location)}</span></p>
+          <p><strong data-i18n="pages.about.role">{html.escape(translate(i18n, locale, "pages.about.role", "Atuação"))}</strong>: <span data-page-field="role">{html.escape(developer_role)}</span></p>
+          <p><strong data-i18n="pages.about.focus">{html.escape(translate(i18n, locale, "pages.about.focus", "Foco"))}</strong>: <span data-page-field="focus">{html.escape(snapshot_focus)}</span></p>
         </div>
       </aside>
     </section>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     return render_layout(
-        page_title=f"About | {site['title']}",
+        page_title=f"{page_data['title']} | {site['title']}",
         page_description=site["description"],
         site=site,
         system=system,
@@ -548,7 +548,7 @@ def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_
       <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."))}</p>
     </section>
     <section class="section-panel">
-      <ol class="resource-list daily-collection timeline-collection">
+      <ol class="entry-list">
         {"".join(render_daily_card(entry, i18n, locale) for entry in daily_entries)}
       </ol>
     </section>
@@ -584,12 +584,14 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
     )
     badges_html = render_badge_list(post.get("badges", []))
     tags_html = render_tag_list(post.get("tags", []))
-    impact_html = render_impact_bar(post.get("impact", []))
+    impact_html = render_impact_bar(post.get("impact", []), i18n, locale)
+    repo_label = html.escape(translate(i18n, locale, "actions.repo", "repo"))
+    code_label = html.escape(translate(i18n, locale, "actions.code", "code"))
     actions_html = "".join(
         link
         for link in [
-            f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">repo</a>' if post.get("resolved_repo_url") else "",
-            f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if post.get("resolved_code_url") else "",
+            f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener" data-i18n="actions.repo">{repo_label}</a>' if post.get("resolved_repo_url") else "",
+            f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener" data-i18n="actions.code">{code_label}</a>' if post.get("resolved_code_url") else "",
         ]
         if link
     )
@@ -620,8 +622,8 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
           <p class="post-summary post-deck" data-page-summary>{html.escape(post['summary'])}</p>
         </header>
         <div class="post-body" data-page-body>{render_markdown(post['body'])}</div>
-        {render_trade_offs_section(post.get("trade_offs", []))}
-        {render_lessons_section(post.get("lessons", []))}
+        {render_trade_offs_section(post.get("trade_offs", []), i18n, locale)}
+        {render_lessons_section(post.get("lessons", []), i18n, locale)}
       </article>
       {sidebar}
     </section>
@@ -687,12 +689,12 @@ def render_daily_page(site: dict[str, str], system: dict[str, Any], entry: dict[
         <div data-page-body>{render_markdown(entry['body'])}</div>
       </article>
       <aside class="sidebar-panel notebook-meta-panel">
-        <div class="sidebar-header"><h2>{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
+        <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
         {render_tag_list(entry.get("tags", []))}
         <div class="meta-stack">
-          {f'<p><strong>{html.escape(translate(i18n, locale, "pages.daily.mood", "Mood"))}:</strong> {html.escape(entry["mood"])}</p>' if entry.get("mood") else ""}
-          {f'<p><strong>{html.escape(translate(i18n, locale, "pages.daily.soundtrack", "Soundtrack"))}:</strong> {html.escape(entry["soundtrack"])}</p>' if entry.get("soundtrack") else ""}
-          {f'<p><strong>{html.escape(translate(i18n, locale, "pages.daily.now_playing", "Tocando"))}:</strong> {html.escape(entry["now_playing"])}</p>' if entry.get("now_playing") else ""}
+          {f'<p><strong data-i18n="pages.daily.mood">{html.escape(translate(i18n, locale, "pages.daily.mood", "Mood"))}</strong>: {html.escape(entry["mood"])}</p>' if entry.get("mood") else ""}
+          {f'<p><strong data-i18n="pages.daily.soundtrack">{html.escape(translate(i18n, locale, "pages.daily.soundtrack", "Soundtrack"))}</strong>: {html.escape(entry["soundtrack"])}</p>' if entry.get("soundtrack") else ""}
+          {f'<p><strong data-i18n="pages.daily.now_playing">{html.escape(translate(i18n, locale, "pages.daily.now_playing", "Tocando"))}</strong>: {html.escape(entry["now_playing"])}</p>' if entry.get("now_playing") else ""}
         </div>
         <div class="sidebar-actions">{soundtrack_link}</div>
       </aside>
@@ -730,10 +732,10 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
       <p>{render_status_badge(project['status'], i18n, locale)}</p>
       <h3 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h3>
       {render_stack_list(project['stack'])}
-      {render_impact_bar(project.get("impact", []))}
+      {render_impact_bar(project.get("impact", []), i18n, locale)}
       <div class="sidebar-actions">
-        {f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">architecture</a>' if project.get("resolved_architecture_url") else ""}
-        {f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">code</a>' if project.get("resolved_code_url") else ""}
+        {f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}" data-i18n="actions.view_architecture">{html.escape(translate(i18n, locale, "actions.view_architecture", "architecture"))}</a>' if project.get("resolved_architecture_url") else ""}
+        {f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener" data-i18n="actions.code">{html.escape(translate(i18n, locale, "actions.code", "code"))}</a>' if project.get("resolved_code_url") else ""}
       </div>
     </aside>
     """

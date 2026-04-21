@@ -390,7 +390,7 @@ const initCommandPalette = (loc) => {
   });
 };
 
-const initCodeBlocks = () => {
+const initCodeBlocks = (loc) => {
   document.querySelectorAll(".code-shell").forEach(shell => {
     const btn = shell.querySelector(".code-shell-copy");
     const code = shell.querySelector("code");
@@ -399,7 +399,8 @@ const initCodeBlocks = () => {
     btn.addEventListener("click", async () => {
       await navigator.clipboard.writeText(code.textContent);
       const original = btn.innerHTML;
-      btn.innerHTML = '<span style="color:var(--accent)">Done</span>';
+      const doneLabel = loc?.translate("actions.done", "Done") || "Done";
+      btn.innerHTML = `<span style="color:var(--accent)">${doneLabel}</span>`;
       setTimeout(() => btn.innerHTML = original, 2000);
     });
   });
@@ -425,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initThemeManager();
   initLocaleToggle(loc);
   initCommandPalette(loc);
-  initCodeBlocks();
+  initCodeBlocks(loc);
   initInteractiveGlow();
   
   // Cleanup old sidebar if exists

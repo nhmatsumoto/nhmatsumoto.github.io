@@ -270,92 +270,117 @@ def render_breadcrumbs(items: list[dict[str, str]], i18n: dict[str, Any], locale
     aria_label = translate(i18n, locale, "accessibility.breadcrumbs", "Breadcrumbs")
     return f'<nav class="breadcrumbs" aria-label="{html.escape(aria_label)}" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list">{"".join(crumbs)}</ol></nav>'
 
+def _entry_eyebrow(parts: list[str]) -> str:
+    cleaned = [p for p in parts if p]
+    if not cleaned:
+        return ""
+    separator = '<span class="entry-eyebrow-dot" aria-hidden="true">·</span>'
+    return f'<p class="entry-eyebrow">{separator.join(cleaned)}</p>'
+
+def _entry_cta(url: str, label: str, aria_key: str) -> str:
+    return (
+        f'<a class="entry-cta" href="{html.escape(url)}" data-i18n="{html.escape(aria_key)}">'
+        f'{html.escape(label)}<span class="entry-cta-arrow" aria-hidden="true">→</span>'
+        f'</a>'
+    )
+
 def render_post_card(post: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
-    metrics = render_metric_list([
-        render_localized_date(post["published_dt"], locale, "short"),
-        render_reading_time(post["reading_time"], i18n, locale)
-    ], escape_items=False)
+    kind_label = html.escape(translate(i18n, locale, "kinds.post", "post"))
+    date_html = render_localized_date(post["published_dt"], locale, "short")
+    reading_html = render_reading_time(post["reading_time"], i18n, locale)
+    eyebrow = _entry_eyebrow([
+        f'<span class="entry-kind" data-i18n="kinds.post">{kind_label}</span>',
+        f'<span class="entry-meta">{date_html}</span>',
+        f'<span class="entry-meta">{reading_html}</span>',
+    ])
+    cta_label = translate(i18n, locale, "actions.read_article", "Open")
     return f"""
-    <li>
-      <article class="resource-card post-card">
-        <header class="card-headline">
-          <div class="card-meta">
-            <span class="card-type" data-i18n="kinds.post">{html.escape(translate(i18n, locale, "kinds.post", "post"))}</span>
-            {metrics}
-          </div>
-          {render_badge_list(post["badges"])}
-        </header>
-        <div class="card-content">
-          <h3><a href="{html.escape(post['resolved_url'])}">{html.escape(post['title'])}</a></h3>
-          <p class="card-summary">{html.escape(post['summary'])}</p>
-        </div>
-        <footer>{render_tag_list(post["tags"])}</footer>
+    <li class="entry">
+      <article class="entry-card entry-card-post">
+        {eyebrow}
+        <h3 class="entry-title"><a href="{html.escape(post['resolved_url'])}">{html.escape(post['title'])}</a></h3>
+        <p class="entry-lede">{html.escape(post['summary'])}</p>
+        {_entry_cta(post['resolved_url'], cta_label, "actions.read_article")}
       </article>
     </li>
     """.strip()
 
 def render_daily_card(entry: dict[str, Any], i18n: dict[str, Any], locale: str, *, compact: bool = False) -> str:
-    metrics = render_metric_list([
-        render_localized_date(entry["published_dt"], locale, "short"),
-        render_reading_time(entry["reading_time"], i18n, locale),
-    ], escape_items=False)
-    mood = f'<span class="daily-meta-pill">{html.escape(entry["mood"])}</span>' if entry.get("mood") else ""
-    soundtrack = f'<span class="daily-meta-pill">{html.escape(entry["now_playing"] or entry["soundtrack"])}</span>' if entry.get("now_playing") or entry.get("soundtrack") else ""
-    compact_class = " daily-card-compact" if compact else ""
+    kind_label = html.escape(translate(i18n, locale, "kinds.daily", "daily"))
+    date_html = render_localized_date(entry["published_dt"], locale, "short")
+    reading_html = render_reading_time(entry["reading_time"], i18n, locale)
+    eyebrow = _entry_eyebrow([
+        f'<span class="entry-kind" data-i18n="kinds.daily">{kind_label}</span>',
+        f'<span class="entry-meta">{date_html}</span>',
+        f'<span class="entry-meta">{reading_html}</span>',
+    ])
+    context_bits: list[str] = []
+    if entry.get("mood"):
+        context_bits.append(f'<span class="entry-context-item">{html.escape(entry["mood"])}</span>')
+    if entry.get("now_playing") or entry.get("soundtrack"):
+        track = entry.get("now_playing") or entry.get("soundtrack")
+        context_bits.append(f'<span class="entry-context-item">{html.escape(track)}</span>')
+    context_row = f'<p class="entry-context">{"".join(context_bits)}</p>' if context_bits else ""
+    compact_class = " entry-card-compact" if compact else ""
+    cta_label = translate(i18n, locale, "actions.read_article", "Open")
     return f"""
-    <li>
-      <article class="resource-card daily-card{compact_class}">
-        <header class="card-headline">
-          <div class="card-meta">
-            <span class="card-type" data-i18n="kinds.daily">{html.escape(translate(i18n, locale, "kinds.daily", "daily"))}</span>
-            {metrics}
-          </div>
-        </header>
-        <div class="card-content">
-          <h3><a href="{html.escape(entry['resolved_url'])}">{html.escape(entry['title'])}</a></h3>
-          <p class="card-summary">{html.escape(entry['summary'])}</p>
-          <div class="daily-meta-row">{mood}{soundtrack}</div>
-        </div>
-        <footer>{render_tag_list(entry["tags"])}</footer>
+    <li class="entry">
+      <article class="entry-card entry-card-daily{compact_class}">
+        {eyebrow}
+        <h3 class="entry-title"><a href="{html.escape(entry['resolved_url'])}">{html.escape(entry['title'])}</a></h3>
+        <p class="entry-lede">{html.escape(entry['summary'])}</p>
+        {context_row}
+        {_entry_cta(entry['resolved_url'], cta_label, "actions.read_article")}
       </article>
     </li>
     """.strip()
 
 def render_project_card(project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
-    preview = f'<div class="card-preview"><code>{html.escape(project["diagram_preview"])}</code></div>' if project["diagram_preview"] else ""
+    kind_label = html.escape(translate(i18n, locale, "kinds.project", "project"))
+    status_key = project.get("status") or ""
+    status_label = html.escape(translate(i18n, locale, f"status.{status_key}", status_key.replace("_", " "))) if status_key else ""
+    eyebrow_parts = [f'<span class="entry-kind" data-i18n="kinds.project">{kind_label}</span>']
+    if status_label:
+        eyebrow_parts.append(
+            f'<span class="entry-status entry-status-{html.escape(status_key)}" data-status-key="status.{html.escape(status_key)}">{status_label}</span>'
+        )
+    eyebrow = _entry_eyebrow(eyebrow_parts)
+    cta_label = translate(i18n, locale, "actions.view_project", "View")
     return f"""
-    <li>
-      <article class="resource-card project-card">
-        <header class="card-headline">
-          <span class="card-type" data-i18n="kinds.project">{html.escape(translate(i18n, locale, "kinds.project", "project"))}</span>
-          <div class="card-state">{render_status_badge(project["status"], i18n, locale)}</div>
-        </header>
-        <div class="card-content">
-          <h3><a href="{html.escape(project['resolved_url'])}">{html.escape(project['name'])}</a></h3>
-          <p class="card-summary">{html.escape(project['summary'])}</p>
-          {render_stack_list(project["stack"])}
-          {render_badge_list(project["badges"])}
-          {preview}
-        </div>
+    <li class="entry">
+      <article class="entry-card entry-card-project">
+        {eyebrow}
+        <h3 class="entry-title"><a href="{html.escape(project['resolved_url'])}">{html.escape(project['name'])}</a></h3>
+        <p class="entry-lede">{html.escape(project['summary'])}</p>
+        {_entry_cta(project['resolved_url'], cta_label, "actions.view_project")}
       </article>
     </li>
     """.strip()
 
 def render_document_card(document: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
-    agent_tag = f'<span class="mini-flag" data-i18n="common.agent_generated">{html.escape(translate(i18n, locale, "common.agent_generated", "agent-generated"))}</span>' if document["agent_generated_tag"] else ""
+    kind_label = html.escape(translate(i18n, locale, "kinds.document", "document"))
+    category = str(document.get("category") or "").strip()
+    version_raw = str(document.get("version") or "").strip()
+    version_label = version_raw if version_raw.lower().startswith("v") else (f"v{version_raw}" if version_raw else "")
+    eyebrow_parts = [f'<span class="entry-kind" data-i18n="kinds.document">{kind_label}</span>']
+    if category:
+        eyebrow_parts.append(f'<span class="entry-meta">{html.escape(category)}</span>')
+    if version_label:
+        eyebrow_parts.append(f'<span class="entry-meta entry-version">{html.escape(version_label)}</span>')
+    if document.get("agent_generated_tag"):
+        agent_label = translate(i18n, locale, "common.agent_generated", "agent-generated")
+        eyebrow_parts.append(
+            f'<span class="entry-flag" data-i18n="common.agent_generated">{html.escape(agent_label)}</span>'
+        )
+    eyebrow = _entry_eyebrow(eyebrow_parts)
+    cta_label = translate(i18n, locale, "actions.open_docs", "Open")
     return f"""
-    <li>
-      <article class="resource-card document-card">
-        <header class="card-headline">
-          <span class="card-type">{html.escape(document['category'])}</span>
-          <span class="card-version">v{html.escape(document['version'])}</span>
-        </header>
-        <div class="card-content">
-          <h3><a href="{html.escape(document['resolved_url'])}">{html.escape(document['title'])}</a></h3>
-          <p class="card-summary">{html.escape(document['summary'])}</p>
-          <div class="document-flags">{agent_tag}</div>
-        </div>
-        <footer>{render_tag_list(document["tags"])}</footer>
+    <li class="entry">
+      <article class="entry-card entry-card-document">
+        {eyebrow}
+        <h3 class="entry-title"><a href="{html.escape(document['resolved_url'])}">{html.escape(document['title'])}</a></h3>
+        <p class="entry-lede">{html.escape(document['summary'])}</p>
+        {_entry_cta(document['resolved_url'], cta_label, "actions.open_docs")}
       </article>
     </li>
     """.strip()
@@ -382,12 +407,12 @@ def render_publications_grouped_section(system: dict[str, Any], publications: li
         blocks.append(f"""
         <section class="publication-group">
           <header class="group-header"><h3>{html.escape(cat.upper())}</h3></header>
-          <ul class="resource-list">{cards}</ul>
+          <ol class="entry-list">{cards}</ol>
         </section>
         """)
 
     empty_msg = translate(i18n, locale, "empty.publications", "No publications found.")
-    content = "\n".join(blocks) if blocks else f'<p class="empty-state">{html.escape(empty_msg)}</p>'
+    content = "\n".join(blocks) if blocks else f'<p class="empty-state" data-i18n="empty.publications">{html.escape(empty_msg)}</p>'
     header_html = ""
     if show_header:
         header_html = f"""
@@ -508,20 +533,23 @@ def render_pagination_controls(site: dict[str, str], current_page: int, total_pa
         links.append(f'<span class="pagination-link pagination-disabled">{html.escape(translate(i18n, locale, "pagination.next", "next"))} →</span>')
     return f'<nav class="pagination-container" aria-label="Pagination"><div class="pagination-inner">{"".join(links)}</div></nav>'
 
-def render_impact_bar(items: list[str]) -> str:
+def render_impact_bar(items: list[str], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     if not items: return ""
     metrics = "".join(f'<li class="impact-metric"><i data-lucide="trending-up"></i><span>{html.escape(it)}</span></li>' for it in items)
-    return f'<aside class="evidence-impact"><h3 class="evidence-title">Impacto & Resultados</h3><ul class="impact-list">{metrics}</ul></aside>'
+    heading = translate(i18n or {}, locale, "pages.project.impact", "Impacto & Resultados")
+    return f'<aside class="evidence-impact"><h3 class="evidence-title" data-i18n="pages.project.impact">{html.escape(heading)}</h3><ul class="impact-list">{metrics}</ul></aside>'
 
-def render_trade_offs_section(items: list[str]) -> str:
+def render_trade_offs_section(items: list[str], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     if not items: return ""
     rows = "".join(f'<li class="tradeoff-item"><i data-lucide="scale"></i><span>{html.escape(it)}</span></li>' for it in items)
-    return f'<section class="evidence-section"><h2 class="evidence-title">Trade-offs & Decisões</h2><ul class="tradeoff-list">{rows}</ul></section>'
+    heading = translate(i18n or {}, locale, "pages.project.trade_offs", "Trade-offs & Decisões")
+    return f'<section class="evidence-section"><h2 class="evidence-title" data-i18n="pages.project.trade_offs">{html.escape(heading)}</h2><ul class="tradeoff-list">{rows}</ul></section>'
 
-def render_lessons_section(items: list[str]) -> str:
+def render_lessons_section(items: list[str], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     if not items: return ""
     rows = "".join(f'<li class="lesson-item"><i data-lucide="lightbulb"></i><span>{html.escape(it)}</span></li>' for it in items)
-    return f'<section class="evidence-section"><h2 class="evidence-title">Lições Aprendidas</h2><ul class="lesson-list">{rows}</ul></section>'
+    heading = translate(i18n or {}, locale, "pages.project.lessons", "Lições Aprendidas")
+    return f'<section class="evidence-section"><h2 class="evidence-title" data-i18n="pages.project.lessons">{html.escape(heading)}</h2><ul class="lesson-list">{rows}</ul></section>'
 
 def render_evidence_highlights(posts: list[dict[str, Any]], projects: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     cards = []
@@ -531,17 +559,21 @@ def render_evidence_highlights(posts: list[dict[str, Any]], projects: list[dict[
         if not impact: continue
         name = item.get("title") or item.get("name", "")
         url = item.get("resolved_url") or item.get("url", "#")
+        kind_label = translate(i18n, locale, f"kinds.{kind}", kind)
         metrics_html = "".join(f'<span class="highlight-metric">{html.escape(m)}</span>' for m in impact[:2])
-        cards.append(f'<article class="evidence-card"><div class="evidence-card-head"><span class="card-type">{html.escape(kind)}</span><h3><a href="{html.escape(url)}">{html.escape(name)}</a></h3></div><div class="evidence-card-metrics">{metrics_html}</div></article>')
+        cards.append(f'<article class="evidence-card"><div class="evidence-card-head"><span class="card-type" data-i18n="kinds.{html.escape(kind)}">{html.escape(kind_label)}</span><h3><a href="{html.escape(url)}">{html.escape(name)}</a></h3></div><div class="evidence-card-metrics">{metrics_html}</div></article>')
     if not cards: return ""
+    kicker = translate(i18n, locale, "sections.evidence_kicker", "evidência")
+    title = translate(i18n, locale, "sections.evidence_title", "Resultados em produção")
+    copy = translate(i18n, locale, "sections.evidence_copy", "Métricas, decisões arquiteturais e resultados concretos documentados nos projetos e publicações.")
     return f"""
     <section class="section-panel evidence-highlights" aria-labelledby="evidence-title">
       <header class="section-header">
         <div>
-          <p class="section-kicker">evidência</p>
-          <h2 id="evidence-title">Resultados em Produção</h2>
+          <p class="section-kicker" data-i18n="sections.evidence_kicker">{html.escape(kicker)}</p>
+          <h2 id="evidence-title" data-i18n="sections.evidence_title">{html.escape(title)}</h2>
         </div>
-        <p>Métricas, decisões arquiteturais e resultados concretos documentados nos projetos e publicações.</p>
+        <p data-i18n="sections.evidence_copy">{html.escape(copy)}</p>
       </header>
       <div class="evidence-grid">{"".join(cards[:6])}</div>
     </section>
@@ -557,7 +589,7 @@ def render_related_posts(posts: list[dict[str, Any]], i18n: dict[str, Any], loca
       <header class="section-header">
         <h2 data-i18n="sections.related_posts">{html.escape(title)}</h2>
       </header>
-      <ul class="resource-list">{cards}</ul>
+      <ol class="entry-list">{cards}</ol>
     </section>
     """
 
@@ -574,13 +606,13 @@ def render_documents_section(system: dict[str, Any], documents: list[dict[str, A
             docs_in_category = groups.get(category, [])
             if not docs_in_category: continue
             cards = "\n".join(render_document_card(d, i18n, locale) for d in docs_in_category)
-            blocks.append(f'<section class="document-group"><header class="document-group-head"><h3>{html.escape(category)}</h3></header><ol class="resource-list document-collection">{cards}</ol></section>')
+            blocks.append(f'<section class="document-group"><header class="document-group-head"><h3>{html.escape(category)}</h3></header><ol class="entry-list">{cards}</ol></section>')
         empty_msg = translate(i18n, locale, "empty.documents", "No documents indexed yet.")
         content = "\n".join(blocks) if blocks else f'<p class="empty-state" data-i18n="empty.documents">{html.escape(empty_msg)}</p>'
     else:
         cards = "\n".join(render_document_card(d, i18n, locale) for d in items)
         empty_state = f'<li><p class="empty-state" data-i18n="empty.documents">{html.escape(translate(i18n, locale, "empty.documents", "No documents indexed yet."))}</p></li>'
-        content = f'<ol class="resource-list document-collection">{cards or empty_state}</ol>'
+        content = f'<ol class="entry-list">{cards or empty_state}</ol>'
     return f"""
     <section class="section-panel" aria-labelledby="documents-title">
       <header class="section-header">

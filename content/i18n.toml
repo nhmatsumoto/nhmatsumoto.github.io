@@ -68,6 +68,9 @@ navigation_copy = "Links diretos para publicações, projetos, documentos e as c
 publications_title = "Publicações"
 publications_copy = "Fluxo unificado de documentos de arquitetura, artigos técnicos e notas de pesquisa."
 related_posts = "Posts relacionados"
+evidence_kicker = "evidência"
+evidence_title = "Resultados em produção"
+evidence_copy = "Métricas, decisões arquiteturais e resultados concretos documentados nos projetos e publicações."
 
 [strings."pt-BR".pages.archive]
 title = "Todas as publicações"
@@ -146,6 +149,7 @@ publications = "Nenhuma publicação encontrada."
 [strings."pt-BR".actions]
 copy = "copiar"
 copied = "copiado"
+done = "feito"
 repo = "repo"
 code = "código"
 view_architecture = "ver arquitetura"
@@ -232,6 +236,9 @@ navigation_copy = "Direct links to publications, projects, documents and the mos
 publications_title = "Publications"
 publications_copy = "Unified stream of architecture documents, technical articles and research notes."
 related_posts = "Related posts"
+evidence_kicker = "evidence"
+evidence_title = "Production results"
+evidence_copy = "Metrics, architectural decisions and concrete outcomes documented across projects and publications."
 
 [strings."en-US".pages.archive]
 title = "All posts"
@@ -314,6 +321,7 @@ publications = "No publications found."
 [strings."en-US".actions]
 copy = "copy"
 copied = "copied"
+done = "done"
 repo = "repo"
 code = "code"
 view_architecture = "view architecture"
@@ -395,6 +403,9 @@ navigation_copy = "記事、プロジェクト、ドキュメント、および�
 publications_title = "公開記事"
 publications_copy = "アーキテクチャドキュメント、技術記事、研究メモの統合ストリーム。"
 related_posts = "関連記事"
+evidence_kicker = "エビデンス"
+evidence_title = "本番環境での成果"
+evidence_copy = "プロジェクトと公開記事に記録されたメトリクス、アーキテクチャの決定、具体的な成果。"
 
 [strings."ja-JP".pages.archive]
 title = "すべての記事"
@@ -477,6 +488,7 @@ publications = "公開記事が見つかりませんでした。"
 [strings."ja-JP".actions]
 copy = "コピー"
 copied = "コピー済み"
+done = "完了"
 repo = "リポ"
 code = "コード"
 view_architecture = "アーキテクチャを表示"

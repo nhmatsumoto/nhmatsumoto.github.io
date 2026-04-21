@@ -318,7 +318,7 @@ if ((e.ctrlKey || e.metaKey) && e.key === "k") { e.preventDefault(); setOpen(pal
 if (e.key === "Escape") setOpen(false);
 });
 };
-const initCodeBlocks = () => {
+const initCodeBlocks = (loc) => {
 document.querySelectorAll(".code-shell").forEach(shell => {
 const btn = shell.querySelector(".code-shell-copy");
 const code = shell.querySelector("code");
@@ -326,7 +326,8 @@ if (!btn || !code) return;
 btn.addEventListener("click", async () => {
 await navigator.clipboard.writeText(code.textContent);
 const original = btn.innerHTML;
-btn.innerHTML = '<span style="color:var(--accent)">Done</span>';
+const doneLabel = loc?.translate("actions.done", "Done") || "Done";
+btn.innerHTML = `<span style="color:var(--accent)">${doneLabel}</span>`;
 setTimeout(() => btn.innerHTML = original, 2000);
 });
 });
@@ -348,7 +349,7 @@ initPageContentLocalization();
 initThemeManager();
 initLocaleToggle(loc);
 initCommandPalette(loc);
-initCodeBlocks();
+initCodeBlocks(loc);
 initInteractiveGlow();
 document.body.removeAttribute('data-sidebar-open');
 if (typeof lucide !== 'undefined') lucide.createIcons();
