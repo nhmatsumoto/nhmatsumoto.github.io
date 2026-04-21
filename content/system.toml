@@ -16,6 +16,9 @@ role_ja_jp = "Software Engineer · エンドツーエンドのプロダクト構
 location = "Brasil / Remote"
 location_en_us = "Brazil / Remote"
 location_ja_jp = "ブラジル / リモート"
+experience = "7+ anos em software engineering"
+experience_en_us = "7+ years in software engineering"
+experience_ja_jp = "ソフトウェアエンジニアリング 7年以上"
 
 [layout.header]
 type = "fixed"
@@ -33,131 +36,191 @@ type = "technical library"
 navigation = ["architecture", "agents", "apis", "domain"]
 
 [about]
-lede = "Sou Hiro Matsumoto. Construo software com uma mistura de calma técnica, curiosidade por sistemas e atenção ao caminho completo entre ideia, produto e valor real."
-lede_en_us = "I am Hiro Matsumoto. I build software with technical calm, curiosity for systems and attention to the full path from idea to product to real value."
-lede_ja_jp = "Hiro Matsumoto です。技術的な落ち着き、システムへの好奇心、アイデアからプロダクト、実際の価値までの流れを意識してソフトウェアを作っています。"
+lede = "Sou Hiro Matsumoto. Construo software como quem acompanha uma ideia até ela virar sistema: problema, arquitetura, código, produto, operação e valor real para quem usa."
+lede_en_us = "I am Hiro Matsumoto. I build software by following an idea until it becomes a system: problem, architecture, code, product, operation and real value for the people who use it."
+lede_ja_jp = "Hiro Matsumoto です。アイデアがシステムになるまで、問題、アーキテクチャ、コード、プロダクト、運用、そして使う人への価値まで追いながらソフトウェアを作っています。"
 snapshot_focus = "software, produto, arquitetura, agentes, GIS e sistemas legíveis"
 snapshot_focus_en_us = "software, product, architecture, agents, GIS and readable systems"
 snapshot_focus_ja_jp = "ソフトウェア、プロダクト、アーキテクチャ、エージェント、GIS、読みやすいシステム"
+snapshot_summary = "Engenheiro com base forte em backend e arquitetura, mas com atenção constante ao produto inteiro: domínio, experiência de uso, operação e consequência para o cliente final."
+snapshot_summary_en_us = "Engineer with a strong backend and architecture base, while keeping constant attention on the whole product: domain, user experience, operation and impact for the final customer."
+snapshot_summary_ja_jp = "バックエンドとアーキテクチャを軸にしながら、ドメイン、利用体験、運用、最終的な利用者への価値まで見てプロダクト全体を考えるエンジニアです。"
+
+[[about.snapshot_items]]
+id = "base"
+icon = "map-pin"
+label = "Base"
+label_en_us = "Base"
+label_ja_jp = "拠点"
+value = "Brasil / Remote"
+value_en_us = "Brazil / Remote"
+value_ja_jp = "ブラジル / リモート"
+
+[[about.snapshot_items]]
+id = "experience"
+icon = "timer-reset"
+label = "Experiência"
+label_en_us = "Experience"
+label_ja_jp = "経験"
+value = "7+ anos em software engineering"
+value_en_us = "7+ years in software engineering"
+value_ja_jp = "ソフトウェアエンジニアリング 7年以上"
+
+[[about.snapshot_items]]
+id = "role"
+icon = "briefcase-business"
+label = "Atuação"
+label_en_us = "Role"
+label_ja_jp = "役割"
+value = "Software Engineer · produto ponta a ponta"
+value_en_us = "Software Engineer · end-to-end product builder"
+value_ja_jp = "Software Engineer · エンドツーエンドのプロダクト構築"
+
+[[about.snapshot_items]]
+id = "focus"
+icon = "crosshair"
+label = "Foco"
+label_en_us = "Focus"
+label_ja_jp = "フォーカス"
+value = "software, produto, arquitetura, agentes, GIS e sistemas legíveis"
+value_en_us = "software, product, architecture, agents, GIS and readable systems"
+value_ja_jp = "ソフトウェア、プロダクト、アーキテクチャ、エージェント、GIS、読みやすいシステム"
+
+[[about.snapshot_items]]
+id = "stack"
+icon = "layers-3"
+label = "Base técnica"
+label_en_us = "Technical base"
+label_ja_jp = "技術基盤"
+value = ".NET/C#, SQL Server, DDD, CQRS, Clean Architecture, sistemas distribuídos"
+value_en_us = ".NET/C#, SQL Server, DDD, CQRS, Clean Architecture, distributed systems"
+value_ja_jp = ".NET/C#、SQL Server、DDD、CQRS、Clean Architecture、分散システム"
+
+[[about.proof_points]]
+icon = "server-cog"
+title = "Backend que aguenta mudança"
+title_en_us = "Backends that tolerate change"
+title_ja_jp = "変化に耐えるバックエンド"
+body = "Minha base vem de sistemas reais: .NET Core/C#, SQL Server, EF Core, Dapper, Redis, RabbitMQ, Docker, CI/CD e suporte a produção."
+body_en_us = "My base comes from real systems: .NET Core/C#, SQL Server, EF Core, Dapper, Redis, RabbitMQ, Docker, CI/CD and production support."
+body_ja_jp = "私の基盤は実システムから来ています。.NET Core/C#、SQL Server、EF Core、Dapper、Redis、RabbitMQ、Docker、CI/CD、本番運用サポートです。"
+
+[[about.proof_points]]
+icon = "route"
+title = "Produto visto por inteiro"
+title_en_us = "Product seen as a whole"
+title_ja_jp = "全体として見るプロダクト"
+body = "Gosto de transitar entre ideia, regra de negócio, arquitetura, implementação, interface, deploy e retorno do usuário."
+body_en_us = "I like moving between idea, business rule, architecture, implementation, interface, deploy and user feedback."
+body_ja_jp = "アイデア、業務ルール、アーキテクチャ、実装、インターフェース、デプロイ、ユーザーからの反応までをつなげて考えます。"
+
+[[about.proof_points]]
+icon = "map"
+title = "Domínios diferentes, mesmo rigor"
+title_en_us = "Different domains, same rigor"
+title_ja_jp = "異なるドメイン、同じ規律"
+body = "Já atuei em pagamentos, mobilidade, recuperação financeira, telecom, educação, ERP, software corporativo e projetos autorais como SOS Location e Nihongo Sensei."
+body_en_us = "I have worked across payments, mobility, financial recovery, telecom, education, ERP, enterprise software and personal projects such as SOS Location and Nihongo Sensei."
+body_ja_jp = "決済、モビリティ、金融回収、通信、教育、ERP、業務ソフトウェア、そして SOS Location や Nihongo Sensei のような個人プロジェクトに取り組んできました。"
 
 [[about.sections]]
-title = "quem sou"
-title_en_us = "who I am"
-title_ja_jp = "自己紹介"
+title = "software como sistema inteiro"
+title_en_us = "software as a whole system"
+title_ja_jp = "全体としてのソフトウェア"
 body = """
-Sou engenheiro de software, mas não penso o trabalho apenas como programação. O que me interessa é pegar uma ideia ainda meio solta, entender o problema por trás dela e encontrar uma forma clara de transformá-la em sistema.
+Meu trabalho começa antes do código e continua depois do deploy. Eu gosto de entender o problema, encontrar a linguagem certa para o domínio, desenhar uma arquitetura que não prenda o futuro e implementar com atenção ao detalhe operacional.
 
-Gosto de tecnologia porque ela permite esse movimento: observar, estruturar, testar, ajustar e entregar algo que outra pessoa consiga usar. Quando o software encaixa bem, ele deixa de parecer esforço técnico e começa a virar ferramenta.
+Essa forma de trabalhar vem de anos construindo e mantendo software em contextos diferentes: consultoria, produto, sistemas corporativos, integrações, APIs, backends críticos e projetos próprios. O padrão que ficou foi simples: software precisa ser tecnicamente correto, mas também precisa explicar valor, reduzir atrito e continuar compreensível quando cresce.
 """
 body_en_us = """
-I am a software engineer, but I do not think of the work as programming alone. What interests me is taking an idea that is still loose, understanding the problem behind it and finding a clear way to turn it into a system.
+My work starts before code and continues after deployment. I like understanding the problem, finding the right language for the domain, designing architecture that does not trap the future and implementing with attention to operational detail.
 
-I like technology because it allows that movement: observe, structure, test, adjust and deliver something another person can actually use. When software fits well, it stops looking like technical effort and starts becoming a tool.
+This way of working comes from years building and maintaining software in different contexts: consulting, product, enterprise systems, integrations, APIs, critical backends and personal projects. The pattern that stayed is simple: software must be technically correct, but it must also explain value, reduce friction and remain understandable as it grows.
 """
 body_ja_jp = """
-私はソフトウェアエンジニアですが、仕事を単にプログラミングだけとしては見ていません。まだ形の定まっていないアイデアを受け取り、その奥にある問題を理解し、システムとして形にする方法を考えることに興味があります。
+私の仕事はコードを書く前から始まり、デプロイの後も続きます。問題を理解し、ドメインに合う言葉を見つけ、未来を閉じ込めないアーキテクチャを設計し、運用の細部まで意識して実装することに関心があります。
 
-技術が好きなのは、その流れを可能にしてくれるからです。観察し、構造化し、試し、調整し、誰かが実際に使えるものとして届ける。ソフトウェアがうまくはまると、それは技術的な作業ではなく、道具になっていきます。
+この働き方は、コンサルティング、プロダクト、業務システム、連携、API、重要なバックエンド、自分のプロジェクトなど、異なる文脈でソフトウェアを作り、保守してきた経験から来ています。残った基準はシンプルです。ソフトウェアは技術的に正しいだけでなく、価値を説明し、摩擦を減らし、成長しても理解できるものであるべきです。
 """
 
 [[about.sections]]
-title = "como penso software"
-title_en_us = "how I think about software"
-title_ja_jp = "ソフトウェアの捉え方"
+title = "base técnica, sem fetiche"
+title_en_us = "technical base, without fetish"
+title_ja_jp = "技術基盤、過剰なこだわりなし"
 body = """
-Para mim, software bom precisa ser legível em mais de uma camada. O código precisa explicar intenção. A arquitetura precisa dar lugar para mudança. A interface precisa reduzir dúvida. A operação precisa mostrar o que está acontecendo.
+Tenho uma base forte em backend: .NET Core/C#, SQL Server, Clean Architecture, DDD, CQRS, mensageria, persistência, cache, containers, CI/CD e suporte a produção. Mas não trato stack como identidade. Stack é ferramenta para preservar clareza e entregar comportamento confiável.
 
-Essa visão aparece nos temas que mais estudo e construo: DDD, APIs, pipelines geoespaciais, workflows com agentes, renderização estática, observabilidade e interfaces técnicas para leitura longa. Não vejo essas áreas como assuntos separados. Vejo como partes de um mesmo esforço: criar sistemas que continuem compreensíveis quando crescem.
+O que me importa é conseguir atravessar as camadas sem perder o desenho: regra de negócio, contrato de API, modelo de dados, filas, observabilidade, experiência de uso e manutenção futura. Quando essas peças conversam, o sistema fica mais fácil de operar e mais honesto com quem depende dele.
 """
 body_en_us = """
-For me, good software needs to be readable in more than one layer. The code should explain intent. The architecture should leave room for change. The interface should reduce doubt. The operation should show what is happening.
+I have a strong backend base: .NET Core/C#, SQL Server, Clean Architecture, DDD, CQRS, messaging, persistence, cache, containers, CI/CD and production support. But I do not treat a stack as an identity. A stack is a tool to preserve clarity and deliver reliable behavior.
 
-That view appears in the themes I study and build most: DDD, APIs, geospatial pipelines, agent workflows, static rendering, observability and technical interfaces for long-form reading. I do not see those areas as separate topics. I see them as parts of the same effort: creating systems that remain understandable as they grow.
+What matters to me is crossing layers without losing the design: business rule, API contract, data model, queues, observability, user experience and future maintenance. When those pieces talk to each other, the system becomes easier to operate and more honest with the people who depend on it.
 """
 body_ja_jp = """
-良いソフトウェアは、複数の層で読みやすくあるべきだと考えています。コードは意図を説明し、アーキテクチャは変更の余地を残し、インターフェースは迷いを減らし、運用は何が起きているかを見せる必要があります。
+私の基盤はバックエンドにあります。.NET Core/C#、SQL Server、Clean Architecture、DDD、CQRS、メッセージング、永続化、キャッシュ、コンテナ、CI/CD、本番運用サポートです。ただし、スタックを自分のアイデンティティにはしません。スタックは明瞭さを保ち、信頼できる振る舞いを届けるための道具です。
 
-この考え方は、私がよく学び、作っているテーマにも表れています。DDD、API、地理空間パイプライン、エージェントのワークフロー、静的レンダリング、可観測性、長文を読むための技術的なインターフェース。これらを別々の領域としてではなく、成長しても理解し続けられるシステムを作るための同じ努力の一部として見ています。
+大事なのは、業務ルール、API の契約、データモデル、キュー、可観測性、利用体験、将来の保守を、設計を失わずにつなげることです。それらが会話できると、システムは運用しやすくなり、それに依存する人に対してより誠実になります。
 """
 
 [[about.sections]]
-title = "produto de ponta a ponta"
-title_en_us = "end-to-end product thinking"
-title_ja_jp = "プロダクトを端から端まで考える"
+title = "produto, negócio e entrega"
+title_en_us = "product, business and delivery"
+title_ja_jp = "プロダクト、ビジネス、提供"
 body = """
-Gosto de pensar produto desde o primeiro recorte do problema até a forma como ele chega ao cliente final. Isso passa por linguagem, domínio, arquitetura, banco de dados, API, interface, documentação, deploy, posicionamento e feedback.
+Eu me interesso pelo caminho completo entre uma ideia e o valor percebido por quem usa. Isso inclui o recorte do problema, as restrições do negócio, a arquitetura possível, a experiência da interface, a forma de operar e o feedback que volta depois.
 
-Não trato negócio como uma camada externa ao software. A pergunta central costuma ser: que valor este sistema promete, que decisão ele facilita e que atrito ele remove? A tecnologia entra para sustentar essa resposta com precisão.
+Pagamentos, mobilidade, recuperação financeira, telecom, educação, ERP e software corporativo me ensinaram que domínio muda, mas a pergunta central se repete: que decisão este sistema facilita, que risco ele reduz e que atrito ele remove? A tecnologia entra para sustentar essa resposta.
 """
 body_en_us = """
-I like thinking about product from the first framing of the problem to the way it reaches the final customer. That includes language, domain, architecture, database, API, interface, documentation, deploy, positioning and feedback.
+I am interested in the whole path between an idea and the value perceived by the people who use it. That includes framing the problem, understanding business constraints, choosing a possible architecture, shaping the interface experience, operating the system and listening to the feedback that returns.
 
-I do not treat business as an external layer around software. The central question is usually: what value does this system promise, what decision does it make easier and what friction does it remove? Technology enters to support that answer with precision.
+Payments, mobility, financial recovery, telecom, education, ERP and enterprise software taught me that domains change, but the central question repeats: what decision does this system make easier, what risk does it reduce and what friction does it remove? Technology exists to support that answer.
 """
 body_ja_jp = """
-プロダクトは、問題を最初に切り出すところから、それが最終的なユーザーや顧客に届くところまで考えたいと思っています。そこには、言葉、ドメイン、アーキテクチャ、データベース、API、インターフェース、ドキュメント、デプロイ、伝え方、フィードバックが含まれます。
+私は、アイデアから使う人が感じる価値までの道筋全体に関心があります。問題の切り出し、ビジネス上の制約、選べるアーキテクチャ、インターフェースの体験、運用の仕方、戻ってくるフィードバックまで含みます。
 
-ビジネスをソフトウェアの外側にある別の層としては扱いません。中心になる問いは、このシステムがどんな価値を約束し、どんな判断を楽にし、どんな摩擦を取り除くのか、です。技術はその答えを正確に支えるためにあります。
+決済、モビリティ、金融回収、通信、教育、ERP、業務ソフトウェアから学んだのは、ドメインは変わっても中心の問いは繰り返されるということです。このシステムはどの判断を楽にし、どのリスクを減らし、どの摩擦を取り除くのか。技術はその答えを支えるためにあります。
 """
 
 [[about.sections]]
-title = "os últimos dois anos"
-title_en_us = "the last two years"
-title_ja_jp = "この二年間"
+title = "projetos autorais como laboratório sério"
+title_en_us = "personal projects as serious labs"
+title_ja_jp = "真剣な実験場としての個人プロジェクト"
 body = """
-Nos últimos dois anos, essa forma de pensar ficou mais visível. Mesmo fora de um fluxo tradicional de mercado, continuei estudando, escrevendo, projetando e implementando. O site virou parte disso: um caderno técnico onde ideias deixam de ficar soltas e passam a ganhar estrutura.
+Projetos autorais são uma forma prática de manter pensamento e execução no mesmo lugar. SOS Location, por exemplo, concentra backend, GIS, regras operacionais, mapas, risco, simulação e interface. Nihongo Sensei segue outra direção, mas nasce da mesma vontade: transformar aprendizado e uso real em produto.
 
-SOS Location, agentes, GIS, arquitetura de domínio, renderização estática e textos longos não são peças aleatórias. São rastros de uma mesma prática: transformar curiosidade em especificação, especificação em código, código em sistema e sistema em aprendizado.
+Este site também faz parte disso. Ele não é só vitrine. É uma peça do meu processo: escrever para pensar melhor, organizar decisões, publicar sistemas em andamento e deixar rastros técnicos que possam ser revisitados.
 """
 body_en_us = """
-Over the last two years, this way of thinking became more visible. Even outside a traditional market flow, I kept studying, writing, designing and implementing. The site became part of that: a technical notebook where ideas stop floating around and start gaining structure.
+Personal projects are a practical way to keep thinking and execution in the same place. SOS Location, for example, brings together backend, GIS, operational rules, maps, risk, simulation and interface. Nihongo Sensei follows another direction, but comes from the same will: turning learning and real use into product.
 
-SOS Location, agents, GIS, domain architecture, static rendering and long-form writing are not random pieces. They are traces of the same practice: turning curiosity into specification, specification into code, code into system and system into learning.
+This site is part of that too. It is not just a showcase. It is part of my process: writing to think better, organizing decisions, publishing systems in progress and leaving technical traces that can be revisited.
 """
 body_ja_jp = """
-この二年間で、この考え方はよりはっきり見えるようになりました。伝統的な市場の流れの外にいる時間があっても、学び、書き、設計し、実装することは続いていました。このサイトもその一部です。アイデアを散らしたままにせず、構造に変えていくための技術ノートになっています。
+個人プロジェクトは、思考と実行を同じ場所に置くための実践的な方法です。たとえば SOS Location は、バックエンド、GIS、運用ルール、地図、リスク、シミュレーション、インターフェースをまとめています。Nihongo Sensei は別の方向ですが、学習と実際の利用をプロダクトに変えたいという同じ意志から生まれています。
 
-SOS Location、エージェント、GIS、ドメインアーキテクチャ、静的レンダリング、長文の技術文章は、ばらばらのものではありません。好奇心を仕様に、仕様をコードに、コードをシステムに、システムを学びに変える同じ実践の跡です。
+このサイトもその一部です。単なるショーケースではありません。よりよく考えるために書き、意思決定を整理し、進行中のシステムを公開し、後から見直せる技術的な跡を残すための場所です。
 """
 
 [[about.sections]]
-title = "o tipo de problema que me chama"
-title_en_us = "the kind of problem that pulls me in"
-title_ja_jp = "惹かれる問題"
+title = "a assinatura que procuro"
+title_en_us = "the signature I look for"
+title_ja_jp = "目指している署名"
 body = """
-Tenho inclinação por problemas em que dados, pessoas e decisão se encontram. Mapas que precisam explicar uma situação. Agentes que precisam operar com rastreabilidade. Interfaces que precisam acalmar a leitura, não disputar atenção. Backends que precisam sustentar regras sem virar labirinto.
+Tenho inclinação por sistemas em que dados, pessoas e decisão se encontram. Mapas que precisam explicar uma situação. Agentes que precisam operar com rastreabilidade. Interfaces que precisam acalmar a leitura. Backends que precisam sustentar regra sem virar labirinto.
 
-O que procuro é esse ponto em que engenharia deixa de ser só implementação e vira clareza aplicada.
+O que procuro é esse ponto em que engenharia deixa de ser só implementação e vira clareza aplicada: uma solução que alguém consegue usar, operar, explicar e evoluir.
 """
 body_en_us = """
-I am drawn to problems where data, people and decision meet. Maps that need to explain a situation. Agents that need to operate with traceability. Interfaces that need to calm the reading experience instead of fighting for attention. Backends that need to support rules without turning into a maze.
+I am drawn to systems where data, people and decision meet. Maps that need to explain a situation. Agents that need to operate with traceability. Interfaces that need to calm the reading experience. Backends that need to support rules without becoming a maze.
 
-What I look for is that point where engineering stops being only implementation and becomes applied clarity.
+What I look for is that point where engineering stops being only implementation and becomes applied clarity: a solution someone can use, operate, explain and evolve.
 """
 body_ja_jp = """
-データ、人、判断が交わる問題に惹かれます。状況を説明する必要がある地図。トレーサビリティを持って動く必要があるエージェント。注意を奪うのではなく、読む体験を落ち着かせるインターフェース。迷路にならずにルールを支えるバックエンド。
+データ、人、判断が交わるシステムに惹かれます。状況を説明する必要がある地図。トレーサビリティを持って動く必要があるエージェント。読む体験を落ち着かせるインターフェース。迷路にならずにルールを支えるバックエンド。
 
-私が探しているのは、エンジニアリングが単なる実装ではなく、適用された明晰さになる地点です。
-"""
-
-[[about.sections]]
-title = "direção"
-title_en_us = "direction"
-title_ja_jp = "これから"
-body = """
-Hoje estou concentrando energia em transformar esse conjunto em algo mais nítido: produtos próprios, pesquisa aplicada, escrita técnica e sistemas que conectem arquitetura, operação e experiência humana.
-
-Quero construir software que pareça pensado por inteiro. Não perfeito. Inteiro: com intenção, responsabilidade, utilidade e espaço para evoluir.
-"""
-body_en_us = """
-Today I am putting energy into making this set of interests more concrete: personal products, applied research, technical writing and systems that connect architecture, operation and human experience.
-
-I want to build software that feels thought through as a whole. Not perfect. Whole: with intent, responsibility, usefulness and room to evolve.
-"""
-body_ja_jp = """
-今は、この関心のまとまりをより具体的なものにすることに力を使っています。自分のプロダクト、応用研究、技術的な文章、そしてアーキテクチャ、運用、人間の体験をつなぐシステムです。
-
-作りたいのは、全体として考えられていると感じられるソフトウェアです。完璧なものではありません。意図、責任、有用性、そして進化する余地を持った、ひとつの全体です。
+私が探しているのは、エンジニアリングが単なる実装ではなく、適用された明晰さになる地点です。つまり、誰かが使い、運用し、説明し、進化させられる解決策です。
 """
 
 [contact]

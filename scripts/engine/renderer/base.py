@@ -1,8 +1,120 @@
 import html
 import json
+import os
+import re
 from typing import Any
 from ..utils import site_href, normalize_string_list
 from ..i18n import translate
+from .components import NAV_ICON_BY_KEY, render_icon
+
+GA_MEASUREMENT_ID_RE = re.compile(r"^G-[A-Z0-9]+$")
+GTM_CONTAINER_ID_RE = re.compile(r"^GTM-[A-Z0-9]+$")
+
+
+def analytics_id_from_config(analytics: dict[str, Any], id_key: str, env_key: str, default_env: str) -> str:
+    env_name = str(analytics.get(env_key, default_env) or "").strip()
+    value = str(os.environ.get(env_name, "") if env_name else "").strip()
+    if not value:
+        value = str(analytics.get(id_key, "") or "").strip()
+    return value.upper()
+
+
+def render_google_tag_manager_head(config: dict[str, Any], container_id: str) -> str:
+    analytics = config.get("analytics", {})
+    allowed_hostnames = normalize_string_list(analytics.get("allowed_hostnames", []))
+    container_json = json.dumps(container_id)
+    hosts_json = json.dumps(allowed_hostnames)
+    return f"""<!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i, allowedHostnames) {{
+        var hostname = w.location.hostname;
+        if (allowedHostnames.length && allowedHostnames.indexOf(hostname) === -1) {{
+          return;
+        }}
+
+        w[l] = w[l] || [];
+        w[l].push({{ 'gtm.start': new Date().getTime(), event: 'gtm.js' }});
+        var f = d.getElementsByTagName(s)[0];
+        var j = d.createElement(s);
+        var dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      }})(window, document, 'script', 'dataLayer', {container_json}, {hosts_json});
+    </script>
+    <!-- End Google Tag Manager -->"""
+
+
+def render_google_tag_manager_body(config: dict[str, Any], container_id: str) -> str:
+    analytics = config.get("analytics", {})
+    allowed_hostnames = normalize_string_list(analytics.get("allowed_hostnames", []))
+    hosts_json = html.escape(json.dumps(allowed_hostnames), quote=True)
+    src = f"https://www.googletagmanager.com/ns.html?id={html.escape(container_id)}"
+    return (
+        '<noscript data-analytics-noscript="gtm" '
+        f"data-allowed-hostnames=\"{hosts_json}\">"
+        f'<iframe src="{src}" height="0" width="0" style="display:none;visibility:hidden"></iframe>'
+        "</noscript>"
+    )
+
+
+def render_google_analytics_head(config: dict[str, Any], measurement_id: str) -> str:
+    analytics = config.get("analytics", {})
+    allowed_hostnames = normalize_string_list(analytics.get("allowed_hostnames", []))
+    debug = bool(analytics.get("debug", False))
+    measurement_json = json.dumps(measurement_id)
+    hosts_json = json.dumps(allowed_hostnames)
+    debug_json = json.dumps(debug)
+    return f"""<!-- Google tag (gtag.js) -->
+    <script>
+      (function (window, document, measurementId, allowedHostnames, debugMode) {{
+        var hostname = window.location.hostname;
+        if (allowedHostnames.length && allowedHostnames.indexOf(hostname) === -1) {{
+          return;
+        }}
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function () {{ window.dataLayer.push(arguments); }};
+        window.gtag('js', new Date());
+        window.gtag('config', measurementId, {{ debug_mode: debugMode }});
+
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
+        document.head.appendChild(script);
+      }})(window, document, {measurement_json}, {hosts_json}, {debug_json});
+    </script>"""
+
+
+def resolve_analytics_ids(config: dict[str, Any]) -> tuple[str, str]:
+    analytics = config.get("analytics", {})
+    if not analytics.get("enabled", True):
+        return "", ""
+
+    container_id = analytics_id_from_config(analytics, "container_id", "container_id_env", "GTM_CONTAINER_ID")
+    measurement_id = analytics_id_from_config(analytics, "measurement_id", "measurement_id_env", "GA_MEASUREMENT_ID")
+    if not GTM_CONTAINER_ID_RE.match(container_id):
+        container_id = ""
+    if not GA_MEASUREMENT_ID_RE.match(measurement_id):
+        measurement_id = ""
+    return container_id, measurement_id
+
+
+def render_analytics_head(config: dict[str, Any]) -> str:
+    container_id, measurement_id = resolve_analytics_ids(config)
+    if container_id:
+        return render_google_tag_manager_head(config, container_id)
+    if measurement_id:
+        return render_google_analytics_head(config, measurement_id)
+    return ""
+
+
+def render_analytics_body(config: dict[str, Any]) -> str:
+    container_id, _ = resolve_analytics_ids(config)
+    if not container_id:
+        return ""
+    return render_google_tag_manager_body(config, container_id)
+
 
 def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: str, i18n: dict[str, Any], locale: str) -> str:
     search_label = translate(i18n, locale, "nav.search", "command palette")
@@ -10,20 +122,21 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         ("about", "nav.about", "/about/"),
         ("posts", "nav.posts", "/posts/"),
         ("daily", "nav.daily", "/daily/"),
-        ("contact", "nav.contact", "/contact/"),
-    ]
-    secondary_items = [
         ("projects", "nav.projects", "/projects/"),
         ("documents", "nav.documents", "/documents/"),
+        ("contact", "nav.contact", "/contact/"),
     ]
-    primary_links = "".join(
-        f'<a class="nav-link{" is-active" if active_nav == key else ""}" href="{site_href(site, url)}" data-i18n="{html.escape(i18n_key)}">{html.escape(translate(i18n, locale, i18n_key, key))}</a>'
-        for key, i18n_key, url in nav_items
-    )
-    secondary_links = "".join(
-        f'<a class="nav-secondary-link{" is-active" if active_nav == key else ""}" href="{site_href(site, url)}" data-i18n="{html.escape(i18n_key)}">{html.escape(translate(i18n, locale, i18n_key, key))}</a>'
-        for key, i18n_key, url in secondary_items
-    )
+    def render_nav_link(key: str, i18n_key: str, url: str) -> str:
+        active_class = " is-active" if active_nav == key else ""
+        current_attr = ' aria-current="page"' if active_nav == key else ""
+        label = translate(i18n, locale, i18n_key, key)
+        return (
+            f'<a class="nav-link{active_class}"{current_attr} href="{site_href(site, url)}">'
+            f'{render_icon(NAV_ICON_BY_KEY.get(i18n_key, "circle"), "site-icon nav-link-icon")}'
+            f'<span class="icon-label" data-i18n="{html.escape(i18n_key)}">{html.escape(label)}</span></a>'
+        )
+
+    primary_links = "".join(render_nav_link(key, i18n_key, url) for key, i18n_key, url in nav_items)
     return f"""
     <nav class="nav-shell" data-nav-shell>
       <div class="nav-brand">
@@ -31,7 +144,6 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
       </div>
       <div class="nav-primary-links">{primary_links}</div>
       <div class="nav-actions">
-        <div class="nav-secondary-links">{secondary_links}</div>
         <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_label)}"><i data-lucide="search"></i></button>
         <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action"><i data-lucide="languages"></i><span class="locale-label" data-locale-label>PT</span></button>
         <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
@@ -44,7 +156,12 @@ def render_footer(site: dict[str, str], system: dict[str, Any]) -> str:
     engine_url = f"{github_url}/nhmatsumoto-blog-engine"
     return f"""
     <footer class="site-footer">
-      <p>desenvolvido por <a href="{github_url}" target="_blank" rel="noopener noreferrer">NHMatsumoto</a> | <a href="{engine_url}" target="_blank" rel="noopener noreferrer">blog engine</a></p>
+      <p>
+        <span>desenvolvido por</span>
+        <a href="{github_url}" target="_blank" rel="noopener noreferrer">{render_icon("github", "site-icon footer-icon")}<span>NHMatsumoto</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
+        <span class="footer-separator" aria-hidden="true">|</span>
+        <a href="{engine_url}" target="_blank" rel="noopener noreferrer">{render_icon("square-terminal", "site-icon footer-icon")}<span>blog engine</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
+      </p>
     </footer>
     """
 
@@ -55,11 +172,12 @@ def render_palette(site: dict[str, str], i18n: dict[str, Any], locale: str) -> s
     hint = translate(i18n, locale, "palette.hint", "Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.")
     return f"""
     <div class="palette-shell" hidden data-command-palette data-search-index="{site_href(site, '/assets/search-index.json')}">
-      <div class="palette-backdrop" data-close-palette></div>
+        <div class="palette-backdrop" data-close-palette></div>
       <div class="palette-panel" role="dialog" aria-modal="true" aria-label="{html.escape(aria_label)}" data-i18n-aria-label="accessibility.command_palette">
         <div class="palette-head">
+          {render_icon("search", "site-icon palette-head-icon")}
           <input class="palette-input" type="search" placeholder="{html.escape(placeholder)}" data-palette-input data-i18n-placeholder="palette.placeholder">
-          <button class="palette-close" type="button" data-close-palette data-i18n="palette.close">{html.escape(close_label)}</button>
+          <button class="palette-close" type="button" data-close-palette>{render_icon("x", "site-icon palette-close-icon")}<span data-i18n="palette.close">{html.escape(close_label)}</span></button>
         </div>
         <p class="palette-hint" data-i18n="palette.hint">{html.escape(hint)}</p>
         <ul class="palette-results" data-palette-results></ul>
@@ -120,6 +238,8 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     rss_link = f'<link rel="alternate" type="application/rss+xml" title="{html.escape(site.get("title", ""))} RSS" href="{html.escape(site_href(site, "/" + rss_file))}">'
 
     og_html = f"\n    {render_og_tags(og)}" if og else ""
+    analytics_head_html = render_analytics_head(config)
+    analytics_body_html = render_analytics_body(config)
 
     import_map = {"imports": {"zustand": "https://unpkg.com/zustand@4.4.1/esm/vanilla.mjs"}}
     import_map_html = f'<script type="importmap">{json.dumps(import_map)}</script>'
@@ -127,6 +247,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     return f"""<!DOCTYPE html>
 <html lang="{html.escape(locale)}" data-theme="dark">
   <head>
+    {analytics_head_html}
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -142,6 +263,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     {import_map_html}
   </head>
   <body class="{html.escape(body_class)}" data-has-math="{str(has_math).lower()}" data-default-locale="{html.escape(locale)}">
+    {analytics_body_html}
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">{html.escape(translate(i18n, locale, "accessibility.skip_to_content", "Ir para o conteúdo"))}</a>
     {render_site_nav(site, system, active_nav, i18n, locale)}
     <div class="site-shell">

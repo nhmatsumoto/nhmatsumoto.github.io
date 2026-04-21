@@ -25,6 +25,15 @@ daily_on_home = 4
 projects_on_home = 3
 documents_on_home = 4
 
+[analytics]
+enabled = true
+container_id = "GTM-NJJFQ4JM"
+container_id_env = "GTM_CONTAINER_ID"
+measurement_id = ""
+measurement_id_env = "GA_MEASUREMENT_ID"
+allowed_hostnames = ["nhmatsumoto.github.io"]
+debug = false
+
 [math]
 enabled = true
 script_url = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"

@@ -35,7 +35,16 @@ def load_blog_config() -> dict[str, dict[str, Any]]:
     raw = load_toml(CONFIG_PATH)
     build = DEFAULT_BUILD_CONFIG | raw.get("build", {})
     math = DEFAULT_MATH_CONFIG | raw.get("math", {})
-    return {"build": build, "math": math}
+    analytics = {
+        "enabled": True,
+        "container_id": "",
+        "container_id_env": "GTM_CONTAINER_ID",
+        "measurement_id": "",
+        "measurement_id_env": "GA_MEASUREMENT_ID",
+        "allowed_hostnames": ["nhmatsumoto.github.io"],
+        "debug": False,
+    } | raw.get("analytics", {})
+    return {"build": build, "math": math, "analytics": analytics}
 
 def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)

@@ -268,6 +268,13 @@ const input = palette?.querySelector("[data-palette-input]");
 const results = palette?.querySelector("[data-palette-results]");
 if (!palette || !input || !results) return;
 let index = null;
+const iconForKind = (kind) => ({
+post: "newspaper",
+article: "newspaper",
+daily: "calendar-days",
+project: "folder-kanban",
+document: "file-text"
+}[kind] || "file");
 const loadIndex = async () => {
 if (index) return index;
 const res = await fetch(palette.dataset.searchIndex || "https://nhmatsumoto.github.io/search-index.json");
@@ -307,6 +314,7 @@ const localized = localizeEntry(it, locale);
 return `
 <li>
 <a href="${it.url}" class="palette-result">
+<i class="site-icon palette-result-icon" data-lucide="${iconForKind(it.kind)}" aria-hidden="true"></i>
 <span class="result-kind">${loc?.translate(`kinds.${it.kind}`, it.kind)}</span>
 <div class="result-info">
 <strong class="result-title">${localized.title}</strong>
@@ -316,6 +324,7 @@ return `
 </li>`;
 }).join("")
 : `<li class="palette-empty">${loc?.translate("palette.empty", "No results found.")}</li>`;
+if (typeof lucide !== "undefined") lucide.createIcons();
 };
 const setOpen = (open) => {
 palette.hidden = !open;
@@ -363,7 +372,23 @@ document.querySelectorAll(".resource-card, .project-card-premium, .post-card, .d
 el.addEventListener("mousemove", updateCoords);
 });
 };
+const initAnalyticsHelpers = () => {
+window.siteAnalytics = window.siteAnalytics || {};
+window.siteAnalytics.track = (eventName, params = {}) => {
+if (!eventName) return false;
+if (typeof window.gtag === "function") {
+window.gtag("event", eventName, params);
+return true;
+}
+if (Array.isArray(window.dataLayer)) {
+window.dataLayer.push({ event: eventName, ...params });
+return true;
+}
+return false;
+};
+};
 document.addEventListener("DOMContentLoaded", () => {
+initAnalyticsHelpers();
 const loc = initLocalization();
 initPageContentLocalization();
 initContactCardsLocalization();

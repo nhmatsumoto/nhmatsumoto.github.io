@@ -59,6 +59,33 @@ python3 scripts/editor_server.py
 
 O editor local sobe por padrão em `http://127.0.0.1:4173/`.
 
+## Google Tag Manager / GA4
+
+O site suporta Google Tag Manager no layout base. A configuração fica centralizada em `blog.toml`:
+
+```toml
+[analytics]
+enabled = true
+container_id = "GTM-NJJFQ4JM"
+container_id_env = "GTM_CONTAINER_ID"
+measurement_id = ""
+measurement_id_env = "GA_MEASUREMENT_ID"
+allowed_hostnames = ["nhmatsumoto.github.io"]
+debug = false
+```
+
+Com `container_id` configurado, o build emite o snippet do GTM no `<head>` e o fallback `noscript` no começo do `<body>`. Configure a tag GA4 dentro do container `GTM-NJJFQ4JM` no Google Tag Manager.
+
+Para trocar o container sem alterar o arquivo versionado:
+
+```bash
+GTM_CONTAINER_ID=GTM-XXXXXXXX python3 scripts/build.py
+```
+
+Se `container_id` estiver vazio, o renderer pode usar `measurement_id`/`GA_MEASUREMENT_ID` como fallback direto para GA4 via `gtag.js`. A tag principal só carrega em hostnames listados em `allowed_hostnames`, evitando coleta acidental em `localhost` ou previews locais com JavaScript habilitado.
+
+Para validar, publique no domínio permitido e confira o carregamento de `https://www.googletagmanager.com/gtm.js?id=GTM-NJJFQ4JM` no painel Network. Depois confirme eventos em Preview/Tag Assistant do GTM ou no Tempo real/DebugView do GA4.
+
 ## Formato dos posts
 
 ```toml

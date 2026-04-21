@@ -232,6 +232,44 @@ def render_reading_time(minutes: int, i18n: dict[str, Any], locale: str) -> str:
     label = template.replace("{minutes}", str(minutes))
     return f'<span data-reading-time="{minutes}">{html.escape(label)}</span>'
 
+def render_icon(name: str, class_name: str = "site-icon") -> str:
+    classes = " ".join(part for part in [class_name] if part)
+    return (
+        f'<i class="{html.escape(classes, quote=True)}" '
+        f'data-lucide="{html.escape(name, quote=True)}" aria-hidden="true"></i>'
+    )
+
+NAV_ICON_BY_KEY = {
+    "nav.home": "home",
+    "nav.about": "user-round",
+    "nav.posts": "newspaper",
+    "nav.daily": "calendar-days",
+    "nav.contact": "mail",
+    "nav.projects": "folder-kanban",
+    "nav.documents": "file-text",
+}
+
+KIND_ICON_BY_KIND = {
+    "post": "newspaper",
+    "daily": "calendar-days",
+    "project": "folder-kanban",
+    "document": "file-text",
+}
+
+def _label_span(label: str, key: str | None = None) -> str:
+    attr = f' data-i18n="{html.escape(key)}"' if key else ""
+    return f'<span class="icon-label"{attr}>{html.escape(label)}</span>'
+
+def _entry_kind(kind: str, label: str, i18n_key: str) -> str:
+    icon = KIND_ICON_BY_KIND.get(kind, "circle")
+    return (
+        f'<span class="entry-kind">{render_icon(icon, "site-icon entry-icon")}'
+        f'{_label_span(label, i18n_key)}</span>'
+    )
+
+def _entry_meta(icon: str, content: str, class_name: str = "entry-meta") -> str:
+    return f'<span class="{html.escape(class_name)}">{render_icon(icon, "site-icon entry-icon")}{content}</span>'
+
 def render_tag_list(tags: list[str], class_name: str = "tag-list") -> str:
     if not tags: return ""
     items = "".join(f'<span class="tag">{html.escape(tag)}</span>' for tag in tags)
@@ -262,11 +300,12 @@ def render_breadcrumbs(items: list[dict[str, str]], i18n: dict[str, Any], locale
     crumbs = []
     for item in items:
         label, key, url = item.get("label", ""), item.get("key", ""), item.get("url")
-        attr = f' data-i18n="{html.escape(key)}"' if key else ""
+        label_html = _label_span(label, key) if key else html.escape(label)
         if url:
-            crumbs.append(f'<li><a href="{html.escape(url)}"{attr}>{html.escape(label)}</a></li>')
+            icon_html = render_icon(NAV_ICON_BY_KEY.get(key, "chevron-right"), "site-icon breadcrumb-icon") if key else ""
+            crumbs.append(f'<li><a href="{html.escape(url)}">{icon_html}{label_html}</a></li>')
         else:
-            crumbs.append(f'<li><span aria-current="page"{attr}>{html.escape(label)}</span></li>')
+            crumbs.append(f'<li><span aria-current="page">{label_html}</span></li>')
     aria_label = translate(i18n, locale, "accessibility.breadcrumbs", "Breadcrumbs")
     return f'<nav class="breadcrumbs" aria-label="{html.escape(aria_label)}" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list">{"".join(crumbs)}</ol></nav>'
 
@@ -279,19 +318,19 @@ def _entry_eyebrow(parts: list[str]) -> str:
 
 def _entry_cta(url: str, label: str, aria_key: str) -> str:
     return (
-        f'<a class="entry-cta" href="{html.escape(url)}" data-i18n="{html.escape(aria_key)}">'
-        f'{html.escape(label)}<span class="entry-cta-arrow" aria-hidden="true">→</span>'
+        f'<a class="entry-cta" href="{html.escape(url)}">'
+        f'{_label_span(label, aria_key)}{render_icon("arrow-right", "site-icon entry-cta-arrow")}'
         f'</a>'
     )
 
 def render_post_card(post: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
-    kind_label = html.escape(translate(i18n, locale, "kinds.post", "post"))
+    kind_label = translate(i18n, locale, "kinds.post", "post")
     date_html = render_localized_date(post["published_dt"], locale, "short")
     reading_html = render_reading_time(post["reading_time"], i18n, locale)
     eyebrow = _entry_eyebrow([
-        f'<span class="entry-kind" data-i18n="kinds.post">{kind_label}</span>',
-        f'<span class="entry-meta">{date_html}</span>',
-        f'<span class="entry-meta">{reading_html}</span>',
+        _entry_kind("post", kind_label, "kinds.post"),
+        _entry_meta("calendar-days", date_html),
+        _entry_meta("clock-3", reading_html),
     ])
     cta_label = translate(i18n, locale, "actions.read_article", "Open")
     return f"""
@@ -306,13 +345,13 @@ def render_post_card(post: dict[str, Any], i18n: dict[str, Any], locale: str) ->
     """.strip()
 
 def render_daily_card(entry: dict[str, Any], i18n: dict[str, Any], locale: str, *, compact: bool = False) -> str:
-    kind_label = html.escape(translate(i18n, locale, "kinds.daily", "daily"))
+    kind_label = translate(i18n, locale, "kinds.daily", "daily")
     date_html = render_localized_date(entry["published_dt"], locale, "short")
     reading_html = render_reading_time(entry["reading_time"], i18n, locale)
     eyebrow = _entry_eyebrow([
-        f'<span class="entry-kind" data-i18n="kinds.daily">{kind_label}</span>',
-        f'<span class="entry-meta">{date_html}</span>',
-        f'<span class="entry-meta">{reading_html}</span>',
+        _entry_kind("daily", kind_label, "kinds.daily"),
+        _entry_meta("calendar-days", date_html),
+        _entry_meta("clock-3", reading_html),
     ])
     context_bits: list[str] = []
     if entry.get("mood"):
@@ -336,10 +375,10 @@ def render_daily_card(entry: dict[str, Any], i18n: dict[str, Any], locale: str, 
     """.strip()
 
 def render_project_card(project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
-    kind_label = html.escape(translate(i18n, locale, "kinds.project", "project"))
+    kind_label = translate(i18n, locale, "kinds.project", "project")
     status_key = project.get("status") or ""
     status_label = html.escape(translate(i18n, locale, f"status.{status_key}", status_key.replace("_", " "))) if status_key else ""
-    eyebrow_parts = [f'<span class="entry-kind" data-i18n="kinds.project">{kind_label}</span>']
+    eyebrow_parts = [_entry_kind("project", kind_label, "kinds.project")]
     if status_label:
         eyebrow_parts.append(
             f'<span class="entry-status entry-status-{html.escape(status_key)}" data-status-key="status.{html.escape(status_key)}">{status_label}</span>'
@@ -358,19 +397,19 @@ def render_project_card(project: dict[str, Any], i18n: dict[str, Any], locale: s
     """.strip()
 
 def render_document_card(document: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
-    kind_label = html.escape(translate(i18n, locale, "kinds.document", "document"))
+    kind_label = translate(i18n, locale, "kinds.document", "document")
     category = str(document.get("category") or "").strip()
     version_raw = str(document.get("version") or "").strip()
     version_label = version_raw if version_raw.lower().startswith("v") else (f"v{version_raw}" if version_raw else "")
-    eyebrow_parts = [f'<span class="entry-kind" data-i18n="kinds.document">{kind_label}</span>']
+    eyebrow_parts = [_entry_kind("document", kind_label, "kinds.document")]
     if category:
-        eyebrow_parts.append(f'<span class="entry-meta">{html.escape(category)}</span>')
+        eyebrow_parts.append(_entry_meta("folder", html.escape(category)))
     if version_label:
-        eyebrow_parts.append(f'<span class="entry-meta entry-version">{html.escape(version_label)}</span>')
+        eyebrow_parts.append(_entry_meta("git-branch", html.escape(version_label), "entry-meta entry-version"))
     if document.get("agent_generated_tag"):
         agent_label = translate(i18n, locale, "common.agent_generated", "agent-generated")
         eyebrow_parts.append(
-            f'<span class="entry-flag" data-i18n="common.agent_generated">{html.escape(agent_label)}</span>'
+            f'<span class="entry-flag">{render_icon("bot", "site-icon entry-icon")}{_label_span(agent_label, "common.agent_generated")}</span>'
         )
     eyebrow = _entry_eyebrow(eyebrow_parts)
     cta_label = translate(i18n, locale, "actions.open_docs", "Open")
@@ -500,7 +539,12 @@ def render_navigation_section(system: dict[str, Any], documents: list[dict[str, 
     nav_items = [("nav.about", "/about/"), ("nav.posts", "/posts/"), ("nav.daily", "/daily/"), ("nav.contact", "/contact/"), ("nav.projects", "/projects/"), ("nav.documents", "/documents/")]
     nav_items += [(f"sections.category_{c}", f"/documents/?category={c}") for c in categories]
     
-    links = "\n".join(f'<a class="nav-link" href="{html.escape(url)}" data-i18n="{html.escape(key)}">{html.escape(translate(i18n, locale, key, key.split(".")[-1].replace("_", " ")))}</a>' for key, url in nav_items)
+    links = "\n".join(
+        f'<a class="nav-link" href="{html.escape(url)}">'
+        f'{render_icon(NAV_ICON_BY_KEY.get(key, "folder"), "site-icon nav-link-icon")}'
+        f'{_label_span(translate(i18n, locale, key, key.split(".")[-1].replace("_", " ")), key)}</a>'
+        for key, url in nav_items
+    )
     
     return f"""
     <section class="section-panel navigation-grid" aria-labelledby="nav-grid-title">
@@ -521,16 +565,16 @@ def render_pagination_controls(site: dict[str, str], current_page: int, total_pa
         return site_href(site, f"{base_url.rstrip('/')}/page/{p}/")
     links = []
     if current_page > 1:
-        links.append(f'<a href="{page_url(current_page - 1)}" class="pagination-link pagination-prev" data-i18n="pagination.prev">← {html.escape(translate(i18n, locale, "pagination.prev", "previous"))}</a>')
+        links.append(f'<a href="{page_url(current_page - 1)}" class="pagination-link pagination-prev">{render_icon("chevron-left", "site-icon pagination-icon")}{_label_span(translate(i18n, locale, "pagination.prev", "previous"), "pagination.prev")}</a>')
     else:
-        links.append(f'<span class="pagination-link pagination-disabled">← {html.escape(translate(i18n, locale, "pagination.prev", "previous"))}</span>')
+        links.append(f'<span class="pagination-link pagination-disabled">{render_icon("chevron-left", "site-icon pagination-icon")}{_label_span(translate(i18n, locale, "pagination.prev", "previous"), "pagination.prev")}</span>')
     for p in range(1, total_pages + 1):
         active_class = " pagination-active" if p == current_page else ""
         links.append(f'<a href="{page_url(p)}" class="pagination-link{active_class}">{p}</a>')
     if current_page < total_pages:
-        links.append(f'<a href="{page_url(current_page + 1)}" class="pagination-link pagination-next" data-i18n="pagination.next">{html.escape(translate(i18n, locale, "pagination.next", "next"))} →</a>')
+        links.append(f'<a href="{page_url(current_page + 1)}" class="pagination-link pagination-next">{_label_span(translate(i18n, locale, "pagination.next", "next"), "pagination.next")}{render_icon("chevron-right", "site-icon pagination-icon")}</a>')
     else:
-        links.append(f'<span class="pagination-link pagination-disabled">{html.escape(translate(i18n, locale, "pagination.next", "next"))} →</span>')
+        links.append(f'<span class="pagination-link pagination-disabled">{_label_span(translate(i18n, locale, "pagination.next", "next"), "pagination.next")}{render_icon("chevron-right", "site-icon pagination-icon")}</span>')
     return f'<nav class="pagination-container" aria-label="Pagination"><div class="pagination-inner">{"".join(links)}</div></nav>'
 
 def render_impact_bar(items: list[str], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:

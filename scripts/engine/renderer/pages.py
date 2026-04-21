@@ -23,6 +23,7 @@ from .components import (
     render_trade_offs_section,
     render_lessons_section,
     render_related_posts,
+    render_icon,
 )
 from ..utils import site_href, normalize_string_list, load_blog_config, copy_localized_fields
 from ..i18n import translate, localized_value, locale_suffixes
@@ -385,6 +386,67 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
 def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     about = system.get("about", {})
     sections = about.get("sections", [])
+    snapshot_items = about.get("snapshot_items", [])
+    proof_points = about.get("proof_points", [])
+
+    def snapshot_field_id(item_id: str, field: str) -> str:
+        safe_id = item_id.replace("-", "_")
+        return f"snapshot_{safe_id}_{field}"
+
+    def render_about_snapshot(target_locale: str) -> str:
+        summary = str(localized_value(about, "snapshot_summary", target_locale, i18n, "") or "").strip()
+        snapshot_html = []
+        for item in snapshot_items:
+            item_id = str(item.get("id", "") or "").strip()
+            label = str(localized_value(item, "label", target_locale, i18n, "") or "").strip()
+            value = str(localized_value(item, "value", target_locale, i18n, "") or "").strip()
+            if not item_id or not label or not value:
+                continue
+            icon = str(item.get("icon", "sparkles") or "sparkles").strip()
+            label_field = snapshot_field_id(item_id, "label")
+            value_field = snapshot_field_id(item_id, "value")
+            snapshot_html.append(
+                f"""
+                <div class="about-snapshot-item">
+                  {render_icon(icon, "site-icon about-snapshot-icon")}
+                  <dt data-page-field="{html.escape(label_field)}">{html.escape(label)}</dt>
+                  <dd data-page-field="{html.escape(value_field)}">{html.escape(value)}</dd>
+                </div>
+                """
+            )
+
+        return f"""
+        <aside class="about-snapshot-card" aria-label="{html.escape(translate(i18n, target_locale, "pages.about.facts", "Snapshot"))}">
+          <div class="about-snapshot-card-head">
+            <p class="section-kicker" data-i18n="pages.about.facts">{html.escape(translate(i18n, target_locale, "pages.about.facts", "Snapshot"))}</p>
+            <p class="about-snapshot-summary" data-page-field="snapshot_summary">{html.escape(summary)}</p>
+          </div>
+          <dl class="about-snapshot-list">
+            {"".join(snapshot_html)}
+          </dl>
+        </aside>
+        """
+
+    def render_about_proof_points(target_locale: str) -> str:
+        cards = []
+        for point in proof_points:
+            title = str(localized_value(point, "title", target_locale, i18n, "") or "").strip()
+            body = str(localized_value(point, "body", target_locale, i18n, "") or "").strip()
+            if not title or not body:
+                continue
+            icon = str(point.get("icon", "sparkles") or "sparkles").strip()
+            cards.append(
+                f"""
+                <article class="about-proof-card">
+                  {render_icon(icon, "site-icon about-proof-icon")}
+                  <h2>{html.escape(title)}</h2>
+                  <p>{html.escape(body)}</p>
+                </article>
+                """
+            )
+        if not cards:
+            return ""
+        return f'<section class="about-proof-grid" aria-label="{html.escape(translate(i18n, target_locale, "pages.about.facts", "Snapshot"))}">{"".join(cards)}</section>'
 
     def render_about_sections(target_locale: str) -> str:
         section_html = []
@@ -399,7 +461,7 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
 
         if not section_html:
             section_html.append(f'<section class="notebook-subsection"><div class="prose">{render_markdown(site.get("about", ""))}</div></section>')
-        return "".join(section_html)
+        return render_about_proof_points(target_locale) + "".join(section_html)
 
     breadcrumbs = render_breadcrumbs(
         [
@@ -410,19 +472,21 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
         locale,
     )
     about_lede = str(localized_value(about, "lede", locale, i18n, site.get("headline", "")) or "").strip()
-    snapshot_focus = str(localized_value(about, "snapshot_focus", locale, i18n, site.get("headline", "")) or "").strip()
-    developer = system.get("identity", {}).get("developer", {})
-    developer_location = str(localized_value(developer, "location", locale, i18n, "Brasil / Remote") or "").strip()
-    developer_role = str(localized_value(developer, "role", locale, i18n, "Software Engineer") or "").strip()
+    snapshot_summary = str(localized_value(about, "snapshot_summary", locale, i18n, "") or "").strip()
 
     page_data: dict[str, Any] = {
         "title": translate(i18n, locale, "pages.about.title", "Sobre"),
         "summary": about_lede,
         "body_html": render_about_sections(locale),
-        "location": developer_location,
-        "role": developer_role,
-        "focus": snapshot_focus,
+        "snapshot_summary": snapshot_summary,
     }
+    for item in snapshot_items:
+        item_id = str(item.get("id", "") or "").strip()
+        if not item_id:
+            continue
+        page_data[snapshot_field_id(item_id, "label")] = str(localized_value(item, "label", locale, i18n, "") or "").strip()
+        page_data[snapshot_field_id(item_id, "value")] = str(localized_value(item, "value", locale, i18n, "") or "").strip()
+
     for supported_locale in i18n.get("supported_locales", []):
         if supported_locale == locale:
             continue
@@ -433,30 +497,31 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
         page_data[f"title_{suffix}"] = translate(i18n, supported_locale, "pages.about.title", page_data["title"])
         page_data[f"summary_{suffix}"] = str(localized_value(about, "lede", supported_locale, i18n, page_data["summary"]) or "").strip()
         page_data[f"body_html_{suffix}"] = render_about_sections(supported_locale)
-        page_data[f"location_{suffix}"] = str(localized_value(developer, "location", supported_locale, i18n, page_data["location"]) or "").strip()
-        page_data[f"role_{suffix}"] = str(localized_value(developer, "role", supported_locale, i18n, page_data["role"]) or "").strip()
-        page_data[f"focus_{suffix}"] = str(localized_value(about, "snapshot_focus", supported_locale, i18n, page_data["focus"]) or "").strip()
+        page_data[f"snapshot_summary_{suffix}"] = str(localized_value(about, "snapshot_summary", supported_locale, i18n, page_data["snapshot_summary"]) or "").strip()
+        for item in snapshot_items:
+            item_id = str(item.get("id", "") or "").strip()
+            if not item_id:
+                continue
+            label_field = snapshot_field_id(item_id, "label")
+            value_field = snapshot_field_id(item_id, "value")
+            page_data[f"{label_field}_{suffix}"] = str(localized_value(item, "label", supported_locale, i18n, page_data[label_field]) or "").strip()
+            page_data[f"{value_field}_{suffix}"] = str(localized_value(item, "value", supported_locale, i18n, page_data[value_field]) or "").strip()
 
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <section class="page-heading">
-      <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
-      <h1 data-i18n="pages.about.title" data-page-title>{html.escape(page_data["title"])}</h1>
-      <p data-page-summary>{html.escape(about_lede)}</p>
+    <section class="page-heading about-hero">
+      <div class="about-hero-copy">
+        <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
+        <h1 data-i18n="pages.about.title" data-page-title>{html.escape(page_data["title"])}</h1>
+        <p data-page-summary>{html.escape(about_lede)}</p>
+      </div>
+      {render_about_snapshot(locale)}
     </section>
-    <section class="page-grid notebook-two-column about-layout">
-      <article class="post-shell prose notebook-sheet" data-page-body>
+    <section class="about-layout">
+      <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
         {page_data["body_html"]}
       </article>
-      <aside class="sidebar-panel notebook-meta-panel about-snapshot-card">
-        <div class="sidebar-header"><h2 data-i18n="pages.about.facts">{html.escape(translate(i18n, locale, "pages.about.facts", "Snapshot"))}</h2></div>
-        <div class="meta-stack">
-          <p><strong data-i18n="pages.about.location">{html.escape(translate(i18n, locale, "pages.about.location", "Base"))}</strong>: <span data-page-field="location">{html.escape(developer_location)}</span></p>
-          <p><strong data-i18n="pages.about.role">{html.escape(translate(i18n, locale, "pages.about.role", "Atuação"))}</strong>: <span data-page-field="role">{html.escape(developer_role)}</span></p>
-          <p><strong data-i18n="pages.about.focus">{html.escape(translate(i18n, locale, "pages.about.focus", "Foco"))}</strong>: <span data-page-field="focus">{html.escape(snapshot_focus)}</span></p>
-        </div>
-      </aside>
     </section>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
@@ -590,7 +655,10 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
         locale,
     )
     metrics_html = render_metric_list(
-        [render_localized_date(post["published_dt"], locale, "long"), render_reading_time(post["reading_time"], i18n, locale)],
+        [
+            f'{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(post["published_dt"], locale, "long")}',
+            f'{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post["reading_time"], i18n, locale)}',
+        ],
         escape_items=False,
     )
     badges_html = render_badge_list(post.get("badges", []))
@@ -601,8 +669,8 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
     actions_html = "".join(
         link
         for link in [
-            f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener" data-i18n="actions.repo">{repo_label}</a>' if post.get("resolved_repo_url") else "",
-            f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener" data-i18n="actions.code">{code_label}</a>' if post.get("resolved_code_url") else "",
+            f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">{render_icon("github", "site-icon sidebar-link-icon")}<span data-i18n="actions.repo">{repo_label}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if post.get("resolved_repo_url") else "",
+            f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">{render_icon("code-2", "site-icon sidebar-link-icon")}<span data-i18n="actions.code">{code_label}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if post.get("resolved_code_url") else "",
         ]
         if link
     )
@@ -627,7 +695,7 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
         <header class="post-header post-reading-header">
           <div class="post-header-meta">
             <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
-            <div class="post-meta post-meta-hero">{render_localized_date(post['published_dt'], locale, 'long')}{render_reading_time(post['reading_time'], i18n, locale)}</div>
+            <div class="post-meta post-meta-hero"><span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(post['published_dt'], locale, 'long')}</span><span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post['reading_time'], i18n, locale)}</span></div>
           </div>
           <h1 data-page-title>{html.escape(post['title'])}</h1>
           <p class="post-summary post-deck" data-page-summary>{html.escape(post['summary'])}</p>
@@ -675,16 +743,16 @@ def render_daily_page(site: dict[str, str], system: dict[str, Any], entry: dict[
         locale,
     )
     meta_lines = [
-        render_localized_date(entry["published_dt"], locale, "long"),
-        render_reading_time(entry["reading_time"], i18n, locale),
+        f'<span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(entry["published_dt"], locale, "long")}</span>',
+        f'<span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(entry["reading_time"], i18n, locale)}</span>',
     ]
     if entry.get("mood"):
-        meta_lines.append(f"<span>{html.escape(entry['mood'])}</span>")
+        meta_lines.append(f'<span class="post-meta-item">{render_icon("activity", "site-icon meta-icon")}{html.escape(entry["mood"])}</span>')
     if entry.get("now_playing"):
-        meta_lines.append(f"<span>{html.escape(entry['now_playing'])}</span>")
+        meta_lines.append(f'<span class="post-meta-item">{render_icon("music-2", "site-icon meta-icon")}{html.escape(entry["now_playing"])}</span>')
     soundtrack_link = ""
     if entry.get("resolved_spotify_url"):
-        soundtrack_link = f'<a class="sidebar-link" href="{entry["resolved_spotify_url"]}" target="_blank" rel="noopener">spotify</a>'
+        soundtrack_link = f'<a class="sidebar-link" href="{entry["resolved_spotify_url"]}" target="_blank" rel="noopener">{render_icon("music-2", "site-icon sidebar-link-icon")}<span>spotify</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>'
 
     page_payload = json.dumps(_build_daily_localization_payload(entry), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
@@ -745,8 +813,8 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
       {render_stack_list(project['stack'])}
       {render_impact_bar(project.get("impact", []), i18n, locale)}
       <div class="sidebar-actions">
-        {f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}" data-i18n="actions.view_architecture">{html.escape(translate(i18n, locale, "actions.view_architecture", "architecture"))}</a>' if project.get("resolved_architecture_url") else ""}
-        {f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener" data-i18n="actions.code">{html.escape(translate(i18n, locale, "actions.code", "code"))}</a>' if project.get("resolved_code_url") else ""}
+        {f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">{render_icon("network", "site-icon sidebar-link-icon")}<span data-i18n="actions.view_architecture">{html.escape(translate(i18n, locale, "actions.view_architecture", "architecture"))}</span></a>' if project.get("resolved_architecture_url") else ""}
+        {f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">{render_icon("github", "site-icon sidebar-link-icon")}<span data-i18n="actions.code">{html.escape(translate(i18n, locale, "actions.code", "code"))}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if project.get("resolved_code_url") else ""}
       </div>
     </aside>
     """
@@ -820,8 +888,8 @@ def render_document_page(site: dict[str, str], system: dict[str, Any], document:
     <section class="document-page-meta" aria-label="{metadata_label}">
       <p class="document-page-meta-label" data-i18n="pages.document.meta">{metadata_label}</p>
       <div class="document-page-meta-row">
-        <p class="doc-version">{html.escape(document['version'])}</p>
-        <p class="doc-category">{html.escape(document['category'])}</p>
+        <p class="doc-version">{render_icon("git-branch", "site-icon meta-icon")}{html.escape(document['version'])}</p>
+        <p class="doc-category">{render_icon("folder", "site-icon meta-icon")}{html.escape(document['category'])}</p>
       </div>
       {metadata_tags}
     </section>
