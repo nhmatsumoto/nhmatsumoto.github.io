@@ -3456,7 +3456,6 @@ body::after {
 .page-about .about-profile-shell {
   display: grid;
   width: 100%;
-  max-width: min(58rem, calc(100vw - var(--container-gutter) * 2));
   margin-inline: auto;
   gap: calc(var(--base_grid_unit) * 4);
   padding-top: calc(var(--base_grid_unit) * 4);
@@ -3535,7 +3534,6 @@ body::after {
 
 .page-about .about-layout {
   width: 100%;
-  max-width: min(58rem, calc(100vw - var(--container-gutter) * 2));
   margin-inline: auto;
 }
 
@@ -4579,7 +4577,7 @@ body::after {
   }
 
   .page-about .about-profile-shell {
-    max-width: min(44rem, calc(100vw - var(--container-gutter) * 2));
+    max-width: 100%;
   }
 
   .about-snapshot-list {
