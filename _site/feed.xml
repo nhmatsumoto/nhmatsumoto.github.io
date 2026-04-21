@@ -6,144 +6,144 @@
     <description>Caderno de engenharia em pt-BR sobre arquitetura, agentes, GIS, software de produto e o processo de construir sistemas estáticos, legíveis e duráveis.</description>
     <atom:link href="https://nhmatsumoto.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Ronaldinho Agent: persona, memória curta e tool use sem virar produto separado</title>
-      <link>https://nhmatsumoto.github.io/posts/20260406-093000-ronaldinho-agent-persona-tooling/</link>
-      <description><![CDATA[Registro do ronaldinho-agent como experimento de engenharia de agentes: o que foi validado, quais trade-offs apareceram e por que ele faz mais sentido como publicação do que como rota principal do site.]]></description>
-      <pubDate>Mon, 06 Apr 2026 09:30:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260406-093000-ronaldinho-agent-persona-tooling/</guid>
+      <title>Por que simulação me atrai mais do que demo</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-07-30-0900-por-que-simulacao-me-atrai-mais-do-que-demo/</link>
+      <description><![CDATA[Ligar física, risco, dados, cidades, clima e arquitetura de software.]]></description>
+      <pubDate>Thu, 30 Jul 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-07-30-0900-por-que-simulacao-me-atrai-mais-do-que-demo/</guid>
     </item>
     <item>
-      <title>SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/</link>
-      <description><![CDATA[O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.]]></description>
-      <pubDate>Sun, 05 Apr 2026 15:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/</guid>
+      <title>O que a botânica me ensina sobre modelagem</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-07-26-0900-o-que-a-botanica-me-ensina-sobre-modelagem/</link>
+      <description><![CDATA[Expandir para como observar estrutura na natureza muda meu jeito de modelar software.]]></description>
+      <pubDate>Sun, 26 Jul 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-07-26-0900-o-que-a-botanica-me-ensina-sobre-modelagem/</guid>
     </item>
     <item>
-      <title>SOS Location: PostGIS e inteligência espacial para resposta a desastres</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/</link>
-      <description><![CDATA[PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.]]></description>
-      <pubDate>Sun, 05 Apr 2026 14:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/</guid>
+      <title>O problema do mapa bonito que não explica nada</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-07-22-0900-o-problema-do-mapa-bonito-que-nao-explica-nada/</link>
+      <description><![CDATA[Contrastar estética, sinal operacional e legibilidade de camadas.]]></description>
+      <pubDate>Wed, 22 Jul 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-07-22-0900-o-problema-do-mapa-bonito-que-nao-explica-nada/</guid>
     </item>
     <item>
-      <title>SOS Location: Clean Architecture + CQRS em .NET 10</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/</link>
-      <description><![CDATA[Arquitetura limpa, CQRS com MediatR e domain events no backend do SOS Location. Como estruturamos o código para resiliência em cenários de crise.]]></description>
-      <pubDate>Sun, 05 Apr 2026 13:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/</guid>
+      <title>Interfaces que ajudam a decidir, não só a navegar</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-07-18-0900-interfaces-que-ajudam-a-decidir-nao-so-a-navegar/</link>
+      <description><![CDATA[Discutir overlays, densidade de informação, priorização visual e UX para crise.]]></description>
+      <pubDate>Sat, 18 Jul 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-07-18-0900-interfaces-que-ajudam-a-decidir-nao-so-a-navegar/</guid>
     </item>
     <item>
-      <title>SOS Location: Motor WebGL 3D de visualização de cidades em tempo real</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/</link>
-      <description><![CDATA[Como construímos um motor WebGL 2.0 com Three.js para renderizar cidades completas com terreno, edificações 3D e camadas de desastre ao vivo.]]></description>
-      <pubDate>Sun, 05 Apr 2026 12:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/</guid>
+      <title>Eventos, filas e a ilusão da arquitetura resiliente</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-07-14-0900-eventos-filas-e-a-ilusao-da-arquitetura-resiliente/</link>
+      <description><![CDATA[Ir além da introdução de filas e mostrar o que realmente torna um fluxo confiável.]]></description>
+      <pubDate>Tue, 14 Jul 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-07-14-0900-eventos-filas-e-a-ilusao-da-arquitetura-resiliente/</guid>
     </item>
     <item>
-      <title>SOS Location: Tecnologias, ferramentas e exemplos</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1100-sos-location-stack/</link>
-      <description><![CDATA[Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location.]]></description>
-      <pubDate>Sun, 05 Apr 2026 11:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1100-sos-location-stack/</guid>
+      <title>CQRS sem fetiche</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-07-09-0900-cqrs-sem-fetiche/</link>
+      <description><![CDATA[Explicar quando CQRS protege domínio, quando melhora observabilidade e quando apenas fragmenta o sistema.]]></description>
+      <pubDate>Thu, 09 Jul 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-07-09-0900-cqrs-sem-fetiche/</guid>
     </item>
     <item>
-      <title>SOS Location: Fluxos, arquitetura e diagramas</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1000-sos-location-flow-architecture/</link>
-      <description><![CDATA[Descrição dos pipelines do SOS Location, diagramas e exemplos de código.]]></description>
-      <pubDate>Sun, 05 Apr 2026 10:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1000-sos-location-flow-architecture/</guid>
+      <title>Quando eu escolho EF Core e quando eu quebro a abstração</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-07-05-0900-quando-eu-escolho-ef-core-e-quando-eu-quebro-a-abstracao/</link>
+      <description><![CDATA[Mostrar o uso combinado de EF Core, Dapper, SQL explícito e projeções.]]></description>
+      <pubDate>Sun, 05 Jul 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-07-05-0900-quando-eu-escolho-ef-core-e-quando-eu-quebro-a-abstracao/</guid>
     </item>
     <item>
-      <title>SOS Location: Regras de negócio, contratos e operação</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-0900-sos-location-business-rules/</link>
-      <description><![CDATA[Catálogo completo das regras de negócio que sustentam o SOS Location.]]></description>
-      <pubDate>Sun, 05 Apr 2026 09:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-0900-sos-location-business-rules/</guid>
+      <title>Como eu avalio se ainda estou acompanhando a evolução da TI</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-07-01-0900-como-eu-avalio-se-ainda-estou-acompanhando-a-evolucao-da-ti/</link>
+      <description><![CDATA[Criar um framework pessoal de avaliação: fundamentos, execução, leitura de mercado, experimentação e profundidade.]]></description>
+      <pubDate>Wed, 01 Jul 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-07-01-0900-como-eu-avalio-se-ainda-estou-acompanhando-a-evolucao-da-ti/</guid>
     </item>
     <item>
-      <title>A Bio-matemática da Araucária: Modelagem e Simetria</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/</link>
-      <description><![CDATA[Uma exploração sobre os padrões matemáticos que regem a estrutura da Araucaria angustifolia, de verticilos a séries exponenciais de crescimento.]]></description>
-      <pubDate>Sun, 05 Apr 2026 04:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/</guid>
+      <title>O que o Japão fez com a minha forma de pensar trabalho e sistema</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-06-27-0900-o-que-o-japao-fez-com-a-minha-forma-de-pensar-trabalho-e-sistema/</link>
+      <description><![CDATA[Mostrar como contexto humano e operacional influenciaram minha visão sobre automação, custo, disciplina e respeito ao processo.]]></description>
+      <pubDate>Sat, 27 Jun 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-06-27-0900-o-que-o-japao-fez-com-a-minha-forma-de-pensar-trabalho-e-sistema/</guid>
     </item>
     <item>
-      <title>Tecnologia de Pulso: Do HEMP ao Micro-ondas de Alta Potência</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/</link>
-      <description><![CDATA[Uma análise técnica sobre a geração artificial de pulsos eletromagnéticos, do Efeito Compton ao Gerador de Compressão de Fluxo.]]></description>
-      <pubDate>Sat, 04 Apr 2026 22:50:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/</guid>
+      <title>Dois anos fora do mercado não significam dois anos parado</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-06-22-0900-dois-anos-fora-do-mercado-nao-significam-dois-anos-parado/</link>
+      <description><![CDATA[Uma publicação honesta sobre continuidade de prática, projeto pessoal e maturidade técnica fora do radar formal.]]></description>
+      <pubDate>Mon, 22 Jun 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-06-22-0900-dois-anos-fora-do-mercado-nao-significam-dois-anos-parado/</guid>
     </item>
     <item>
-      <title>Sopros Estelares: De Supernovas a Space Weather</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/</link>
-      <description><![CDATA[Anatomia dos fenômenos astrofísicos que geram emissões eletromagnéticas extremas e seu impacto nos sistemas tecnológicos.]]></description>
-      <pubDate>Sat, 04 Apr 2026 22:45:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/</guid>
+      <title>Tipografia e interface para conteúdo técnico</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-06-18-0900-tipografia-e-interface-para-conteudo-tecnico/</link>
+      <description><![CDATA[Falar de largura de coluna, ritmo vertical, metadata, hierarquia, diagrams, fórmulas e design para leitura longa.]]></description>
+      <pubDate>Thu, 18 Jun 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-06-18-0900-tipografia-e-interface-para-conteudo-tecnico/</guid>
     </item>
     <item>
-      <title>Engenharia de Resiliência Eletromagnética e Acoplamento</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/</link>
-      <description><![CDATA[Do ponto zero à ruptura de junções: como circuitos reais falham sob transientes de alta intensidade.]]></description>
-      <pubDate>Sat, 04 Apr 2026 22:40:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/</guid>
+      <title>Renderização estática como disciplina de engenharia</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-06-13-0900-renderizacao-estatica-como-disciplina-de-engenharia/</link>
+      <description><![CDATA[Explorar previsibilidade, performance, manutenção, leitura longa, build pipeline e custo cognitivo.]]></description>
+      <pubDate>Sat, 13 Jun 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-06-13-0900-renderizacao-estatica-como-disciplina-de-engenharia/</guid>
     </item>
     <item>
-      <title>A Física dos Pulsos Dispersos: Além do EMP Convencional</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-demp-physics-fisica-demp-pulsos-dispersos/</link>
-      <description><![CDATA[Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos.]]></description>
-      <pubDate>Sat, 04 Apr 2026 22:30:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-demp-physics-fisica-demp-pulsos-dispersos/</guid>
+      <title>Por que estou transformando meu site em um caderno técnico</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-06-09-0900-por-que-eu-estou-transformando-meu-site-em-um-caderno-tecnico/</link>
+      <description><![CDATA[Amarrar escrita longa, arquitetura estática, busca, taxonomia e clareza como parte da engenharia.]]></description>
+      <pubDate>Tue, 09 Jun 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-06-09-0900-por-que-eu-estou-transformando-meu-site-em-um-caderno-tecnico/</guid>
     </item>
     <item>
-      <title>O Despertar do Technical Knowledge OS v2</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/</link>
-      <description><![CDATA[Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico.]]></description>
-      <pubDate>Sat, 04 Apr 2026 22:15:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/</guid>
+      <title>O que a versão pública do SOS Location ainda não explica</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-06-05-0900-o-que-a-versao-publica-do-sos-location-ainda-nao-explica/</link>
+      <description><![CDATA[Fortalecer credibilidade do projeto mostrando maturidade crítica e transparência.]]></description>
+      <pubDate>Fri, 05 Jun 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-06-05-0900-o-que-a-versao-publica-do-sos-location-ainda-nao-explica/</guid>
     </item>
     <item>
-      <title>IA Inspirada pela Física: Entropia e Energia nas Redes Neurais</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/</link>
-      <description><![CDATA[Como conceitos térmicos e de mecânica estatística moldam o treinamento de IAs modernas, de Hopfield Networks a Diffusion Models.]]></description>
-      <pubDate>Fri, 03 Apr 2026 23:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/</guid>
+      <title>De OpenStreetMap à camada operacional</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-06-01-0900-de-openstreetmap-a-camada-operacional/</link>
+      <description><![CDATA[Discutir ingestão, normalização, geocodificação, enriquecimento, visualização e tomada de decisão.]]></description>
+      <pubDate>Mon, 01 Jun 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-06-01-0900-de-openstreetmap-a-camada-operacional/</guid>
     </item>
     <item>
-      <title>Computação Quântica: O Poder Além dos Bits</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2500-computacao-quantica-qbits-vs-bits/</link>
-      <description><![CDATA[Uma visão clara sobre os Qubits, superposição e como o poder quântico pode resolver problemas impossíveis para computadores clássicos.]]></description>
-      <pubDate>Fri, 03 Apr 2026 22:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2500-computacao-quantica-qbits-vs-bits/</guid>
+      <title>Simular desastres antes do desastre</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-05-27-0900-simular-desastres-antes-do-desastre/</link>
+      <description><![CDATA[Unir visão de produto, pesquisa aplicada e arquitetura de simulação.]]></description>
+      <pubDate>Wed, 27 May 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-05-27-0900-simular-desastres-antes-do-desastre/</guid>
     </item>
     <item>
-      <title>O Universo Quântico: Além da Lógica Clássica</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2400-introducao-intuitiva-fisica-quantica/</link>
-      <description><![CDATA[Uma jornada intuitiva pela física quântica. Superposição, entrelaçamento e por que o observador muda a realidade.]]></description>
-      <pubDate>Fri, 03 Apr 2026 21:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2400-introducao-intuitiva-fisica-quantica/</guid>
+      <title>SOS Location: o problema nunca foi o mapa, foi a fragmentação</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-05-22-0900-sos-location-o-problema-nao-era-o-mapa-era-a-fragmentacao/</link>
+      <description><![CDATA[Uma publicação mais estratégica e menos tecnológica, ligando problema operacional, dados, interface e resposta humanitária.]]></description>
+      <pubDate>Fri, 22 May 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-05-22-0900-sos-location-o-problema-nao-era-o-mapa-era-a-fragmentacao/</guid>
     </item>
     <item>
-      <title>Simulação de Partículas: O poder dos Métodos de Monte Carlo</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/</link>
-      <description><![CDATA[Explorando a simulação do universo e sistemas complexos usando estatística, caminhos aleatórios e leis da física codificadas.]]></description>
-      <pubDate>Fri, 03 Apr 2026 20:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/</guid>
+      <title>Memória operacional para agentes: diffs, commits e rastreabilidade</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-05-18-0900-memoria-operacional-para-agentes-diffs-commits-e-rastreabilidade/</link>
+      <description><![CDATA[Propor estrutura de indexação por commits, diffs, regras e artefatos para reduzir perda de contexto.]]></description>
+      <pubDate>Mon, 18 May 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-05-18-0900-memoria-operacional-para-agentes-diffs-commits-e-rastreabilidade/</guid>
     </item>
     <item>
-      <title>Excelência em Dados: Pilhas, Filas e Árvores</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/</link>
-      <description><![CDATA[Por que a escolha da estrutura de dados correta é mais importante do que o próprio algoritmo para a performance de sistemas complexos.]]></description>
-      <pubDate>Fri, 03 Apr 2026 18:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/</guid>
+      <title>Neuroplasticidade como metáfora útil para agentes</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-05-12-0900-neuroplasticidade-como-metafora-util-para-agentes/</link>
+      <description><![CDATA[Explorar pesos, recorrência de correção, consolidação de padrões e indexação de experiências como mecanismo de refinamento.]]></description>
+      <pubDate>Tue, 12 May 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-05-12-0900-neuroplasticidade-como-metafora-util-para-agentes/</guid>
     </item>
     <item>
-      <title>Algoritmos e Big O: Entendendo a Eficiência do Código</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/</link>
-      <description><![CDATA[Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade.]]></description>
-      <pubDate>Fri, 03 Apr 2026 17:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/</guid>
+      <title>Do chat à especificação: como eu uso LLMs para pensar sistemas</title>
+      <link>https://nhmatsumoto.github.io/posts/2026-05-08-0900-do-chat-a-especificacao-como-eu-uso-llms-para-pensar-sistemas/</link>
+      <description><![CDATA[Mostrar um processo prático de uso de IA sem romantização, incluindo limites, vantagens e o papel humano na curadoria.]]></description>
+      <pubDate>Fri, 08 May 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-05-08-0900-do-chat-a-especificacao-como-eu-uso-llms-para-pensar-sistemas/</guid>
     </item>
   </channel>
 </rss>
