@@ -70,7 +70,7 @@
           "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."
         },
         "about": {
-          "title": "Sobre",
+          "title": "Hiro Matsumoto",
           "facts": "Snapshot",
           "location": "Base",
           "role": "Atuação",
@@ -237,7 +237,7 @@
           "description": "Documents grouped by domain, architecture, agents and APIs to keep decisions accessible."
         },
         "about": {
-          "title": "About",
+          "title": "Hiro Matsumoto",
           "facts": "Snapshot",
           "location": "Base",
           "role": "Role",
@@ -404,7 +404,7 @@
           "description": "意思決定を容易にするために、ドメイン、アーキテクチャ、エージェント、APIごとにグループ化された文書。"
         },
         "about": {
-          "title": "プロフィール",
+          "title": "Hiro Matsumoto",
           "facts": "スナップショット",
           "location": "拠点",
           "role": "役割",

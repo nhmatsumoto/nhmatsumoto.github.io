@@ -209,6 +209,7 @@ const initPageContentLocalization = () => {
     title: document.querySelector("[data-page-title]"),
     summary: document.querySelector("[data-page-summary]"),
     body: document.querySelector("[data-page-body]"),
+    fields: document.querySelectorAll("[data-page-field]"),
     breadcrumb: document.querySelector(".breadcrumbs [aria-current='page']"),
     description: document.querySelector('meta[name="description"]')
   };
@@ -244,6 +245,15 @@ const initPageContentLocalization = () => {
       elements.body.innerHTML = bodyHtml || elements.body.dataset.pageFallbackHtml;
       setTimeout(() => syncRichContent(elements.body), 50);
     }
+
+    elements.fields.forEach(element => {
+      const field = element.dataset.pageField;
+      if (!field) return;
+      if (!element.dataset.pageFallback) {
+        element.dataset.pageFallback = element.textContent || "";
+      }
+      element.textContent = resolveLocalizedField(data, field, locale, element.dataset.pageFallback);
+    });
 
     if (elements.breadcrumb) {
       if (!elements.breadcrumb.dataset.pageFallback) {

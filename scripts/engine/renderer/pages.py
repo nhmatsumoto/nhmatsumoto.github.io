@@ -383,19 +383,23 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
 
 
 def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
-    sections = system.get("about", {}).get("sections", [])
-    section_html = []
-    for section in sections:
-        title = str(section.get("title", "") or "").strip()
-        body = str(section.get("body", "") or "").strip()
-        if not title or not body:
-            continue
-        section_html.append(
-            f'<section class="notebook-subsection"><h2>{html.escape(title)}</h2><div class="prose">{render_markdown(body)}</div></section>'
-        )
+    about = system.get("about", {})
+    sections = about.get("sections", [])
 
-    if not section_html:
-        section_html.append(f'<section class="notebook-subsection"><div class="prose">{render_markdown(site.get("about", ""))}</div></section>')
+    def render_about_sections(target_locale: str) -> str:
+        section_html = []
+        for section in sections:
+            title = str(localized_value(section, "title", target_locale, i18n, "") or "").strip()
+            body = str(localized_value(section, "body", target_locale, i18n, "") or "").strip()
+            if not title or not body:
+                continue
+            section_html.append(
+                f'<section class="notebook-subsection"><h2>{html.escape(title)}</h2><div class="prose">{render_markdown(body)}</div></section>'
+            )
+
+        if not section_html:
+            section_html.append(f'<section class="notebook-subsection"><div class="prose">{render_markdown(site.get("about", ""))}</div></section>')
+        return "".join(section_html)
 
     breadcrumbs = render_breadcrumbs(
         [
@@ -405,26 +409,56 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
         i18n,
         locale,
     )
+    about_lede = str(localized_value(about, "lede", locale, i18n, site.get("headline", "")) or "").strip()
+    snapshot_focus = str(localized_value(about, "snapshot_focus", locale, i18n, site.get("headline", "")) or "").strip()
+    developer = system.get("identity", {}).get("developer", {})
+    developer_location = str(localized_value(developer, "location", locale, i18n, "Brasil / Remote") or "").strip()
+    developer_role = str(localized_value(developer, "role", locale, i18n, "Software Engineer") or "").strip()
+
+    page_data: dict[str, Any] = {
+        "title": translate(i18n, locale, "pages.about.title", "Sobre"),
+        "summary": about_lede,
+        "body_html": render_about_sections(locale),
+        "location": developer_location,
+        "role": developer_role,
+        "focus": snapshot_focus,
+    }
+    for supported_locale in i18n.get("supported_locales", []):
+        if supported_locale == locale:
+            continue
+        suffixes = locale_suffixes(supported_locale, i18n)
+        if not suffixes:
+            continue
+        suffix = suffixes[0]
+        page_data[f"title_{suffix}"] = translate(i18n, supported_locale, "pages.about.title", page_data["title"])
+        page_data[f"summary_{suffix}"] = str(localized_value(about, "lede", supported_locale, i18n, page_data["summary"]) or "").strip()
+        page_data[f"body_html_{suffix}"] = render_about_sections(supported_locale)
+        page_data[f"location_{suffix}"] = str(localized_value(developer, "location", supported_locale, i18n, page_data["location"]) or "").strip()
+        page_data[f"role_{suffix}"] = str(localized_value(developer, "role", supported_locale, i18n, page_data["role"]) or "").strip()
+        page_data[f"focus_{suffix}"] = str(localized_value(about, "snapshot_focus", supported_locale, i18n, page_data["focus"]) or "").strip()
+
+    page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
     <section class="page-heading">
       <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
-      <h1 data-i18n="pages.about.title">{html.escape(translate(i18n, locale, "pages.about.title", "Sobre"))}</h1>
-      <p>{html.escape(site.get("headline", ""))}</p>
+      <h1 data-i18n="pages.about.title" data-page-title>{html.escape(page_data["title"])}</h1>
+      <p data-page-summary>{html.escape(about_lede)}</p>
     </section>
     <section class="page-grid notebook-two-column about-layout">
-      <article class="post-shell prose notebook-sheet">
-        {"".join(section_html)}
+      <article class="post-shell prose notebook-sheet" data-page-body>
+        {page_data["body_html"]}
       </article>
       <aside class="sidebar-panel notebook-meta-panel about-snapshot-card">
         <div class="sidebar-header"><h2>{html.escape(translate(i18n, locale, "pages.about.facts", "Snapshot"))}</h2></div>
         <div class="meta-stack">
-          <p><strong>{html.escape(translate(i18n, locale, "pages.about.location", "Base"))}:</strong> {html.escape(system.get("identity", {}).get("developer", {}).get("location", "Brasil / Remote"))}</p>
-          <p><strong>{html.escape(translate(i18n, locale, "pages.about.role", "Atuação"))}:</strong> {html.escape(system.get("identity", {}).get("developer", {}).get("role", "Software Engineer"))}</p>
-          <p><strong>{html.escape(translate(i18n, locale, "pages.about.focus", "Foco"))}:</strong> {html.escape(site.get("headline", ""))}</p>
+          <p><strong>{html.escape(translate(i18n, locale, "pages.about.location", "Base"))}:</strong> <span data-page-field="location">{html.escape(developer_location)}</span></p>
+          <p><strong>{html.escape(translate(i18n, locale, "pages.about.role", "Atuação"))}:</strong> <span data-page-field="role">{html.escape(developer_role)}</span></p>
+          <p><strong>{html.escape(translate(i18n, locale, "pages.about.focus", "Foco"))}:</strong> <span data-page-field="focus">{html.escape(snapshot_focus)}</span></p>
         </div>
       </aside>
     </section>
+    <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     return render_layout(
         page_title=f"About | {site['title']}",

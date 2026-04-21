@@ -13,8 +13,8 @@ Este site funciona como um caderno técnico publicado: artigos longos quando a i
 A escolha por HTML estático, TOML versionado e um gerador em Python não é nostalgia. É uma decisão de arquitetura: conteúdo previsível, build simples, deploy barato e total controle sobre a experiência de leitura.
 """
 about = """
-Sou engenheiro de software e trato este espaço como uma superfície de trabalho, não como uma landing page. Meu interesse está em sistemas que precisam permanecer claros mesmo quando crescem: pipelines geoespaciais, arquitetura orientada a domínio, agentes e produtos com bastante integração.
+Sou Hiro Matsumoto, engenheiro de software que gosta de transformar ideias em sistemas utilizáveis. Penso software como uma cadeia inteira de valor: problema, produto, arquitetura, código, operação, comunicação e experiência final.
 
-Escrevo para registrar decisões, limites e heurísticas úteis. Quando algo merece mais profundidade, vira post. Quando precisa durar, vira documento. Quando é parte do dia a dia, entra em daily.
+Nos últimos dois anos, esse jeito de pensar ficou mais nítido no meu trabalho aberto: projetos, publicações, documentos técnicos e experimentos que conectam engenharia, produto, agentes, GIS e interfaces para leitura longa.
 """
 footer_note = "Publicado com um gerador estático em Python, conteúdo em TOML e um design system pensado para leitura longa em ritmo de notebook técnico."

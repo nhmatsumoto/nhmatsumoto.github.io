@@ -3301,8 +3301,41 @@ body::after {
   align-items: start;
 }
 
+.page-about .page-heading {
+  gap: calc(var(--base_grid_unit) * 2);
+}
+
+.page-about .page-heading p {
+  max-width: 54rem;
+  font-family: var(--font-editorial);
+  font-size: clamp(1.12rem, 1rem + 0.45vw, 1.34rem);
+  line-height: 1.72;
+  color: color-mix(in srgb, var(--text) 80%, var(--muted));
+}
+
 .page-about .about-layout .post-shell {
   padding: calc(var(--base_grid_unit) * 6);
+}
+
+.page-about .notebook-subsection {
+  max-width: 47rem;
+}
+
+.page-about .notebook-subsection + .notebook-subsection {
+  margin-top: calc(var(--base_grid_unit) * 5);
+  padding-top: calc(var(--base_grid_unit) * 4);
+  border-top: 1px dashed color-mix(in srgb, var(--border-strong) 64%, transparent);
+}
+
+.page-about .notebook-subsection h2 {
+  margin-bottom: calc(var(--base_grid_unit) * 2);
+  font-size: clamp(1.35rem, 1.14rem + 0.7vw, 1.78rem);
+}
+
+.page-about .notebook-subsection .prose p {
+  font-family: var(--font-editorial);
+  font-size: clamp(1.03rem, 0.98rem + 0.2vw, 1.12rem);
+  line-height: 1.86;
 }
 
 .about-snapshot-card {
