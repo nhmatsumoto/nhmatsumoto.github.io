@@ -3387,26 +3387,52 @@ body::after {
 /* ── Post Reading Experience ─────────────────────────────────────────────── */
 
 .page-post .breadcrumbs {
-  max-width: min(78rem, calc(100vw - var(--container-gutter) * 2));
-  margin: 0 auto calc(var(--base_grid_unit) * 3);
+  max-width: min(84rem, calc(100vw - var(--container-gutter) * 2));
+  margin: 0 auto calc(var(--base_grid_unit) * 2);
 }
 
 .page-post .post-reading-layout {
-  max-width: min(78rem, calc(100vw - var(--container-gutter) * 2));
+  position: relative;
+  isolation: isolate;
+  max-width: min(84rem, calc(100vw - var(--container-gutter) * 2));
   margin: 0 auto;
-  grid-template-columns: minmax(0, 49rem) minmax(16rem, 21rem);
-  gap: calc(var(--base_grid_unit) * 5);
+  padding: calc(var(--base_grid_unit) * 2) 0 calc(var(--base_grid_unit) * 5);
+  grid-template-columns: minmax(0, 54rem) minmax(15rem, 20rem);
+  gap: clamp(calc(var(--base_grid_unit) * 4), 5vw, calc(var(--base_grid_unit) * 8));
   align-items: start;
 }
 
+.page-post .post-reading-layout::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--base_grid_unit) * -2) calc(var(--base_grid_unit) * -4) 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, transparent 0 calc(var(--base_grid_unit) * 8 - 1px), color-mix(in srgb, var(--accent) 16%, transparent) calc(var(--base_grid_unit) * 8), transparent calc(var(--base_grid_unit) * 8 + 1px)),
+    linear-gradient(180deg, transparent 0 calc(var(--base_grid_unit) * 5 - 1px), color-mix(in srgb, var(--border) 32%, transparent) calc(var(--base_grid_unit) * 5), transparent calc(var(--base_grid_unit) * 5 + 1px));
+  background-size: calc(var(--base_grid_unit) * 8) calc(var(--base_grid_unit) * 5);
+  opacity: 0.34;
+  pointer-events: none;
+}
+
 .page-post .post-reading-article {
-  padding: calc(var(--base_grid_unit) * 6) calc(var(--base_grid_unit) * 6);
+  overflow: visible;
+  padding: 0 0 0 calc(var(--base_grid_unit) * 5);
+  border: 0;
+  border-left: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page-post .post-reading-article::before {
+  display: none;
 }
 
 .page-post .post-reading-header {
   display: grid;
-  gap: calc(var(--base_grid_unit) * 3);
-  margin-bottom: calc(var(--base_grid_unit) * 5);
+  gap: calc(var(--base_grid_unit) * 2.5);
+  margin-bottom: calc(var(--base_grid_unit) * 5.5);
 }
 
 .page-post .post-header-meta {
@@ -3416,7 +3442,7 @@ body::after {
   justify-content: space-between;
   gap: calc(var(--base_grid_unit) * 2);
   padding-bottom: calc(var(--base_grid_unit) * 2);
-  border-bottom: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  border-bottom: 1px dashed color-mix(in srgb, var(--accent) 34%, transparent);
 }
 
 .page-post .post-meta-hero {
@@ -3427,15 +3453,15 @@ body::after {
 }
 
 .page-post .post-header h1 {
-  max-width: 14ch;
-  font-size: clamp(2.6rem, 5.4vw, 4.7rem);
+  max-width: 16ch;
+  font-size: clamp(2.55rem, 5.1vw, 4.45rem);
   line-height: 0.95;
   letter-spacing: -0.065em;
   text-wrap: balance;
 }
 
 .page-post .post-deck {
-  max-width: 39rem;
+  max-width: 43rem;
   font-family: var(--font-editorial);
   font-size: clamp(1.18rem, 1rem + 0.6vw, 1.5rem);
   line-height: 1.62;
@@ -3446,7 +3472,7 @@ body::after {
   display: grid;
   grid-template-columns:
     [full-start] minmax(0, 1fr)
-    [content-start] minmax(0, 40rem)
+    [content-start] minmax(0, 42rem)
     [content-end] minmax(0, 1fr)
     [full-end];
 }
@@ -3491,7 +3517,7 @@ body::after {
 .page-post .post-body > h5,
 .page-post .post-body > h6 {
   grid-column: content;
-  max-width: 34rem;
+  max-width: 36rem;
 }
 
 .page-post .post-body > h1 {
@@ -3504,7 +3530,7 @@ body::after {
 .page-post .post-body h2 {
   margin: calc(var(--base_grid_unit) * 6) 0 calc(var(--base_grid_unit) * 2);
   padding-top: calc(var(--base_grid_unit) * 2);
-  border-top: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-top: 1px dashed color-mix(in srgb, var(--accent) 30%, transparent);
   font-size: clamp(1.55rem, 1.2rem + 1vw, 2.05rem);
   line-height: 1.08;
   letter-spacing: -0.045em;
@@ -3564,8 +3590,8 @@ body::after {
 .page-post .post-body code {
   padding: 0.16rem 0.42rem;
   border-radius: 0.45rem;
-  border-color: color-mix(in srgb, var(--border) 85%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 86%, transparent);
+  border-color: color-mix(in srgb, var(--border) 68%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 52%, transparent);
   color: color-mix(in srgb, var(--accent) 82%, white 18%);
   font-size: 0.88em;
 }
@@ -3573,18 +3599,19 @@ body::after {
 .page-post .post-body pre,
 .page-post .post-body .code-shell {
   margin: calc(var(--base_grid_unit) * 4) 0 calc(var(--base_grid_unit) * 5);
-  border-radius: var(--radius-lg);
-  border-color: color-mix(in srgb, var(--border-strong) 86%, transparent);
+  border-radius: calc(var(--base_grid_unit) * 1.5);
+  border-color: color-mix(in srgb, var(--border-strong) 68%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--accent) 72%, transparent);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 96%, transparent), color-mix(in srgb, var(--surface-soft) 92%, transparent));
-  box-shadow: var(--shadow-sm);
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 84%, transparent), color-mix(in srgb, var(--surface-soft) 58%, transparent));
+  box-shadow: none;
   overflow: hidden;
 }
 
 .page-post .post-body .code-shell-header {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  border-bottom: 1px dashed color-mix(in srgb, var(--border) 78%, transparent);
+  background: color-mix(in srgb, var(--surface) 48%, transparent);
 }
 
 .page-post .post-body .code-shell-label {
@@ -3604,13 +3631,12 @@ body::after {
 
 .page-post .post-body blockquote {
   margin: calc(var(--base_grid_unit) * 4) 0 calc(var(--base_grid_unit) * 4.5);
-  padding: calc(var(--base_grid_unit) * 2.5) calc(var(--base_grid_unit) * 3);
-  border: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
-  border-left: 3px solid var(--accent);
-  border-radius: var(--radius-md);
+  padding: calc(var(--base_grid_unit) * 2) 0 calc(var(--base_grid_unit) * 2) calc(var(--base_grid_unit) * 3);
+  border: 0;
+  border-left: 3px solid color-mix(in srgb, var(--accent) 74%, transparent);
+  border-radius: 0;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 75%, transparent), transparent 70%),
-    color-mix(in srgb, var(--surface-soft) 90%, transparent);
+    linear-gradient(90deg, color-mix(in srgb, var(--accent-soft) 58%, transparent), transparent 82%);
   color: color-mix(in srgb, var(--text) 84%, var(--muted));
 }
 
@@ -3620,10 +3646,10 @@ body::after {
 
 .page-post .post-body .table-wrapper {
   margin: calc(var(--base_grid_unit) * 4) 0 calc(var(--base_grid_unit) * 5);
-  border-radius: var(--radius-lg);
-  border-color: color-mix(in srgb, var(--border-strong) 76%, transparent);
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: var(--shadow-sm);
+  border-radius: calc(var(--base_grid_unit) * 1.5);
+  border-color: color-mix(in srgb, var(--border-strong) 66%, transparent);
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  box-shadow: none;
 }
 
 .page-post .post-body table {
@@ -3638,7 +3664,7 @@ body::after {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-  background: color-mix(in srgb, var(--surface-soft) 94%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 56%, transparent);
 }
 
 .page-post .post-body td {
@@ -3657,10 +3683,10 @@ body::after {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: var(--radius-lg);
-  border: 1px solid color-mix(in srgb, var(--border-strong) 78%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 94%, transparent);
-  box-shadow: var(--shadow-sm);
+  border-radius: calc(var(--base_grid_unit) * 1.5);
+  border: 1px solid color-mix(in srgb, var(--border-strong) 64%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 62%, transparent);
+  box-shadow: none;
 }
 
 .page-post .post-body figcaption {
@@ -3677,9 +3703,10 @@ body::after {
 .page-post .post-body .math-block {
   margin: calc(var(--base_grid_unit) * 4) 0 calc(var(--base_grid_unit) * 5);
   padding: calc(var(--base_grid_unit) * 3);
-  border: 1px solid color-mix(in srgb, var(--border-strong) 76%, transparent);
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--surface-soft) 95%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--border-strong) 70%, transparent);
+  border-radius: calc(var(--base_grid_unit) * 1.5);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-soft) 62%, transparent), color-mix(in srgb, var(--surface-soft) 42%, transparent));
 }
 
 .page-post .prose-divider {
@@ -3692,11 +3719,11 @@ body::after {
 
 .page-post .evidence-section {
   margin-top: calc(var(--base_grid_unit) * 4);
-  padding: calc(var(--base_grid_unit) * 3.5);
-  border-radius: var(--radius-lg);
-  border-color: color-mix(in srgb, var(--border-strong) 74%, transparent);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, transparent), color-mix(in srgb, var(--surface-soft) 92%, transparent));
+  padding: calc(var(--base_grid_unit) * 3.5) 0 0;
+  border: 0;
+  border-top: 1px dashed color-mix(in srgb, var(--accent) 34%, transparent);
+  border-radius: 0;
+  background: transparent;
 }
 
 .page-post .evidence-title {
@@ -3716,9 +3743,29 @@ body::after {
 }
 
 .page-post .post-meta-panel {
-  padding: calc(var(--base_grid_unit) * 4);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface) 98%, transparent), color-mix(in srgb, var(--surface-soft) 92%, transparent));
+  overflow: visible;
+  padding: calc(var(--base_grid_unit) * 1.5) 0 0 calc(var(--base_grid_unit) * 3);
+  border: 0;
+  border-left: 1px dashed color-mix(in srgb, var(--border-strong) 72%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page-post .post-meta-panel::before {
+  display: none;
+}
+
+.page-post .site-footer {
+  border: 0;
+  border-top: 1px dashed color-mix(in srgb, var(--border-strong) 62%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page-post .site-footer::before {
+  display: none;
 }
 
 .page-post .post-sidebar-section + .post-sidebar-section {
@@ -3985,7 +4032,18 @@ body::after {
   }
 
   .page-post .post-reading-layout {
-    max-width: min(46rem, calc(100vw - var(--container-gutter) * 2));
+    max-width: min(52rem, calc(100vw - var(--container-gutter) * 2));
+    padding-bottom: calc(var(--base_grid_unit) * 3);
+  }
+
+  .page-post .post-reading-layout::before {
+    inset-inline: calc(var(--base_grid_unit) * -2);
+  }
+
+  .page-post .post-meta-panel {
+    padding: calc(var(--base_grid_unit) * 3) 0 0;
+    border-left: 0;
+    border-top: 1px dashed color-mix(in srgb, var(--border-strong) 72%, transparent);
   }
 }
 
@@ -4026,9 +4084,12 @@ body::after {
     padding-left: calc(var(--base_grid_unit) * 3.5);
   }
 
-  .page-post .post-reading-article,
+  .page-post .page-grid.notebook-two-column .post-reading-article {
+    padding: 0 0 0 calc(var(--base_grid_unit) * 3);
+  }
+
   .page-post .post-meta-panel {
-    padding: calc(var(--base_grid_unit) * 4);
+    padding: calc(var(--base_grid_unit) * 3) 0 0;
   }
 
   .page-post .post-reading-header {
