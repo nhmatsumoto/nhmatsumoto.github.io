@@ -388,6 +388,7 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     sections = about.get("sections", [])
     snapshot_items = about.get("snapshot_items", [])
     proof_points = about.get("proof_points", [])
+    profile_chips = about.get("profile_chips", [])
 
     def snapshot_field_id(item_id: str, field: str) -> str:
         safe_id = item_id.replace("-", "_")
@@ -426,6 +427,19 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
           </dl>
         </aside>
         """
+
+    def render_profile_chips(target_locale: str) -> str:
+        chips = localized_value(about, "profile_chips", target_locale, i18n, profile_chips) or []
+        if isinstance(chips, str):
+            chips = [chips]
+        chip_html = []
+        for idx, chip in enumerate(chips):
+            value = str(chip or "").strip()
+            if not value:
+                continue
+            field = f"profile_chip_{idx}"
+            chip_html.append(f'<span class="about-profile-chip" data-page-field="{html.escape(field)}">{html.escape(value)}</span>')
+        return "".join(chip_html)
 
     def render_about_proof_points(target_locale: str) -> str:
         cards = []
@@ -480,6 +494,12 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
         "body_html": render_about_sections(locale),
         "snapshot_summary": snapshot_summary,
     }
+    chips = localized_value(about, "profile_chips", locale, i18n, profile_chips) or []
+    if isinstance(chips, str):
+        chips = [chips]
+    for idx, chip in enumerate(chips):
+        page_data[f"profile_chip_{idx}"] = str(chip or "").strip()
+
     for item in snapshot_items:
         item_id = str(item.get("id", "") or "").strip()
         if not item_id:
@@ -498,6 +518,11 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
         page_data[f"summary_{suffix}"] = str(localized_value(about, "lede", supported_locale, i18n, page_data["summary"]) or "").strip()
         page_data[f"body_html_{suffix}"] = render_about_sections(supported_locale)
         page_data[f"snapshot_summary_{suffix}"] = str(localized_value(about, "snapshot_summary", supported_locale, i18n, page_data["snapshot_summary"]) or "").strip()
+        localized_chips = localized_value(about, "profile_chips", supported_locale, i18n, chips) or []
+        if isinstance(localized_chips, str):
+            localized_chips = [localized_chips]
+        for idx, chip in enumerate(localized_chips):
+            page_data[f"profile_chip_{idx}_{suffix}"] = str(chip or "").strip()
         for item in snapshot_items:
             item_id = str(item.get("id", "") or "").strip()
             if not item_id:
@@ -510,11 +535,20 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <section class="page-heading about-hero">
-      <div class="about-hero-copy">
-        <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
-        <h1 data-i18n="pages.about.title" data-page-title>{html.escape(page_data["title"])}</h1>
-        <p data-page-summary>{html.escape(about_lede)}</p>
+    <section class="page-heading about-profile-shell">
+      <div class="about-profile-card">
+        <div class="about-profile-avatar">
+          <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Avatar de Hiro Matsumoto" width="400" height="300" loading="eager">
+        </div>
+        <div class="about-profile-main">
+          <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
+          <h1 data-i18n="pages.about.title" data-page-title>{html.escape(page_data["title"])}</h1>
+          <p class="about-profile-handle">@nhmatsumoto · Brasil / Japão</p>
+          <p class="about-profile-bio" data-page-summary>{html.escape(about_lede)}</p>
+          <div class="about-profile-chips" aria-label="contexto">
+            {render_profile_chips(locale)}
+          </div>
+        </div>
       </div>
       {render_about_snapshot(locale)}
     </section>
