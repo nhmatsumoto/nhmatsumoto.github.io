@@ -153,7 +153,7 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
 
 def render_footer(site: dict[str, str], system: dict[str, Any]) -> str:
     github_url = site.get("github_url", "https://github.com/nhmatsumoto")
-    engine_url = f"{github_url}/nhmatsumoto-blog-engine"
+    engine_url = site.get("engine_url") or f"{github_url}/nhmatsumoto.github.io"
     return f"""
     <footer class="site-footer">
       <p>

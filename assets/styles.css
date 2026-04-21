@@ -231,10 +231,9 @@ button, input, select {
   gap: var(--space-8);
 }
 
-.page-home .site-shell {
-  gap: var(--space-4);
-  padding-top: 4.5rem;
-}
+/* Page-home gap & spacing now defined in the blueprint layer
+   using --home-section-gap. Keeping this block empty avoids
+   shadowing the token-driven rules with legacy magic numbers. */
 
 .nav-shell {
   position: fixed;
@@ -579,29 +578,11 @@ button, input, select {
 /* Sections & Content */
 /* ── Section Layout ──────────────────────────────────────────────────────── */
 
-.section-panel {
-  padding: var(--space-16) 0;
-  border-top: 1px solid var(--border);
-}
-
-.page-home .section-panel {
-  padding: var(--space-10) 0;
-}
-
-.page-home .section-panel:first-child {
-  border-top: none;
-  padding-top: var(--space-6);
-}
-
-.section-header {
-  margin-bottom: var(--space-10);
-  max-width: 860px;
-}
-
-.page-home .section-header {
-  margin-bottom: var(--space-8);
-  padding-bottom: var(--space-6);
-}
+/* Legacy section-panel rules removed — the blueprint layer
+   governs section padding via --home-section-pad-* tokens so
+   homepage blocks keep proper horizontal breathing room around
+   the dashed surface border. Section-header sizing is also
+   centralized there (--home-header-gap / --home-header-to-body). */
 
 .section-kicker {
   font-family: var(--font-code);
@@ -772,8 +753,9 @@ button, input, select {
 .navigation-grid-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.85rem;
-  padding: 0.5rem 0;
+  gap: calc(var(--base_grid_unit) * 1.5);
+  padding: calc(var(--base_grid_unit) * 1) 0 0;
+  align-items: center;
 }
 
 .nav-link {
@@ -1286,11 +1268,11 @@ body[data-sidebar-open="true"] .sidebar-backdrop {
   line-height: var(--leading-tight);
 }
 
-.section-header {
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 2rem;
-  margin-bottom: 3rem;
-}
+/* Legacy .section-header border/padding removed: the blueprint rule
+   at the bottom of the file defines the final vertical rhythm via
+   --home-header-gap and --home-header-to-body. Keeping a separator
+   here produced a heavy line under every section heading that did
+   not match the dashed surface vocabulary. */
 
 .view-switch {
   display: flex;
@@ -2865,6 +2847,24 @@ tbody tr:hover td {
   --radius-xl: 1.75rem;
   --shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.18);
   --shadow-md: 0 22px 52px rgba(0, 0, 0, 0.22);
+
+  /*
+    Homepage rhythm tokens.
+    Keep every block spacing in terms of these so the page breathes
+    consistently instead of accumulating ad-hoc margins per block.
+  */
+  --home-section-gap:     calc(var(--base_grid_unit) * 7);  /* 56px between section panels */
+  --home-section-pad-y:   calc(var(--base_grid_unit) * 6);  /* 48px vertical inner padding */
+  --home-section-pad-x:   calc(var(--base_grid_unit) * 5);  /* 40px horizontal inner padding */
+  --home-header-gap:      calc(var(--base_grid_unit) * 1.5); /* kicker → title → copy */
+  --home-header-to-body:  calc(var(--base_grid_unit) * 5);  /* 40px header → list/cards */
+  --home-card-gap:        calc(var(--base_grid_unit) * 3);  /* 24px between cards */
+
+  --nav-shell-pad-block:  calc(var(--base_grid_unit) * 3.5) calc(var(--base_grid_unit) * 2.5);
+  --nav-shell-pad-inline: calc(var(--base_grid_unit) * 3);
+  --footer-pad-top:       calc(var(--base_grid_unit) * 4);
+  --footer-pad-bottom:    calc(var(--base_grid_unit) * 6);
+  --footer-pad-inline:    calc(var(--base_grid_unit) * 5);
 }
 
 [data-theme="light"] {
@@ -2968,19 +2968,25 @@ body::after {
 
 .site-shell {
   width: min(var(--container-width), 100% - var(--container-gutter) * 2);
-  padding-top: calc(var(--grid-step) * 3);
-  gap: calc(var(--base_grid_unit) * 5);
+  padding-top: calc(var(--grid-step) * 3.5);
+  padding-bottom: calc(var(--base_grid_unit) * 6);
+  gap: calc(var(--base_grid_unit) * 6);
+}
+
+.page-home .site-shell {
+  gap: var(--home-section-gap);
+  padding-top: calc(var(--grid-step) * 3.5);
 }
 
 .site-main {
   display: grid;
-  gap: calc(var(--base_grid_unit) * 6);
+  gap: var(--home-section-gap);
 }
 
 .nav-shell {
   width: min(calc(var(--container-width) + 1rem), 100% - var(--container-gutter) * 2);
   margin: 0 auto;
-  padding: calc(var(--base_grid_unit) * 3) calc(var(--base_grid_unit) * 3);
+  padding: var(--nav-shell-pad-block) var(--nav-shell-pad-inline);
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface) 78%, transparent);
   backdrop-filter: blur(18px);
@@ -3110,7 +3116,24 @@ body::after {
 
 .section-panel,
 .site-footer {
-  padding: calc(var(--base_grid_unit) * 5) calc(var(--base_grid_unit) * 4);
+  padding: calc(var(--base_grid_unit) * 6) calc(var(--base_grid_unit) * 5);
+}
+
+.page-home .section-panel {
+  padding: var(--home-section-pad-y) var(--home-section-pad-x);
+}
+
+.page-home .section-panel:first-child {
+  padding-top: calc(var(--base_grid_unit) * 5);
+}
+
+.page-home .section-panel + .section-panel {
+  margin-top: 0;
+}
+
+.site-footer {
+  padding: var(--footer-pad-top) var(--footer-pad-inline) var(--footer-pad-bottom);
+  margin-top: calc(var(--base_grid_unit) * 2);
 }
 
 .page-heading {
@@ -3119,8 +3142,8 @@ body::after {
 
 .section-header {
   display: grid;
-  gap: calc(var(--base_grid_unit) * 2);
-  margin-bottom: calc(var(--base_grid_unit) * 4);
+  gap: var(--home-header-gap);
+  margin-bottom: var(--home-header-to-body);
   max-width: 48rem;
 }
 
@@ -3230,7 +3253,7 @@ body::after {
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: calc(var(--base_grid_unit) * 3);
+  gap: var(--home-card-gap);
 }
 
 .resource-list {
@@ -3250,6 +3273,22 @@ body::after {
     var(--surface-glow),
     var(--surface-ghost-soft);
   box-shadow: none;
+}
+
+.resource-card .card-content {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--base_grid_unit) * 1.5);
+  flex: 1;
+}
+
+.resource-card > footer {
+  margin-top: calc(var(--base_grid_unit) * 2);
+}
+
+.daily-card-compact .card-headline {
+  margin-bottom: calc(var(--base_grid_unit) * 1.5);
 }
 
 .resource-card:hover,
@@ -3316,7 +3355,7 @@ body::after {
 
 .timeline-collection {
   display: grid;
-  gap: calc(var(--base_grid_unit) * 3);
+  gap: var(--home-card-gap);
 }
 
 .timeline-collection > li {
@@ -4488,6 +4527,20 @@ body::after {
 
 .navigation-grid .section-header {
   max-width: none;
+  margin-bottom: calc(var(--base_grid_unit) * 3);
+  row-gap: calc(var(--base_grid_unit) * 1.25);
+}
+
+.navigation-grid .section-header > div {
+  display: grid;
+  gap: var(--home-header-gap);
+}
+
+.navigation-grid .section-header p {
+  margin: 0;
+  color: var(--muted);
+  line-height: var(--rhythm-line-compact);
+  max-width: 52rem;
 }
 
 .pagination-inner {
@@ -4571,13 +4624,29 @@ body::after {
 
 @media (max-width: 720px) {
   .site-shell {
-    padding-top: calc(var(--base_grid_unit) * 14);
+    padding-top: calc(var(--base_grid_unit) * 15);
+    padding-bottom: calc(var(--base_grid_unit) * 4);
+  }
+
+  .page-home .site-shell {
+    gap: calc(var(--base_grid_unit) * 5);
   }
 
   .section-panel,
-  .page-heading,
+  .page-heading {
+    padding: calc(var(--base_grid_unit) * 4) calc(var(--base_grid_unit) * 3);
+  }
+
+  .page-home .section-panel {
+    padding: calc(var(--base_grid_unit) * 4) calc(var(--base_grid_unit) * 3);
+  }
+
   .site-footer {
-    padding: calc(var(--base_grid_unit) * 4) calc(var(--base_grid_unit) * 2);
+    padding: calc(var(--base_grid_unit) * 3) calc(var(--base_grid_unit) * 3) calc(var(--base_grid_unit) * 5);
+  }
+
+  .navigation-grid-links {
+    gap: calc(var(--base_grid_unit) * 1);
   }
 
   .page-grid.notebook-two-column .post-shell,

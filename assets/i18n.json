@@ -54,7 +54,10 @@
         "navigation_copy": "Links diretos para publicações, projetos, documentos e as categorias mais relevantes.",
         "publications_title": "Publicações",
         "publications_copy": "Fluxo unificado de documentos de arquitetura, artigos técnicos e notas de pesquisa.",
-        "related_posts": "Posts relacionados"
+        "related_posts": "Posts relacionados",
+        "evidence_kicker": "evidência",
+        "evidence_title": "Resultados em produção",
+        "evidence_copy": "Métricas, decisões arquiteturais e resultados concretos documentados nos projetos e publicações."
       },
       "pages": {
         "archive": {
@@ -70,7 +73,7 @@
           "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."
         },
         "about": {
-          "title": "Sobre",
+          "title": "Hiro Matsumoto",
           "facts": "Snapshot",
           "location": "Base",
           "role": "Atuação",
@@ -135,6 +138,7 @@
       "actions": {
         "copy": "copiar",
         "copied": "copiado",
+        "done": "feito",
         "repo": "repo",
         "code": "código",
         "view_architecture": "ver arquitetura",
@@ -221,7 +225,10 @@
         "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories.",
         "publications_title": "Publications",
         "publications_copy": "Unified stream of architecture documents, technical articles and research notes.",
-        "related_posts": "Related posts"
+        "related_posts": "Related posts",
+        "evidence_kicker": "evidence",
+        "evidence_title": "Production results",
+        "evidence_copy": "Metrics, architectural decisions and concrete outcomes documented across projects and publications."
       },
       "pages": {
         "archive": {
@@ -237,7 +244,7 @@
           "description": "Documents grouped by domain, architecture, agents and APIs to keep decisions accessible."
         },
         "about": {
-          "title": "About",
+          "title": "Hiro Matsumoto",
           "facts": "Snapshot",
           "location": "Base",
           "role": "Role",
@@ -306,6 +313,7 @@
       "actions": {
         "copy": "copy",
         "copied": "copied",
+        "done": "done",
         "repo": "repo",
         "code": "code",
         "view_architecture": "view architecture",
@@ -388,7 +396,10 @@
         "navigation_copy": "記事、プロジェクト、ドキュメント、および最も関連性の高いカテゴリーへの直接リンク。",
         "publications_title": "公開記事",
         "publications_copy": "アーキテクチャドキュメント、技術記事、研究メモの統合ストリーム。",
-        "related_posts": "関連記事"
+        "related_posts": "関連記事",
+        "evidence_kicker": "エビデンス",
+        "evidence_title": "本番環境での成果",
+        "evidence_copy": "プロジェクトと公開記事に記録されたメトリクス、アーキテクチャの決定、具体的な成果。"
       },
       "pages": {
         "archive": {
@@ -404,7 +415,7 @@
           "description": "意思決定を容易にするために、ドメイン、アーキテクチャ、エージェント、APIごとにグループ化された文書。"
         },
         "about": {
-          "title": "プロフィール",
+          "title": "Hiro Matsumoto",
           "facts": "スナップショット",
           "location": "拠点",
           "role": "役割",
@@ -473,6 +484,7 @@
       "actions": {
         "copy": "コピー",
         "copied": "コピー済み",
+        "done": "完了",
         "repo": "リポ",
         "code": "コード",
         "view_architecture": "アーキテクチャを表示",
