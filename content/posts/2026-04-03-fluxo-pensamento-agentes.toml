@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 Resolver um problema complexo não é apenas gerar texto; é sobre **decomposição, validação e execução**. Em sistemas de agentes, o fluxo de pensamento (Chain of Thought) é o que separa uma resposta genérica de uma solução de engenharia robusta.
 

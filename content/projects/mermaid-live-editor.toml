@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/mermaid-live-editor"
 published_at = "2026-01-31T19:13:57Z"
 tags = ["fork"]
 stack = ["Svelte", "TypeScript", "Mermaid", "Monaco Editor"]
-view_engine = "binary-tree"
 
 overview = """
 Fork do Mermaid Live Editor, a aplicação web oficial para criação e preview de diagramas Mermaid em tempo real.

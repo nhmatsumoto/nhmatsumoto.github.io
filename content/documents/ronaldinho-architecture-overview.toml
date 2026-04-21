@@ -108,4 +108,3 @@ Core は単一モデルに依存しません。段階的 fallback 戦略を用�
 
 skill は `.agent/skills/` 配下にあり、各 skill は独立した Python module です。ランタイムを再起動せずに能力を拡張できます。
 """
-view_engine = "binary-tree"

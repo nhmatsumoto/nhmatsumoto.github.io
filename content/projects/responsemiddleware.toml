@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/ResponseMiddleware"
 published_at = "2024-11-02T16:53:33Z"
 tags = ["C#"]
 stack = ["C#", ".NET Core", "Middleware", "REST API"]
-view_engine = "binary-tree"
 
 overview = """
 Middleware de padronização de respostas para APIs ASP.NET Core, complementar ao **nhmatsumoto.exception.middleware**.

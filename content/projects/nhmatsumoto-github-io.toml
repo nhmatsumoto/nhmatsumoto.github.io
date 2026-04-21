@@ -1,11 +1,11 @@
 name = "nhmatsumoto.github.io"
 slug = "nhmatsumoto-github-io"
-headline = "Technical Knowledge OS — blog e portfolio com engine de geração estática e visualização 3D interativa."
-headline_en_us = "Technical Knowledge OS — blog and portfolio with a static site engine and interactive 3D visualization."
-headline_ja_jp = "Technical Knowledge OS — 静的サイト生成エンジンとインタラクティブ 3D 可視化を備えたブログ兼ポートフォリオ。"
-summary = "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, visualização 3D interativa com Three.js, sistema de grafo de conhecimento e deploy via GitHub Pages."
-summary_en_us = "Personal site and Technical Knowledge OS: static site engine in Python, interactive 3D visualization with Three.js, knowledge graph system and deploy via GitHub Pages."
-summary_ja_jp = "個人サイト兼 Technical Knowledge OS。Python による静的サイト生成、Three.js を用いた 3D インタラクティブ可視化、知識グラフ、GitHub Pages での配信。"
+headline = "Technical Knowledge OS — blog e portfolio com engine de geração estática e navegação estruturada."
+headline_en_us = "Technical Knowledge OS — blog and portfolio with a static site engine and structured navigation."
+headline_ja_jp = "Technical Knowledge OS — 静的サイト生成エンジンと構造化ナビゲーションを備えたブログ兼ポートフォリオ。"
+summary = "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, conteúdo em TOML, busca client-side, i18n e deploy via GitHub Pages."
+summary_en_us = "Personal site and Technical Knowledge OS: static site engine in Python, TOML content, client-side search, i18n and deploy via GitHub Pages."
+summary_ja_jp = "個人サイト兼 Technical Knowledge OS。Python による静的サイト生成、TOML コンテンツ、クライアント側検索、i18n、GitHub Pages での配信。"
 status = "published"
 featured = true
 order = 1
@@ -13,85 +13,84 @@ repo_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io"
 code_url = "https://github.com/nhmatsumoto/nhmatsumoto.github.io"
 published_at = "2026-02-22T03:06:53Z"
 tags = ["HTML"]
-stack = ["Python", "Three.js", "HTML", "CSS", "GitHub Pages"]
-view_engine = "binary-tree"
+stack = ["Python", "HTML", "CSS", "JavaScript", "GitHub Pages"]
 
 overview = """
-Este é o repositório do Technical Knowledge OS — o site que você está usando agora. Uma plataforma de publicação técnica construída do zero com um engine de geração estática em Python e visualização 3D interativa.
+Este é o repositório do Technical Knowledge OS — o site que você está usando agora. Uma plataforma de publicação técnica construída do zero com um engine de geração estática em Python, conteúdo estruturado e navegação leve.
 
 ## Arquitetura do engine
 
 O engine de geração estática processa conteúdo em TOML, renderiza markdown para HTML e gera um site completo com:
 
 - **Posts** — artigos técnicos com suporte a math (AsciiMath), Mermaid, code blocks e tabelas
-- **Projetos** — portfolio com dados estruturados e visualização interativa
+- **Projetos** — portfolio com dados estruturados e páginas dedicadas
 - **Documentos** — especificações técnicas com versionamento
 - **i18n** — suporte a internacionalização multi-idioma
 - **Busca** — índice JSON para search client-side
 
-## Visualização 3D
+## Páginas e navegação
 
-A página de projetos utiliza Three.js para renderizar um grafo 3D interativo onde cada nó representa um projeto, post ou documento. O grafo inclui:
+A navegação prioriza páginas estáticas rápidas, cards claros e links permanentes para posts, projetos e documentos. O site inclui:
 
-- Starfield com 4000 partículas
-- Nós de vidro com efeitos de glow e órbitas
-- Conexões bezier entre nós
-- Painel de detalhes com navegação
-- Reader mode para leitura de conteúdo inline
+- Listagens por tipo de conteúdo
+- Páginas de detalhe com metadados consistentes
+- Sitemap e feed gerados automaticamente
+- Busca client-side baseada em índice JSON
+- Layouts responsivos para leitura técnica
 
 ## Deploy
 
 GitHub Actions executa o build em cada push ao master e deploya o resultado no GitHub Pages automaticamente.
 """
 overview_en_us = """
-This is the Technical Knowledge OS repository — the site you are using right now. A technical-publishing platform built from scratch with a Python static-site engine and an interactive 3D visualization layer.
+This is the Technical Knowledge OS repository — the site you are using right now. A technical-publishing platform built from scratch with a Python static-site engine, structured content and lightweight navigation.
 
 ## Engine architecture
 
 The static-site engine processes TOML content, renders markdown to HTML and outputs a complete site with:
 
 - **Posts** — technical articles with support for math, Mermaid, code blocks and tables
-- **Projects** — a portfolio backed by structured data and an interactive viewer
+- **Projects** — a portfolio backed by structured data and dedicated pages
 - **Documents** — technical specs with versioned publication
 - **i18n** — multi-language content support
 - **Search** — a client-side JSON index
 
-## 3D visualization
+## Pages and navigation
 
-The projects page uses Three.js to render an interactive 3D graph where each node represents a project, post or document. The graph includes:
+Navigation prioritizes fast static pages, clear cards and permanent links for posts, projects and documents. The site includes:
 
-- A starfield with 4,000 particles
-- Glass-like nodes with glow and orbit effects
-- Bezier connections between nodes
-- A detail panel with navigation
-- Reader mode for inline content
+- Listings by content type
+- Detail pages with consistent metadata
+- Automatically generated sitemap and feed
+- Client-side search backed by a JSON index
+- Responsive layouts for technical reading
 
 ## Deploy
 
 GitHub Actions runs the build on every push to `master` and deploys the generated output to GitHub Pages automatically.
 """
 overview_ja_jp = """
-これは、今見ているサイトそのもの、Technical Knowledge OS のリポジトリです。Python 製の静的サイトエンジンとインタラクティブな 3D 可視化レイヤでゼロから構築した技術出版プラットフォームです。
+これは、今見ているサイトそのもの、Technical Knowledge OS のリポジトリです。Python 製の静的サイトエンジン、構造化コンテンツ、軽量なナビゲーションでゼロから構築した技術出版プラットフォームです。
 
 ## エンジンのアーキテクチャ
 
 静的サイト・エンジンは TOML コンテンツを処理し、markdown を HTML に変換して、次を備えた完全なサイトを出力します。
 
 - **Posts** — 数式、Mermaid、code block、表を含む技術記事
-- **Projects** — 構造化データと対話型ビューアを備えたポートフォリオ
+- **Projects** — 構造化データと専用ページを備えたポートフォリオ
 - **Documents** — バージョン付き公開が可能な技術仕様
 - **i18n** — 多言語対応
 - **Search** — クライアント側 JSON インデックス
 
-## 3D 可視化
+## ページとナビゲーション
 
-projects ページでは Three.js を使い、各ノードが project、post、document を表す 3D グラフを描画します。主な要素は次の通りです。
+ナビゲーションは高速な静的ページ、明快なカード、posts / projects / documents への永続リンクを重視しています。主な要素は次の通りです。
 
-- 4,000 パーティクルの starfield
-- ガラス調ノードと glow / orbit エフェクト
-- ノード間の Bezier 接続
-- ナビゲーション付き detail panel
-- inline 読書のための reader mode
+- コンテンツ種別ごとの一覧
+- 一貫したメタデータを持つ詳細ページ
+- 自動生成される sitemap と feed
+- JSON インデックスに基づくクライアント側検索
+- 技術文書向けのレスポンシブな読書レイアウト
 
 ## デプロイ
 
@@ -99,13 +98,13 @@ GitHub Actions が `master` への各 push ごとに build を実行し、生成
 """
 
 problem_solution = """
-Plataformas de blog existentes são genéricas demais para um portfolio técnico que precisa de visualizações interativas, suporte a fórmulas matemáticas e controle total sobre o design. O Technical Knowledge OS resolve isso com um engine customizado que trata conteúdo como domínio.
+Plataformas de blog existentes são genéricas demais para um portfolio técnico que precisa de conteúdo estruturado, suporte a fórmulas matemáticas e controle total sobre o design. O Technical Knowledge OS resolve isso com um engine customizado que trata conteúdo como domínio.
 """
-problem_solution_en_us = "Existing blog platforms are too generic for a technical portfolio that needs interactive visualization, math rendering and full control over design and structure. Technical Knowledge OS solves that by treating content as a first-class domain."
-problem_solution_ja_jp = "既存のブログ基盤は、インタラクティブ可視化、数式表示、設計と構造への完全な制御を必要とする技術ポートフォリオには汎用的すぎます。Technical Knowledge OS は、コンテンツを第一級のドメインとして扱うことでそれを解決します。"
+problem_solution_en_us = "Existing blog platforms are too generic for a technical portfolio that needs structured content, math rendering and full control over design and structure. Technical Knowledge OS solves that by treating content as a first-class domain."
+problem_solution_ja_jp = "既存のブログ基盤は、構造化コンテンツ、数式表示、設計と構造への完全な制御を必要とする技術ポートフォリオには汎用的すぎます。Technical Knowledge OS は、コンテンツを第一級のドメインとして扱うことでそれを解決します。"
 
 architecture = """
-Engine Python modular: loader (TOML → dict), renderer (dict → HTML), generator (orquestração). Assets estáticos (CSS, JS) são copiados e servidos diretamente. Three.js carregado via importmap para a visualização 3D. GitHub Actions para CI/CD.
+Engine Python modular: loader (TOML → dict), renderer (dict → HTML), generator (orquestração). Assets estáticos (CSS, JS) são copiados e servidos diretamente. Índices de busca, sitemap, feed e páginas localizadas são gerados no build. GitHub Actions para CI/CD.
 """
-architecture_en_us = "Modular Python engine: loader (TOML → dict), renderer (dict → HTML) and generator (orchestration). Static assets are copied directly. Three.js is loaded through import maps for the 3D graph, and GitHub Actions handles CI/CD."
-architecture_ja_jp = "モジュール化された Python エンジンで、loader（TOML → dict）、renderer（dict → HTML）、generator（オーケストレーション）に分かれています。静的アセットはそのままコピーされ、3D グラフには import map 経由で Three.js を読み込みます。CI/CD は GitHub Actions が担当します。"
+architecture_en_us = "Modular Python engine: loader (TOML → dict), renderer (dict → HTML) and generator (orchestration). Static assets are copied directly. Search indexes, sitemap, feed and localized pages are generated during the build. GitHub Actions handles CI/CD."
+architecture_ja_jp = "モジュール化された Python エンジンで、loader（TOML → dict）、renderer（dict → HTML）、generator（オーケストレーション）に分かれています。静的アセットはそのままコピーされ、検索インデックス、sitemap、feed、ローカライズ済みページは build 時に生成されます。CI/CD は GitHub Actions が担当します。"

@@ -4,7 +4,7 @@ import shutil
 import subprocess
 from pathlib import Path
 from typing import Any
-from .constants import ROOT, MANAGED_GIT_PATHS, WIKILINK_RE
+from .constants import ROOT, MANAGED_GIT_PATHS
 from .utils import (
     load_blog_config, write_text, write_json, site_href,
     resolve_optional_url, now_local, minify_js, minify_css, md5_of_content,
@@ -222,7 +222,6 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     for d in documents: write_text(target_root / config["documents_output_dir"] / d["slug"] / "index.html", render_document_page(site, system, d, i18n, locale))
 
     # Assets & Index
-    write_json(target_root / "assets/graph-data.json", build_graph_data(posts, projects, documents))
     write_json(target_root / config["search_index_file"], build_search_index(site, posts, daily_entries, projects, documents, i18n, locale))
     write_json(target_root / config["i18n_asset_file"], {
         "defaultLocale": i18n.get("default_locale", locale),
@@ -243,120 +242,6 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         "published_posts": len(posts),
         "updated_at": now_local().isoformat(timespec="seconds"),
     }
-
-def build_graph_data(posts, projects, documents):
-    from .utils import load_toml, slugify
-    
-    graph_config_path = ROOT / "config/graph.toml"
-    graph_config = load_toml(graph_config_path) if graph_config_path.exists() else {}
-    
-    nodes = []
-    links = []
-    node_map = {}
-    
-    # 1. Hiro Node
-    hiro_cfg = graph_config.get("hiro", {})
-    hiro_id = "hiro"
-    nodes.append({
-        "id": hiro_id,
-        "title": hiro_cfg.get("label", "Hiro"),
-        "kind": "central",
-        "color": hiro_cfg.get("color", "#FFFFFF"),
-        "glow": True,
-        "size": 20
-    })
-    
-    # 2. Category Nodes
-    categories = graph_config.get("categories", {})
-    tag_to_cat = {}
-    
-    for cat_id, cat_cfg in categories.items():
-        nodes.append({
-            "id": cat_id,
-            "title": cat_cfg.get("label", cat_id),
-            "kind": "group",
-            "color": cat_cfg.get("color", "#00C2FF"),
-            "size": 15
-        })
-        links.append({"source": hiro_id, "target": cat_id, "value": 3})
-        
-        for tag in cat_cfg.get("tags", []):
-            tag_to_cat[tag.lower()] = cat_id
-
-    # 3. Topic Nodes (from tags)
-    all_tags = set()
-    for res in posts + documents:
-        for tag in res.get("tags", []):
-            all_tags.add(tag.lower())
-    for p in projects:
-        for tag in p.get("stack", []):
-            all_tags.add(tag.lower())
-            
-    topic_map = {}
-    for tag in all_tags:
-        topic_id = f"topic-{slugify(tag)}"
-        topic_map[tag] = topic_id
-        cat_id = tag_to_cat.get(tag)
-        
-        nodes.append({
-            "id": topic_id,
-            "title": tag,
-            "kind": "topic",
-            "color": categories.get(cat_id, {}).get("color", "#64748b") if cat_id else "#64748b",
-            "size": 10
-        })
-        
-        if cat_id:
-            links.append({"source": cat_id, "target": topic_id, "value": 2})
-
-    # 4. Publication Nodes
-    flat = []
-    for p in posts: flat.append((p, "post"))
-    for p in projects: flat.append((p, "project"))
-    for d in documents: flat.append((d, "document"))
-    
-    for res, kind in flat:
-        slug = res.get("slug")
-        tags = res.get("tags", []) if kind != "project" else res.get("stack", [])
-        
-        # Core fields
-        node_data = {
-            "id": slug, 
-            "title": res.get("title") or res.get("name"), 
-            "kind": kind,
-            "url": res.get("resolved_url"),
-            "summary": res.get("summary") or res.get("headline", ""),
-            "headline": res.get("headline", ""),
-            "published_dt": res.get("published_dt").isoformat() if res.get("published_dt") and hasattr(res.get("published_dt"), "isoformat") else None,
-            "reading_time": res.get("reading_time"),
-            "category": res.get("category"),
-            "stack": res.get("stack") if kind == "project" else res.get("tags"),
-            "size": 8 if kind == "project" else 6
-        }
-        
-        # Merge all other metadata (including localized fields)
-        for k, v in res.items():
-            if k not in node_data and isinstance(v, (str, list, int, float, bool)):
-                node_data[k] = v
-                
-        node_map[slug] = node_data
-        nodes.append(node_map[slug])
-        
-        # Link topics to publications
-        for tag in tags:
-            tag_lower = tag.lower()
-            if tag_lower in topic_map:
-                links.append({"source": topic_map[tag_lower], "target": slug, "value": 1})
-    
-    # 5. Wikilinks (existing logic)
-    for res, _ in flat:
-        body = res.get("body", "") or res.get("overview", "") or ""
-        for target, _ in WIKILINK_RE.findall(body):
-            target_slug = target.strip()
-            if target_slug in node_map:
-                links.append({"source": res.get("slug"), "target": target_slug, "value": 1})
-                
-    return {"nodes": nodes, "links": links}
 
 def publish_changes(message: str, push: bool = False) -> dict[str, Any]:
     build_site()

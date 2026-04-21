@@ -16,7 +16,6 @@ code_url = ""
 featured = false
 has_math = true
 
-view_engine = "binary-tree"
 body = """
 Simular o universo não exige conhecer cada posição e cada velocidade de cada átomo. Em vez disso, usamos a **Simulação Estocástica**, e o rei dessa técnica é o **Método de Monte Carlo**.
 

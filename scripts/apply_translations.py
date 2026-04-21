@@ -423,16 +423,6 @@ POSTS: dict[str, dict[str, dict[str, str]]] = {
             "ja-JP": "極端な電磁放射を生み出す天体物理学的現象の解剖と、それが技術システムに及ぼす影響。",
         },
     },
-    "brain-map-topology-hiro": {
-        "title": {
-            "en-US": "Knowledge Topologies: The Hiro Graph",
-            "ja-JP": "知識のトポロジー：Hiro グラフ",
-        },
-        "summary": {
-            "en-US": "Exploring the implementation of a D3.js hierarchy to visualize technical intelligence in a non-linear way.",
-            "ja-JP": "技術的知性を非線形に可視化するための D3.js ハイアラーキー実装の探求。",
-        },
-    },
     "fisica-demp-pulsos-dispersos": {
         "title": {
             "en-US": "The Physics of Dispersed Pulses: Beyond Conventional EMP",
@@ -638,12 +628,12 @@ PROJECTS: dict[str, dict[str, dict[str, str]]] = {
     },
     "nhmatsumoto-github-io": {
         "headline": {
-            "en-US": "Technical Knowledge OS — blog and portfolio with a static site engine and interactive 3D visualization.",
-            "ja-JP": "Technical Knowledge OS — 静的サイト生成エンジンとインタラクティブ 3D 可視化を備えたブログ兼ポートフォリオ。",
+            "en-US": "Technical Knowledge OS — blog and portfolio with a static site engine and structured navigation.",
+            "ja-JP": "Technical Knowledge OS — 静的サイト生成エンジンと構造化ナビゲーションを備えたブログ兼ポートフォリオ。",
         },
         "summary": {
-            "en-US": "Personal site and Technical Knowledge OS: static site engine in Python, interactive 3D visualization with Three.js, knowledge graph system and deploy via GitHub Pages.",
-            "ja-JP": "個人サイト兼 Technical Knowledge OS。Python による静的サイト生成、Three.js を用いた 3D インタラクティブ可視化、知識グラフ、GitHub Pages での配信。",
+            "en-US": "Personal site and Technical Knowledge OS: static site engine in Python, TOML content, client-side search, i18n and deploy via GitHub Pages.",
+            "ja-JP": "個人サイト兼 Technical Knowledge OS。Python による静的サイト生成、TOML コンテンツ、クライアント側検索、i18n、GitHub Pages での配信。",
         },
     },
     "playground-fe": {

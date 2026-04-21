@@ -4,8 +4,6 @@ const useStore = createStore((set) => ({
   // State
   locale: localStorage.getItem('site-locale') || 'pt-BR',
   theme: localStorage.getItem('site-theme') || 'dark',
-  panelOpen: false,
-  panelData: null,
 
   // Actions
   setLocale: (locale) => {
@@ -18,15 +16,6 @@ const useStore = createStore((set) => ({
     localStorage.setItem('site-theme', theme)
     document.documentElement.setAttribute('data-theme', theme)
     set({ theme })
-  },
-
-  togglePanel: (open, data = null) => {
-    if (open) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    set({ panelOpen: open, panelData: data })
   },
 }))
 

@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/gemini-cli"
 published_at = "2026-03-21T16:51:52Z"
 tags = ["fork"]
 stack = ["TypeScript", "Node.js", "Gemini API", "CLI"]
-view_engine = "binary-tree"
 
 overview = """
 Fork do Gemini CLI, o agente de IA open-source do Google que integra o modelo Gemini diretamente ao terminal, com capacidade de executar ferramentas de sistema.

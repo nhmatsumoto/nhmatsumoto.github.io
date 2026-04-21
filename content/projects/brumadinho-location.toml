@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/brumadinho_location"
 published_at = "2026-03-04T03:55:07Z"
 tags = ["fork"]
 stack = ["Python", "GIS", "Geolocation"]
-view_engine = "binary-tree"
 
 overview = """
 Projeto comunitário criado em resposta ao rompimento da barragem da Vale em Brumadinho (MG) em janeiro de 2019. O objetivo é consolidar ferramentas de geolocalização para apoiar equipes de resgate e familiares na localização de vítimas.

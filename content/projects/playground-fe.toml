@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/Playground-FE"
 published_at = "2025-06-28T07:49:30Z"
 tags = ["TypeScript"]
 stack = ["React", "TypeScript", "Keycloak", "OAuth2"]
-view_engine = "binary-tree"
 
 overview = """
 Projeto frontend criado com React e TypeScript, com integração completa ao Keycloak para autenticação e autorização de usuários.

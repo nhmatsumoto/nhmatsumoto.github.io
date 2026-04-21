@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 Richard Feynman não era apenas um físico; ele era um **explorador**. Conhecido por sua recusa em aceitar respostas prontas, ele revolucionou a eletrodinâmica quântica (QED) e ensinou gerações a "não se enganar".
 

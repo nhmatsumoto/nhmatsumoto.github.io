@@ -36,7 +36,6 @@ about = "sobre"
 contact = "contato"
 search = "palette de comandos"
 cta = "trabalho aberto / contato"
-graph = "mapa cerebral"
 language = "idioma"
 language_action = "trocar idioma"
 theme = "alternar tema"
@@ -62,8 +61,6 @@ projects_copy = "Projetos tratados como ativos de longo prazo: arquitetura, stac
 documents_title = "Sistema de documentação"
 documents_copy = "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente."
 about_copy = "O site é organizado mais como uma base de código do que como uma landing page pessoal."
-brain_map_title = "Mapa cerebral vivo"
-brain_map_copy = "Use este mapa para navegar, visualizar conexões e sentir como o meu cérebro técnico organiza projetos, publicações e documentos."
 welcome_message = "SO de Conhecimento Técnico"
 navigation_kicker = "navegação"
 navigation_title = "Sitemap e categorias"
@@ -79,7 +76,6 @@ description = "Fluxo de escrita sobre arquitetura, experimentos, modelagem de do
 [strings."pt-BR".pages.projects]
 title = "Sistemas centrais"
 description = "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."
-flow_hint = "Clique em um nó para explorar. Nós conectados compartilham stack."
 
 [strings."pt-BR".pages.documents]
 title = "Sistema de documentos"
@@ -204,7 +200,6 @@ about = "about"
 contact = "contact"
 search = "command palette"
 cta = "open work / contact"
-graph = "brain map"
 language = "language"
 language_action = "switch language"
 theme = "toggle theme"
@@ -230,8 +225,6 @@ projects_copy = "Projects managed as long-term assets: architecture, stack, stat
 documents_title = "Documentation system"
 documents_copy = "Markdown notes organized by domain, architecture, agents and APIs, with versioning and agent-generated markers."
 about_copy = "The site is organized more like a codebase than a personal landing page."
-brain_map_title = "Living brain map"
-brain_map_copy = "Navigate this map to see how thoughts, projects and documents connect across the nhmatsumoto brain."
 welcome_message = "Technical Knowledge OS"
 navigation_kicker = "navigation"
 navigation_title = "Sitemap & categories"
@@ -247,7 +240,6 @@ description = "Writing flow on architecture, experiments, domain modeling and op
 [strings."en-US".pages.projects]
 title = "Core systems"
 description = "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap."
-flow_hint = "Click a node to explore. Connected nodes share stack."
 
 [strings."en-US".pages.documents]
 title = "Document system"
@@ -372,7 +364,6 @@ about = "プロフィール"
 contact = "連絡先"
 search = "コマンドパレット"
 cta = "お問い合わせ"
-graph = "ブレーンマップ"
 language = "言語"
 language_action = "言語切替"
 theme = "テーマ切替"
@@ -397,8 +388,6 @@ projects_copy = "長期資産としてのプロジェクト：アーキテクチ
 documents_title = "ドキュメントシステム"
 documents_copy = "ドメイン、アーキテクチャ、エージェント、APIごとに分類されたMarkdownドキュメント。"
 about_copy = "このサイトは、個人のウェブサイトというよりも、コードベースのように構成されています。"
-brain_map_title = "ダイナミック・ナレッジマップ"
-brain_map_copy = " nhmatsumoto の思考、プロジェクト、ドキュメントがどのように繋がっているかを確認できます。"
 welcome_message = "技術ナレッジ OS"
 navigation_kicker = "ナビゲーション"
 navigation_title = "サイトマップ & カテゴリー"
@@ -414,7 +403,6 @@ description = "アーキテクチャ、実験、ドメインモデリング、�
 [strings."ja-JP".pages.projects]
 title = "主要システム"
 description = "システムとしてのプロジェクト：課題、解決策、アーキテクチャ、スタック、ADR、ロードマップ。"
-flow_hint = "ノードをクリックして探索してください。繋がったノードはスタックを共有しています。"
 
 [strings."ja-JP".pages.documents]
 title = "ドキュメントシステム"

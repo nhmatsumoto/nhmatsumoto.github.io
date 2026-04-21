@@ -54,7 +54,6 @@ repo_url = {json.dumps(url, ensure_ascii=False)}
 code_url = {json.dumps(url, ensure_ascii=False)}
 published_at = "{created_at}"
 tags = {json.dumps(topics + ([language] if language else []) + (["fork"] if is_fork else []), ensure_ascii=False)}
-view_engine = "binary-tree"
 
 overview = \"\"\"
 {description}

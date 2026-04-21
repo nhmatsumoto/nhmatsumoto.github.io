@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 Alan Turing não apenas desenhou o futuro, ele o **codificou**. Sua vida é o ponto de encontro entre a matemática pura, a guerra mundial e a filosofia.
 

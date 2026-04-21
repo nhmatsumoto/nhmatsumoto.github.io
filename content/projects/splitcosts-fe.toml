@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/SplitCosts-FE"
 published_at = "2025-07-05T17:34:22Z"
 tags = ["TypeScript"]
 stack = ["React", "TypeScript", "Keycloak", "REST API"]
-view_engine = "binary-tree"
 
 overview = """
 Frontend do **SplitCosts** — SPA em React/TypeScript que consome o SplitCost-Backend para gerenciamento de despesas compartilhadas.

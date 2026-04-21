@@ -267,109 +267,6 @@ const initPageContentLocalization = () => {
   applyPageContent(useStore.getState().locale);
 };
 
-const initIntelligencePanel = (loc) => {
-  const panel = document.querySelector("[data-intelligence-panel]");
-  const content = panel?.querySelector(".panel-content");
-  if (!panel || !content) return;
-
-  const elements = {
-    role: panel.querySelector("[data-panel-role]"),
-    name: panel.querySelector("[data-panel-name]"),
-    headline: panel.querySelector("[data-panel-headline]"),
-    summary: panel.querySelector("[data-panel-summary]"),
-    stack: panel.querySelector("[data-panel-stack]"),
-    metaRow: panel.querySelector("[data-panel-meta-row]"),
-    link: panel.querySelector("[data-panel-link]")
-  };
-
-  const updatePanelUI = (data) => {
-    if (!data) return;
-    const locale = useStore.getState().locale;
-
-    const getName = (d) => resolveLocalizedField(d, ["name", "title"], locale, d.name || d.title || "");
-    const getHeadline = (d) => resolveLocalizedField(d, "headline", locale, d.headline || "");
-    const getSummary = (d) => resolveLocalizedField(d, "summary", locale, d.summary || getHeadline(d));
-    const getBody = (d) => resolveLocalizedField(d, "body_html", locale, d.body_html || getSummary(d));
-
-    if (elements.role) {
-      const kind = data.kind || "knowledge";
-      elements.role.textContent = loc?.translate(`kinds.${kind}`, kind) || kind;
-    }
-    
-    if (elements.name) elements.name.textContent = getName(data);
-    if (elements.headline) elements.headline.textContent = getHeadline(data);
-    
-    if (elements.summary) {
-      const body = getBody(data);
-      if (typeof body === 'string' && (body.includes('<') || data.body_html)) {
-        elements.summary.innerHTML = body;
-        elements.summary.querySelectorAll(".mermaid").forEach(m => {
-          if (!m.getAttribute("data-original-code")) m.setAttribute("data-original-code", m.innerHTML);
-        });
-      } else {
-        elements.summary.textContent = body;
-      }
-    }
-
-    if (elements.stack) {
-      elements.stack.innerHTML = (data.stack || []).map(s => `<span class="stack-chip">${s}</span>`).join("");
-    }
-
-    if (elements.metaRow) {
-      const meta = [];
-      if (data.published_dt) {
-        const date = new Date(data.published_dt);
-        meta.push(`<span>${new Intl.DateTimeFormat(locale, { day: "2-digit", month: "long", year: "numeric" }).format(date)}</span>`);
-      }
-      if (data.reading_time) meta.push(`<span>${data.reading_time} min</span>`);
-      if (data.category) meta.push(`<span>${data.category}</span>`);
-      elements.metaRow.innerHTML = meta.join(" &middot; ");
-    }
-
-    if (elements.link) {
-      elements.link.href = data.resolved_url || data.url || "#";
-      const actionKey = data.kind === "project" ? "actions.view_project" : "actions.read_article";
-      elements.link.innerHTML = `<i data-lucide="eye"></i> ${loc?.translate(actionKey, "View")} <i data-lucide="arrow-right"></i>`;
-    }
-
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-    
-    // Trigger rendering after a short delay to ensure DOM is ready
-    setTimeout(() => syncRichContent(panel), 50);
-  };
-
-  useStore.subscribe((state, prevState) => {
-    // Detect open/close
-    if (state.panelOpen !== prevState.panelOpen) {
-      panel.dataset.open = String(state.panelOpen);
-      panel.setAttribute("aria-hidden", String(!state.panelOpen));
-      if (content) content.dataset.revealed = String(state.panelOpen);
-      
-      // Ensure UI is updated when opening
-      if (state.panelOpen && state.panelData) {
-        updatePanelUI(state.panelData);
-      }
-    }
-
-    // Detect data changes specifically
-    if (state.panelData !== prevState.panelData && state.panelData && state.panelOpen) {
-      updatePanelUI(state.panelData);
-    }
-  });
-
-  // Export globals for non-module legacy support
-  window.showIntelligencePanel = (data) => useStore.getState().togglePanel(true, data);
-  window.hideIntelligencePanel = () => useStore.getState().togglePanel(false);
-
-  panel.querySelectorAll("[data-panel-close], .panel-backdrop").forEach(el => {
-    el.addEventListener("click", () => window.hideIntelligencePanel());
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") window.hideIntelligencePanel();
-  });
-};
-
 const initLocaleToggle = (loc) => {
   const btns = document.querySelectorAll("[data-locale-toggle]");
   const supported = loc?.getSupportedLocales() || [];
@@ -513,7 +410,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initThemeManager();
   initLocaleToggle(loc);
   initCommandPalette(loc);
-  initIntelligencePanel(loc);
   initCodeBlocks();
   initInteractiveGlow();
   
@@ -521,5 +417,4 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.removeAttribute('data-sidebar-open');
   
   if (typeof lucide !== 'undefined') lucide.createIcons();
-  if (typeof window.initKnowledgeGraph === 'function') window.initKnowledgeGraph(loc);
 });

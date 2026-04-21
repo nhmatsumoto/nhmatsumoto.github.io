@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 Agentes de IA não são apenas modelos de linguagem (LLMs). Eles são **sistemas cognitivos** que utilizam modelos como "motores de raciocínio" dentro de um ecossistema de ferramentas e memória.
 

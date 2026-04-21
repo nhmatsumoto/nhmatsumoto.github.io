@@ -1,19 +1,41 @@
 [
   {
-    "title": "nhmatsumoto-blog-engine",
-    "url": "/",
+    "title": "nhmatsumoto.github.io",
+    "url": "https://nhmatsumoto.github.io/",
     "kind": "home",
-    "summary": "Notebook técnico sobre arquitetura, agentes autônomos, sistemas distribuídos, GIS e documentação viva."
+    "summary": "Caderno de engenharia em pt-BR sobre arquitetura, agentes, GIS, software de produto e o processo de construir sistemas estáticos, legíveis e duráveis."
   },
   {
     "title": "sobre",
-    "url": "/about/",
+    "url": "https://nhmatsumoto.github.io/about/",
     "kind": "about",
-    "summary": "Sou engenheiro de software e trato este espaço como um caderno operacional: menos marketing, mais contexto técnico. O blog deixou de ser apenas uma coleção de posts e passou a fun…"
+    "summary": "Sou engenheiro de software e trato este espaço como uma superfície de trabalho, não como uma landing page. Meu interesse está em sistemas que precisam permanecer claros mesmo quan…"
+  },
+  {
+    "title": "contato",
+    "url": "https://nhmatsumoto.github.io/contact/",
+    "kind": "contact",
+    "summary": "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."
+  },
+  {
+    "title": "Ronaldinho Agent: persona, memória curta e tool use sem virar produto separado",
+    "url": "https://nhmatsumoto.github.io/posts/20260406-093000-ronaldinho-agent-persona-tooling/",
+    "kind": "post",
+    "summary": "Registro do ronaldinho-agent como experimento de engenharia de agentes: o que foi validado, quais trade-offs apareceram e por que ele faz mais sentido como publicação do que como rota principal do site.",
+    "keywords": [
+      "agents",
+      "python",
+      "prompt-engineering",
+      "architecture"
+    ],
+    "title_en_us": "Ronaldinho Agent: persona, short-term memory and tool use without turning it into a separate product",
+    "title_ja_jp": "Ronaldinho Agent: 独立した製品にせず、persona と短期記憶と tool use を試す",
+    "summary_en_us": "A field note on `ronaldinho-agent` as an agent-engineering experiment: what it validated, which trade-offs appeared and why it now fits better as a publication than as a primary site route.",
+    "summary_ja_jp": "エージェント工学の実験としての `ronaldinho-agent` を記録したノート。検証できたこと、現れたトレードオフ、そしてなぜ独立ルートより公開記事として扱うほうが自然なのかをまとめる。"
   },
   {
     "title": "SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica",
-    "url": "/publications/2026-04-05-1500-sos-location-ml-risk-neural-models/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/",
     "kind": "post",
     "summary": "O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.",
     "keywords": [
@@ -22,11 +44,15 @@
       "python",
       "gis",
       "risk-analysis"
-    ]
+    ],
+    "title_en_us": "SOS Location: Neural Risk Models with PyTorch and Semantic Segmentation",
+    "title_ja_jp": "SOS Location：PyTorch とセマンティックセグメンテーションによるニューラル・リスクモデル",
+    "summary_en_us": "SOSLocation.ML uses PyTorch to predict risk in disaster zones. How we train semantic segmentation models to identify critical areas in satellite imagery and GIS data.",
+    "summary_ja_jp": "SOSLocation.ML は PyTorch で災害地域のリスクを予測する。衛星画像と GIS データから重要領域を特定するセマンティックセグメンテーションモデルの訓練方法。"
   },
   {
     "title": "SOS Location: PostGIS e inteligência espacial para resposta a desastres",
-    "url": "/publications/2026-04-05-1400-sos-location-postgis-spatial-intelligence/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/",
     "kind": "post",
     "summary": "PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.",
     "keywords": [
@@ -35,11 +61,15 @@
       "postgresql",
       "spatial",
       "backend"
-    ]
+    ],
+    "title_en_us": "SOS Location: PostGIS and Spatial Intelligence for Disaster Response",
+    "title_ja_jp": "SOS Location：災害対応のための PostGIS と空間インテリジェンス",
+    "summary_en_us": "PostGIS turns PostgreSQL into a geospatial engine. How we use GIST indexes, ST_DWithin and line-of-sight for real-time tactical decisions.",
+    "summary_ja_jp": "PostGIS は PostgreSQL を地理空間エンジンへと変える。GIST インデックス、ST_DWithin、見通し線をリアルタイム戦術判断にどう活かすか。"
   },
   {
     "title": "SOS Location: Clean Architecture + CQRS em .NET 10",
-    "url": "/publications/2026-04-05-1300-sos-location-clean-architecture-dotnet10/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/",
     "kind": "post",
     "summary": "Arquitetura limpa, CQRS com MediatR e domain events no backend do SOS Location. Como estruturamos o código para resiliência em cenários de crise.",
     "keywords": [
@@ -48,11 +78,15 @@
       "cqrs",
       "backend",
       "architecture"
-    ]
+    ],
+    "title_en_us": "SOS Location: Clean Architecture + CQRS on .NET 10",
+    "title_ja_jp": "SOS Location：.NET 10 で Clean Architecture + CQRS",
+    "summary_en_us": "Clean Architecture, CQRS with MediatR and domain events in the SOS Location backend. How we structured code for crisis-scenario resilience.",
+    "summary_ja_jp": "SOS Location バックエンドにおける Clean Architecture、MediatR による CQRS、ドメインイベント。危機シナリオに耐える構造化の実践。"
   },
   {
     "title": "SOS Location: Motor WebGL 3D de visualização de cidades em tempo real",
-    "url": "/publications/2026-04-05-1200-sos-location-webgl-3d-city-engine/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/",
     "kind": "post",
     "summary": "Como construímos um motor WebGL 2.0 com Three.js para renderizar cidades completas com terreno, edificações 3D e camadas de desastre ao vivo.",
     "keywords": [
@@ -61,44 +95,60 @@
       "gis",
       "3d",
       "typescript"
-    ]
+    ],
+    "title_en_us": "SOS Location: WebGL 3D City Engine for Real-Time Visualization",
+    "title_ja_jp": "SOS Location：リアルタイム都市可視化のための WebGL 3D エンジン",
+    "summary_en_us": "How we built a WebGL 2.0 engine with Three.js to render full cities with terrain, 3D buildings and live disaster layers.",
+    "summary_ja_jp": "Three.js による WebGL 2.0 エンジンを構築し、地形・3D 建物・ライブ災害レイヤを含む都市全体をどうレンダリングしたか。"
   },
   {
     "title": "SOS Location: Tecnologias, ferramentas e exemplos",
-    "url": "/publications/2026-04-05-1100-sos-location-stack/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-05-1100-sos-location-stack/",
     "kind": "post",
     "summary": "Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location.",
     "keywords": [
       "gis",
       "techstack",
       "sos"
-    ]
+    ],
+    "title_en_us": "SOS Location: Technologies, Tools and Examples",
+    "title_ja_jp": "SOS Location：技術スタック、ツール、サンプル",
+    "summary_en_us": "Full overview of SOS Location's stack, key concepts and code examples.",
+    "summary_ja_jp": "SOS Location のスタック、主要概念、コード例の総覧。"
   },
   {
     "title": "SOS Location: Fluxos, arquitetura e diagramas",
-    "url": "/publications/2026-04-05-1000-sos-location-flow-architecture/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-05-1000-sos-location-flow-architecture/",
     "kind": "post",
     "summary": "Descrição dos pipelines do SOS Location, diagramas e exemplos de código.",
     "keywords": [
       "gis",
       "architecture",
       "sos"
-    ]
+    ],
+    "title_en_us": "SOS Location: Flows, Architecture and Diagrams",
+    "title_ja_jp": "SOS Location：フロー、アーキテクチャ、図解",
+    "summary_en_us": "Description of SOS Location pipelines, diagrams and code examples.",
+    "summary_ja_jp": "SOS Location のパイプライン、ダイアグラム、コード例の解説。"
   },
   {
     "title": "SOS Location: Regras de negócio, contratos e operação",
-    "url": "/publications/2026-04-05-0900-sos-location-business-rules/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-05-0900-sos-location-business-rules/",
     "kind": "post",
     "summary": "Catálogo completo das regras de negócio que sustentam o SOS Location.",
     "keywords": [
       "gis",
       "operations",
       "sos"
-    ]
+    ],
+    "title_en_us": "SOS Location: Business Rules, Contracts and Operations",
+    "title_ja_jp": "SOS Location：ビジネスルール、契約、運用",
+    "summary_en_us": "Complete catalog of the business rules that sustain SOS Location.",
+    "summary_ja_jp": "SOS Location を支えるビジネスルールの完全なカタログ。"
   },
   {
     "title": "A Bio-matemática da Araucária: Modelagem e Simetria",
-    "url": "/publications/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/",
     "kind": "post",
     "summary": "Uma exploração sobre os padrões matemáticos que regem a estrutura da Araucaria angustifolia, de verticilos a séries exponenciais de crescimento.",
     "keywords": [
@@ -106,11 +156,15 @@
       "geometria",
       "araucaria",
       "natureza"
-    ]
+    ],
+    "title_en_us": "The Bio-Mathematics of the Araucaria: Modeling and Symmetry",
+    "title_ja_jp": "アラウカリアの生物数学：モデリングと対称性",
+    "summary_en_us": "An exploration of the mathematical patterns that govern the structure of Araucaria angustifolia, from whorls to exponential growth series.",
+    "summary_ja_jp": "Araucaria angustifolia の構造を支配する数学的パターンの探求。輪生から指数関数的成長系列まで。"
   },
   {
     "title": "Tecnologia de Pulso: Do HEMP ao Micro-ondas de Alta Potência",
-    "url": "/publications/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/",
+    "url": "https://nhmatsumoto.github.io/posts/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/",
     "kind": "post",
     "summary": "Uma análise técnica sobre a geração artificial de pulsos eletromagnéticos, do Efeito Compton ao Gerador de Compressão de Fluxo.",
     "keywords": [
@@ -118,11 +172,15 @@
       "defense",
       "electromagnetism",
       "pulse-power"
-    ]
+    ],
+    "title_en_us": "Pulse Technology: From HEMP to High-Power Microwaves",
+    "title_ja_jp": "パルス技術：HEMP から高出力マイクロ波まで",
+    "summary_en_us": "A technical analysis of artificial electromagnetic pulse generation, from the Compton effect to the flux compression generator.",
+    "summary_ja_jp": "人工電磁パルス生成の技術分析。コンプトン効果から磁束圧縮発電機まで。"
   },
   {
     "title": "Sopros Estelares: De Supernovas a Space Weather",
-    "url": "/publications/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/",
+    "url": "https://nhmatsumoto.github.io/posts/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/",
     "kind": "post",
     "summary": "Anatomia dos fenômenos astrofísicos que geram emissões eletromagnéticas extremas e seu impacto nos sistemas tecnológicos.",
     "keywords": [
@@ -130,11 +188,15 @@
       "science",
       "space-weather",
       "radiation"
-    ]
+    ],
+    "title_en_us": "Stellar Blasts: From Supernovae to Space Weather",
+    "title_ja_jp": "星々の息吹：超新星から宇宙天気へ",
+    "summary_en_us": "Anatomy of astrophysical phenomena that produce extreme electromagnetic emissions and their impact on technological systems.",
+    "summary_ja_jp": "極端な電磁放射を生み出す天体物理学的現象の解剖と、それが技術システムに及ぼす影響。"
   },
   {
     "title": "Engenharia de Resiliência Eletromagnética e Acoplamento",
-    "url": "/publications/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/",
+    "url": "https://nhmatsumoto.github.io/posts/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/",
     "kind": "post",
     "summary": "Do ponto zero à ruptura de junções: como circuitos reais falham sob transientes de alta intensidade.",
     "keywords": [
@@ -142,11 +204,15 @@
       "electronics",
       "resilience",
       "security"
-    ]
+    ],
+    "title_en_us": "Electromagnetic Resilience Engineering and Coupling",
+    "title_ja_jp": "電磁レジリエンス工学と結合",
+    "summary_en_us": "From ground zero to junction breakdown: how real circuits fail under high-intensity transients.",
+    "summary_ja_jp": "グラウンド・ゼロから接合破壊まで：現実の回路が高強度過渡現象下でどう壊れるか。"
   },
   {
     "title": "A Física dos Pulsos Dispersos: Além do EMP Convencional",
-    "url": "/publications/20260404-demp-physics-fisica-demp-pulsos-dispersos/",
+    "url": "https://nhmatsumoto.github.io/posts/20260404-demp-physics-fisica-demp-pulsos-dispersos/",
     "kind": "post",
     "summary": "Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos.",
     "keywords": [
@@ -154,23 +220,15 @@
       "astrophysics",
       "electromagnetism",
       "science"
-    ]
-  },
-  {
-    "title": "Topologias de Conhecimento: O Grafo Hiro",
-    "url": "/publications/20260404-brain-map-topology-brain-map-topology-hiro/",
-    "kind": "post",
-    "summary": "Explorando a implementação de uma hierarquia D3.js para visualizar a inteligência técnica de forma não-linear.",
-    "keywords": [
-      "visual-computing",
-      "graphs",
-      "d3js",
-      "architecture"
-    ]
+    ],
+    "title_en_us": "The Physics of Dispersed Pulses: Beyond Conventional EMP",
+    "title_ja_jp": "分散パルスの物理学：従来の EMP を超えて",
+    "summary_en_us": "A deep exploration of DEMP phenomena, GRBs and the dissipation of electromagnetic pulses in dispersive media.",
+    "summary_ja_jp": "DEMP 現象、ガンマ線バースト、分散性媒質中の電磁パルス減衰の深い考察。"
   },
   {
     "title": "O Despertar do Technical Knowledge OS v2",
-    "url": "/publications/20260404-knowledge-os-v2-technical-knowledge-os-v2/",
+    "url": "https://nhmatsumoto.github.io/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/",
     "kind": "post",
     "summary": "Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico.",
     "keywords": [
@@ -178,11 +236,15 @@
       "architecture",
       "knowledge-os",
       "hiro"
-    ]
+    ],
+    "title_en_us": "The Awakening of Technical Knowledge OS v2",
+    "title_ja_jp": "Technical Knowledge OS v2 の覚醒",
+    "summary_en_us": "A journey through the modularization of the rendering engine and the concept of an operating system for technical intellect.",
+    "summary_ja_jp": "レンダリングエンジンのモジュール化と、技術的知性のための OS という構想を巡る旅。"
   },
   {
     "title": "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
-    "url": "/publications/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/",
     "kind": "post",
     "summary": "Como conceitos térmicos e de mecânica estatística moldam o treinamento de IAs modernas, de Hopfield Networks a Diffusion Models.",
     "keywords": [
@@ -191,11 +253,15 @@
       "entropia",
       "redes-neurais",
       "diffusao"
-    ]
+    ],
+    "title_en_us": "Physics-Inspired AI: Entropy and Energy in Neural Networks",
+    "title_ja_jp": "物理学に着想を得た AI：ニューラルネットのエントロピーとエネルギー",
+    "summary_en_us": "How thermal and statistical-mechanics concepts shape the training of modern AI, from Hopfield Networks to Diffusion Models.",
+    "summary_ja_jp": "熱力学や統計力学の概念が、Hopfield Network から Diffusion Model まで、現代 AI の学習をいかに形作ってきたか。"
   },
   {
     "title": "Computação Quântica: O Poder Além dos Bits",
-    "url": "/publications/2026-04-03-2500-computacao-quantica-qbits-vs-bits/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-2500-computacao-quantica-qbits-vs-bits/",
     "kind": "post",
     "summary": "Uma visão clara sobre os Qubits, superposição e como o poder quântico pode resolver problemas impossíveis para computadores clássicos.",
     "keywords": [
@@ -203,11 +269,15 @@
       "computacao",
       "bits-vs-qubits",
       "tecnologia"
-    ]
+    ],
+    "title_en_us": "Quantum Computing: Power Beyond Bits",
+    "title_ja_jp": "量子コンピューティング：ビットを超えた力",
+    "summary_en_us": "A clear view on qubits, superposition, and how quantum power can solve problems impossible for classical computers.",
+    "summary_ja_jp": "量子ビット、重ね合わせ、そして古典コンピュータでは不可能な問題を量子の力がどう解くかについての明瞭な概観。"
   },
   {
     "title": "O Universo Quântico: Além da Lógica Clássica",
-    "url": "/publications/2026-04-03-2400-introducao-intuitiva-fisica-quantica/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-2400-introducao-intuitiva-fisica-quantica/",
     "kind": "post",
     "summary": "Uma jornada intuitiva pela física quântica. Superposição, entrelaçamento e por que o observador muda a realidade.",
     "keywords": [
@@ -215,11 +285,15 @@
       "quantica",
       "ciencia",
       "teoria"
-    ]
+    ],
+    "title_en_us": "The Quantum Universe: Beyond Classical Logic",
+    "title_ja_jp": "量子宇宙：古典論理の先へ",
+    "summary_en_us": "An intuitive journey through quantum physics. Superposition, entanglement, and why the observer changes reality.",
+    "summary_ja_jp": "量子物理への直感的な旅。重ね合わせ、もつれ、そして観測者がなぜ現実を変えるのか。"
   },
   {
     "title": "Simulação de Partículas: O poder dos Métodos de Monte Carlo",
-    "url": "/publications/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/",
     "kind": "post",
     "summary": "Explorando a simulação do universo e sistemas complexos usando estatística, caminhos aleatórios e leis da física codificadas.",
     "keywords": [
@@ -228,11 +302,15 @@
       "simulacao",
       "monte-carlo",
       "algoritmos"
-    ]
+    ],
+    "title_en_us": "Particle Simulation: The Power of Monte Carlo Methods",
+    "title_ja_jp": "粒子シミュレーション：モンテカルロ法の威力",
+    "summary_en_us": "Exploring the simulation of the universe and complex systems using statistics, random walks and encoded laws of physics.",
+    "summary_ja_jp": "統計、ランダムウォーク、コード化された物理法則を用いた宇宙と複雑系のシミュレーション探求。"
   },
   {
     "title": "Excelência em Dados: Pilhas, Filas e Árvores",
-    "url": "/publications/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/",
     "kind": "post",
     "summary": "Por que a escolha da estrutura de dados correta é mais importante do que o próprio algoritmo para a performance de sistemas complexos.",
     "keywords": [
@@ -240,11 +318,15 @@
       "computacao",
       "desempenho",
       "engenharia"
-    ]
+    ],
+    "title_en_us": "Excellence in Data: Stacks, Queues and Trees",
+    "title_ja_jp": "データの美学：スタック、キュー、ツリー",
+    "summary_en_us": "Why choosing the right data structure matters more than the algorithm itself for the performance of complex systems.",
+    "summary_ja_jp": "複雑なシステムのパフォーマンスにおいて、アルゴリズムよりも適切なデータ構造の選択が重要である理由。"
   },
   {
     "title": "Algoritmos e Big O: Entendendo a Eficiência do Código",
-    "url": "/publications/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/",
     "kind": "post",
     "summary": "Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade.",
     "keywords": [
@@ -252,11 +334,15 @@
       "computacao",
       "big-o",
       "performance"
-    ]
+    ],
+    "title_en_us": "Algorithms and Big O: Understanding Code Efficiency",
+    "title_ja_jp": "アルゴリズムと Big O：コード効率の理解",
+    "summary_en_us": "An intuitive introduction to algorithmic complexity (time and space) and why Big O is the definitive metric for scalability.",
+    "summary_ja_jp": "アルゴリズムの計算量（時間と空間）への直感的な入門と、Big O がスケーラビリティの決定的な指標である理由。"
   },
   {
     "title": "Daniel Kahneman: Rápido e Devagar - A Economia Comportamental",
-    "url": "/publications/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/",
     "kind": "post",
     "summary": "Uma homenagem ao psicólogo que ganhou o Nobel de Economia ao provar que o ser humano não é tão racional quanto gosta de acreditar.",
     "keywords": [
@@ -265,11 +351,15 @@
       "psicologia",
       "tomada-de-decisão",
       "Nobel"
-    ]
+    ],
+    "title_en_us": "Daniel Kahneman: Thinking, Fast and Slow — Behavioral Economics",
+    "title_ja_jp": "ダニエル・カーネマン：ファスト & スロー — 行動経済学",
+    "summary_en_us": "A tribute to the psychologist who won the Nobel in Economics by proving humans are not as rational as they like to believe.",
+    "summary_ja_jp": "人間は自分が信じるほど合理的ではないことを証明し、ノーベル経済学賞を受賞した心理学者へのオマージュ。"
   },
   {
     "title": "Projeto Manhattan: A Ciência da Bomba",
-    "url": "/publications/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/",
     "kind": "post",
     "summary": "Uma análise sobre o maior esforço científico-militar da história, de Einstein e Oppenheimer aos testes de Trinity.",
     "keywords": [
@@ -277,11 +367,15 @@
       "física",
       "guerra",
       "projeto-manhattan"
-    ]
+    ],
+    "title_en_us": "The Manhattan Project: The Science of the Bomb",
+    "title_ja_jp": "マンハッタン計画：爆弾の科学",
+    "summary_en_us": "An analysis of the largest scientific-military effort in history, from Einstein and Oppenheimer to the Trinity tests.",
+    "summary_ja_jp": "史上最大の科学的・軍事的努力の分析。アインシュタインとオッペンハイマーからトリニティ実験まで。"
   },
   {
     "title": "Segunda Guerra Mundial: O Motor da Inovação Tecnológica",
-    "url": "/publications/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/",
     "kind": "post",
     "summary": "Uma análise sobre como o maior conflito da história forçou o nascimento do radar, computadores digitais e motores a jato.",
     "keywords": [
@@ -289,11 +383,15 @@
       "tecnologia",
       "guerra",
       "inovação"
-    ]
+    ],
+    "title_en_us": "World War II: The Engine of Technological Innovation",
+    "title_ja_jp": "第二次世界大戦：技術革新のエンジン",
+    "summary_en_us": "How the largest conflict in history forced the birth of radar, digital computers and jet engines.",
+    "summary_ja_jp": "史上最大の紛争が、レーダー、デジタルコンピュータ、ジェットエンジンの誕生をいかに強制したか。"
   },
   {
     "title": "Resiliência e Escala: Sistemas orientados a Filas de Mensageria",
-    "url": "/publications/2026-04-03-1600-sistemas-orientados-a-filas/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1600-sistemas-orientados-a-filas/",
     "kind": "post",
     "summary": "Por que desacoplar sistemas com filas (RabbitMQ, Azure Service Bus) é o segredo para arquiteturas distribuídas inquebráveis.",
     "keywords": [
@@ -302,11 +400,15 @@
       "filas",
       "mensageria",
       "rabbitmq"
-    ]
+    ],
+    "title_en_us": "Resilience and Scale: Queue-Oriented Systems",
+    "title_ja_jp": "レジリエンスとスケール：キュー指向システム",
+    "summary_en_us": "Why decoupling systems with queues (RabbitMQ, Azure Service Bus) is the secret to unbreakable distributed architectures.",
+    "summary_ja_jp": "キュー（RabbitMQ、Azure Service Bus）による疎結合が、壊れない分散アーキテクチャの秘訣である理由。"
   },
   {
     "title": "Richard Feynman: O Prazer de Descobrir e o Pensamento Quântico",
-    "url": "/publications/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/",
     "kind": "post",
     "summary": "Uma homenagem ao gênio que ensinou o mundo a pensar a partir dos primeiros princípios, da física de partículas à nanotecnologia.",
     "keywords": [
@@ -315,11 +417,15 @@
       "física",
       "ciência",
       "biografia"
-    ]
+    ],
+    "title_en_us": "Richard Feynman: The Pleasure of Finding Things Out and Quantum Thinking",
+    "title_ja_jp": "リチャード・ファインマン：発見する喜びと量子的思考",
+    "summary_en_us": "A tribute to the genius who taught the world to think from first principles, from particle physics to nanotechnology.",
+    "summary_ja_jp": "素粒子物理から ナノテクノロジー まで、第一原理から考えることを世界に教えた天才へのオマージュ。"
   },
   {
     "title": "Alan Turing: O Código Enigma e o Nascimento da IA",
-    "url": "/publications/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/",
     "kind": "post",
     "summary": "Uma homenagem ao pai da computação moderna, desde a quebra do Enigma à fundação teórica da Inteligência Artificial.",
     "keywords": [
@@ -328,11 +434,15 @@
       "ia",
       "computação",
       "criptografia"
-    ]
+    ],
+    "title_en_us": "Alan Turing: The Enigma Code and the Birth of AI",
+    "title_ja_jp": "アラン・チューリング：エニグマ暗号と AI の誕生",
+    "summary_en_us": "A tribute to the father of modern computing, from breaking the Enigma to laying the theoretical foundations of Artificial Intelligence.",
+    "summary_ja_jp": "エニグマ解読から人工知能の理論的基盤の構築まで、現代コンピューティングの父へのオマージュ。"
   },
   {
     "title": "Bill Gates e a Microsoft: Do Desktop à Ubiquidade",
-    "url": "/publications/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/",
     "kind": "post",
     "summary": "Uma análise sobre a visão de Gates de 'um computador em cada mesa' e como a Microsoft moldou a indústria do software moderno.",
     "keywords": [
@@ -340,11 +450,15 @@
       "microsoft",
       "biografia",
       "software"
-    ]
+    ],
+    "title_en_us": "Bill Gates and Microsoft: From the Desktop to Ubiquity",
+    "title_ja_jp": "ビル・ゲイツとマイクロソフト：デスクトップから遍在へ",
+    "summary_en_us": "An analysis of Gates' vision of 'a computer on every desk' and how Microsoft shaped the modern software industry.",
+    "summary_ja_jp": "「すべての机にコンピュータを」というゲイツのビジョンと、マイクロソフトが現代ソフトウェア産業を形作った歩みの分析。"
   },
   {
     "title": "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos",
-    "url": "/publications/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/",
     "kind": "post",
     "summary": "Uma análise profunda sobre o sistema de tipos Turing-complete do TypeScript, explorando tipos condicionais, inferência e utilitários de transformação.",
     "keywords": [
@@ -352,11 +466,15 @@
       "javascript",
       "tipagem",
       "frontend"
-    ]
+    ],
+    "title_en_us": "Advanced TypeScript: Type Mapping and Complex Generics",
+    "title_ja_jp": "上級 TypeScript：型マッピングと複雑なジェネリクス",
+    "summary_en_us": "A deep analysis of TypeScript's Turing-complete type system, covering conditional types, inference and transformation utilities.",
+    "summary_ja_jp": "チューリング完全な TypeScript 型システムの深堀り。条件型、型推論、変換ユーティリティを扱う。"
   },
   {
     "title": "TDD: O Ciclo Red-Green-Refactor como Proteção de Domínio",
-    "url": "/publications/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/",
     "kind": "post",
     "summary": "Uma análise técnica sobre o Test-Driven Development, de como testes falhos garantem que o código realmente funciona ao refactor seguro.",
     "keywords": [
@@ -364,11 +482,15 @@
       "tdd",
       "testes",
       "engenharia"
-    ]
+    ],
+    "title_en_us": "TDD: The Red-Green-Refactor Cycle as Domain Protection",
+    "title_ja_jp": "TDD：ドメインを守る Red-Green-Refactor サイクル",
+    "summary_en_us": "A technical analysis of Test-Driven Development: from failing tests that prove code actually works to safe refactors.",
+    "summary_ja_jp": "テスト駆動開発の技術分析。コードが実際に動くことを保証する失敗テストから、安全なリファクタリングまで。"
   },
   {
     "title": "Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos",
-    "url": "/publications/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/",
     "kind": "post",
     "summary": "Uma análise sobre a segurança de tempo de compilação versus a agilidade de tempo de execução, explorando tipagem forte, fraca e duck typing.",
     "keywords": [
@@ -376,11 +498,15 @@
       "linguagens",
       "tipagem",
       "engenharia"
-    ]
+    ],
+    "title_en_us": "Type Systems: Static vs Dynamic — Semantic Tradeoffs",
+    "title_ja_jp": "型システム：静的 vs 動的 — 意味論的トレードオフ",
+    "summary_en_us": "An analysis of compile-time safety vs runtime agility, exploring strong, weak and duck typing.",
+    "summary_ja_jp": "コンパイル時の安全性と実行時の機敏さの対立。強い型付け・弱い型付け・ダックタイピングを探る。"
   },
   {
     "title": "A anatomia do pensamento em agentes: transformando intenção em execução",
-    "url": "/publications/2026-04-03-1200-fluxo-pensamento-agentes/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1200-fluxo-pensamento-agentes/",
     "kind": "post",
     "summary": "Uma análise sobre como o 'Chain of Thought' e a estruturação de planos permitem que agentes de IA resolvam tarefas complexas com precisão.",
     "keywords": [
@@ -388,11 +514,15 @@
       "agentes",
       "chain-of-thought",
       "metacognicao"
-    ]
+    ],
+    "title_en_us": "The Anatomy of Thought in Agents: Turning Intent into Execution",
+    "title_ja_jp": "エージェントの思考の解剖：意図を実行へと変える",
+    "summary_en_us": "An analysis of how Chain of Thought and plan structuring enable AI agents to solve complex tasks with precision.",
+    "summary_ja_jp": "Chain of Thought と計画の構造化によって、AI エージェントが複雑なタスクを正確に解決する仕組みの分析。"
   },
   {
     "title": "Redes Neurais do Zero: Implementação Matemática em Python",
-    "url": "/publications/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/",
     "kind": "post",
     "summary": "Uma jornada do neurônio de McCulloch-Pitts ao Backpropagation, implementando uma rede neural densa usando apenas NumPy.",
     "keywords": [
@@ -400,11 +530,15 @@
       "matemática",
       "python",
       "machine-learning"
-    ]
+    ],
+    "title_en_us": "Neural Networks from Scratch: Mathematical Implementation in Python",
+    "title_ja_jp": "ゼロから作るニューラルネット：Python による数学的実装",
+    "summary_en_us": "A journey from the McCulloch-Pitts neuron to backpropagation, implementing a dense neural network using only NumPy.",
+    "summary_ja_jp": "マッカロック・ピッツのニューロンから誤差逆伝播まで。NumPy だけで密結合ニューラルネットを実装する旅。"
   },
   {
     "title": "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória",
-    "url": "/publications/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/",
     "kind": "post",
     "summary": "Uma análise profunda sobre o runtime do .NET, focando em Garbage Collector (GC), Just-In-Time compilation e Native AOT para microsserviços.",
     "keywords": [
@@ -412,11 +546,15 @@
       "performance",
       "runtime",
       "gc"
-    ]
+    ],
+    "title_en_us": ".NET Performance: JIT, AOT and the Cost of Memory Allocation",
+    "title_ja_jp": ".NET のパフォーマンス：JIT、AOT、メモリ割り当てのコスト",
+    "summary_en_us": "A deep dive into the .NET runtime focused on the Garbage Collector, Just-In-Time compilation and Native AOT for microservices.",
+    "summary_ja_jp": ".NET ランタイムの深堀り。GC、JIT、マイクロサービス向け Native AOT に焦点を当てて。"
   },
   {
     "title": "Flutter & Dart: Arquitetura de Estados e Performance Mobile",
-    "url": "/publications/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/",
     "kind": "post",
     "summary": "Uma análise técnica sobre a renderização do Skia/Impeller e como padrões como Riverpod e Bloc afetam o ciclo de vida do widget.",
     "keywords": [
@@ -424,11 +562,15 @@
       "flutter",
       "dart",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Flutter & Dart: State Architecture and Mobile Performance",
+    "title_ja_jp": "Flutter と Dart：状態アーキテクチャとモバイルパフォーマンス",
+    "summary_en_us": "A technical analysis of Skia/Impeller rendering and how patterns like Riverpod and Bloc affect the widget lifecycle.",
+    "summary_ja_jp": "Skia/Impeller レンダリングの技術分析と、Riverpod や Bloc といったパターンがウィジェットのライフサイクルに与える影響。"
   },
   {
     "title": "Engenharia Cognitiva: Como Agentes de IA 'Pensam'",
-    "url": "/publications/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/",
     "kind": "post",
     "summary": "Uma análise sobre a orquestração de pensamento em LLMs, do ciclo Percepção-Ação à estrutura de memória de curto e longo prazo (RAG).",
     "keywords": [
@@ -436,11 +578,15 @@
       "agentes",
       "cognição",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Cognitive Engineering: How AI Agents 'Think'",
+    "title_ja_jp": "認知エンジニアリング：AI エージェントはどう「考える」のか",
+    "summary_en_us": "An analysis of thought orchestration in LLMs, from the perception-action loop to short- and long-term memory (RAG).",
+    "summary_ja_jp": "LLM における思考のオーケストレーション分析。知覚・行動ループから短期・長期記憶（RAG）まで。"
   },
   {
     "title": "Design Patterns: O que ainda é Relevante no C# Moderno?",
-    "url": "/publications/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/",
     "kind": "post",
     "summary": "Uma revisão crítica dos padrões GoF, analisando como o C# 12 e 13 tornaram alguns obsoletos através de registros e correspondência de padrões.",
     "keywords": [
@@ -448,11 +594,15 @@
       "dotnet",
       "design-patterns",
       "engenharia"
-    ]
+    ],
+    "title_en_us": "Design Patterns: What Still Matters in Modern C#?",
+    "title_ja_jp": "デザインパターン：モダン C# で今も有効なのは？",
+    "summary_en_us": "A critical review of GoF patterns, analyzing how C# 12 and 13 made some obsolete through records and pattern matching.",
+    "summary_ja_jp": "GoF パターンの批判的レビュー。C# 12/13 のレコードやパターンマッチングによって陳腐化したものを分析。"
   },
   {
     "title": "Clean Code & SOLID: O Custo da Dívida Técnica",
-    "url": "/publications/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/",
     "kind": "post",
     "summary": "Uma análise sobre a manutenibilidade de longo prazo, de nomes de variáveis expressivos aos cinco princípios de arquitetura de classes.",
     "keywords": [
@@ -460,11 +610,15 @@
       "arquitetura",
       "solid",
       "manutenibilidade"
-    ]
+    ],
+    "title_en_us": "Clean Code & SOLID: The Cost of Technical Debt",
+    "title_ja_jp": "Clean Code と SOLID：技術的負債のコスト",
+    "summary_en_us": "An analysis of long-term maintainability, from expressive variable names to the five principles of class architecture.",
+    "summary_ja_jp": "表現力のある変数名からクラス設計の五原則まで、長期的な保守性に関する分析。"
   },
   {
     "title": "Dapper vs EF Core: Quando a Performance Supera a Abstração",
-    "url": "/publications/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/",
     "kind": "post",
     "summary": "Uma análise comparativa sobre ORMs no ecossistema .NET, focando em ciclos de vida de objetos, rastreamento e overhead de consulta.",
     "keywords": [
@@ -472,11 +626,15 @@
       "performance",
       "orm",
       "banco-de-dados"
-    ]
+    ],
+    "title_en_us": "Dapper vs EF Core: When Performance Beats Abstraction",
+    "title_ja_jp": "Dapper vs EF Core：パフォーマンスが抽象化を上回るとき",
+    "summary_en_us": "A comparative analysis of ORMs in the .NET ecosystem, focused on object lifecycles, tracking, and query overhead.",
+    "summary_ja_jp": ".NET エコシステムにおける ORM の比較分析。オブジェクトのライフサイクル、トラッキング、クエリオーバーヘッドに注目。"
   },
   {
     "title": "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)",
-    "url": "/publications/2026-04-03-1100-poc-minerando-logs/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1100-poc-minerando-logs/",
     "kind": "post",
     "summary": "Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável.",
     "keywords": [
@@ -485,11 +643,15 @@
       "privacidade",
       "lgpd",
       "embeddings"
-    ]
+    ],
+    "title_en_us": "PoC: Mining Conversation Logs to Generate Posts with Traceability and Privacy (LGPD)",
+    "title_ja_jp": "PoC：対話ログを採掘し、追跡性とプライバシー（LGPD）を両立した記事を生成",
+    "summary_en_us": "Concept note on extracting technical knowledge from anonymized chat logs and turning them into publishable content.",
+    "summary_ja_jp": "匿名化されたチャットログから技術的知見を抽出し、公開可能なコンテンツに変換する構想ノート。"
   },
   {
     "title": "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua",
-    "url": "/publications/2026-04-03-1000-neuroplasticidade-agentes/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-1000-neuroplasticidade-agentes/",
     "kind": "post",
     "summary": "Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada.",
     "keywords": [
@@ -497,11 +659,15 @@
       "agentes",
       "feedback",
       "neuroplasticidade"
-    ]
+    ],
+    "title_en_us": "'Neuroplasticity' in Agent Systems: Feedback, Memory and Continuous Improvement",
+    "title_ja_jp": "エージェントシステムにおける「神経可塑性」：フィードバック・記憶・継続的改善",
+    "summary_en_us": "An architecture proposal for AI agents that learn and evolve through feedback cycles and curated memory.",
+    "summary_ja_jp": "フィードバック・サイクルとキュレートされた記憶を通じて学習・進化する AI エージェントのアーキテクチャ提案。"
   },
   {
     "title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
-    "url": "/publications/2026-04-03-0900-orquestrador-agentes-ddd/",
+    "url": "https://nhmatsumoto.github.io/posts/2026-04-03-0900-orquestrador-agentes-ddd/",
     "kind": "post",
     "summary": "Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.",
     "keywords": [
@@ -509,44 +675,93 @@
       "arquitetura",
       "agentes-ia",
       "inteligência-artificial"
-    ]
+    ],
+    "title_en_us": "DDD Agent Orchestrator: Translating Natural Language into Ubiquitous Language",
+    "title_ja_jp": "DDD エージェント・オーケストレーター：自然言語をユビキタス言語へ",
+    "summary_en_us": "Technical note on converting natural language into DDD artifacts via multi-agent AI orchestration.",
+    "summary_ja_jp": "複数の AI エージェントのオーケストレーションを用いて、自然言語を DDD のアーティファクトに変換する技術ノート。"
   },
   {
-    "title": "DDD boundaries for agent systems",
-    "url": "/publications/20260402-203000-ddd-boundaries-for-agent-systems/",
+    "title": "Limites de DDD para sistemas com agentes",
+    "url": "https://nhmatsumoto.github.io/posts/20260402-203000-ddd-boundaries-for-agent-systems/",
     "kind": "post",
     "summary": "Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.",
     "keywords": [
       "dotnet",
       "ddd",
       "ai"
-    ]
+    ],
+    "title_en_us": "DDD Boundaries for Agent Systems",
+    "title_ja_jp": "エージェントシステムのための DDD 境界",
+    "summary_en_us": "Practical notes on separating domain, tool execution and coordination policies in agent-based systems.",
+    "summary_ja_jp": "エージェントベースのシステムにおいて、ドメイン、ツール実行、調整ポリシーを分離する実践的なノート。"
   },
   {
-    "title": "GIS pipelines with event-driven services",
-    "url": "/publications/20260401-184500-gis-pipelines-with-event-driven-services/",
+    "title": "Pipelines GIS com serviços orientados a eventos",
+    "url": "https://nhmatsumoto.github.io/posts/20260401-184500-gis-pipelines-with-event-driven-services/",
     "kind": "post",
     "summary": "Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.",
     "keywords": [
       "gis",
       "dotnet",
       "architecture"
-    ]
+    ],
+    "title_en_us": "GIS Pipelines with Event-Driven Services",
+    "title_ja_jp": "イベント駆動サービスによる GIS パイプライン",
+    "summary_en_us": "How to handle geospatial ingestion, async processing and operational reads without turning the backend into an accidental monolith.",
+    "summary_ja_jp": "地理空間データの取り込み、非同期処理、運用向け読み取りを、バックエンドを偶発的なモノリスにせずに扱う方法。"
   },
   {
     "title": "Bem-vindo ao meu novo blog",
-    "url": "/publications/20260312-090000-primeiro-post/",
+    "url": "https://nhmatsumoto.github.io/posts/20260312-090000-primeiro-post/",
     "kind": "post",
     "summary": "O ponto de partida do Technical Knowledge OS: um notebook de engenharia versionado, focado em arquitetura, sistemas distribuídos e documentação viva.",
     "keywords": [
       "pessoal",
       "anuncio",
       "projeto"
+    ],
+    "title_en_us": "Welcome to My New Blog",
+    "title_ja_jp": "新しいブログへようこそ",
+    "summary_en_us": "The starting point of Technical Knowledge OS: a versioned engineering notebook focused on architecture, distributed systems and living documentation.",
+    "summary_ja_jp": "Technical Knowledge OS の出発点：アーキテクチャ、分散システム、生きたドキュメンテーションに焦点を当てた、バージョン管理されたエンジニアリング・ノートブック。"
+  },
+  {
+    "title": "Refatorando o shell visual do site",
+    "url": "https://nhmatsumoto.github.io/daily/20260420-223000-blueprint-refresh/",
+    "kind": "daily",
+    "summary": "Hoje o foco foi alinhar navegação, tipografia e background para que o site pareça um caderno técnico de verdade, não apenas um blog com grid decorativo.",
+    "keywords": [
+      "site",
+      "design-system",
+      "css"
     ]
   },
   {
-    "title": "Untitled Project",
-    "url": "/projects/sos-location/",
+    "title": "Boundary útil entre agente, domínio e tool layer",
+    "url": "https://nhmatsumoto.github.io/daily/20260419-071500-agent-boundaries-note/",
+    "kind": "daily",
+    "summary": "Reforcei uma heurística simples: se a decisão precisa sobreviver à troca de provider, ela não deveria morar no prompt.",
+    "keywords": [
+      "agents",
+      "ddd",
+      "architecture"
+    ]
+  },
+  {
+    "title": "Lendo GIS como sistema operacional de decisão",
+    "url": "https://nhmatsumoto.github.io/daily/20260417-201000-field-notes-gis-reading/",
+    "kind": "daily",
+    "summary": "Tenho pensado em GIS menos como mapa bonito e mais como camada operacional para decidir rápido em contextos com muito ruído.",
+    "keywords": [
+      "gis",
+      "systems",
+      "notes"
+    ]
+  },
+  {
+    "title": "SOS Location",
+    "url": "https://nhmatsumoto.github.io/projects/sos-location/",
     "kind": "project",
     "summary": "Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real.",
     "keywords": [
@@ -554,24 +769,30 @@
       "Node.js",
       "GIS",
       "Event-Driven"
-    ]
+    ],
+    "title_en_us": "SOS Location",
+    "title_ja_jp": "SOSロケーション",
+    "summary_en_us": "Disaster management platform that integrates geospatial data, weather and humanitarian resources in real time.",
+    "summary_ja_jp": "地理空間データ、気象情報、人道支援リソースをリアルタイムで統合する災害管理プラットフォーム。"
   },
   {
     "title": "nhmatsumoto.github.io",
-    "url": "/projects/nhmatsumoto-github-io/",
+    "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-github-io/",
     "kind": "project",
-    "summary": "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, visualização 3D interativa com Three.js, sistema de grafo de conhecimento e deploy via GitHub Pages.",
+    "summary": "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, conteúdo em TOML, busca client-side, i18n e deploy via GitHub Pages.",
     "keywords": [
       "Python",
-      "Three.js",
       "HTML",
       "CSS",
+      "JavaScript",
       "GitHub Pages"
-    ]
+    ],
+    "summary_en_us": "Personal site and Technical Knowledge OS: static site engine in Python, TOML content, client-side search, i18n and deploy via GitHub Pages.",
+    "summary_ja_jp": "個人サイト兼 Technical Knowledge OS。Python による静的サイト生成、TOML コンテンツ、クライアント側検索、i18n、GitHub Pages での配信。"
   },
   {
     "title": "SplitCosts",
-    "url": "/projects/splitcosts/",
+    "url": "https://nhmatsumoto.github.io/projects/splitcosts/",
     "kind": "project",
     "summary": "Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional.",
     "keywords": [
@@ -579,11 +800,13 @@
       "React",
       "PostgreSQL",
       "multi-tenant architecture"
-    ]
+    ],
+    "summary_en_us": "Household finance management application with focus on multi-tenant, UX and operational consistency.",
+    "summary_ja_jp": "マルチテナント、UX、運用一貫性を重視した家計管理アプリケーション。"
   },
   {
     "title": "GIS Incident Lab",
-    "url": "/projects/gis-incident-lab/",
+    "url": "https://nhmatsumoto.github.io/projects/gis-incident-lab/",
     "kind": "project",
     "summary": "Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta.",
     "keywords": [
@@ -591,56 +814,52 @@
       ".NET",
       "GIS",
       "event-driven services"
-    ]
+    ],
+    "summary_en_us": "Lab applied to GIS, geospatial data ingestion and operational projections for response teams.",
+    "summary_ja_jp": "GIS、地理空間データの取り込み、対応チーム向け運用投影に特化したラボ。"
   },
   {
     "title": "brumadinho_location",
-    "url": "/projects/brumadinho-location/",
+    "url": "https://nhmatsumoto.github.io/projects/brumadinho-location/",
     "kind": "project",
     "summary": "Conjunto de ferramentas geoespaciais para apoiar o resgate e localização de vítimas do desastre de Brumadinho/MG, utilizando dados públicos e coordenadas de referência.",
     "keywords": [
       "Python",
       "GIS",
       "Geolocation"
-    ]
-  },
-  {
-    "title": "ronaldinho-agent",
-    "url": "/projects/ronaldinho-agent/",
-    "kind": "project",
-    "summary": "Agente autônomo em Python com personalidade inspirada em Ronaldinho Gaúcho — arquitetura de decisão baseada em contexto, memória e interação conversacional.",
-    "keywords": [
-      "Python",
-      "LLM",
-      "AI Agents",
-      "Prompt Engineering"
-    ]
+    ],
+    "summary_en_us": "Set of geospatial tools to support the rescue and localization of victims of the Brumadinho/MG disaster, using public data and reference coordinates.",
+    "summary_ja_jp": "公的データと参照座標を用い、ブルマジーニョ／MG 災害の被害者救助と位置特定を支援する地理空間ツール群。"
   },
   {
     "title": "Apollo-11",
-    "url": "/projects/apollo-11/",
+    "url": "https://nhmatsumoto.github.io/projects/apollo-11/",
     "kind": "project",
     "summary": "Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar — referência histórica de engenharia de software embarcado.",
     "keywords": [
       "Assembly",
       "AGC",
       "Embedded Systems"
-    ]
+    ],
+    "summary_en_us": "Original Apollo 11 Guidance Computer (AGC) source code, including the command and lunar modules — a historical reference for embedded software engineering.",
+    "summary_ja_jp": "アポロ 11 号誘導コンピュータ（AGC）の指令船・月着陸船オリジナル・ソースコード。組み込みソフトウェア工学の歴史的リファレンス。"
   },
   {
     "title": "AutoMapper",
-    "url": "/projects/automapper/",
+    "url": "https://nhmatsumoto.github.io/projects/automapper/",
     "kind": "project",
     "summary": "Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET — elimina boilerplate de transformação entre camadas.",
     "keywords": [
       "C#",
       ".NET",
       "Reflection"
-    ]
+    ],
+    "summary_en_us": "Convention-based object-to-object mapping library for .NET — removes boilerplate when transforming data across layers.",
+    "summary_ja_jp": "規約ベースの .NET 用オブジェクトマッピング・ライブラリ。レイヤー間のデータ変換における定型コードを排除する。"
   },
   {
     "title": "Chess",
-    "url": "/projects/chess/",
+    "url": "https://nhmatsumoto.github.io/projects/chess/",
     "kind": "project",
     "summary": "Jogo de xadrez implementado em C# com foco em modelagem de domínio, validação de movimentos e representação do tabuleiro.",
     "keywords": [
@@ -648,22 +867,26 @@
       ".NET",
       "OOP",
       "Domain Modeling"
-    ]
+    ],
+    "summary_en_us": "Chess game implemented in C# with a focus on domain modeling, move validation and board representation.",
+    "summary_ja_jp": "ドメインモデリング、着手の検証、盤面表現に焦点を置いた C# 実装のチェスゲーム。"
   },
   {
     "title": "claw-code",
-    "url": "/projects/claw-code/",
+    "url": "https://nhmatsumoto.github.io/projects/claw-code/",
     "kind": "project",
     "summary": "Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade.",
     "keywords": [
       "Rust",
       "CLI",
       "AI Agents"
-    ]
+    ],
+    "summary_en_us": "Analysis and experimentation tooling for code-agent architectures, currently being rewritten in Rust for performance and portability.",
+    "summary_ja_jp": "コード系エージェントのアーキテクチャを分析・実験するツール群。パフォーマンスと移植性を狙って Rust への書き直し中。"
   },
   {
     "title": "DeepSeek-V3",
-    "url": "/projects/deepseek-v3/",
+    "url": "https://nhmatsumoto.github.io/projects/deepseek-v3/",
     "kind": "project",
     "summary": "Fork do DeepSeek-V3, modelo de linguagem com arquitetura Mixture-of-Experts (MoE) e Multi-head Latent Attention para inferência eficiente em larga escala.",
     "keywords": [
@@ -671,11 +894,13 @@
       "PyTorch",
       "Transformers",
       "MoE"
-    ]
+    ],
+    "summary_en_us": "Fork of DeepSeek-V3, a language model with Mixture-of-Experts (MoE) and Multi-head Latent Attention for efficient large-scale inference.",
+    "summary_ja_jp": "DeepSeek-V3 のフォーク。Mixture-of-Experts（MoE）と Multi-head Latent Attention を備え、大規模推論を効率化する言語モデル。"
   },
   {
     "title": "Financial",
-    "url": "/projects/financial/",
+    "url": "https://nhmatsumoto.github.io/projects/financial/",
     "kind": "project",
     "summary": "Aplicação monolítica de gestão financeira pessoal desenvolvida em C#/.NET, com foco em controle de despesas, categorização e relatórios.",
     "keywords": [
@@ -683,11 +908,13 @@
       ".NET",
       "Entity Framework",
       "SQL Server"
-    ]
+    ],
+    "summary_en_us": "Monolithic personal finance application developed in C#/.NET, focused on expense control, categorization and reporting.",
+    "summary_ja_jp": "C#/.NET で開発されたモノリシックな個人家計アプリ。支出管理、分類、レポーティングに注力。"
   },
   {
     "title": "gaussian-splatting",
-    "url": "/projects/gaussian-splatting/",
+    "url": "https://nhmatsumoto.github.io/projects/gaussian-splatting/",
     "kind": "project",
     "summary": "Fork da implementação original de 3D Gaussian Splatting — técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real.",
     "keywords": [
@@ -695,11 +922,13 @@
       "CUDA",
       "PyTorch",
       "Computer Vision"
-    ]
+    ],
+    "summary_en_us": "Fork of the original 3D Gaussian Splatting implementation — a neural rendering technique that represents 3D scenes as sets of Gaussians for real-time rendering.",
+    "summary_ja_jp": "3D Gaussian Splatting オリジナル実装のフォーク。3D シーンをガウス分布の集合で表現し、リアルタイムレンダリングを行うニューラル描画技法。"
   },
   {
     "title": "gemini-cli",
-    "url": "/projects/gemini-cli/",
+    "url": "https://nhmatsumoto.github.io/projects/gemini-cli/",
     "kind": "project",
     "summary": "Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem.",
     "keywords": [
@@ -707,11 +936,13 @@
       "Node.js",
       "Gemini API",
       "CLI"
-    ]
+    ],
+    "summary_en_us": "Fork of Gemini CLI — Google's AI agent that runs directly in the terminal with access to system tools, code editing and filesystem navigation.",
+    "summary_ja_jp": "Gemini CLI のフォーク。Google の AI エージェントが、システムツール・コード編集・ファイルシステム走査を備えて端末内で直接動作する。"
   },
   {
     "title": "Java-Servlet-Pages",
-    "url": "/projects/java-servlet-pages/",
+    "url": "https://nhmatsumoto.github.io/projects/java-servlet-pages/",
     "kind": "project",
     "summary": "Projeto de estudo com Java Servlets e JSP, cobrindo ciclo de vida de requisições HTTP, sessões, filtros e padrão MVC no servidor.",
     "keywords": [
@@ -719,11 +950,13 @@
       "Servlets",
       "JSP",
       "Tomcat"
-    ]
+    ],
+    "summary_en_us": "Study project using Java Servlets and JSP, covering HTTP request lifecycle, sessions, filters and the server-side MVC pattern.",
+    "summary_ja_jp": "Java Servlet と JSP を用いた学習プロジェクト。HTTP リクエストのライフサイクル、セッション、フィルター、サーバ側 MVC を扱う。"
   },
   {
     "title": "Leaflet",
-    "url": "/projects/leaflet/",
+    "url": "https://nhmatsumoto.github.io/projects/leaflet/",
     "kind": "project",
     "summary": "Fork do Leaflet, a biblioteca JavaScript mais popular para mapas interativos, utilizada como base nos projetos de GIS do ecossistema.",
     "keywords": [
@@ -731,11 +964,13 @@
       "GIS",
       "Maps",
       "WebGL"
-    ]
+    ],
+    "summary_en_us": "Fork of Leaflet, the most popular JavaScript library for interactive maps, used as a base in the ecosystem's GIS projects.",
+    "summary_ja_jp": "Leaflet のフォーク。インタラクティブマップで最も人気のある JavaScript ライブラリで、エコシステム内の GIS プロジェクトの基盤として利用。"
   },
   {
     "title": "macos",
-    "url": "/projects/macos/",
+    "url": "https://nhmatsumoto.github.io/projects/macos/",
     "kind": "project",
     "summary": "Fork do projeto Docker-OSX: virtualização de macOS dentro de containers Docker para testes de compatibilidade e desenvolvimento cross-platform.",
     "keywords": [
@@ -743,22 +978,26 @@
       "QEMU",
       "KVM",
       "macOS"
-    ]
+    ],
+    "summary_en_us": "Fork of Docker-OSX: macOS virtualization inside Docker containers for compatibility testing and cross-platform development.",
+    "summary_ja_jp": "Docker-OSX のフォーク。Docker コンテナ内で macOS を仮想化し、互換性テストとクロスプラットフォーム開発を可能にする。"
   },
   {
     "title": "MapleBR",
-    "url": "/projects/maplebr/",
+    "url": "https://nhmatsumoto.github.io/projects/maplebr/",
     "kind": "project",
     "summary": "Projeto com ferramentas e configurações para servidores MapleStory, incluindo scripts de build e automação via Makefile.",
     "keywords": [
       "Makefile",
       "C++",
       "Networking"
-    ]
+    ],
+    "summary_en_us": "Project with tooling and configuration for MapleStory servers, including build scripts and Makefile-based automation.",
+    "summary_ja_jp": "MapleStory サーバー向けのツールと構成を含むプロジェクト。ビルドスクリプトと Makefile による自動化を備える。"
   },
   {
     "title": "mermaid-live-editor",
-    "url": "/projects/mermaid-live-editor/",
+    "url": "https://nhmatsumoto.github.io/projects/mermaid-live-editor/",
     "kind": "project",
     "summary": "Fork do Mermaid Live Editor — aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação.",
     "keywords": [
@@ -766,11 +1005,13 @@
       "TypeScript",
       "Mermaid",
       "Monaco Editor"
-    ]
+    ],
+    "summary_en_us": "Fork of Mermaid Live Editor — a web app for real-time Mermaid diagram editing with instant preview and export.",
+    "summary_ja_jp": "Mermaid Live Editor のフォーク。Mermaid 図をリアルタイム編集し、即時プレビューとエクスポートを行う Web アプリ。"
   },
   {
     "title": "mermaid",
-    "url": "/projects/mermaid/",
+    "url": "https://nhmatsumoto.github.io/projects/mermaid/",
     "kind": "project",
     "summary": "Fork do Mermaid.js — ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual.",
     "keywords": [
@@ -778,11 +1019,13 @@
       "SVG",
       "Parsing",
       "Diagrams"
-    ]
+    ],
+    "summary_en_us": "Fork of Mermaid.js — a text-based diagram generator used extensively across the Technical Knowledge OS for visual documentation.",
+    "summary_ja_jp": "Mermaid.js のフォーク。Technical Knowledge OS の可視的ドキュメンテーション全体で広く使われる、テキストベースのダイアグラム生成ツール。"
   },
   {
     "title": "nhmatsumoto.exception.middleware",
-    "url": "/projects/nhmatsumoto-exception-middleware/",
+    "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-exception-middleware/",
     "kind": "project",
     "summary": "Middleware de tratamento global de exceções para ASP.NET Core, padronizando respostas de erro e logging em aplicações web.",
     "keywords": [
@@ -790,11 +1033,13 @@
       ".NET Core",
       "Middleware",
       "REST API"
-    ]
+    ],
+    "summary_en_us": "Global exception-handling middleware for ASP.NET Core, standardizing error responses and logging across web applications.",
+    "summary_ja_jp": "ASP.NET Core 向けのグローバル例外処理ミドルウェア。エラーレスポンスとログを Web アプリ全体で標準化する。"
   },
   {
     "title": "Playground-FE",
-    "url": "/projects/playground-fe/",
+    "url": "https://nhmatsumoto.github.io/projects/playground-fe/",
     "kind": "project",
     "summary": "Projeto frontend em React e TypeScript com integração ao Keycloak para autenticação, servindo como base para futuros desenvolvimentos com controle de acesso.",
     "keywords": [
@@ -802,43 +1047,51 @@
       "TypeScript",
       "Keycloak",
       "OAuth2"
-    ]
+    ],
+    "summary_en_us": "Frontend project in React and TypeScript with Keycloak integration for authentication, serving as a base for future developments requiring access control.",
+    "summary_ja_jp": "認証に Keycloak を統合した React・TypeScript フロントエンド。アクセス制御を必要とする将来の開発の基盤として利用。"
   },
   {
     "title": "prog_lib",
-    "url": "/projects/prog-lib/",
+    "url": "https://nhmatsumoto.github.io/projects/prog-lib/",
     "kind": "project",
     "summary": "Coleção de implementações de algoritmos e estruturas de dados clássicos, organizada como biblioteca de referência para estudo e consulta rápida.",
     "keywords": [
       "Algorithms",
       "Data Structures"
-    ]
+    ],
+    "summary_en_us": "Collection of classic algorithm and data-structure implementations, organized as a reference library for study and quick lookup.",
+    "summary_ja_jp": "古典的なアルゴリズムとデータ構造の実装コレクション。学習と素早い参照のためのライブラリとして整理。"
   },
   {
     "title": "QuickReaderv1",
-    "url": "/projects/quickreaderv1/",
+    "url": "https://nhmatsumoto.github.io/projects/quickreaderv1/",
     "kind": "project",
     "summary": "Aplicação de speed reading em TypeScript que apresenta texto em chunks otimizados para leitura rápida, com controle de velocidade e tracking de progresso.",
     "keywords": [
       "TypeScript",
       "React",
       "Speed Reading"
-    ]
+    ],
+    "summary_en_us": "Speed-reading app in TypeScript that presents text in optimized chunks for rapid reading, with speed control and progress tracking.",
+    "summary_ja_jp": "最適化されたチャンクで素早くテキストを表示する TypeScript 製の速読アプリ。速度制御と進捗追跡を備える。"
   },
   {
     "title": "react-data-grid",
-    "url": "/projects/react-data-grid/",
+    "url": "https://nhmatsumoto.github.io/projects/react-data-grid/",
     "kind": "project",
     "summary": "Fork do react-data-grid — componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados.",
     "keywords": [
       "React",
       "TypeScript",
       "Virtualization"
-    ]
+    ],
+    "summary_en_us": "Fork of react-data-grid — React data table component with sorting, filtering, inline editing and virtualization for large datasets.",
+    "summary_ja_jp": "react-data-grid のフォーク。ソート、フィルタ、インライン編集、大規模データの仮想化に対応した React データテーブル・コンポーネント。"
   },
   {
     "title": "ResponseMiddleware",
-    "url": "/projects/responsemiddleware/",
+    "url": "https://nhmatsumoto.github.io/projects/responsemiddleware/",
     "kind": "project",
     "summary": "Middleware ASP.NET Core para padronização de respostas HTTP, envolvendo resultados de controllers em um envelope consistente com metadados de sucesso/erro.",
     "keywords": [
@@ -846,11 +1099,13 @@
       ".NET Core",
       "Middleware",
       "REST API"
-    ]
+    ],
+    "summary_en_us": "ASP.NET Core middleware that standardizes HTTP responses by wrapping controller results in a consistent envelope with success/error metadata.",
+    "summary_ja_jp": "ASP.NET Core ミドルウェア。コントローラの結果を成功／失敗メタデータを含む一貫したエンベロープで包み、HTTP レスポンスを標準化する。"
   },
   {
     "title": "Security.Jwt",
-    "url": "/projects/security-jwt/",
+    "url": "https://nhmatsumoto.github.io/projects/security-jwt/",
     "kind": "project",
     "summary": "Biblioteca .NET para gerenciamento completo de JWT: rotação automática de chaves, endpoint JWKS, suporte a múltiplos algoritmos e armazenamento seguro de material criptográfico.",
     "keywords": [
@@ -859,22 +1114,26 @@
       "JWT",
       "Cryptography",
       "OAuth2"
-    ]
+    ],
+    "summary_en_us": ".NET library for end-to-end JWT management: automatic key rotation, JWKS endpoint, multi-algorithm support and secure cryptographic material storage.",
+    "summary_ja_jp": "エンドツーエンドの JWT 管理を提供する .NET ライブラリ。鍵の自動ローテーション、JWKS エンドポイント、複数アルゴリズム対応、暗号材料の安全保管。"
   },
   {
     "title": "SOS",
-    "url": "/projects/sos/",
+    "url": "https://nhmatsumoto.github.io/projects/sos/",
     "kind": "project",
     "summary": "Módulo auxiliar do ecossistema SOS Location com componentes compartilhados, utilitários e contratos de integração para os serviços de resposta a desastres.",
     "keywords": [
       "TypeScript",
       "Node.js",
       "GIS"
-    ]
+    ],
+    "summary_en_us": "Helper module of the SOS Location ecosystem with shared components, utilities and integration contracts for disaster-response services.",
+    "summary_ja_jp": "SOS Location エコシステムの補助モジュール。災害対応サービス向けの共有コンポーネント、ユーティリティ、連携契約を提供。"
   },
   {
     "title": "SplitCost-Backend",
-    "url": "/projects/splitcost-backend/",
+    "url": "https://nhmatsumoto.github.io/projects/splitcost-backend/",
     "kind": "project",
     "summary": "Backend do SplitCosts em .NET/C# com arquitetura multi-tenant, domain events, separação de contextos de leitura/escrita e projeções operacionais.",
     "keywords": [
@@ -883,11 +1142,13 @@
       "PostgreSQL",
       "Multi-tenant",
       "DDD"
-    ]
+    ],
+    "summary_en_us": "SplitCosts backend in .NET/C# with multi-tenant architecture, domain events, read/write context separation and operational projections.",
+    "summary_ja_jp": ".NET/C# による SplitCosts バックエンド。マルチテナント構造、ドメインイベント、読み書きコンテキストの分離、運用投影を備える。"
   },
   {
     "title": "SplitCosts-FE",
-    "url": "/projects/splitcosts-fe/",
+    "url": "https://nhmatsumoto.github.io/projects/splitcosts-fe/",
     "kind": "project",
     "summary": "Frontend do SplitCosts em React/TypeScript com Keycloak auth, visualização de despesas, saldos e reconciliação, consumindo o SplitCost-Backend via REST API.",
     "keywords": [
@@ -895,22 +1156,26 @@
       "TypeScript",
       "Keycloak",
       "REST API"
-    ]
+    ],
+    "summary_en_us": "SplitCosts frontend in React/TypeScript with Keycloak auth, expense visualization, balances and reconciliation, consuming the SplitCost-Backend via REST API.",
+    "summary_ja_jp": "React/TypeScript による SplitCosts フロントエンド。Keycloak 認証、支出可視化、残高、照合機能を備え、SplitCost-Backend を REST API 経由で利用。"
   },
   {
     "title": "system-prompts-and-models-of-ai-tools",
-    "url": "/projects/system-prompts-and-models-of-ai-tools/",
+    "url": "https://nhmatsumoto.github.io/projects/system-prompts-and-models-of-ai-tools/",
     "kind": "project",
     "summary": "Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros — referência para engenharia de prompts.",
     "keywords": [
       "Prompt Engineering",
       "AI Agents",
       "LLM"
-    ]
+    ],
+    "summary_en_us": "Fork of the complete collection of AI tooling system prompts: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent and others — a reference for prompt engineering.",
+    "summary_ja_jp": "AI ツールのシステムプロンプト完全コレクションのフォーク：v0、Cursor、Manus、Same.dev、Lovable、Devin、Replit Agent、Windsurf、VSCode Agent など — プロンプトエンジニアリングのリファレンス。"
   },
   {
     "title": "User-Auth",
-    "url": "/projects/user-auth/",
+    "url": "https://nhmatsumoto.github.io/projects/user-auth/",
     "kind": "project",
     "summary": "Serviço de autenticação e autorização em TypeScript/Node.js com gestão de usuários, sessões e integração com provedores de identidade como Keycloak.",
     "keywords": [
@@ -918,59 +1183,81 @@
       "Node.js",
       "JWT",
       "OAuth2"
-    ]
+    ],
+    "summary_en_us": "Authentication and authorization service in TypeScript/Node.js with user management, sessions and integration with identity providers such as Keycloak.",
+    "summary_ja_jp": "TypeScript/Node.js による認証・認可サービス。ユーザー管理、セッション、Keycloak など ID プロバイダーとの連携を提供。"
   },
   {
     "title": "Technical Knowledge OS",
-    "url": "/documents/technical-knowledge-os/",
+    "url": "https://nhmatsumoto.github.io/documents/technical-knowledge-os/",
     "kind": "document",
     "summary": "A definição operacional do blog como sistema vivo de documentação técnica.",
     "keywords": [
       "domain",
       "knowledge"
-    ]
+    ],
+    "title_en_us": "Technical Knowledge OS",
+    "title_ja_jp": "Technical Knowledge OS",
+    "summary_en_us": "The operational definition of the blog as a living system of technical documentation.",
+    "summary_ja_jp": "ブログを生きた技術ドキュメンテーション・システムとして運用する定義。"
   },
   {
-    "title": "System Architecture",
-    "url": "/documents/system-architecture/",
+    "title": "Arquitetura do Sistema",
+    "url": "https://nhmatsumoto.github.io/documents/system-architecture/",
     "kind": "document",
     "summary": "Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.",
     "keywords": [
       "architecture",
       "system"
-    ]
+    ],
+    "title_en_us": "System Architecture",
+    "title_ja_jp": "システムアーキテクチャ",
+    "summary_en_us": "Structural view of the system's boundaries and its architectural rationale.",
+    "summary_ja_jp": "システム境界の構造的俯瞰と、その背後にある設計根拠。"
   },
   {
-    "title": "ADR 003 - Versioned Memory",
-    "url": "/documents/adr-versioned-memory/",
+    "title": "ADR 003 - Memória Versionada",
+    "url": "https://nhmatsumoto.github.io/documents/adr-versioned-memory/",
     "kind": "document",
     "summary": "Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.",
     "keywords": [
       "agents",
       "adr",
       "memory"
-    ]
+    ],
+    "title_en_us": "ADR 003 — Versioned Memory",
+    "title_ja_jp": "ADR 003 — バージョン管理された記憶",
+    "summary_en_us": "Architectural decision on memory snapshots and context persistence in agent-oriented workflows.",
+    "summary_ja_jp": "エージェント指向ワークフローにおける記憶スナップショットとコンテキスト永続化に関するアーキテクチャ決定。"
   },
   {
-    "title": "Agent Integration Surface",
-    "url": "/documents/agent-integration-surface/",
+    "title": "Superfície de Integração de Agentes",
+    "url": "https://nhmatsumoto.github.io/documents/agent-integration-surface/",
     "kind": "document",
     "summary": "Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes.",
     "keywords": [
       "apis",
       "agents",
       "integration"
-    ]
+    ],
+    "title_en_us": "Agent Integration Surface",
+    "title_ja_jp": "エージェント統合サーフェス",
+    "summary_en_us": "Minimal contracts for exposing tools and services to an agent-oriented runtime.",
+    "summary_ja_jp": "エージェント指向のランタイムに対して、ツールとサービスを公開する最小契約。"
   },
   {
-    "title": "Ronaldinho Architecture Overview",
-    "url": "/documents/ronaldinho-architecture-overview/",
+    "title": "Visão Geral da Arquitetura do Ronaldinho",
+    "url": "https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/",
     "kind": "document",
     "summary": "Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.",
     "keywords": [
       "agents",
       "architecture",
       "runtime"
-    ]
+    ],
+    "title_en_us": "Ronaldinho Architecture Overview",
+    "title_ja_jp": "Ronaldinho アーキテクチャ概観",
+    "summary_en_us": "Overview of the Ronaldinho Agent architecture and runtime modularity choices.",
+    "summary_ja_jp": "Ronaldinho Agent のアーキテクチャとランタイム・モジュラリティ選定の概観。"
   }
 ]

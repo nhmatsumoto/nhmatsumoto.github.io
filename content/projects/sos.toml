@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/sos"
 published_at = "2026-03-20T11:07:55Z"
 tags = ["TypeScript", "GIS"]
 stack = ["TypeScript", "Node.js", "GIS"]
-view_engine = "binary-tree"
 
 overview = """
 Módulo auxiliar do ecossistema **SOS Location**, contendo componentes compartilhados entre os serviços da plataforma de resposta a desastres.

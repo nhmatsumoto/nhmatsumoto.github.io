@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/User-Auth"
 published_at = "2024-10-12T10:33:49Z"
 tags = ["TypeScript"]
 stack = ["TypeScript", "Node.js", "JWT", "OAuth2"]
-view_engine = "binary-tree"
 
 overview = """
 Serviço de autenticação e autorização em TypeScript/Node.js, projetado para gerenciar usuários, sessões e integração com provedores de identidade.

@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 A história de Bill Gates não é apenas sobre código, mas sobre **estratégia de ecossistema**. Enquanto outros focavam no hardware, Gates percebeu que o software era o verdadeiro motor da escalabilidade.
 

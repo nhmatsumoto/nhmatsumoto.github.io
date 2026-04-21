@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/gaussian-splatting"
 published_at = "2026-02-24T14:33:21Z"
 tags = ["fork"]
 stack = ["Python", "CUDA", "PyTorch", "Computer Vision"]
-view_engine = "binary-tree"
 
 overview = """
 Fork da implementação de referência do paper "3D Gaussian Splatting for Real-Time Radiance Field Rendering" (SIGGRAPH 2023).

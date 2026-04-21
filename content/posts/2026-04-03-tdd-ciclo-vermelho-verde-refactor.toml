@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 O **Test-Driven Development (TDD)** não é uma técnica de teste; é uma técnica de **design**. Ao escrever o teste antes do código, você é forçado a pensar na interface e na usabilidade da sua API antes da implementação.
 

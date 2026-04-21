@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/mermaid"
 published_at = "2024-01-13T07:11:22Z"
 tags = ["fork"]
 stack = ["JavaScript", "SVG", "Parsing", "Diagrams"]
-view_engine = "binary-tree"
 
 overview = """
 Fork do Mermaid.js, a biblioteca de geração de diagramas a partir de texto que é integrada nativamente no Technical Knowledge OS.

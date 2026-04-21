@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 Flutter não é apenas um "wrapper" de UI; é um motor de renderização completo escrito em C++ que utiliza Dart como sua linguagem de orquestração de alto nível.
 

@@ -28,7 +28,6 @@ lessons = [
   "Anti-corruption layers entre agente e domínio de negócio evitam que o modelo de IA 'vaze' para o core",
 ]
 
-view_engine = "binary-tree"
 body = """
 # Separando domínio de orquestração em sistemas com agentes
 

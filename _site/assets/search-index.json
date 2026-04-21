@@ -227,22 +227,6 @@
     "summary_ja_jp": "DEMP 現象、ガンマ線バースト、分散性媒質中の電磁パルス減衰の深い考察。"
   },
   {
-    "title": "Topologias de Conhecimento: O Grafo Hiro",
-    "url": "https://nhmatsumoto.github.io/posts/20260404-brain-map-topology-brain-map-topology-hiro/",
-    "kind": "post",
-    "summary": "Explorando a implementação de uma hierarquia D3.js para visualizar a inteligência técnica de forma não-linear.",
-    "keywords": [
-      "visual-computing",
-      "graphs",
-      "d3js",
-      "architecture"
-    ],
-    "title_en_us": "Knowledge Topologies: The Hiro Graph",
-    "title_ja_jp": "知識のトポロジー：Hiro グラフ",
-    "summary_en_us": "Exploring the implementation of a D3.js hierarchy to visualize technical intelligence in a non-linear way.",
-    "summary_ja_jp": "技術的知性を非線形に可視化するための D3.js ハイアラーキー実装の探求。"
-  },
-  {
     "title": "O Despertar do Technical Knowledge OS v2",
     "url": "https://nhmatsumoto.github.io/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/",
     "kind": "post",
@@ -795,16 +779,16 @@
     "title": "nhmatsumoto.github.io",
     "url": "https://nhmatsumoto.github.io/projects/nhmatsumoto-github-io/",
     "kind": "project",
-    "summary": "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, visualização 3D interativa com Three.js, sistema de grafo de conhecimento e deploy via GitHub Pages.",
+    "summary": "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, conteúdo em TOML, busca client-side, i18n e deploy via GitHub Pages.",
     "keywords": [
       "Python",
-      "Three.js",
       "HTML",
       "CSS",
+      "JavaScript",
       "GitHub Pages"
     ],
-    "summary_en_us": "Personal site and Technical Knowledge OS: static site engine in Python, interactive 3D visualization with Three.js, knowledge graph system and deploy via GitHub Pages.",
-    "summary_ja_jp": "個人サイト兼 Technical Knowledge OS。Python による静的サイト生成、Three.js を用いた 3D インタラクティブ可視化、知識グラフ、GitHub Pages での配信。"
+    "summary_en_us": "Personal site and Technical Knowledge OS: static site engine in Python, TOML content, client-side search, i18n and deploy via GitHub Pages.",
+    "summary_ja_jp": "個人サイト兼 Technical Knowledge OS。Python による静的サイト生成、TOML コンテンツ、クライアント側検索、i18n、GitHub Pages での配信。"
   },
   {
     "title": "SplitCosts",

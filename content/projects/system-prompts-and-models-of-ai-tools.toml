@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/system-prompts-and-models-of-ai-tools
 published_at = "2026-02-24T12:44:20Z"
 tags = ["fork"]
 stack = ["Prompt Engineering", "AI Agents", "LLM"]
-view_engine = "binary-tree"
 
 overview = """
 Fork da coleção mais abrangente de system prompts e definições de tools de ferramentas de IA para desenvolvimento de software.

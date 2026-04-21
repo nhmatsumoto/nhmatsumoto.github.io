@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 O TypeScript não é apenas "JS com tipos". O sistema de tipos do TS é **Turing-complete**, o que significa que podemos realizar computações complexas apenas em tempo de compilação.
 

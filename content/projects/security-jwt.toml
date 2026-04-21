@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/Security.Jwt"
 published_at = "2024-11-01T09:27:40Z"
 tags = ["fork"]
 stack = ["C#", ".NET", "JWT", "Cryptography", "OAuth2"]
-view_engine = "binary-tree"
 
 overview = """
 Fork do NetDevPack Security.Jwt — conjunto de componentes para gerenciamento completo de JWTs em aplicações .NET.

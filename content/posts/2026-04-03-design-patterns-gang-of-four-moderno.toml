@@ -28,7 +28,6 @@ lessons = [
   "O melhor pattern é o que o time inteiro entende — sofisticação sem consenso é dívida técnica disfarçada",
 ]
 
-view_engine = "binary-tree"
 body = """
 Os **Design Patterns** (GoF) foram escritos em uma era de C++ e Smalltalk primitivos. Com a evolução das linguagens modernas, muitos desses padrões tornaram-se nativos da plataforma.
 

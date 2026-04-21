@@ -17,7 +17,6 @@ project_url = "/projects/sos-location/"
 featured = false
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 # PostGIS: o motor geoespacial do SOS Location
 

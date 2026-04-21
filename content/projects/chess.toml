@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/chess"
 published_at = "2026-03-11T01:32:49Z"
 tags = ["C#"]
 stack = ["C#", ".NET", "OOP", "Domain Modeling"]
-view_engine = "binary-tree"
 
 overview = """
 Implementação de um jogo de xadrez completo em C#, com modelagem de domínio que trata cada peça como entidade com regras próprias de movimentação.

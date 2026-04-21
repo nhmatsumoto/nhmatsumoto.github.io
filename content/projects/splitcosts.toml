@@ -20,7 +20,6 @@ api -> domain -> projections
  |       |          |
 ui <-- tenancy --> db
 """
-view_engine = "binary-tree"
 overview = """
 SplitCosts nasceu para resolver um problema simples sem cair em uma solução rasa: compartilhar despesas com contexto, histórico e separação clara entre grupos e usuários.
 """

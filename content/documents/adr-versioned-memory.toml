@@ -76,4 +76,3 @@ sequenceDiagram
 - **バージョン履歴**: すべての変更が記録され、追跡しやすい。
 - **最適化**: 再処理を減らし、token と request の消費を抑えられる。
 """
-view_engine = "binary-tree"

@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/DeepSeek-V3"
 published_at = "2025-01-27T20:19:13Z"
 tags = ["fork"]
 stack = ["Python", "PyTorch", "Transformers", "MoE"]
-view_engine = "binary-tree"
 
 overview = """
 Fork do repositório oficial do DeepSeek-V3, um Large Language Model com 671B de parâmetros totais que utiliza Mixture-of-Experts (MoE) para ativar apenas 37B por token durante inferência.

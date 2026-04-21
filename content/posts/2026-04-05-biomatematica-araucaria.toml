@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = true
 
-view_engine = "araucaria"
 body = """
 A *Araucaria angustifolia*, o "Pinheiro-do-Paraná", não é apenas um ícone biológico, mas um exemplo fascinante de organização geométrica e eficiência estrutural. Para replicar sua forma em um ambiente digital 3D, utilizamos modelos matemáticos que capturam sua essência fractal e simétrica.
 

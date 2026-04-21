@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/Apollo-11"
 published_at = "2024-01-19T20:32:17Z"
 tags = ["fork"]
 stack = ["Assembly", "AGC", "Embedded Systems"]
-view_engine = "binary-tree"
 
 overview = """
 Fork do código-fonte original do Apollo 11 Guidance Computer (AGC), escrito em assembly para o computador de bordo que levou a humanidade à Lua em 1969.

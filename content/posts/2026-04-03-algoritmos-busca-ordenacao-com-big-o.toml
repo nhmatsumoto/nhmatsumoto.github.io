@@ -16,7 +16,6 @@ code_url = ""
 featured = false
 has_math = true
 
-view_engine = "binary-tree"
 body = """
 Escrever código que funciona é o primeiro passo. Escrever código que escala é o segundo. A notação **Big O** é a linguagem que usamos para descrever quão rápido um algoritmo cresce à medida que os dados aumentam.
 

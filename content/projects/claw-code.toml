@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/claw-code"
 published_at = "2026-03-31T19:21:01Z"
 tags = ["fork"]
 stack = ["Rust", "CLI", "AI Agents"]
-view_engine = "binary-tree"
 
 overview = """
 Fork do projeto Claw Code, focado em criar ferramentas úteis para análise e experimentação com a arquitetura de agentes de código como Claude Code.

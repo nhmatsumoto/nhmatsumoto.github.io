@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/AutoMapper"
 published_at = "2025-04-03T11:57:29Z"
 tags = ["fork"]
 stack = ["C#", ".NET", "Reflection"]
-view_engine = "binary-tree"
 
 overview = """
 Fork do AutoMapper, a biblioteca mais utilizada no ecossistema .NET para mapeamento automático entre objetos de diferentes camadas (DTOs, ViewModels, Entities).

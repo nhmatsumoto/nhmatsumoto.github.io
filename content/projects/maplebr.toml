@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/MapleBR"
 published_at = "2026-03-10T21:08:24Z"
 tags = ["Makefile"]
 stack = ["Makefile", "C++", "Networking"]
-view_engine = "binary-tree"
 
 overview = """
 Projeto de servidor e ferramentas para o universo MapleStory, com automação de build via Makefile.

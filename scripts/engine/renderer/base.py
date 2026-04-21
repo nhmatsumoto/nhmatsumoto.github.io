@@ -67,38 +67,6 @@ def render_palette(site: dict[str, str], i18n: dict[str, Any], locale: str) -> s
     </div>
     """
 
-def render_intelligence_panel(site: dict[str, str], i18n: dict[str, Any], locale: str) -> str:
-    close_label = translate(i18n, locale, "actions.close", "Fechar")
-    view_label = translate(i18n, locale, "actions.read_article", "Abrir")
-    return f"""
-    <aside class="intelligence-panel" data-intelligence-panel data-open="false" aria-hidden="true">
-      <div class="panel-backdrop" data-panel-close></div>
-      <div class="panel-content">
-        <div class="panel-header" data-reveal>
-          <div class="panel-title-group">
-            <span class="panel-role card-type" data-panel-role></span>
-            <h2 class="panel-name" data-panel-name></h2>
-            <div class="panel-meta-row" data-panel-meta-row></div>
-          </div>
-          <button class="nav-button panel-close" type="button" data-panel-close aria-label="{html.escape(close_label)}">
-            <i data-lucide="x"></i>
-          </button>
-        </div>
-        <div class="panel-scroll-body">
-          <p class="panel-headline" data-panel-headline data-reveal></p>
-          <div class="panel-summary prose" data-panel-summary data-reveal></div>
-          <div class="panel-stack" data-panel-stack data-reveal></div>
-          <div class="panel-metrics" data-panel-metrics data-reveal></div>
-        </div>
-        <div class="panel-actions" data-reveal>
-          <a class="panel-cta nav-cta" href="#" data-panel-link>
-            <i data-lucide="eye"></i> {html.escape(view_label)} <i data-lucide="arrow-right"></i>
-          </a>
-        </div>
-      </div>
-    </aside>
-    """
-
 def render_og_tags(og: dict[str, str]) -> str:
     tags = [
         f'<meta property="og:title" content="{html.escape(og["title"])}">',
@@ -153,14 +121,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
 
     og_html = f"\n    {render_og_tags(og)}" if og else ""
 
-    import_map = {
-        "imports": {
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
-            "@tweenjs/tween.js": "https://unpkg.com/@tweenjs/tween.js@23.0.0/dist/tween.esm.js",
-            "zustand": "https://unpkg.com/zustand@4.4.1/esm/vanilla.mjs"
-        }
-    }
+    import_map = {"imports": {"zustand": "https://unpkg.com/zustand@4.4.1/esm/vanilla.mjs"}}
     import_map_html = f'<script type="importmap">{json.dumps(import_map)}</script>'
 
     return f"""<!DOCTYPE html>
@@ -175,7 +136,6 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     {og_html}
     <link rel="stylesheet" href="{site_href(site, '/assets/' + hashed('styles.css'))}">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => {{ mermaid.initialize({{ startOnLoad: true, theme: 'dark' }}); lucide.createIcons(); }});</script>
     {math_meta}
@@ -187,13 +147,11 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     <div class="site-shell">
       <main class="site-main" id="content">{content}</main>
       {render_footer(site, system)}
-      {render_intelligence_panel(site, i18n, locale)}
     </div>
     {render_palette(site, i18n, locale)}
     <div class="sidebar-backdrop" data-sidebar-toggle></div>
     <script id="site-i18n" type="application/json">{i18n_payload}</script>
     <script src="{site_href(site, '/assets/' + hashed('blog.js'))}" type="module"></script>
-    <script src="{site_href(site, '/assets/' + hashed('graphview.js'))}" defer></script>
     {scripts_html}
   </body>
 </html>

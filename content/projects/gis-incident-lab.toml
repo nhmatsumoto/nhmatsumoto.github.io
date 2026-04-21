@@ -20,7 +20,6 @@ ingest -> normalize -> geocode
    |         |          |
 events -> risk map -> ops view
 """
-view_engine = "binary-tree"
 overview = """
 Este laboratório consolida uma linha de trabalho com GIS orientada a operação. O foco não é só mapa: é como transformar dado espacial em leitura acionável.
 """

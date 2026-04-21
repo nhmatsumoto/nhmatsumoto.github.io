@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 A Segunda Guerra Mundial foi um laboratório de escala global. A necessidade de sobrevivência e superioridade tática comprimiu décadas de evolução em cinco anos.
 

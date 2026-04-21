@@ -914,64 +914,64 @@ This package is reused in **SplitCosts**, **Financial** and other .NET backends.
     },
     "nhmatsumoto-github-io": {
         "overview": {
-            "en-US": """This is the Technical Knowledge OS repository — the site you are using right now. A technical-publishing platform built from scratch with a Python static-site engine and an interactive 3D visualization layer.
+            "en-US": """This is the Technical Knowledge OS repository — the site you are using right now. A technical-publishing platform built from scratch with a Python static-site engine, structured content and lightweight navigation.
 
 ## Engine architecture
 
 The static-site engine processes TOML content, renders markdown to HTML and outputs a complete site with:
 
 - **Posts** — technical articles with support for math, Mermaid, code blocks and tables
-- **Projects** — a portfolio backed by structured data and an interactive viewer
+- **Projects** — a portfolio backed by structured data and dedicated pages
 - **Documents** — technical specs with versioned publication
 - **i18n** — multi-language content support
 - **Search** — a client-side JSON index
 
-## 3D visualization
+## Pages and navigation
 
-The projects page uses Three.js to render an interactive 3D graph where each node represents a project, post or document. The graph includes:
+Navigation prioritizes fast static pages, clear cards and permanent links for posts, projects and documents. The site includes:
 
-- A starfield with 4,000 particles
-- Glass-like nodes with glow and orbit effects
-- Bezier connections between nodes
-- A detail panel with navigation
-- Reader mode for inline content
+- Listings by content type
+- Detail pages with consistent metadata
+- Automatically generated sitemap and feed
+- Client-side search backed by a JSON index
+- Responsive layouts for technical reading
 
 ## Deploy
 
 GitHub Actions runs the build on every push to `master` and deploys the generated output to GitHub Pages automatically.""",
-            "ja-JP": """これは、今見ているサイトそのもの、Technical Knowledge OS のリポジトリです。Python 製の静的サイトエンジンとインタラクティブな 3D 可視化レイヤでゼロから構築した技術出版プラットフォームです。
+            "ja-JP": """これは、今見ているサイトそのもの、Technical Knowledge OS のリポジトリです。Python 製の静的サイトエンジン、構造化コンテンツ、軽量なナビゲーションでゼロから構築した技術出版プラットフォームです。
 
 ## エンジンのアーキテクチャ
 
 静的サイト・エンジンは TOML コンテンツを処理し、markdown を HTML に変換して、次を備えた完全なサイトを出力します。
 
 - **Posts** — 数式、Mermaid、code block、表を含む技術記事
-- **Projects** — 構造化データと対話型ビューアを備えたポートフォリオ
+- **Projects** — 構造化データと専用ページを備えたポートフォリオ
 - **Documents** — バージョン付き公開が可能な技術仕様
 - **i18n** — 多言語対応
 - **Search** — クライアント側 JSON インデックス
 
-## 3D 可視化
+## ページとナビゲーション
 
-projects ページでは Three.js を使い、各ノードが project、post、document を表す 3D グラフを描画します。主な要素は次の通りです。
+ナビゲーションは高速な静的ページ、明快なカード、posts / projects / documents への永続リンクを重視しています。主な要素は次の通りです。
 
-- 4,000 パーティクルの starfield
-- ガラス調ノードと glow / orbit エフェクト
-- ノード間の Bezier 接続
-- ナビゲーション付き detail panel
-- inline 読書のための reader mode
+- コンテンツ種別ごとの一覧
+- 一貫したメタデータを持つ詳細ページ
+- 自動生成される sitemap と feed
+- JSON インデックスに基づくクライアント側検索
+- 技術文書向けのレスポンシブな読書レイアウト
 
 ## デプロイ
 
 GitHub Actions が `master` への各 push ごとに build を実行し、生成物を GitHub Pages へ自動デプロイします。""",
         },
         "problem_solution": {
-            "en-US": "Existing blog platforms are too generic for a technical portfolio that needs interactive visualization, math rendering and full control over design and structure. Technical Knowledge OS solves that by treating content as a first-class domain.",
-            "ja-JP": "既存のブログ基盤は、インタラクティブ可視化、数式表示、設計と構造への完全な制御を必要とする技術ポートフォリオには汎用的すぎます。Technical Knowledge OS は、コンテンツを第一級のドメインとして扱うことでそれを解決します。",
+            "en-US": "Existing blog platforms are too generic for a technical portfolio that needs structured content, math rendering and full control over design and structure. Technical Knowledge OS solves that by treating content as a first-class domain.",
+            "ja-JP": "既存のブログ基盤は、構造化コンテンツ、数式表示、設計と構造への完全な制御を必要とする技術ポートフォリオには汎用的すぎます。Technical Knowledge OS は、コンテンツを第一級のドメインとして扱うことでそれを解決します。",
         },
         "architecture": {
-            "en-US": "Modular Python engine: loader (TOML → dict), renderer (dict → HTML) and generator (orchestration). Static assets are copied directly. Three.js is loaded through import maps for the 3D graph, and GitHub Actions handles CI/CD.",
-            "ja-JP": "モジュール化された Python エンジンで、loader（TOML → dict）、renderer（dict → HTML）、generator（オーケストレーション）に分かれています。静的アセットはそのままコピーされ、3D グラフには import map 経由で Three.js を読み込みます。CI/CD は GitHub Actions が担当します。",
+            "en-US": "Modular Python engine: loader (TOML → dict), renderer (dict → HTML) and generator (orchestration). Static assets are copied directly. Search indexes, sitemap, feed and localized pages are generated during the build. GitHub Actions handles CI/CD.",
+            "ja-JP": "モジュール化された Python エンジンで、loader（TOML → dict）、renderer（dict → HTML）、generator（オーケストレーション）に分かれています。静的アセットはそのままコピーされ、検索インデックス、sitemap、feed、ローカライズ済みページは build 時に生成されます。CI/CD は GitHub Actions が担当します。",
         },
     },
     "playground-fe": {

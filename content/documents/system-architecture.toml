@@ -96,4 +96,3 @@ Ronaldinho-Agent/
 
 設定、メモリ、機微情報は service code の外に保持し、ランタイムを再起動しても ID や文脈を失わないようにしています。
 """
-view_engine = "binary-tree"

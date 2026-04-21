@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/macos"
 published_at = "2025-07-05T10:29:41Z"
 tags = ["fork"]
 stack = ["Docker", "QEMU", "KVM", "macOS"]
-view_engine = "binary-tree"
 
 overview = """
 Fork do projeto que permite executar macOS dentro de um container Docker, utilizando QEMU/KVM para virtualização.

@@ -31,7 +31,6 @@ lessons = [
   "Monitorar cada estágio individualmente revelou que 80% do tempo era gasto em geocoding externo",
 ]
 
-view_engine = "binary-tree"
 body = """
 # GIS não precisa virar um sistema opaco
 

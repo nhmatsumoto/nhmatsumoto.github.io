@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/prog_lib"
 published_at = "2026-03-18T07:12:51Z"
 tags = ["fork"]
 stack = ["Algorithms", "Data Structures"]
-view_engine = "binary-tree"
 
 overview = """
 Biblioteca de referência com implementações de algoritmos e estruturas de dados fundamentais da ciência da computação.

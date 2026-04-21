@@ -28,7 +28,6 @@ lessons = [
   "Clean Code não é sobre estética: é sobre reduzir o custo cognitivo de manutenção para o próximo desenvolvedor",
 ]
 
-view_engine = "binary-tree"
 body = """
 Escrever código que o computador entende é fácil. Escrever código que **outro humano** entende é o verdadeiro desafio da engenharia de software contemporânea.
 

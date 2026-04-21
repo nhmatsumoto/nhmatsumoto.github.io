@@ -16,7 +16,6 @@ code_url = ""
 featured = false
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 Quando alguém pede que um sistema “aprenda com correções repetidas”, o requisito real costuma ser: capturar feedback, transformá-lo em regra operacional e impedir regressões. Este post propõe um desenho de **neuroplasticidade** para sistemas de agentes.
 

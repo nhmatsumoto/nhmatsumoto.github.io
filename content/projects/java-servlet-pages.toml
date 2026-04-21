@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/Java-Servlet-Pages"
 published_at = "2025-05-26T17:53:52Z"
 tags = ["Java"]
 stack = ["Java", "Servlets", "JSP", "Tomcat"]
-view_engine = "binary-tree"
 
 overview = """
 Projeto de estudo de desenvolvimento web com Java Servlets e JavaServer Pages (JSP), utilizando Apache Tomcat como container.

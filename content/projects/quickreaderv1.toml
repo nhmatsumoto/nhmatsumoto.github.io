@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/QuickReaderv1"
 published_at = "2025-01-20T17:47:50Z"
 tags = ["TypeScript"]
 stack = ["TypeScript", "React", "Speed Reading"]
-view_engine = "binary-tree"
 
 overview = """
 Aplicação de speed reading que apresenta texto em chunks otimizados para leitura rápida, inspirada na técnica RSVP (Rapid Serial Visual Presentation).

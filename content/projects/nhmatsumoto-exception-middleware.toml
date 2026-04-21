@@ -14,7 +14,6 @@ code_url = "https://github.com/nhmatsumoto/nhmatsumoto.exception.middleware"
 published_at = "2023-11-27T10:21:43Z"
 tags = ["C#"]
 stack = ["C#", ".NET Core", "Middleware", "REST API"]
-view_engine = "binary-tree"
 
 overview = """
 Middleware de tratamento global de exceções para aplicações ASP.NET Core, projetado para padronizar respostas de erro em APIs REST.

@@ -16,7 +16,6 @@ code_url = ""
 featured = true
 has_math = false
 
-view_engine = "binary-tree"
 body = """
 A tipagem não é apenas uma restrição; é uma ferramenta de **comunicação entre o programador e o compilador**. A escolha do sistema de tipagem define a robustez e a velocidade de iteração de um projeto.
 

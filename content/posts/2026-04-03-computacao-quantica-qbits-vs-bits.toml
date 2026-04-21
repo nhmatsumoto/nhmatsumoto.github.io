@@ -16,7 +16,6 @@ code_url = ""
 featured = false
 has_math = true
 
-view_engine = "binary-tree"
 body = """
 Enquanto os computadores clássicos processam informações em **Bits** (0 ou 1), a **Computação Quântica** usa **Qubits**. Essa simples diferença muda tudo o que sabemos sobre velocidade de processamento.
 

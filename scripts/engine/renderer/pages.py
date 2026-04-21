@@ -5,7 +5,6 @@ from typing import Any
 from .base import render_layout
 from .components import (
     render_navigation_section,
-    render_brain_map_section,
     render_post_card,
     render_project_card,
     render_daily_card,
@@ -265,7 +264,6 @@ def render_home_page(
       </ol>
     </section>
     {render_navigation_section(system, documents, i18n, locale)}
-    {render_brain_map_section(site, system, i18n, locale, compact=True, counts={"posts": len(posts), "projects": len(projects), "documents": len(documents)})}
     """
     return render_layout(
         page_title=f"{site['title']} | engineering notebook",
@@ -321,72 +319,20 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
     )
 
 
-def render_projects_flow_data(posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
-    unified_items = []
-
-    for item in posts:
-        post_payload = {
-            "id": f"post-{item['slug']}",
-            "kind": "post",
-            "name": item["title"],
-            "headline": item["summary"],
-            "summary": item["summary"],
-            "status": "production",
-            "stack": item["tags"],
-            "url": item["url"],
-            "resolved_url": item.get("resolved_url", ""),
-            "repo_url": item.get("repo_url", ""),
-            "has_math": item.get("has_math", False),
-            "body_html": render_markdown(item.get("body", "") or item["summary"]),
-        }
-        copy_localized_fields(item, post_payload, "title")
-        copy_localized_fields(item, post_payload, "summary")
-        copy_localized_fields(item, post_payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
-        unified_items.append(post_payload)
-
-    for item in projects:
-        project_payload = {
-            "id": f"project-{item['slug']}",
-            "kind": "project",
-            "status": item["status"],
-            "stack": item["stack"],
-            "url": item["url"],
-            "resolved_url": item.get("resolved_url", ""),
-            "repo_url": item.get("repo_url", ""),
-            "has_math": item.get("has_math", False),
-        }
-        project_payload.update(_build_project_localization_payload(item, i18n or {}, locale))
-        unified_items.append(project_payload)
-
-    for item in documents:
-        document_payload = {
-            "id": f"document-{item['slug']}",
-            "kind": "document",
-            "name": item["title"],
-            "headline": item["summary"],
-            "summary": item["summary"],
-            "status": "production",
-            "stack": item["tags"],
-            "url": item["url"],
-            "resolved_url": item.get("resolved_url", ""),
-            "repo_url": "",
-            "has_math": item.get("has_math", False),
-        }
-        document_payload.update(_build_document_localization_payload(item))
-        unified_items.append(document_payload)
-
-    return json.dumps(unified_items, ensure_ascii=False).replace("<", "\\u003c")
-
-
 def render_projects_index_page(site: dict[str, str], system: dict[str, Any], posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
-    flow_data = render_projects_flow_data(posts, projects, documents, i18n, locale)
     content = f"""
-    <div class="project-flow-shell">
-      <div class="project-flow-wrapper" data-project-flow></div>
-    </div>
-    <script id="projects-data" type="application/json">{flow_data}</script>
+    <section class="page-heading">
+      <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
+      <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>
+      <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."))}</p>
+    </section>
+    <section class="section-panel">
+      <ul class="resource-list project-collection notebook-card-grid">
+        {"".join(render_project_card(project, i18n, locale) for project in projects)}
+      </ul>
+    </section>
     """
-    has_math = any(post.get("has_math") for post in posts) or any(project.get("has_math") for project in projects)
+    has_math = any(project.get("has_math") for project in projects)
     return render_layout(
         page_title=f"Projects | {site['title']}",
         page_description=translate(i18n, locale, "pages.projects.description", "Visual exploration of projects and connected notes."),
@@ -399,7 +345,6 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
         active_nav="projects",
         i18n=i18n,
         locale=locale,
-        extra_scripts=["projects.js?module=true"],
     )
 
 
@@ -466,11 +411,11 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
       <h1 data-i18n="pages.about.title">{html.escape(translate(i18n, locale, "pages.about.title", "Sobre"))}</h1>
       <p>{html.escape(site.get("headline", ""))}</p>
     </section>
-    <section class="page-grid notebook-two-column">
+    <section class="page-grid notebook-two-column about-layout">
       <article class="post-shell prose notebook-sheet">
         {"".join(section_html)}
       </article>
-      <aside class="sidebar-panel notebook-meta-panel">
+      <aside class="sidebar-panel notebook-meta-panel about-snapshot-card">
         <div class="sidebar-header"><h2>{html.escape(translate(i18n, locale, "pages.about.facts", "Snapshot"))}</h2></div>
         <div class="meta-stack">
           <p><strong>{html.escape(translate(i18n, locale, "pages.about.location", "Base"))}:</strong> {html.escape(system.get("identity", {}).get("developer", {}).get("location", "Brasil / Remote"))}</p>
@@ -794,7 +739,6 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
         active_nav="projects",
         i18n=i18n,
         locale=locale,
-        extra_scripts=["canvas-reader.js"],
         og=og,
     )
 
@@ -809,19 +753,13 @@ def render_document_page(site: dict[str, str], system: dict[str, Any], document:
         i18n,
         locale,
     )
-    sidebar = f"""
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.document.meta">{html.escape(translate(i18n, locale, "pages.document.meta", "Document meta"))}</h2></div>
-      <p class="doc-version">{html.escape(document['version'])}</p>
-      <p class="doc-category">{html.escape(document['category'])}</p>
-      {render_tag_list(document.get('tags', []))}
-    </aside>
-    """
+    metadata_label = html.escape(translate(i18n, locale, "pages.document.meta", "Document meta"))
+    metadata_tags = render_tag_list(document.get("tags", []), "tag-list document-page-meta-tags")
     page_payload_obj = _build_document_localization_payload(document)
     page_payload = json.dumps(page_payload_obj, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <section class="page-grid notebook-two-column">
+    <section class="page-grid notebook-two-column document-page-layout">
       <article class="document-shell prose notebook-sheet">
         <header class="post-header">
           <p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p>
@@ -830,7 +768,14 @@ def render_document_page(site: dict[str, str], system: dict[str, Any], document:
         </header>
         <div data-page-body>{page_payload_obj["body_html"]}</div>
       </article>
-      {sidebar}
+    </section>
+    <section class="document-page-meta" aria-label="{metadata_label}">
+      <p class="document-page-meta-label" data-i18n="pages.document.meta">{metadata_label}</p>
+      <div class="document-page-meta-row">
+        <p class="doc-version">{html.escape(document['version'])}</p>
+        <p class="doc-category">{html.escape(document['category'])}</p>
+      </div>
+      {metadata_tags}
     </section>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
