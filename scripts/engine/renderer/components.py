@@ -557,7 +557,7 @@ def render_hero(site: dict[str, str], system: dict[str, Any], posts: list[dict[s
 
 def render_navigation_section(system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     categories = sorted({d["category"] for d in documents if d.get("category")})
-    nav_items = [("nav.about", "/about/"), ("nav.posts", "/posts/"), ("nav.daily", "/daily/"), ("nav.contact", "/contact/"), ("nav.projects", "/projects/"), ("nav.documents", "/documents/")]
+    nav_items = [("nav.about", "/about/"), ("nav.posts", "/posts/"), ("nav.daily", "/daily/"), ("nav.projects", "/projects/"), ("nav.documents", "/documents/")]
     nav_items += [(f"sections.category_{c}", f"/documents/?category={c}") for c in categories]
     
     links = "\n".join(

@@ -46,9 +46,45 @@ snapshot_summary = "Minha história passa por escola pública, aprendizado autod
 snapshot_summary_en_us = "My story moves through public school, self-directed learning, years building software in Brazil and a current chapter in Japan, where I keep working, studying and building."
 snapshot_summary_ja_jp = "公立学校、独学、ブラジルでソフトウェアを作ってきた年月、そして日本で働きながら学び、作り続けている現在までが私の流れです。"
 
-profile_chips = ["Brasil", "Japão", "software engineer", "manufatura + projetos"]
-profile_chips_en_us = ["Brazil", "Japan", "software engineer", "manufacturing + projects"]
-profile_chips_ja_jp = ["ブラジル", "日本", "software engineer", "製造 + 個人プロジェクト"]
+profile_chips = [
+  "arquitetura de software", "sistemas distribuídos", "DDD", "agentes de IA",
+  "orquestração de agentes", "automação de processos", "full stack", ".NET",
+  "React", "TypeScript", "cloud / escalabilidade", "open source",
+  "engenharia de plataforma", "performance", "segurança", "workflow", "boas práticas",
+  "produto", "RH tech", "SaaS modular", "inovação", "projetos",
+  "impacto social", "propósito", "resposta a desastres", "mapas e geotecnologia",
+  "simulação 3D", "Three.js / WebGL",
+  "Brasil", "Japão", "vida no Japão", "cultura japonesa", "manufatura",
+  "aprendizado contínuo", "café",
+  "fungos", "permacultura", "agrofloresta", "física",
+  "computação quântica", "fusão nuclear", "foguetes"
+]
+profile_chips_en_us = [
+  "software architecture", "distributed systems", "DDD", "AI agents",
+  "agent orchestration", "process automation", "full stack", ".NET",
+  "React", "TypeScript", "cloud / scalability", "open source",
+  "platform engineering", "performance", "security", "workflow", "best practices",
+  "product", "HR tech", "modular SaaS", "innovation", "projects",
+  "social impact", "purpose", "disaster response", "maps & geotechnology",
+  "3D simulation", "Three.js / WebGL",
+  "Brazil", "Japan", "life in Japan", "Japanese culture", "manufacturing",
+  "continuous learning", "coffee",
+  "fungi", "permaculture", "agroforestry", "physics",
+  "quantum computing", "nuclear fusion", "rockets"
+]
+profile_chips_ja_jp = [
+  "ソフトウェアアーキテクチャ", "分散システム", "DDD", "AIエージェント",
+  "エージェントオーケストレーション", "プロセス自動化", "フルスタック", ".NET",
+  "React", "TypeScript", "クラウド / スケーラビリティ", "オープンソース",
+  "プラットフォームエンジニアリング", "パフォーマンス", "セキュリティ", "ワークフロー", "ベストプラクティス",
+  "プロダクト", "HR テック", "モジュラー SaaS", "イノベーション", "プロジェクト",
+  "社会的インパクト", "目的意識", "災害対応", "地図 & 地理技術",
+  "3D シミュレーション", "Three.js / WebGL",
+  "ブラジル", "日本", "日本での生活", "日本文化", "製造",
+  "継続的学習", "コーヒー",
+  "菌類", "パーマカルチャー", "アグロフォレストリー", "物理学",
+  "量子コンピューティング", "核融合", "ロケット"
+]
 
 [[about.snapshot_items]]
 id = "base"
