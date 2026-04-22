@@ -5076,6 +5076,28 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   transition: transform 0.2s ease;
 }
 
+.entry-card-links {
+  display: flex;
+  gap: calc(var(--base_grid_unit) * 2);
+  flex-wrap: wrap;
+  margin-top: calc(var(--base_grid_unit) * 0.5);
+}
+.entry-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font-family: var(--font-code);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.entry-card-link:hover { color: var(--accent); }
+.entry-card-link .site-icon { width: 0.75rem; height: 0.75rem; }
+
 .page-home .entry-list > li.entry {
   padding: calc(var(--base_grid_unit) * 3) 0;
 }

@@ -858,6 +858,7 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
       {render_impact_bar(project.get("impact", []), i18n, locale)}
       <div class="sidebar-actions">
         {f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">{render_icon("network", "site-icon sidebar-link-icon")}<span data-i18n="actions.view_architecture">{html.escape(translate(i18n, locale, "actions.view_architecture", "architecture"))}</span></a>' if project.get("resolved_architecture_url") else ""}
+        {f'<a class="sidebar-link" href="{project["resolved_docs_url"]}">{render_icon("book-open", "site-icon sidebar-link-icon")}<span data-i18n="actions.open_docs">{html.escape(translate(i18n, locale, "actions.open_docs", "docs"))}</span></a>' if project.get("resolved_docs_url") else ""}
         {f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">{render_icon("github", "site-icon sidebar-link-icon")}<span data-i18n="actions.code">{html.escape(translate(i18n, locale, "actions.code", "code"))}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if project.get("resolved_code_url") else ""}
       </div>
     </aside>

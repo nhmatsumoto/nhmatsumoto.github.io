@@ -384,14 +384,35 @@ def render_project_card(project: dict[str, Any], i18n: dict[str, Any], locale: s
             f'<span class="entry-status entry-status-{html.escape(status_key)}" data-status-key="status.{html.escape(status_key)}">{status_label}</span>'
         )
     eyebrow = _entry_eyebrow(eyebrow_parts)
-    cta_label = translate(i18n, locale, "actions.view_project", "View")
+    lede = html.escape(project.get("headline") or project["summary"])
+    stack_html = render_stack_list(project["stack"][:4]) if project.get("stack") else ""
+    cta_label = translate(i18n, locale, "actions.view_project", "Ver projeto")
+    secondary_links = []
+    if project.get("resolved_code_url"):
+        repo_label = html.escape(translate(i18n, locale, "actions.code", "repo"))
+        secondary_links.append(
+            f'<a class="entry-card-link" href="{html.escape(project["resolved_code_url"])}" target="_blank" rel="noopener">'
+            f'{render_icon("github", "site-icon entry-icon")}'
+            f'<span data-i18n="actions.code">{repo_label}</span>'
+            f'{render_icon("arrow-up-right", "site-icon external-icon")}</a>'
+        )
+    if project.get("resolved_docs_url"):
+        docs_label = html.escape(translate(i18n, locale, "actions.open_docs", "docs"))
+        secondary_links.append(
+            f'<a class="entry-card-link" href="{html.escape(project["resolved_docs_url"])}">'
+            f'{render_icon("book-open", "site-icon entry-icon")}'
+            f'<span data-i18n="actions.open_docs">{docs_label}</span></a>'
+        )
+    secondary_html = f'<div class="entry-card-links">{"".join(secondary_links)}</div>' if secondary_links else ""
     return f"""
     <li class="entry">
       <article class="entry-card entry-card-project">
         {eyebrow}
         <h3 class="entry-title"><a href="{html.escape(project['resolved_url'])}">{html.escape(project['name'])}</a></h3>
-        <p class="entry-lede">{html.escape(project['summary'])}</p>
+        <p class="entry-lede">{lede}</p>
+        {stack_html}
         {_entry_cta(project['resolved_url'], cta_label, "actions.view_project")}
+        {secondary_html}
       </article>
     </li>
     """.strip()
