@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="claw-code">
     <meta name="twitter:description" content="Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.45dedf88.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.e67b3662.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -60,15 +60,24 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">claw-code</span></li></ol></nav>
-    <section class="page-grid notebook-two-column">
-      <article class="project-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
-          <h1 data-page-title>claw-code</h1>
-          <p class="post-summary" data-page-summary>Better Harness Tools — ferramentas para análise e experimentação com Claude Code, em reescrita para Rust.</p>
-          
-        </header>
-        <div data-page-body><p>Fork do projeto Claw Code, focado em criar ferramentas úteis para análise e experimentação com a arquitetura de agentes de código como Claude Code.</p>
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+      <div class="sidebar-panel notebook-meta-panel">
+        <div class="sidebar-header"><h2 data-i18n="pages.project.status">Status</h2></div>
+        <p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p>
+        <h3 data-i18n="pages.project.stack">Stack</h3>
+        <div class="stack-list"><span class="stack-chip">Rust</span><span class="stack-chip">CLI</span><span class="stack-chip">AI Agents</span></div>
+        <div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/claw-code" target="_blank" rel="noopener"><i class="site-icon sidebar-link-icon" data-lucide="github" aria-hidden="true"></i><span data-i18n="actions.code">código</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>
+      </div>
+    </aside>
+      <div class="page-main">
+        <article class="project-shell prose notebook-sheet">
+          <header class="post-header">
+            <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+            <h1 data-page-title>claw-code</h1>
+            <p class="post-summary" data-page-summary>Better Harness Tools — ferramentas para análise e experimentação com Claude Code, em reescrita para Rust.</p>
+          </header>
+          <div data-page-body><p>Fork do projeto Claw Code, focado em criar ferramentas úteis para análise e experimentação com a arquitetura de agentes de código como Claude Code.</p>
 <h2>Motivação</h2>
 <p>Entender como agentes de código funcionam internamente — seus system prompts, tool loops, decisão de contexto — é fundamental para quem trabalha com automação de engenharia. Este projeto vai além do arquivo: transforma referência em ferramenta.</p>
 <h2>Reescrita em Rust</h2>
@@ -80,22 +89,9 @@
 <p>Agentes de código são caixas-pretas poderosas, mas entender sua arquitetura interna permite usá-los de forma mais eficiente. Este projeto constrói ferramentas para inspecionar, comparar e experimentar com essas arquiteturas.</p>
 <h2>Arquitetura</h2>
 <p>CLI em Rust com subcomandos para parsing de prompts, comparação entre versões e análise de tool definitions. Estruturado como workspace Cargo com crates separados para parsing, rendering e CLI.</p></div>
-      </article>
-      
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.project.status">Status</h2></div>
-      <p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p>
-      <h3 data-i18n="pages.project.stack">Stack</h3>
-      <div class="stack-list"><span class="stack-chip">Rust</span><span class="stack-chip">CLI</span><span class="stack-chip">AI Agents</span></div>
-      
-      <div class="sidebar-actions">
-        
-        
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/claw-code" target="_blank" rel="noopener"><i class="site-icon sidebar-link-icon" data-lucide="github" aria-hidden="true"></i><span data-i18n="actions.code">código</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+        </article>
       </div>
-    </aside>
-    
-    </section>
+    </div>
     <script id="page-content-data" type="application/json">{"name": "claw-code", "headline": "Better Harness Tools — ferramentas para análise e experimentação com Claude Code, em reescrita para Rust.", "summary": "Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade.", "body_html": "\u003cp>Fork do projeto Claw Code, focado em criar ferramentas úteis para análise e experimentação com a arquitetura de agentes de código como Claude Code.\u003c/p>\n\u003ch2>Motivação\u003c/h2>\n\u003cp>Entender como agentes de código funcionam internamente — seus system prompts, tool loops, decisão de contexto — é fundamental para quem trabalha com automação de engenharia. Este projeto vai além do arquivo: transforma referência em ferramenta.\u003c/p>\n\u003ch2>Reescrita em Rust\u003c/h2>\n\u003cp>A versão atual está sendo reescrita em Rust para:\u003c/p>\n\u003cul>\u003cli>\u003cstrong>Performance\u003c/strong> — parsing e análise de prompts grandes sem overhead de runtime\u003c/li> \u003cli>\u003cstrong>Portabilidade\u003c/strong> — binário único sem dependências\u003c/li> \u003cli>\u003cstrong>CLI ergonômico\u003c/strong> — interface de terminal com output formatado\u003c/li>\u003c/ul>\n\u003ch2>Relação com o ecossistema\u003c/h2>\n\u003cp>Complementa o repositório \u003cstrong>system-prompts-and-models-of-ai-tools\u003c/strong> como referência de engenharia de prompts e arquitetura de agentes.\u003c/p>\n\u003ch2>Problema e solução\u003c/h2>\n\u003cp>Agentes de código são caixas-pretas poderosas, mas entender sua arquitetura interna permite usá-los de forma mais eficiente. Este projeto constrói ferramentas para inspecionar, comparar e experimentar com essas arquiteturas.\u003c/p>\n\u003ch2>Arquitetura\u003c/h2>\n\u003cp>CLI em Rust com subcomandos para parsing de prompts, comparação entre versões e análise de tool definitions. Estruturado como workspace Cargo com crates separados para parsing, rendering e CLI.\u003c/p>", "headline_en_us": "Better Harness Tools — tools for analyzing and experimenting with Claude Code, being rewritten in Rust.", "headline_ja_jp": "Better Harness Tools — Claude Code の分析と実験のためのツール群。Rust への書き直しが進行中。", "summary_en_us": "Analysis and experimentation tooling for code-agent architectures, currently being rewritten in Rust for performance and portability.", "summary_ja_jp": "コード系エージェントのアーキテクチャを分析・実験するツール群。パフォーマンスと移植性を狙って Rust への書き直し中。", "body_html_en_us": "\u003cp>Fork of the Claw Code project, focused on building useful tooling for analyzing and experimenting with code-agent architectures such as Claude Code.\u003c/p>\n\u003ch2>Motivation\u003c/h2>\n\u003cp>Understanding how coding agents work internally — system prompts, tool loops, context decisions — is essential for anyone automating engineering workflows. This project turns a reference implementation into practical tooling.\u003c/p>\n\u003ch2>Rust rewrite\u003c/h2>\n\u003cp>The current version is being rewritten in Rust to improve:\u003c/p>\n\u003cul>\u003cli>\u003cstrong>Performance\u003c/strong> — parsing and analyzing large prompts without runtime overhead\u003c/li> \u003cli>\u003cstrong>Portability\u003c/strong> — a single binary with no external dependencies\u003c/li> \u003cli>\u003cstrong>CLI ergonomics\u003c/strong> — a polished terminal interface with structured output\u003c/li>\u003c/ul>\n\u003ch2>Relationship with the ecosystem\u003c/h2>\n\u003cp>It complements \u003cstrong>system-prompts-and-models-of-ai-tools\u003c/strong> as a practical companion for prompt engineering and agent-architecture analysis.\u003c/p>\n\u003ch2>Problem and solution\u003c/h2>\n\u003cp>Coding agents are powerful black boxes, but understanding their internal architecture is what makes them usable with intent. This project builds tools to inspect, compare and experiment with those architectures.\u003c/p>\n\u003ch2>Architecture\u003c/h2>\n\u003cp>Rust CLI with subcommands for prompt parsing, version comparison and tool-definition analysis. Structured as a Cargo workspace with separate crates for parsing, rendering and the CLI surface.\u003c/p>", "body_html_en": "\u003cp>Fork of the Claw Code project, focused on building useful tooling for analyzing and experimenting with code-agent architectures such as Claude Code.\u003c/p>\n\u003ch2>Motivation\u003c/h2>\n\u003cp>Understanding how coding agents work internally — system prompts, tool loops, context decisions — is essential for anyone automating engineering workflows. This project turns a reference implementation into practical tooling.\u003c/p>\n\u003ch2>Rust rewrite\u003c/h2>\n\u003cp>The current version is being rewritten in Rust to improve:\u003c/p>\n\u003cul>\u003cli>\u003cstrong>Performance\u003c/strong> — parsing and analyzing large prompts without runtime overhead\u003c/li> \u003cli>\u003cstrong>Portability\u003c/strong> — a single binary with no external dependencies\u003c/li> \u003cli>\u003cstrong>CLI ergonomics\u003c/strong> — a polished terminal interface with structured output\u003c/li>\u003c/ul>\n\u003ch2>Relationship with the ecosystem\u003c/h2>\n\u003cp>It complements \u003cstrong>system-prompts-and-models-of-ai-tools\u003c/strong> as a practical companion for prompt engineering and agent-architecture analysis.\u003c/p>\n\u003ch2>Problem and solution\u003c/h2>\n\u003cp>Coding agents are powerful black boxes, but understanding their internal architecture is what makes them usable with intent. This project builds tools to inspect, compare and experiment with those architectures.\u003c/p>\n\u003ch2>Architecture\u003c/h2>\n\u003cp>Rust CLI with subcommands for prompt parsing, version comparison and tool-definition analysis. Structured as a Cargo workspace with separate crates for parsing, rendering and the CLI surface.\u003c/p>", "body_html_ja_jp": "\u003cp>Claude Code のようなコードエージェントのアーキテクチャを分析・実験するための実用ツールを作ることに焦点を当てた、Claw Code プロジェクトのフォークです。\u003c/p>\n\u003ch2>動機\u003c/h2>\n\u003cp>コードエージェントの内部動作、つまり system prompt、tool loop、コンテキスト判断を理解することは、開発フローを自動化するうえで重要です。このプロジェクトは、参照実装を実用ツールへと変換します。\u003c/p>\n\u003ch2>Rust への書き直し\u003c/h2>\n\u003cp>現在のバージョンは、次を改善するため Rust へ書き直し中です。\u003c/p>\n\u003cul>\u003cli>\u003cstrong>性能\u003c/strong> — 大きな prompt をランタイム・オーバーヘッドなしに解析\u003c/li> \u003cli>\u003cstrong>可搬性\u003c/strong> — 依存の少ない単一バイナリ\u003c/li> \u003cli>\u003cstrong>CLI 体験\u003c/strong> — 整形済み出力を持つ使いやすい端末インターフェース\u003c/li>\u003c/ul>\n\u003ch2>エコシステムとの関係\u003c/h2>\n\u003cp>\u003cstrong>system-prompts-and-models-of-ai-tools\u003c/strong> を、より実践的なプロンプト工学・エージェント分析ツールとして補完します。\u003c/p>\n\u003ch2>課題と解決策\u003c/h2>\n\u003cp>コードエージェントは強力なブラックボックスですが、意図を持って使うには内部アーキテクチャの理解が欠かせません。このプロジェクトは、その構造を観察し、比較し、実験するためのツールを作ります。\u003c/p>\n\u003ch2>アーキテクチャ\u003c/h2>\n\u003cp>prompt 解析、バージョン比較、tool definition 分析のためのサブコマンドを備えた Rust CLI です。Cargo workspace として構成され、parsing、rendering、CLI の各責務を別 crate に分離しています。\u003c/p>", "body_html_ja": "\u003cp>Claude Code のようなコードエージェントのアーキテクチャを分析・実験するための実用ツールを作ることに焦点を当てた、Claw Code プロジェクトのフォークです。\u003c/p>\n\u003ch2>動機\u003c/h2>\n\u003cp>コードエージェントの内部動作、つまり system prompt、tool loop、コンテキスト判断を理解することは、開発フローを自動化するうえで重要です。このプロジェクトは、参照実装を実用ツールへと変換します。\u003c/p>\n\u003ch2>Rust への書き直し\u003c/h2>\n\u003cp>現在のバージョンは、次を改善するため Rust へ書き直し中です。\u003c/p>\n\u003cul>\u003cli>\u003cstrong>性能\u003c/strong> — 大きな prompt をランタイム・オーバーヘッドなしに解析\u003c/li> \u003cli>\u003cstrong>可搬性\u003c/strong> — 依存の少ない単一バイナリ\u003c/li> \u003cli>\u003cstrong>CLI 体験\u003c/strong> — 整形済み出力を持つ使いやすい端末インターフェース\u003c/li>\u003c/ul>\n\u003ch2>エコシステムとの関係\u003c/h2>\n\u003cp>\u003cstrong>system-prompts-and-models-of-ai-tools\u003c/strong> を、より実践的なプロンプト工学・エージェント分析ツールとして補完します。\u003c/p>\n\u003ch2>課題と解決策\u003c/h2>\n\u003cp>コードエージェントは強力なブラックボックスですが、意図を持って使うには内部アーキテクチャの理解が欠かせません。このプロジェクトは、その構造を観察し、比較し、実験するためのツールを作ります。\u003c/p>\n\u003ch2>アーキテクチャ\u003c/h2>\n\u003cp>prompt 解析、バージョン比較、tool definition 分析のためのサブコマンドを備えた Rust CLI です。Cargo workspace として構成され、parsing、rendering、CLI の各責務を別 crate に分離しています。\u003c/p>"}</script>
     </main>
       

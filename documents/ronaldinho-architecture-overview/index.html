@@ -53,14 +53,25 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/documents/"><i class="site-icon breadcrumb-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></li><li><span aria-current="page">Visão Geral da Arquitetura do Ronaldinho</span></li></ol></nav>
-    <section class="page-grid notebook-two-column document-page-layout">
-      <article class="document-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
-          <h1 data-page-title>Visão Geral da Arquitetura do Ronaldinho</h1>
-          <p class="post-summary" data-page-summary>Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.</p>
-        </header>
-        <div data-page-body><h1>A Estrutura OpenClaw Pro 🏗️</h1>
+    <div class="page-two-column document-page-layout">
+      <aside class="page-sidebar">
+        <section class="document-page-meta" aria-label="Metadados do documento">
+          <p class="document-page-meta-label" data-i18n="pages.document.meta">Metadados do documento</p>
+          <div class="document-page-meta-row">
+            <p class="doc-version"><i class="site-icon meta-icon" data-lucide="git-branch" aria-hidden="true"></i>v0.1</p>
+            <p class="doc-category"><i class="site-icon meta-icon" data-lucide="folder" aria-hidden="true"></i>agents</p>
+          </div>
+          <div class="tag-list document-page-meta-tags"><span class="tag">agents</span><span class="tag">architecture</span><span class="tag">runtime</span></div>
+        </section>
+      </aside>
+      <div class="page-main">
+        <article class="document-shell prose notebook-sheet">
+          <header class="post-header">
+            <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
+            <h1 data-page-title>Visão Geral da Arquitetura do Ronaldinho</h1>
+            <p class="post-summary" data-page-summary>Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.</p>
+          </header>
+          <div data-page-body><h1>A Estrutura OpenClaw Pro 🏗️</h1>
 <p>O Ronaldinho Agent não é monolítico. Ele é uma orquestração de microsserviços e camadas de inteligência que garantem autonomia nível L6.</p>
 <h3>O Diagrama de Fluxo</h3>
 <div class="mermaid">graph TD
@@ -88,16 +99,9 @@
 <ol><li>Tenta API Principal (ex: Gemini Flash).</li> <li>Se falhar por cota, tenta Fallbacks (OpenAI, Anthropic).</li> <li>Se falhar, ativa o <strong>Ghost Mode</strong> (Navegador).</li> <li>Como última instância, encaminha para a <strong>Antigravity Bridge</strong>.</li></ol>
 <h4>4. Skills Engine</h4>
 <p>As habilidades saem de <code>.agent/skills/</code>. Cada skill é um módulo Python independente que o agente pode importar e usar para expandir suas capacidades sem precisar reiniciar o sistema.</p></div>
-      </article>
-    </section>
-    <section class="document-page-meta" aria-label="Metadados do documento">
-      <p class="document-page-meta-label" data-i18n="pages.document.meta">Metadados do documento</p>
-      <div class="document-page-meta-row">
-        <p class="doc-version"><i class="site-icon meta-icon" data-lucide="git-branch" aria-hidden="true"></i>v0.1</p>
-        <p class="doc-category"><i class="site-icon meta-icon" data-lucide="folder" aria-hidden="true"></i>agents</p>
+        </article>
       </div>
-      <div class="tag-list document-page-meta-tags"><span class="tag">agents</span><span class="tag">architecture</span><span class="tag">runtime</span></div>
-    </section>
+    </div>
     <script id="page-content-data" type="application/json">{"title": "Visão Geral da Arquitetura do Ronaldinho", "summary": "Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.", "body_html": "\u003ch1>A Estrutura OpenClaw Pro 🏗️\u003c/h1>\n\u003cp>O Ronaldinho Agent não é monolítico. Ele é uma orquestração de microsserviços e camadas de inteligência que garantem autonomia nível L6.\u003c/p>\n\u003ch3>O Diagrama de Fluxo\u003c/h3>\n\u003cdiv class=\"mermaid\">graph TD\n    User([Usuário]) --&gt; |Telegram| Bridge[Neural Bridge]\n    User --&gt; |Browser| Dashboard[OpenClaw Dashboard]\n\n    subgraph &quot;Camada de Inteligência&quot;\n        Bridge &lt;--&gt; Core[Neural Core - FastAPI]\n        Dashboard &lt;--&gt; Core\n        Core --&gt; Skills[Engine de Habilidades]\n        Core --&gt; Memory[Memory Store]\n    end\n\n    subgraph &quot;Execução Autónoma&quot;\n        Core --&gt; Lane[Execution Lane]\n        Core --&gt; Tools[Terminal/File Tools]\n    end\u003c/div>\n\u003ch3>Componentes Chave\u003c/h3>\n\u003ch4>1. Neural Core (Sessão Central)\u003c/h4>\n\u003cp>O cérebro do sistema. Desenvolvido em FastAPI, ele gerencia as requisições, faz a compressão de contexto e decide qual Persona deve entrar em campo.\u003c/p>\n\u003ch4>2. Execution Lanes\u003c/h4>\n\u003cp>Um conceito chave inspirado no OpenClaw. Cada usuário tem uma &quot;Lane&quot; (faixa) de execução. Isso garante que o Ronaldinho não tente editar o mesmo arquivo em duas tarefas diferentes ao mesmo tempo, evitando conflitos de IO.\u003c/p>\n\u003ch4>3. Provedor Agnóstico\u003c/h4>\n\u003cp>O Core não depende de apenas um modelo. Ele utiliza um sistema de \u003cstrong>Fallback em Cascata\u003c/strong>:\u003c/p>\n\u003col>\u003cli>Tenta API Principal (ex: Gemini Flash).\u003c/li> \u003cli>Se falhar por cota, tenta Fallbacks (OpenAI, Anthropic).\u003c/li> \u003cli>Se falhar, ativa o \u003cstrong>Ghost Mode\u003c/strong> (Navegador).\u003c/li> \u003cli>Como última instância, encaminha para a \u003cstrong>Antigravity Bridge\u003c/strong>.\u003c/li>\u003c/ol>\n\u003ch4>4. Skills Engine\u003c/h4>\n\u003cp>As habilidades saem de \u003ccode>.agent/skills/\u003c/code>. Cada skill é um módulo Python independente que o agente pode importar e usar para expandir suas capacidades sem precisar reiniciar o sistema.\u003c/p>", "title_en_us": "Ronaldinho Architecture Overview", "title_ja_jp": "Ronaldinho アーキテクチャ概観", "summary_en_us": "Overview of the Ronaldinho Agent architecture and runtime modularity choices.", "summary_ja_jp": "Ronaldinho Agent のアーキテクチャとランタイム・モジュラリティ選定の概観。", "body_html_en_us": "\u003ch1>Ronaldinho Architecture Overview\u003c/h1>\n\u003cp>The Ronaldinho Agent is not monolithic. It is an orchestration of services and intelligence layers designed to provide autonomy without losing control over execution.\u003c/p>\n\u003ch2>Flow diagram\u003c/h2>\n\u003cdiv class=\"mermaid\">graph TD\n    User([User]) --&gt; |Telegram| Bridge[Neural Bridge]\n    User --&gt; |Browser| Dashboard[OpenClaw Dashboard]\n\n    subgraph &quot;Intelligence Layer&quot;\n        Bridge &lt;--&gt; Core[Neural Core - FastAPI]\n        Dashboard &lt;--&gt; Core\n        Core --&gt; Skills[Skills Engine]\n        Core --&gt; Memory[Memory Store]\n    end\n\n    subgraph &quot;Autonomous Execution&quot;\n        Core --&gt; Lane[Execution Lane]\n        Core --&gt; Tools[Terminal/File Tools]\n    end\u003c/div>\n\u003ch2>Key components\u003c/h2>\n\u003ch3>1. Neural Core (central session)\u003c/h3>\n\u003cp>The brain of the system. Built in FastAPI, it manages requests, compresses context and decides which persona should respond.\u003c/p>\n\u003ch3>2. Execution Lanes\u003c/h3>\n\u003cp>A key concept inspired by OpenClaw. Each user gets an execution lane, ensuring the agent does not try to edit the same file in two parallel tasks and reducing I/O conflicts.\u003c/p>\n\u003ch3>3. Provider-agnostic design\u003c/h3>\n\u003cp>The core does not depend on a single model. It uses a cascading fallback strategy:\u003c/p>\n\u003col>\u003cli>Try the primary API.\u003c/li> \u003cli>If quota or availability fails, try fallback providers.\u003c/li> \u003cli>If that also fails, activate browser-based execution.\u003c/li> \u003cli>As a last resort, hand off through the Antigravity bridge.\u003c/li>\u003c/ol>\n\u003ch3>4. Skills Engine\u003c/h3>\n\u003cp>Skills live under \u003ccode>.agent/skills/\u003c/code>. Each skill is an isolated Python module that the agent can load to expand its capabilities without restarting the runtime.\u003c/p>", "body_html_ja_jp": "\u003ch1>Ronaldinho アーキテクチャ概観\u003c/h1>\n\u003cp>Ronaldinho Agent はモノリスではありません。実行制御を失わずに自律性を実現するため、サービス群と知能レイヤを組み合わせたオーケストレーションです。\u003c/p>\n\u003ch2>フローダイアグラム\u003c/h2>\n\u003cdiv class=\"mermaid\">graph TD\n    User([ユーザー]) --&gt; |Telegram| Bridge[Neural Bridge]\n    User --&gt; |Browser| Dashboard[OpenClaw Dashboard]\n\n    subgraph &quot;Intelligence Layer&quot;\n        Bridge &lt;--&gt; Core[Neural Core - FastAPI]\n        Dashboard &lt;--&gt; Core\n        Core --&gt; Skills[Skills Engine]\n        Core --&gt; Memory[Memory Store]\n    end\n\n    subgraph &quot;Autonomous Execution&quot;\n        Core --&gt; Lane[Execution Lane]\n        Core --&gt; Tools[Terminal/File Tools]\n    end\u003c/div>\n\u003ch2>主要コンポーネント\u003c/h2>\n\u003ch3>1. Neural Core（中央セッション）\u003c/h3>\n\u003cp>システムの頭脳です。FastAPI で構築され、リクエスト管理、文脈圧縮、どの persona が応答すべきかの判断を担います。\u003c/p>\n\u003ch3>2. Execution Lanes\u003c/h3>\n\u003cp>OpenClaw に着想を得た重要概念です。各ユーザーに専用 lane を与えることで、エージェントが並列タスクで同じファイルを同時編集しようとするのを防ぎ、I/O 競合を減らします。\u003c/p>\n\u003ch3>3. Provider 非依存設計\u003c/h3>\n\u003cp>Core は単一モデルに依存しません。段階的 fallback 戦略を用います。\u003c/p>\n\u003col>\u003cli>まず primary API を試す。\u003c/li> \u003cli>quota や可用性で失敗したら fallback provider を試す。\u003c/li> \u003cli>それでも失敗したら browser ベース実行へ切り替える。\u003c/li> \u003cli>最後の手段として Antigravity bridge に委譲する。\u003c/li>\u003c/ol>\n\u003ch3>4. Skills Engine\u003c/h3>\n\u003cp>skill は \u003ccode>.agent/skills/\u003c/code> 配下にあり、各 skill は独立した Python module です。ランタイムを再起動せずに能力を拡張できます。\u003c/p>"}</script>
     </main>
       

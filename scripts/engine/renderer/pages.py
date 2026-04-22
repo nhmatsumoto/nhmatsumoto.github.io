@@ -807,38 +807,56 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
         ]
         if link
     )
+    sidebar_sections = [
+        f"""<div class="post-sidebar-section post-sidebar-section-meta">
+          <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2></div>
+          {metrics_html}
+        </div>"""
+    ]
+    if badges_html:
+        sidebar_sections.append(f'<div class="post-sidebar-section">{badges_html}</div>')
+    if tags_html:
+        sidebar_sections.append(f'<div class="post-sidebar-section">{tags_html}</div>')
+    if impact_html:
+        sidebar_sections.append(f'<div class="post-sidebar-section">{impact_html}</div>')
+    if actions_html:
+        sidebar_sections.append(f'<div class="sidebar-actions">{actions_html}</div>')
+    sidebar_body = "\n        ".join(sidebar_sections)
     sidebar = f"""
-    <aside class="sidebar-panel notebook-meta-panel post-meta-panel">
-      <div class="post-sidebar-section post-sidebar-section-meta">
-        <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">{html.escape(translate(i18n, locale, "pages.post.metadata", "Metadata"))}</h2></div>
-        {metrics_html}
+    <aside class="page-sidebar post-detail-sidebar">
+      <div class="sidebar-panel notebook-meta-panel post-meta-panel">
+        {sidebar_body}
       </div>
-      {f'<div class="post-sidebar-section">{badges_html}</div>' if badges_html else ""}
-      {f'<div class="post-sidebar-section">{tags_html}</div>' if tags_html else ""}
-      {f'<div class="post-sidebar-section">{impact_html}</div>' if impact_html else ""}
-      {f'<div class="sidebar-actions">{actions_html}</div>' if actions_html else ""}
     </aside>
-    """
+    """.strip()
+    post_body_sections = "".join(
+        section
+        for section in [
+            render_trade_offs_section(post.get("trade_offs", []), i18n, locale),
+            render_lessons_section(post.get("lessons", []), i18n, locale),
+        ]
+        if section
+    )
     related_html = render_related_posts(related_posts or [], i18n, locale)
     page_payload = json.dumps(_build_post_localization_payload(post), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <section class="page-grid notebook-two-column post-reading-layout">
-      <article class="post-shell prose notebook-sheet post-reading-article">
-        <header class="post-header post-reading-header">
-          <div class="post-header-meta">
-            <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
-            <div class="post-meta post-meta-hero"><span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(post['published_dt'], locale, 'long')}</span><span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post['reading_time'], i18n, locale)}</span></div>
-          </div>
-          <h1 data-page-title>{html.escape(post['title'])}</h1>
-          <p class="post-summary post-deck" data-page-summary>{html.escape(post['summary'])}</p>
-        </header>
-        <div class="post-body" data-page-body>{render_markdown(post['body'])}</div>
-        {render_trade_offs_section(post.get("trade_offs", []), i18n, locale)}
-        {render_lessons_section(post.get("lessons", []), i18n, locale)}
-      </article>
+    <div class="page-two-column post-reading-layout">
       {sidebar}
-    </section>
+      <div class="page-main">
+        <article class="post-shell prose notebook-sheet post-reading-article">
+          <header class="post-header post-reading-header">
+            <div class="post-header-meta">
+              <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
+              <div class="post-meta post-meta-hero"><span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(post['published_dt'], locale, 'long')}</span><span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post['reading_time'], i18n, locale)}</span></div>
+            </div>
+            <h1 data-page-title>{html.escape(post['title'])}</h1>
+            <p class="post-summary post-deck" data-page-summary>{html.escape(post['summary'])}</p>
+          </header>
+          <div class="post-body" data-page-body>{render_markdown(post['body'])}</div>{post_body_sections}
+        </article>
+      </div>
+    </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     {related_html}
     """
@@ -890,27 +908,31 @@ def render_daily_page(site: dict[str, str], system: dict[str, Any], entry: dict[
     page_payload = json.dumps(_build_daily_localization_payload(entry), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <section class="page-grid notebook-two-column">
-      <article class="post-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.daily.kicker">{html.escape(translate(i18n, locale, "pages.daily.kicker", "daily"))}</p>
-          <h1 data-page-title>{html.escape(entry['title'])}</h1>
-          <p class="post-summary" data-page-summary>{html.escape(entry['summary'])}</p>
-          <div class="post-meta">{"".join(meta_lines)}</div>
-        </header>
-        <div data-page-body>{render_markdown(entry['body'])}</div>
-      </article>
-      <aside class="sidebar-panel notebook-meta-panel">
-        <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
-        {render_tag_list(entry.get("tags", []))}
-        <div class="meta-stack">
-          {f'<p><strong data-i18n="pages.daily.mood">{html.escape(translate(i18n, locale, "pages.daily.mood", "Mood"))}</strong>: {html.escape(entry["mood"])}</p>' if entry.get("mood") else ""}
-          {f'<p><strong data-i18n="pages.daily.soundtrack">{html.escape(translate(i18n, locale, "pages.daily.soundtrack", "Soundtrack"))}</strong>: {html.escape(entry["soundtrack"])}</p>' if entry.get("soundtrack") else ""}
-          {f'<p><strong data-i18n="pages.daily.now_playing">{html.escape(translate(i18n, locale, "pages.daily.now_playing", "Tocando"))}</strong>: {html.escape(entry["now_playing"])}</p>' if entry.get("now_playing") else ""}
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+        <div class="sidebar-panel notebook-meta-panel">
+          <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
+          {render_tag_list(entry.get("tags", []))}
+          <div class="meta-stack">
+            {f'<p><strong data-i18n="pages.daily.mood">{html.escape(translate(i18n, locale, "pages.daily.mood", "Mood"))}</strong>: {html.escape(entry["mood"])}</p>' if entry.get("mood") else ""}
+            {f'<p><strong data-i18n="pages.daily.soundtrack">{html.escape(translate(i18n, locale, "pages.daily.soundtrack", "Soundtrack"))}</strong>: {html.escape(entry["soundtrack"])}</p>' if entry.get("soundtrack") else ""}
+            {f'<p><strong data-i18n="pages.daily.now_playing">{html.escape(translate(i18n, locale, "pages.daily.now_playing", "Tocando"))}</strong>: {html.escape(entry["now_playing"])}</p>' if entry.get("now_playing") else ""}
+          </div>
+          <div class="sidebar-actions">{soundtrack_link}</div>
         </div>
-        <div class="sidebar-actions">{soundtrack_link}</div>
       </aside>
-    </section>
+      <div class="page-main">
+        <article class="post-shell prose notebook-sheet">
+          <header class="post-header">
+            <p class="section-kicker" data-i18n="pages.daily.kicker">{html.escape(translate(i18n, locale, "pages.daily.kicker", "daily"))}</p>
+            <h1 data-page-title>{html.escape(entry['title'])}</h1>
+            <p class="post-summary" data-page-summary>{html.escape(entry['summary'])}</p>
+            <div class="post-meta">{"".join(meta_lines)}</div>
+          </header>
+          <div data-page-body>{render_markdown(entry['body'])}</div>
+        </article>
+      </div>
+    </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     return render_layout(
@@ -938,36 +960,49 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
         i18n,
         locale,
     )
+    sidebar_actions = "".join(
+        link
+        for link in [
+            f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">{render_icon("network", "site-icon sidebar-link-icon")}<span data-i18n="actions.view_architecture">{html.escape(translate(i18n, locale, "actions.view_architecture", "architecture"))}</span></a>' if project.get("resolved_architecture_url") else "",
+            f'<a class="sidebar-link" href="{project["resolved_docs_url"]}">{render_icon("book-open", "site-icon sidebar-link-icon")}<span data-i18n="actions.open_docs">{html.escape(translate(i18n, locale, "actions.open_docs", "docs"))}</span></a>' if project.get("resolved_docs_url") else "",
+            f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">{render_icon("github", "site-icon sidebar-link-icon")}<span data-i18n="actions.code">{html.escape(translate(i18n, locale, "actions.code", "code"))}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if project.get("resolved_code_url") else "",
+        ]
+        if link
+    )
+    sidebar_sections = [
+        f'<div class="sidebar-header"><h2 data-i18n="pages.project.status">{html.escape(translate(i18n, locale, "pages.project.status", "Status"))}</h2></div>',
+        f"<p>{render_status_badge(project['status'], i18n, locale)}</p>",
+        f'<h3 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h3>',
+        render_stack_list(project["stack"]),
+        render_impact_bar(project.get("impact", []), i18n, locale),
+        f'<div class="sidebar-actions">{sidebar_actions}</div>' if sidebar_actions else "",
+    ]
+    sidebar_body = "\n        ".join(section for section in sidebar_sections if section)
     sidebar = f"""
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.project.status">{html.escape(translate(i18n, locale, "pages.project.status", "Status"))}</h2></div>
-      <p>{render_status_badge(project['status'], i18n, locale)}</p>
-      <h3 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h3>
-      {render_stack_list(project['stack'])}
-      {render_impact_bar(project.get("impact", []), i18n, locale)}
-      <div class="sidebar-actions">
-        {f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">{render_icon("network", "site-icon sidebar-link-icon")}<span data-i18n="actions.view_architecture">{html.escape(translate(i18n, locale, "actions.view_architecture", "architecture"))}</span></a>' if project.get("resolved_architecture_url") else ""}
-        {f'<a class="sidebar-link" href="{project["resolved_docs_url"]}">{render_icon("book-open", "site-icon sidebar-link-icon")}<span data-i18n="actions.open_docs">{html.escape(translate(i18n, locale, "actions.open_docs", "docs"))}</span></a>' if project.get("resolved_docs_url") else ""}
-        {f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">{render_icon("github", "site-icon sidebar-link-icon")}<span data-i18n="actions.code">{html.escape(translate(i18n, locale, "actions.code", "code"))}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if project.get("resolved_code_url") else ""}
+    <aside class="page-sidebar">
+      <div class="sidebar-panel notebook-meta-panel">
+        {sidebar_body}
       </div>
     </aside>
-    """
+    """.strip()
     page_payload_obj = _build_project_localization_payload(project, i18n, locale)
     page_payload = json.dumps(page_payload_obj, ensure_ascii=False).replace("<", "\\u003c")
+    badges_html = render_badge_list(project.get("badges", []))
     content = f"""
     {breadcrumbs}
-    <section class="page-grid notebook-two-column">
-      <article class="project-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p>
-          <h1 data-page-title>{html.escape(project['name'])}</h1>
-          <p class="post-summary" data-page-summary>{html.escape(project['headline'] or project['summary'])}</p>
-          {render_badge_list(project.get('badges', []))}
-        </header>
-        <div data-page-body>{page_payload_obj["body_html"]}</div>
-      </article>
+    <div class="page-two-column">
       {sidebar}
-    </section>
+      <div class="page-main">
+        <article class="project-shell prose notebook-sheet">
+          <header class="post-header">
+            <p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p>
+            <h1 data-page-title>{html.escape(project['name'])}</h1>
+            <p class="post-summary" data-page-summary>{html.escape(project['headline'] or project['summary'])}</p>{badges_html}
+          </header>
+          <div data-page-body>{page_payload_obj["body_html"]}</div>
+        </article>
+      </div>
+    </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     og = {
@@ -1009,24 +1044,28 @@ def render_document_page(site: dict[str, str], system: dict[str, Any], document:
     page_payload = json.dumps(page_payload_obj, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <section class="page-grid notebook-two-column document-page-layout">
-      <article class="document-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p>
-          <h1 data-page-title>{html.escape(document['title'])}</h1>
-          <p class="post-summary" data-page-summary>{html.escape(document['summary'])}</p>
-        </header>
-        <div data-page-body>{page_payload_obj["body_html"]}</div>
-      </article>
-    </section>
-    <section class="document-page-meta" aria-label="{metadata_label}">
-      <p class="document-page-meta-label" data-i18n="pages.document.meta">{metadata_label}</p>
-      <div class="document-page-meta-row">
-        <p class="doc-version">{render_icon("git-branch", "site-icon meta-icon")}{html.escape(document['version'])}</p>
-        <p class="doc-category">{render_icon("folder", "site-icon meta-icon")}{html.escape(document['category'])}</p>
+    <div class="page-two-column document-page-layout">
+      <aside class="page-sidebar">
+        <section class="document-page-meta" aria-label="{metadata_label}">
+          <p class="document-page-meta-label" data-i18n="pages.document.meta">{metadata_label}</p>
+          <div class="document-page-meta-row">
+            <p class="doc-version">{render_icon("git-branch", "site-icon meta-icon")}{html.escape(document['version'])}</p>
+            <p class="doc-category">{render_icon("folder", "site-icon meta-icon")}{html.escape(document['category'])}</p>
+          </div>
+          {metadata_tags}
+        </section>
+      </aside>
+      <div class="page-main">
+        <article class="document-shell prose notebook-sheet">
+          <header class="post-header">
+            <p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p>
+            <h1 data-page-title>{html.escape(document['title'])}</h1>
+            <p class="post-summary" data-page-summary>{html.escape(document['summary'])}</p>
+          </header>
+          <div data-page-body>{page_payload_obj["body_html"]}</div>
+        </article>
       </div>
-      {metadata_tags}
-    </section>
+    </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     return render_layout(

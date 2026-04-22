@@ -27,7 +27,7 @@
     <link rel="canonical" href="https://nhmatsumoto.github.io/documents/technical-knowledge-os/">
     <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
     
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.45dedf88.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.e67b3662.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -53,14 +53,25 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/documents/"><i class="site-icon breadcrumb-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></li><li><span aria-current="page">Technical Knowledge OS</span></li></ol></nav>
-    <section class="page-grid notebook-two-column document-page-layout">
-      <article class="document-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
-          <h1 data-page-title>Technical Knowledge OS</h1>
-          <p class="post-summary" data-page-summary>A definição operacional do blog como sistema vivo de documentação técnica.</p>
-        </header>
-        <div data-page-body><h1>Technical Knowledge OS</h1>
+    <div class="page-two-column document-page-layout">
+      <aside class="page-sidebar">
+        <section class="document-page-meta" aria-label="Metadados do documento">
+          <p class="document-page-meta-label" data-i18n="pages.document.meta">Metadados do documento</p>
+          <div class="document-page-meta-row">
+            <p class="doc-version"><i class="site-icon meta-icon" data-lucide="git-branch" aria-hidden="true"></i>v1</p>
+            <p class="doc-category"><i class="site-icon meta-icon" data-lucide="folder" aria-hidden="true"></i>domain</p>
+          </div>
+          <div class="tag-list document-page-meta-tags"><span class="tag">domain</span><span class="tag">knowledge</span></div>
+        </section>
+      </aside>
+      <div class="page-main">
+        <article class="document-shell prose notebook-sheet">
+          <header class="post-header">
+            <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
+            <h1 data-page-title>Technical Knowledge OS</h1>
+            <p class="post-summary" data-page-summary>A definição operacional do blog como sistema vivo de documentação técnica.</p>
+          </header>
+          <div data-page-body><h1>Technical Knowledge OS</h1>
 <p>O blog passou a funcionar como um sistema de documentação viva. A ideia de <strong>technical knowledge OS</strong> é simples:</p>
 <ul><li>posts registram aprendizado e síntese;</li> <li>projetos mantêm contexto operacional;</li> <li>documentos preservam decisões e arquitetura;</li> <li>tudo é versionado no mesmo fluxo de publicação.</li></ul>
 <h2>Por que isso importa</h2>
@@ -68,16 +79,9 @@
 <p>O objetivo aqui é reduzir essa distância e fazer o site refletir o trabalho real: arquitetura, decisões, trade-offs e evolução.</p>
 <h2>Princípios</h2>
 <ul><li>clareza antes de ornamentação;</li> <li>profundidade sem ruído;</li> <li>cada página precisa justificar sua existência;</li> <li>o sistema deve continuar pequeno o suficiente para ser mantido.</li></ul></div>
-      </article>
-    </section>
-    <section class="document-page-meta" aria-label="Metadados do documento">
-      <p class="document-page-meta-label" data-i18n="pages.document.meta">Metadados do documento</p>
-      <div class="document-page-meta-row">
-        <p class="doc-version"><i class="site-icon meta-icon" data-lucide="git-branch" aria-hidden="true"></i>v1</p>
-        <p class="doc-category"><i class="site-icon meta-icon" data-lucide="folder" aria-hidden="true"></i>domain</p>
+        </article>
       </div>
-      <div class="tag-list document-page-meta-tags"><span class="tag">domain</span><span class="tag">knowledge</span></div>
-    </section>
+    </div>
     <script id="page-content-data" type="application/json">{"title": "Technical Knowledge OS", "summary": "A definição operacional do blog como sistema vivo de documentação técnica.", "body_html": "\u003ch1>Technical Knowledge OS\u003c/h1>\n\u003cp>O blog passou a funcionar como um sistema de documentação viva. A ideia de \u003cstrong>technical knowledge OS\u003c/strong> é simples:\u003c/p>\n\u003cul>\u003cli>posts registram aprendizado e síntese;\u003c/li> \u003cli>projetos mantêm contexto operacional;\u003c/li> \u003cli>documentos preservam decisões e arquitetura;\u003c/li> \u003cli>tudo é versionado no mesmo fluxo de publicação.\u003c/li>\u003c/ul>\n\u003ch2>Por que isso importa\u003c/h2>\n\u003cp>Na prática, conhecimento técnico se perde quando cada formato vive isolado. O post explica, a documentação detalha, mas o contexto entre um e outro desaparece.\u003c/p>\n\u003cp>O objetivo aqui é reduzir essa distância e fazer o site refletir o trabalho real: arquitetura, decisões, trade-offs e evolução.\u003c/p>\n\u003ch2>Princípios\u003c/h2>\n\u003cul>\u003cli>clareza antes de ornamentação;\u003c/li> \u003cli>profundidade sem ruído;\u003c/li> \u003cli>cada página precisa justificar sua existência;\u003c/li> \u003cli>o sistema deve continuar pequeno o suficiente para ser mantido.\u003c/li>\u003c/ul>", "title_en_us": "Technical Knowledge OS", "title_ja_jp": "Technical Knowledge OS", "summary_en_us": "The operational definition of the blog as a living system of technical documentation.", "summary_ja_jp": "ブログを生きた技術ドキュメンテーション・システムとして運用する定義。", "body_html_en_us": "\u003ch1>Technical Knowledge OS\u003c/h1>\n\u003cp>The blog has evolved into a living documentation system. The idea behind \u003cstrong>Technical Knowledge OS\u003c/strong> is simple:\u003c/p>\n\u003cul>\u003cli>posts register learning and synthesis;\u003c/li> \u003cli>projects preserve operational context;\u003c/li> \u003cli>documents store decisions and architecture;\u003c/li> \u003cli>everything is versioned inside the same publishing flow.\u003c/li>\u003c/ul>\n\u003ch2>Why it matters\u003c/h2>\n\u003cp>In practice, technical knowledge gets lost when each format lives in isolation. A post explains something, a document details it, but the context between them disappears.\u003c/p>\n\u003cp>The goal here is to reduce that gap and make the site reflect the real work: architecture, decisions, trade-offs and evolution.\u003c/p>\n\u003ch2>Principles\u003c/h2>\n\u003cul>\u003cli>clarity before ornament;\u003c/li> \u003cli>depth without noise;\u003c/li> \u003cli>every page must justify its existence;\u003c/li> \u003cli>the system should remain small enough to be maintainable.\u003c/li>\u003c/ul>", "body_html_ja_jp": "\u003ch1>Technical Knowledge OS\u003c/h1>\n\u003cp>このブログは、生きたドキュメンテーション・システムへ進化しました。\u003cstrong>Technical Knowledge OS\u003c/strong> という考え方はシンプルです。\u003c/p>\n\u003cul>\u003cli>post は学びと要約を記録する\u003c/li> \u003cli>project は運用文脈を保持する\u003c/li> \u003cli>document は設計判断とアーキテクチャを保存する\u003c/li> \u003cli>そのすべてを同じ公開フローの中でバージョン管理する\u003c/li>\u003c/ul>\n\u003ch2>なぜ重要か\u003c/h2>\n\u003cp>実際には、技術知識は形式ごとに孤立すると失われます。post が説明し、document が詳細を残しても、その間の文脈は消えてしまいます。\u003c/p>\n\u003cp>ここでの目標は、その距離を縮め、アーキテクチャ、意思決定、トレードオフ、進化といった実際の仕事がサイトに反映されるようにすることです。\u003c/p>\n\u003ch2>原則\u003c/h2>\n\u003cul>\u003cli>装飾より先に明快さ\u003c/li> \u003cli>ノイズのない深さ\u003c/li> \u003cli>すべてのページは存在理由を持つこと\u003c/li> \u003cli>システムは保守できるだけ十分に小さく保つこと\u003c/li>\u003c/ul>"}</script>
     </main>
       

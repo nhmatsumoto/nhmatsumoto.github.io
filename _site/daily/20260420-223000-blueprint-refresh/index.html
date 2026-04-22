@@ -27,7 +27,7 @@
     <link rel="canonical" href="https://nhmatsumoto.github.io/daily/20260420-223000-blueprint-refresh/">
     <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
     
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.45dedf88.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.e67b3662.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -53,29 +53,33 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/daily/"><i class="site-icon breadcrumb-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a></li><li><span aria-current="page">Refatorando o shell visual do site</span></li></ol></nav>
-    <section class="page-grid notebook-two-column">
-      <article class="post-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.daily.kicker">daily</p>
-          <h1 data-page-title>Refatorando o shell visual do site</h1>
-          <p class="post-summary" data-page-summary>Hoje o foco foi alinhar navegação, tipografia e background para que o site pareça um caderno técnico de verdade, não apenas um blog com grid decorativo.</p>
-          <div class="post-meta"><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-20T22:30:00+09:00" data-localize-date="long">20 de abril de 2026</time></span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="activity" aria-hidden="true"></i>concentrado</span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="music-2" aria-hidden="true"></i>Tycho - Awake</span></div>
-        </header>
-        <div data-page-body><p>Passei boa parte do dia ajustando o ritmo vertical do site. O problema anterior não era falta de identidade, e sim falta de alinhamento entre superfície e conteúdo.</p>
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+        <div class="sidebar-panel notebook-meta-panel">
+          <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">Contexto</h2></div>
+          <div class="tag-list"><span class="tag">site</span><span class="tag">design-system</span><span class="tag">css</span></div>
+          <div class="meta-stack">
+            <p><strong data-i18n="pages.daily.mood">Mood</strong>: concentrado</p>
+            <p><strong data-i18n="pages.daily.soundtrack">Soundtrack</strong>: ambient / downtempo</p>
+            <p><strong data-i18n="pages.daily.now_playing">Tocando</strong>: Tycho - Awake</p>
+          </div>
+          <div class="sidebar-actions"><a class="sidebar-link" href="https://open.spotify.com/track/5elQnH6wu7vJ3ctY2L4eAQ" target="_blank" rel="noopener"><i class="site-icon sidebar-link-icon" data-lucide="music-2" aria-hidden="true"></i><span>spotify</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>
+        </div>
+      </aside>
+      <div class="page-main">
+        <article class="post-shell prose notebook-sheet">
+          <header class="post-header">
+            <p class="section-kicker" data-i18n="pages.daily.kicker">daily</p>
+            <h1 data-page-title>Refatorando o shell visual do site</h1>
+            <p class="post-summary" data-page-summary>Hoje o foco foi alinhar navegação, tipografia e background para que o site pareça um caderno técnico de verdade, não apenas um blog com grid decorativo.</p>
+            <div class="post-meta"><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-20T22:30:00+09:00" data-localize-date="long">20 de abril de 2026</time></span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="activity" aria-hidden="true"></i>concentrado</span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="music-2" aria-hidden="true"></i>Tycho - Awake</span></div>
+          </header>
+          <div data-page-body><p>Passei boa parte do dia ajustando o ritmo vertical do site. O problema anterior não era falta de identidade, e sim falta de alinhamento entre superfície e conteúdo.</p>
 <p>Objetivo prático:</p>
 <ul><li>usar a malha do fundo para orientar leitura;</li> <li>reduzir a sensação de “cards soltos”;</li> <li>fazer headings, parágrafos e metadados parecerem parte do mesmo papel técnico.</li></ul></div>
-      </article>
-      <aside class="sidebar-panel notebook-meta-panel">
-        <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">Contexto</h2></div>
-        <div class="tag-list"><span class="tag">site</span><span class="tag">design-system</span><span class="tag">css</span></div>
-        <div class="meta-stack">
-          <p><strong data-i18n="pages.daily.mood">Mood</strong>: concentrado</p>
-          <p><strong data-i18n="pages.daily.soundtrack">Soundtrack</strong>: ambient / downtempo</p>
-          <p><strong data-i18n="pages.daily.now_playing">Tocando</strong>: Tycho - Awake</p>
-        </div>
-        <div class="sidebar-actions"><a class="sidebar-link" href="https://open.spotify.com/track/5elQnH6wu7vJ3ctY2L4eAQ" target="_blank" rel="noopener"><i class="site-icon sidebar-link-icon" data-lucide="music-2" aria-hidden="true"></i><span>spotify</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>
-      </aside>
-    </section>
+        </article>
+      </div>
+    </div>
     <script id="page-content-data" type="application/json">{"title": "Refatorando o shell visual do site", "summary": "Hoje o foco foi alinhar navegação, tipografia e background para que o site pareça um caderno técnico de verdade, não apenas um blog com grid decorativo.", "body_html": "\u003cp>Passei boa parte do dia ajustando o ritmo vertical do site. O problema anterior não era falta de identidade, e sim falta de alinhamento entre superfície e conteúdo.\u003c/p>\n\u003cp>Objetivo prático:\u003c/p>\n\u003cul>\u003cli>usar a malha do fundo para orientar leitura;\u003c/li> \u003cli>reduzir a sensação de “cards soltos”;\u003c/li> \u003cli>fazer headings, parágrafos e metadados parecerem parte do mesmo papel técnico.\u003c/li>\u003c/ul>", "title_en_us": "Refactoring the site's visual shell", "title_ja_jp": "サイトのビジュアルシェルをリファクタリングする", "summary_en_us": "Today's focus was aligning navigation, typography and background so the site feels like a real technical notebook, not just a blog with a decorative grid.", "summary_ja_jp": "今日は、ナビゲーション、タイポグラフィ、背景をそろえ、装飾的なグリッド付きブログではなく、本物の技術ノートのように感じられるサイトにすることへ集中した。", "body_html_en_us": "\u003cp>I spent a large part of the day adjusting the site&#x27;s vertical rhythm. The previous problem was not a lack of identity, but a lack of alignment between surface and content.\u003c/p>\n\u003cp>Practical goal:\u003c/p>\n\u003cul>\u003cli>use the background grid to guide reading;\u003c/li> \u003cli>reduce the feeling of loose cards;\u003c/li> \u003cli>make headings, paragraphs and metadata feel like part of the same technical sheet.\u003c/li>\u003c/ul>", "body_html_ja_jp": "\u003cp>今日はかなりの時間を使って、サイトの縦方向のリズムを調整した。以前の問題はアイデンティティ不足ではなく、表面とコンテンツの整合性が足りないことだった。\u003c/p>\n\u003cp>実務的な目標:\u003c/p>\n\u003cul>\u003cli>背景のグリッドを読書のガイドとして使う。\u003c/li> \u003cli>「ばらばらのカード」の感覚を減らす。\u003c/li> \u003cli>headings、paragraphs、metadata が同じ技術用紙の一部に見えるようにする。\u003c/li>\u003c/ul>"}</script>
     </main>
       

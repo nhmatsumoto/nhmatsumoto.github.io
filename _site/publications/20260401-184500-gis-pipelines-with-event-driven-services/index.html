@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Pipelines GIS com serviços orientados a eventos">
     <meta name="twitter:description" content="Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.45dedf88.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.e67b3662.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -60,17 +60,29 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/posts/"><i class="site-icon breadcrumb-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a></li><li><span aria-current="page">Pipelines GIS com serviços orientados a eventos</span></li></ol></nav>
-    <section class="page-grid notebook-two-column post-reading-layout">
-      <article class="post-shell prose notebook-sheet post-reading-article">
-        <header class="post-header post-reading-header">
-          <div class="post-header-meta">
-            <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
-            <div class="post-meta post-meta-hero"><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="long">1 de abril de 2026</time></span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></div>
-          </div>
-          <h1 data-page-title>Pipelines GIS com serviços orientados a eventos</h1>
-          <p class="post-summary post-deck" data-page-summary>Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.</p>
-        </header>
-        <div class="post-body" data-page-body><h1>GIS não precisa virar um sistema opaco</h1>
+    <div class="page-two-column post-reading-layout">
+      <aside class="page-sidebar post-detail-sidebar">
+      <div class="sidebar-panel notebook-meta-panel post-meta-panel">
+        <div class="post-sidebar-section post-sidebar-section-meta">
+          <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
+          <div class="card-metrics"><span class="metric"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="long">1 de abril de 2026</time></span> &middot; <span class="metric"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></div>
+        </div>
+        <div class="post-sidebar-section"><div class="badge-list"><span class="badge">production</span></div></div>
+        <div class="post-sidebar-section"><div class="tag-list"><span class="tag">gis</span><span class="tag">dotnet</span><span class="tag">architecture</span></div></div>
+        <div class="post-sidebar-section"><aside class="evidence-impact"><h3 class="evidence-title" data-i18n="pages.project.impact">Impacto &amp; Resultados</h3><ul class="impact-list"><li class="impact-metric"><i data-lucide="trending-up"></i><span>Pipeline em 5 estágios reduziu tempo de ingestão de 45min para 8min em datasets de 200k pontos</span></li><li class="impact-metric"><i data-lucide="trending-up"></i><span>Isolamento de falhas: erro em geocoding não bloqueia mais a cadeia de ingestão</span></li><li class="impact-metric"><i data-lucide="trending-up"></i><span>Dashboard operacional atualizado em near real-time (&lt;30s) mesmo durante ingestão pesada</span></li></ul></aside></div>
+      </div>
+    </aside>
+      <div class="page-main">
+        <article class="post-shell prose notebook-sheet post-reading-article">
+          <header class="post-header post-reading-header">
+            <div class="post-header-meta">
+              <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+              <div class="post-meta post-meta-hero"><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="long">1 de abril de 2026</time></span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></div>
+            </div>
+            <h1 data-page-title>Pipelines GIS com serviços orientados a eventos</h1>
+            <p class="post-summary post-deck" data-page-summary>Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.</p>
+          </header>
+          <div class="post-body" data-page-body><h1>GIS não precisa virar um sistema opaco</h1>
 <p>Sistemas geoespaciais costumam acumular parsing, transformação, regras de negócio, projeção de coordenadas e relatórios operacionais em um mesmo serviço. Isso funciona por pouco tempo.</p>
 <h2>Pipeline melhor que endpoint gigante</h2>
 <p>Uma abordagem mais sustentável é separar o fluxo em etapas:</p>
@@ -79,23 +91,10 @@
 <p>Com esse desenho, cada etapa tem semântica própria e falhas mais legíveis. O dashboard não precisa entender o processamento bruto, e a camada de leitura pode responder rápido mesmo quando a ingestão está pesada.</p>
 <h2>O que eu procuro preservar</h2>
 <ul><li>rastreabilidade do dado;</li> <li>contratos estáveis para consumo;</li> <li>clareza entre cálculo espacial e regra de negócio.</li></ul>
-<p>Essa mesma lógica de separar escrita, leitura e decisão acaba aparecendo em quase todos os sistemas que escalam bem.</p></div>
-        <section class="evidence-section"><h2 class="evidence-title" data-i18n="pages.project.trade_offs">Trade-offs &amp; Decisões</h2><ul class="tradeoff-list"><li class="tradeoff-item"><i data-lucide="scale"></i><span>Pipeline assíncrono adiciona latência end-to-end vs endpoint único — aceitável para dados não-interativos</span></li><li class="tradeoff-item"><i data-lucide="scale"></i><span>Cada estágio precisa de contrato explícito (schema) — overhead de design inicial compensa em manutenção</span></li><li class="tradeoff-item"><i data-lucide="scale"></i><span>Event-driven exige infraestrutura de mensageria — custo operacional maior que REST direto</span></li></ul></section>
-        <section class="evidence-section"><h2 class="evidence-title" data-i18n="pages.project.lessons">Lições Aprendidas</h2><ul class="lesson-list"><li class="lesson-item"><i data-lucide="lightbulb"></i><span>Separar cálculo espacial de regra de negócio evitou 3 incidentes de regressão em 6 meses</span></li><li class="lesson-item"><i data-lucide="lightbulb"></i><span>Contratos entre estágios devem ser versionados desde o dia 1 — migração retroativa é cara</span></li><li class="lesson-item"><i data-lucide="lightbulb"></i><span>Monitorar cada estágio individualmente revelou que 80% do tempo era gasto em geocoding externo</span></li></ul></section>
-      </article>
-      
-    <aside class="sidebar-panel notebook-meta-panel post-meta-panel">
-      <div class="post-sidebar-section post-sidebar-section-meta">
-        <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
-        <div class="card-metrics"><span class="metric"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-01T18:45:00+09:00" data-localize-date="long">1 de abril de 2026</time></span> &middot; <span class="metric"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></div>
+<p>Essa mesma lógica de separar escrita, leitura e decisão acaba aparecendo em quase todos os sistemas que escalam bem.</p></div><section class="evidence-section"><h2 class="evidence-title" data-i18n="pages.project.trade_offs">Trade-offs &amp; Decisões</h2><ul class="tradeoff-list"><li class="tradeoff-item"><i data-lucide="scale"></i><span>Pipeline assíncrono adiciona latência end-to-end vs endpoint único — aceitável para dados não-interativos</span></li><li class="tradeoff-item"><i data-lucide="scale"></i><span>Cada estágio precisa de contrato explícito (schema) — overhead de design inicial compensa em manutenção</span></li><li class="tradeoff-item"><i data-lucide="scale"></i><span>Event-driven exige infraestrutura de mensageria — custo operacional maior que REST direto</span></li></ul></section><section class="evidence-section"><h2 class="evidence-title" data-i18n="pages.project.lessons">Lições Aprendidas</h2><ul class="lesson-list"><li class="lesson-item"><i data-lucide="lightbulb"></i><span>Separar cálculo espacial de regra de negócio evitou 3 incidentes de regressão em 6 meses</span></li><li class="lesson-item"><i data-lucide="lightbulb"></i><span>Contratos entre estágios devem ser versionados desde o dia 1 — migração retroativa é cara</span></li><li class="lesson-item"><i data-lucide="lightbulb"></i><span>Monitorar cada estágio individualmente revelou que 80% do tempo era gasto em geocoding externo</span></li></ul></section>
+        </article>
       </div>
-      <div class="post-sidebar-section"><div class="badge-list"><span class="badge">production</span></div></div>
-      <div class="post-sidebar-section"><div class="tag-list"><span class="tag">gis</span><span class="tag">dotnet</span><span class="tag">architecture</span></div></div>
-      <div class="post-sidebar-section"><aside class="evidence-impact"><h3 class="evidence-title" data-i18n="pages.project.impact">Impacto &amp; Resultados</h3><ul class="impact-list"><li class="impact-metric"><i data-lucide="trending-up"></i><span>Pipeline em 5 estágios reduziu tempo de ingestão de 45min para 8min em datasets de 200k pontos</span></li><li class="impact-metric"><i data-lucide="trending-up"></i><span>Isolamento de falhas: erro em geocoding não bloqueia mais a cadeia de ingestão</span></li><li class="impact-metric"><i data-lucide="trending-up"></i><span>Dashboard operacional atualizado em near real-time (&lt;30s) mesmo durante ingestão pesada</span></li></ul></aside></div>
-      
-    </aside>
-    
-    </section>
+    </div>
     <script id="page-content-data" type="application/json">{"title": "Pipelines GIS com serviços orientados a eventos", "summary": "Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental.", "body_html": "\u003ch1>GIS não precisa virar um sistema opaco\u003c/h1>\n\u003cp>Sistemas geoespaciais costumam acumular parsing, transformação, regras de negócio, projeção de coordenadas e relatórios operacionais em um mesmo serviço. Isso funciona por pouco tempo.\u003c/p>\n\u003ch2>Pipeline melhor que endpoint gigante\u003c/h2>\n\u003cp>Uma abordagem mais sustentável é separar o fluxo em etapas:\u003c/p>\n\u003cul>\u003cli>ingestão de dados;\u003c/li> \u003cli>normalização e validação;\u003c/li> \u003cli>enriquecimento e geocoding;\u003c/li> \u003cli>projeção para leitura operacional;\u003c/li> \u003cli>entrega para dashboard, API ou alerta.\u003c/li>\u003c/ul>\n\u003ch2>Por que isso importa\u003c/h2>\n\u003cp>Com esse desenho, cada etapa tem semântica própria e falhas mais legíveis. O dashboard não precisa entender o processamento bruto, e a camada de leitura pode responder rápido mesmo quando a ingestão está pesada.\u003c/p>\n\u003ch2>O que eu procuro preservar\u003c/h2>\n\u003cul>\u003cli>rastreabilidade do dado;\u003c/li> \u003cli>contratos estáveis para consumo;\u003c/li> \u003cli>clareza entre cálculo espacial e regra de negócio.\u003c/li>\u003c/ul>\n\u003cp>Essa mesma lógica de separar escrita, leitura e decisão acaba aparecendo em quase todos os sistemas que escalam bem.\u003c/p>", "title_en_us": "GIS Pipelines with Event-Driven Services", "title_ja_jp": "イベント駆動サービスによる GIS パイプライン", "summary_en_us": "How to handle geospatial ingestion, async processing and operational reads without turning the backend into an accidental monolith.", "summary_ja_jp": "地理空間データの取り込み、非同期処理、運用向け読み取りを、バックエンドを偶発的なモノリスにせずに扱う方法。", "body_html_en_us": "\u003ch1>GIS does not have to become an opaque system\u003c/h1>\n\u003cp>Geospatial systems tend to accumulate parsing, transformation, business rules, coordinate projection and operational reporting inside the same service. That works for a while.\u003c/p>\n\u003ch2>A pipeline is better than a giant endpoint\u003c/h2>\n\u003cp>A more sustainable approach is to split the flow into stages:\u003c/p>\n\u003cul>\u003cli>data ingestion;\u003c/li> \u003cli>normalization and validation;\u003c/li> \u003cli>enrichment and geocoding;\u003c/li> \u003cli>projection for operational reads;\u003c/li> \u003cli>delivery to dashboards, APIs or alerts.\u003c/li>\u003c/ul>\n\u003ch2>Why this matters\u003c/h2>\n\u003cp>With this design, each stage has its own semantics and failures are easier to read. The dashboard does not need to understand raw processing, and the read layer can answer quickly even while ingestion is under heavy load.\u003c/p>\n\u003ch2>What I try to preserve\u003c/h2>\n\u003cul>\u003cli>data traceability;\u003c/li> \u003cli>stable consumption contracts;\u003c/li> \u003cli>a clear boundary between spatial computation and business rules.\u003c/li>\u003c/ul>\n\u003cp>The same logic of separating write, read and decision-making tends to reappear in almost every system that scales well.\u003c/p>", "body_html_ja_jp": "\u003ch1>GIS を不透明なシステムにする必要はない\u003c/h1>\n\u003cp>地理空間システムは、パース、変換、ビジネスルール、座標投影、運用レポートを同じサービスに積み上げがちです。しばらくは動きますが、長くは持ちません。\u003c/p>\n\u003ch2>巨大エンドポイントよりパイプライン\u003c/h2>\n\u003cp>より持続可能なのは、フローを段階に分けることです。\u003c/p>\n\u003cul>\u003cli>データ取り込み\u003c/li> \u003cli>正規化と検証\u003c/li> \u003cli>エンリッチメントとジオコーディング\u003c/li> \u003cli>運用向け読み取りへの投影\u003c/li> \u003cli>ダッシュボード、API、アラートへの配信\u003c/li>\u003c/ul>\n\u003ch2>なぜ重要か\u003c/h2>\n\u003cp>この設計では、各段階が独自の意味を持ち、失敗も読みやすくなります。ダッシュボードは生の処理を理解する必要がなく、読み取りレイヤは取り込み負荷が高い間でも高速に応答できます。\u003c/p>\n\u003ch2>私が守りたいもの\u003c/h2>\n\u003cul>\u003cli>データのトレーサビリティ\u003c/li> \u003cli>消費側の安定した契約\u003c/li> \u003cli>空間計算とビジネスルールの明確な境界\u003c/li>\u003c/ul>\n\u003cp>書き込み、読み取り、意思決定を分けるという考え方は、うまくスケールするほぼすべてのシステムで繰り返し現れます。\u003c/p>"}</script>
     
     <section class="section-panel related-posts-panel">

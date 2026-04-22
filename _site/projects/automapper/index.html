@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="AutoMapper">
     <meta name="twitter:description" content="Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET — elimina boilerplate de transformação entre camadas.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.45dedf88.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.e67b3662.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -60,15 +60,24 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">AutoMapper</span></li></ol></nav>
-    <section class="page-grid notebook-two-column">
-      <article class="project-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
-          <h1 data-page-title>AutoMapper</h1>
-          <p class="post-summary" data-page-summary>Mapeador objeto-para-objeto baseado em convenções para .NET.</p>
-          
-        </header>
-        <div data-page-body><p>Fork do AutoMapper, a biblioteca mais utilizada no ecossistema .NET para mapeamento automático entre objetos de diferentes camadas (DTOs, ViewModels, Entities).</p>
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+      <div class="sidebar-panel notebook-meta-panel">
+        <div class="sidebar-header"><h2 data-i18n="pages.project.status">Status</h2></div>
+        <p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p>
+        <h3 data-i18n="pages.project.stack">Stack</h3>
+        <div class="stack-list"><span class="stack-chip">C#</span><span class="stack-chip">.NET</span><span class="stack-chip">Reflection</span></div>
+        <div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/AutoMapper" target="_blank" rel="noopener"><i class="site-icon sidebar-link-icon" data-lucide="github" aria-hidden="true"></i><span data-i18n="actions.code">código</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>
+      </div>
+    </aside>
+      <div class="page-main">
+        <article class="project-shell prose notebook-sheet">
+          <header class="post-header">
+            <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+            <h1 data-page-title>AutoMapper</h1>
+            <p class="post-summary" data-page-summary>Mapeador objeto-para-objeto baseado em convenções para .NET.</p>
+          </header>
+          <div data-page-body><p>Fork do AutoMapper, a biblioteca mais utilizada no ecossistema .NET para mapeamento automático entre objetos de diferentes camadas (DTOs, ViewModels, Entities).</p>
 <h2>Por que este fork</h2>
 <p>AutoMapper é referência direta para projetos como SplitCosts e Financial, onde a separação entre domínio e contratos de API exige transformações frequentes entre modelos. Manter o fork permite estudar a implementação interna e avaliar trade-offs de performance vs. conveniência.</p>
 <h2>Conceitos centrais</h2>
@@ -77,22 +86,9 @@
 <p>Código de mapeamento manual entre camadas é repetitivo e frágil. AutoMapper resolve isso com convenções que reduzem boilerplate, mas exige disciplina: mapeamentos implícitos podem esconder bugs quando os modelos divergem.</p>
 <h2>Arquitetura</h2>
 <p>AutoMapper utiliza reflection e expression trees para gerar mapeamentos em tempo de compilação do perfil. A versão mais recente introduziu source generators como alternativa para eliminar overhead de reflection em cenários de alta performance.</p></div>
-      </article>
-      
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.project.status">Status</h2></div>
-      <p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p>
-      <h3 data-i18n="pages.project.stack">Stack</h3>
-      <div class="stack-list"><span class="stack-chip">C#</span><span class="stack-chip">.NET</span><span class="stack-chip">Reflection</span></div>
-      
-      <div class="sidebar-actions">
-        
-        
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/AutoMapper" target="_blank" rel="noopener"><i class="site-icon sidebar-link-icon" data-lucide="github" aria-hidden="true"></i><span data-i18n="actions.code">código</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+        </article>
       </div>
-    </aside>
-    
-    </section>
+    </div>
     <script id="page-content-data" type="application/json">{"name": "AutoMapper", "headline": "Mapeador objeto-para-objeto baseado em convenções para .NET.", "summary": "Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET — elimina boilerplate de transformação entre camadas.", "body_html": "\u003cp>Fork do AutoMapper, a biblioteca mais utilizada no ecossistema .NET para mapeamento automático entre objetos de diferentes camadas (DTOs, ViewModels, Entities).\u003c/p>\n\u003ch2>Por que este fork\u003c/h2>\n\u003cp>AutoMapper é referência direta para projetos como SplitCosts e Financial, onde a separação entre domínio e contratos de API exige transformações frequentes entre modelos. Manter o fork permite estudar a implementação interna e avaliar trade-offs de performance vs. conveniência.\u003c/p>\n\u003ch2>Conceitos centrais\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Convention over configuration\u003c/strong> — propriedades com mesmo nome são mapeadas automaticamente\u003c/li> \u003cli>\u003cstrong>Profiles\u003c/strong> — agrupamento de configurações de mapeamento por contexto de domínio\u003c/li> \u003cli>\u003cstrong>Projections\u003c/strong> — integração com LINQ/EF para projeções diretas no banco de dados\u003c/li> \u003cli>\u003cstrong>Validação de configuração\u003c/strong> — detecção antecipada de mapeamentos incompletos em tempo de inicialização\u003c/li>\u003c/ul>\n\u003ch2>Problema e solução\u003c/h2>\n\u003cp>Código de mapeamento manual entre camadas é repetitivo e frágil. AutoMapper resolve isso com convenções que reduzem boilerplate, mas exige disciplina: mapeamentos implícitos podem esconder bugs quando os modelos divergem.\u003c/p>\n\u003ch2>Arquitetura\u003c/h2>\n\u003cp>AutoMapper utiliza reflection e expression trees para gerar mapeamentos em tempo de compilação do perfil. A versão mais recente introduziu source generators como alternativa para eliminar overhead de reflection em cenários de alta performance.\u003c/p>", "headline_en_us": "A convention-based object-to-object mapper in .NET.", "headline_ja_jp": ".NET 向けの規約ベース・オブジェクト間マッパー。", "summary_en_us": "Convention-based object-to-object mapping library for .NET — removes boilerplate when transforming data across layers.", "summary_ja_jp": "規約ベースの .NET 用オブジェクトマッピング・ライブラリ。レイヤー間のデータ変換における定型コードを排除する。", "body_html_en_us": "\u003cp>Fork of AutoMapper, the most widely used library in the .NET ecosystem for automatic mapping between objects from different layers (DTOs, ViewModels and Entities).\u003c/p>\n\u003ch2>Why this fork\u003c/h2>\n\u003cp>AutoMapper is a direct reference for projects such as SplitCosts and Financial, where the separation between domain models and API contracts requires frequent transformations between representations. Keeping the fork available makes it possible to inspect the internal implementation and evaluate performance-versus-convenience trade-offs.\u003c/p>\n\u003ch2>Core concepts\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Convention over configuration\u003c/strong> — properties with the same name are mapped automatically\u003c/li> \u003cli>\u003cstrong>Profiles\u003c/strong> — grouping mapping configuration by domain context\u003c/li> \u003cli>\u003cstrong>Projections\u003c/strong> — integration with LINQ/EF for database-side projections\u003c/li> \u003cli>\u003cstrong>Configuration validation\u003c/strong> — early detection of incomplete mappings during startup\u003c/li>\u003c/ul>\n\u003ch2>Problem and solution\u003c/h2>\n\u003cp>Manual mapping code between layers is repetitive and fragile. AutoMapper reduces that boilerplate through conventions, but it requires discipline: implicit mappings can hide bugs when models diverge.\u003c/p>\n\u003ch2>Architecture\u003c/h2>\n\u003cp>AutoMapper uses reflection and expression trees to generate mappings when profiles are compiled. Newer versions also introduced source generators as an alternative for eliminating reflection overhead in performance-sensitive scenarios.\u003c/p>", "body_html_en": "\u003cp>Fork of AutoMapper, the most widely used library in the .NET ecosystem for automatic mapping between objects from different layers (DTOs, ViewModels and Entities).\u003c/p>\n\u003ch2>Why this fork\u003c/h2>\n\u003cp>AutoMapper is a direct reference for projects such as SplitCosts and Financial, where the separation between domain models and API contracts requires frequent transformations between representations. Keeping the fork available makes it possible to inspect the internal implementation and evaluate performance-versus-convenience trade-offs.\u003c/p>\n\u003ch2>Core concepts\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Convention over configuration\u003c/strong> — properties with the same name are mapped automatically\u003c/li> \u003cli>\u003cstrong>Profiles\u003c/strong> — grouping mapping configuration by domain context\u003c/li> \u003cli>\u003cstrong>Projections\u003c/strong> — integration with LINQ/EF for database-side projections\u003c/li> \u003cli>\u003cstrong>Configuration validation\u003c/strong> — early detection of incomplete mappings during startup\u003c/li>\u003c/ul>\n\u003ch2>Problem and solution\u003c/h2>\n\u003cp>Manual mapping code between layers is repetitive and fragile. AutoMapper reduces that boilerplate through conventions, but it requires discipline: implicit mappings can hide bugs when models diverge.\u003c/p>\n\u003ch2>Architecture\u003c/h2>\n\u003cp>AutoMapper uses reflection and expression trees to generate mappings when profiles are compiled. Newer versions also introduced source generators as an alternative for eliminating reflection overhead in performance-sensitive scenarios.\u003c/p>", "body_html_ja_jp": "\u003cp>AutoMapper のフォークです。.NET エコシステムで最も広く使われている、異なるレイヤー間（DTO、ViewModel、Entity）のオブジェクトを自動マッピングするライブラリです。\u003c/p>\n\u003ch2>このフォークの理由\u003c/h2>\n\u003cp>AutoMapper は SplitCosts や Financial のようなプロジェクトにおける直接的な参照実装です。ドメインと API 契約を分離すると、表現間の変換が頻繁に発生します。フォークを維持することで、内部実装を調べ、パフォーマンスと利便性のトレードオフを評価できます。\u003c/p>\n\u003ch2>中核となる考え方\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Convention over configuration\u003c/strong> — 同名プロパティを自動マッピング\u003c/li> \u003cli>\u003cstrong>Profiles\u003c/strong> — ドメイン文脈ごとにマッピング設定を整理\u003c/li> \u003cli>\u003cstrong>Projections\u003c/strong> — LINQ / EF と統合し、DB 側で投影を実行\u003c/li> \u003cli>\u003cstrong>Configuration validation\u003c/strong> — 起動時に不完全なマッピングを早期検出\u003c/li>\u003c/ul>\n\u003ch2>課題と解決策\u003c/h2>\n\u003cp>レイヤー間の手動マッピングコードは反復的で壊れやすいものです。AutoMapper は規約でその定型コードを減らしますが、規律は必要です。モデルが乖離すると、暗黙マッピングが不具合を隠すことがあります。\u003c/p>\n\u003ch2>アーキテクチャ\u003c/h2>\n\u003cp>AutoMapper は profile のコンパイル時に reflection と expression tree を使ってマッピングを生成します。最近のバージョンでは、高性能が求められる場面で reflection のオーバーヘッドを避けるため、source generator も導入されました。\u003c/p>", "body_html_ja": "\u003cp>AutoMapper のフォークです。.NET エコシステムで最も広く使われている、異なるレイヤー間（DTO、ViewModel、Entity）のオブジェクトを自動マッピングするライブラリです。\u003c/p>\n\u003ch2>このフォークの理由\u003c/h2>\n\u003cp>AutoMapper は SplitCosts や Financial のようなプロジェクトにおける直接的な参照実装です。ドメインと API 契約を分離すると、表現間の変換が頻繁に発生します。フォークを維持することで、内部実装を調べ、パフォーマンスと利便性のトレードオフを評価できます。\u003c/p>\n\u003ch2>中核となる考え方\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Convention over configuration\u003c/strong> — 同名プロパティを自動マッピング\u003c/li> \u003cli>\u003cstrong>Profiles\u003c/strong> — ドメイン文脈ごとにマッピング設定を整理\u003c/li> \u003cli>\u003cstrong>Projections\u003c/strong> — LINQ / EF と統合し、DB 側で投影を実行\u003c/li> \u003cli>\u003cstrong>Configuration validation\u003c/strong> — 起動時に不完全なマッピングを早期検出\u003c/li>\u003c/ul>\n\u003ch2>課題と解決策\u003c/h2>\n\u003cp>レイヤー間の手動マッピングコードは反復的で壊れやすいものです。AutoMapper は規約でその定型コードを減らしますが、規律は必要です。モデルが乖離すると、暗黙マッピングが不具合を隠すことがあります。\u003c/p>\n\u003ch2>アーキテクチャ\u003c/h2>\n\u003cp>AutoMapper は profile のコンパイル時に reflection と expression tree を使ってマッピングを生成します。最近のバージョンでは、高性能が求められる場面で reflection のオーバーヘッドを避けるため、source generator も導入されました。\u003c/p>"}</script>
     </main>
       

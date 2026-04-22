@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="MapleBR">
     <meta name="twitter:description" content="Projeto com ferramentas e configurações para servidores MapleStory, incluindo scripts de build e automação via Makefile.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.45dedf88.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.e67b3662.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -60,15 +60,24 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">MapleBR</span></li></ol></nav>
-    <section class="page-grid notebook-two-column">
-      <article class="project-shell prose notebook-sheet">
-        <header class="post-header">
-          <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
-          <h1 data-page-title>MapleBR</h1>
-          <p class="post-summary" data-page-summary>Projeto MapleBR — servidor e ferramentas para o ecossistema MapleStory.</p>
-          
-        </header>
-        <div data-page-body><p>Projeto de servidor e ferramentas para o universo MapleStory, com automação de build via Makefile.</p>
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+      <div class="sidebar-panel notebook-meta-panel">
+        <div class="sidebar-header"><h2 data-i18n="pages.project.status">Status</h2></div>
+        <p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p>
+        <h3 data-i18n="pages.project.stack">Stack</h3>
+        <div class="stack-list"><span class="stack-chip">Makefile</span><span class="stack-chip">C++</span><span class="stack-chip">Networking</span></div>
+        <div class="sidebar-actions"><a class="sidebar-link" href="https://github.com/nhmatsumoto/MapleBR" target="_blank" rel="noopener"><i class="site-icon sidebar-link-icon" data-lucide="github" aria-hidden="true"></i><span data-i18n="actions.code">código</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>
+      </div>
+    </aside>
+      <div class="page-main">
+        <article class="project-shell prose notebook-sheet">
+          <header class="post-header">
+            <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+            <h1 data-page-title>MapleBR</h1>
+            <p class="post-summary" data-page-summary>Projeto MapleBR — servidor e ferramentas para o ecossistema MapleStory.</p>
+          </header>
+          <div data-page-body><p>Projeto de servidor e ferramentas para o universo MapleStory, com automação de build via Makefile.</p>
 <h2>Contexto</h2>
 <p>MapleStory é um MMORPG que possui uma comunidade ativa de desenvolvimento de servidores privados. Este projeto reúne ferramentas, scripts de compilação e configurações para manutenção de um ambiente de servidor.</p>
 <h2>Aspectos técnicos</h2>
@@ -77,22 +86,9 @@
 <p>Servidores de jogos exigem compilação e configuração complexa de múltiplos componentes. O Makefile centraliza o processo de build e garante reprodutibilidade na construção do ambiente.</p>
 <h2>Arquitetura</h2>
 <p>Servidor multi-threaded em C++ com protocolo de rede proprietário. O Makefile orquestra a compilação de módulos (login server, game server, channel server) e a preparação de dados estáticos do jogo.</p></div>
-      </article>
-      
-    <aside class="sidebar-panel notebook-meta-panel">
-      <div class="sidebar-header"><h2 data-i18n="pages.project.status">Status</h2></div>
-      <p><span class="status-chip status-research" data-status-key="status.research">pesquisa</span></p>
-      <h3 data-i18n="pages.project.stack">Stack</h3>
-      <div class="stack-list"><span class="stack-chip">Makefile</span><span class="stack-chip">C++</span><span class="stack-chip">Networking</span></div>
-      
-      <div class="sidebar-actions">
-        
-        
-        <a class="sidebar-link" href="https://github.com/nhmatsumoto/MapleBR" target="_blank" rel="noopener"><i class="site-icon sidebar-link-icon" data-lucide="github" aria-hidden="true"></i><span data-i18n="actions.code">código</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+        </article>
       </div>
-    </aside>
-    
-    </section>
+    </div>
     <script id="page-content-data" type="application/json">{"name": "MapleBR", "headline": "Projeto MapleBR — servidor e ferramentas para o ecossistema MapleStory.", "summary": "Projeto com ferramentas e configurações para servidores MapleStory, incluindo scripts de build e automação via Makefile.", "body_html": "\u003cp>Projeto de servidor e ferramentas para o universo MapleStory, com automação de build via Makefile.\u003c/p>\n\u003ch2>Contexto\u003c/h2>\n\u003cp>MapleStory é um MMORPG que possui uma comunidade ativa de desenvolvimento de servidores privados. Este projeto reúne ferramentas, scripts de compilação e configurações para manutenção de um ambiente de servidor.\u003c/p>\n\u003ch2>Aspectos técnicos\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Build system\u003c/strong> com Makefile para compilação de componentes C++\u003c/li> \u003cli>\u003cstrong>Networking\u003c/strong> — protocolo de comunicação cliente-servidor customizado\u003c/li> \u003cli>\u003cstrong>Gestão de dados\u003c/strong> — handling de arquivos de dados do jogo (WZ files)\u003c/li> \u003cli>\u003cstrong>Automação\u003c/strong> — scripts para deploy e manutenção do servidor\u003c/li>\u003c/ul>\n\u003ch2>Problema e solução\u003c/h2>\n\u003cp>Servidores de jogos exigem compilação e configuração complexa de múltiplos componentes. O Makefile centraliza o processo de build e garante reprodutibilidade na construção do ambiente.\u003c/p>\n\u003ch2>Arquitetura\u003c/h2>\n\u003cp>Servidor multi-threaded em C++ com protocolo de rede proprietário. O Makefile orquestra a compilação de módulos (login server, game server, channel server) e a preparação de dados estáticos do jogo.\u003c/p>", "headline_en_us": "MapleBR project — server and tooling for the MapleStory ecosystem.", "headline_ja_jp": "MapleBR プロジェクト — MapleStory エコシステムのサーバーとツール群。", "summary_en_us": "Project with tooling and configuration for MapleStory servers, including build scripts and Makefile-based automation.", "summary_ja_jp": "MapleStory サーバー向けのツールと構成を含むプロジェクト。ビルドスクリプトと Makefile による自動化を備える。", "body_html_en_us": "\u003cp>Server-and-tooling project for the MapleStory universe, with build automation orchestrated through Makefiles.\u003c/p>\n\u003ch2>Context\u003c/h2>\n\u003cp>MapleStory has a long-standing private-server development community. This project brings together tooling, compilation scripts and configuration needed to maintain a server environment.\u003c/p>\n\u003ch2>Technical aspects\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Build system\u003c/strong> with Makefiles for compiling C++ components\u003c/li> \u003cli>\u003cstrong>Networking\u003c/strong> — a custom client-server communication protocol\u003c/li> \u003cli>\u003cstrong>Data management\u003c/strong> — handling of game data files (WZ files)\u003c/li> \u003cli>\u003cstrong>Automation\u003c/strong> — scripts for deployment and server maintenance\u003c/li>\u003c/ul>\n\u003ch2>Problem and solution\u003c/h2>\n\u003cp>Game servers require a complex build and configuration flow across multiple components. The Makefile centralizes that process and improves reproducibility when bringing the environment up.\u003c/p>\n\u003ch2>Architecture\u003c/h2>\n\u003cp>Multi-threaded C++ server with a proprietary network protocol. The Makefile orchestrates the build of modules such as login, game and channel servers, along with preparation of static game data.\u003c/p>", "body_html_en": "\u003cp>Server-and-tooling project for the MapleStory universe, with build automation orchestrated through Makefiles.\u003c/p>\n\u003ch2>Context\u003c/h2>\n\u003cp>MapleStory has a long-standing private-server development community. This project brings together tooling, compilation scripts and configuration needed to maintain a server environment.\u003c/p>\n\u003ch2>Technical aspects\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Build system\u003c/strong> with Makefiles for compiling C++ components\u003c/li> \u003cli>\u003cstrong>Networking\u003c/strong> — a custom client-server communication protocol\u003c/li> \u003cli>\u003cstrong>Data management\u003c/strong> — handling of game data files (WZ files)\u003c/li> \u003cli>\u003cstrong>Automation\u003c/strong> — scripts for deployment and server maintenance\u003c/li>\u003c/ul>\n\u003ch2>Problem and solution\u003c/h2>\n\u003cp>Game servers require a complex build and configuration flow across multiple components. The Makefile centralizes that process and improves reproducibility when bringing the environment up.\u003c/p>\n\u003ch2>Architecture\u003c/h2>\n\u003cp>Multi-threaded C++ server with a proprietary network protocol. The Makefile orchestrates the build of modules such as login, game and channel servers, along with preparation of static game data.\u003c/p>", "body_html_ja_jp": "\u003cp>MapleStory のサーバーと周辺ツールを扱うプロジェクトで、Makefile によるビルド自動化を中心に構成されています。\u003c/p>\n\u003ch2>背景\u003c/h2>\n\u003cp>MapleStory には長く続くプライベートサーバー開発コミュニティがあります。このプロジェクトは、そのサーバー環境を維持するためのツール、コンパイル・スクリプト、設定をまとめたものです。\u003c/p>\n\u003ch2>技術的な要素\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Build system\u003c/strong> — C++ コンポーネントをコンパイルする Makefile\u003c/li> \u003cli>\u003cstrong>Networking\u003c/strong> — クライアント・サーバ間の独自通信プロトコル\u003c/li> \u003cli>\u003cstrong>Data management\u003c/strong> — ゲームデータ（WZ files）の取り扱い\u003c/li> \u003cli>\u003cstrong>Automation\u003c/strong> — デプロイと保守のためのスクリプト\u003c/li>\u003c/ul>\n\u003ch2>課題と解決策\u003c/h2>\n\u003cp>ゲームサーバーは複数コンポーネントにまたがる複雑なビルド・設定フローを必要とします。Makefile はその手順を一元化し、環境構築の再現性を高めます。\u003c/p>\n\u003ch2>アーキテクチャ\u003c/h2>\n\u003cp>独自ネットワークプロトコルを持つマルチスレッド C++ サーバーです。Makefile が login server、game server、channel server などのモジュールのビルドと、静的ゲームデータの準備をまとめて制御します。\u003c/p>", "body_html_ja": "\u003cp>MapleStory のサーバーと周辺ツールを扱うプロジェクトで、Makefile によるビルド自動化を中心に構成されています。\u003c/p>\n\u003ch2>背景\u003c/h2>\n\u003cp>MapleStory には長く続くプライベートサーバー開発コミュニティがあります。このプロジェクトは、そのサーバー環境を維持するためのツール、コンパイル・スクリプト、設定をまとめたものです。\u003c/p>\n\u003ch2>技術的な要素\u003c/h2>\n\u003cul>\u003cli>\u003cstrong>Build system\u003c/strong> — C++ コンポーネントをコンパイルする Makefile\u003c/li> \u003cli>\u003cstrong>Networking\u003c/strong> — クライアント・サーバ間の独自通信プロトコル\u003c/li> \u003cli>\u003cstrong>Data management\u003c/strong> — ゲームデータ（WZ files）の取り扱い\u003c/li> \u003cli>\u003cstrong>Automation\u003c/strong> — デプロイと保守のためのスクリプト\u003c/li>\u003c/ul>\n\u003ch2>課題と解決策\u003c/h2>\n\u003cp>ゲームサーバーは複数コンポーネントにまたがる複雑なビルド・設定フローを必要とします。Makefile はその手順を一元化し、環境構築の再現性を高めます。\u003c/p>\n\u003ch2>アーキテクチャ\u003c/h2>\n\u003cp>独自ネットワークプロトコルを持つマルチスレッド C++ サーバーです。Makefile が login server、game server、channel server などのモジュールのビルドと、静的ゲームデータの準備をまとめて制御します。\u003c/p>"}</script>
     </main>
       

@@ -3410,7 +3410,10 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 
 .page-grid.notebook-two-column .post-shell,
 .page-grid.notebook-two-column .project-shell,
-.page-grid.notebook-two-column .document-shell {
+.page-grid.notebook-two-column .document-shell,
+.page-two-column .post-shell,
+.page-two-column .project-shell,
+.page-two-column .document-shell {
   padding: calc(var(--base_grid_unit) * 4);
   border-color: var(--surface-dashed-border-soft);
   border-left: 1px dashed var(--surface-dashed-accent);
@@ -3543,6 +3546,11 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 
 .page-sidebar::-webkit-scrollbar {
   display: none;
+}
+
+.page-sidebar .notebook-meta-panel {
+  position: static;
+  max-height: none;
 }
 
 .about-profile-card {
@@ -3770,13 +3778,13 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 }
 
 .document-page-layout {
-  max-width: var(--reading-width);
+  max-width: 100%;
   margin-bottom: calc(var(--base_grid_unit) * 3);
 }
 
 .document-page-meta {
-  max-width: var(--reading-width);
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
   padding: calc(var(--base_grid_unit) * 3);
   border: 1px dashed var(--surface-dashed-border-soft);
   border-radius: var(--radius-md);
@@ -4017,10 +4025,10 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 .page-post .post-reading-layout {
   position: relative;
   isolation: isolate;
-  max-width: min(84rem, calc(100vw - var(--container-gutter) * 2));
+  max-width: 100%;
   margin: 0 auto;
   padding: calc(var(--base_grid_unit) * 2) 0 calc(var(--base_grid_unit) * 5);
-  grid-template-columns: minmax(0, 54rem) minmax(15rem, 20rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
   gap: clamp(calc(var(--base_grid_unit) * 4), 5vw, calc(var(--base_grid_unit) * 8));
   align-items: start;
 }
@@ -4816,7 +4824,10 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 
   .page-grid.notebook-two-column .post-shell,
   .page-grid.notebook-two-column .project-shell,
-  .page-grid.notebook-two-column .document-shell {
+  .page-grid.notebook-two-column .document-shell,
+  .page-two-column .post-shell,
+  .page-two-column .project-shell,
+  .page-two-column .document-shell {
     padding: calc(var(--base_grid_unit) * 3);
   }
 
@@ -4889,7 +4900,7 @@ body[data-locale="ja-JP"] .nav-btn-locale {
     padding-left: calc(var(--base_grid_unit) * 4);
   }
 
-  .page-post .page-grid.notebook-two-column .post-reading-article {
+  .page-post .post-reading-article {
     padding: calc(var(--base_grid_unit) * 3);
   }
 
