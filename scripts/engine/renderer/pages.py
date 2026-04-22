@@ -193,6 +193,7 @@ def render_home_page(
     projects_limit = int(config.get("projects_on_home", 3))
 
     intro = site.get("home_intro", "").strip()
+    home_summary = site.get("home_summary", "").strip()
     quick_links = [
         ("nav.about", "/about/"),
         ("nav.posts", "/posts/"),
@@ -221,7 +222,7 @@ def render_home_page(
         <div class="notebook-hero-copy">
           <p class="section-kicker" data-i18n="home.kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
           <h1 id="home-title" class="notebook-hero-title">{html.escape(site.get("home_title") or site.get("headline") or site["title"])}</h1>
-          <p class="notebook-hero-summary">{html.escape(site["description"])}</p>
+          {f'<p class="notebook-hero-summary">{html.escape(home_summary)}</p>' if home_summary else ""}
           <div class="prose notebook-intro">{render_markdown(intro)}</div>
           <div class="notebook-link-row">{quick_links_html}</div>
         </div>

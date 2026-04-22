@@ -6,11 +6,13 @@ author = "Hiro Matsumoto"
 base_url = "https://nhmatsumoto.github.io"
 github_url = "https://github.com/nhmatsumoto"
 linkedin_url = "https://www.linkedin.com/in/hiroyukims/"
-home_title = "engineering notebook para software, agentes e sistemas espaciais"
+home_title = "um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção"
 home_intro = """
-Este site funciona como um caderno técnico publicado: artigos longos quando a ideia pede contexto, notas curtas quando o valor está no registro do processo, e páginas de projeto quando a engenharia precisa ser vista como sistema.
+Este é o meu espaço publicado em pt-BR, com suporte para japonês e inglês. Aqui eu compartilho projetos, pensamentos, estudos, experiências e assuntos diversos que despertam minha curiosidade.
 
-A escolha por HTML estático, TOML versionado e um gerador em Python não é nostalgia. É uma decisão de arquitetura: conteúdo previsível, build simples, deploy barato e total controle sobre a experiência de leitura.
+Minha base está no desenvolvimento web, mas este site vai além da tecnologia. Ele conecta software, arquitetura, produto, cultura, vida no Japão, aprendizado contínuo e tudo aquilo que vale a pena explorar com mais atenção.
+
+Não foi pensado como vitrine. Foi pensado como um lugar de registro, construção e descoberta.
 """
 about = """
 Sou Hiro Matsumoto, engenheiro de software que gosta de transformar ideias em sistemas utilizáveis. Penso software como uma cadeia inteira de valor: problema, produto, arquitetura, código, operação, comunicação e experiência final.
