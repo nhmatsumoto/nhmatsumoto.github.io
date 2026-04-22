@@ -177,6 +177,70 @@ def _build_document_localization_payload(document: dict[str, Any]) -> dict[str, 
     return payload
 
 
+def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+    about = system.get("about", {})
+    lede = str(localized_value(about, "lede", locale, i18n, site.get("headline", "")) or "").strip()
+    chips_raw = localized_value(about, "profile_chips", locale, i18n, about.get("profile_chips", [])) or []
+    if isinstance(chips_raw, str):
+        chips_raw = [chips_raw]
+    chips_html = "".join(
+        f'<span class="about-profile-chip">{html.escape(str(c or "").strip())}</span>'
+        for c in chips_raw if str(c or "").strip()
+    )
+    view_label = html.escape(translate(i18n, locale, "actions.view_about", "Ver perfil completo"))
+    return f"""
+    <section class="home-profile-section section-panel" aria-labelledby="home-profile-name">
+      <div class="about-profile-card">
+        <div class="about-profile-avatar">
+          <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Hiro Matsumoto" width="400" height="300" loading="lazy">
+        </div>
+        <div class="about-profile-main">
+          <p class="about-profile-handle">@nhmatsumoto · Brasil / Japão</p>
+          <h2 id="home-profile-name" class="home-profile-name">Hiro Matsumoto</h2>
+          <p class="about-profile-bio">{html.escape(lede)}</p>
+          <div class="about-profile-chips">{chips_html}</div>
+          <a class="home-profile-link entry-cta" href="{site_href(site, "/about/")}" data-i18n="actions.view_about">{view_label}{render_icon("arrow-right", "site-icon entry-cta-arrow")}</a>
+        </div>
+      </div>
+    </section>
+    """
+
+
+def _render_home_contact(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+    links = system.get("contact", {}).get("links", [])
+    icon_by_kind = {"code": "github", "network": "linkedin", "feed": "rss", "writing": "globe"}
+    items_html = []
+    for item in links:
+        label = str(item.get("label", "") or "").strip()
+        url = str(item.get("url", "") or "").strip()
+        kind = str(item.get("kind", "") or "").strip()
+        if not label or not url:
+            continue
+        icon = icon_by_kind.get(kind, "link")
+        is_external = url.startswith("http")
+        target = ' target="_blank" rel="noopener noreferrer"' if is_external else ""
+        ext_icon = render_icon("arrow-up-right", "site-icon external-icon") if is_external else ""
+        items_html.append(
+            f'<a class="home-contact-link" href="{html.escape(url)}"{target}>'
+            f'{render_icon(icon, "site-icon home-contact-icon")}'
+            f'<span>{html.escape(label)}</span>'
+            f'{ext_icon}</a>'
+        )
+    if not items_html:
+        return ""
+    contact_kicker = html.escape(translate(i18n, locale, "nav.contact", "contato"))
+    contact_label = html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))
+    return f"""
+    <section class="home-contact-section section-panel" aria-labelledby="home-contact-title">
+      <header class="section-header">
+        <p class="section-kicker" data-i18n="nav.contact">{contact_kicker}</p>
+        <h2 id="home-contact-title" data-i18n="pages.contact.title">{contact_label}</h2>
+      </header>
+      <div class="home-contact-row">{"".join(items_html)}</div>
+    </section>
+    """
+
+
 def render_home_page(
     site: dict[str, str],
     system: dict[str, Any],
@@ -198,44 +262,24 @@ def render_home_page(
         ("nav.about", "/about/"),
         ("nav.posts", "/posts/"),
         ("nav.daily", "/daily/"),
-        ("nav.contact", "/contact/"),
+        ("nav.projects", "/projects/"),
     ]
     quick_links_html = "".join(
         f'<a class="notebook-link-chip" href="{html.escape(site_href(site, url))}" data-i18n="{html.escape(key)}">{html.escape(translate(i18n, locale, key, key.split(".")[-1]))}</a>'
         for key, url in quick_links
     )
 
-    hero_metrics = [
-        (translate(i18n, locale, "nav.posts", "posts"), len(posts)),
-        (translate(i18n, locale, "nav.daily", "daily"), len(daily_entries)),
-        (translate(i18n, locale, "nav.projects", "projects"), len(projects)),
-        (translate(i18n, locale, "nav.documents", "documents"), len(documents)),
-    ]
-    hero_metrics_html = "".join(
-        f'<div class="notebook-stat"><span class="notebook-stat-value">{value}</span><span class="notebook-stat-label">{html.escape(label)}</span></div>'
-        for label, value in hero_metrics
-    )
-
     content = f"""
     <section class="notebook-hero section-panel" aria-labelledby="home-title">
-      <div class="notebook-hero-grid">
-        <div class="notebook-hero-copy">
-          <p class="section-kicker" data-i18n="home.kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
-          <h1 id="home-title" class="notebook-hero-title">{html.escape(site.get("home_title") or site.get("headline") or site["title"])}</h1>
-          {f'<p class="notebook-hero-summary">{html.escape(home_summary)}</p>' if home_summary else ""}
-          <div class="prose notebook-intro">{render_markdown(intro)}</div>
-          <div class="notebook-link-row">{quick_links_html}</div>
-        </div>
-        <aside class="notebook-hero-aside">
-          <div class="notebook-stat-grid">{hero_metrics_html}</div>
-          <div class="notebook-status-card">
-            <p class="section-kicker" data-i18n="home.focus_kicker">{html.escape(translate(i18n, locale, "home.focus_kicker", "foco atual"))}</p>
-            <p>{html.escape(system.get("identity", {}).get("developer", {}).get("role", "Software Engineer"))}</p>
-            <p class="muted-copy">{html.escape(site.get("headline", ""))}</p>
-          </div>
-        </aside>
+      <div class="notebook-hero-copy">
+        <p class="section-kicker" data-i18n="home.kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
+        <h1 id="home-title" class="notebook-hero-title">{html.escape(site.get("home_title") or site.get("headline") or site["title"])}</h1>
+        {f'<p class="notebook-hero-summary">{html.escape(home_summary)}</p>' if home_summary else ""}
+        <div class="prose notebook-intro">{render_markdown(intro)}</div>
+        <div class="notebook-link-row">{quick_links_html}</div>
       </div>
     </section>
+    {_render_home_profile(site, system, i18n, locale)}
     <section class="section-panel" aria-labelledby="posts-title">
       <header class="section-header">
         <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
@@ -266,6 +310,7 @@ def render_home_page(
         {"".join(render_project_card(project, i18n, locale) for project in projects[:projects_limit])}
       </ol>
     </section>
+    {_render_home_contact(site, system, i18n, locale)}
     {render_navigation_section(system, documents, i18n, locale)}
     """
     return render_layout(

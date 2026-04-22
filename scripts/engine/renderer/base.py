@@ -124,7 +124,6 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         ("daily", "nav.daily", "/daily/"),
         ("projects", "nav.projects", "/projects/"),
         ("documents", "nav.documents", "/documents/"),
-        ("contact", "nav.contact", "/contact/"),
     ]
     def render_nav_link(key: str, i18n_key: str, url: str) -> str:
         active_class = " is-active" if active_nav == key else ""
