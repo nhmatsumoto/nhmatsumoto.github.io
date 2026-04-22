@@ -3,7 +3,7 @@
   <channel>
     <title>nhmatsumoto.github.io</title>
     <link>https://nhmatsumoto.github.io/</link>
-    <description>Caderno de engenharia em pt-BR sobre arquitetura, agentes, GIS, software de produto e o processo de construir sistemas estáticos, legíveis e duráveis.</description>
+    <description>um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção</description>
     <atom:link href="https://nhmatsumoto.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Por que simulação me atrai mais do que demo</title>

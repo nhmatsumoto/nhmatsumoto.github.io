@@ -1,12 +1,12 @@
 title = "nhmatsumoto.github.io"
 headline = "engenharia de software para sistemas distribuídos, agentes e produtos com forte densidade técnica."
-description = "Caderno de engenharia em pt-BR sobre arquitetura, agentes, GIS, software de produto e o processo de construir sistemas estáticos, legíveis e duráveis."
+description = "um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção"
 language = "pt-BR"
 author = "Hiro Matsumoto"
 base_url = "https://nhmatsumoto.github.io"
 github_url = "https://github.com/nhmatsumoto"
 linkedin_url = "https://www.linkedin.com/in/hiroyukims/"
-home_title = "um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção"
+home_title = "engineering notebook"
 home_intro = """
 Este é o meu espaço publicado em pt-BR, com suporte para japonês e inglês. Aqui eu compartilho projetos, pensamentos, estudos, experiências e assuntos diversos que despertam minha curiosidade.
 
