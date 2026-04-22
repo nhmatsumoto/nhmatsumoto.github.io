@@ -3474,7 +3474,7 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 
 /* ── Home profile & contact ─────────────────────────────────────────────── */
 .home-profile-section {
-  border-top: 1px dashed var(--surface-dashed-border-soft);
+  border-bottom: 1px dashed var(--surface-dashed-border-soft);
 }
 
 .home-profile-name {

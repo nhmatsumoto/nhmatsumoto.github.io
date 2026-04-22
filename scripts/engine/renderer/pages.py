@@ -280,6 +280,7 @@ def render_home_page(
     )
 
     content = f"""
+    {_render_home_profile(site, system, i18n, locale)}
     <section class="notebook-hero section-panel" aria-labelledby="home-title">
       <div class="notebook-hero-copy">
         <p class="section-kicker" data-i18n="home.kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
@@ -289,7 +290,6 @@ def render_home_page(
         <div class="notebook-link-row">{quick_links_html}</div>
       </div>
     </section>
-    {_render_home_profile(site, system, i18n, locale)}
     <section class="section-panel" aria-labelledby="posts-title">
       <header class="section-header">
         <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
