@@ -600,28 +600,30 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <section class="page-heading about-profile-shell">
-      <div class="about-profile-card">
-        <div class="about-profile-avatar">
-          <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Avatar de Hiro Matsumoto" width="400" height="300" loading="eager">
-        </div>
-        <div class="about-profile-main">
-          <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
-          <h1 data-i18n="pages.about.title" data-page-title>{html.escape(page_data["title"])}</h1>
-          <p class="about-profile-handle">@nhmatsumoto · Brasil / Japão</p>
-          <p class="about-profile-bio" data-page-summary>{html.escape(about_lede)}</p>
-          <div class="about-profile-chips" aria-label="contexto">
-            {render_profile_chips(locale)}
+    <div class="about-two-column">
+      <aside class="about-sidebar">
+        <div class="about-profile-card">
+          <div class="about-profile-avatar">
+            <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Avatar de Hiro Matsumoto" width="400" height="300" loading="eager">
+          </div>
+          <div class="about-profile-main">
+            <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
+            <h1 data-i18n="pages.about.title" data-page-title>{html.escape(page_data["title"])}</h1>
+            <p class="about-profile-handle">@nhmatsumoto · Brasil / Japão</p>
+            <p class="about-profile-bio" data-page-summary>{html.escape(about_lede)}</p>
+            <div class="about-profile-chips" aria-label="contexto">
+              {render_profile_chips(locale)}
+            </div>
           </div>
         </div>
-      </div>
-      {render_about_snapshot(locale)}
-    </section>
-    <section class="about-layout">
-      <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
-        {page_data["body_html"]}
-      </article>
-    </section>
+        {render_about_snapshot(locale)}
+      </aside>
+      <section class="about-main">
+        <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
+          {page_data["body_html"]}
+        </article>
+      </section>
+    </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     return render_layout(
