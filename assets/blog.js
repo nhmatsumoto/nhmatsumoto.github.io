@@ -305,6 +305,33 @@ const initPageContentLocalization = () => {
   applyPageContent(useStore.getState().locale);
 };
 
+const initProfileContentLocalization = () => {
+  const data = parseJsonScript("profile-content-data");
+  if (!data) return;
+
+  const fields = document.querySelectorAll("[data-profile-field]");
+  if (!fields.length) return;
+
+  const applyProfileContent = (locale) => {
+    fields.forEach(element => {
+      const field = element.dataset.profileField;
+      if (!field) return;
+      if (!element.dataset.profileFallback) {
+        element.dataset.profileFallback = element.textContent || "";
+      }
+      element.textContent = resolveLocalizedField(data, field, locale, element.dataset.profileFallback);
+    });
+  };
+
+  useStore.subscribe((state, prevState) => {
+    if (state.locale !== prevState.locale) {
+      applyProfileContent(state.locale);
+    }
+  });
+
+  applyProfileContent(useStore.getState().locale);
+};
+
 const initLocaleToggle = (loc) => {
   const btns = document.querySelectorAll("[data-locale-toggle]");
   const supported = loc?.getSupportedLocales() || [];
@@ -473,6 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initAnalyticsHelpers();
   const loc = initLocalization();
   initPageContentLocalization();
+  initProfileContentLocalization();
   initContactCardsLocalization();
   initThemeManager();
   initLocaleToggle(loc);

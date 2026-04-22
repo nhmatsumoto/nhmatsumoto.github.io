@@ -36,7 +36,7 @@ type = "technical library"
 navigation = ["architecture", "agents", "apis", "domain"]
 
 [about]
-lede = "Brasileiro vivendo no Japão, engenheiro de software moldado pela experiência real. Entre a fábrica, os estudos e os projetos próprios, sigo construindo minha trajetória na tecnologia."
+lede = "Brasileiro vivendo no Japão, construindo uma trajetória em tecnologia com profundidade, intenção e aprendizado contínuo. Entre arquitetura, produto e projetos próprios, busco criar software que una utilidade, clareza e impacto real."
 lede_en_us = "Brazilian living in Japan, a software engineer shaped by real-world experience. Between factory work, study, and personal projects, I continue building my path in technology."
 lede_ja_jp = "日本で暮らすブラジル人です。実体験の中で培われたソフトウェアエンジニアとして、今は工場の仕事、学習、個人プロジェクトのあいだで、テクノロジーの道を築き続けています。"
 snapshot_focus = "software, produto, arquitetura, agentes, GIS e sistemas legíveis"
