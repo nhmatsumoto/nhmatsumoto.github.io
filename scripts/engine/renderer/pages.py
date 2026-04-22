@@ -323,7 +323,16 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
 
 
 def render_projects_index_page(site: dict[str, str], system: dict[str, Any], posts: list[dict[str, Any]], projects: list[dict[str, Any]], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    breadcrumbs = render_breadcrumbs(
+        [
+            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
+            {"label": translate(i18n, locale, "nav.projects", "projects"), "url": "", "key": "nav.projects"},
+        ],
+        i18n,
+        locale,
+    )
     content = f"""
+    {breadcrumbs}
     <section class="page-heading">
       <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
       <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>

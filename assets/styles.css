@@ -3066,6 +3066,25 @@ body::after {
   color: var(--text);
 }
 
+/* Locale button — identity color by active language */
+body[data-locale="pt-BR"] .nav-btn-locale {
+  background: hsla(134, 52%, 36%, 0.16);
+  border-color: hsla(134, 52%, 36%, 0.45);
+  color: hsl(134, 48%, 50%);
+}
+
+body[data-locale="en-US"] .nav-btn-locale {
+  background: hsla(220, 68%, 50%, 0.15);
+  border-color: hsla(220, 68%, 50%, 0.42);
+  color: hsl(220, 65%, 62%);
+}
+
+body[data-locale="ja-JP"] .nav-btn-locale {
+  background: hsla(348, 72%, 48%, 0.15);
+  border-color: hsla(348, 72%, 48%, 0.42);
+  color: hsl(348, 68%, 62%);
+}
+
 .site-footer,
 .section-panel,
 .page-heading,
@@ -4243,6 +4262,77 @@ body::after {
   margin: calc(var(--base_grid_unit) * 5) 0;
   border: 0;
   border-top: 1px solid color-mix(in srgb, var(--border-strong) 72%, transparent);
+}
+
+/* Global code-shell refinement (blueprint layer — applies to all prose contexts) */
+.prose .code-shell,
+.notebook-intro .code-shell,
+.about-narrative .code-shell,
+.post-body .code-shell,
+.document-shell .code-shell {
+  margin: calc(var(--base_grid_unit) * 4) 0 calc(var(--base_grid_unit) * 5);
+  border: 1px solid color-mix(in srgb, var(--border-strong) 62%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--accent) 68%, transparent);
+  border-radius: calc(var(--base_grid_unit) * 1.5);
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--surface-strong) 82%, transparent),
+      color-mix(in srgb, var(--surface-soft)   56%, transparent));
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.prose .code-shell-header,
+.notebook-intro .code-shell-header,
+.about-narrative .code-shell-header,
+.post-body .code-shell-header,
+.document-shell .code-shell-header {
+  padding: calc(var(--base_grid_unit) * 1.5) calc(var(--base_grid_unit) * 2.5);
+  background: color-mix(in srgb, var(--surface) 46%, transparent);
+  border-bottom: 1px dashed color-mix(in srgb, var(--border) 72%, transparent);
+}
+
+.prose .code-shell-label,
+.notebook-intro .code-shell-label,
+.about-narrative .code-shell-label,
+.post-body .code-shell-label,
+.document-shell .code-shell-label {
+  font-family: var(--font-code);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 78%, var(--muted));
+}
+
+.prose .code-shell pre,
+.notebook-intro .code-shell pre,
+.about-narrative .code-shell pre,
+.post-body .code-shell pre,
+.document-shell .code-shell pre {
+  margin: 0;
+  padding: calc(var(--base_grid_unit) * 3) calc(var(--base_grid_unit) * 3);
+  overflow-x: auto;
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  line-height: 1.72;
+  tab-size: 2;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose .code-shell pre code,
+.notebook-intro .code-shell pre code,
+.about-narrative .code-shell pre code,
+.post-body .code-shell pre code,
+.document-shell .code-shell pre code {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  word-break: normal;
+  white-space: pre;
 }
 
 .page-post .evidence-section {

@@ -262,7 +262,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     {math_meta}
     {import_map_html}
   </head>
-  <body class="{html.escape(body_class)}" data-has-math="{str(has_math).lower()}" data-default-locale="{html.escape(locale)}">
+  <body class="{html.escape(body_class)}" data-has-math="{str(has_math).lower()}" data-default-locale="{html.escape(locale)}" data-locale="{html.escape(locale)}">
     {analytics_body_html}
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">{html.escape(translate(i18n, locale, "accessibility.skip_to_content", "Ir para o conteúdo"))}</a>
     {render_site_nav(site, system, active_nav, i18n, locale)}
