@@ -188,22 +188,18 @@ def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dic
         for c in chips_raw if str(c or "").strip()
     )
     view_label = html.escape(translate(i18n, locale, "actions.view_about", "Ver perfil completo"))
-    return f"""
-    <section class="home-profile-section section-panel" aria-labelledby="home-profile-name">
-      <div class="about-profile-card">
-        <div class="about-profile-avatar">
-          <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Hiro Matsumoto" width="400" height="300" loading="lazy">
-        </div>
-        <div class="about-profile-main">
-          <p class="about-profile-handle">@nhmatsumoto · Brasil / Japão</p>
-          <h2 id="home-profile-name" class="home-profile-name">Hiro Matsumoto</h2>
-          <p class="about-profile-bio">{html.escape(lede)}</p>
-          <div class="about-profile-chips">{chips_html}</div>
-          <a class="home-profile-link entry-cta" href="{site_href(site, "/about/")}" data-i18n="actions.view_about">{view_label}{render_icon("arrow-right", "site-icon entry-cta-arrow")}</a>
-        </div>
+    return f"""<div class="about-profile-card">
+      <div class="about-profile-avatar">
+        <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Hiro Matsumoto" width="400" height="300" loading="lazy">
       </div>
-    </section>
-    """
+      <div class="about-profile-main">
+        <p class="about-profile-handle">@nhmatsumoto · Brasil / Japão</p>
+        <h2 id="home-profile-name" class="home-profile-name">Hiro Matsumoto</h2>
+        <p class="about-profile-bio">{html.escape(lede)}</p>
+        <div class="about-profile-chips">{chips_html}</div>
+        <a class="home-profile-link entry-cta" href="{site_href(site, "/about/")}" data-i18n="actions.view_about">{view_label}{render_icon("arrow-right", "site-icon entry-cta-arrow")}</a>
+      </div>
+    </div>"""
 
 
 def _render_home_contact(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
@@ -280,48 +276,54 @@ def render_home_page(
     )
 
     content = f"""
-    {_render_home_profile(site, system, i18n, locale)}
-    <section class="notebook-hero section-panel" aria-labelledby="home-title">
-      <div class="notebook-hero-copy">
-        <p class="section-kicker" data-i18n="home.kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
-        <h1 id="home-title" class="notebook-hero-title">{html.escape(site.get("home_title") or site.get("headline") or site["title"])}</h1>
-        {f'<p class="notebook-hero-summary">{html.escape(home_summary)}</p>' if home_summary else ""}
-        <div class="prose notebook-intro">{render_markdown(intro)}</div>
-        <div class="notebook-link-row">{quick_links_html}</div>
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+        {_render_home_profile(site, system, i18n, locale)}
+      </aside>
+      <div class="page-main">
+        <section class="notebook-hero section-panel" aria-labelledby="home-title">
+          <div class="notebook-hero-copy">
+            <p class="section-kicker" data-i18n="home.kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
+            <h1 id="home-title" class="notebook-hero-title">{html.escape(site.get("home_title") or site.get("headline") or site["title"])}</h1>
+            {f'<p class="notebook-hero-summary">{html.escape(home_summary)}</p>' if home_summary else ""}
+            <div class="prose notebook-intro">{render_markdown(intro)}</div>
+            <div class="notebook-link-row">{quick_links_html}</div>
+          </div>
+        </section>
+        <section class="section-panel" aria-labelledby="posts-title">
+          <header class="section-header">
+            <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
+            <h2 id="posts-title" data-i18n="sections.posts_title">{html.escape(translate(i18n, locale, "sections.posts_title", "Publicações recentes"))}</h2>
+            <p class="section-copy" data-i18n="sections.posts_copy">{html.escape(translate(i18n, locale, "sections.posts_copy", "Ensaios técnicos, decisões de arquitetura e aprendizado aplicado."))}</p>
+          </header>
+          <ol class="entry-list">
+            {"".join(render_post_card(post, i18n, locale) for post in posts[:posts_limit])}
+          </ol>
+        </section>
+        <section class="section-panel" aria-labelledby="daily-title">
+          <header class="section-header">
+            <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
+            <h2 id="daily-title" data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h2>
+            <p class="section-copy" data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Notas curtas de progresso, ideias e trilha sonora de trabalho."))}</p>
+          </header>
+          <ol class="entry-list">
+            {"".join(render_daily_card(entry, i18n, locale, compact=True) for entry in daily_entries[:daily_limit])}
+          </ol>
+        </section>
+        <section class="section-panel" aria-labelledby="projects-title">
+          <header class="section-header">
+            <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
+            <h2 id="projects-title" data-i18n="sections.projects_title">{html.escape(translate(i18n, locale, "sections.projects_title", "Projetos relevantes"))}</h2>
+            <p class="section-copy" data-i18n="sections.projects_copy">{html.escape(translate(i18n, locale, "sections.projects_copy", "Sistemas que concentram arquitetura, trade-offs e execução prática."))}</p>
+          </header>
+          <ol class="entry-list">
+            {"".join(render_project_card(project, i18n, locale) for project in projects[:projects_limit])}
+          </ol>
+        </section>
+        {_render_home_contact(site, system, i18n, locale)}
+        {render_navigation_section(system, documents, i18n, locale)}
       </div>
-    </section>
-    <section class="section-panel" aria-labelledby="posts-title">
-      <header class="section-header">
-        <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
-        <h2 id="posts-title" data-i18n="sections.posts_title">{html.escape(translate(i18n, locale, "sections.posts_title", "Publicações recentes"))}</h2>
-        <p class="section-copy" data-i18n="sections.posts_copy">{html.escape(translate(i18n, locale, "sections.posts_copy", "Ensaios técnicos, decisões de arquitetura e aprendizado aplicado."))}</p>
-      </header>
-      <ol class="entry-list">
-        {"".join(render_post_card(post, i18n, locale) for post in posts[:posts_limit])}
-      </ol>
-    </section>
-    <section class="section-panel" aria-labelledby="daily-title">
-      <header class="section-header">
-        <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
-        <h2 id="daily-title" data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h2>
-        <p class="section-copy" data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Notas curtas de progresso, ideias e trilha sonora de trabalho."))}</p>
-      </header>
-      <ol class="entry-list">
-        {"".join(render_daily_card(entry, i18n, locale, compact=True) for entry in daily_entries[:daily_limit])}
-      </ol>
-    </section>
-    <section class="section-panel" aria-labelledby="projects-title">
-      <header class="section-header">
-        <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
-        <h2 id="projects-title" data-i18n="sections.projects_title">{html.escape(translate(i18n, locale, "sections.projects_title", "Projetos relevantes"))}</h2>
-        <p class="section-copy" data-i18n="sections.projects_copy">{html.escape(translate(i18n, locale, "sections.projects_copy", "Sistemas que concentram arquitetura, trade-offs e execução prática."))}</p>
-      </header>
-      <ol class="entry-list">
-        {"".join(render_project_card(project, i18n, locale) for project in projects[:projects_limit])}
-      </ol>
-    </section>
-    {_render_home_contact(site, system, i18n, locale)}
-    {render_navigation_section(system, documents, i18n, locale)}
+    </div>
     """
     return render_layout(
         page_title=f"{site['title']} | engineering notebook",
@@ -350,17 +352,23 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
     pagination = render_pagination_controls(site, current_page, total_pages, "/posts/", i18n, locale)
     content = f"""
     {breadcrumbs}
-    <section class="page-heading">
-      <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
-      <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "Publicações"))}</h1>
-      <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Escrita técnica organizada por clareza, ritmo e utilidade prática."))}</p>
-    </section>
-    <section class="section-panel">
-      <ol class="entry-list">
-        {"".join(render_post_card(post, i18n, locale) for post in posts)}
-      </ol>
-    </section>
-    {pagination}
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
+          <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "Publicações"))}</h1>
+          <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Escrita técnica organizada por clareza, ritmo e utilidade prática."))}</p>
+        </section>
+      </aside>
+      <div class="page-main">
+        <section class="section-panel">
+          <ol class="entry-list">
+            {"".join(render_post_card(post, i18n, locale) for post in posts)}
+          </ol>
+        </section>
+        {pagination}
+      </div>
+    </div>
     """
     return render_layout(
         page_title=f"Posts | {site['title']}",
@@ -388,16 +396,22 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     )
     content = f"""
     {breadcrumbs}
-    <section class="page-heading">
-      <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
-      <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>
-      <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."))}</p>
-    </section>
-    <section class="section-panel">
-      <ol class="entry-list">
-        {"".join(render_project_card(project, i18n, locale) for project in projects)}
-      </ol>
-    </section>
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
+          <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>
+          <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."))}</p>
+        </section>
+      </aside>
+      <div class="page-main">
+        <section class="section-panel">
+          <ol class="entry-list">
+            {"".join(render_project_card(project, i18n, locale) for project in projects)}
+          </ol>
+        </section>
+      </div>
+    </div>
     """
     has_math = any(project.get("has_math") for project in projects)
     return render_layout(
@@ -426,12 +440,18 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
     )
     content = f"""
     {breadcrumbs}
-    <section class="page-heading">
-      <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
-      <h1 data-i18n="pages.documents.title">{html.escape(translate(i18n, locale, "pages.documents.title", "Documents"))}</h1>
-      <p data-i18n="pages.documents.description">{html.escape(translate(i18n, locale, "pages.documents.description", "Documentação técnica organizada por domínio, arquitetura e integrações."))}</p>
-    </section>
-    {render_documents_section(system, documents, i18n, locale, grouped=True)}
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
+          <h1 data-i18n="pages.documents.title">{html.escape(translate(i18n, locale, "pages.documents.title", "Documents"))}</h1>
+          <p data-i18n="pages.documents.description">{html.escape(translate(i18n, locale, "pages.documents.description", "Documentação técnica organizada por domínio, arquitetura e integrações."))}</p>
+        </section>
+      </aside>
+      <div class="page-main">
+        {render_documents_section(system, documents, i18n, locale, grouped=True)}
+      </div>
+    </div>
     """
     return render_layout(
         page_title=f"Documents | {site['title']}",
@@ -600,8 +620,8 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <div class="about-two-column">
-      <aside class="about-sidebar">
+    <div class="page-two-column">
+      <aside class="page-sidebar">
         <div class="about-profile-card">
           <div class="about-profile-avatar">
             <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Avatar de Hiro Matsumoto" width="400" height="300" loading="eager">
@@ -618,7 +638,7 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
         </div>
         {render_about_snapshot(locale)}
       </aside>
-      <section class="about-main">
+      <section class="page-main">
         <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
           {page_data["body_html"]}
         </article>
@@ -682,16 +702,22 @@ def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict
     )
     content = f"""
     {breadcrumbs}
-    <section class="page-heading">
-      <p class="section-kicker" data-i18n="nav.contact">{html.escape(translate(i18n, locale, "nav.contact", "contact"))}</p>
-      <h1 data-i18n="pages.contact.title">{html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))}</h1>
-      <p data-i18n="pages.contact.description">{html.escape(translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."))}</p>
-    </section>
-    <section class="section-panel">
-      <div class="contact-grid">
-        {"".join(cards)}
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.contact">{html.escape(translate(i18n, locale, "nav.contact", "contact"))}</p>
+          <h1 data-i18n="pages.contact.title">{html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))}</h1>
+          <p data-i18n="pages.contact.description">{html.escape(translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."))}</p>
+        </section>
+      </aside>
+      <div class="page-main">
+        <section class="section-panel">
+          <div class="contact-grid">
+            {"".join(cards)}
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
     """
     return render_layout(
         page_title=f"{translate(i18n, locale, 'pages.contact.title', 'Contato')} | {site['title']}",
@@ -719,16 +745,22 @@ def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_
     )
     content = f"""
     {breadcrumbs}
-    <section class="page-heading">
-      <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
-      <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
-      <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."))}</p>
-    </section>
-    <section class="section-panel">
-      <ol class="entry-list">
-        {"".join(render_daily_card(entry, i18n, locale) for entry in daily_entries)}
-      </ol>
-    </section>
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
+          <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
+          <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."))}</p>
+        </section>
+      </aside>
+      <div class="page-main">
+        <section class="section-panel">
+          <ol class="entry-list">
+            {"".join(render_daily_card(entry, i18n, locale) for entry in daily_entries)}
+          </ol>
+        </section>
+      </div>
+    </div>
     """
     return render_layout(
         page_title=f"Daily | {site['title']}",
