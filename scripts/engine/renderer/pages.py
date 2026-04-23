@@ -186,22 +186,6 @@ def _profile_snapshot_field_id(item_id: str, field: str) -> str:
     return f"snapshot_{safe_id}_{field}"
 
 
-def _profile_chips(system: dict[str, Any], i18n: dict[str, Any], locale: str) -> list[str]:
-    about = system.get("about", {})
-    chips_raw = localized_value(about, "profile_chips", locale, i18n, about.get("profile_chips", [])) or []
-    if isinstance(chips_raw, str):
-        chips_raw = [chips_raw]
-    return [str(chip or "").strip() for chip in chips_raw if str(chip or "").strip()]
-
-
-def _render_profile_chips(system: dict[str, Any], i18n: dict[str, Any], locale: str, *, field_attr: str = "") -> str:
-    chip_html = []
-    for idx, chip in enumerate(_profile_chips(system, i18n, locale)):
-        attr = f' {field_attr}="profile_chip_{idx}"' if field_attr else ""
-        chip_html.append(f'<span class="about-profile-chip"{attr}>{html.escape(chip)}</span>')
-    return "".join(chip_html)
-
-
 def _render_profile_snapshot(
     system: dict[str, Any],
     i18n: dict[str, Any],
@@ -256,6 +240,74 @@ def _render_profile_snapshot(
     )
 
 
+def _contact_icon_name(item: dict[str, Any]) -> str:
+    label = str(item.get("label", "") or "").strip().lower()
+    kind = str(item.get("kind", "") or "").strip().lower()
+    if "github" in label or kind == "code":
+        return "git-branch"
+    if "linkedin" in label or kind == "network":
+        return "network"
+    if "rss" in label or kind == "feed":
+        return "rss"
+    return "globe-2"
+
+
+def _render_profile_contact_block(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str, *, title_id: str) -> str:
+    links = system.get("contact", {}).get("links", [])
+    link_items = []
+    for item in links:
+        label = str(item.get("label", "") or "").strip()
+        url = str(item.get("url", "") or "").strip()
+        description = str(localized_value(item, "description", locale, i18n, item.get("description", "")) or "").strip()
+        if not label or not url:
+            continue
+        desc_payload: dict[str, Any] = {"description": description}
+        for supported_locale in i18n.get("supported_locales", []):
+            if supported_locale == locale:
+                continue
+            suffixes = locale_suffixes(supported_locale, i18n)
+            if not suffixes:
+                continue
+            suffix = suffixes[0]
+            desc_payload[f"description_{suffix}"] = str(localized_value(item, "description", supported_locale, i18n, description) or "").strip()
+        payload_json = json.dumps(desc_payload, ensure_ascii=False).replace("<", "\\u003c")
+        link_items.append(
+            _clean_html_fragment(
+                f"""
+          <li class="profile-contact-item" data-contact-card>
+            <a class="profile-contact-link" href="{html.escape(url)}" target="_blank" rel="noopener noreferrer">
+              {render_icon(_contact_icon_name(item), "site-icon profile-contact-icon")}
+              <span class="profile-contact-link-copy">
+                <span class="profile-contact-label">{html.escape(label)}</span>
+                <span class="profile-contact-description" data-contact-description>{html.escape(description)}</span>
+              </span>
+              {render_icon("arrow-up-right", "site-icon external-icon")}
+            </a>
+            <script type="application/json" data-contact-card-data>{payload_json}</script>
+          </li>
+          """
+            )
+        )
+    if not link_items:
+        return ""
+
+    contact_kicker = html.escape(translate(i18n, locale, "nav.contact", "contato"))
+    contact_label = html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))
+    contact_desc = html.escape(translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."))
+    return _clean_html_fragment(
+        f"""
+        <section class="profile-contact-block" aria-labelledby="{html.escape(title_id)}">
+          <p class="section-kicker profile-contact-kicker" data-i18n="nav.contact">{contact_kicker}</p>
+          <h3 id="{html.escape(title_id)}" class="profile-contact-title" data-i18n="pages.contact.title">{contact_label}</h3>
+          <p class="profile-contact-copy" data-i18n="pages.contact.description">{contact_desc}</p>
+          <ul class="profile-contact-links">
+            {"".join(link_items)}
+          </ul>
+        </section>
+        """
+    )
+
+
 def _build_profile_localization_payload(system: dict[str, Any], i18n: dict[str, Any], locale: str, fallback_summary: str) -> dict[str, Any]:
     about = system.get("about", {})
     payload: dict[str, Any] = {
@@ -264,8 +316,6 @@ def _build_profile_localization_payload(system: dict[str, Any], i18n: dict[str, 
         "profile_summary": str(localized_value(about, "lede", locale, i18n, fallback_summary) or "").strip(),
         "snapshot_summary": str(localized_value(about, "snapshot_summary", locale, i18n, "") or "").strip(),
     }
-    for idx, chip in enumerate(_profile_chips(system, i18n, locale)):
-        payload[f"profile_chip_{idx}"] = chip
 
     for item in about.get("snapshot_items", []):
         item_id = str(item.get("id", "") or "").strip()
@@ -283,8 +333,6 @@ def _build_profile_localization_payload(system: dict[str, Any], i18n: dict[str, 
         suffix = suffixes[0]
         payload[f"profile_summary_{suffix}"] = str(localized_value(about, "lede", supported_locale, i18n, payload["profile_summary"]) or "").strip()
         payload[f"snapshot_summary_{suffix}"] = str(localized_value(about, "snapshot_summary", supported_locale, i18n, payload["snapshot_summary"]) or "").strip()
-        for idx, chip in enumerate(_profile_chips(system, i18n, supported_locale)):
-            payload[f"profile_chip_{idx}_{suffix}"] = chip
         for item in about.get("snapshot_items", []):
             item_id = str(item.get("id", "") or "").strip()
             if not item_id:
@@ -318,9 +366,7 @@ def _render_profile_header(site: dict[str, str], system: dict[str, Any], i18n: d
           <p class="about-profile-handle" data-profile-field="profile_handle">@nhmatsumoto · Brasil / Japão</p>
           <h2 id="profile-shell-name" class="profile-shell-name" data-profile-field="profile_name">Hiro Matsumoto</h2>
           <p class="about-profile-bio" data-profile-field="profile_summary">{html.escape(lede)}</p>
-          <div class="about-profile-chips" aria-label="contexto">
-            {_render_profile_chips(system, i18n, locale, field_attr="data-profile-field")}
-          </div>
+          {_render_profile_contact_block(site, system, i18n, locale, title_id="profile-shell-contact-title")}
         </div>
       </div>
       {snapshot_html}
@@ -333,10 +379,6 @@ def _render_profile_header(site: dict[str, str], system: dict[str, Any], i18n: d
 def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     about = system.get("about", {})
     lede = str(localized_value(about, "lede", locale, i18n, site.get("headline", "")) or "").strip()
-    chips_html = "".join(
-        f'<span class="about-profile-chip">{html.escape(chip)}</span>'
-        for chip in _profile_chips(system, i18n, locale)
-    )
     view_label = html.escape(translate(i18n, locale, "actions.view_about", "Ver perfil completo"))
     return f"""<div class="about-profile-card">
       <div class="about-profile-avatar">
@@ -346,7 +388,7 @@ def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dic
         <p class="about-profile-handle">@nhmatsumoto · Brasil / Japão</p>
         <h2 id="home-profile-name" class="home-profile-name">Hiro Matsumoto</h2>
         <p class="about-profile-bio">{html.escape(lede)}</p>
-        <div class="about-profile-chips">{chips_html}</div>
+        {_render_profile_contact_block(site, system, i18n, locale, title_id="home-profile-contact-title")}
         <a class="home-profile-link" href="{site_href(site, "/about/")}" aria-label="{view_label}">
           {render_icon("user-round", "site-icon home-profile-link-icon")}
           <span data-i18n="actions.view_about">{view_label}</span>
@@ -861,7 +903,7 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
     actions_html = "".join(
         link
         for link in [
-            f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">{render_icon("github", "site-icon sidebar-link-icon")}<span data-i18n="actions.repo">{repo_label}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if post.get("resolved_repo_url") else "",
+            f'<a class="sidebar-link" href="{post["resolved_repo_url"]}" target="_blank" rel="noopener">{render_icon("git-branch", "site-icon sidebar-link-icon")}<span data-i18n="actions.repo">{repo_label}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if post.get("resolved_repo_url") else "",
             f'<a class="sidebar-link" href="{post["resolved_code_url"]}" target="_blank" rel="noopener">{render_icon("code-2", "site-icon sidebar-link-icon")}<span data-i18n="actions.code">{code_label}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if post.get("resolved_code_url") else "",
         ]
         if link
@@ -1024,7 +1066,7 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
         for link in [
             f'<a class="sidebar-link" href="{project["resolved_architecture_url"]}">{render_icon("network", "site-icon sidebar-link-icon")}<span data-i18n="actions.view_architecture">{html.escape(translate(i18n, locale, "actions.view_architecture", "architecture"))}</span></a>' if project.get("resolved_architecture_url") else "",
             f'<a class="sidebar-link" href="{project["resolved_docs_url"]}">{render_icon("book-open", "site-icon sidebar-link-icon")}<span data-i18n="actions.open_docs">{html.escape(translate(i18n, locale, "actions.open_docs", "docs"))}</span></a>' if project.get("resolved_docs_url") else "",
-            f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">{render_icon("github", "site-icon sidebar-link-icon")}<span data-i18n="actions.code">{html.escape(translate(i18n, locale, "actions.code", "code"))}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if project.get("resolved_code_url") else "",
+            f'<a class="sidebar-link" href="{project["resolved_code_url"]}" target="_blank" rel="noopener">{render_icon("code-2", "site-icon sidebar-link-icon")}<span data-i18n="actions.code">{html.escape(translate(i18n, locale, "actions.code", "code"))}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>' if project.get("resolved_code_url") else "",
         ]
         if link
     )

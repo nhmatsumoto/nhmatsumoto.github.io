@@ -157,7 +157,7 @@ def render_footer(site: dict[str, str], system: dict[str, Any]) -> str:
     <footer class="site-footer">
       <p>
         <span>desenvolvido por</span>
-        <a href="{github_url}" target="_blank" rel="noopener noreferrer">{render_icon("github", "site-icon footer-icon")}<span>NHMatsumoto</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
+        <a href="{github_url}" target="_blank" rel="noopener noreferrer">{render_icon("git-branch", "site-icon footer-icon")}<span>NHMatsumoto</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
         <span class="footer-separator" aria-hidden="true">|</span>
         <a href="{engine_url}" target="_blank" rel="noopener noreferrer">{render_icon("square-terminal", "site-icon footer-icon")}<span>blog engine</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
       </p>

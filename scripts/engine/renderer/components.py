@@ -392,7 +392,7 @@ def render_project_card(project: dict[str, Any], i18n: dict[str, Any], locale: s
         repo_label = html.escape(translate(i18n, locale, "actions.code", "repo"))
         secondary_links.append(
             f'<a class="entry-card-link" href="{html.escape(project["resolved_code_url"])}" target="_blank" rel="noopener">'
-            f'{render_icon("github", "site-icon entry-icon")}'
+            f'{render_icon("code-2", "site-icon entry-icon")}'
             f'<span data-i18n="actions.code">{repo_label}</span>'
             f'{render_icon("arrow-up-right", "site-icon external-icon")}</a>'
         )
@@ -497,8 +497,8 @@ def render_developer_profile(site: dict[str, str], system: dict[str, Any], i18n:
     location = str(dev.get("location") or "").strip()
     stack = normalize_string_list(hero.get("stack", []))
     links = []
-    if site.get("github_url"): links.append(f'<a class="profile-social-link" href="{html.escape(site["github_url"])}" target="_blank" rel="noopener noreferrer"><i data-lucide="github"></i><span>GitHub</span><i data-lucide="arrow-up-right" class="link-arrow"></i></a>')
-    if site.get("linkedin_url"): links.append(f'<a class="profile-social-link" href="{html.escape(site["linkedin_url"])}" target="_blank" rel="noopener noreferrer"><i data-lucide="linkedin"></i><span>LinkedIn</span><i data-lucide="arrow-up-right" class="link-arrow"></i></a>')
+    if site.get("github_url"): links.append(f'<a class="profile-social-link" href="{html.escape(site["github_url"])}" target="_blank" rel="noopener noreferrer"><i data-lucide="git-branch"></i><span>GitHub</span><i data-lucide="arrow-up-right" class="link-arrow"></i></a>')
+    if site.get("linkedin_url"): links.append(f'<a class="profile-social-link" href="{html.escape(site["linkedin_url"])}" target="_blank" rel="noopener noreferrer"><i data-lucide="network"></i><span>LinkedIn</span><i data-lucide="arrow-up-right" class="link-arrow"></i></a>')
     
     return f"""
     <article class="highlight-card profile-card">
