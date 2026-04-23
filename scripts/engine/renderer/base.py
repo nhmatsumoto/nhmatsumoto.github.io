@@ -142,37 +142,39 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     menu_aria = translate(i18n, locale, "nav.menu", "Menu")
 
     return f"""
-    <nav class="nav-shell" data-nav-shell>
-      <div class="nav-brand">
-        <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
-      </div>
-      
-      <div class="nav-primary-links desktop-only">{primary_links}</div>
-      
-      <div class="nav-actions">
-        <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_aria)}" data-i18n-aria-label="accessibility.command_palette">
-          <i data-lucide="search"></i>
-          <span class="nav-btn-label" data-i18n="nav.search">{html.escape(search_label)}</span>
-          <span class="nav-btn-shortcut" aria-hidden="true">Ctrl/⌘ K</span>
-        </button>
+    <nav class="navbar" data-nav-shell>
+      <div class="layout-container">
+        <div class="nav-brand">
+          <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+        </div>
         
-        <div class="nav-group desktop-only">
-          <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
-            <i data-lucide="languages"></i>
-            <span class="locale-label" data-locale-label>{html.escape(locale.upper())}</span>
-            {f'<span class="locale-available" aria-hidden="true">{html.escape(locale_codes)}</span>' if locale_codes else ""}
+        <div class="nav-primary-links desktop-only">{primary_links}</div>
+        
+        <div class="nav-actions">
+          <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_aria)}" data-i18n-aria-label="accessibility.command_palette">
+            <i data-lucide="search"></i>
+            <span class="nav-btn-label" data-i18n="nav.search">{html.escape(search_label)}</span>
+            <span class="nav-btn-shortcut" aria-hidden="true">Ctrl/⌘ K</span>
           </button>
           
-          <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="{html.escape(translate(i18n, locale, "nav.theme", "Toggle theme"))}" data-i18n-aria-label="nav.theme">
-            <i data-lucide="moon" class="theme-icon-moon"></i>
-            <i data-lucide="sun" class="theme-icon-sun hidden"></i>
+          <div class="nav-group desktop-only">
+            <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
+              <i data-lucide="languages"></i>
+              <span class="locale-label" data-locale-label>{html.escape(locale.upper())}</span>
+              {f'<span class="locale-available" aria-hidden="true">{html.escape(locale_codes)}</span>' if locale_codes else ""}
+            </button>
+            
+            <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="{html.escape(translate(i18n, locale, "nav.theme", "Toggle theme"))}" data-i18n-aria-label="nav.theme">
+              <i data-lucide="moon" class="theme-icon-moon"></i>
+              <i data-lucide="sun" class="theme-icon-sun hidden"></i>
+            </button>
+          </div>
+
+          <button class="nav-btn-icon nav-btn-menu mobile-only" type="button" data-nav-toggle aria-label="{html.escape(menu_aria)}" data-i18n-aria-label="nav.menu">
+            <i data-lucide="menu" class="menu-icon-open"></i>
+            <i data-lucide="x" class="menu-icon-close hidden"></i>
           </button>
         </div>
-
-        <button class="nav-btn-icon nav-btn-menu mobile-only" type="button" data-nav-toggle aria-label="{html.escape(menu_aria)}" data-i18n-aria-label="nav.menu">
-          <i data-lucide="menu" class="menu-icon-open"></i>
-          <i data-lucide="x" class="menu-icon-close hidden"></i>
-        </button>
       </div>
     </nav>
 
@@ -203,12 +205,14 @@ def render_footer(site: dict[str, str], system: dict[str, Any], i18n: dict[str, 
     blog_engine = translate(i18n, locale, "footer.blog_engine", "blog engine")
     return f"""
     <footer class="site-footer">
-      <p>
-        <span data-i18n="footer.developed_by">{html.escape(developed_by)}</span>
-        <a href="{github_url}" target="_blank" rel="noopener noreferrer">{render_icon("git-branch", "site-icon footer-icon")}<span>NHMatsumoto</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
-        <span class="footer-separator" aria-hidden="true">|</span>
-        <a href="{engine_url}" target="_blank" rel="noopener noreferrer">{render_icon("square-terminal", "site-icon footer-icon")}<span data-i18n="footer.blog_engine">{html.escape(blog_engine)}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
-      </p>
+      <div class="layout-container">
+        <p>
+          <span data-i18n="footer.developed_by">{html.escape(developed_by)}</span>
+          <a href="{github_url}" target="_blank" rel="noopener noreferrer">{render_icon("git-branch", "site-icon footer-icon")}<span>NHMatsumoto</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
+          <span class="footer-separator" aria-hidden="true">|</span>
+          <a href="{engine_url}" target="_blank" rel="noopener noreferrer">{render_icon("square-terminal", "site-icon footer-icon")}<span data-i18n="footer.blog_engine">{html.escape(blog_engine)}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
+        </p>
+      </div>
     </footer>
     """
 

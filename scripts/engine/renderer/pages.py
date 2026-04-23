@@ -469,7 +469,7 @@ def render_home_page(
     )
 
     content = f"""
-    <div class="page-two-column">
+    <div class="layout-container page-two-column">
       <aside class="page-sidebar profile-sidebar">
         {_render_home_profile(site, system, i18n, locale)}
       </aside>
@@ -547,7 +547,7 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
     pagination = render_pagination_controls(site, current_page, total_pages, "/posts/", i18n, locale)
     content = f"""
     {breadcrumbs}
-    <div class="page-stack page-stack-wide">
+    <div class="layout-container page-stack page-stack-wide">
       <section class="page-heading">
         <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
         <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "Publicações"))}</h1>
@@ -587,7 +587,7 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     )
     content = f"""
     {breadcrumbs}
-    <div class="page-stack page-stack-wide">
+    <div class="layout-container page-stack page-stack-wide">
       <section class="page-heading">
         <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
         <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>
@@ -627,7 +627,7 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
     )
     content = f"""
     {breadcrumbs}
-    <div class="page-stack page-stack-wide">
+    <div class="layout-container page-stack page-stack-wide">
       <section class="page-heading">
         <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
         <h1 data-i18n="pages.documents.title">{html.escape(translate(i18n, locale, "pages.documents.title", "Documents"))}</h1>
@@ -722,7 +722,7 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <div class="page-stack">
+    <div class="layout-container page-stack">
       <section class="page-heading">
         <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
         <h1 data-page-title>{html.escape(page_data["title"])}</h1>
@@ -790,7 +790,7 @@ def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict
     )
     content = f"""
     {breadcrumbs}
-    <div class="page-stack">
+    <div class="layout-container page-stack">
       <section class="page-heading">
         <p class="section-kicker" data-i18n="nav.contact">{html.escape(translate(i18n, locale, "nav.contact", "contact"))}</p>
         <h1 data-i18n="pages.contact.title">{html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))}</h1>
@@ -829,7 +829,7 @@ def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_
     )
     content = f"""
     {breadcrumbs}
-    <div class="page-stack page-stack-wide">
+    <div class="layout-container page-stack page-stack-wide">
       <section class="page-heading">
         <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
         <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
@@ -932,7 +932,7 @@ def render_post_page(
     page_payload = json.dumps(_build_post_localization_payload(post), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column post-reading-layout">
+    <div class="layout-container page-two-column post-reading-layout">
       {sidebar}
       <div class="page-main">
         <article class="post-shell prose notebook-sheet post-reading-article">
@@ -1009,7 +1009,7 @@ def render_daily_page(
     page_payload = json.dumps(_build_daily_localization_payload(entry), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column">
+    <div class="layout-container page-two-column">
       <aside class="page-sidebar">
         <div class="sidebar-panel notebook-meta-panel">
           <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
@@ -1101,7 +1101,7 @@ def render_project_page(
     badges_html = render_badge_list(project.get("badges", []))
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column">
+    <div class="layout-container page-two-column">
       {sidebar}
       <div class="page-main">
         <article class="project-shell prose notebook-sheet">
@@ -1164,7 +1164,7 @@ def render_document_page(
     page_payload = json.dumps(page_payload_obj, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column document-page-layout">
+    <div class="layout-container page-two-column document-page-layout">
       <aside class="page-sidebar">
         <section class="document-page-meta" aria-label="{metadata_label}">
           <p class="document-page-meta-label" data-i18n="pages.document.meta">{metadata_label}</p>

@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Excelência em Dados: Pilhas, Filas e Árvores">
     <meta name="twitter:description" content="Por que a escolha da estrutura de dados correta é mais importante do que o próprio algoritmo para a performance de sistemas complexos.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.24d6ea88.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.85aa1871.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -45,37 +45,39 @@
     <noscript data-analytics-noscript="gtm" data-allowed-hostnames="[&quot;nhmatsumoto.github.io&quot;]"><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJJFQ4JM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     
-    <nav class="nav-shell" data-nav-shell>
-      <div class="nav-brand">
-        <a class="nav-title" href="https://nhmatsumoto.github.io/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
-      </div>
-      
-      <div class="nav-primary-links desktop-only"><a class="nav-link" href="https://nhmatsumoto.github.io/about/"><i class="site-icon nav-link-icon" data-lucide="user-round" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.about">sobre</span></a><a class="nav-link is-active" aria-current="page" href="https://nhmatsumoto.github.io/posts/"><i class="site-icon nav-link-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/daily/"><i class="site-icon nav-link-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/projects/"><i class="site-icon nav-link-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/documents/"><i class="site-icon nav-link-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></div>
-      
-      <div class="nav-actions">
-        <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
-          <i data-lucide="search"></i>
-          <span class="nav-btn-label" data-i18n="nav.search">buscar</span>
-          <span class="nav-btn-shortcut" aria-hidden="true">Ctrl/⌘ K</span>
-        </button>
+    <nav class="navbar" data-nav-shell>
+      <div class="layout-container">
+        <div class="nav-brand">
+          <a class="nav-title" href="https://nhmatsumoto.github.io/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+        </div>
         
-        <div class="nav-group desktop-only">
-          <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="trocar idioma" data-i18n-aria-label="nav.language_action">
-            <i data-lucide="languages"></i>
-            <span class="locale-label" data-locale-label>PT-BR</span>
-            <span class="locale-available" aria-hidden="true">PT · EN · JA</span>
+        <div class="nav-primary-links desktop-only"><a class="nav-link" href="https://nhmatsumoto.github.io/about/"><i class="site-icon nav-link-icon" data-lucide="user-round" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.about">sobre</span></a><a class="nav-link is-active" aria-current="page" href="https://nhmatsumoto.github.io/posts/"><i class="site-icon nav-link-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/daily/"><i class="site-icon nav-link-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/projects/"><i class="site-icon nav-link-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/documents/"><i class="site-icon nav-link-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></div>
+        
+        <div class="nav-actions">
+          <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette">
+            <i data-lucide="search"></i>
+            <span class="nav-btn-label" data-i18n="nav.search">buscar</span>
+            <span class="nav-btn-shortcut" aria-hidden="true">Ctrl/⌘ K</span>
           </button>
           
-          <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="alternar tema" data-i18n-aria-label="nav.theme">
-            <i data-lucide="moon" class="theme-icon-moon"></i>
-            <i data-lucide="sun" class="theme-icon-sun hidden"></i>
+          <div class="nav-group desktop-only">
+            <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="trocar idioma" data-i18n-aria-label="nav.language_action">
+              <i data-lucide="languages"></i>
+              <span class="locale-label" data-locale-label>PT-BR</span>
+              <span class="locale-available" aria-hidden="true">PT · EN · JA</span>
+            </button>
+            
+            <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="alternar tema" data-i18n-aria-label="nav.theme">
+              <i data-lucide="moon" class="theme-icon-moon"></i>
+              <i data-lucide="sun" class="theme-icon-sun hidden"></i>
+            </button>
+          </div>
+
+          <button class="nav-btn-icon nav-btn-menu mobile-only" type="button" data-nav-toggle aria-label="Menu" data-i18n-aria-label="nav.menu">
+            <i data-lucide="menu" class="menu-icon-open"></i>
+            <i data-lucide="x" class="menu-icon-close hidden"></i>
           </button>
         </div>
-
-        <button class="nav-btn-icon nav-btn-menu mobile-only" type="button" data-nav-toggle aria-label="Menu" data-i18n-aria-label="nav.menu">
-          <i data-lucide="menu" class="menu-icon-open"></i>
-          <i data-lucide="x" class="menu-icon-close hidden"></i>
-        </button>
       </div>
     </nav>
 
@@ -101,7 +103,7 @@
     <div class="site-shell">
       <main class="site-main" id="content">
     <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/posts/"><i class="site-icon breadcrumb-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a></li><li><span aria-current="page">Excelência em Dados: Pilhas, Filas e Árvores</span></li></ol></nav>
-    <div class="page-two-column post-reading-layout">
+    <div class="layout-container page-two-column post-reading-layout">
       <aside class="page-sidebar post-detail-sidebar">
       <div class="sidebar-panel notebook-meta-panel post-meta-panel">
         <div class="post-sidebar-section post-sidebar-section-meta">
@@ -196,12 +198,14 @@
     </main>
       
     <footer class="site-footer">
-      <p>
-        <span data-i18n="footer.developed_by">desenvolvido por</span>
-        <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer"><i class="site-icon footer-icon" data-lucide="git-branch" aria-hidden="true"></i><span>NHMatsumoto</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a>
-        <span class="footer-separator" aria-hidden="true">|</span>
-        <a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer"><i class="site-icon footer-icon" data-lucide="square-terminal" aria-hidden="true"></i><span data-i18n="footer.blog_engine">blog engine</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a>
-      </p>
+      <div class="layout-container">
+        <p>
+          <span data-i18n="footer.developed_by">desenvolvido por</span>
+          <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer"><i class="site-icon footer-icon" data-lucide="git-branch" aria-hidden="true"></i><span>NHMatsumoto</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+          <span class="footer-separator" aria-hidden="true">|</span>
+          <a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer"><i class="site-icon footer-icon" data-lucide="square-terminal" aria-hidden="true"></i><span data-i18n="footer.blog_engine">blog engine</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+        </p>
+      </div>
     </footer>
     
     </div>
