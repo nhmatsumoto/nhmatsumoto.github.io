@@ -980,9 +980,9 @@ def render_post_page(
           </article>
         </div>
       </div>
+      {related_html}
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
-    {related_html}
     """
     og = {
         "title": post["title"],
@@ -1156,9 +1156,9 @@ def render_project_page(
           </article>
         </div>
       </div>
+      {render_related_content(related_items or [], i18n, locale)}
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
-    {render_related_content(related_items or [], i18n, locale)}
     """
     og = {
         "title": project["name"],
@@ -1237,9 +1237,9 @@ def render_document_page(
           </article>
         </div>
       </div>
+      {render_related_content(related_items or [], i18n, locale)}
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
-    {render_related_content(related_items or [], i18n, locale)}
     """
     return render_layout(
         page_title=f"{document['title']} | {site['title']}",

@@ -27,7 +27,7 @@
     <link rel="canonical" href="https://nhmatsumoto.github.io/daily/20260419-071500-agent-boundaries-note/">
     <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
     
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.fbfb9511.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.2123254f.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -125,15 +125,14 @@
     <script id="page-content-data" type="application/json">{"title": "Boundary útil entre agente, domínio e tool layer", "summary": "Reforcei uma heurística simples: se a decisão precisa sobreviver à troca de provider, ela não deveria morar no prompt.", "body_html": "\u003cp>Anotei uma regra que continua útil: provider, prompt e ferramenta mudam rápido; política de negócio muda devagar.\u003c/p>\n\u003cp>Quando essa separação fica explícita:\u003c/p>\n\u003cul>\u003cli>o agente deixa de carregar regra escondida;\u003c/li> \u003cli>os testes ficam mais honestos;\u003c/li> \u003cli>trocar runtime deixa de ser reescrita completa.\u003c/li>\u003c/ul>", "title_en_us": "A useful boundary between agent, domain and tool layer", "title_ja_jp": "エージェント、ドメイン、tool layer の有用な境界", "summary_en_us": "I reinforced a simple heuristic: if a decision needs to survive a provider change, it should not live in the prompt.", "summary_ja_jp": "シンプルなヒューリスティックを再確認した。provider を変えても残るべき判断は、prompt の中に置くべきではない。", "body_html_en_us": "\u003cp>I wrote down a rule that remains useful: provider, prompt and tool change quickly; business policy changes slowly.\u003c/p>\n\u003cp>When that separation becomes explicit:\u003c/p>\n\u003cul>\u003cli>the agent stops carrying hidden rules;\u003c/li> \u003cli>the tests become more honest;\u003c/li> \u003cli>changing runtime stops being a full rewrite.\u003c/li>\u003c/ul>", "body_html_ja_jp": "\u003cp>今でも役に立つルールをメモした。provider、prompt、tool は速く変わる。ビジネスポリシーはゆっくり変わる。\u003c/p>\n\u003cp>この分離が明示されると、次のことが起きる。\u003c/p>\n\u003cul>\u003cli>エージェントが隠れたルールを背負わなくなる。\u003c/li> \u003cli>テストがより正直になる。\u003c/li> \u003cli>runtime の変更が全面的な書き直しではなくなる。\u003c/li>\u003c/ul>"}</script>
     
     <section class="section-panel related-content-panel">
-      <div class="layout-container">
-        <header class="section-header">
-          <div>
-            <p class="section-kicker" data-i18n="sections.navigation_kicker">navegação</p>
-            <h2 data-i18n="sections.related_content">Continue explorando</h2>
-          </div>
-          <p class="section-copy" data-i18n="sections.related_content_copy">Conteudos conectados por tags, projeto e documentacao.</p>
-        </header>
-        <ol class="entry-list"><li class="entry" data-entry-card>
+      <header class="section-header">
+        <div>
+          <p class="section-kicker" data-i18n="sections.navigation_kicker">navegação</p>
+          <h2 data-i18n="sections.related_content">Continue explorando</h2>
+        </div>
+        <p class="section-copy" data-i18n="sections.related_content_copy">Conteudos conectados por tags, projeto e documentacao.</p>
+      </header>
+      <ol class="entry-list"><li class="entry" data-entry-card>
       <article class="entry-card entry-card-document">
         <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.document">documento</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="folder" aria-hidden="true"></i>agents</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta entry-version"><i class="site-icon entry-icon" data-lucide="git-branch" aria-hidden="true"></i>v0.1</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-flag"><i class="site-icon entry-icon" data-lucide="bot" aria-hidden="true"></i><span class="icon-label" data-i18n="common.agent_generated">gerado por agente</span></span></p>
         <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/" data-entry-title>Visão Geral da Arquitetura do Ronaldinho</a></h3>
@@ -169,7 +168,6 @@
       </article>
       <script type="application/json" data-entry-card-data>{"title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua", "title_en_us": "DDD Agent Orchestrator: Translating Natural Language into Ubiquitous Language", "title_ja_jp": "DDD エージェント・オーケストレーター：自然言語をユビキタス言語へ", "summary": "Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.", "summary_en_us": "Technical note on converting natural language into DDD artifacts via multi-agent AI orchestration.", "summary_ja_jp": "複数の AI エージェントのオーケストレーションを用いて、自然言語を DDD のアーティファクトに変換する技術ノート。"}</script>
     </li></ol>
-      </div>
     </section>
     
     </main>
