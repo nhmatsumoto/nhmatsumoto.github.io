@@ -3724,6 +3724,12 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   min-width: 0;
 }
 
+.page-home .page-main {
+  display: grid;
+  gap: var(--home-section-gap);
+  align-content: start;
+}
+
 .page-about .about-narrative {
   padding: calc(var(--base_grid_unit) * 4);
   border-left-color: var(--surface-dashed-border-soft);
