@@ -23,7 +23,7 @@
         "documents": "documentos",
         "about": "sobre",
         "contact": "contato",
-        "search": "palette de comandos",
+        "search": "buscar",
         "cta": "trabalho aberto / contato",
         "language": "idioma",
         "language_action": "trocar idioma",
@@ -32,14 +32,17 @@
       "palette": {
         "placeholder": "Buscar publicações, daily notes, projetos e documentos",
         "close": "Fechar",
-        "hint": "Use Ctrl/⌘ K para abrir, Enter para abrir o primeiro resultado e Esc para fechar.",
+        "hint": "Toque ou clique em buscar para abrir. Ctrl/⌘ K tambem funciona; Enter abre o primeiro resultado e Esc fecha.",
         "empty": "Nenhum resultado encontrado."
       },
       "home": {
         "highlight_main_project": "projeto principal",
         "highlight_recent_article": "artigo recente",
         "kicker": "engineering notebook",
-        "focus_kicker": "foco atual"
+        "focus_kicker": "foco atual",
+        "start_here_kicker": "comece por aqui",
+        "start_here_title": "Trilha curta de entrada",
+        "start_here_copy": "Uma sequencia curta para entender a proposta do site, ver o sistema principal e chegar na documentacao conectada."
       },
       "sections": {
         "posts_title": "Publicações recentes",
@@ -56,6 +59,8 @@
         "publications_title": "Publicações",
         "publications_copy": "Fluxo unificado de documentos de arquitetura, artigos técnicos e notas de pesquisa.",
         "related_posts": "Posts relacionados",
+        "related_content": "Continue explorando",
+        "related_content_copy": "Conteudos conectados por tags, projeto e documentacao.",
         "evidence_kicker": "evidência",
         "evidence_title": "Resultados em produção",
         "evidence_copy": "Métricas, decisões arquiteturais e resultados concretos documentados nos projetos e publicações."
@@ -152,7 +157,11 @@
         "close": "Fechar"
       },
       "status": {
+        "draft": "rascunho",
+        "published": "publicado",
         "research": "pesquisa",
+        "active": "ativo",
+        "archived": "arquivado",
         "in_progress": "em andamento",
         "production": "produção"
       },
@@ -203,7 +212,7 @@
         "documents": "documents",
         "about": "about",
         "contact": "contact",
-        "search": "command palette",
+        "search": "search",
         "cta": "open work / contact",
         "language": "language",
         "language_action": "switch language",
@@ -212,14 +221,17 @@
       "palette": {
         "placeholder": "Search posts, daily notes, projects and documents",
         "close": "Close",
-        "hint": "Use Ctrl/⌘ K to open, Enter to open first result and Esc to close.",
+        "hint": "Tap or click search to open. Ctrl/⌘ K also works; Enter opens the first result and Esc closes it.",
         "empty": "No results found."
       },
       "home": {
         "highlight_main_project": "main project",
         "highlight_recent_article": "recent article",
         "kicker": "engineering notebook",
-        "focus_kicker": "current focus"
+        "focus_kicker": "current focus",
+        "start_here_kicker": "start here",
+        "start_here_title": "A short guided path",
+        "start_here_copy": "A compact route to understand the notebook, inspect the core system and jump into the connected documentation."
       },
       "sections": {
         "posts_title": "Recent posts",
@@ -236,6 +248,8 @@
         "publications_title": "Publications",
         "publications_copy": "Unified stream of architecture documents, technical articles and research notes.",
         "related_posts": "Related posts",
+        "related_content": "Keep exploring",
+        "related_content_copy": "Content connected by tags, project links and documentation references.",
         "evidence_kicker": "evidence",
         "evidence_title": "Production results",
         "evidence_copy": "Metrics, architectural decisions and concrete outcomes documented across projects and publications."
@@ -336,7 +350,11 @@
         "close": "Close"
       },
       "status": {
+        "draft": "draft",
+        "published": "published",
         "research": "research",
+        "active": "active",
+        "archived": "archived",
         "in_progress": "in progress",
         "production": "production"
       },
@@ -383,7 +401,7 @@
         "documents": "ドキュメント",
         "about": "プロフィール",
         "contact": "連絡先",
-        "search": "コマンドパレット",
+        "search": "検索",
         "cta": "お問い合わせ",
         "language": "言語",
         "language_action": "言語切替",
@@ -392,14 +410,17 @@
       "palette": {
         "placeholder": "記事、daily notes、プロジェクト、ドキュメントを検索",
         "close": "閉じる",
-        "hint": "Ctrl/⌘ K で開き、Enter で最初の結果を表示、Esc で閉じます。",
+        "hint": "検索ボタンをタップまたはクリックして開けます。Ctrl/⌘ K でも開き、Enter で最初の結果、Esc で閉じます。",
         "empty": "結果が見つかりませんでした。"
       },
       "home": {
         "highlight_main_project": "主要プロジェクト",
         "highlight_recent_article": "最近の記事",
         "kicker": "engineering notebook",
-        "focus_kicker": "現在の焦点"
+        "focus_kicker": "現在の焦点",
+        "start_here_kicker": "最初の導線",
+        "start_here_title": "最短で入るためのルート",
+        "start_here_copy": "サイトの意図を掴み、主力システムを見て、つながったドキュメントへ入るための短い導線です。"
       },
       "sections": {
         "posts_title": "最近の記事",
@@ -416,6 +437,8 @@
         "publications_title": "公開記事",
         "publications_copy": "アーキテクチャドキュメント、技術記事、研究メモの統合ストリーム。",
         "related_posts": "関連記事",
+        "related_content": "関連コンテンツ",
+        "related_content_copy": "タグ、プロジェクトの導線、ドキュメント参照でつながる内容。",
         "evidence_kicker": "エビデンス",
         "evidence_title": "本番環境での成果",
         "evidence_copy": "プロジェクトと公開記事に記録されたメトリクス、アーキテクチャの決定、具体的な成果。"
@@ -516,7 +539,11 @@
         "close": "閉じる"
       },
       "status": {
+        "draft": "ドラフト",
+        "published": "公開済み",
         "research": "研究中",
+        "active": "進行中",
+        "archived": "アーカイブ",
         "in_progress": "進行中",
         "production": "プロダクション"
       },

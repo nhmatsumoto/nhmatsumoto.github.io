@@ -205,6 +205,8 @@ STATUS_LABELS = {
     "draft": "draft",
     "published": "published",
     "research": "research",
+    "active": "active",
+    "archived": "archived",
     "in_progress": "in progress",
     "production": "production",
 }

@@ -7,21 +7,23 @@ O projeto funciona como um **engineering notebook vivo**: publicações longas, 
 
 - **Gerador estático próprio em Python** (`scripts/build.py`)
 - **Conteúdo versionado em TOML** (`content/`)
-- **Renderização HTML estática** para `index.html`, `posts/`, `projects/`, `documents/`, `daily/`, `about/`, `contact/`
-- **Design system minimalista** orientado à leitura longa (`assets/styles.css`)
-- **Command palette local** + índice de busca gerado (`assets/search-index.json`)
+- **Renderização HTML estática** para `index.html`, `posts/`, `projects/`, `documents/`, `daily/`, `about/` e `contact/` como rota secundária
+- **Design system editorial** orientado à leitura longa e responsividade mobile (`assets/styles.css`)
+- **Busca local com botão visível + atalho opcional** usando command palette e índice gerado (`assets/search-index.json`)
 - **i18n com locale default pt-BR** e suporte a `en-US` e `ja-JP`
 
 ## Implementações recentes (estado atual)
 
-- Home organizada em bloco principal com hierarquia clara:
+- Home organizada como entrada editorial guiada:
   - `home_title` (headline)
   - `description` (subheadline)
   - `home_intro` (introdução em parágrafos)
-- Ajustes de ritmo visual e largura de leitura para manter conforto tipográfico.
-- Seção `daily` integrada ao fluxo principal do site.
-- Área de documentos técnicos com categorização por domínio/arquitetura/agentes/APIs.
-- Publicações e projetos com metadados estruturados (tags, badges, status, links de repo/código quando aplicável).
+  - trilha curta de entrada com conteúdos-chave
+- Shell interno mais compacto nas páginas de listagem para o conteúdo começar mais cedo.
+- Busca acionável por clique/toque no topo, sem depender apenas de `Ctrl` / `⌘ K`.
+- Área de documentos técnicos com categorização por domínio/arquitetura/agentes/APIs e links por âncora para grupos.
+- Relações estáticas entre posts, projetos, documentos e daily notes derivadas de `tags`, `project_url`, `docs_url` e `architecture_url`.
+- Publicações e projetos com metadados estruturados (tags, badges, status e links de repo/código quando aplicável).
 
 ## Estrutura do repositório
 
@@ -109,5 +111,6 @@ GTM_CONTAINER_ID=GTM-XXXXXXXX python3 scripts/build.py
 ## Observações
 
 - Diretórios como `posts/`, `projects/`, `documents/`, `daily/`, `about/` e `contact/` são saídas estáticas do build.
+- A rota `contact/` continua gerada, mas funciona como superfície secundária; a navegação principal prioriza home, posts, daily, projects, documents e about.
 - A home é orientada por dados de `content/site.toml`, permitindo atualização de copy sem alterar template.
-- O projeto prioriza legibilidade, rastreabilidade em git e simplicidade operacional.
+- O projeto prioriza legibilidade, rastreabilidade em git, simplicidade operacional e boa leitura em mobile sem depender de JavaScript excessivo.

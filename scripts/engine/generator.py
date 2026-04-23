@@ -4,6 +4,7 @@ import shutil
 import subprocess
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 from .constants import ROOT, MANAGED_GIT_PATHS
 from .utils import (
     load_blog_config, write_text, write_json, site_href,
@@ -84,6 +85,98 @@ def find_related_posts(current: dict[str, Any], all_posts: list[dict[str, Any]],
     scored.sort(key=lambda x: (-x[0], -x[1]["published_dt"].timestamp()))
     return [post for _, post in scored[:max_count]]
 
+
+def _normalize_relation_url(value: Any) -> str:
+    text = str(value or "").strip()
+    if not text:
+        return ""
+    parsed = urlparse(text)
+    if parsed.scheme or parsed.netloc:
+        text = parsed.path or "/"
+    if not text.startswith("/"):
+        text = "/" + text.lstrip("/")
+    return text if text.endswith("/") else f"{text}/"
+
+
+def _relation_links(item: dict[str, Any]) -> set[str]:
+    links = {
+        _normalize_relation_url(item.get("resolved_url") or item.get("url")),
+        _normalize_relation_url(item.get("resolved_project_url")),
+        _normalize_relation_url(item.get("resolved_docs_url")),
+        _normalize_relation_url(item.get("resolved_architecture_url")),
+    }
+    return {link for link in links if link}
+
+
+def _relation_tags(item: dict[str, Any]) -> set[str]:
+    return {
+        str(tag or "").strip().lower()
+        for tag in item.get("tags", [])
+        if str(tag or "").strip()
+    }
+
+
+def _relation_recency(item: dict[str, Any]) -> float:
+    published_dt = item.get("published_dt")
+    if hasattr(published_dt, "timestamp"):
+        return float(published_dt.timestamp())
+    return float(item.get("featured", False))
+
+
+def _relation_score(current: dict[str, Any], candidate: dict[str, Any]) -> int:
+    if current is candidate:
+        return 0
+    if current.get("kind") == candidate.get("kind"):
+        if current.get("slug") and current.get("slug") == candidate.get("slug"):
+            return 0
+        if current.get("id") and current.get("id") == candidate.get("id"):
+            return 0
+
+    score = 0
+    current_url = _normalize_relation_url(current.get("resolved_url") or current.get("url"))
+    candidate_url = _normalize_relation_url(candidate.get("resolved_url") or candidate.get("url"))
+    current_links = _relation_links(current) - ({current_url} if current_url else set())
+    candidate_links = _relation_links(candidate) - ({candidate_url} if candidate_url else set())
+
+    if candidate_url and candidate_url in current_links:
+        score += 10
+    if current_url and current_url in candidate_links:
+        score += 10
+
+    shared_tags = len(_relation_tags(current) & _relation_tags(candidate))
+    score += shared_tags * 3
+
+    current_category = str(current.get("category", "") or "").strip().lower()
+    candidate_category = str(candidate.get("category", "") or "").strip().lower()
+    if current_category and candidate_category and current_category == candidate_category and current_category not in {"daily", "engineering"}:
+        score += 1
+
+    if current.get("kind") == candidate.get("kind"):
+        score += 1
+    if candidate.get("featured"):
+        score += 1
+    return score
+
+
+def find_related_content(
+    current: dict[str, Any],
+    posts: list[dict[str, Any]],
+    daily_entries: list[dict[str, Any]],
+    projects: list[dict[str, Any]],
+    documents: list[dict[str, Any]],
+    *,
+    max_count: int = 4,
+) -> list[dict[str, Any]]:
+    candidates = [*posts, *daily_entries, *projects, *documents]
+    scored: list[tuple[int, float, dict[str, Any]]] = []
+    for candidate in candidates:
+        score = _relation_score(current, candidate)
+        if score < 4:
+            continue
+        scored.append((score, _relation_recency(candidate), candidate))
+    scored.sort(key=lambda item: (-item[0], -item[1]))
+    return [candidate for _, _, candidate in scored[:max_count]]
+
 def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     config = load_blog_config()["build"]
     site = load_site()
@@ -104,6 +197,7 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         p["resolved_url"] = site_href(site, p["url"])
         p["resolved_repo_url"] = resolve_optional_url(site, p["repo_url"])
         p["resolved_code_url"] = resolve_optional_url(site, p["code_url"])
+        p["resolved_project_url"] = resolve_optional_url(site, p.get("project_url", ""))
     for entry in daily_entries:
         entry["resolved_url"] = site_href(site, entry["url"])
         entry["resolved_spotify_url"] = resolve_optional_url(site, entry.get("spotify", ""))
@@ -211,16 +305,45 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     # Render items
     for idx, post in enumerate(posts):
         dest = target_root / config["publications_dir"] / post["output_dir_name"] / "index.html"
-        related = find_related_posts(post, posts)
-        page_html = render_post_page(site, system, post, posts[idx-1] if idx > 0 else None, posts[idx+1] if idx+1 < len(posts) else None, i18n, locale, related_posts=related)
+        related = find_related_content(post, posts, daily_entries, projects, documents)
+        page_html = render_post_page(
+            site,
+            system,
+            post,
+            posts[idx-1] if idx > 0 else None,
+            posts[idx+1] if idx+1 < len(posts) else None,
+            i18n,
+            locale,
+            related_items=related,
+        )
         write_text(dest, page_html)
         legacy_publications_dir = config.get("legacy_publications_dir", "publications")
         write_text(target_root / legacy_publications_dir / post["output_dir_name"] / "index.html", page_html)
     for idx, entry in enumerate(daily_entries):
         dest = target_root / config.get("daily_output_dir", "daily") / entry["output_dir_name"] / "index.html"
-        write_text(dest, render_daily_page(site, system, entry, daily_entries[idx-1] if idx > 0 else None, daily_entries[idx+1] if idx+1 < len(daily_entries) else None, i18n, locale))
-    for p in projects: write_text(target_root / config["projects_output_dir"] / p["slug"] / "index.html", render_project_page(site, system, p, i18n, locale))
-    for d in documents: write_text(target_root / config["documents_output_dir"] / d["slug"] / "index.html", render_document_page(site, system, d, i18n, locale))
+        write_text(
+            dest,
+            render_daily_page(
+                site,
+                system,
+                entry,
+                daily_entries[idx-1] if idx > 0 else None,
+                daily_entries[idx+1] if idx+1 < len(daily_entries) else None,
+                i18n,
+                locale,
+                related_items=find_related_content(entry, posts, daily_entries, projects, documents),
+            ),
+        )
+    for p in projects:
+        write_text(
+            target_root / config["projects_output_dir"] / p["slug"] / "index.html",
+            render_project_page(site, system, p, i18n, locale, related_items=find_related_content(p, posts, daily_entries, projects, documents)),
+        )
+    for d in documents:
+        write_text(
+            target_root / config["documents_output_dir"] / d["slug"] / "index.html",
+            render_document_page(site, system, d, i18n, locale, related_items=find_related_content(d, posts, daily_entries, projects, documents)),
+        )
 
     # Assets & Index
     write_json(target_root / config["search_index_file"], build_search_index(site, posts, daily_entries, projects, documents, i18n, locale))

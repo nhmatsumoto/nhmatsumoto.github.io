@@ -153,8 +153,8 @@ const initLocalization = () => {
     });
     
     // Update locale label in navbar
-    const short = locale.split("-")[0].toUpperCase();
-    document.querySelectorAll("[data-locale-label]").forEach(el => el.textContent = short);
+    const localeCode = String(locale || "").toUpperCase();
+    document.querySelectorAll("[data-locale-label]").forEach(el => el.textContent = localeCode);
   };
 
   // Subscribe to locale changes

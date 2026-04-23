@@ -117,7 +117,10 @@ def render_analytics_body(config: dict[str, Any]) -> str:
 
 
 def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: str, i18n: dict[str, Any], locale: str) -> str:
-    search_label = translate(i18n, locale, "nav.search", "command palette")
+    search_label = translate(i18n, locale, "nav.search", "search")
+    search_aria = translate(i18n, locale, "accessibility.command_palette", "Command palette")
+    supported_locales = i18n.get("supported_locales", [])
+    locale_codes = " · ".join(str(code).split("-")[0].upper() for code in supported_locales if code)
     nav_items = [
         ("about", "nav.about", "/about/"),
         ("posts", "nav.posts", "/posts/"),
@@ -143,8 +146,16 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
       </div>
       <div class="nav-primary-links">{primary_links}</div>
       <div class="nav-actions">
-        <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_label)}"><i data-lucide="search"></i></button>
-        <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action"><i data-lucide="languages"></i><span class="locale-label" data-locale-label>PT</span></button>
+        <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_aria)}" data-i18n-aria-label="accessibility.command_palette">
+          <i data-lucide="search"></i>
+          <span class="nav-btn-label" data-i18n="nav.search">{html.escape(search_label)}</span>
+          <span class="nav-btn-shortcut" aria-hidden="true">Ctrl/⌘ K</span>
+        </button>
+        <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
+          <i data-lucide="languages"></i>
+          <span class="locale-label" data-locale-label>{html.escape(locale.upper())}</span>
+          {f'<span class="locale-available" aria-hidden="true">{html.escape(locale_codes)}</span>' if locale_codes else ""}
+        </button>
         <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="{html.escape(translate(i18n, locale, "nav.theme", "Toggle theme"))}" data-i18n-aria-label="nav.theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
       </div>
     </nav>

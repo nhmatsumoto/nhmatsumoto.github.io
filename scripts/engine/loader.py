@@ -109,6 +109,7 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
         "badges": badges,
         "repo_url": str(raw.get("repo_url", "") or "").strip(),
         "code_url": str(raw.get("code_url", "") or "").strip(),
+        "project_url": str(raw.get("project_url", "") or "").strip(),
         "featured": bool(raw.get("featured", False)),
         "has_math": has_math
         or _has_math_content(_localized_string_values(raw, ["body"]), config),
@@ -204,11 +205,13 @@ def normalise_project(raw: dict[str, Any], source_path: Path | None = None) -> d
     config = load_blog_config()
     res = {
         "slug": slug,
+        "kind": "project",
         "name": name,
         "headline": headline,
         "summary": summary,
         "status": status,
         "status_label": STATUS_LABELS[status],
+        "tags": normalize_string_list(raw.get("tags", [])),
         "stack": normalize_string_list(raw.get("stack", [])),
         "badges": normalize_string_list(raw.get("badges", [])),
         "repo_url": str(raw.get("repo_url", "") or "").strip(),

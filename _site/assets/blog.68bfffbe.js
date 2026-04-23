@@ -122,8 +122,8 @@ document.querySelectorAll("[data-status-key]").forEach(el => {
 if (!el.dataset.i18nFallback) el.dataset.i18nFallback = el.textContent || "";
 el.textContent = translate(el.dataset.statusKey, el.dataset.i18nFallback, locale);
 });
-const short = locale.split("-")[0].toUpperCase();
-document.querySelectorAll("[data-locale-label]").forEach(el => el.textContent = short);
+const localeCode = String(locale || "").toUpperCase();
+document.querySelectorAll("[data-locale-label]").forEach(el => el.textContent = localeCode);
 };
 useStore.subscribe((state, prevState) => {
 if (state.locale !== prevState.locale) {

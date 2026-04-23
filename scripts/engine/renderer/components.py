@@ -5,6 +5,7 @@ from typing import Any
 from ..utils import (
     site_href,
     normalize_string_list,
+    slugify,
     summarize_body,
     HEADING_RE,
     UNORDERED_LIST_RE,
@@ -472,6 +473,17 @@ def render_document_card(document: dict[str, Any], i18n: dict[str, Any], locale:
     </li>
     """.strip()
 
+
+def render_entry_card(item: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+    kind = str(item.get("kind", "") or "").strip().lower()
+    if kind in {"post", "article"}:
+        return render_post_card(item, i18n, locale)
+    if kind == "daily":
+        return render_daily_card(item, i18n, locale)
+    if kind == "project":
+        return render_project_card(item, i18n, locale)
+    return render_document_card(item, i18n, locale)
+
 def render_publication_card(item: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     if item.get("kind") == "article": return render_post_card(item, i18n, locale)
     return render_document_card(item, i18n, locale)
@@ -582,15 +594,15 @@ def render_hero(site: dict[str, str], system: dict[str, Any], posts: list[dict[s
     </section>
     """
 
-def render_navigation_section(system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+def render_navigation_section(site: dict[str, str], system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     categories = sorted({d["category"] for d in documents if d.get("category")})
     nav_items = [("nav.about", "/about/"), ("nav.posts", "/posts/"), ("nav.daily", "/daily/"), ("nav.projects", "/projects/"), ("nav.documents", "/documents/")]
-    nav_items += [(f"sections.category_{c}", f"/documents/?category={c}") for c in categories]
+    nav_items += [(f"sections.category_{c}", f"/documents/#category-{slugify(c)}") for c in categories]
     
     links = "\n".join(
-        f'<a class="nav-link" href="{html.escape(url)}">'
+        f'<a class="nav-link" href="{html.escape(site_href(site, url) if str(url).startswith("/") else str(url))}">'
         f'{render_icon(NAV_ICON_BY_KEY.get(key, "folder"), "site-icon nav-link-icon")}'
-        f'{_label_span(translate(i18n, locale, key, key.split(".")[-1].replace("_", " ")), key)}</a>'
+        f'{_label_span(translate(i18n, locale, key, key.split(".")[-1].replace("category_", "").replace("_", " ")), key)}</a>'
         for key, url in nav_items
     )
     
@@ -686,12 +698,47 @@ def render_related_posts(posts: list[dict[str, Any]], i18n: dict[str, Any], loca
     </section>
     """
 
-def render_documents_section(system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str, *, limit: int | None = None, grouped: bool = False) -> str:
+def render_related_content(items: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    if not items:
+        return ""
+    title = translate(i18n, locale, "sections.related_content", "Continue explorando")
+    copy = translate(
+        i18n,
+        locale,
+        "sections.related_content_copy",
+        "Conteudos conectados por tags, projeto ou documentacao.",
+    )
+    cards = "\n".join(render_entry_card(item, i18n, locale) for item in items)
+    return f"""
+    <section class="section-panel related-content-panel">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker" data-i18n="sections.navigation_kicker">{html.escape(translate(i18n, locale, "sections.navigation_kicker", "navegacao"))}</p>
+          <h2 data-i18n="sections.related_content">{html.escape(title)}</h2>
+        </div>
+        <p class="section-copy" data-i18n="sections.related_content_copy">{html.escape(copy)}</p>
+      </header>
+      <ol class="entry-list">{cards}</ol>
+    </section>
+    """
+
+
+def render_documents_section(
+    system: dict[str, Any],
+    documents: list[dict[str, Any]],
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    limit: int | None = None,
+    grouped: bool = False,
+    show_header: bool = True,
+) -> str:
     items = documents[:limit] if limit is not None else documents
     if grouped:
         from collections import defaultdict
         groups = defaultdict(list)
-        for d in documents: groups[d["category"]].append(d)
+        for d in items:
+            groups[d["category"]].append(d)
         layout_docs = system.get("layout", {}).get("documents", {})
         categories = normalize_string_list(layout_docs.get("navigation", []))
         blocks = []
@@ -699,15 +746,22 @@ def render_documents_section(system: dict[str, Any], documents: list[dict[str, A
             docs_in_category = groups.get(category, [])
             if not docs_in_category: continue
             cards = "\n".join(render_document_card(d, i18n, locale) for d in docs_in_category)
-            blocks.append(f'<section class="document-group"><header class="document-group-head"><h3>{html.escape(category)}</h3></header><ol class="entry-list">{cards}</ol></section>')
+            blocks.append(
+                f'<section class="document-group" id="category-{html.escape(slugify(category), quote=True)}">'
+                f'<header class="document-group-head"><h3>{html.escape(category)}</h3></header>'
+                f'<ol class="entry-list">{cards}</ol></section>'
+            )
         empty_msg = translate(i18n, locale, "empty.documents", "No documents indexed yet.")
         content = "\n".join(blocks) if blocks else f'<p class="empty-state" data-i18n="empty.documents">{html.escape(empty_msg)}</p>'
     else:
         cards = "\n".join(render_document_card(d, i18n, locale) for d in items)
         empty_state = f'<li><p class="empty-state" data-i18n="empty.documents">{html.escape(translate(i18n, locale, "empty.documents", "No documents indexed yet."))}</p></li>'
         content = f'<ol class="entry-list">{cards or empty_state}</ol>'
-    return f"""
-    <section class="section-panel" aria-labelledby="documents-title">
+    header_html = ""
+    labelledby_attr = ""
+    if show_header:
+        labelledby_attr = ' aria-labelledby="documents-title"'
+        header_html = f"""
       <header class="section-header">
         <div>
           <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
@@ -715,6 +769,10 @@ def render_documents_section(system: dict[str, Any], documents: list[dict[str, A
         </div>
         <p class="section-copy" data-i18n="sections.documents_copy">{html.escape(translate(i18n, locale, "sections.documents_copy", "Markdown-backed notes organized by domain, architecture, agents and APIs, with version markers and agent-generated tags."))}</p>
       </header>
-      {content}
+        """
+    return f"""
+    <section class="section-panel documents-panel{' documents-panel-condensed' if not show_header else ''}"{labelledby_attr}>
+      {header_html}
+      <div class="documents-panel-body">{content}</div>
     </section>
     """

@@ -5,6 +5,7 @@ from typing import Any
 from .base import render_layout
 from .components import (
     render_navigation_section,
+    render_entry_card,
     render_post_card,
     render_project_card,
     render_daily_card,
@@ -22,7 +23,7 @@ from .components import (
     render_impact_bar,
     render_trade_offs_section,
     render_lessons_section,
-    render_related_posts,
+    render_related_content,
     render_icon,
 )
 from ..utils import site_href, normalize_string_list, load_blog_config, copy_localized_fields
@@ -402,6 +403,27 @@ def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dic
     <script id="profile-content-data" type="application/json">{payload_json}</script>"""
 
 
+def _render_start_here_section(items: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    visible_items = [item for item in items if item][:3]
+    if not visible_items:
+        return ""
+    cards = "".join(render_entry_card(item, i18n, locale) for item in visible_items)
+    return f"""
+    <section class="section-panel start-here-panel" aria-labelledby="start-here-title">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker" data-i18n="home.start_here_kicker">{html.escape(translate(i18n, locale, "home.start_here_kicker", "start here"))}</p>
+          <h2 id="start-here-title" data-i18n="home.start_here_title">{html.escape(translate(i18n, locale, "home.start_here_title", "Comece por aqui"))}</h2>
+        </div>
+        <p class="section-copy" data-i18n="home.start_here_copy">{html.escape(translate(i18n, locale, "home.start_here_copy", "Uma trilha curta para entender o notebook, ver o sistema principal e entrar na documentacao conectada."))}</p>
+      </header>
+      <ol class="entry-list entry-list-guided">
+        {cards}
+      </ol>
+    </section>
+    """
+
+
 def render_home_page(
     site: dict[str, str],
     system: dict[str, Any],
@@ -419,6 +441,10 @@ def render_home_page(
 
     intro = site.get("home_intro", "").strip()
     home_summary = site.get("home_summary", "").strip()
+    featured_post = next((post for post in posts if post.get("featured")), posts[0] if posts else None)
+    featured_project = next((project for project in projects if project.get("featured")), projects[0] if projects else None)
+    featured_document = documents[0] if documents else None
+    start_here_items = [item for item in [featured_post, featured_project, featured_document] if item]
 
     intro_payload: dict[str, Any] = {"body_html": render_markdown(intro)}
     for supported_locale in i18n.get("supported_locales", []):
@@ -457,6 +483,7 @@ def render_home_page(
             <div class="notebook-link-row">{quick_links_html}</div>
           </div>
         </section>
+        {_render_start_here_section(start_here_items, i18n, locale)}
         <section class="section-panel" aria-labelledby="posts-title">
           <header class="section-header">
             <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
@@ -487,7 +514,8 @@ def render_home_page(
             {"".join(render_project_card(project, i18n, locale) for project in projects[:projects_limit])}
           </ol>
         </section>
-        {render_navigation_section(system, documents, i18n, locale)}
+        {render_documents_section(system, documents, i18n, locale, limit=3)}
+        {render_navigation_section(site, system, documents, i18n, locale)}
       </div>
     </div>
     <script id="page-content-data" type="application/json">{intro_payload_json}</script>
@@ -519,23 +547,18 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
     pagination = render_pagination_controls(site, current_page, total_pages, "/posts/", i18n, locale)
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column">
-      <aside class="page-sidebar profile-sidebar">
-        {_render_profile_header(site, system, i18n, locale)}
-      </aside>
-      <div class="page-main">
-        <section class="page-heading">
-          <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
-          <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "Publicações"))}</h1>
-          <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Escrita técnica organizada por clareza, ritmo e utilidade prática."))}</p>
-        </section>
-        <section class="section-panel">
-          <ol class="entry-list">
-            {"".join(render_post_card(post, i18n, locale) for post in posts)}
-          </ol>
-        </section>
-        {pagination}
-      </div>
+    <div class="page-stack page-stack-wide">
+      <section class="page-heading">
+        <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
+        <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "Publicações"))}</h1>
+        <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Escrita técnica organizada por clareza, ritmo e utilidade prática."))}</p>
+      </section>
+      <section class="section-panel">
+        <ol class="entry-list">
+          {"".join(render_post_card(post, i18n, locale) for post in posts)}
+        </ol>
+      </section>
+      {pagination}
     </div>
     """
     return render_layout(
@@ -564,22 +587,17 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     )
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column">
-      <aside class="page-sidebar profile-sidebar">
-        {_render_profile_header(site, system, i18n, locale)}
-      </aside>
-      <div class="page-main">
-        <section class="page-heading">
-          <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
-          <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>
-          <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."))}</p>
-        </section>
-        <section class="section-panel">
-          <ol class="entry-list">
-            {"".join(render_project_card(project, i18n, locale) for project in projects)}
-          </ol>
-        </section>
-      </div>
+    <div class="page-stack page-stack-wide">
+      <section class="page-heading">
+        <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
+        <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>
+        <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."))}</p>
+      </section>
+      <section class="section-panel">
+        <ol class="entry-list">
+          {"".join(render_project_card(project, i18n, locale) for project in projects)}
+        </ol>
+      </section>
     </div>
     """
     has_math = any(project.get("has_math") for project in projects)
@@ -609,18 +627,13 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
     )
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column">
-      <aside class="page-sidebar profile-sidebar">
-        {_render_profile_header(site, system, i18n, locale)}
-      </aside>
-      <div class="page-main">
-        <section class="page-heading">
-          <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
-          <h1 data-i18n="pages.documents.title">{html.escape(translate(i18n, locale, "pages.documents.title", "Documents"))}</h1>
-          <p data-i18n="pages.documents.description">{html.escape(translate(i18n, locale, "pages.documents.description", "Documentação técnica organizada por domínio, arquitetura e integrações."))}</p>
-        </section>
-        {render_documents_section(system, documents, i18n, locale, grouped=True)}
-      </div>
+    <div class="page-stack page-stack-wide">
+      <section class="page-heading">
+        <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
+        <h1 data-i18n="pages.documents.title">{html.escape(translate(i18n, locale, "pages.documents.title", "Documents"))}</h1>
+        <p data-i18n="pages.documents.description">{html.escape(translate(i18n, locale, "pages.documents.description", "Documentação técnica organizada por domínio, arquitetura e integrações."))}</p>
+      </section>
+      {render_documents_section(system, documents, i18n, locale, grouped=True, show_header=False)}
     </div>
     """
     return render_layout(
@@ -709,15 +722,15 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column">
-      <aside class="page-sidebar profile-sidebar">
-        {_render_profile_header(site, system, i18n, locale)}
-      </aside>
-      <div class="page-main">
-        <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
-          {page_data["body_html"]}
-        </article>
-      </div>
+    <div class="page-stack">
+      <section class="page-heading">
+        <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
+        <h1 data-page-title>{html.escape(page_data["title"])}</h1>
+        <p data-page-summary>{html.escape(page_data["summary"])}</p>
+      </section>
+      <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
+        {page_data["body_html"]}
+      </article>
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
@@ -777,22 +790,17 @@ def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict
     )
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column">
-      <aside class="page-sidebar profile-sidebar">
-        {_render_profile_header(site, system, i18n, locale)}
-      </aside>
-      <div class="page-main">
-        <section class="page-heading">
-          <p class="section-kicker" data-i18n="nav.contact">{html.escape(translate(i18n, locale, "nav.contact", "contact"))}</p>
-          <h1 data-i18n="pages.contact.title">{html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))}</h1>
-          <p data-i18n="pages.contact.description">{html.escape(translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."))}</p>
-        </section>
-        <section class="section-panel">
-          <div class="contact-grid">
-            {"".join(cards)}
-          </div>
-        </section>
-      </div>
+    <div class="page-stack">
+      <section class="page-heading">
+        <p class="section-kicker" data-i18n="nav.contact">{html.escape(translate(i18n, locale, "nav.contact", "contact"))}</p>
+        <h1 data-i18n="pages.contact.title">{html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))}</h1>
+        <p data-i18n="pages.contact.description">{html.escape(translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."))}</p>
+      </section>
+      <section class="section-panel">
+        <div class="contact-grid">
+          {"".join(cards)}
+        </div>
+      </section>
     </div>
     """
     return render_layout(
@@ -821,22 +829,17 @@ def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_
     )
     content = f"""
     {breadcrumbs}
-    <div class="page-two-column">
-      <aside class="page-sidebar profile-sidebar">
-        {_render_profile_header(site, system, i18n, locale)}
-      </aside>
-      <div class="page-main">
-        <section class="page-heading">
-          <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
-          <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
-          <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."))}</p>
-        </section>
-        <section class="section-panel">
-          <ol class="entry-list">
-            {"".join(render_daily_card(entry, i18n, locale) for entry in daily_entries)}
-          </ol>
-        </section>
-      </div>
+    <div class="page-stack page-stack-wide">
+      <section class="page-heading">
+        <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
+        <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
+        <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."))}</p>
+      </section>
+      <section class="section-panel">
+        <ol class="entry-list">
+          {"".join(render_daily_card(entry, i18n, locale) for entry in daily_entries)}
+        </ol>
+      </section>
     </div>
     """
     return render_layout(
@@ -854,7 +857,18 @@ def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_
     )
 
 
-def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[str, Any], previous_post: Any, next_post: Any, i18n: dict[str, Any], locale: str, *, related_posts: list | None = None) -> str:
+def render_post_page(
+    site: dict[str, str],
+    system: dict[str, Any],
+    post: dict[str, Any],
+    previous_post: Any,
+    next_post: Any,
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    related_posts: list | None = None,
+    related_items: list | None = None,
+) -> str:
     breadcrumbs = render_breadcrumbs(
         [
             {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
@@ -914,7 +928,7 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
         ]
         if section
     )
-    related_html = render_related_posts(related_posts or [], i18n, locale)
+    related_html = render_related_content(related_items or related_posts or [], i18n, locale)
     page_payload = json.dumps(_build_post_localization_payload(post), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
@@ -960,7 +974,17 @@ def render_post_page(site: dict[str, str], system: dict[str, Any], post: dict[st
     )
 
 
-def render_daily_page(site: dict[str, str], system: dict[str, Any], entry: dict[str, Any], previous_entry: Any, next_entry: Any, i18n: dict[str, Any], locale: str) -> str:
+def render_daily_page(
+    site: dict[str, str],
+    system: dict[str, Any],
+    entry: dict[str, Any],
+    previous_entry: Any,
+    next_entry: Any,
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    related_items: list | None = None,
+) -> str:
     breadcrumbs = render_breadcrumbs(
         [
             {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
@@ -1011,6 +1035,7 @@ def render_daily_page(site: dict[str, str], system: dict[str, Any], entry: dict[
       </div>
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
+    {render_related_content(related_items or [], i18n, locale)}
     """
     return render_layout(
         page_title=f"{entry['title']} | {site['title']}",
@@ -1027,7 +1052,15 @@ def render_daily_page(site: dict[str, str], system: dict[str, Any], entry: dict[
     )
 
 
-def render_project_page(site: dict[str, str], system: dict[str, Any], project: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+def render_project_page(
+    site: dict[str, str],
+    system: dict[str, Any],
+    project: dict[str, Any],
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    related_items: list | None = None,
+) -> str:
     breadcrumbs = render_breadcrumbs(
         [
             {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
@@ -1051,6 +1084,7 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
         f"<p>{render_status_badge(project['status'], i18n, locale)}</p>",
         f'<h3 data-i18n="pages.project.stack">{html.escape(translate(i18n, locale, "pages.project.stack", "Stack"))}</h3>',
         render_stack_list(project["stack"]),
+        render_tag_list(project.get("tags", [])),
         render_impact_bar(project.get("impact", []), i18n, locale),
         f'<div class="sidebar-actions">{sidebar_actions}</div>' if sidebar_actions else "",
     ]
@@ -1081,6 +1115,7 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
       </div>
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
+    {render_related_content(related_items or [], i18n, locale)}
     """
     og = {
         "title": project["name"],
@@ -1105,7 +1140,15 @@ def render_project_page(site: dict[str, str], system: dict[str, Any], project: d
     )
 
 
-def render_document_page(site: dict[str, str], system: dict[str, Any], document: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+def render_document_page(
+    site: dict[str, str],
+    system: dict[str, Any],
+    document: dict[str, Any],
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    related_items: list | None = None,
+) -> str:
     breadcrumbs = render_breadcrumbs(
         [
             {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
@@ -1144,6 +1187,7 @@ def render_document_page(site: dict[str, str], system: dict[str, Any], document:
       </div>
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
+    {render_related_content(related_items or [], i18n, locale)}
     """
     return render_layout(
         page_title=f"{document['title']} | {site['title']}",
