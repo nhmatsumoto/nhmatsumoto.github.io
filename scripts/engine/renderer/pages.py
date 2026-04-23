@@ -107,7 +107,7 @@ def _build_project_body(item: dict[str, Any], i18n: dict[str, Any] | None = None
 
     diagram_preview = (item.get("diagram_preview") or "").strip()
     if diagram_preview:
-        diagram_language = "mermaid" if item.get("diagram_format") == "mermaid" else ""
+        diagram_language = (item.get("diagram_format") or "mermaid").strip().lower()
         parts.append(f"```{diagram_language}\n{diagram_preview}\n```")
 
     stack_notes = str(localized_value(item, "stack_notes", locale, i18n, "") or "").strip()
@@ -1128,20 +1128,22 @@ def render_project_page(
     page_payload = json.dumps(page_payload_obj, ensure_ascii=False).replace("<", "\\u003c")
     badges_html = render_badge_list(project.get("badges", []))
     content = f"""
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         {breadcrumbs}
       </header>
       <div class="page-two-column">
         {sidebar}
         <div class="page-main">
-          <article class="project-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p>
+          <article class="project-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p>
+              </div>
               <h1 data-page-title>{html.escape(project['name'])}</h1>
-              <p class="post-summary" data-page-summary>{html.escape(project['headline'] or project['summary'])}</p>{badges_html}
+              <p class="post-summary post-deck" data-page-summary>{html.escape(project['headline'] or project['summary'])}</p>{badges_html}
             </header>
-            <div data-page-body>{page_payload_obj["body_html"]}</div>
+            <div class="post-body" data-page-body>{page_payload_obj["body_html"]}</div>
           </article>
         </div>
       </div>
@@ -1207,20 +1209,22 @@ def render_document_page(
       </aside>
     """
     content = f"""
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         {breadcrumbs}
       </header>
       <div class="page-two-column document-page-layout">
         {aside_meta}
         <div class="page-main">
-          <article class="document-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p>
+          <article class="document-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p>
+              </div>
               <h1 data-page-title>{html.escape(document['title'])}</h1>
-              <p class="post-summary" data-page-summary>{html.escape(document['summary'])}</p>
+              <p class="post-summary post-deck" data-page-summary>{html.escape(document['summary'])}</p>
             </header>
-            <div data-page-body>{page_payload_obj["body_html"]}</div>
+            <div class="post-body" data-page-body>{page_payload_obj["body_html"]}</div>
           </article>
         </div>
       </div>

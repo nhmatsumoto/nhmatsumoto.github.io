@@ -27,7 +27,7 @@
     <link rel="canonical" href="https://nhmatsumoto.github.io/documents/system-architecture/">
     <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
     
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.6938826c.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.7abd6d48.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -90,7 +90,7 @@
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/documents/"><i class="site-icon breadcrumb-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></li><li><span aria-current="page">Arquitetura do Sistema</span></li></ol></nav>
       </header>
@@ -108,13 +108,15 @@
       </aside>
     
         <div class="page-main">
-          <article class="document-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
+          <article class="document-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
+              </div>
               <h1 data-page-title>Arquitetura do Sistema</h1>
-              <p class="post-summary" data-page-summary>Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.</p>
+              <p class="post-summary post-deck" data-page-summary>Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.</p>
             </header>
-            <div data-page-body><h1>Arquitetura do Sistema</h1>
+            <div class="post-body" data-page-body><h1>Arquitetura do Sistema</h1>
 <p>O Ronaldinho-Agent segue uma arquitetura moderna e bastante integrada, na qual um <code>NeuralCore</code> em C# orquestra estratégias de IA e regras de governança.</p>
 <h2>Estrutura de diretórios</h2>
 <div class="code-shell" data-language="text">  <div class="code-shell-header">    <div class="code-shell-controls"><span class="control-dot close"></span><span class="control-dot minimize"></span><span class="control-dot maximize"></span></div>    <div class="code-shell-title"><span class="code-shell-label">TEXT</span></div>    <button class="code-shell-copy" aria-label="Copy code"><i data-lucide="copy" class="copy-icon"></i><span class="copy-feedback" data-i18n="actions.copied">Copiado!</span></button>  </div>  <div class="code-shell-content"><pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"><span>Ronaldinho-Agent/</span></span>

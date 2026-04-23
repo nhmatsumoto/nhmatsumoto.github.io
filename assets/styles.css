@@ -115,7 +115,7 @@
 }
 
 body {
-  padding-top: 0.5rem;
+  padding-top: 0;
 }
 
 [data-theme="light"] {
@@ -258,7 +258,11 @@ button, input, select {
   top: 0.75rem;
   z-index: 1000;
   pointer-events: none;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-4);
+}
+
+.site-shell {
+  padding-top: 0.5rem;
 }
 
 .navbar > .layout-container {
@@ -2980,7 +2984,6 @@ body::after {
 
 .page-home .site-shell {
   gap: var(--home-section-gap);
-  padding-top: calc(var(--grid-step) * 3.5);
 }
 
 /* Normalized layout rules moved to global shell block */
@@ -4147,9 +4150,9 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 
 /* ── Post Reading Experience ─────────────────────────────────────────────── */
 
-.page-post .breadcrumbs {
+.breadcrumbs {
   max-width: min(84rem, calc(100vw - var(--container-gutter) * 2));
-  margin: 0 auto calc(var(--base_grid_unit) * 2);
+  margin: 0 auto calc(var(--base_grid_unit) * 4);
 }
 
 .page-post .post-reading-layout {
@@ -5472,8 +5475,13 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 }
 
 .copy-feedback {
+  display: none;
   font-size: 0.65rem;
   font-weight: 600;
+}
+
+.is-copied .copy-feedback {
+  display: inline-block;
 }
 
 .is-copied .copy-icon {

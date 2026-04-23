@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="MapleBR">
     <meta name="twitter:description" content="Projeto com ferramentas e configurações para servidores MapleStory, incluindo scripts de build e automação via Makefile.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.6938826c.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.7abd6d48.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -97,7 +97,7 @@
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">MapleBR</span></li></ol></nav>
       </header>
@@ -113,13 +113,15 @@
       </div>
     </aside>
         <div class="page-main">
-          <article class="project-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+          <article class="project-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+              </div>
               <h1 data-page-title>MapleBR</h1>
-              <p class="post-summary" data-page-summary>Projeto MapleBR — servidor e ferramentas para o ecossistema MapleStory.</p>
+              <p class="post-summary post-deck" data-page-summary>Projeto MapleBR — servidor e ferramentas para o ecossistema MapleStory.</p>
             </header>
-            <div data-page-body><p>Projeto de servidor e ferramentas para o universo MapleStory, com automação de build via Makefile.</p>
+            <div class="post-body" data-page-body><p>Projeto de servidor e ferramentas para o universo MapleStory, com automação de build via Makefile.</p>
 <h2>Contexto</h2>
 <p>MapleStory é um MMORPG que possui uma comunidade ativa de desenvolvimento de servidores privados. Este projeto reúne ferramentas, scripts de compilação e configurações para manutenção de um ambiente de servidor.</p>
 <h2>Aspectos técnicos</h2>

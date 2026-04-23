@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="DeepSeek-V3">
     <meta name="twitter:description" content="Fork do DeepSeek-V3, modelo de linguagem com arquitetura Mixture-of-Experts (MoE) e Multi-head Latent Attention para inferência eficiente em larga escala.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.6938826c.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.7abd6d48.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -97,7 +97,7 @@
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">DeepSeek-V3</span></li></ol></nav>
       </header>
@@ -113,13 +113,15 @@
       </div>
     </aside>
         <div class="page-main">
-          <article class="project-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+          <article class="project-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+              </div>
               <h1 data-page-title>DeepSeek-V3</h1>
-              <p class="post-summary" data-page-summary>Referência de implementação do modelo DeepSeek-V3 — arquitetura Mixture-of-Experts para LLMs de larga escala.</p>
+              <p class="post-summary post-deck" data-page-summary>Referência de implementação do modelo DeepSeek-V3 — arquitetura Mixture-of-Experts para LLMs de larga escala.</p>
             </header>
-            <div data-page-body><p>Fork do repositório oficial do DeepSeek-V3, um Large Language Model com 671B de parâmetros totais que utiliza Mixture-of-Experts (MoE) para ativar apenas 37B por token durante inferência.</p>
+            <div class="post-body" data-page-body><p>Fork do repositório oficial do DeepSeek-V3, um Large Language Model com 671B de parâmetros totais que utiliza Mixture-of-Experts (MoE) para ativar apenas 37B por token durante inferência.</p>
 <h2>Arquitetura MoE</h2>
 <p>Mixture-of-Experts é uma abordagem que permite escalar modelos sem aumentar proporcionalmente o custo computacional:</p>
 <ul><li><strong>Router</strong> — decide quais especialistas ativar para cada token</li> <li><strong>Expert layers</strong> — módulos Feed-Forward especializados (apenas uma fração é ativada por vez)</li> <li><strong>Multi-head Latent Attention (MLA)</strong> — comprime as key-value caches para reduzir uso de memória durante inferência</li></ul>

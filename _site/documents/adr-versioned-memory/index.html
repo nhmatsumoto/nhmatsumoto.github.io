@@ -27,7 +27,7 @@
     <link rel="canonical" href="https://nhmatsumoto.github.io/documents/adr-versioned-memory/">
     <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
     
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.6938826c.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.7abd6d48.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -90,7 +90,7 @@
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/documents/"><i class="site-icon breadcrumb-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></li><li><span aria-current="page">ADR 003 - Memória Versionada</span></li></ol></nav>
       </header>
@@ -108,13 +108,15 @@
       </aside>
     
         <div class="page-main">
-          <article class="document-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
+          <article class="document-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.document.kicker">documento</p>
+              </div>
               <h1 data-page-title>ADR 003 - Memória Versionada</h1>
-              <p class="post-summary" data-page-summary>Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.</p>
+              <p class="post-summary post-deck" data-page-summary>Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.</p>
             </header>
-            <div data-page-body><h1>Gestão de Memória Versionada para Agentes de IA</h1>
+            <div class="post-body" data-page-body><h1>Gestão de Memória Versionada para Agentes de IA</h1>
 <h2>Visão Geral</h2>
 <p>A ideia é criar um sistema onde os agentes de IA possam versionar suas memórias usando o Git. Cada &quot;snapshot&quot; do contexto é armazenado como um commit, criando um histórico versionado que o agente pode consultar no futuro.</p>
 <h2>Fluxo do Sistema</h2>

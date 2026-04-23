@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Chess">
     <meta name="twitter:description" content="Jogo de xadrez implementado em C# com foco em modelagem de domínio, validação de movimentos e representação do tabuleiro.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.6938826c.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.7abd6d48.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -97,7 +97,7 @@
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">Chess</span></li></ol></nav>
       </header>
@@ -113,13 +113,15 @@
       </div>
     </aside>
         <div class="page-main">
-          <article class="project-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+          <article class="project-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+              </div>
               <h1 data-page-title>Chess</h1>
-              <p class="post-summary" data-page-summary>Implementação de xadrez em C# com modelagem de domínio orientada a regras.</p>
+              <p class="post-summary post-deck" data-page-summary>Implementação de xadrez em C# com modelagem de domínio orientada a regras.</p>
             </header>
-            <div data-page-body><p>Implementação de um jogo de xadrez completo em C#, com modelagem de domínio que trata cada peça como entidade com regras próprias de movimentação.</p>
+            <div class="post-body" data-page-body><p>Implementação de um jogo de xadrez completo em C#, com modelagem de domínio que trata cada peça como entidade com regras próprias de movimentação.</p>
 <h2>Modelagem de domínio</h2>
 <p>O tabuleiro é representado como uma matriz 8x8 onde cada célula pode conter uma peça. Cada tipo de peça (Rei, Rainha, Torre, Bispo, Cavalo, Peão) implementa suas próprias regras de movimentação, incluindo:</p>
 <ul><li>Movimentos válidos considerando o estado atual do tabuleiro</li> <li>Detecção de xeque e xeque-mate</li> <li>Movimentos especiais: roque, en passant, promoção de peão</li></ul>

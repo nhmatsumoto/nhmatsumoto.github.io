@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="gaussian-splatting">
     <meta name="twitter:description" content="Fork da implementação original de 3D Gaussian Splatting — técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.6938826c.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.7abd6d48.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -97,7 +97,7 @@
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">gaussian-splatting</span></li></ol></nav>
       </header>
@@ -113,13 +113,15 @@
       </div>
     </aside>
         <div class="page-main">
-          <article class="project-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+          <article class="project-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+              </div>
               <h1 data-page-title>gaussian-splatting</h1>
-              <p class="post-summary" data-page-summary>Implementação de referência de 3D Gaussian Splatting para renderização de campos de radiância em tempo real.</p>
+              <p class="post-summary post-deck" data-page-summary>Implementação de referência de 3D Gaussian Splatting para renderização de campos de radiância em tempo real.</p>
             </header>
-            <div data-page-body><p>Fork da implementação de referência do paper &quot;3D Gaussian Splatting for Real-Time Radiance Field Rendering&quot; (SIGGRAPH 2023).</p>
+            <div class="post-body" data-page-body><p>Fork da implementação de referência do paper &quot;3D Gaussian Splatting for Real-Time Radiance Field Rendering&quot; (SIGGRAPH 2023).</p>
 <h2>O que é Gaussian Splatting</h2>
 <p>Diferente de NeRFs (Neural Radiance Fields) que usam redes neurais para representar cenas, Gaussian Splatting representa a cena como milhões de gaussianas 3D semi-transparentes. Cada gaussiana tem:</p>
 <ul><li><strong>Posição</strong> (xyz) no espaço 3D</li> <li><strong>Covariância</strong> (3x3) que define forma e orientação</li> <li><strong>Opacidade</strong> (alpha)</li> <li><strong>Cor</strong> representada em spherical harmonics</li></ul>

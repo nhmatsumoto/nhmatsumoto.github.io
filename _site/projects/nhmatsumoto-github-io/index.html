@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="nhmatsumoto.github.io">
     <meta name="twitter:description" content="Site pessoal e Technical Knowledge OS: engine de geração estática em Python, conteúdo em TOML, busca client-side, i18n e deploy via GitHub Pages.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.6938826c.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.7abd6d48.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -97,7 +97,7 @@
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">nhmatsumoto.github.io</span></li></ol></nav>
       </header>
@@ -113,13 +113,15 @@
       </div>
     </aside>
         <div class="page-main">
-          <article class="project-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+          <article class="project-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+              </div>
               <h1 data-page-title>nhmatsumoto.github.io</h1>
-              <p class="post-summary" data-page-summary>Technical Knowledge OS — blog e portfolio com engine de geração estática e navegação estruturada.</p>
+              <p class="post-summary post-deck" data-page-summary>Technical Knowledge OS — blog e portfolio com engine de geração estática e navegação estruturada.</p>
             </header>
-            <div data-page-body><p>Este é o repositório do Technical Knowledge OS — o site que você está usando agora. Uma plataforma de publicação técnica construída do zero com um engine de geração estática em Python, conteúdo estruturado e navegação leve.</p>
+            <div class="post-body" data-page-body><p>Este é o repositório do Technical Knowledge OS — o site que você está usando agora. Uma plataforma de publicação técnica construída do zero com um engine de geração estática em Python, conteúdo estruturado e navegação leve.</p>
 <h2>Arquitetura do engine</h2>
 <p>O engine de geração estática processa conteúdo em TOML, renderiza markdown para HTML e gera um site completo com:</p>
 <ul><li><strong>Posts</strong> — artigos técnicos com suporte a math (AsciiMath), Mermaid, code blocks e tabelas</li> <li><strong>Projetos</strong> — portfolio com dados estruturados e páginas dedicadas</li> <li><strong>Documentos</strong> — especificações técnicas com versionamento</li> <li><strong>i18n</strong> — suporte a internacionalização multi-idioma</li> <li><strong>Busca</strong> — índice JSON para search client-side</li></ul>

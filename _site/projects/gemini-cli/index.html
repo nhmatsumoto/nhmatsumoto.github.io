@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="gemini-cli">
     <meta name="twitter:description" content="Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.6938826c.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.7abd6d48.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -97,7 +97,7 @@
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">gemini-cli</span></li></ol></nav>
       </header>
@@ -114,13 +114,15 @@
       </div>
     </aside>
         <div class="page-main">
-          <article class="project-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+          <article class="project-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+              </div>
               <h1 data-page-title>gemini-cli</h1>
-              <p class="post-summary" data-page-summary>Agente de IA open-source que traz o poder do Gemini direto para o terminal.</p>
+              <p class="post-summary post-deck" data-page-summary>Agente de IA open-source que traz o poder do Gemini direto para o terminal.</p>
             </header>
-            <div data-page-body><p>Fork do Gemini CLI, o agente de IA open-source do Google que integra o modelo Gemini diretamente ao terminal, com capacidade de executar ferramentas de sistema.</p>
+            <div class="post-body" data-page-body><p>Fork do Gemini CLI, o agente de IA open-source do Google que integra o modelo Gemini diretamente ao terminal, com capacidade de executar ferramentas de sistema.</p>
 <h2>Arquitetura de agente</h2>
 <p>O Gemini CLI implementa um loop de agente clássico:</p>
 <ol><li><strong>Input</strong> — recebe instrução do usuário via terminal</li> <li><strong>Reasoning</strong> — o modelo Gemini processa o contexto e decide a próxima ação</li> <li><strong>Tool execution</strong> — executa ferramentas (shell, file read/write, search)</li> <li><strong>Observation</strong> — resultado da ferramenta alimenta o próximo ciclo</li> <li><strong>Output</strong> — resposta final ao usuário</li></ol>

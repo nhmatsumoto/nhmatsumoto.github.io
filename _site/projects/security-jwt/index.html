@@ -34,7 +34,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Security.Jwt">
     <meta name="twitter:description" content="Biblioteca .NET para gerenciamento completo de JWT: rotação automática de chaves, endpoint JWKS, suporte a múltiplos algoritmos e armazenamento seguro de material criptográfico.">
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.6938826c.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.7abd6d48.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { mermaid.initialize({ startOnLoad: false, theme: 'dark' }); lucide.createIcons(); });</script>
@@ -97,7 +97,7 @@
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/projects/"><i class="site-icon breadcrumb-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a></li><li><span aria-current="page">Security.Jwt</span></li></ol></nav>
       </header>
@@ -113,13 +113,15 @@
       </div>
     </aside>
         <div class="page-main">
-          <article class="project-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+          <article class="project-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.project.kicker">projeto</p>
+              </div>
               <h1 data-page-title>Security.Jwt</h1>
-              <p class="post-summary" data-page-summary>JWT Manager para .NET — rotação automática de chaves, suporte a JWKS e armazenamento seguro de chaves criptográficas.</p>
+              <p class="post-summary post-deck" data-page-summary>JWT Manager para .NET — rotação automática de chaves, suporte a JWKS e armazenamento seguro de chaves criptográficas.</p>
             </header>
-            <div data-page-body><p>Fork do NetDevPack Security.Jwt — conjunto de componentes para gerenciamento completo de JWTs em aplicações .NET.</p>
+            <div class="post-body" data-page-body><p>Fork do NetDevPack Security.Jwt — conjunto de componentes para gerenciamento completo de JWTs em aplicações .NET.</p>
 <h2>Funcionalidades principais</h2>
 <ul><li><strong>Rotação automática de chaves</strong> — gera novas chaves de assinatura periodicamente sem downtime</li> <li><strong>JWKS endpoint</strong> — expõe <code>/.well-known/jwks</code> para validação distribuída de tokens</li> <li><strong>Múltiplos algoritmos</strong> — suporte a RSA, ECDSA e HMAC</li> <li><strong>Armazenamento seguro</strong> — chaves podem ser persistidas em banco de dados, filesystem ou Azure Key Vault</li> <li><strong>Key revocation</strong> — revogação de chaves comprometidas com propagação automática</li></ul>
 <h2>Por que rotação de chaves importa</h2>
