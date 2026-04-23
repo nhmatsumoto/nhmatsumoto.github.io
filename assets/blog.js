@@ -581,6 +581,22 @@ const initAnalyticsHelpers = () => {
   };
 };
 
+const initNavbarScroll = () => {
+  const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+  
+  const updateNavbar = () => {
+    if (window.scrollY > 12) {
+      navbar.classList.add('is-scrolled');
+    } else {
+      navbar.classList.remove('is-scrolled');
+    }
+  };
+  
+  window.addEventListener('scroll', updateNavbar, { passive: true });
+  updateNavbar();
+};
+
 // --- DOM Content Loaded ---
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -596,6 +612,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCodeBlocks(loc);
   initInteractiveGlow();
   initNavDrawer();
+  initNavbarScroll();
   
   // Cleanup old sidebar if exists
   document.body.removeAttribute('data-sidebar-open');
