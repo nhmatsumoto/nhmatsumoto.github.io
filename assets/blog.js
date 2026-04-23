@@ -386,103 +386,6 @@ const initLocaleToggle = (loc) => {
 };
 
 
-const initCommandPalette = (loc) => {
-  const palette = document.querySelector("[data-command-palette]");
-  const input = palette?.querySelector("[data-palette-input]");
-  const results = palette?.querySelector("[data-palette-results]");
-  if (!palette || !input || !results) return;
-
-  let index = null;
-  const iconForKind = (kind) => ({
-    post: "newspaper",
-    article: "newspaper",
-    daily: "calendar-days",
-    project: "folder-kanban",
-    document: "file-text"
-  }[kind] || "file");
-
-  const loadIndex = async () => {
-    if (index) return index;
-    const res = await fetch(palette.dataset.searchIndex || "https://nhmatsumoto.github.io/search-index.json");
-    index = res.ok ? await res.json() : [];
-    return index;
-  };
-
-  const localizeEntry = (item, locale) => ({
-    title: resolveLocalizedField(item, "title", locale, item.title || ""),
-    summary: resolveLocalizedField(item, ["summary", "headline"], locale, item.summary || "")
-  });
-
-  const searchableText = (item, locale) => {
-    const localized = localizeEntry(item, locale);
-    const values = [
-      localized.title,
-      localized.summary,
-      item.title,
-      item.summary,
-      ...(item.keywords || [])
-    ];
-
-    Object.entries(item).forEach(([key, value]) => {
-      if (/^(title|summary|headline)_/.test(key) && typeof value === "string") {
-        values.push(value);
-      }
-    });
-
-    return values.filter(Boolean).join(" ").toLowerCase();
-  };
-
-  const search = async (q) => {
-    const items = await loadIndex();
-    const locale = useStore.getState().locale;
-    const query = q.trim().toLowerCase();
-    const filtered = query 
-      ? items.filter(it => searchableText(it, locale).includes(query))
-      : items;
-
-    results.innerHTML = filtered.length 
-      ? filtered.slice(0, 10).map(it => {
-        const localized = localizeEntry(it, locale);
-        return `
-        <li>
-          <a href="${it.url}" class="palette-result">
-            <i class="site-icon palette-result-icon" data-lucide="${iconForKind(it.kind)}" aria-hidden="true"></i>
-            <span class="result-kind">${loc?.translate(`kinds.${it.kind}`, it.kind)}</span>
-            <div class="result-info">
-              <strong class="result-title">${localized.title}</strong>
-              <small class="result-summary">${localized.summary}</small>
-            </div>
-          </a>
-        </li>`;
-      }).join("")
-      : `<li class="palette-empty">${loc?.translate("palette.empty", "No results found.")}</li>`;
-    if (typeof lucide !== "undefined") lucide.createIcons();
-  };
-
-  const setOpen = (open) => {
-    palette.hidden = !open;
-    document.body.dataset.paletteOpen = String(open);
-    if (open) {
-      input.focus();
-      search(input.value);
-    }
-  };
-
-  document.querySelectorAll("[data-open-palette]").forEach(b => b.addEventListener("click", () => setOpen(true)));
-  document.querySelectorAll("[data-close-palette]").forEach(b => b.addEventListener("click", () => setOpen(false)));
-  input.addEventListener("input", (e) => search(e.target.value));
-
-  useStore.subscribe((state, prevState) => {
-    if (state.locale !== prevState.locale && !palette.hidden) {
-      search(input.value);
-    }
-  });
-  
-  document.addEventListener("keydown", (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === "k") { e.preventDefault(); setOpen(palette.hidden); }
-    if (e.key === "Escape") setOpen(false);
-  });
-};
 
 const initCodeBlocks = (loc) => {
   document.querySelectorAll(".code-shell").forEach(shell => {
@@ -608,7 +511,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactCardsLocalization();
   initThemeManager();
   initLocaleToggle(loc);
-  initCommandPalette(loc);
   initCodeBlocks(loc);
   initInteractiveGlow();
   initNavDrawer();

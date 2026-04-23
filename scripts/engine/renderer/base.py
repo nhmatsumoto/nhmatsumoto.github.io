@@ -151,12 +151,6 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         <div class="nav-primary-links desktop-only">{primary_links}</div>
         
         <div class="nav-actions">
-          <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_aria)}" data-i18n-aria-label="accessibility.command_palette">
-            <i data-lucide="search"></i>
-            <span class="nav-btn-label" data-i18n="nav.search">{html.escape(search_label)}</span>
-            <span class="nav-btn-shortcut" aria-hidden="true">Ctrl/⌘ K</span>
-          </button>
-          
           <div class="nav-group desktop-only">
             <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
               <i data-lucide="languages"></i>
@@ -216,25 +210,6 @@ def render_footer(site: dict[str, str], system: dict[str, Any], i18n: dict[str, 
     </footer>
     """
 
-def render_palette(site: dict[str, str], i18n: dict[str, Any], locale: str) -> str:
-    aria_label = translate(i18n, locale, "accessibility.command_palette", "Command palette")
-    placeholder = translate(i18n, locale, "palette.placeholder", "Search posts, projects and documents")
-    close_label = translate(i18n, locale, "palette.close", "Close")
-    hint = translate(i18n, locale, "palette.hint", "Use Ctrl/⌘ K to open, Enter to open the first result, Esc to close.")
-    return f"""
-    <div class="palette-shell" hidden data-command-palette data-search-index="{site_href(site, '/assets/search-index.json')}">
-        <div class="palette-backdrop" data-close-palette></div>
-      <div class="palette-panel" role="dialog" aria-modal="true" aria-label="{html.escape(aria_label)}" data-i18n-aria-label="accessibility.command_palette">
-        <div class="palette-head">
-          {render_icon("search", "site-icon palette-head-icon")}
-          <input class="palette-input" type="search" placeholder="{html.escape(placeholder)}" data-palette-input data-i18n-placeholder="palette.placeholder">
-          <button class="palette-close" type="button" data-close-palette>{render_icon("x", "site-icon palette-close-icon")}<span data-i18n="palette.close">{html.escape(close_label)}</span></button>
-        </div>
-        <p class="palette-hint" data-i18n="palette.hint">{html.escape(hint)}</p>
-        <ul class="palette-results" data-palette-results></ul>
-      </div>
-    </div>
-    """
 
 def render_og_tags(og: dict[str, str]) -> str:
     tags = [
@@ -323,7 +298,6 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
       {render_footer(site, system, i18n, locale)}
     </div>
 
-    {render_palette(site, i18n, locale)}
     <div class="sidebar-backdrop" data-sidebar-toggle></div>
     <script id="site-i18n" type="application/json">{i18n_payload}</script>
     <script src="{site_href(site, '/assets/' + hashed('blog.js'))}" type="module"></script>
