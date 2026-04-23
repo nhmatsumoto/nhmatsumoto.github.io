@@ -432,6 +432,15 @@ const activateInlineEdit = (el, form, fieldName, multiline) => {
 
   input.addEventListener("blur", () => commit(false));
 
+  input.addEventListener("input", () => {
+    if (formField) {
+      formField.value = input.value;
+      setDirty(true);
+      // Disparamos o evento de input no formulário para acionar o schedulePreview global
+      formField.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+  });
+
   input.addEventListener("keydown", (e) => {
     if (!multiline && e.key === "Enter") {
       e.preventDefault();
@@ -1011,13 +1020,13 @@ const previewCurrent = async (silent = false) => {
   preview.innerHTML = payload.html;
   rerenderMermaid();
 
-  // Re-aplica marcadores de edição inline se estiver no modo edit
   if (state.editorMode === "edit") {
     applyInlineEditors();
   }
 
   if (!silent) {
     setNotice("Preview atualizado.");
+    setSyncState("saved");
   }
 };
 
@@ -1420,23 +1429,42 @@ const handleImageDrop = async (event, textarea) => {
 
 // ─── Preview agendado ─────────────────────────────────────────────────────────
 
-const schedulePreview = () => {
-  // Não atualiza preview enquanto uma edição inline está em andamento
-  if (state.inlineEditing) return;
+const setSyncState = (syncState) => {
+  const el = document.querySelector("#sync-status");
+  if (!el) return;
+  
+  const icon = el.querySelector(".sync-icon");
+  const text = el.querySelector(".sync-text");
+  
+  el.dataset.state = syncState;
+  
+  if (syncState === "saving") {
+    icon.textContent = "↻";
+    text.textContent = "Sincronizando…";
+  } else {
+    icon.textContent = "○";
+    text.textContent = "Sincronizado";
+  }
+};
 
+const schedulePreview = () => {
   if (state.activeSection === "site") {
     renderSitePreview();
+    setSyncState("saved");
     return;
   }
 
+  setSyncState("saving");
   window.clearTimeout(state.previewTimer);
   state.previewTimer = window.setTimeout(async () => {
     try {
       await previewCurrent(true);
+      setSyncState("saved");
     } catch (error) {
       console.error(error);
+      setSyncState("saved");
     }
-  }, 350);
+  }, 400);
 };
 
 // ─── Sinais de formulario ─────────────────────────────────────────────────────

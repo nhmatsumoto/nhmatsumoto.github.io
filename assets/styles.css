@@ -109,10 +109,8 @@
 /* ── Global Layout Container ───────────────────────────────────────────── */
 .layout-container {
   max-width: var(--layout-max-width);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--layout-padding-x);
-  padding-right: var(--layout-padding-x);
+  margin-inline: auto;
+  padding-inline: var(--layout-padding-x);
   width: 100%;
 }
 
@@ -233,19 +231,23 @@ button, input, select {
 }
 
 /* Layout & Shell */
-.container {
-  width: min(var(--container-width), 100% - var(--container-gutter) * 2);
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .site-shell {
   width: 100%;
-  padding-top: var(--space-12);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
-  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.site-main {
+  flex: 1;
+  width: 100%;
+  padding-block: var(--space-8) var(--space-20);
+}
+
+.container {
+  display: contents; /* legacy bridge */
 }
 
 /* Page-home gap & spacing now defined in the blueprint layer
@@ -255,10 +257,10 @@ button, input, select {
 
 .navbar {
   position: sticky;
-  top: 0.5rem;
+  top: 0.75rem; /* Respiro superior */
   z-index: 1000;
   pointer-events: none;
-  /* Margin-top removed in favor of top offset and body padding */
+  margin-bottom: var(--space-8);
 }
 
 .navbar > .layout-container {
@@ -3048,11 +3050,17 @@ body::after {
   z-index: 1;
 }
 
-.site-shell {
-  width: min(var(--container-width), 100% - var(--container-gutter) * 2);
-  padding-top: calc(var(--grid-step) * 3.5);
-  padding-bottom: calc(var(--base_grid_unit) * 6);
-  gap: calc(var(--base_grid_unit) * 6);
+.page-header {
+  margin-bottom: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
 }
 
 .page-home .site-shell {
@@ -3060,10 +3068,7 @@ body::after {
   padding-top: calc(var(--grid-step) * 3.5);
 }
 
-.site-main {
-  display: grid;
-  gap: var(--home-section-gap);
-}
+/* Normalized layout rules moved to global shell block */
 
 
 /* Removed duplicate nav-shell block and decentralized layout rules to .layout-container */

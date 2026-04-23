@@ -546,19 +546,23 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
     )
     pagination = render_pagination_controls(site, current_page, total_pages, "/posts/", i18n, locale)
     content = f"""
-    {breadcrumbs}
     <div class="layout-container page-stack page-stack-wide">
-      <section class="page-heading">
-        <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
-        <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "Publicações"))}</h1>
-        <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Escrita técnica organizada por clareza, ritmo e utilidade prática."))}</p>
-      </section>
-      <section class="section-panel">
-        <ol class="entry-list">
-          {"".join(render_post_card(post, i18n, locale) for post in posts)}
-        </ol>
-      </section>
-      {pagination}
+      <header class="page-header">
+        {breadcrumbs}
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
+          <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "Publicações"))}</h1>
+          <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Escrita técnica organizada por clareza, ritmo e utilidade prática."))}</p>
+        </section>
+      </header>
+      <div class="page-content">
+        <section class="section-panel">
+          <ol class="entry-list">
+            {"".join(render_post_card(post, i18n, locale) for post in posts)}
+          </ol>
+        </section>
+        {pagination}
+      </div>
     </div>
     """
     return render_layout(
@@ -586,18 +590,22 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
         locale,
     )
     content = f"""
-    {breadcrumbs}
     <div class="layout-container page-stack page-stack-wide">
-      <section class="page-heading">
-        <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
-        <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>
-        <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."))}</p>
-      </section>
-      <section class="section-panel">
-        <ol class="entry-list">
-          {"".join(render_project_card(project, i18n, locale) for project in projects)}
-        </ol>
-      </section>
+      <header class="page-header">
+        {breadcrumbs}
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
+          <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>
+          <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."))}</p>
+        </section>
+      </header>
+      <div class="page-content">
+        <section class="section-panel">
+          <ol class="entry-list">
+            {"".join(render_project_card(project, i18n, locale) for project in projects)}
+          </ol>
+        </section>
+      </div>
     </div>
     """
     has_math = any(project.get("has_math") for project in projects)
@@ -626,14 +634,18 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
         locale,
     )
     content = f"""
-    {breadcrumbs}
     <div class="layout-container page-stack page-stack-wide">
-      <section class="page-heading">
-        <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
-        <h1 data-i18n="pages.documents.title">{html.escape(translate(i18n, locale, "pages.documents.title", "Documents"))}</h1>
-        <p data-i18n="pages.documents.description">{html.escape(translate(i18n, locale, "pages.documents.description", "Documentação técnica organizada por domínio, arquitetura e integrações."))}</p>
-      </section>
-      {render_documents_section(system, documents, i18n, locale, grouped=True, show_header=False)}
+      <header class="page-header">
+        {breadcrumbs}
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
+          <h1 data-i18n="pages.documents.title">{html.escape(translate(i18n, locale, "pages.documents.title", "Documents"))}</h1>
+          <p data-i18n="pages.documents.description">{html.escape(translate(i18n, locale, "pages.documents.description", "Documentação técnica organizada por domínio, arquitetura e integrações."))}</p>
+        </section>
+      </header>
+      <div class="page-content">
+        {render_documents_section(system, documents, i18n, locale, grouped=True, show_header=False)}
+      </div>
     </div>
     """
     return render_layout(
@@ -721,13 +733,15 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
 
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
-    {breadcrumbs}
     <div class="layout-container page-stack">
-      <section class="page-heading">
-        <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
-        <h1 data-page-title>{html.escape(page_data["title"])}</h1>
-        <p data-page-summary>{html.escape(page_data["summary"])}</p>
-      </section>
+      <header class="page-header">
+        {breadcrumbs}
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
+          <h1 data-page-title>{html.escape(page_data["title"])}</h1>
+          <p data-page-summary>{html.escape(page_data["summary"])}</p>
+        </section>
+      </header>
       <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
         {page_data["body_html"]}
       </article>
@@ -789,13 +803,15 @@ def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict
         locale,
     )
     content = f"""
-    {breadcrumbs}
     <div class="layout-container page-stack">
-      <section class="page-heading">
-        <p class="section-kicker" data-i18n="nav.contact">{html.escape(translate(i18n, locale, "nav.contact", "contact"))}</p>
-        <h1 data-i18n="pages.contact.title">{html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))}</h1>
-        <p data-i18n="pages.contact.description">{html.escape(translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."))}</p>
-      </section>
+      <header class="page-header">
+        {breadcrumbs}
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.contact">{html.escape(translate(i18n, locale, "nav.contact", "contact"))}</p>
+          <h1 data-i18n="pages.contact.title">{html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))}</h1>
+          <p data-i18n="pages.contact.description">{html.escape(translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."))}</p>
+        </section>
+      </header>
       <section class="section-panel">
         <div class="contact-grid">
           {"".join(cards)}
@@ -828,18 +844,22 @@ def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_
         locale,
     )
     content = f"""
-    {breadcrumbs}
     <div class="layout-container page-stack page-stack-wide">
-      <section class="page-heading">
-        <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
-        <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
-        <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."))}</p>
-      </section>
-      <section class="section-panel">
-        <ol class="entry-list">
-          {"".join(render_daily_card(entry, i18n, locale) for entry in daily_entries)}
-        </ol>
-      </section>
+      <header class="page-header">
+        {breadcrumbs}
+        <section class="page-heading">
+          <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
+          <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
+          <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."))}</p>
+        </section>
+      </header>
+      <div class="page-content">
+        <section class="section-panel">
+          <ol class="entry-list">
+            {"".join(render_daily_card(entry, i18n, locale) for entry in daily_entries)}
+          </ol>
+        </section>
+      </div>
     </div>
     """
     return render_layout(
@@ -931,21 +951,25 @@ def render_post_page(
     related_html = render_related_content(related_items or related_posts or [], i18n, locale)
     page_payload = json.dumps(_build_post_localization_payload(post), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
-    {breadcrumbs}
-    <div class="layout-container page-two-column post-reading-layout">
-      {sidebar}
-      <div class="page-main">
-        <article class="post-shell prose notebook-sheet post-reading-article">
-          <header class="post-header post-reading-header">
-            <div class="post-header-meta">
-              <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
-              <div class="post-meta post-meta-hero"><span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(post['published_dt'], locale, 'long')}</span><span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post['reading_time'], i18n, locale)}</span></div>
-            </div>
-            <h1 data-page-title>{html.escape(post['title'])}</h1>
-            <p class="post-summary post-deck" data-page-summary>{html.escape(post['summary'])}</p>
-          </header>
-          <div class="post-body" data-page-body>{render_markdown(post['body'])}</div>{post_body_sections}
-        </article>
+    <div class="layout-container post-reading-layout">
+      <header class="page-header">
+        {breadcrumbs}
+      </header>
+      <div class="page-two-column">
+        {sidebar}
+        <div class="page-main">
+          <article class="post-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
+                <div class="post-meta post-meta-hero"><span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(post['published_dt'], locale, 'long')}</span><span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post['reading_time'], i18n, locale)}</span></div>
+              </div>
+              <h1 data-page-title>{html.escape(post['title'])}</h1>
+              <p class="post-summary post-deck" data-page-summary>{html.escape(post['summary'])}</p>
+            </header>
+            <div class="post-body" data-page-body>{render_markdown(post['body'])}</div>{post_body_sections}
+          </article>
+        </div>
       </div>
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
@@ -1008,30 +1032,34 @@ def render_daily_page(
 
     page_payload = json.dumps(_build_daily_localization_payload(entry), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
-    {breadcrumbs}
-    <div class="layout-container page-two-column">
-      <aside class="page-sidebar">
-        <div class="sidebar-panel notebook-meta-panel">
-          <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
-          {render_tag_list(entry.get("tags", []))}
-          <div class="meta-stack">
-            {f'<p><strong data-i18n="pages.daily.mood">{html.escape(translate(i18n, locale, "pages.daily.mood", "Mood"))}</strong>: {html.escape(entry["mood"])}</p>' if entry.get("mood") else ""}
-            {f'<p><strong data-i18n="pages.daily.soundtrack">{html.escape(translate(i18n, locale, "pages.daily.soundtrack", "Soundtrack"))}</strong>: {html.escape(entry["soundtrack"])}</p>' if entry.get("soundtrack") else ""}
-            {f'<p><strong data-i18n="pages.daily.now_playing">{html.escape(translate(i18n, locale, "pages.daily.now_playing", "Tocando"))}</strong>: {html.escape(entry["now_playing"])}</p>' if entry.get("now_playing") else ""}
+    <div class="layout-container">
+      <header class="page-header">
+        {breadcrumbs}
+      </header>
+      <div class="page-two-column">
+        <aside class="page-sidebar">
+          <div class="sidebar-panel notebook-meta-panel">
+            <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
+            {render_tag_list(entry.get("tags", []))}
+            <div class="meta-stack">
+              {f'<p><strong data-i18n="pages.daily.mood">{html.escape(translate(i18n, locale, "pages.daily.mood", "Mood"))}</strong>: {html.escape(entry["mood"])}</p>' if entry.get("mood") else ""}
+              {f'<p><strong data-i18n="pages.daily.soundtrack">{html.escape(translate(i18n, locale, "pages.daily.soundtrack", "Soundtrack"))}</strong>: {html.escape(entry["soundtrack"])}</p>' if entry.get("soundtrack") else ""}
+              {f'<p><strong data-i18n="pages.daily.now_playing">{html.escape(translate(i18n, locale, "pages.daily.now_playing", "Tocando"))}</strong>: {html.escape(entry["now_playing"])}</p>' if entry.get("now_playing") else ""}
+            </div>
+            <div class="sidebar-actions">{soundtrack_link}</div>
           </div>
-          <div class="sidebar-actions">{soundtrack_link}</div>
+        </aside>
+        <div class="page-main">
+          <article class="post-shell prose notebook-sheet">
+            <header class="post-header">
+              <p class="section-kicker" data-i18n="pages.daily.kicker">{html.escape(translate(i18n, locale, "pages.daily.kicker", "daily"))}</p>
+              <h1 data-page-title>{html.escape(entry['title'])}</h1>
+              <p class="post-summary" data-page-summary>{html.escape(entry['summary'])}</p>
+              <div class="post-meta">{"".join(meta_lines)}</div>
+            </header>
+            <div data-page-body>{render_markdown(entry['body'])}</div>
+          </article>
         </div>
-      </aside>
-      <div class="page-main">
-        <article class="post-shell prose notebook-sheet">
-          <header class="post-header">
-            <p class="section-kicker" data-i18n="pages.daily.kicker">{html.escape(translate(i18n, locale, "pages.daily.kicker", "daily"))}</p>
-            <h1 data-page-title>{html.escape(entry['title'])}</h1>
-            <p class="post-summary" data-page-summary>{html.escape(entry['summary'])}</p>
-            <div class="post-meta">{"".join(meta_lines)}</div>
-          </header>
-          <div data-page-body>{render_markdown(entry['body'])}</div>
-        </article>
       </div>
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
@@ -1100,18 +1128,22 @@ def render_project_page(
     page_payload = json.dumps(page_payload_obj, ensure_ascii=False).replace("<", "\\u003c")
     badges_html = render_badge_list(project.get("badges", []))
     content = f"""
-    {breadcrumbs}
-    <div class="layout-container page-two-column">
-      {sidebar}
-      <div class="page-main">
-        <article class="project-shell prose notebook-sheet">
-          <header class="post-header">
-            <p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p>
-            <h1 data-page-title>{html.escape(project['name'])}</h1>
-            <p class="post-summary" data-page-summary>{html.escape(project['headline'] or project['summary'])}</p>{badges_html}
-          </header>
-          <div data-page-body>{page_payload_obj["body_html"]}</div>
-        </article>
+    <div class="layout-container">
+      <header class="page-header">
+        {breadcrumbs}
+      </header>
+      <div class="page-two-column">
+        {sidebar}
+        <div class="page-main">
+          <article class="project-shell prose notebook-sheet">
+            <header class="post-header">
+              <p class="section-kicker" data-i18n="pages.project.kicker">{html.escape(translate(i18n, locale, "pages.project.kicker", "project"))}</p>
+              <h1 data-page-title>{html.escape(project['name'])}</h1>
+              <p class="post-summary" data-page-summary>{html.escape(project['headline'] or project['summary'])}</p>{badges_html}
+            </header>
+            <div data-page-body>{page_payload_obj["body_html"]}</div>
+          </article>
+        </div>
       </div>
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
@@ -1162,9 +1194,7 @@ def render_document_page(
     metadata_tags = render_tag_list(document.get("tags", []), "tag-list document-page-meta-tags")
     page_payload_obj = _build_document_localization_payload(document)
     page_payload = json.dumps(page_payload_obj, ensure_ascii=False).replace("<", "\\u003c")
-    content = f"""
-    {breadcrumbs}
-    <div class="layout-container page-two-column document-page-layout">
+    aside_meta = f"""
       <aside class="page-sidebar">
         <section class="document-page-meta" aria-label="{metadata_label}">
           <p class="document-page-meta-label" data-i18n="pages.document.meta">{metadata_label}</p>
@@ -1175,15 +1205,24 @@ def render_document_page(
           {metadata_tags}
         </section>
       </aside>
-      <div class="page-main">
-        <article class="document-shell prose notebook-sheet">
-          <header class="post-header">
-            <p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p>
-            <h1 data-page-title>{html.escape(document['title'])}</h1>
-            <p class="post-summary" data-page-summary>{html.escape(document['summary'])}</p>
-          </header>
-          <div data-page-body>{page_payload_obj["body_html"]}</div>
-        </article>
+    """
+    content = f"""
+    <div class="layout-container">
+      <header class="page-header">
+        {breadcrumbs}
+      </header>
+      <div class="page-two-column document-page-layout">
+        {aside_meta}
+        <div class="page-main">
+          <article class="document-shell prose notebook-sheet">
+            <header class="post-header">
+              <p class="section-kicker" data-i18n="pages.document.kicker">{html.escape(translate(i18n, locale, "pages.document.kicker", "document"))}</p>
+              <h1 data-page-title>{html.escape(document['title'])}</h1>
+              <p class="post-summary" data-page-summary>{html.escape(document['summary'])}</p>
+            </header>
+            <div data-page-body>{page_payload_obj["body_html"]}</div>
+          </article>
+        </div>
       </div>
     </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
