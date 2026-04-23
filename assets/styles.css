@@ -398,14 +398,13 @@ button, input, select {
   gap: var(--space-1);
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border);
-  background: var(--surface-soft);
+  border-radius: 0;
+  border: 1px solid transparent;
+  background: transparent;
   color: var(--muted);
   cursor: pointer;
   transition: all var(--transition-base-speed) var(--ease-out);
   position: relative;
-  overflow: hidden;
 }
 
 .nav-btn-icon svg {
@@ -414,8 +413,8 @@ button, input, select {
 }
 
 .nav-btn-icon:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
 }
 
 
@@ -452,8 +451,6 @@ button, input, select {
 }
 
 .nav-btn-locale:hover {
-  background: hsla(var(--accent-secondary-h), var(--accent-secondary-s), var(--accent-secondary-l), 0.15);
-  border-color: var(--accent-secondary);
   color: var(--accent-secondary);
 }
 
@@ -467,8 +464,6 @@ button, input, select {
 }
 
 .nav-btn-theme:hover {
-  background: hsla(45, 100%, 50%, 0.15);
-  border-color: hsl(45, 100%, 50%);
   color: hsl(45, 100%, 50%);
 }
 
@@ -596,17 +591,18 @@ body[data-nav-open="true"] .drawer-content {
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-4);
-  background: var(--surface-soft);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  color: var(--text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  color: var(--muted);
   font-weight: 600;
   cursor: pointer;
   width: 100%;
 }
 
 .drawer-action-btn:hover {
-  background: var(--surface-strong);
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
 }
 
 .drawer-action-btn .active-locale {
@@ -2849,10 +2845,11 @@ tbody tr:hover td {
   --container-width: 84rem;
   --container-gutter: clamp(1rem, 3vw, 2rem);
   --reading-width: 44rem;
-  --radius-sm: 0.35rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1.25rem;
-  --radius-xl: 1.75rem;
+  --radius-sm: 0;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-full: 0;
   --shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.18);
   --shadow-md: 0 22px 52px rgba(0, 0, 0, 0.22);
 
@@ -3001,15 +2998,15 @@ body::after {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 0.5rem 0.85rem;
+  padding: 0.5rem 0.25rem;
+  margin: 0 var(--space-3);
   color: var(--muted);
   font-size: var(--type-label);
   font-weight: 500;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid transparent;
-  border-radius: var(--radius-full);
+  border-bottom: 2px solid transparent;
   transition: var(--transition-base);
   white-space: nowrap;
 }
@@ -3017,22 +3014,19 @@ body::after {
 .nav-link-icon {
   width: 1rem;
   height: 1rem;
-  color: var(--accent);
+  color: inherit;
   opacity: 0.8;
   transition: var(--transition-base);
 }
 
 .nav-link:hover {
   color: var(--text);
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  transform: translateY(-1px);
+  border-bottom-color: var(--accent);
 }
 
 .nav-link.is-active {
   color: var(--accent);
-  background: var(--accent-soft);
-  border-color: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.3);
+  border-bottom-color: var(--accent);
   font-weight: 600;
 }
 
@@ -3042,41 +3036,27 @@ body::after {
 }
 
 /* Standardized nav actions and localized buttons */
-.nav-btn-icon {
-  border: 1px solid var(--border);
-  background: var(--surface-soft);
-  color: var(--text);
-  padding: var(--space-2);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  transition: var(--transition-base);
-  cursor: pointer;
+.nav-btn-locale, .nav-btn-theme, .nav-btn-menu {
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
 }
 
-.nav-btn-icon:hover {
-  background: var(--surface-strong);
-  border-color: var(--accent);
+.nav-btn-locale:hover, .nav-btn-theme:hover, .nav-btn-menu:hover {
+  color: var(--text);
 }
 
 /* Locale button — identity color by active language */
 body[data-locale="pt-BR"] .nav-btn-locale {
-  background: hsla(134, 52%, 36%, 0.16);
-  border-color: hsla(134, 52%, 36%, 0.45);
   color: hsl(134, 48%, 50%);
 }
 
 body[data-locale="en-US"] .nav-btn-locale {
-  background: hsla(220, 68%, 50%, 0.15);
-  border-color: hsla(220, 68%, 50%, 0.42);
   color: hsl(220, 65%, 62%);
 }
 
 body[data-locale="ja-JP"] .nav-btn-locale {
-  background: hsla(348, 72%, 48%, 0.15);
-  border-color: hsla(348, 72%, 48%, 0.42);
   color: hsl(348, 68%, 62%);
 }
 
