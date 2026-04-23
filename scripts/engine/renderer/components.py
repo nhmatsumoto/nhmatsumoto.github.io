@@ -19,6 +19,31 @@ from ..i18n import (
     locale_suffixes,
 )
 
+import subprocess
+from functools import lru_cache
+
+@lru_cache(maxsize=512)
+def _highlight_code(code: str, lang: str) -> str:
+    from ..constants import ROOT
+    script_path = ROOT / "scripts" / "engine" / "renderer" / "highlight" / "index.js"
+    node_path = ROOT / "scripts" / "engine" / "renderer" / "highlight"
+    
+    try:
+        # Preparamos o JSON para o stdin
+        payload = json.dumps({"code": code, "lang": lang, "theme": "github-dark"})
+        
+        result = subprocess.run(
+            ["node", "index.js"],
+            input=payload.encode("utf-8"),
+            capture_output=True,
+            cwd=str(node_path),
+            check=True
+        )
+        return result.stdout.decode("utf-8").strip()
+    except Exception as e:
+        # Fallback para o rendering atual seguro em caso de falha no Node/Shiki
+        return f'<pre><code>{html.escape(code)}</code></pre>'
+
 def render_markdown(text: str) -> str:
     import re
     from ..constants import WIKILINK_RE, LINK_RE, STRONG_RE, EMPHASIS_RE, INLINE_CODE_RE
@@ -89,11 +114,24 @@ def render_markdown(text: str) -> str:
             if language == "mermaid":
                 parts.append(f'<div class="mermaid">{html.escape(content)}</div>')
             else:
+                highlighted_html = _highlight_code(content, language)
+                
+                # Extraímos o nome amigável da linguagem para o label
+                lang_label = (language or "text").upper()
+                if lang_label == "TS": lang_label = "TypeScript"
+                if lang_label == "JS": lang_label = "JavaScript"
+                if lang_label == "CS": lang_label = "C#"
+                if lang_label == "PY": lang_label = "Python"
+                
                 parts.append(
-                    f'<div class="code-shell" data-language="{html.escape(language)}">'
-                    f'  <div class="code-shell-header"><span class="code-shell-label">{html.escape(language or "text")}</span>'
-                    f'  <button class="code-shell-copy" aria-label="Copy"><i data-lucide="copy"></i></button></div>'
-                    f'  <pre><code>{html.escape(content)}</code></pre></div>'
+                    f'<div class="code-shell" data-language="{html.escape(language or "text")}">'
+                    f'  <div class="code-shell-header">'
+                    f'    <div class="code-shell-controls"><span class="control-dot close"></span><span class="control-dot minimize"></span><span class="control-dot maximize"></span></div>'
+                    f'    <div class="code-shell-title"><span class="code-shell-label">{html.escape(lang_label)}</span></div>'
+                    f'    <button class="code-shell-copy" aria-label="Copy code"><i data-lucide="copy" class="copy-icon"></i><span class="copy-feedback" data-i18n="actions.copied">Copiado!</span></button>'
+                    f'  </div>'
+                    f'  <div class="code-shell-content">{highlighted_html}</div>'
+                    f'</div>'
                 )
             continue
 

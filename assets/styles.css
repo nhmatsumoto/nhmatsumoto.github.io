@@ -5562,3 +5562,203 @@ body[data-locale="ja-JP"] .nav-btn-locale {
     font-size: 1.2rem;
   }
 }
+
+/* ── Premium Code Blocks (Linux Desktop Window Aesthetics) ──────────────── */
+.code-shell {
+  margin: var(--space-8) 0;
+  background: #0d0d0d; /* Fundo base Shiki costuma ser escuro */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.2),
+    0 20px 40px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.code-shell:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.code-shell-header {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), transparent);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  user-select: none;
+  gap: 1rem;
+}
+
+.code-shell-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.control-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.control-dot.close { background: #ff5f56; opacity: 0.8; }
+.control-dot.minimize { background: #ffbd2e; opacity: 0.8; }
+.control-dot.maximize { background: #27c93f; opacity: 0.8; }
+
+.code-shell-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+}
+
+.code-shell-label {
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.code-shell-copy {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.code-shell-copy:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.code-shell-copy:active {
+  transform: scale(0.95);
+}
+
+.copy-feedback {
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.is-copied .copy-icon {
+  display: none;
+}
+
+.is-copied .code-shell-copy {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.code-shell-content {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shiki Overrides */
+.code-shell-content pre.shiki {
+  margin: 0 !important;
+  padding: 1.25rem 1.5rem !important;
+  background: transparent !important;
+  overflow-x: auto;
+  font-family: "IBM Plex Mono", var(--font-code), monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+.code-shell-content pre.shiki code {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: inherit !important;
+}
+
+/* Scrollbar styling for code blocks */
+.code-shell-content pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.code-shell-content pre::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.code-shell-content pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.code-shell-content pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Subtitle for filename (optional support) */
+.code-shell-subtitle {
+  margin-left: 8px;
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+
+/* ── Line Numbers for Code Blocks ────────────────────────────────────────── */
+.code-shell-content pre.shiki {
+  counter-reset: line;
+}
+
+.code-shell-content pre.shiki .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1.5rem;
+  margin-right: 1.25rem;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.2);
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.code-shell-content pre.shiki .line {
+  display: block;
+  min-height: 1.5rem;
+}
+
+/* ── Final Polish for Code Blocks ───────────────────────────────────────── */
+.code-shell-header {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.code-shell-copy:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+/* Subtle pulse for the copy feedback */
+@keyframes feedback-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.is-copied .copy-feedback {
+  animation: feedback-pulse 0.5s ease-in-out infinite;
+}

@@ -487,15 +487,29 @@ const initCommandPalette = (loc) => {
 const initCodeBlocks = (loc) => {
   document.querySelectorAll(".code-shell").forEach(shell => {
     const btn = shell.querySelector(".code-shell-copy");
-    const code = shell.querySelector("code");
-    if (!btn || !code) return;
+    const pre = shell.querySelector("pre");
+    if (!btn || !pre) return;
 
     btn.addEventListener("click", async () => {
-      await navigator.clipboard.writeText(code.textContent);
-      const original = btn.innerHTML;
-      const doneLabel = loc?.translate("actions.done", "Done") || "Done";
-      btn.innerHTML = `<span style="color:var(--accent)">${doneLabel}</span>`;
-      setTimeout(() => btn.innerHTML = original, 2000);
+      const code = pre.textContent;
+      try {
+        await navigator.clipboard.writeText(code);
+        
+        shell.classList.add("is-copied");
+        const feedback = btn.querySelector(".copy-feedback");
+        if (feedback) {
+          const originalText = feedback.textContent;
+          feedback.textContent = loc?.translate("actions.copied", "Copiado!") || "Copiado!";
+          setTimeout(() => {
+            shell.classList.remove("is-copied");
+            feedback.textContent = originalText;
+          }, 2000);
+        } else {
+           setTimeout(() => shell.classList.remove("is-copied"), 2000);
+        }
+      } catch (err) {
+        console.error("Failed to copy:", err);
+      }
     });
   });
 };
