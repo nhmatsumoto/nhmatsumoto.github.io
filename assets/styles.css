@@ -3538,40 +3538,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   transform: translateX(3px);
 }
 
-.home-contact-section {
-  border-top: 1px dashed var(--surface-dashed-border-soft);
-}
-
-.home-contact-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--base_grid_unit) * 5);
-  margin-top: calc(var(--base_grid_unit) * 3);
-  align-items: center;
-}
-
-.home-contact-link {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(var(--base_grid_unit) * 1.5);
-  color: var(--muted);
-  font-family: var(--font-code);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.home-contact-link:hover { color: var(--accent); }
-
-.home-contact-icon {
-  width: 1.1rem;
-  height: 1.1rem;
-  flex-shrink: 0;
-}
-
 .page-two-column {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
