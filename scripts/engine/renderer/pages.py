@@ -696,7 +696,7 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    {_render_profile_header(site, system, i18n, locale, include_snapshot=True)}
+    {_render_profile_header(site, system, i18n, locale)}
     <div class="page-two-column">
       <aside class="page-sidebar">
         <section class="page-heading">
