@@ -473,7 +473,7 @@ def render_home_page(
 
     content = f"""
     <div class="page-two-column">
-      <aside class="page-sidebar">
+      <aside class="page-sidebar profile-sidebar">
         {_render_home_profile(site, system, i18n, locale)}
       </aside>
       <div class="page-main">
@@ -549,7 +549,7 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
     content = f"""
     {breadcrumbs}
     <div class="page-two-column">
-      <aside class="page-sidebar">
+      <aside class="page-sidebar profile-sidebar">
         {_render_profile_header(site, system, i18n, locale)}
       </aside>
       <div class="page-main">
@@ -594,7 +594,7 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     content = f"""
     {breadcrumbs}
     <div class="page-two-column">
-      <aside class="page-sidebar">
+      <aside class="page-sidebar profile-sidebar">
         {_render_profile_header(site, system, i18n, locale)}
       </aside>
       <div class="page-main">
@@ -639,7 +639,7 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
     content = f"""
     {breadcrumbs}
     <div class="page-two-column">
-      <aside class="page-sidebar">
+      <aside class="page-sidebar profile-sidebar">
         {_render_profile_header(site, system, i18n, locale)}
       </aside>
       <div class="page-main">
@@ -739,7 +739,7 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     content = f"""
     {breadcrumbs}
     <div class="page-two-column">
-      <aside class="page-sidebar">
+      <aside class="page-sidebar profile-sidebar">
         {_render_profile_header(site, system, i18n, locale)}
       </aside>
       <div class="page-main">
@@ -807,7 +807,7 @@ def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict
     content = f"""
     {breadcrumbs}
     <div class="page-two-column">
-      <aside class="page-sidebar">
+      <aside class="page-sidebar profile-sidebar">
         {_render_profile_header(site, system, i18n, locale)}
       </aside>
       <div class="page-main">
@@ -851,7 +851,7 @@ def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_
     content = f"""
     {breadcrumbs}
     <div class="page-two-column">
-      <aside class="page-sidebar">
+      <aside class="page-sidebar profile-sidebar">
         {_render_profile_header(site, system, i18n, locale)}
       </aside>
       <div class="page-main">

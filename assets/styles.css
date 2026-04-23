@@ -3595,6 +3595,11 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   display: none;
 }
 
+.profile-sidebar {
+  max-height: none;
+  overflow-y: visible;
+}
+
 .profile-shell {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
