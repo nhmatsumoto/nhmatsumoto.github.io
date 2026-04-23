@@ -97,6 +97,10 @@
   --radius-full: 9999px;
   --radius: var(--radius-md);
 
+  /* Navbar & Sidebar Offsets */
+  --navbar-safe-height: 5.5rem;
+  --sidebar-top: var(--navbar-safe-height);
+
   /* Shadows — dark mode: strong depth */
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.5), 0 12px 28px rgba(0,0,0,0.35);
@@ -3550,10 +3554,11 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 .page-sidebar {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--base_grid_unit) * 4);
+  gap: var(--space-4);
   position: sticky;
-  top: calc(var(--base_grid_unit) * 12);
-  max-height: calc(100vh - var(--base_grid_unit) * 14);
+  top: var(--sidebar-top);
+  height: fit-content;
+  max-height: calc(100vh - var(--sidebar-top) - var(--space-8));
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -3563,8 +3568,9 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 }
 
 .profile-sidebar {
-  max-height: none;
-  overflow-y: visible;
+  /* Override parent constraints if necessary for short profile content, 
+     but keep scrolling available just in case of screen height reduction */
+  align-self: start;
 }
 
 .profile-shell {
