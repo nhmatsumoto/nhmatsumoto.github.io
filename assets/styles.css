@@ -3861,10 +3861,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   border-left-color: var(--surface-dashed-border-soft);
 }
 
-.profile-shell + .page-about-main {
-  margin-top: calc(var(--base_grid_unit) * 5);
-}
-
 .page-about .notebook-subsection {
   max-width: 44rem;
 }
@@ -5082,8 +5078,7 @@ body[data-locale="ja-JP"] .nav-btn-locale {
     padding-bottom: calc(var(--base_grid_unit) * 4);
   }
 
-  .profile-shell + .page-two-column,
-  .profile-shell + .page-about-main {
+  .profile-shell + .page-two-column {
     margin-top: calc(var(--base_grid_unit) * 4);
   }
 

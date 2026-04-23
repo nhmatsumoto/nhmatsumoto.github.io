@@ -738,12 +738,16 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    {_render_profile_header(site, system, i18n, locale)}
-    <section class="page-main page-about-main">
-      <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
-        {page_data["body_html"]}
-      </article>
-    </section>
+    <div class="page-two-column">
+      <aside class="page-sidebar">
+        {_render_profile_header(site, system, i18n, locale)}
+      </aside>
+      <div class="page-main">
+        <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
+          {page_data["body_html"]}
+        </article>
+      </div>
+    </div>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     return render_layout(
@@ -848,13 +852,14 @@ def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_
     {breadcrumbs}
     <div class="page-two-column">
       <aside class="page-sidebar">
+        {_render_profile_header(site, system, i18n, locale)}
+      </aside>
+      <div class="page-main">
         <section class="page-heading">
           <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
           <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
           <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."))}</p>
         </section>
-      </aside>
-      <div class="page-main">
         <section class="section-panel">
           <ol class="entry-list">
             {"".join(render_daily_card(entry, i18n, locale) for entry in daily_entries)}
