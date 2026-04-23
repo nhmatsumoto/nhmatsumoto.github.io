@@ -749,14 +749,16 @@ def render_related_content(items: list[dict[str, Any]], i18n: dict[str, Any], lo
     cards = "\n".join(render_entry_card(item, i18n, locale) for item in items)
     return f"""
     <section class="section-panel related-content-panel">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="sections.navigation_kicker">{html.escape(translate(i18n, locale, "sections.navigation_kicker", "navegacao"))}</p>
-          <h2 data-i18n="sections.related_content">{html.escape(title)}</h2>
-        </div>
-        <p class="section-copy" data-i18n="sections.related_content_copy">{html.escape(copy)}</p>
-      </header>
-      <ol class="entry-list">{cards}</ol>
+      <div class="layout-container">
+        <header class="section-header">
+          <div>
+            <p class="section-kicker" data-i18n="sections.navigation_kicker">{html.escape(translate(i18n, locale, "sections.navigation_kicker", "navegacao"))}</p>
+            <h2 data-i18n="sections.related_content">{html.escape(title)}</h2>
+          </div>
+          <p class="section-copy" data-i18n="sections.related_content_copy">{html.escape(copy)}</p>
+        </header>
+        <ol class="entry-list">{cards}</ol>
+      </div>
     </section>
     """
 

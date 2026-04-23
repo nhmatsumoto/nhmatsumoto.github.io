@@ -3130,7 +3130,7 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 
 .section-panel,
 .site-footer {
-  padding: calc(var(--base_grid_unit) * 6) calc(var(--base_grid_unit) * 5);
+  padding-block: calc(var(--base_grid_unit) * 6);
 }
 
 .page-home .section-panel {
@@ -3202,7 +3202,7 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 .page-grid.notebook-two-column {
   display: grid;
   width: 100%;
-  max-width: min(78rem, calc(100vw - var(--container-gutter) * 2));
+  max-width: var(--layout-max-width);
   margin-inline: auto;
   grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 0.9fr);
   gap: calc(var(--base_grid_unit) * 5);
@@ -4979,7 +4979,7 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   }
 
   .site-footer {
-    padding: calc(var(--base_grid_unit) * 3) calc(var(--base_grid_unit) * 3) calc(var(--base_grid_unit) * 5);
+    padding-block: calc(var(--base_grid_unit) * 3.5) calc(var(--base_grid_unit) * 5);
   }
 
   .navigation-grid-links {
