@@ -506,16 +506,16 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
     pagination = render_pagination_controls(site, current_page, total_pages, "/posts/", i18n, locale)
     content = f"""
     {breadcrumbs}
-    {_render_profile_header(site, system, i18n, locale)}
     <div class="page-two-column">
       <aside class="page-sidebar">
+        {_render_profile_header(site, system, i18n, locale)}
+      </aside>
+      <div class="page-main">
         <section class="page-heading">
           <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
           <h1 data-i18n="pages.archive.title">{html.escape(translate(i18n, locale, "pages.archive.title", "Publicações"))}</h1>
           <p data-i18n="pages.archive.description">{html.escape(translate(i18n, locale, "pages.archive.description", "Escrita técnica organizada por clareza, ritmo e utilidade prática."))}</p>
         </section>
-      </aside>
-      <div class="page-main">
         <section class="section-panel">
           <ol class="entry-list">
             {"".join(render_post_card(post, i18n, locale) for post in posts)}
@@ -551,16 +551,16 @@ def render_projects_index_page(site: dict[str, str], system: dict[str, Any], pos
     )
     content = f"""
     {breadcrumbs}
-    {_render_profile_header(site, system, i18n, locale)}
     <div class="page-two-column">
       <aside class="page-sidebar">
+        {_render_profile_header(site, system, i18n, locale)}
+      </aside>
+      <div class="page-main">
         <section class="page-heading">
           <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
           <h1 data-i18n="pages.projects.title">{html.escape(translate(i18n, locale, "pages.projects.title", "Projetos"))}</h1>
           <p data-i18n="pages.projects.description">{html.escape(translate(i18n, locale, "pages.projects.description", "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."))}</p>
         </section>
-      </aside>
-      <div class="page-main">
         <section class="section-panel">
           <ol class="entry-list">
             {"".join(render_project_card(project, i18n, locale) for project in projects)}
@@ -596,16 +596,16 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
     )
     content = f"""
     {breadcrumbs}
-    {_render_profile_header(site, system, i18n, locale)}
     <div class="page-two-column">
       <aside class="page-sidebar">
+        {_render_profile_header(site, system, i18n, locale)}
+      </aside>
+      <div class="page-main">
         <section class="page-heading">
           <p class="section-kicker" data-i18n="nav.documents">{html.escape(translate(i18n, locale, "nav.documents", "documents"))}</p>
           <h1 data-i18n="pages.documents.title">{html.escape(translate(i18n, locale, "pages.documents.title", "Documents"))}</h1>
           <p data-i18n="pages.documents.description">{html.escape(translate(i18n, locale, "pages.documents.description", "Documentação técnica organizada por domínio, arquitetura e integrações."))}</p>
         </section>
-      </aside>
-      <div class="page-main">
         {render_documents_section(system, documents, i18n, locale, grouped=True)}
       </div>
     </div>
@@ -769,16 +769,16 @@ def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict
     )
     content = f"""
     {breadcrumbs}
-    {_render_profile_header(site, system, i18n, locale)}
     <div class="page-two-column">
       <aside class="page-sidebar">
+        {_render_profile_header(site, system, i18n, locale)}
+      </aside>
+      <div class="page-main">
         <section class="page-heading">
           <p class="section-kicker" data-i18n="nav.contact">{html.escape(translate(i18n, locale, "nav.contact", "contact"))}</p>
           <h1 data-i18n="pages.contact.title">{html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))}</h1>
           <p data-i18n="pages.contact.description">{html.escape(translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."))}</p>
         </section>
-      </aside>
-      <div class="page-main">
         <section class="section-panel">
           <div class="contact-grid">
             {"".join(cards)}

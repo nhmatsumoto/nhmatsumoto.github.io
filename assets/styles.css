@@ -3655,6 +3655,42 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   margin: 0;
 }
 
+.page-sidebar .profile-shell {
+  display: block;
+  padding: 0;
+  border-bottom: 0;
+}
+
+.page-sidebar .profile-shell-compact .profile-shell-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--base_grid_unit) * 3);
+  text-align: center;
+}
+
+.page-sidebar .profile-shell .about-profile-avatar {
+  width: clamp(7rem, 14vw, 9.5rem);
+}
+
+.page-sidebar .profile-shell .about-profile-main {
+  max-width: none;
+  justify-items: center;
+}
+
+.page-sidebar .profile-shell-name {
+  font-size: clamp(1.4rem, 1.2rem + 0.8vw, 2rem);
+}
+
+.page-sidebar .profile-shell .about-profile-bio {
+  max-width: none;
+  font-size: clamp(1rem, 0.98rem + 0.18vw, 1.12rem);
+}
+
+.page-sidebar .profile-shell .about-profile-chips {
+  justify-content: center;
+}
+
 .page-sidebar .notebook-meta-panel {
   position: static;
   max-height: none;
@@ -3737,6 +3773,12 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 
 .page-main {
   min-width: 0;
+}
+
+.page-two-column > .page-main {
+  display: grid;
+  gap: calc(var(--base_grid_unit) * 4);
+  align-content: start;
 }
 
 .page-home .page-main {
