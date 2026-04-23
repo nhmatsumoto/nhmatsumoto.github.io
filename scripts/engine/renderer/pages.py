@@ -697,20 +697,11 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     content = f"""
     {breadcrumbs}
     {_render_profile_header(site, system, i18n, locale)}
-    <div class="page-two-column">
-      <aside class="page-sidebar">
-        <section class="page-heading">
-          <p class="section-kicker" data-i18n="nav.about">{html.escape(translate(i18n, locale, "nav.about", "about"))}</p>
-          <h1 data-i18n="pages.about.title" data-page-title>{html.escape(page_data["title"])}</h1>
-          <p data-page-summary>{html.escape(about_lede)}</p>
-        </section>
-      </aside>
-      <section class="page-main">
-        <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
-          {page_data["body_html"]}
-        </article>
-      </section>
-    </div>
+    <section class="page-main page-about-main">
+      <article class="post-shell prose notebook-sheet about-narrative" data-page-body>
+        {page_data["body_html"]}
+      </article>
+    </section>
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     return render_layout(
