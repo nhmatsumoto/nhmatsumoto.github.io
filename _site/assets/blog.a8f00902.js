@@ -424,6 +424,32 @@ console.error("Failed to copy:", err);
 });
 });
 };
+const initNavDrawer = () => {
+const toggles = document.querySelectorAll("[data-nav-toggle]");
+const drawer = document.getElementById("mobile-drawer");
+if (!toggles.length || !drawer) return;
+const setOpen = (open) => {
+document.body.dataset.navOpen = String(open);
+drawer.setAttribute("aria-hidden", String(!open));
+document.querySelectorAll(".menu-icon-open").forEach(el => el.classList.toggle("hidden", open));
+document.querySelectorAll(".menu-icon-close").forEach(el => el.classList.toggle("hidden", !open));
+};
+toggles.forEach(t => t.addEventListener("click", () => {
+const isOpen = document.body.dataset.navOpen === "true";
+setOpen(!isOpen);
+}));
+document.addEventListener("keydown", (e) => {
+if (e.key === "Escape" && document.body.dataset.navOpen === "true") setOpen(false);
+});
+drawer.querySelectorAll(".nav-link").forEach(link => {
+link.addEventListener("click", () => setOpen(false));
+});
+window.addEventListener("resize", () => {
+if (window.innerWidth > 1024 && document.body.dataset.navOpen === "true") {
+setOpen(false);
+}
+});
+};
 const initInteractiveGlow = () => {
 const updateCoords = (e) => {
 const card = e.currentTarget;
@@ -462,6 +488,7 @@ initLocaleToggle(loc);
 initCommandPalette(loc);
 initCodeBlocks(loc);
 initInteractiveGlow();
+initNavDrawer();
 document.body.removeAttribute('data-sidebar-open');
 if (typeof lucide !== 'undefined') lucide.createIcons();
 });

@@ -139,26 +139,61 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         )
 
     primary_links = "".join(render_nav_link(key, i18n_key, url) for key, i18n_key, url in nav_items)
+    menu_aria = translate(i18n, locale, "nav.menu", "Menu")
+
     return f"""
     <nav class="nav-shell" data-nav-shell>
       <div class="nav-brand">
         <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
       </div>
-      <div class="nav-primary-links">{primary_links}</div>
+      
+      <div class="nav-primary-links desktop-only">{primary_links}</div>
+      
       <div class="nav-actions">
         <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_aria)}" data-i18n-aria-label="accessibility.command_palette">
           <i data-lucide="search"></i>
           <span class="nav-btn-label" data-i18n="nav.search">{html.escape(search_label)}</span>
           <span class="nav-btn-shortcut" aria-hidden="true">Ctrl/⌘ K</span>
         </button>
-        <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
-          <i data-lucide="languages"></i>
-          <span class="locale-label" data-locale-label>{html.escape(locale.upper())}</span>
-          {f'<span class="locale-available" aria-hidden="true">{html.escape(locale_codes)}</span>' if locale_codes else ""}
+        
+        <div class="nav-group desktop-only">
+          <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
+            <i data-lucide="languages"></i>
+            <span class="locale-label" data-locale-label>{html.escape(locale.upper())}</span>
+            {f'<span class="locale-available" aria-hidden="true">{html.escape(locale_codes)}</span>' if locale_codes else ""}
+          </button>
+          
+          <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="{html.escape(translate(i18n, locale, "nav.theme", "Toggle theme"))}" data-i18n-aria-label="nav.theme">
+            <i data-lucide="moon" class="theme-icon-moon"></i>
+            <i data-lucide="sun" class="theme-icon-sun hidden"></i>
+          </button>
+        </div>
+
+        <button class="nav-btn-icon nav-btn-menu mobile-only" type="button" data-nav-toggle aria-label="{html.escape(menu_aria)}" data-i18n-aria-label="nav.menu">
+          <i data-lucide="menu" class="menu-icon-open"></i>
+          <i data-lucide="x" class="menu-icon-close hidden"></i>
         </button>
-        <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="{html.escape(translate(i18n, locale, "nav.theme", "Toggle theme"))}" data-i18n-aria-label="nav.theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
       </div>
     </nav>
+
+    <div class="nav-drawer" id="mobile-drawer" aria-hidden="true">
+      <div class="drawer-backdrop" data-nav-toggle></div>
+      <div class="drawer-content">
+        <div class="drawer-links">{primary_links}</div>
+        <div class="drawer-actions">
+          <button class="drawer-action-btn" type="button" data-locale-toggle>
+            <i data-lucide="languages"></i>
+            <span data-i18n="nav.language">{html.escape(translate(i18n, locale, "nav.language", "Language"))}</span>
+            <span class="active-locale">{html.escape(locale.upper())}</span>
+          </button>
+          <button class="drawer-action-btn" type="button" data-theme-toggle>
+            <i data-lucide="moon" class="theme-icon-moon"></i>
+            <i data-lucide="sun" class="theme-icon-sun hidden"></i>
+            <span data-i18n="nav.theme">{html.escape(translate(i18n, locale, "nav.theme", "Toggle theme"))}</span>
+          </button>
+        </div>
+      </div>
+    </div>
     """
 
 def render_footer(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:

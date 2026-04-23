@@ -514,7 +514,46 @@ const initCodeBlocks = (loc) => {
   });
 };
 
+
+const initNavDrawer = () => {
+  const toggles = document.querySelectorAll("[data-nav-toggle]");
+  const drawer = document.getElementById("mobile-drawer");
+  if (!toggles.length || !drawer) return;
+
+  const setOpen = (open) => {
+    document.body.dataset.navOpen = String(open);
+    drawer.setAttribute("aria-hidden", String(!open));
+    
+    // Sync icons
+    document.querySelectorAll(".menu-icon-open").forEach(el => el.classList.toggle("hidden", open));
+    document.querySelectorAll(".menu-icon-close").forEach(el => el.classList.toggle("hidden", !open));
+  };
+
+  toggles.forEach(t => t.addEventListener("click", () => {
+    const isOpen = document.body.dataset.navOpen === "true";
+    setOpen(!isOpen);
+  }));
+
+  // Close on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && document.body.dataset.navOpen === "true") setOpen(false);
+  });
+
+  // Close on link click (drawer links)
+  drawer.querySelectorAll(".nav-link").forEach(link => {
+    link.addEventListener("click", () => setOpen(false));
+  });
+
+  // Close on resize if > 1024px
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1024 && document.body.dataset.navOpen === "true") {
+      setOpen(false);
+    }
+  });
+};
+
 const initInteractiveGlow = () => {
+
   const updateCoords = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -556,9 +595,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initCommandPalette(loc);
   initCodeBlocks(loc);
   initInteractiveGlow();
+  initNavDrawer();
   
   // Cleanup old sidebar if exists
   document.body.removeAttribute('data-sidebar-open');
   
   if (typeof lucide !== 'undefined') lucide.createIcons();
+
 });
