@@ -312,7 +312,7 @@ def _build_profile_localization_payload(system: dict[str, Any], i18n: dict[str, 
     about = system.get("about", {})
     payload: dict[str, Any] = {
         "profile_name": "Hiro Matsumoto",
-        "profile_handle": "@nhmatsumoto · Brasil / Japão",
+        "profile_handle": translate(i18n, locale, "profile.handle", "@nhmatsumoto · Brasil / Japão"),
         "profile_summary": str(localized_value(about, "lede", locale, i18n, fallback_summary) or "").strip(),
         "snapshot_summary": str(localized_value(about, "snapshot_summary", locale, i18n, "") or "").strip(),
     }
@@ -331,6 +331,7 @@ def _build_profile_localization_payload(system: dict[str, Any], i18n: dict[str, 
         if not suffixes:
             continue
         suffix = suffixes[0]
+        payload[f"profile_handle_{suffix}"] = translate(i18n, supported_locale, "profile.handle", payload["profile_handle"])
         payload[f"profile_summary_{suffix}"] = str(localized_value(about, "lede", supported_locale, i18n, payload["profile_summary"]) or "").strip()
         payload[f"snapshot_summary_{suffix}"] = str(localized_value(about, "snapshot_summary", supported_locale, i18n, payload["snapshot_summary"]) or "").strip()
         for item in about.get("snapshot_items", []):
@@ -360,10 +361,10 @@ def _render_profile_header(site: dict[str, str], system: dict[str, Any], i18n: d
     <section class="{shell_class}" aria-labelledby="profile-shell-name">
       <div class="about-profile-card profile-shell-card">
         <div class="about-profile-avatar">
-          <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Avatar de Hiro Matsumoto" width="400" height="300" loading="eager">
+          <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="{html.escape(translate(i18n, locale, "profile.alt", "Hiro Matsumoto"))}" width="400" height="300" loading="eager">
         </div>
         <div class="about-profile-main">
-          <p class="about-profile-handle" data-profile-field="profile_handle">@nhmatsumoto · Brasil / Japão</p>
+          <p class="about-profile-handle" data-profile-field="profile_handle">{html.escape(translate(i18n, locale, "profile.handle", "@nhmatsumoto · Brasil / Japão"))}</p>
           <h2 id="profile-shell-name" class="profile-shell-name" data-profile-field="profile_name">Hiro Matsumoto</h2>
           <p class="about-profile-bio" data-profile-field="profile_summary">{html.escape(lede)}</p>
           {_render_profile_contact_block(site, system, i18n, locale, title_id="profile-shell-contact-title")}
@@ -380,14 +381,16 @@ def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dic
     about = system.get("about", {})
     lede = str(localized_value(about, "lede", locale, i18n, site.get("headline", "")) or "").strip()
     view_label = html.escape(translate(i18n, locale, "actions.view_about", "Ver perfil completo"))
+    payload = _build_profile_localization_payload(system, i18n, locale, site.get("headline", ""))
+    payload_json = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
     return f"""<div class="about-profile-card">
       <div class="about-profile-avatar">
-        <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Hiro Matsumoto" width="400" height="300" loading="lazy">
+        <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="{html.escape(translate(i18n, locale, "profile.alt", "Hiro Matsumoto"))}" width="400" height="300" loading="lazy">
       </div>
       <div class="about-profile-main">
-        <p class="about-profile-handle">@nhmatsumoto · Brasil / Japão</p>
+        <p class="about-profile-handle" data-i18n="profile.handle">{html.escape(translate(i18n, locale, "profile.handle", "@nhmatsumoto · Brasil / Japão"))}</p>
         <h2 id="home-profile-name" class="home-profile-name">Hiro Matsumoto</h2>
-        <p class="about-profile-bio">{html.escape(lede)}</p>
+        <p class="about-profile-bio" data-profile-field="profile_summary">{html.escape(lede)}</p>
         {_render_profile_contact_block(site, system, i18n, locale, title_id="home-profile-contact-title")}
         <a class="home-profile-link" href="{site_href(site, "/about/")}" aria-label="{view_label}">
           {render_icon("user-round", "site-icon home-profile-link-icon")}
@@ -395,7 +398,8 @@ def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dic
           {render_icon("arrow-right", "site-icon home-profile-link-arrow")}
         </a>
       </div>
-    </div>"""
+    </div>
+    <script id="profile-content-data" type="application/json">{payload_json}</script>"""
 
 
 def render_home_page(
@@ -415,6 +419,18 @@ def render_home_page(
 
     intro = site.get("home_intro", "").strip()
     home_summary = site.get("home_summary", "").strip()
+
+    intro_payload: dict[str, Any] = {"body_html": render_markdown(intro)}
+    for supported_locale in i18n.get("supported_locales", []):
+        for suffix in locale_suffixes(supported_locale, i18n):
+            locale_intro = str(site.get(f"home_intro_{suffix}", "") or "").strip()
+            if locale_intro:
+                payload_key = f"body_html_{suffix}"
+                if payload_key not in intro_payload:
+                    intro_payload[payload_key] = render_markdown(locale_intro)
+                break
+    intro_payload_json = json.dumps(intro_payload, ensure_ascii=False).replace("<", "\\u003c")
+
     quick_links = [
         ("nav.about", "/about/"),
         ("nav.posts", "/posts/"),
@@ -437,7 +453,7 @@ def render_home_page(
             <p class="section-kicker" data-i18n="home.kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
             <h1 id="home-title" class="notebook-hero-title">{html.escape(site.get("home_title") or site.get("headline") or site["title"])}</h1>
             {f'<p class="notebook-hero-summary">{html.escape(home_summary)}</p>' if home_summary else ""}
-            <div class="prose notebook-intro">{render_markdown(intro)}</div>
+            <div class="prose notebook-intro" data-page-body>{render_markdown(intro)}</div>
             <div class="notebook-link-row">{quick_links_html}</div>
           </div>
         </section>
@@ -474,6 +490,7 @@ def render_home_page(
         {render_navigation_section(system, documents, i18n, locale)}
       </div>
     </div>
+    <script id="page-content-data" type="application/json">{intro_payload_json}</script>
     """
     return render_layout(
         page_title=f"{site['title']} | engineering notebook",

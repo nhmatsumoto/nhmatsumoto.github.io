@@ -10,7 +10,11 @@ from .utils import (
 
 def normalise_site(raw: dict[str, Any]) -> dict[str, str]:
     site = DEFAULT_SITE | raw
-    return {key: str(site.get(key, "") or "") for key in SITE_FIELD_ORDER}
+    result = {key: str(site.get(key, "") or "") for key in SITE_FIELD_ORDER}
+    for key, value in raw.items():
+        if key not in result and isinstance(value, str):
+            result[key] = value
+    return result
 
 def load_site() -> dict[str, str]:
     config = load_blog_config()
@@ -289,6 +293,7 @@ def normalise_document(raw: dict[str, Any], source_path: Path | None = None) -> 
         "body": body.rstrip() + "\n" if body.strip() else "",
         "published_dt": published_dt,
         "source_path": source_path,
+        "body_source_path": source_relative,
         "url": f"/documents/{slug}/",
         "has_math": bool(raw.get("has_math", raw.get("has_asciimath", False)))
         or _has_math_content([value for value in document_bodies if isinstance(value, str) and value.strip()], config),
@@ -301,6 +306,13 @@ def normalise_document(raw: dict[str, Any], source_path: Path | None = None) -> 
     return res
 
 def load_posts(include_drafts: bool = False) -> list[dict[str, Any]]:
+    from . import postgres_store
+
+    database_posts = postgres_store.load_raw_posts(include_drafts=include_drafts)
+    if database_posts is not None:
+        posts = [normalise_post(raw, source_path=None) for raw in database_posts]
+        return sorted(posts, key=lambda x: x["published_dt"], reverse=True)
+
     config = load_blog_config()
     posts_dir = ROOT / config["build"]["posts_dir"]
     posts = []

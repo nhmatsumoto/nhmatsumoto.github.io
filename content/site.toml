@@ -14,6 +14,22 @@ Minha base está no desenvolvimento web, mas este site vai além da tecnologia. 
 
 Não foi pensado como vitrine. Foi pensado como um lugar de registro, construção e descoberta.
 """
+
+home_intro_en_us = """
+This is my space, published in pt-BR with support for Japanese and English. Here I share projects, thoughts, studies, experiences and various subjects that spark my curiosity.
+
+My foundation is in web development, but this site goes beyond technology. It connects software, architecture, product, culture, life in Japan, continuous learning and everything worth exploring more closely.
+
+It was not designed as a showcase. It was designed as a place for documentation, building and discovery.
+"""
+
+home_intro_ja_jp = """
+これは私のスペースです。pt-BR で公開され、日本語と英語にも対応しています。ここでは、プロジェクト、考え、学習、経験、そして好奇心を刺激するさまざまなテーマを共有しています。
+
+私のベースはウェブ開発にありますが、このサイトは技術の枠を超えています。ソフトウェア、アーキテクチャ、プロダクト、文化、日本での生活、継続的な学習、そして深く探求する価値のあるすべてのことをつないでいます。
+
+ショーケースとして作られたものではありません。記録、構築、発見のための場所として作られました。
+"""
 about = """
 Sou Hiro Matsumoto, engenheiro de software que gosta de transformar ideias em sistemas utilizáveis. Penso software como uma cadeia inteira de valor: problema, produto, arquitetura, código, operação, comunicação e experiência final.
 

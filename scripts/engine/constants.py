@@ -43,6 +43,15 @@ DEFAULT_MATH_CONFIG = {
     "block_delimiter": "$$",
 }
 
+DEFAULT_DATABASE_CONFIG = {
+    "enabled": False,
+    "url": "",
+    "url_env": "BLOG_DATABASE_URL",
+    "fallback_url_env": "DATABASE_URL",
+    "schema": "public",
+    "mirror_to_toml": True,
+}
+
 DEFAULT_SITE = {
     "title": "Meu Blog",
     "headline": "Vida prática, software e tecnologia.",
@@ -109,6 +118,50 @@ POST_FIELD_ORDER = [
     "body",
 ]
 
+PROJECT_FIELD_ORDER = [
+    "slug",
+    "name",
+    "headline",
+    "summary",
+    "status",
+    "stack",
+    "badges",
+    "repo_url",
+    "code_url",
+    "docs_url",
+    "architecture_url",
+    "featured",
+    "order",
+    "diagram_preview",
+    "diagram_format",
+    "overview",
+    "problem_solution",
+    "architecture",
+    "stack_notes",
+    "adr",
+    "roadmap",
+    "impact",
+    "trade_offs",
+    "lessons",
+    "production_notes",
+    "has_math",
+]
+
+DOCUMENT_FIELD_ORDER = [
+    "slug",
+    "title",
+    "summary",
+    "category",
+    "version",
+    "tags",
+    "agent_generated_tag",
+    "order",
+    "published_at",
+    "source_path",
+    "body",
+    "has_math",
+]
+
 MANAGED_GIT_PATHS = [
     ".github",
     ".gitignore",
@@ -149,6 +202,8 @@ MONTHS_SHORT_PT = [
 ]
 
 STATUS_LABELS = {
+    "draft": "draft",
+    "published": "published",
     "research": "research",
     "in_progress": "in progress",
     "production": "production",

@@ -34,6 +34,14 @@ measurement_id_env = "GA_MEASUREMENT_ID"
 allowed_hostnames = ["nhmatsumoto.github.io"]
 debug = false
 
+[database]
+enabled = false
+url = ""
+url_env = "BLOG_DATABASE_URL"
+fallback_url_env = "DATABASE_URL"
+schema = "public"
+mirror_to_toml = true
+
 [math]
 enabled = true
 script_url = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"

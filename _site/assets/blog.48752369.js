@@ -268,6 +268,34 @@ applyProfileContent(state.locale);
 });
 applyProfileContent(useStore.getState().locale);
 };
+const initEntryCardsLocalization = () => {
+const cards = document.querySelectorAll("[data-entry-card]");
+if (!cards.length) return;
+const apply = (locale) => {
+cards.forEach(card => {
+const script = card.querySelector("[data-entry-card-data]");
+if (!script) return;
+let data;
+try { data = JSON.parse(script.textContent || "{}"); } catch { return; }
+const titleEl = card.querySelector("[data-entry-title]");
+const ledeEl = card.querySelector("[data-entry-lede]");
+if (titleEl) {
+if (!titleEl.dataset.fallback) titleEl.dataset.fallback = titleEl.textContent || "";
+const value = resolveLocalizedField(data, ["name", "title"], locale, titleEl.dataset.fallback);
+titleEl.textContent = value || titleEl.dataset.fallback;
+}
+if (ledeEl) {
+if (!ledeEl.dataset.fallback) ledeEl.dataset.fallback = ledeEl.textContent || "";
+const value = resolveLocalizedField(data, ["headline", "summary"], locale, ledeEl.dataset.fallback);
+ledeEl.textContent = value || ledeEl.dataset.fallback;
+}
+});
+};
+useStore.subscribe((state, prevState) => {
+if (state.locale !== prevState.locale) apply(state.locale);
+});
+apply(useStore.getState().locale);
+};
 const initLocaleToggle = (loc) => {
 const btns = document.querySelectorAll("[data-locale-toggle]");
 const supported = loc?.getSupportedLocales() || [];
@@ -414,6 +442,7 @@ initAnalyticsHelpers();
 const loc = initLocalization();
 initPageContentLocalization();
 initProfileContentLocalization();
+initEntryCardsLocalization();
 initContactCardsLocalization();
 initThemeManager();
 initLocaleToggle(loc);

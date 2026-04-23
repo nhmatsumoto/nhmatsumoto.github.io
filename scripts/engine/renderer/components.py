@@ -15,6 +15,7 @@ from ..i18n import (
     translate,
     format_short_date_for_locale,
     format_long_date_for_locale,
+    locale_suffixes,
 )
 
 def render_markdown(text: str) -> str:
@@ -323,6 +324,20 @@ def _entry_cta(url: str, label: str, aria_key: str) -> str:
         f'</a>'
     )
 
+def _build_entry_card_payload(item: dict[str, Any], fields: list[str], i18n: dict[str, Any]) -> dict[str, Any]:
+    payload: dict[str, Any] = {}
+    for field in fields:
+        value = item.get(field)
+        if value is not None:
+            payload[field] = value
+        for lc in i18n.get("supported_locales", []):
+            for suffix in locale_suffixes(lc, i18n):
+                key = f"{field}_{suffix}"
+                if item.get(key) and key not in payload:
+                    payload[key] = item[key]
+    return payload
+
+
 def render_post_card(post: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     kind_label = translate(i18n, locale, "kinds.post", "post")
     date_html = render_localized_date(post["published_dt"], locale, "short")
@@ -333,14 +348,17 @@ def render_post_card(post: dict[str, Any], i18n: dict[str, Any], locale: str) ->
         _entry_meta("clock-3", reading_html),
     ])
     cta_label = translate(i18n, locale, "actions.read_article", "Open")
+    entry_payload = _build_entry_card_payload(post, ["title", "summary"], i18n)
+    payload_json = json.dumps(entry_payload, ensure_ascii=False).replace("<", "\\u003c")
     return f"""
-    <li class="entry">
+    <li class="entry" data-entry-card>
       <article class="entry-card entry-card-post">
         {eyebrow}
-        <h3 class="entry-title"><a href="{html.escape(post['resolved_url'])}">{html.escape(post['title'])}</a></h3>
-        <p class="entry-lede">{html.escape(post['summary'])}</p>
+        <h3 class="entry-title"><a href="{html.escape(post['resolved_url'])}" data-entry-title>{html.escape(post['title'])}</a></h3>
+        <p class="entry-lede" data-entry-lede>{html.escape(post['summary'])}</p>
         {_entry_cta(post['resolved_url'], cta_label, "actions.read_article")}
       </article>
+      <script type="application/json" data-entry-card-data>{payload_json}</script>
     </li>
     """.strip()
 
@@ -362,15 +380,18 @@ def render_daily_card(entry: dict[str, Any], i18n: dict[str, Any], locale: str, 
     context_row = f'<p class="entry-context">{"".join(context_bits)}</p>' if context_bits else ""
     compact_class = " entry-card-compact" if compact else ""
     cta_label = translate(i18n, locale, "actions.read_article", "Open")
+    entry_payload = _build_entry_card_payload(entry, ["title", "summary"], i18n)
+    payload_json = json.dumps(entry_payload, ensure_ascii=False).replace("<", "\\u003c")
     return f"""
-    <li class="entry">
+    <li class="entry" data-entry-card>
       <article class="entry-card entry-card-daily{compact_class}">
         {eyebrow}
-        <h3 class="entry-title"><a href="{html.escape(entry['resolved_url'])}">{html.escape(entry['title'])}</a></h3>
-        <p class="entry-lede">{html.escape(entry['summary'])}</p>
+        <h3 class="entry-title"><a href="{html.escape(entry['resolved_url'])}" data-entry-title>{html.escape(entry['title'])}</a></h3>
+        <p class="entry-lede" data-entry-lede>{html.escape(entry['summary'])}</p>
         {context_row}
         {_entry_cta(entry['resolved_url'], cta_label, "actions.read_article")}
       </article>
+      <script type="application/json" data-entry-card-data>{payload_json}</script>
     </li>
     """.strip()
 
@@ -404,16 +425,19 @@ def render_project_card(project: dict[str, Any], i18n: dict[str, Any], locale: s
             f'<span data-i18n="actions.open_docs">{docs_label}</span></a>'
         )
     secondary_html = f'<div class="entry-card-links">{"".join(secondary_links)}</div>' if secondary_links else ""
+    entry_payload = _build_entry_card_payload(project, ["name", "headline", "summary"], i18n)
+    payload_json = json.dumps(entry_payload, ensure_ascii=False).replace("<", "\\u003c")
     return f"""
-    <li class="entry">
+    <li class="entry" data-entry-card>
       <article class="entry-card entry-card-project">
         {eyebrow}
-        <h3 class="entry-title"><a href="{html.escape(project['resolved_url'])}">{html.escape(project['name'])}</a></h3>
-        <p class="entry-lede">{lede}</p>
+        <h3 class="entry-title"><a href="{html.escape(project['resolved_url'])}" data-entry-title>{html.escape(project['name'])}</a></h3>
+        <p class="entry-lede" data-entry-lede>{lede}</p>
         {stack_html}
         {_entry_cta(project['resolved_url'], cta_label, "actions.view_project")}
         {secondary_html}
       </article>
+      <script type="application/json" data-entry-card-data>{payload_json}</script>
     </li>
     """.strip()
 
@@ -434,14 +458,17 @@ def render_document_card(document: dict[str, Any], i18n: dict[str, Any], locale:
         )
     eyebrow = _entry_eyebrow(eyebrow_parts)
     cta_label = translate(i18n, locale, "actions.open_docs", "Open")
+    entry_payload = _build_entry_card_payload(document, ["title", "summary"], i18n)
+    payload_json = json.dumps(entry_payload, ensure_ascii=False).replace("<", "\\u003c")
     return f"""
-    <li class="entry">
+    <li class="entry" data-entry-card>
       <article class="entry-card entry-card-document">
         {eyebrow}
-        <h3 class="entry-title"><a href="{html.escape(document['resolved_url'])}">{html.escape(document['title'])}</a></h3>
-        <p class="entry-lede">{html.escape(document['summary'])}</p>
+        <h3 class="entry-title"><a href="{html.escape(document['resolved_url'])}" data-entry-title>{html.escape(document['title'])}</a></h3>
+        <p class="entry-lede" data-entry-lede>{html.escape(document['summary'])}</p>
         {_entry_cta(document['resolved_url'], cta_label, "actions.open_docs")}
       </article>
+      <script type="application/json" data-entry-card-data>{payload_json}</script>
     </li>
     """.strip()
 
@@ -596,7 +623,8 @@ def render_pagination_controls(site: dict[str, str], current_page: int, total_pa
         links.append(f'<a href="{page_url(current_page + 1)}" class="pagination-link pagination-next">{_label_span(translate(i18n, locale, "pagination.next", "next"), "pagination.next")}{render_icon("chevron-right", "site-icon pagination-icon")}</a>')
     else:
         links.append(f'<span class="pagination-link pagination-disabled">{_label_span(translate(i18n, locale, "pagination.next", "next"), "pagination.next")}{render_icon("chevron-right", "site-icon pagination-icon")}</span>')
-    return f'<nav class="pagination-container" aria-label="Pagination"><div class="pagination-inner">{"".join(links)}</div></nav>'
+    pagination_label = translate(i18n, locale, "accessibility.pagination", "Pagination")
+    return f'<nav class="pagination-container" aria-label="{html.escape(pagination_label)}" data-i18n-aria-label="accessibility.pagination"><div class="pagination-inner">{"".join(links)}</div></nav>'
 
 def render_impact_bar(items: list[str], i18n: dict[str, Any] | None = None, locale: str = "pt-BR") -> str:
     if not items: return ""

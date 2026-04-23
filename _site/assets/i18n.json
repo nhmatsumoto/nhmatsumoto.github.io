@@ -12,7 +12,8 @@
         "primary_navigation": "Navegação principal",
         "breadcrumbs": "Você está aqui",
         "language_switcher": "Selecionar idioma",
-        "command_palette": "Palette de comandos"
+        "command_palette": "Palette de comandos",
+        "pagination": "Paginação"
       },
       "nav": {
         "home": "início",
@@ -175,6 +176,14 @@
       "view": {
         "list": "lista",
         "grid": "grade"
+      },
+      "footer": {
+        "developed_by": "desenvolvido por",
+        "blog_engine": "blog engine"
+      },
+      "profile": {
+        "handle": "@nhmatsumoto · Brasil / Japão",
+        "alt": "Avatar de Hiro Matsumoto"
       }
     },
     "en-US": {
@@ -183,7 +192,8 @@
         "primary_navigation": "Primary navigation",
         "breadcrumbs": "You are here",
         "language_switcher": "Select language",
-        "command_palette": "Command palette"
+        "command_palette": "Command palette",
+        "pagination": "Pagination"
       },
       "nav": {
         "home": "home",
@@ -346,6 +356,14 @@
       "view": {
         "list": "list",
         "grid": "grid"
+      },
+      "footer": {
+        "developed_by": "developed by",
+        "blog_engine": "blog engine"
+      },
+      "profile": {
+        "handle": "@nhmatsumoto · Brazil / Japan",
+        "alt": "Hiro Matsumoto profile picture"
       }
     },
     "ja-JP": {
@@ -354,7 +372,8 @@
         "primary_navigation": "メインナビゲーション",
         "breadcrumbs": "現在位置",
         "language_switcher": "言語を切り替える",
-        "command_palette": "コマンドパレット"
+        "command_palette": "コマンドパレット",
+        "pagination": "ページネーション"
       },
       "nav": {
         "home": "ホーム",
@@ -517,6 +536,14 @@
       "view": {
         "list": "リスト",
         "grid": "グリッド"
+      },
+      "footer": {
+        "developed_by": "開発",
+        "blog_engine": "ブログエンジン"
+      },
+      "profile": {
+        "handle": "@nhmatsumoto · ブラジル / 日本",
+        "alt": "Hiro Matsumoto のプロフィール画像"
       }
     }
   }

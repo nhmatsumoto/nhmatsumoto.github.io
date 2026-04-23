@@ -25,6 +25,7 @@ primary_navigation = "Navegação principal"
 breadcrumbs = "Você está aqui"
 language_switcher = "Selecionar idioma"
 command_palette = "Palette de comandos"
+pagination = "Paginação"
 
 [strings."pt-BR".nav]
 home = "início"
@@ -187,12 +188,21 @@ next = "próxima"
 list = "lista"
 grid = "grade"
 
+[strings."pt-BR".footer]
+developed_by = "desenvolvido por"
+blog_engine = "blog engine"
+
+[strings."pt-BR".profile]
+handle = "@nhmatsumoto · Brasil / Japão"
+alt = "Avatar de Hiro Matsumoto"
+
 [strings."en-US".accessibility]
 skip_to_content = "Skip to content"
 primary_navigation = "Primary navigation"
 breadcrumbs = "You are here"
 language_switcher = "Select language"
 command_palette = "Command palette"
+pagination = "Pagination"
 
 [strings."en-US".nav]
 home = "home"
@@ -355,12 +365,21 @@ reading_time = "{minutes} min read"
 list = "list"
 grid = "grid"
 
+[strings."en-US".footer]
+developed_by = "developed by"
+blog_engine = "blog engine"
+
+[strings."en-US".profile]
+handle = "@nhmatsumoto · Brazil / Japan"
+alt = "Hiro Matsumoto profile picture"
+
 [strings."ja-JP".accessibility]
 skip_to_content = "コンテンツへ移動"
 primary_navigation = "メインナビゲーション"
 breadcrumbs = "現在位置"
 language_switcher = "言語を切り替える"
 command_palette = "コマンドパレット"
+pagination = "ページネーション"
 
 [strings."ja-JP".nav]
 home = "ホーム"
@@ -521,3 +540,11 @@ reading_time = "読了時間 {minutes} 分"
 [strings."ja-JP".view]
 list = "リスト"
 grid = "グリッド"
+
+[strings."ja-JP".footer]
+developed_by = "開発"
+blog_engine = "ブログエンジン"
+
+[strings."ja-JP".profile]
+handle = "@nhmatsumoto · ブラジル / 日本"
+alt = "Hiro Matsumoto のプロフィール画像"

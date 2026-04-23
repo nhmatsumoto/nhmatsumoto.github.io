@@ -62,6 +62,9 @@ python3 scripts/build.py
 ## Comandos úteis
 
 ```bash
+# dependência opcional do editor com PostgreSQL
+python3 -m pip install -r requirements.txt
+
 # build estático
 python3 scripts/build.py
 
@@ -70,6 +73,17 @@ python3 scripts/editor_server.py
 ```
 
 Editor local (padrão): `http://127.0.0.1:4173/`
+
+## PostgreSQL no editor
+
+O editor continua funcionando com TOML quando não há banco configurado. Para usar PostgreSQL como store das publicações, defina a URL de conexão antes de iniciar o editor:
+
+```bash
+export BLOG_DATABASE_URL="postgresql://usuario:senha@localhost:5432/blog"
+python3 scripts/editor_server.py
+```
+
+A primeira importação cria as tabelas `blog_posts` e `blog_post_translations`. O painel permite importar os TOMLs existentes para o banco e exportar de volta para TOML, mantendo o build estático compatível com GitHub Pages.
 
 ## Analytics (GTM / GA4)
 

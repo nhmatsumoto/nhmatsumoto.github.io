@@ -6,7 +6,7 @@ from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-from .constants import ROOT, CONFIG_PATH, DEFAULT_BUILD_CONFIG, DEFAULT_MATH_CONFIG
+from .constants import ROOT, CONFIG_PATH, DEFAULT_BUILD_CONFIG, DEFAULT_MATH_CONFIG, DEFAULT_DATABASE_CONFIG
 
 HEADING_RE = re.compile(r"^(?P<level>#{1,6})\s+(?P<content>.+)$")
 UNORDERED_LIST_RE = re.compile(r"^[*\-+]\s+(.+)$")
@@ -44,7 +44,8 @@ def load_blog_config() -> dict[str, dict[str, Any]]:
         "allowed_hostnames": ["nhmatsumoto.github.io"],
         "debug": False,
     } | raw.get("analytics", {})
-    return {"build": build, "math": math, "analytics": analytics}
+    database = DEFAULT_DATABASE_CONFIG | raw.get("database", {})
+    return {"build": build, "math": math, "analytics": analytics, "database": database}
 
 def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)

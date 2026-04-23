@@ -4,9 +4,9 @@ import argparse
 import base64
 import json
 import mimetypes
-import os
 import re
 import tomllib
+from binascii import Error as Base64Error
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -14,17 +14,33 @@ from urllib.parse import parse_qs, urlparse
 
 from blog_engine import (
     build_site,
+    database_status,
+    delete_document,
+    delete_post,
+    delete_project,
     default_locale,
+    document_to_api,
+    export_database_posts_to_toml,
     git_status,
+    import_toml_posts_to_database,
     load_blog_config,
+    load_documents,
     load_i18n,
     load_posts,
+    load_projects,
     load_site,
+    normalise_document,
     normalise_post,
+    normalise_project,
     post_to_api,
+    project_to_api,
     publish_changes,
+    render_document_preview,
     render_post_preview,
+    render_project_preview,
+    save_document,
     save_post,
+    save_project,
     save_site,
 )
 
@@ -34,6 +50,17 @@ PROJECTS_DIR = ROOT / "content" / "projects"
 
 SECTION_TYPES = ["intro", "problem", "solution", "architecture", "stack", "code", "diagram", "text"]
 SECTION_ANIMATIONS = ["fade", "slide_right", "zoom", "typewriter", "matrix_rain", "expand_node"]
+
+
+def unique_asset_path(directory: Path, filename: str) -> Path:
+    stem = Path(filename).stem or "image"
+    suffix = Path(filename).suffix or ".png"
+    candidate = directory / f"{stem}{suffix}"
+    index = 1
+    while candidate.exists():
+        candidate = directory / f"{stem}-{index}{suffix}"
+        index += 1
+    return candidate
 
 
 def load_sections(slug: str) -> list[dict]:
@@ -109,10 +136,20 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/state":
+            site = load_site()
+            i18n = load_i18n()
             self.send_json(
                 {
-                    "site": load_site(),
-                    "posts": [post_to_api(post) for post in load_posts(include_drafts=True)],
+                    "site": site,
+                    "posts": [post_to_api(post, include_content=False) for post in load_posts(include_drafts=True)],
+                    "projects": [project_to_api(project, include_content=False) for project in load_projects()],
+                    "documents": [document_to_api(document, include_content=False) for document in load_documents()],
+                    "locales": {
+                        "default": default_locale(site, i18n),
+                        "supported": i18n.get("supported_locales", []),
+                        "names": i18n.get("language_names", {}),
+                    },
+                    "storage": database_status(),
                     "git": git_status(),
                 }
             )
@@ -127,8 +164,30 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
             self.send_json(post_to_api(post))
             return
 
+        if parsed.path == "/api/project":
+            slug = parse_qs(parsed.query).get("slug", [""])[0].strip()
+            project = next((item for item in load_projects() if item["slug"] == slug), None)
+            if not project:
+                self.send_error_json(HTTPStatus.NOT_FOUND, "Projeto não encontrado.")
+                return
+            self.send_json(project_to_api(project))
+            return
+
+        if parsed.path == "/api/document":
+            slug = parse_qs(parsed.query).get("slug", [""])[0].strip()
+            document = next((item for item in load_documents() if item["slug"] == slug), None)
+            if not document:
+                self.send_error_json(HTTPStatus.NOT_FOUND, "Documento não encontrado.")
+                return
+            self.send_json(document_to_api(document))
+            return
+
         if parsed.path == "/api/git/status":
             self.send_json(git_status())
+            return
+
+        if parsed.path == "/api/storage/status":
+            self.send_json(database_status())
             return
 
         self.send_error_json(HTTPStatus.NOT_FOUND, "Rota não encontrada.")
@@ -163,7 +222,75 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
                 self.send_json(
                     {
                         "post": post_to_api(saved),
-                        "posts": [post_to_api(post) for post in load_posts(include_drafts=True)],
+                        "posts": [post_to_api(post, include_content=False) for post in load_posts(include_drafts=True)],
+                        "projects": [project_to_api(project, include_content=False) for project in load_projects()],
+                        "documents": [document_to_api(document, include_content=False) for document in load_documents()],
+                        "storage": database_status(),
+                    }
+                )
+                return
+
+            if parsed.path == "/api/project/save":
+                saved = save_project(payload)
+                self.send_json(
+                    {
+                        "project": project_to_api(saved),
+                        "posts": [post_to_api(post, include_content=False) for post in load_posts(include_drafts=True)],
+                        "projects": [project_to_api(project, include_content=False) for project in load_projects()],
+                        "documents": [document_to_api(document, include_content=False) for document in load_documents()],
+                        "storage": database_status(),
+                    }
+                )
+                return
+
+            if parsed.path == "/api/document/save":
+                saved = save_document(payload)
+                self.send_json(
+                    {
+                        "document": document_to_api(saved),
+                        "posts": [post_to_api(post, include_content=False) for post in load_posts(include_drafts=True)],
+                        "projects": [project_to_api(project, include_content=False) for project in load_projects()],
+                        "documents": [document_to_api(document, include_content=False) for document in load_documents()],
+                        "storage": database_status(),
+                    }
+                )
+                return
+
+            if parsed.path == "/api/post/delete":
+                result = delete_post(str(payload.get("id", "") or ""))
+                self.send_json(
+                    {
+                        **result,
+                        "posts": [post_to_api(post, include_content=False) for post in load_posts(include_drafts=True)],
+                        "projects": [project_to_api(project, include_content=False) for project in load_projects()],
+                        "documents": [document_to_api(document, include_content=False) for document in load_documents()],
+                        "storage": database_status(),
+                    }
+                )
+                return
+
+            if parsed.path == "/api/project/delete":
+                result = delete_project(str(payload.get("slug", "") or ""))
+                self.send_json(
+                    {
+                        **result,
+                        "posts": [post_to_api(post, include_content=False) for post in load_posts(include_drafts=True)],
+                        "projects": [project_to_api(project, include_content=False) for project in load_projects()],
+                        "documents": [document_to_api(document, include_content=False) for document in load_documents()],
+                        "storage": database_status(),
+                    }
+                )
+                return
+
+            if parsed.path == "/api/document/delete":
+                result = delete_document(str(payload.get("slug", "") or ""))
+                self.send_json(
+                    {
+                        **result,
+                        "posts": [post_to_api(post, include_content=False) for post in load_posts(include_drafts=True)],
+                        "projects": [project_to_api(project, include_content=False) for project in load_projects()],
+                        "documents": [document_to_api(document, include_content=False) for document in load_documents()],
+                        "storage": database_status(),
                     }
                 )
                 return
@@ -172,7 +299,43 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
                 preview_post = normalise_post(payload)
                 site = load_site()
                 i18n = load_i18n()
-                self.send_json({"html": render_post_preview(preview_post, i18n, default_locale(site, i18n))})
+                locale = str(payload.get("locale", "") or payload.get("_preview_locale", "") or "").strip()
+                if not locale:
+                    locale = default_locale(site, i18n)
+                self.send_json({"html": render_post_preview(preview_post, i18n, locale)})
+                return
+
+            if parsed.path == "/api/project/preview":
+                preview_project = normalise_project(payload)
+                site = load_site()
+                i18n = load_i18n()
+                locale = str(payload.get("locale", "") or payload.get("_preview_locale", "") or "").strip()
+                if not locale:
+                    locale = default_locale(site, i18n)
+                self.send_json({"html": render_project_preview(preview_project, i18n, locale)})
+                return
+
+            if parsed.path == "/api/document/preview":
+                preview_payload = dict(payload)
+                if preview_payload.get("body_source_path"):
+                    preview_payload["source_path"] = preview_payload["body_source_path"]
+                else:
+                    preview_payload.pop("source_path", None)
+                preview_document = normalise_document(preview_payload)
+                site = load_site()
+                i18n = load_i18n()
+                locale = str(payload.get("locale", "") or payload.get("_preview_locale", "") or "").strip()
+                if not locale:
+                    locale = default_locale(site, i18n)
+                self.send_json({"html": render_document_preview(preview_document, i18n, locale)})
+                return
+
+            if parsed.path == "/api/storage/import":
+                self.send_json({"import": import_toml_posts_to_database(), "storage": database_status()})
+                return
+
+            if parsed.path == "/api/storage/export":
+                self.send_json({"export": export_database_posts_to_toml(), "storage": database_status()})
                 return
 
             if parsed.path == "/api/build":
@@ -201,23 +364,50 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
                 image_dir = ROOT / "assets" / "images" / "posts"
                 image_dir.mkdir(parents=True, exist_ok=True)
                 
-                image_path = image_dir / filename
+                image_path = unique_asset_path(image_dir, filename)
                 
                 # Handle base64 data URL
                 if "," in content_base64:
                     content_base64 = content_base64.split(",")[1]
                 
+                try:
+                    image_bytes = base64.b64decode(content_base64, validate=True)
+                except (Base64Error, ValueError):
+                    self.send_error_json(HTTPStatus.BAD_REQUEST, "Imagem em base64 inválida.")
+                    return
+
                 with open(image_path, "wb") as f:
-                    f.write(base64.b64decode(content_base64))
+                    f.write(image_bytes)
                 
                 # Build relative URL for markdown
-                rel_url = f"/assets/images/posts/{filename}"
+                rel_url = f"/assets/images/posts/{image_path.name}"
                 self.send_json({"url": rel_url})
                 return
 
             self.send_error_json(HTTPStatus.NOT_FOUND, "Rota não encontrada.")
         except ValueError as error:
             self.send_error_json(HTTPStatus.BAD_REQUEST, str(error))
+        except RuntimeError as error:
+            self.send_error_json(HTTPStatus.BAD_REQUEST, str(error))
+        except Exception as error:  # noqa: BLE001
+            self.send_error_json(HTTPStatus.INTERNAL_SERVER_ERROR, f"Erro interno: {error}")
+
+    def do_DELETE(self) -> None:  # noqa: N802
+        parsed = urlparse(self.path)
+        if parsed.path != "/api/post":
+            self.send_error_json(HTTPStatus.NOT_FOUND, "Rota não encontrada.")
+            return
+
+        try:
+            post_id = parse_qs(parsed.query).get("id", [""])[0].strip()
+            result = delete_post(post_id)
+            self.send_json(
+                {
+                    **result,
+                    "posts": [post_to_api(post, include_content=False) for post in load_posts(include_drafts=True)],
+                    "storage": database_status(),
+                }
+            )
         except RuntimeError as error:
             self.send_error_json(HTTPStatus.BAD_REQUEST, str(error))
         except Exception as error:  # noqa: BLE001
@@ -254,7 +444,9 @@ class EditorRequestHandler(BaseHTTPRequestHandler):
             self.send_error_json(HTTPStatus.NOT_FOUND, "Arquivo não encontrado.")
             return
 
-        if not str(resolved).startswith(str(EDITOR_DIR.resolve())):
+        try:
+            resolved.relative_to(EDITOR_DIR.resolve())
+        except ValueError:
             self.send_error_json(HTTPStatus.FORBIDDEN, "Acesso negado.")
             return
 

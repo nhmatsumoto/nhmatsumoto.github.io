@@ -145,21 +145,23 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
       <div class="nav-actions">
         <button class="nav-btn-icon nav-btn-search" type="button" data-open-palette aria-label="{html.escape(search_label)}"><i data-lucide="search"></i></button>
         <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action"><i data-lucide="languages"></i><span class="locale-label" data-locale-label>PT</span></button>
-        <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="Toggle theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
+        <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="{html.escape(translate(i18n, locale, "nav.theme", "Toggle theme"))}" data-i18n-aria-label="nav.theme"><i data-lucide="moon" class="theme-icon-moon"></i><i data-lucide="sun" class="theme-icon-sun hidden"></i></button>
       </div>
     </nav>
     """
 
-def render_footer(site: dict[str, str], system: dict[str, Any]) -> str:
+def render_footer(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     github_url = site.get("github_url", "https://github.com/nhmatsumoto")
     engine_url = site.get("engine_url") or f"{github_url}/nhmatsumoto.github.io"
+    developed_by = translate(i18n, locale, "footer.developed_by", "desenvolvido por")
+    blog_engine = translate(i18n, locale, "footer.blog_engine", "blog engine")
     return f"""
     <footer class="site-footer">
       <p>
-        <span>desenvolvido por</span>
+        <span data-i18n="footer.developed_by">{html.escape(developed_by)}</span>
         <a href="{github_url}" target="_blank" rel="noopener noreferrer">{render_icon("git-branch", "site-icon footer-icon")}<span>NHMatsumoto</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
         <span class="footer-separator" aria-hidden="true">|</span>
-        <a href="{engine_url}" target="_blank" rel="noopener noreferrer">{render_icon("square-terminal", "site-icon footer-icon")}<span>blog engine</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
+        <a href="{engine_url}" target="_blank" rel="noopener noreferrer">{render_icon("square-terminal", "site-icon footer-icon")}<span data-i18n="footer.blog_engine">{html.escape(blog_engine)}</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
       </p>
     </footer>
     """
@@ -267,7 +269,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     {render_site_nav(site, system, active_nav, i18n, locale)}
     <div class="site-shell">
       <main class="site-main" id="content">{content}</main>
-      {render_footer(site, system)}
+      {render_footer(site, system, i18n, locale)}
     </div>
     {render_palette(site, i18n, locale)}
     <div class="sidebar-backdrop" data-sidebar-toggle></div>
