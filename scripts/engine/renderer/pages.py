@@ -253,7 +253,7 @@ def _contact_icon_name(item: dict[str, Any]) -> str:
     return "globe-2"
 
 
-def _render_profile_contact_block(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str, *, title_id: str) -> str:
+def _render_profile_contact_block(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str, *, title_id: str, compact: bool = False) -> str:
     links = system.get("contact", {}).get("links", [])
     link_items = []
     for item in links:
@@ -280,7 +280,7 @@ def _render_profile_contact_block(site: dict[str, str], system: dict[str, Any], 
               {render_icon(_contact_icon_name(item), "site-icon profile-contact-icon")}
               <span class="profile-contact-link-copy">
                 <span class="profile-contact-label">{html.escape(label)}</span>
-                <span class="profile-contact-description" data-contact-description>{html.escape(description)}</span>
+                {f'<span class="profile-contact-description" data-contact-description>{html.escape(description)}</span>' if not compact else ""}
               </span>
               {render_icon("arrow-up-right", "site-icon external-icon")}
             </a>
@@ -295,9 +295,10 @@ def _render_profile_contact_block(site: dict[str, str], system: dict[str, Any], 
     contact_kicker = html.escape(translate(i18n, locale, "nav.contact", "contato"))
     contact_label = html.escape(translate(i18n, locale, "pages.contact.title", "Contato"))
     contact_desc = html.escape(translate(i18n, locale, "pages.contact.description", "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."))
+    class_attr = ' class="profile-contact-block profile-contact-compact"' if compact else ' class="profile-contact-block"'
     return _clean_html_fragment(
         f"""
-        <section class="profile-contact-block" aria-labelledby="{html.escape(title_id)}">
+        <section{class_attr} aria-labelledby="{html.escape(title_id)}">
           <p class="section-kicker profile-contact-kicker" data-i18n="nav.contact">{contact_kicker}</p>
           <h3 id="{html.escape(title_id)}" class="profile-contact-title" data-i18n="pages.contact.title">{contact_label}</h3>
           <p class="profile-contact-copy" data-i18n="pages.contact.description">{contact_desc}</p>
@@ -384,7 +385,7 @@ def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dic
     view_label = html.escape(translate(i18n, locale, "actions.view_about", "Ver perfil completo"))
     payload = _build_profile_localization_payload(system, i18n, locale, site.get("headline", ""))
     payload_json = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
-    return f"""<div class="about-profile-card">
+    return f"""<div class="about-profile-card home-profile-card">
       <div class="about-profile-avatar">
         <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="{html.escape(translate(i18n, locale, "profile.alt", "Hiro Matsumoto"))}" width="400" height="300" loading="lazy">
       </div>
@@ -392,7 +393,7 @@ def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dic
         <p class="about-profile-handle" data-i18n="profile.handle">{html.escape(translate(i18n, locale, "profile.handle", "@nhmatsumoto · Brasil / Japão"))}</p>
         <h2 id="home-profile-name" class="home-profile-name">Hiro Matsumoto</h2>
         <p class="about-profile-bio" data-profile-field="profile_summary">{html.escape(lede)}</p>
-        {_render_profile_contact_block(site, system, i18n, locale, title_id="home-profile-contact-title")}
+        {_render_profile_contact_block(site, system, i18n, locale, title_id="home-profile-contact-title", compact=True)}
         <a class="home-profile-link" href="{site_href(site, "/about/")}" aria-label="{view_label}">
           {render_icon("user-round", "site-icon home-profile-link-icon")}
           <span data-i18n="actions.view_about">{view_label}</span>
@@ -469,11 +470,12 @@ def render_home_page(
     )
 
     content = f"""
-    <div class="layout-container page-two-column">
-      <aside class="page-sidebar profile-sidebar">
+    <div class="layout-container home-shell">
+      <header class="home-header">
         {_render_home_profile(site, system, i18n, locale)}
-      </aside>
-      <div class="page-main">
+      </header>
+
+      <div class="home-stack">
         <section class="notebook-hero section-panel" aria-labelledby="home-title">
           <div class="notebook-hero-copy">
             <p class="section-kicker" data-i18n="home.kicker">{html.escape(translate(i18n, locale, "home.kicker", "engineering notebook"))}</p>
@@ -483,37 +485,44 @@ def render_home_page(
             <div class="notebook-link-row">{quick_links_html}</div>
           </div>
         </section>
+
         {_render_start_here_section(start_here_items, i18n, locale)}
-        <section class="section-panel" aria-labelledby="posts-title">
-          <header class="section-header">
-            <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
-            <h2 id="posts-title" data-i18n="sections.posts_title">{html.escape(translate(i18n, locale, "sections.posts_title", "Publicações recentes"))}</h2>
-            <p class="section-copy" data-i18n="sections.posts_copy">{html.escape(translate(i18n, locale, "sections.posts_copy", "Ensaios técnicos, decisões de arquitetura e aprendizado aplicado."))}</p>
-          </header>
-          <ol class="entry-list">
-            {"".join(render_post_card(post, i18n, locale) for post in posts[:posts_limit])}
-          </ol>
-        </section>
-        <section class="section-panel" aria-labelledby="daily-title">
-          <header class="section-header">
-            <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
-            <h2 id="daily-title" data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h2>
-            <p class="section-copy" data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Notas curtas de progresso, ideias e trilha sonora de trabalho."))}</p>
-          </header>
-          <ol class="entry-list">
-            {"".join(render_daily_card(entry, i18n, locale, compact=True) for entry in daily_entries[:daily_limit])}
-          </ol>
-        </section>
-        <section class="section-panel" aria-labelledby="projects-title">
-          <header class="section-header">
-            <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
-            <h2 id="projects-title" data-i18n="sections.projects_title">{html.escape(translate(i18n, locale, "sections.projects_title", "Projetos relevantes"))}</h2>
-            <p class="section-copy" data-i18n="sections.projects_copy">{html.escape(translate(i18n, locale, "sections.projects_copy", "Sistemas que concentram arquitetura, trade-offs e execução prática."))}</p>
-          </header>
-          <ol class="entry-list">
-            {"".join(render_project_card(project, i18n, locale) for project in projects[:projects_limit])}
-          </ol>
-        </section>
+        
+        <div class="home-content-grid">
+          <section class="section-panel" aria-labelledby="posts-title">
+            <header class="section-header">
+              <p class="section-kicker" data-i18n="nav.posts">{html.escape(translate(i18n, locale, "nav.posts", "posts"))}</p>
+              <h2 id="posts-title" data-i18n="sections.posts_title">{html.escape(translate(i18n, locale, "sections.posts_title", "Publicações recentes"))}</h2>
+              <p class="section-copy" data-i18n="sections.posts_copy">{html.escape(translate(i18n, locale, "sections.posts_copy", "Ensaios técnicos, decisões de arquitetura e aprendizado aplicado."))}</p>
+            </header>
+            <ol class="entry-list">
+              {"".join(render_post_card(post, i18n, locale) for post in posts[:posts_limit])}
+            </ol>
+          </section>
+
+          <section class="section-panel" aria-labelledby="daily-title">
+            <header class="section-header">
+              <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
+              <h2 id="daily-title" data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h2>
+              <p class="section-copy" data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Notas curtas de progresso, ideias e trilha sonora de trabalho."))}</p>
+            </header>
+            <ol class="entry-list">
+              {"".join(render_daily_card(entry, i18n, locale, compact=True) for entry in daily_entries[:daily_limit])}
+            </ol>
+          </section>
+
+          <section class="section-panel" aria-labelledby="projects-title">
+            <header class="section-header">
+              <p class="section-kicker" data-i18n="nav.projects">{html.escape(translate(i18n, locale, "nav.projects", "projects"))}</p>
+              <h2 id="projects-title" data-i18n="sections.projects_title">{html.escape(translate(i18n, locale, "sections.projects_title", "Projetos relevantes"))}</h2>
+              <p class="section-copy" data-i18n="sections.projects_copy">{html.escape(translate(i18n, locale, "sections.projects_copy", "Sistemas que concentram arquitetura, trade-offs e execução prática."))}</p>
+            </header>
+            <ol class="entry-list">
+              {"".join(render_project_card(project, i18n, locale) for project in projects[:projects_limit])}
+            </ol>
+          </section>
+        </div>
+
         {render_documents_section(system, documents, i18n, locale, limit=3)}
         {render_navigation_section(site, system, documents, i18n, locale)}
       </div>
