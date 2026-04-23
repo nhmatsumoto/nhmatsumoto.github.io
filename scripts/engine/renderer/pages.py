@@ -296,15 +296,20 @@ def _build_profile_localization_payload(system: dict[str, Any], i18n: dict[str, 
     return payload
 
 
-def _render_profile_header(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+def _render_profile_header(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str, *, include_snapshot: bool = False) -> str:
     about = system.get("about", {})
     lede = str(localized_value(about, "lede", locale, i18n, site.get("headline", "")) or "").strip()
     payload = _build_profile_localization_payload(system, i18n, locale, site.get("headline", ""))
     payload_json = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
-    snapshot_html = _render_profile_snapshot(system, i18n, locale, field_attr="data-profile-field", class_name="about-snapshot-card profile-shell-snapshot")
+    shell_class = "profile-shell" if include_snapshot else "profile-shell profile-shell-compact"
+    snapshot_html = (
+        _render_profile_snapshot(system, i18n, locale, field_attr="data-profile-field", class_name="about-snapshot-card profile-shell-snapshot")
+        if include_snapshot
+        else ""
+    )
     return _clean_html_fragment(
         f"""
-    <section class="profile-shell" aria-labelledby="profile-shell-name">
+    <section class="{shell_class}" aria-labelledby="profile-shell-name">
       <div class="about-profile-card profile-shell-card">
         <div class="about-profile-avatar">
           <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="Avatar de Hiro Matsumoto" width="400" height="300" loading="eager">
@@ -691,7 +696,7 @@ def render_about_page(site: dict[str, str], system: dict[str, Any], i18n: dict[s
     page_payload = json.dumps(page_data, ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
     {breadcrumbs}
-    {_render_profile_header(site, system, i18n, locale)}
+    {_render_profile_header(site, system, i18n, locale, include_snapshot=True)}
     <div class="page-two-column">
       <aside class="page-sidebar">
         <section class="page-heading">
