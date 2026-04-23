@@ -13,7 +13,9 @@
   --danger-soft: rgba(180, 35, 24, 0.12);
   --success: #15803d;
   --shadow: 0 16px 30px rgba(31, 41, 51, 0.08);
+  --shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.12);
   --radius: 8px;
+  --radius-lg: 12px;
   --font-ui: "Inter", system-ui, sans-serif;
   --font-body: "Lora", Georgia, serif;
 }
@@ -200,11 +202,12 @@ code {
 .sidebar-card,
 .toolbar,
 .panel {
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.72);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .workspace-nav {
@@ -424,12 +427,35 @@ code {
 
 .workspace-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
-  gap: 1rem;
+  grid-template-columns: 1fr 0px;
+  gap: 0;
+  transition: grid-template-columns 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.workspace-grid[data-panel-open="true"] {
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 400px);
+  gap: 1.25rem;
+}
+
+.preview-panel {
+  align-self: start;
+  transition: all 350ms ease;
 }
 
 .editor-panel {
   align-self: start;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(20px);
+  transition: opacity 250ms ease, transform 300ms ease, visibility 0s 300ms;
+}
+
+.workspace-grid[data-panel-open="true"] .editor-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  transition: opacity 300ms ease 100ms, transform 350ms ease 50ms, visibility 0s;
 }
 
 .entity-panel {
@@ -641,6 +667,73 @@ details > summary {
 .preview-frame .post-summary,
 .preview-frame .empty-preview {
   color: #625c54;
+}
+
+/* Affordances para edição inline */
+.editable-field {
+  position: relative;
+  cursor: pointer;
+  transition: all 180ms ease;
+  border-radius: 4px;
+}
+
+[data-edit-mode="true"] .editable-field:hover {
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+[data-edit-mode="true"] .editable-field::after {
+  content: "✎";
+  position: absolute;
+  top: 0;
+  right: -1.5rem;
+  font-size: 0.8rem;
+  opacity: 0;
+  color: var(--accent);
+  transition: opacity 180ms ease;
+}
+
+[data-edit-mode="true"] .editable-field:hover::after {
+  opacity: 0.5;
+}
+
+.editable-field--active {
+  background: var(--panel) !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+  outline: 2px solid var(--accent);
+  cursor: text;
+  z-index: 10;
+}
+
+.inline-edit-input,
+.inline-edit-textarea {
+  width: 100%;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font: inherit !important;
+  color: inherit !important;
+  box-shadow: none !important;
+}
+
+/* Botões de ícone */
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  color: var(--muted);
+  border: 1px solid transparent;
+  background: transparent;
+}
+
+.icon-button:hover {
+  background: var(--panel-soft);
+  color: var(--accent);
+  border-color: var(--border);
+  transform: none;
 }
 
 .preview-frame pre {

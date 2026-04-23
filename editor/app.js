@@ -81,6 +81,10 @@ const state = {
     documents: false,
   },
   previewTimer: null,
+  // Autoria integrada
+  editorMode: "canvas",   // "canvas" | "edit" | "structure"
+  isDirty: false,
+  inlineEditing: false,   // trava preview enquanto edita inline
 };
 
 const siteForm = document.querySelector("#site-form");
@@ -134,6 +138,11 @@ const importPostsButton = document.querySelector("#import-posts");
 const exportPostsButton = document.querySelector("#export-posts");
 const documentSourceHint = document.querySelector("#document-source-hint");
 const sectionButtons = Array.from(document.querySelectorAll("[data-section-switch]"));
+const workspaceGrid = document.querySelector(".workspace-grid");
+const dirtyDot = document.querySelector("#dirty-dot");
+const modeButtons = Array.from(document.querySelectorAll("[data-mode-btn]"));
+
+// ─── Utilitarios ─────────────────────────────────────────────────────────────
 
 const fetchJson = async (url, options = {}) => {
   const response = await fetch(url, {
@@ -162,7 +171,7 @@ const setNotice = (message, tone = "info") => {
 const slugify = (value) =>
   value
     .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "") || "item";
@@ -243,6 +252,199 @@ const searchTextForItem = (section, item) => {
   ];
   return values.join(" ").toLowerCase();
 };
+
+// ─── Dirty state ─────────────────────────────────────────────────────────────
+
+const setDirty = (dirty) => {
+  state.isDirty = dirty;
+  if (dirtyDot) dirtyDot.hidden = !dirty;
+};
+
+// ─── Modo do editor ───────────────────────────────────────────────────────────
+
+const setEditorMode = (mode) => {
+  state.editorMode = mode;
+
+  if (!workspaceGrid) return;
+
+  workspaceGrid.dataset.panelOpen = String(mode === "structure");
+  workspaceGrid.dataset.editMode = String(mode === "edit");
+
+  modeButtons.forEach((btn) => {
+    btn.dataset.active = String(btn.dataset.modeBtn === mode);
+  });
+
+  // Toggle button state
+  const toggleBtn = document.querySelector("#toggle-panel");
+  if (toggleBtn) {
+    toggleBtn.dataset.active = String(mode === "structure");
+    toggleBtn.style.color = mode === "structure" ? "var(--accent)" : "var(--muted)";
+  }
+
+  if (mode !== "edit") {
+    // Remove marcadores de edição do preview
+    preview.querySelectorAll(".editable-field").forEach((el) => {
+      el.classList.remove("editable-field");
+      delete el.dataset.editableField;
+    });
+  } else {
+    applyInlineEditors();
+  }
+};
+
+// ─── Mapeamento locale → nome de campo ───────────────────────────────────────
+
+const localeFieldSuffix = (locale) => {
+  if (locale === "en-US") return "_en_us";
+  if (locale === "ja-JP") return "_ja_jp";
+  return "";
+};
+
+const localeField = (base, locale) => `${base}${localeFieldSuffix(locale)}`;
+
+// ─── Inline editing ───────────────────────────────────────────────────────────
+
+/**
+ * Retorna o mapa de campos editáveis inline para cada tipo de conteúdo.
+ * Campos de texto curto (título) usam input; campos médios (resumo) usam textarea.
+ * Campos de corpo (markdown) redirecionam para o painel Estrutura.
+ */
+const inlineFieldMappings = (section, locale) => {
+  const s = localeFieldSuffix(locale);
+  const titleBase = section === "projects" ? "name" : "title";
+
+  return [
+    {
+      selector: "h1",
+      field: `${titleBase}${s}`,
+      multiline: false,
+      isBody: false,
+    },
+    {
+      selector: ".post-summary",
+      field: `summary${s}`,
+      multiline: true,
+      isBody: false,
+    },
+    {
+      selector: ".post-body",
+      field: section === "projects" ? `overview${s}` : `body${s}`,
+      multiline: true,
+      isBody: true,
+    },
+    {
+      selector: ".preview-header .section-kicker",
+      field: section === "projects" ? `headline${s}` : `category`,
+      multiline: false,
+      isBody: false,
+    },
+  ];
+};
+
+const applyInlineEditors = () => {
+  if (state.editorMode !== "edit") return;
+  if (state.activeSection === "site") return;
+  if (!preview) return;
+
+  const form = activeForm();
+  if (!form) return;
+
+  const mappings = inlineFieldMappings(state.activeSection, state.activeLocale);
+
+  mappings.forEach(({ selector, field, multiline, isBody }) => {
+    const el = preview.querySelector(selector);
+    if (!el || el.dataset.editableField) return;
+
+    el.classList.add("editable-field");
+    el.dataset.editableField = field;
+    el.title = isBody ? "Clique para abrir o editor de corpo" : "Clique para editar";
+
+    if (isBody) {
+      el.addEventListener("click", () => {
+        setEditorMode("structure");
+        const bodyField = form.elements.namedItem(field);
+        if (bodyField) {
+          setTimeout(() => {
+            bodyField.focus();
+            bodyField.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 80);
+        }
+      });
+    } else {
+      el.addEventListener("click", () => activateInlineEdit(el, form, field, multiline));
+    }
+  });
+};
+
+const activateInlineEdit = (el, form, fieldName, multiline) => {
+  if (state.inlineEditing) return;
+  state.inlineEditing = true;
+
+  const formField = form.elements.namedItem(fieldName);
+  const originalValue = formField ? formField.value : el.textContent.trim();
+
+  // Salva o HTML original para poder cancelar
+  const originalHTML = el.innerHTML;
+
+  const input = document.createElement(multiline ? "textarea" : "input");
+  input.className = multiline ? "inline-edit-textarea" : "inline-edit-input";
+  if (!multiline) input.type = "text";
+  input.value = originalValue;
+
+  if (multiline) {
+    const lineCount = Math.max(2, originalValue.split("\n").length);
+    input.rows = lineCount;
+  }
+
+  el.textContent = "";
+  el.classList.add("editable-field--active");
+  el.appendChild(input);
+  input.focus();
+  if (!multiline) input.select();
+
+  let committed = false;
+
+  const commit = (cancel = false) => {
+    if (committed) return;
+    committed = true;
+    state.inlineEditing = false;
+    el.classList.remove("editable-field--active");
+
+    const newValue = cancel ? originalValue : input.value;
+
+    if (!cancel && formField && newValue !== originalValue) {
+      // Restaura HTML antes de atualizar para não deixar o input visível
+      el.innerHTML = originalHTML;
+      formField.value = newValue;
+      setDirty(true);
+      formField.dispatchEvent(new Event("input", { bubbles: true }));
+    } else {
+      el.innerHTML = originalHTML;
+      // Re-aplica o binding se ainda estiver em edit mode
+      if (state.editorMode === "edit") {
+        el.classList.add("editable-field");
+        el.dataset.editableField = fieldName;
+        el.title = "Clique para editar";
+        el.addEventListener("click", () => activateInlineEdit(el, form, fieldName, multiline));
+      }
+    }
+  };
+
+  input.addEventListener("blur", () => commit(false));
+
+  input.addEventListener("keydown", (e) => {
+    if (!multiline && e.key === "Enter") {
+      e.preventDefault();
+      input.blur();
+    }
+    if (e.key === "Escape") {
+      e.preventDefault();
+      commit(true);
+    }
+  });
+};
+
+// ─── Renderizacao ─────────────────────────────────────────────────────────────
 
 const renderGitStatus = (git) => {
   const scoped = git.scoped.length ? git.scoped.join("\n") : "Sem mudancas do blog no momento.";
@@ -541,6 +743,8 @@ const renderCollection = () => {
   });
 };
 
+// ─── Reset de formularios ─────────────────────────────────────────────────────
+
 const resetPostForm = () => {
   state.current.posts = null;
   state.slugTouched.posts = false;
@@ -550,9 +754,9 @@ const resetPostForm = () => {
     slug: "",
     status: "draft",
     category: "engineering",
-    title: "",
-    summary: "",
-    body: "",
+    title: "Novo Post",
+    summary: "Breve resumo do conteúdo para atrair leitores.",
+    body: "# Título do Post\n\nComece a escrever seu conteúdo aqui. Use Markdown para formatar.",
     title_en_us: "",
     summary_en_us: "",
     body_en_us: "",
@@ -590,10 +794,10 @@ const resetProjectForm = () => {
     featured: false,
     diagram_format: "mermaid",
     diagram_preview: "",
-    name: "",
-    headline: "",
-    summary: "",
-    overview: "",
+    name: "Meu Novo Projeto",
+    headline: "Uma frase marcante sobre o projeto",
+    summary: "Descrição curta para listagens.",
+    overview: "## Visão Geral\n\nDescreva os objetivos principais do projeto.",
     problem_solution: "",
     architecture: "",
     stack_notes: "",
@@ -645,9 +849,9 @@ const resetDocumentForm = () => {
     agent_generated_tag: false,
     order: 999,
     published_at: "",
-    title: "",
-    summary: "",
-    body: "",
+    title: "Documentação Técnica",
+    summary: "Resumo dos objetivos deste documento.",
+    body: "# Documento\n\nDescreva a arquitetura, APIs ou processos aqui.",
     title_en_us: "",
     summary_en_us: "",
     body_en_us: "",
@@ -665,10 +869,15 @@ const resetCurrentForm = () => {
   } else if (state.activeSection === "documents") {
     resetDocumentForm();
   }
+  setDirty(false);
   updateChrome();
-  renderPreviewEmpty("Preencha o formulario e clique em “Visualizar” para renderizar o item atual.");
+  // Abre o painel estrutural para o novo item
+  setEditorMode("structure");
+  schedulePreview();
   renderCollection();
 };
+
+// ─── Chrome / layout ──────────────────────────────────────────────────────────
 
 const updateChrome = () => {
   const meta = SECTION_META[state.activeSection];
@@ -684,7 +893,7 @@ const updateChrome = () => {
   const siteMode = state.activeSection === "site";
   saveSiteButton.hidden = !siteMode;
   saveCurrentButton.hidden = siteMode;
-  previewCurrentButton.hidden = siteMode;
+  if (previewCurrentButton) previewCurrentButton.hidden = siteMode;
   deleteCurrentButton.hidden = siteMode;
   previewField.hidden = siteMode;
 
@@ -695,6 +904,8 @@ const updateChrome = () => {
   deleteCurrentButton.disabled = !isCurrentPersisted();
   sectionsLink.hidden = state.activeSection !== "projects";
 };
+
+// ─── Abrir item ───────────────────────────────────────────────────────────────
 
 const openItem = async (section, key) => {
   const url =
@@ -719,11 +930,14 @@ const openItem = async (section, key) => {
     fillDocumentForm(payload);
   }
 
+  setDirty(false);
   updateChrome();
   renderCollection();
   await previewCurrent(true);
   setNotice(`${SECTION_META[section].title.slice(0, -1)} carregado.`, "success");
 };
+
+// ─── Preview ──────────────────────────────────────────────────────────────────
 
 const previewPayload = () => {
   if (state.activeSection === "posts") {
@@ -797,10 +1011,17 @@ const previewCurrent = async (silent = false) => {
   preview.innerHTML = payload.html;
   rerenderMermaid();
 
+  // Re-aplica marcadores de edição inline se estiver no modo edit
+  if (state.editorMode === "edit") {
+    applyInlineEditors();
+  }
+
   if (!silent) {
     setNotice("Preview atualizado.");
   }
 };
+
+// ─── Salvar / deletar ─────────────────────────────────────────────────────────
 
 const saveSite = async () => {
   const payload = await fetchJson("/api/site/save", {
@@ -835,6 +1056,7 @@ const saveCurrent = async () => {
     fillDocumentForm(payload.document);
   }
 
+  setDirty(false);
   updateChrome();
   await previewCurrent(true);
   setNotice("Item salvo.", "success");
@@ -877,6 +1099,8 @@ const deleteCurrent = async () => {
 
   setNotice("Item excluido.", "success");
 };
+
+// ─── Estado global ────────────────────────────────────────────────────────────
 
 const refreshState = async () => {
   const payload = await fetchJson("/api/state");
@@ -954,6 +1178,8 @@ const refreshGitStatus = async () => {
   setNotice("Status do Git atualizado.");
 };
 
+// ─── Troca de secao ───────────────────────────────────────────────────────────
+
 const switchSection = async (section) => {
   state.activeSection = section;
   updateChrome();
@@ -979,6 +1205,8 @@ const switchSection = async (section) => {
 
   resetCurrentForm();
 };
+
+// ─── Slug auto-generation ─────────────────────────────────────────────────────
 
 const titleSourcesForSection = (section) => {
   if (section === "projects") {
@@ -1007,6 +1235,8 @@ const updateSlugFromPrimaryInputs = (section) => {
     .find(Boolean);
   slugFieldForSection(section).value = slugify(title || "");
 };
+
+// ─── Markdown toolbar ─────────────────────────────────────────────────────────
 
 const insertTextAtCursor = (textarea, text) => {
   const start = textarea.selectionStart ?? textarea.value.length;
@@ -1141,6 +1371,8 @@ const enhanceMarkdownInputs = () => {
   });
 };
 
+// ─── Upload de imagem ─────────────────────────────────────────────────────────
+
 const uploadImage = async (file) => {
   const reader = new FileReader();
   return new Promise((resolve, reject) => {
@@ -1186,7 +1418,12 @@ const handleImageDrop = async (event, textarea) => {
   setNotice("Imagem carregada.", "success");
 };
 
+// ─── Preview agendado ─────────────────────────────────────────────────────────
+
 const schedulePreview = () => {
+  // Não atualiza preview enquanto uma edição inline está em andamento
+  if (state.inlineEditing) return;
+
   if (state.activeSection === "site") {
     renderSitePreview();
     return;
@@ -1202,13 +1439,17 @@ const schedulePreview = () => {
   }, 350);
 };
 
+// ─── Sinais de formulario ─────────────────────────────────────────────────────
+
 const bindFormSignals = () => {
   [postForm, projectForm, documentForm].forEach((form) => {
     form.addEventListener("input", () => {
+      setDirty(true);
       updateChrome();
       schedulePreview();
     });
     form.addEventListener("change", () => {
+      setDirty(true);
       updateChrome();
       schedulePreview();
     });
@@ -1220,6 +1461,8 @@ const bindFormSignals = () => {
     }
   });
 };
+
+// ─── Event listeners ─────────────────────────────────────────────────────────
 
 document.querySelector("#refresh-storage").addEventListener("click", async () => {
   try {
@@ -1253,13 +1496,15 @@ saveCurrentButton.addEventListener("click", async () => {
   }
 });
 
-previewCurrentButton.addEventListener("click", async () => {
-  try {
-    await previewCurrent();
-  } catch (error) {
-    setNotice(error.message, "error");
-  }
-});
+if (previewCurrentButton) {
+  previewCurrentButton.addEventListener("click", async () => {
+    try {
+      await previewCurrent();
+    } catch (error) {
+      setNotice(error.message, "error");
+    }
+  });
+}
 
 deleteCurrentButton.addEventListener("click", async () => {
   try {
@@ -1336,6 +1581,28 @@ sectionButtons.forEach((button) => {
   });
 });
 
+// Modo do editor (Canvas / Editar / Estrutura)
+modeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setEditorMode(button.dataset.modeBtn);
+  });
+});
+
+// Toggle painel de metadados
+const togglePanelBtn = document.querySelector("#toggle-panel");
+if (togglePanelBtn) {
+  togglePanelBtn.addEventListener("click", () => {
+    const isNowOpen = workspaceGrid.dataset.panelOpen === "true";
+    if (isNowOpen) {
+      setEditorMode(state.editorMode === "structure" ? "canvas" : state.editorMode);
+      workspaceGrid.dataset.panelOpen = "false";
+    } else {
+      setEditorMode("structure");
+    }
+  });
+}
+
+// Slug listeners
 postForm.elements.namedItem("slug").addEventListener("input", () => {
   state.slugTouched.posts = Boolean(postForm.elements.namedItem("slug").value.trim());
 });
@@ -1359,6 +1626,20 @@ titleSourcesForSection("documents").forEach((name) => {
 documentForm.elements.namedItem("body_source_path").addEventListener("input", () => {
   updateDocumentSourceHint();
 });
+
+// Ctrl+S / Cmd+S para salvar
+document.addEventListener("keydown", async (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+    e.preventDefault();
+    if (state.activeSection === "site") {
+      try { await saveSite(); } catch (err) { setNotice(err.message, "error"); }
+    } else {
+      try { await saveCurrent(); } catch (err) { setNotice(err.message, "error"); }
+    }
+  }
+});
+
+// ─── Boot ─────────────────────────────────────────────────────────────────────
 
 window.addEventListener("DOMContentLoaded", async () => {
   try {
