@@ -77,6 +77,18 @@ if (typeof lucide !== "undefined") {
 lucide.createIcons();
 }
 };
+const syncMermaidTheme = (theme) => {
+if (!window.mermaid) return;
+try {
+window.mermaid.initialize({
+startOnLoad: false,
+theme: theme === "light" ? "default" : "dark"
+});
+syncRichContent(document);
+} catch (err) {
+console.error("Mermaid theme sync error:", err);
+}
+};
 const initLocalization = () => {
 const config = parseJsonScript("site-i18n");
 if (!config) return null;
@@ -141,6 +153,7 @@ const updateThemeUI = (theme) => {
 document.documentElement.dataset.theme = theme;
 document.querySelectorAll(".theme-icon-moon").forEach(el => el.classList.toggle("hidden", theme === "light"));
 document.querySelectorAll(".theme-icon-sun").forEach(el => el.classList.toggle("hidden", theme === "dark"));
+syncMermaidTheme(theme);
 };
 useStore.subscribe((state, prevState) => {
 if (state.theme !== prevState.theme) {
@@ -148,8 +161,7 @@ updateThemeUI(state.theme);
 }
 });
 updateThemeUI(useStore.getState().theme);
-const toggle = document.querySelector("[data-theme-toggle]");
-if (toggle) {
+document.querySelectorAll("[data-theme-toggle]").forEach(toggle => {
 toggle.addEventListener("click", () => {
 const current = useStore.getState().theme;
 useStore.getState().setTheme(current === "dark" ? "light" : "dark");
@@ -159,7 +171,7 @@ toggle.animate([
 { transform: "rotate(0) scale(1)" }
 ], { duration: 300, easing: "ease-out" });
 });
-}
+});
 };
 const initContactCardsLocalization = () => {
 const cards = document.querySelectorAll("[data-contact-card]");
@@ -316,30 +328,33 @@ btn.animate([
 }));
 };
 const initCodeBlocks = (loc) => {
-document.querySelectorAll(".code-shell").forEach(shell => {
-const btn = shell.querySelector(".code-shell-copy");
-const pre = shell.querySelector("pre");
-if (!btn || !pre) return;
-btn.addEventListener("click", async () => {
+document.addEventListener("click", async (event) => {
+const btn = event.target.closest(".code-shell-copy");
+if (!btn) return;
+const shell = btn.closest(".code-shell");
+const pre = shell?.querySelector("pre");
+if (!shell || !pre) return;
 const code = pre.textContent;
 try {
 await navigator.clipboard.writeText(code);
 shell.classList.add("is-copied");
 const feedback = btn.querySelector(".copy-feedback");
 if (feedback) {
-const originalText = feedback.textContent;
-feedback.textContent = loc?.translate("actions.copied", "Copiado!") || "Copiado!";
-setTimeout(() => {
+const originalText = feedback.dataset.originalText || feedback.textContent || "";
+if (!feedback.dataset.originalText) {
+feedback.dataset.originalText = originalText;
+}
+feedback.textContent = loc?.translate("actions.copied", originalText || "Copiado!") || originalText || "Copiado!";
+window.setTimeout(() => {
 shell.classList.remove("is-copied");
-feedback.textContent = originalText;
+feedback.textContent = feedback.dataset.originalText || originalText;
 }, 2000);
 } else {
-setTimeout(() => shell.classList.remove("is-copied"), 2000);
+window.setTimeout(() => shell.classList.remove("is-copied"), 2000);
 }
 } catch (err) {
 console.error("Failed to copy:", err);
 }
-});
 });
 };
 const initNavDrawer = () => {
