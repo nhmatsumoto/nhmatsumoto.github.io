@@ -302,7 +302,7 @@ def _render_profile_contact_block(site: dict[str, str], system: dict[str, Any], 
           <p class="section-kicker profile-contact-kicker" data-i18n="nav.contact">{contact_kicker}</p>
           <h3 id="{html.escape(title_id)}" class="profile-contact-title" data-i18n="pages.contact.title">{contact_label}</h3>
           <p class="profile-contact-copy" data-i18n="pages.contact.description">{contact_desc}</p>
-          <ul class="profile-contact-links">
+          <ul class="profile-contact-links profile-links">
             {"".join(link_items)}
           </ul>
         </section>
@@ -361,14 +361,14 @@ def _render_profile_header(site: dict[str, str], system: dict[str, Any], i18n: d
     return _clean_html_fragment(
         f"""
     <section class="{shell_class}" aria-labelledby="profile-shell-name">
-      <div class="about-profile-card profile-shell-card">
-        <div class="about-profile-avatar">
+      <div class="about-profile-card profile-shell-card profile">
+        <div class="about-profile-avatar profile-avatar">
           <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="{html.escape(translate(i18n, locale, "profile.alt", "Hiro Matsumoto"))}" width="400" height="300" loading="eager">
         </div>
-        <div class="about-profile-main">
+        <div class="about-profile-main profile-main">
           <p class="about-profile-handle" data-profile-field="profile_handle">{html.escape(translate(i18n, locale, "profile.handle", "@nhmatsumoto · Brasil / Japão"))}</p>
-          <h2 id="profile-shell-name" class="profile-shell-name" data-profile-field="profile_name">Hiro Matsumoto</h2>
-          <p class="about-profile-bio" data-profile-field="profile_summary">{html.escape(lede)}</p>
+          <h2 id="profile-shell-name" class="profile-shell-name profile-name" data-profile-field="profile_name">Hiro Matsumoto</h2>
+          <p class="about-profile-bio profile-bio" data-profile-field="profile_summary">{html.escape(lede)}</p>
           {_render_profile_contact_block(site, system, i18n, locale, title_id="profile-shell-contact-title")}
         </div>
       </div>
@@ -382,25 +382,19 @@ def _render_profile_header(site: dict[str, str], system: dict[str, Any], i18n: d
 def _render_home_profile(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     about = system.get("about", {})
     lede = str(localized_value(about, "lede", locale, i18n, site.get("headline", "")) or "").strip()
-    view_label = html.escape(translate(i18n, locale, "actions.view_about", "Ver perfil completo"))
     payload = _build_profile_localization_payload(system, i18n, locale, site.get("headline", ""))
     payload_json = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
-    return f"""<div class="about-profile-card home-profile-card">
-      <div class="about-profile-avatar">
+    return f"""<section class="about-profile-card home-profile-card profile" aria-labelledby="home-profile-name">
+      <div class="about-profile-avatar profile-avatar">
         <img src="{html.escape(site_href(site, "/assets/images/profile/profile.gif"))}" alt="{html.escape(translate(i18n, locale, "profile.alt", "Hiro Matsumoto"))}" width="400" height="300" loading="lazy">
       </div>
-      <div class="about-profile-main">
+      <div class="about-profile-main profile-main">
         <p class="about-profile-handle" data-i18n="profile.handle">{html.escape(translate(i18n, locale, "profile.handle", "@nhmatsumoto · Brasil / Japão"))}</p>
-        <h2 id="home-profile-name" class="home-profile-name">Hiro Matsumoto</h2>
-        <p class="about-profile-bio" data-profile-field="profile_summary">{html.escape(lede)}</p>
+        <h1 id="home-profile-name" class="home-profile-name profile-name" data-profile-field="profile_name">Hiro Matsumoto</h1>
+        <p class="about-profile-bio profile-bio" data-profile-field="profile_summary">{html.escape(lede)}</p>
         {_render_profile_contact_block(site, system, i18n, locale, title_id="home-profile-contact-title", compact=True)}
-        <a class="home-profile-link" href="{site_href(site, "/about/")}" aria-label="{view_label}">
-          {render_icon("user-round", "site-icon home-profile-link-icon")}
-          <span data-i18n="actions.view_about">{view_label}</span>
-          {render_icon("arrow-right", "site-icon home-profile-link-arrow")}
-        </a>
       </div>
-    </div>
+    </section>
     <script id="profile-content-data" type="application/json">{payload_json}</script>"""
 
 

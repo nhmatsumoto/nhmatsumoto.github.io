@@ -123,7 +123,10 @@ if (!el.dataset.i18nFallback) el.dataset.i18nFallback = el.textContent || "";
 el.textContent = translate(el.dataset.statusKey, el.dataset.i18nFallback, locale);
 });
 const localeCode = String(locale || "").toUpperCase();
-document.querySelectorAll("[data-locale-label]").forEach(el => el.textContent = localeCode);
+const compactLocaleCode = localeCode.split("-")[0] || localeCode;
+document.querySelectorAll("[data-locale-label]").forEach(el => {
+el.textContent = el.dataset.localeStyle === "compact" ? compactLocaleCode : localeCode;
+});
 };
 useStore.subscribe((state, prevState) => {
 if (state.locale !== prevState.locale) {
@@ -344,10 +347,15 @@ const toggles = document.querySelectorAll("[data-nav-toggle]");
 const drawer = document.getElementById("mobile-drawer");
 if (!toggles.length || !drawer) return;
 const setOpen = (open) => {
-document.body.dataset.navOpen = String(open);
+document.body.dataset.navOpen = open ? "true" : "false";
 drawer.setAttribute("aria-hidden", String(!open));
 document.querySelectorAll(".menu-icon-open").forEach(el => el.classList.toggle("hidden", open));
 document.querySelectorAll(".menu-icon-close").forEach(el => el.classList.toggle("hidden", !open));
+toggles.forEach(toggle => {
+if (toggle.tagName === "BUTTON") {
+toggle.setAttribute("aria-expanded", String(open));
+}
+});
 };
 toggles.forEach(t => t.addEventListener("click", () => {
 const isOpen = document.body.dataset.navOpen === "true";
@@ -364,6 +372,7 @@ if (window.innerWidth > 1024 && document.body.dataset.navOpen === "true") {
 setOpen(false);
 }
 });
+setOpen(false);
 };
 const initInteractiveGlow = () => {
 const updateCoords = (e) => {

@@ -27,7 +27,9 @@
         "cta": "trabalho aberto / contato",
         "language": "idioma",
         "language_action": "trocar idioma",
-        "theme": "alternar tema"
+        "theme": "alternar tema",
+        "menu_open": "Abrir menu",
+        "menu_close": "Fechar menu"
       },
       "palette": {
         "placeholder": "Buscar publicações, daily notes, projetos e documentos",
@@ -216,7 +218,9 @@
         "cta": "open work / contact",
         "language": "language",
         "language_action": "switch language",
-        "theme": "toggle theme"
+        "theme": "toggle theme",
+        "menu_open": "Open menu",
+        "menu_close": "Close menu"
       },
       "palette": {
         "placeholder": "Search posts, daily notes, projects and documents",
@@ -405,7 +409,9 @@
         "cta": "お問い合わせ",
         "language": "言語",
         "language_action": "言語切替",
-        "theme": "テーマ切替"
+        "theme": "テーマ切替",
+        "menu_open": "メニューを開く",
+        "menu_close": "メニューを閉じる"
       },
       "palette": {
         "placeholder": "記事、daily notes、プロジェクト、ドキュメントを検索",
