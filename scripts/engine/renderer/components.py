@@ -480,11 +480,19 @@ def render_project_card(project: dict[str, Any], i18n: dict[str, Any], locale: s
     </li>
     """.strip()
 
-def render_document_card(document: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
+def render_document_card(
+    document: dict[str, Any],
+    i18n: dict[str, Any],
+    locale: str,
+    *,
+    title_tag: str = "h3",
+) -> str:
     kind_label = translate(i18n, locale, "kinds.document", "document")
     category = str(document.get("category") or "").strip()
     version_raw = str(document.get("version") or "").strip()
     version_label = version_raw if version_raw.lower().startswith("v") else (f"v{version_raw}" if version_raw else "")
+    heading_tag = title_tag if title_tag in {"h1", "h2", "h3", "h4", "h5", "h6"} else "h3"
+    title_id = f'document-title-{document["slug"]}'
     eyebrow_parts = [_entry_kind("document", kind_label, "kinds.document")]
     if category:
         eyebrow_parts.append(_entry_meta("folder", html.escape(category)))
@@ -496,15 +504,16 @@ def render_document_card(document: dict[str, Any], i18n: dict[str, Any], locale:
             f'<span class="entry-flag">{render_icon("bot", "site-icon entry-icon")}{_label_span(agent_label, "common.agent_generated")}</span>'
         )
     eyebrow = _entry_eyebrow(eyebrow_parts)
+    document_meta = eyebrow.replace('class="entry-eyebrow"', 'class="entry-eyebrow document-meta"', 1)
     cta_label = translate(i18n, locale, "actions.open_docs", "Open")
     entry_payload = _build_entry_card_payload(document, ["title", "summary"], i18n)
     payload_json = json.dumps(entry_payload, ensure_ascii=False).replace("<", "\\u003c")
     return f"""
     <li class="entry" data-entry-card>
-      <article class="entry-card entry-card-document">
-        {eyebrow}
-        <h3 class="entry-title"><a href="{html.escape(document['resolved_url'])}" data-entry-title>{html.escape(document['title'])}</a></h3>
-        <p class="entry-lede" data-entry-lede>{html.escape(document['summary'])}</p>
+      <article class="entry-card entry-card-document document-item" aria-labelledby="{html.escape(title_id, quote=True)}">
+        {document_meta}
+        <{heading_tag} class="entry-title document-title" id="{html.escape(title_id, quote=True)}"><a href="{html.escape(document['resolved_url'])}" data-entry-title>{html.escape(document['title'])}</a></{heading_tag}>
+        <p class="entry-lede document-description" data-entry-lede>{html.escape(document['summary'])}</p>
         {_entry_cta(document['resolved_url'], cta_label, "actions.open_docs")}
       </article>
       <script type="application/json" data-entry-card-data>{payload_json}</script>
@@ -770,6 +779,7 @@ def render_documents_section(
     limit: int | None = None,
     grouped: bool = False,
     show_header: bool = True,
+    document_title_tag: str = "h3",
 ) -> str:
     items = documents[:limit] if limit is not None else documents
     if grouped:
@@ -783,18 +793,18 @@ def render_documents_section(
         for category in categories or sorted(groups):
             docs_in_category = groups.get(category, [])
             if not docs_in_category: continue
-            cards = "\n".join(render_document_card(d, i18n, locale) for d in docs_in_category)
+            cards = "\n".join(render_document_card(d, i18n, locale, title_tag=document_title_tag) for d in docs_in_category)
             blocks.append(
                 f'<section class="document-group" id="category-{html.escape(slugify(category), quote=True)}">'
-                f'<header class="document-group-head"><h3>{html.escape(category)}</h3></header>'
-                f'<ol class="entry-list">{cards}</ol></section>'
+                f'<header class="document-group-head"><h2 class="document-group-title">{html.escape(category)}</h2></header>'
+                f'<ol class="entry-list document-list">{cards}</ol></section>'
             )
         empty_msg = translate(i18n, locale, "empty.documents", "No documents indexed yet.")
         content = "\n".join(blocks) if blocks else f'<p class="empty-state" data-i18n="empty.documents">{html.escape(empty_msg)}</p>'
     else:
-        cards = "\n".join(render_document_card(d, i18n, locale) for d in items)
+        cards = "\n".join(render_document_card(d, i18n, locale, title_tag=document_title_tag) for d in items)
         empty_state = f'<li><p class="empty-state" data-i18n="empty.documents">{html.escape(translate(i18n, locale, "empty.documents", "No documents indexed yet."))}</p></li>'
-        content = f'<ol class="entry-list">{cards or empty_state}</ol>'
+        content = f'<ol class="entry-list document-list">{cards or empty_state}</ol>'
     header_html = ""
     labelledby_attr = ""
     if show_header:

@@ -3978,6 +3978,18 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   margin-bottom: calc(var(--base_grid_unit) * 2);
 }
 
+.document-group-title {
+  margin: 0;
+  font-family: var(--font-code);
+  font-size: var(--type-label);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: calc(var(--base_grid_unit) * 1.5);
+  border-bottom: 1px dashed var(--surface-dashed-border-soft);
+}
+
 .start-here-panel .entry-list,
 .related-content-panel .entry-list {
   gap: 0;
@@ -5504,6 +5516,70 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 .entry-card-link:hover { color: var(--accent); }
 .entry-card-link .site-icon { width: 0.75rem; height: 0.75rem; }
 
+.page-documents .documents-panel {
+  padding: calc(var(--base_grid_unit) * 4) calc(var(--base_grid_unit) * 4) calc(var(--base_grid_unit) * 5);
+}
+
+.page-documents .documents-panel-body {
+  width: min(100%, 54rem);
+  gap: calc(var(--base_grid_unit) * 5);
+}
+
+.page-documents .document-group {
+  display: grid;
+  gap: calc(var(--base_grid_unit) * 3);
+}
+
+.page-documents .document-group-head {
+  margin-bottom: 0;
+}
+
+.page-documents .document-list {
+  gap: calc(var(--base_grid_unit) * 4);
+}
+
+.page-documents .document-list > li.entry,
+.page-documents .document-list > li.entry:first-child,
+.page-documents .document-list > li.entry:last-child {
+  padding: 0;
+}
+
+.page-documents .document-item {
+  width: min(100%, 50rem);
+  gap: calc(var(--base_grid_unit) * 2.5);
+  padding: var(--space-6) clamp(var(--space-6), 3vw, var(--space-8));
+}
+
+.page-documents .document-meta {
+  row-gap: calc(var(--base_grid_unit) * 0.75);
+  color: color-mix(in srgb, var(--text) 68%, var(--muted));
+}
+
+.page-documents .document-title {
+  max-width: 28ch;
+  font-size: clamp(1.4rem, 1.18rem + 0.95vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.page-documents .document-title a {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.page-documents .document-description {
+  max-width: 44rem;
+  font-size: clamp(1rem, 0.97rem + 0.14vw, 1.06rem);
+  line-height: var(--rhythm-line);
+  color: color-mix(in srgb, var(--text) 74%, var(--muted));
+}
+
+.page-documents .document-item .entry-cta {
+  margin-top: calc(var(--base_grid_unit) * 0.5);
+}
+
 .page-home .entry-list > li.entry {
   padding: calc(var(--base_grid_unit) * 3) 0;
 }
@@ -5517,6 +5593,30 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   }
   .entry-title {
     font-size: 1.2rem;
+  }
+
+  .page-documents .documents-panel {
+    padding: calc(var(--base_grid_unit) * 3);
+  }
+
+  .page-documents .documents-panel-body {
+    width: 100%;
+    gap: calc(var(--base_grid_unit) * 4);
+  }
+
+  .page-documents .document-list {
+    gap: calc(var(--base_grid_unit) * 3);
+  }
+
+  .page-documents .document-item {
+    width: 100%;
+    gap: calc(var(--base_grid_unit) * 2);
+    padding: calc(var(--base_grid_unit) * 3);
+  }
+
+  .page-documents .document-title {
+    max-width: none;
+    font-size: clamp(1.32rem, 6vw, 1.56rem);
   }
 }
 

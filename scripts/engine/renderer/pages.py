@@ -653,7 +653,7 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
         </section>
       </header>
       <div class="page-content">
-        {render_documents_section(system, documents, i18n, locale, grouped=True, show_header=False)}
+        {render_documents_section(system, documents, i18n, locale, grouped=True, show_header=False, document_title_tag="h1")}
       </div>
     </div>
     """
