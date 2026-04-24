@@ -44,7 +44,7 @@ def _highlight_code(code: str, lang: str) -> str:
         # Fallback para o rendering atual seguro em caso de falha no Node/Shiki
         return f'<pre><code>{html.escape(code)}</code></pre>'
 
-def render_markdown(text: str) -> str:
+def render_markdown(text: str, *, heading_offset: int = 0) -> str:
     import re
     from ..constants import WIKILINK_RE, LINK_RE, STRONG_RE, EMPHASIS_RE, INLINE_CODE_RE
 
@@ -112,23 +112,45 @@ def render_markdown(text: str) -> str:
             
             content = "\n".join(block)
             if language == "mermaid":
-                parts.append(f'<div class="mermaid">{html.escape(content)}</div>')
+                parts.append(
+                    f'<div class="diagram-shell mermaid-shell" data-language="mermaid">'
+                    f'  <div class="diagram-shell-header"><span class="diagram-shell-label">Mermaid</span></div>'
+                    f'  <div class="diagram-shell-content"><div class="mermaid">{html.escape(content)}</div></div>'
+                    f'</div>'
+                )
             else:
                 highlighted_html = _highlight_code(content, language)
                 
-                # Extraímos o nome amigável da linguagem para o label
-                lang_label = (language or "text").upper()
-                if lang_label == "TS": lang_label = "TypeScript"
-                if lang_label == "JS": lang_label = "JavaScript"
-                if lang_label == "CS": lang_label = "C#"
-                if lang_label == "PY": lang_label = "Python"
+                language_labels = {
+                    "ts": "TypeScript",
+                    "typescript": "TypeScript",
+                    "js": "JavaScript",
+                    "javascript": "JavaScript",
+                    "cs": "C#",
+                    "csharp": "C#",
+                    "sql": "SQL",
+                    "py": "Python",
+                    "python": "Python",
+                    "html": "HTML",
+                    "css": "CSS",
+                    "bash": "Bash",
+                    "sh": "Shell",
+                    "shell": "Shell",
+                    "json": "JSON",
+                    "toml": "TOML",
+                    "yaml": "YAML",
+                    "yml": "YAML",
+                    "md": "Markdown",
+                    "markdown": "Markdown",
+                }
+                lang_label = language_labels.get((language or "text").lower(), (language or "text").upper())
                 
                 parts.append(
                     f'<div class="code-shell" data-language="{html.escape(language or "text")}">'
                     f'  <div class="code-shell-header">'
                     f'    <div class="code-shell-controls"><span class="control-dot close"></span><span class="control-dot minimize"></span><span class="control-dot maximize"></span></div>'
                     f'    <div class="code-shell-title"><span class="code-shell-label">{html.escape(lang_label)}</span></div>'
-                    f'    <button class="code-shell-copy" aria-label="Copy code"><i data-lucide="copy" class="copy-icon"></i><span class="copy-feedback" data-i18n="actions.copied">Copiado!</span></button>'
+                    f'    <button class="code-shell-copy" type="button" aria-label="Copy code" data-i18n-aria-label="actions.copy"><i data-lucide="copy" class="copy-icon"></i><span class="copy-feedback" data-i18n="actions.copied">Copiado!</span></button>'
                     f'  </div>'
                     f'  <div class="code-shell-content">{highlighted_html}</div>'
                     f'</div>'
@@ -162,7 +184,7 @@ def render_markdown(text: str) -> str:
         if stripped.startswith("#"):
             match = re.match(r"^(#+)\s+(.+)$", stripped)
             if match:
-                level = len(match.group(1))
+                level = min(6, max(1, len(match.group(1)) + heading_offset))
                 parts.append(f"<h{level}>{render_inline(match.group(2))}</h{level}>")
                 i += 1
                 continue
@@ -737,12 +759,16 @@ def render_related_posts(posts: list[dict[str, Any]], i18n: dict[str, Any], loca
     title = translate(i18n, locale, "sections.related_posts", "Posts relacionados")
     cards = "\n".join(render_post_card(p, i18n, locale) for p in posts)
     return f"""
-    <section class="section-panel related-posts-panel">
-      <header class="section-header">
-        <h2 data-i18n="sections.related_posts">{html.escape(title)}</h2>
-      </header>
-      <ol class="entry-list">{cards}</ol>
-    </section>
+    <div class="related-content-shell">
+      <div class="layout-container">
+        <section class="section-panel related-posts-panel" aria-labelledby="related-posts-title">
+          <header class="section-header">
+            <h2 id="related-posts-title" data-i18n="sections.related_posts">{html.escape(title)}</h2>
+          </header>
+          <ol class="entry-list">{cards}</ol>
+        </section>
+      </div>
+    </div>
     """
 
 def render_related_content(items: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
@@ -757,16 +783,20 @@ def render_related_content(items: list[dict[str, Any]], i18n: dict[str, Any], lo
     )
     cards = "\n".join(render_entry_card(item, i18n, locale) for item in items)
     return f"""
-    <section class="section-panel related-content-panel">
-      <header class="section-header">
-        <div>
-          <p class="section-kicker" data-i18n="sections.navigation_kicker">{html.escape(translate(i18n, locale, "sections.navigation_kicker", "navegacao"))}</p>
-          <h2 data-i18n="sections.related_content">{html.escape(title)}</h2>
-        </div>
-        <p class="section-copy" data-i18n="sections.related_content_copy">{html.escape(copy)}</p>
-      </header>
-      <ol class="entry-list">{cards}</ol>
-    </section>
+    <div class="related-content-shell">
+      <div class="layout-container">
+        <section class="section-panel related-content-panel" aria-labelledby="related-content-title">
+          <header class="section-header">
+            <div>
+              <p class="section-kicker" data-i18n="sections.navigation_kicker">{html.escape(translate(i18n, locale, "sections.navigation_kicker", "navegacao"))}</p>
+              <h2 id="related-content-title" data-i18n="sections.related_content">{html.escape(title)}</h2>
+            </div>
+            <p class="section-copy" data-i18n="sections.related_content_copy">{html.escape(copy)}</p>
+          </header>
+          <ol class="entry-list">{cards}</ol>
+        </section>
+      </div>
+    </div>
     """
 
 

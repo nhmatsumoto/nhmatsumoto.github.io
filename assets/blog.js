@@ -93,6 +93,20 @@ const syncRichContent = (root) => {
   }
 };
 
+const syncMermaidTheme = (theme) => {
+  if (!window.mermaid) return;
+
+  try {
+    window.mermaid.initialize({
+      startOnLoad: false,
+      theme: theme === "light" ? "default" : "dark"
+    });
+    syncRichContent(document);
+  } catch (err) {
+    console.error("Mermaid theme sync error:", err);
+  }
+};
+
 // --- Initialization Functions ---
 
 const initLocalization = () => {
@@ -178,6 +192,7 @@ const initThemeManager = () => {
     document.documentElement.dataset.theme = theme;
     document.querySelectorAll(".theme-icon-moon").forEach(el => el.classList.toggle("hidden", theme === "light"));
     document.querySelectorAll(".theme-icon-sun").forEach(el => el.classList.toggle("hidden", theme === "dark"));
+    syncMermaidTheme(theme);
   };
 
   useStore.subscribe((state, prevState) => {
@@ -189,8 +204,7 @@ const initThemeManager = () => {
   // Initial UI state
   updateThemeUI(useStore.getState().theme);
 
-  const toggle = document.querySelector("[data-theme-toggle]");
-  if (toggle) {
+  document.querySelectorAll("[data-theme-toggle]").forEach(toggle => {
     toggle.addEventListener("click", () => {
       const current = useStore.getState().theme;
       useStore.getState().setTheme(current === "dark" ? "light" : "dark");
@@ -201,7 +215,7 @@ const initThemeManager = () => {
         { transform: "rotate(0) scale(1)" }
       ], { duration: 300, easing: "ease-out" });
     });
-  }
+  });
 };
 
 const initContactCardsLocalization = () => {
@@ -391,32 +405,36 @@ const initLocaleToggle = (loc) => {
 
 
 const initCodeBlocks = (loc) => {
-  document.querySelectorAll(".code-shell").forEach(shell => {
-    const btn = shell.querySelector(".code-shell-copy");
-    const pre = shell.querySelector("pre");
-    if (!btn || !pre) return;
+  document.addEventListener("click", async (event) => {
+    const btn = event.target.closest(".code-shell-copy");
+    if (!btn) return;
 
-    btn.addEventListener("click", async () => {
-      const code = pre.textContent;
-      try {
-        await navigator.clipboard.writeText(code);
-        
-        shell.classList.add("is-copied");
-        const feedback = btn.querySelector(".copy-feedback");
-        if (feedback) {
-          const originalText = feedback.textContent;
-          feedback.textContent = loc?.translate("actions.copied", "Copiado!") || "Copiado!";
-          setTimeout(() => {
-            shell.classList.remove("is-copied");
-            feedback.textContent = originalText;
-          }, 2000);
-        } else {
-           setTimeout(() => shell.classList.remove("is-copied"), 2000);
+    const shell = btn.closest(".code-shell");
+    const pre = shell?.querySelector("pre");
+    if (!shell || !pre) return;
+
+    const code = pre.textContent;
+    try {
+      await navigator.clipboard.writeText(code);
+
+      shell.classList.add("is-copied");
+      const feedback = btn.querySelector(".copy-feedback");
+      if (feedback) {
+        const originalText = feedback.dataset.originalText || feedback.textContent || "";
+        if (!feedback.dataset.originalText) {
+          feedback.dataset.originalText = originalText;
         }
-      } catch (err) {
-        console.error("Failed to copy:", err);
+        feedback.textContent = loc?.translate("actions.copied", originalText || "Copiado!") || originalText || "Copiado!";
+        window.setTimeout(() => {
+          shell.classList.remove("is-copied");
+          feedback.textContent = feedback.dataset.originalText || originalText;
+        }, 2000);
+      } else {
+        window.setTimeout(() => shell.classList.remove("is-copied"), 2000);
       }
-    });
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
   });
 };
 

@@ -209,7 +209,7 @@ def render_footer(site: dict[str, str], system: dict[str, Any], i18n: dict[str, 
     blog_engine = translate(i18n, locale, "footer.blog_engine", "blog engine")
     return f"""
     <footer class="site-footer">
-      <div class="layout-container">
+      <div class="layout-container site-footer-inner">
         <p>
           <span data-i18n="footer.developed_by">{html.escape(developed_by)}</span>
           <a href="{github_url}" target="_blank" rel="noopener noreferrer">{render_icon("git-branch", "site-icon footer-icon")}<span>NHMatsumoto</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>
@@ -298,7 +298,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     {math_meta}
     {import_map_html}
   </head>
-  <body class="{html.escape(body_class)}" data-has-math="{str(has_math).lower()}" data-default-locale="{html.escape(locale)}" data-locale="{html.escape(locale)}">
+  <body class="{html.escape(body_class)}" data-has-math="{str(has_math).lower()}" data-default-locale="{html.escape(i18n.get('default_locale', locale))}" data-locale="{html.escape(locale)}">
     {analytics_body_html}
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">{html.escape(translate(i18n, locale, "accessibility.skip_to_content", "Ir para o conteúdo"))}</a>
     

@@ -68,11 +68,11 @@ def _build_post_localization_payload(post: dict[str, Any]) -> dict[str, Any]:
     payload = {
         "title": post["title"],
         "summary": post["summary"],
-        "body_html": render_markdown(post.get("body", "")),
+        "body_html": render_markdown(post.get("body", ""), heading_offset=1),
     }
     copy_localized_fields(post, payload, "title")
     copy_localized_fields(post, payload, "summary")
-    copy_localized_fields(post, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
+    copy_localized_fields(post, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or ""), heading_offset=1))
     return payload
 
 
@@ -80,11 +80,11 @@ def _build_daily_localization_payload(entry: dict[str, Any]) -> dict[str, Any]:
     payload = {
         "title": entry["title"],
         "summary": entry["summary"],
-        "body_html": render_markdown(entry.get("body", "")),
+        "body_html": render_markdown(entry.get("body", ""), heading_offset=1),
     }
     copy_localized_fields(entry, payload, "title")
     copy_localized_fields(entry, payload, "summary")
-    copy_localized_fields(entry, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
+    copy_localized_fields(entry, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or ""), heading_offset=1))
     return payload
 
 
@@ -137,7 +137,7 @@ def _build_project_localization_payload(project: dict[str, Any], i18n: dict[str,
         "name": project["name"],
         "headline": project.get("headline", ""),
         "summary": project["summary"],
-        "body_html": render_markdown(_build_project_body(project, i18n, locale)),
+        "body_html": render_markdown(_build_project_body(project, i18n, locale), heading_offset=1),
     }
     copy_localized_fields(project, payload, "name")
     copy_localized_fields(project, payload, "headline")
@@ -158,7 +158,7 @@ def _build_project_localization_payload(project: dict[str, Any], i18n: dict[str,
     for supported_locale in i18n.get("supported_locales", []):
         if not _has_complete_localized_coverage(project, long_fields, supported_locale, i18n):
             continue
-        localized_body = render_markdown(_build_project_body(project, i18n, supported_locale))
+        localized_body = render_markdown(_build_project_body(project, i18n, supported_locale), heading_offset=1)
         for suffix in locale_suffixes(supported_locale, i18n):
             key = f"body_html_{suffix}"
             if key not in payload:
@@ -170,11 +170,11 @@ def _build_document_localization_payload(document: dict[str, Any]) -> dict[str, 
     payload = {
         "title": document["title"],
         "summary": document["summary"],
-        "body_html": render_markdown(document.get("body", "")),
+        "body_html": render_markdown(document.get("body", ""), heading_offset=1),
     }
     copy_localized_fields(document, payload, "title")
     copy_localized_fields(document, payload, "summary")
-    copy_localized_fields(document, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or "")))
+    copy_localized_fields(document, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or ""), heading_offset=1))
     return payload
 
 
@@ -647,7 +647,7 @@ def render_documents_index_page(site: dict[str, str], system: dict[str, Any], do
         </section>
       </header>
       <div class="page-content">
-        {render_documents_section(system, documents, i18n, locale, grouped=True, show_header=False, document_title_tag="h1")}
+        {render_documents_section(system, documents, i18n, locale, grouped=True, show_header=False, document_title_tag="h3")}
       </div>
     </div>
     """
@@ -970,12 +970,12 @@ def render_post_page(
               <h1 data-page-title>{html.escape(post['title'])}</h1>
               <p class="post-summary post-deck" data-page-summary>{html.escape(post['summary'])}</p>
             </header>
-            <div class="post-body" data-page-body>{render_markdown(post['body'])}</div>{post_body_sections}
+            <div class="post-body" data-page-body>{render_markdown(post['body'], heading_offset=1)}</div>{post_body_sections}
           </article>
         </div>
       </div>
-      {related_html}
     </div>
+    {related_html}
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     og = {
@@ -1032,41 +1032,50 @@ def render_daily_page(
     soundtrack_link = ""
     if entry.get("resolved_spotify_url"):
         soundtrack_link = f'<a class="sidebar-link" href="{entry["resolved_spotify_url"]}" target="_blank" rel="noopener">{render_icon("music-2", "site-icon sidebar-link-icon")}<span>spotify</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>'
+    metrics_html = render_metric_list(meta_lines, escape_items=False)
+    tags_html = render_tag_list(entry.get("tags", []))
+    context_parts = [
+        f'<p><strong data-i18n="pages.daily.mood">{html.escape(translate(i18n, locale, "pages.daily.mood", "Mood"))}</strong>: {html.escape(entry["mood"])}</p>' if entry.get("mood") else "",
+        f'<p><strong data-i18n="pages.daily.soundtrack">{html.escape(translate(i18n, locale, "pages.daily.soundtrack", "Soundtrack"))}</strong>: {html.escape(entry["soundtrack"])}</p>' if entry.get("soundtrack") else "",
+        f'<p><strong data-i18n="pages.daily.now_playing">{html.escape(translate(i18n, locale, "pages.daily.now_playing", "Tocando"))}</strong>: {html.escape(entry["now_playing"])}</p>' if entry.get("now_playing") else "",
+    ]
+    context_html = "".join(part for part in context_parts if part)
 
     page_payload = json.dumps(_build_daily_localization_payload(entry), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
-    <div class="layout-container">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
         {breadcrumbs}
       </header>
       <div class="page-two-column">
-        <aside class="page-sidebar">
-          <div class="sidebar-panel notebook-meta-panel">
-            <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
-            {render_tag_list(entry.get("tags", []))}
-            <div class="meta-stack">
-              {f'<p><strong data-i18n="pages.daily.mood">{html.escape(translate(i18n, locale, "pages.daily.mood", "Mood"))}</strong>: {html.escape(entry["mood"])}</p>' if entry.get("mood") else ""}
-              {f'<p><strong data-i18n="pages.daily.soundtrack">{html.escape(translate(i18n, locale, "pages.daily.soundtrack", "Soundtrack"))}</strong>: {html.escape(entry["soundtrack"])}</p>' if entry.get("soundtrack") else ""}
-              {f'<p><strong data-i18n="pages.daily.now_playing">{html.escape(translate(i18n, locale, "pages.daily.now_playing", "Tocando"))}</strong>: {html.escape(entry["now_playing"])}</p>' if entry.get("now_playing") else ""}
+        <aside class="page-sidebar post-detail-sidebar">
+          <div class="sidebar-panel notebook-meta-panel post-meta-panel">
+            <div class="post-sidebar-section post-sidebar-section-meta">
+              <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
+              {metrics_html}
             </div>
-            <div class="sidebar-actions">{soundtrack_link}</div>
+            {f'<div class="post-sidebar-section">{tags_html}</div>' if tags_html else ""}
+            {f'<div class="post-sidebar-section meta-stack">{context_html}</div>' if context_html else ""}
+            {f'<div class="sidebar-actions">{soundtrack_link}</div>' if soundtrack_link else ""}
           </div>
         </aside>
         <div class="page-main">
-          <article class="post-shell prose notebook-sheet">
-            <header class="post-header">
-              <p class="section-kicker" data-i18n="pages.daily.kicker">{html.escape(translate(i18n, locale, "pages.daily.kicker", "daily"))}</p>
+          <article class="post-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.daily.kicker">{html.escape(translate(i18n, locale, "pages.daily.kicker", "daily"))}</p>
+                <div class="post-meta post-meta-hero">{"".join(meta_lines)}</div>
+              </div>
               <h1 data-page-title>{html.escape(entry['title'])}</h1>
-              <p class="post-summary" data-page-summary>{html.escape(entry['summary'])}</p>
-              <div class="post-meta">{"".join(meta_lines)}</div>
+              <p class="post-summary post-deck" data-page-summary>{html.escape(entry['summary'])}</p>
             </header>
-            <div data-page-body>{render_markdown(entry['body'])}</div>
+            <div class="post-body" data-page-body>{render_markdown(entry['body'], heading_offset=1)}</div>
           </article>
         </div>
       </div>
     </div>
-    <script id="page-content-data" type="application/json">{page_payload}</script>
     {render_related_content(related_items or [], i18n, locale)}
+    <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     return render_layout(
         page_title=f"{entry['title']} | {site['title']}",
@@ -1150,8 +1159,8 @@ def render_project_page(
           </article>
         </div>
       </div>
-      {render_related_content(related_items or [], i18n, locale)}
     </div>
+    {render_related_content(related_items or [], i18n, locale)}
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     og = {
@@ -1231,8 +1240,8 @@ def render_document_page(
           </article>
         </div>
       </div>
-      {render_related_content(related_items or [], i18n, locale)}
     </div>
+    {render_related_content(related_items or [], i18n, locale)}
     <script id="page-content-data" type="application/json">{page_payload}</script>
     """
     return render_layout(
