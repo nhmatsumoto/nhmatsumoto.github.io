@@ -23,12 +23,13 @@
         "documents": "documentos",
         "about": "sobre",
         "contact": "contato",
-        "menu": "menu",
         "search": "buscar",
         "cta": "trabalho aberto / contato",
         "language": "idioma",
         "language_action": "trocar idioma",
-        "theme": "alternar tema"
+        "theme": "alternar tema",
+        "menu_open": "Abrir menu",
+        "menu_close": "Fechar menu"
       },
       "palette": {
         "placeholder": "Buscar publicações, daily notes, projetos e documentos",
@@ -97,12 +98,11 @@
         },
         "daily": {
           "title": "Daily notes",
-          "description": "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho.",
+          "description": "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git.",
           "kicker": "daily",
           "meta": "Contexto",
-          "mood": "Mood",
-          "soundtrack": "Soundtrack",
-          "now_playing": "Tocando"
+          "source": "Fonte",
+          "related_paths": "Caminhos relacionados"
         },
         "contact": {
           "title": "Contato",
@@ -140,7 +140,8 @@
         "posts": "Nenhuma publicação publicada ainda.",
         "projects": "Nenhum projeto disponível.",
         "documents": "Nenhum documento indexado ainda.",
-        "publications": "Nenhuma publicação encontrada."
+        "publications": "Nenhuma publicação encontrada.",
+        "daily": "Nenhuma atividade pública relevante encontrada nos últimos 30 dias."
       },
       "actions": {
         "copy": "copiar",
@@ -213,12 +214,13 @@
         "documents": "documents",
         "about": "about",
         "contact": "contact",
-        "menu": "menu",
         "search": "search",
         "cta": "open work / contact",
         "language": "language",
         "language_action": "switch language",
-        "theme": "toggle theme"
+        "theme": "toggle theme",
+        "menu_open": "Open menu",
+        "menu_close": "Close menu"
       },
       "palette": {
         "placeholder": "Search posts, daily notes, projects and documents",
@@ -287,12 +289,11 @@
         },
         "daily": {
           "title": "Daily notes",
-          "description": "Timeline of short notes, daily progress and what is playing while I work.",
+          "description": "Engineering activity timeline generated from the last 30 days of Git history.",
           "kicker": "daily",
           "meta": "Context",
-          "mood": "Mood",
-          "soundtrack": "Soundtrack",
-          "now_playing": "Now playing"
+          "source": "Source",
+          "related_paths": "Related paths"
         },
         "contact": {
           "title": "Contact",
@@ -334,7 +335,8 @@
         "posts": "No posts published yet.",
         "projects": "No projects available.",
         "documents": "No documents indexed yet.",
-        "publications": "No publications found."
+        "publications": "No publications found.",
+        "daily": "No relevant public activity found in the last 30 days."
       },
       "actions": {
         "copy": "copy",
@@ -403,12 +405,13 @@
         "documents": "ドキュメント",
         "about": "プロフィール",
         "contact": "連絡先",
-        "menu": "メニュー",
         "search": "検索",
         "cta": "お問い合わせ",
         "language": "言語",
         "language_action": "言語切替",
-        "theme": "テーマ切替"
+        "theme": "テーマ切替",
+        "menu_open": "メニューを開く",
+        "menu_close": "メニューを閉じる"
       },
       "palette": {
         "placeholder": "記事、daily notes、プロジェクト、ドキュメントを検索",
@@ -477,12 +480,11 @@
         },
         "daily": {
           "title": "Daily notes",
-          "description": "短いメモ、日々の進捗、作業中に流れている音楽のタイムライン。",
+          "description": "過去30日間の Git 履歴から生成したエンジニアリング活動のタイムライン。",
           "kicker": "daily",
           "meta": "コンテキスト",
-          "mood": "Mood",
-          "soundtrack": "Soundtrack",
-          "now_playing": "再生中"
+          "source": "ソース",
+          "related_paths": "関連パス"
         },
         "contact": {
           "title": "連絡先",
@@ -524,7 +526,8 @@
         "posts": "まだ公開された記事はありません。",
         "projects": "利用可能なプロジェクトはありません。",
         "documents": "まだ索引付けされたドキュメントはありません。",
-        "publications": "公開記事が見つかりませんでした。"
+        "publications": "公開記事が見つかりませんでした。",
+        "daily": "過去30日間に表示できる関連アクティビティは見つかりませんでした。"
       },
       "actions": {
         "copy": "コピー",

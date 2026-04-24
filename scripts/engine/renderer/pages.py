@@ -81,10 +81,12 @@ def _build_daily_localization_payload(entry: dict[str, Any]) -> dict[str, Any]:
         "title": entry["title"],
         "summary": entry["summary"],
         "body_html": render_markdown(entry.get("body", ""), heading_offset=1),
+        "source": entry.get("source", ""),
     }
     copy_localized_fields(entry, payload, "title")
     copy_localized_fields(entry, payload, "summary")
     copy_localized_fields(entry, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or ""), heading_offset=1))
+    copy_localized_fields(entry, payload, "source")
     return payload
 
 
@@ -498,7 +500,7 @@ def render_home_page(
             <header class="section-header">
               <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
               <h2 id="daily-title" data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h2>
-              <p class="section-copy" data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Notas curtas de progresso, ideias e trilha sonora de trabalho."))}</p>
+              <p class="section-copy" data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git."))}</p>
             </header>
             <ol class="entry-list">
               {"".join(render_daily_card(entry, i18n, locale, compact=True) for entry in daily_entries[:daily_limit])}
@@ -837,6 +839,35 @@ def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict
     )
 
 
+def _render_daily_index_groups(daily_entries: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
+    groups: dict[str, list[dict[str, Any]]] = {}
+    for entry in daily_entries:
+        day_key = entry["published_dt"].date().isoformat()
+        groups.setdefault(day_key, []).append(entry)
+
+    if not groups:
+        empty_msg = translate(i18n, locale, "empty.daily", "No relevant public activity found in the last 30 days.")
+        return f'<p class="empty-state" data-i18n="empty.daily">{html.escape(empty_msg)}</p>'
+
+    blocks: list[str] = []
+    for day_key, entries in groups.items():
+        date_html = render_localized_date(entries[0]["published_dt"], locale, "long")
+        cards = "".join(render_daily_card(entry, i18n, locale) for entry in entries)
+        blocks.append(
+            f"""
+            <section class="daily-group" aria-labelledby="daily-group-{html.escape(day_key)}">
+              <header class="daily-group-header">
+                <h2 id="daily-group-{html.escape(day_key)}">{date_html}</h2>
+              </header>
+              <ol class="entry-list">
+                {cards}
+              </ol>
+            </section>
+            """.strip()
+        )
+    return "".join(blocks)
+
+
 def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_entries: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     breadcrumbs = render_breadcrumbs(
         [
@@ -853,21 +884,19 @@ def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_
         <section class="page-heading">
           <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
           <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
-          <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."))}</p>
+          <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git."))}</p>
         </section>
       </header>
       <div class="page-content">
-        <section class="section-panel">
-          <ol class="entry-list">
-            {"".join(render_daily_card(entry, i18n, locale) for entry in daily_entries)}
-          </ol>
+        <section class="section-panel daily-timeline-panel">
+          {_render_daily_index_groups(daily_entries, i18n, locale)}
         </section>
       </div>
     </div>
     """
     return render_layout(
         page_title=f"Daily | {site['title']}",
-        page_description=translate(i18n, locale, "pages.daily.description", "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."),
+        page_description=translate(i18n, locale, "pages.daily.description", "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git."),
         site=site,
         system=system,
         body_class="page-daily",
@@ -1025,21 +1054,23 @@ def render_daily_page(
         f'<span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(entry["published_dt"], locale, "long")}</span>',
         f'<span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(entry["reading_time"], i18n, locale)}</span>',
     ]
-    if entry.get("mood"):
-        meta_lines.append(f'<span class="post-meta-item">{render_icon("activity", "site-icon meta-icon")}{html.escape(entry["mood"])}</span>')
-    if entry.get("now_playing"):
-        meta_lines.append(f'<span class="post-meta-item">{render_icon("music-2", "site-icon meta-icon")}{html.escape(entry["now_playing"])}</span>')
-    soundtrack_link = ""
-    if entry.get("resolved_spotify_url"):
-        soundtrack_link = f'<a class="sidebar-link" href="{entry["resolved_spotify_url"]}" target="_blank" rel="noopener">{render_icon("music-2", "site-icon sidebar-link-icon")}<span>spotify</span>{render_icon("arrow-up-right", "site-icon external-icon")}</a>'
     metrics_html = render_metric_list(meta_lines, escape_items=False)
     tags_html = render_tag_list(entry.get("tags", []))
-    context_parts = [
-        f'<p><strong data-i18n="pages.daily.mood">{html.escape(translate(i18n, locale, "pages.daily.mood", "Mood"))}</strong>: {html.escape(entry["mood"])}</p>' if entry.get("mood") else "",
-        f'<p><strong data-i18n="pages.daily.soundtrack">{html.escape(translate(i18n, locale, "pages.daily.soundtrack", "Soundtrack"))}</strong>: {html.escape(entry["soundtrack"])}</p>' if entry.get("soundtrack") else "",
-        f'<p><strong data-i18n="pages.daily.now_playing">{html.escape(translate(i18n, locale, "pages.daily.now_playing", "Tocando"))}</strong>: {html.escape(entry["now_playing"])}</p>' if entry.get("now_playing") else "",
-    ]
-    context_html = "".join(part for part in context_parts if part)
+    related_paths_html = "".join(
+        f'<li><code>{html.escape(path)}</code></li>'
+        for path in entry.get("related_paths", [])
+    )
+    source_line = (
+        f'<p class="meta-stack-line"><strong data-i18n="pages.daily.source">{html.escape(translate(i18n, locale, "pages.daily.source", "Fonte"))}</strong>: '
+        f'<span data-page-field="source">{html.escape(entry.get("source", ""))}</span></p>'
+    ) if entry.get("source") else ""
+    related_paths_block = (
+        f'<div class="daily-related-block">'
+        f'<p class="daily-related-heading" data-i18n="pages.daily.related_paths">{html.escape(translate(i18n, locale, "pages.daily.related_paths", "Caminhos relacionados"))}</p>'
+        f'<ul class="daily-related-paths">{related_paths_html}</ul>'
+        f'</div>'
+    ) if related_paths_html else ""
+    context_html = "".join(block for block in [source_line, related_paths_block] if block)
 
     page_payload = json.dumps(_build_daily_localization_payload(entry), ensure_ascii=False).replace("<", "\\u003c")
     content = f"""
@@ -1056,7 +1087,6 @@ def render_daily_page(
             </div>
             {f'<div class="post-sidebar-section">{tags_html}</div>' if tags_html else ""}
             {f'<div class="post-sidebar-section meta-stack">{context_html}</div>' if context_html else ""}
-            {f'<div class="sidebar-actions">{soundtrack_link}</div>' if soundtrack_link else ""}
           </div>
         </aside>
         <div class="page-main">

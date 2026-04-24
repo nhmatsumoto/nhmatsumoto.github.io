@@ -5537,22 +5537,29 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   color: var(--muted);
 }
 
-.entry-context {
+.entry-paths {
   display: flex;
   flex-wrap: wrap;
   gap: calc(var(--base_grid_unit) * 1);
   margin: 0;
-  font-family: var(--font-code);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  color: color-mix(in srgb, var(--muted) 80%, transparent);
 }
 
-.entry-context-item {
-  padding: 0 calc(var(--base_grid_unit) * 1);
-  border-radius: 999px;
+.entry-path-pill {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: calc(var(--base_grid_unit) * 0.5) calc(var(--base_grid_unit) * 1);
+  border-radius: 0.35rem;
   border: 1px dashed var(--surface-dashed-border-soft);
   background: color-mix(in srgb, var(--surface-ghost-strong) 58%, transparent);
+}
+
+.entry-path-pill code {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  font-size: 0.76rem;
+  white-space: nowrap;
 }
 
 .entry-cta {
@@ -6388,6 +6395,43 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   line-height: 1.6;
 }
 
+.page-daily-entry .daily-related-block {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.page-daily-entry .daily-related-heading {
+  margin: 0;
+  color: color-mix(in srgb, var(--text) 78%, var(--muted));
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-daily-entry .daily-related-paths {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-daily-entry .daily-related-paths li {
+  min-width: 0;
+}
+
+.page-daily-entry .daily-related-paths code {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.45rem 0.55rem;
+  border: 1px dashed var(--surface-dashed-border-soft);
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--surface-ghost-strong) 60%, transparent);
+}
+
 .related-content-shell {
   width: 100%;
   max-width: 100%;
@@ -6448,6 +6492,35 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 
 .entry-lede {
   max-width: 46rem;
+}
+
+.page-daily .entry-card .tag-list {
+  margin-top: 0;
+}
+
+.daily-timeline-panel {
+  display: grid;
+  gap: var(--page-section-gap);
+}
+
+.daily-group {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.daily-group + .daily-group {
+  padding-top: var(--page-panel-padding);
+  border-top: 1px dashed var(--surface-dashed-border-soft);
+}
+
+.daily-group-header h2 {
+  margin: 0;
+  font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.3rem);
+  line-height: 1.35;
+}
+
+.daily-group-header time {
+  color: color-mix(in srgb, var(--text) 86%, var(--muted));
 }
 
 .page-documents .documents-panel {

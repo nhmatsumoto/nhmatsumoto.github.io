@@ -110,12 +110,11 @@ older_empty = "Nenhum texto mais antigo"
 
 [strings."pt-BR".pages.daily]
 title = "Daily notes"
-description = "Linha do tempo de notas curtas, progresso diário e o que está tocando durante o trabalho."
+description = "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git."
 kicker = "daily"
 meta = "Contexto"
-mood = "Mood"
-soundtrack = "Soundtrack"
-now_playing = "Tocando"
+source = "Fonte"
+related_paths = "Caminhos relacionados"
 
 [strings."pt-BR".pages.contact]
 title = "Contato"
@@ -153,6 +152,7 @@ posts = "Nenhuma publicação publicada ainda."
 projects = "Nenhum projeto disponível."
 documents = "Nenhum documento indexado ainda."
 publications = "Nenhuma publicação encontrada."
+daily = "Nenhuma atividade pública relevante encontrada nos últimos 30 dias."
 
 [strings."pt-BR".actions]
 copy = "copiar"
@@ -298,12 +298,11 @@ older_empty = "No older posts"
 
 [strings."en-US".pages.daily]
 title = "Daily notes"
-description = "Timeline of short notes, daily progress and what is playing while I work."
+description = "Engineering activity timeline generated from the last 30 days of Git history."
 kicker = "daily"
 meta = "Context"
-mood = "Mood"
-soundtrack = "Soundtrack"
-now_playing = "Now playing"
+source = "Source"
+related_paths = "Related paths"
 
 [strings."en-US".pages.contact]
 title = "Contact"
@@ -345,6 +344,7 @@ posts = "No posts published yet."
 projects = "No projects available."
 documents = "No documents indexed yet."
 publications = "No publications found."
+daily = "No relevant public activity found in the last 30 days."
 
 [strings."en-US".actions]
 copy = "copy"
@@ -485,12 +485,11 @@ older_empty = "古い記事はありません"
 
 [strings."ja-JP".pages.daily]
 title = "Daily notes"
-description = "短いメモ、日々の進捗、作業中に流れている音楽のタイムライン。"
+description = "過去30日間の Git 履歴から生成したエンジニアリング活動のタイムライン。"
 kicker = "daily"
 meta = "コンテキスト"
-mood = "Mood"
-soundtrack = "Soundtrack"
-now_playing = "再生中"
+source = "ソース"
+related_paths = "関連パス"
 
 [strings."ja-JP".pages.contact]
 title = "連絡先"
@@ -532,6 +531,7 @@ posts = "まだ公開された記事はありません。"
 projects = "利用可能なプロジェクトはありません。"
 documents = "まだ索引付けされたドキュメントはありません。"
 publications = "公開記事が見つかりませんでした。"
+daily = "過去30日間に表示できる関連アクティビティは見つかりませんでした。"
 
 [strings."ja-JP".actions]
 copy = "コピー"

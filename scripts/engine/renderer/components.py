@@ -432,13 +432,13 @@ def render_daily_card(entry: dict[str, Any], i18n: dict[str, Any], locale: str, 
         _entry_meta("calendar-days", date_html),
         _entry_meta("clock-3", reading_html),
     ])
-    context_bits: list[str] = []
-    if entry.get("mood"):
-        context_bits.append(f'<span class="entry-context-item">{html.escape(entry["mood"])}</span>')
-    if entry.get("now_playing") or entry.get("soundtrack"):
-        track = entry.get("now_playing") or entry.get("soundtrack")
-        context_bits.append(f'<span class="entry-context-item">{html.escape(track)}</span>')
-    context_row = f'<p class="entry-context">{"".join(context_bits)}</p>' if context_bits else ""
+    tags_html = render_tag_list(entry.get("tags", [])[:4]) if entry.get("tags") else ""
+    related_paths = entry.get("related_paths", [])[:3]
+    path_bits = "".join(
+        f'<span class="entry-path-pill"><code>{html.escape(path)}</code></span>'
+        for path in related_paths
+    )
+    paths_html = f'<p class="entry-paths">{path_bits}</p>' if path_bits else ""
     compact_class = " entry-card-compact" if compact else ""
     cta_label = translate(i18n, locale, "actions.read_article", "Open")
     entry_payload = _build_entry_card_payload(entry, ["title", "summary"], i18n)
@@ -449,7 +449,8 @@ def render_daily_card(entry: dict[str, Any], i18n: dict[str, Any], locale: str, 
         {eyebrow}
         <h3 class="entry-title"><a href="{html.escape(entry['resolved_url'])}" data-entry-title>{html.escape(entry['title'])}</a></h3>
         <p class="entry-lede" data-entry-lede>{html.escape(entry['summary'])}</p>
-        {context_row}
+        {tags_html}
+        {paths_html}
         {_entry_cta(entry['resolved_url'], cta_label, "actions.read_article")}
       </article>
       <script type="application/json" data-entry-card-data>{payload_json}</script>

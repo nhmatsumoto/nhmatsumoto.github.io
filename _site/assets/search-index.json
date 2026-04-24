@@ -727,49 +727,147 @@
     "summary_ja_jp": "Technical Knowledge OS の出発点：アーキテクチャ、分散システム、生きたドキュメンテーションに焦点を当てた、バージョン管理されたエンジニアリング・ノートブック。"
   },
   {
-    "title": "Refatorando o shell visual do site",
-    "url": "https://nhmatsumoto.github.io/daily/20260420-223000-blueprint-refresh/",
+    "title": "Layout e renderers",
+    "url": "https://nhmatsumoto.github.io/daily/20260424-223436-layout-and-renderers/",
     "kind": "daily",
-    "summary": "Hoje o foco foi alinhar navegação, tipografia e background para que o site pareça um caderno técnico de verdade, não apenas um blog com grid decorativo.",
+    "summary": "O dia reuniu 21 commits voltados a layout, renderers, e build estático. As mudanças passaram por CSS global, interações do navbar, e renderers do site e refinaram o caderno público de forma incremental.",
     "keywords": [
-      "site",
-      "design-system",
-      "css"
+      "layout",
+      "renderer",
+      "build",
+      "navbar"
     ],
-    "title_en_us": "Refactoring the site's visual shell",
-    "title_ja_jp": "サイトのビジュアルシェルをリファクタリングする",
-    "summary_en_us": "Today's focus was aligning navigation, typography and background so the site feels like a real technical notebook, not just a blog with a decorative grid.",
-    "summary_ja_jp": "今日は、ナビゲーション、タイポグラフィ、背景をそろえ、装飾的なグリッド付きブログではなく、本物の技術ノートのように感じられるサイトにすることへ集中した。"
+    "title_en_us": "Layout and renderers",
+    "title_ja_jp": "レイアウトとレンダラー",
+    "summary_en_us": "The day gathered 21 commits focused on layout, renderers, and static build. The work touched global CSS, navbar interactions, and site renderers and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日はレイアウト、レンダラーと静的ビルドを中心に21件のコミットがありました。変更はグローバルCSS、ナビゲーションの挙動とサイトのレンダラーに及び、公開ノートブックを段階的に整えました。"
   },
   {
-    "title": "Boundary útil entre agente, domínio e tool layer",
-    "url": "https://nhmatsumoto.github.io/daily/20260419-071500-agent-boundaries-note/",
+    "title": "Layout e renderers",
+    "url": "https://nhmatsumoto.github.io/daily/20260423-175300-layout-and-renderers/",
     "kind": "daily",
-    "summary": "Reforcei uma heurística simples: se a decisão precisa sobreviver à troca de provider, ela não deveria morar no prompt.",
+    "summary": "O dia reuniu 9 commits voltados a layout, renderers, e perfil. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.",
     "keywords": [
-      "agents",
-      "ddd",
-      "architecture"
+      "layout",
+      "renderer",
+      "profile"
     ],
-    "title_en_us": "A useful boundary between agent, domain and tool layer",
-    "title_ja_jp": "エージェント、ドメイン、tool layer の有用な境界",
-    "summary_en_us": "I reinforced a simple heuristic: if a decision needs to survive a provider change, it should not live in the prompt.",
-    "summary_ja_jp": "シンプルなヒューリスティックを再確認した。provider を変えても残るべき判断は、prompt の中に置くべきではない。"
+    "title_en_us": "Layout and renderers",
+    "title_ja_jp": "レイアウトとレンダラー",
+    "summary_en_us": "The day gathered 9 commits focused on layout, renderers, and profile. The work touched global CSS, site renderers, and static pipeline and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日はレイアウト、レンダラーとプロフィールを中心に9件のコミットがありました。変更はグローバルCSS、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"
   },
   {
-    "title": "Lendo GIS como sistema operacional de decisão",
-    "url": "https://nhmatsumoto.github.io/daily/20260417-201000-field-notes-gis-reading/",
+    "title": "Layout e posts",
+    "url": "https://nhmatsumoto.github.io/daily/20260422-232036-layout-and-posts/",
     "kind": "daily",
-    "summary": "Tenho pensado em GIS menos como mapa bonito e mais como camada operacional para decidir rápido em contextos com muito ruído.",
+    "summary": "O dia reuniu 16 commits voltados a layout, posts, e renderers. As mudanças passaram por CSS global, interações do navbar, e renderers do site e refinaram o caderno público de forma incremental.",
     "keywords": [
-      "gis",
-      "systems",
-      "notes"
+      "layout",
+      "posts",
+      "renderer",
+      "content"
     ],
-    "title_en_us": "Reading GIS as a decision operating system",
-    "title_ja_jp": "意思決定のオペレーティングシステムとして GIS を読む",
-    "summary_en_us": "I have been thinking of GIS less as a beautiful map and more as an operational layer for making fast decisions in noisy contexts.",
-    "summary_ja_jp": "GIS を美しい地図としてではなく、ノイズの多い状況で素早く判断するための運用レイヤーとして考えるようになっている。"
+    "title_en_us": "Layout and posts",
+    "title_ja_jp": "レイアウトと記事",
+    "summary_en_us": "The day gathered 16 commits focused on layout, posts, and renderers. The work touched global CSS, navbar interactions, and site renderers and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日はレイアウト、記事とレンダラーを中心に16件のコミットがありました。変更はグローバルCSS、ナビゲーションの挙動とサイトのレンダラーに及び、公開ノートブックを段階的に整えました。"
+  },
+  {
+    "title": "Posts e conteúdo",
+    "url": "https://nhmatsumoto.github.io/daily/20260421-235101-posts-and-content/",
+    "kind": "daily",
+    "summary": "O dia reuniu 15 commits voltados a posts, conteúdo, e projetos. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.",
+    "keywords": [
+      "posts",
+      "content",
+      "projects",
+      "layout"
+    ],
+    "title_en_us": "Posts and content",
+    "title_ja_jp": "記事とコンテンツ",
+    "summary_en_us": "The day gathered 15 commits focused on posts, content, and projects. The work touched global CSS, site renderers, and static pipeline and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日は記事、コンテンツとプロジェクトを中心に15件のコミットがありました。変更はグローバルCSS、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"
+  },
+  {
+    "title": "Build estático e navegação",
+    "url": "https://nhmatsumoto.github.io/daily/20260413-025701-static-build-and-navigation/",
+    "kind": "daily",
+    "summary": "O dia reuniu 1 commit voltado a build estático, navegação, e renderers. As mudanças passaram por interações do navbar, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.",
+    "keywords": [
+      "build",
+      "navbar",
+      "renderer",
+      "mobile"
+    ],
+    "title_en_us": "Static build and navigation",
+    "title_ja_jp": "静的ビルドとナビゲーション",
+    "summary_en_us": "The day gathered 1 commit focused on static build, navigation, and renderers. The work touched navbar interactions, site renderers, and static pipeline and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日は静的ビルド、ナビゲーションとレンダラーを中心に1件のコミットがありました。変更はナビゲーションの挙動、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"
+  },
+  {
+    "title": "Renderers e build estático",
+    "url": "https://nhmatsumoto.github.io/daily/20260406-102024-renderers-and-static-build/",
+    "kind": "daily",
+    "summary": "O dia reuniu 17 commits voltados a renderers, build estático, e localização. As mudanças passaram por interações do navbar, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.",
+    "keywords": [
+      "renderer",
+      "build",
+      "i18n",
+      "navbar"
+    ],
+    "title_en_us": "Renderers and static build",
+    "title_ja_jp": "レンダラーと静的ビルド",
+    "summary_en_us": "The day gathered 17 commits focused on renderers, static build, and localization. The work touched navbar interactions, site renderers, and static pipeline and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日はレンダラー、静的ビルドとローカライズを中心に17件のコミットがありました。変更はナビゲーションの挙動、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"
+  },
+  {
+    "title": "Projetos e conteúdo",
+    "url": "https://nhmatsumoto.github.io/daily/20260405-161120-projects-and-content/",
+    "kind": "daily",
+    "summary": "O dia reuniu 23 commits voltados a projetos, conteúdo, e posts. As mudanças passaram por interações do navbar e posts e refinaram o caderno público de forma incremental.",
+    "keywords": [
+      "projects",
+      "content",
+      "posts",
+      "layout"
+    ],
+    "title_en_us": "Projects and content",
+    "title_ja_jp": "プロジェクトとコンテンツ",
+    "summary_en_us": "The day gathered 23 commits focused on projects, content, and posts. The work touched navbar interactions and posts and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日はプロジェクト、コンテンツと記事を中心に23件のコミットがありました。変更はナビゲーションの挙動と記事に及び、公開ノートブックを段階的に整えました。"
+  },
+  {
+    "title": "Posts e conteúdo",
+    "url": "https://nhmatsumoto.github.io/daily/20260404-234431-posts-and-content/",
+    "kind": "daily",
+    "summary": "O dia reuniu 35 commits voltados a posts, conteúdo, e layout. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.",
+    "keywords": [
+      "posts",
+      "content",
+      "layout",
+      "projects"
+    ],
+    "title_en_us": "Posts and content",
+    "title_ja_jp": "記事とコンテンツ",
+    "summary_en_us": "The day gathered 35 commits focused on posts, content, and layout. The work touched global CSS, site renderers, and static pipeline and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日は記事、コンテンツとレイアウトを中心に35件のコミットがありました。変更はグローバルCSS、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"
+  },
+  {
+    "title": "Posts e layout",
+    "url": "https://nhmatsumoto.github.io/daily/20260403-151038-posts-and-layout/",
+    "kind": "daily",
+    "summary": "O dia reuniu 45 commits voltados a posts, layout, e conteúdo. As mudanças passaram por CSS global, interações do navbar, e pipeline estático e refinaram o caderno público de forma incremental.",
+    "keywords": [
+      "posts",
+      "layout",
+      "content",
+      "navbar"
+    ],
+    "title_en_us": "Posts and layout",
+    "title_ja_jp": "記事とレイアウト",
+    "summary_en_us": "The day gathered 45 commits focused on posts, layout, and content. The work touched global CSS, navbar interactions, and static pipeline and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日は記事、レイアウトとコンテンツを中心に45件のコミットがありました。変更はグローバルCSS、ナビゲーションの挙動と静的パイプラインに及び、公開ノートブックを段階的に整えました。"
   },
   {
     "title": "SOS Location",

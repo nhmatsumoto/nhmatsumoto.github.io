@@ -20,6 +20,31 @@ from .renderer.pages import (
     render_project_page, render_document_page
 )
 
+LEGACY_DAILY_REDIRECTS = [
+    "20260417-201000-field-notes-gis-reading",
+    "20260419-071500-agent-boundaries-note",
+    "20260420-223000-blueprint-refresh",
+]
+
+
+def render_legacy_redirect_page(site: dict[str, str], title: str, target_path: str) -> str:
+    target_href = site_href(site, target_path)
+    return f"""<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{title}</title>
+    <meta http-equiv="refresh" content="0; url={target_href}">
+    <link rel="canonical" href="{target_href}">
+  </head>
+  <body>
+    <p><a href="{target_href}">Redirecting to {target_href}</a></p>
+  </body>
+</html>
+"""
+
+
 def _copy_localized_alias(
     source: dict[str, Any],
     target: dict[str, Any],
@@ -200,7 +225,6 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         p["resolved_project_url"] = resolve_optional_url(site, p.get("project_url", ""))
     for entry in daily_entries:
         entry["resolved_url"] = site_href(site, entry["url"])
-        entry["resolved_spotify_url"] = resolve_optional_url(site, entry.get("spotify", ""))
     for p in projects:
         p["resolved_url"] = site_href(site, p["url"])
         p["resolved_repo_url"] = resolve_optional_url(site, p["repo_url"])
@@ -333,6 +357,14 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
                 locale,
                 related_items=find_related_content(entry, posts, daily_entries, projects, documents),
             ),
+        )
+    active_daily_paths = {entry["output_dir_name"] for entry in daily_entries}
+    for legacy_path in LEGACY_DAILY_REDIRECTS:
+        if legacy_path in active_daily_paths:
+            continue
+        write_text(
+            target_root / config.get("daily_output_dir", "daily") / legacy_path / "index.html",
+            render_legacy_redirect_page(site, f"Daily | {site['title']}", "/daily/"),
         )
     for p in projects:
         write_text(
