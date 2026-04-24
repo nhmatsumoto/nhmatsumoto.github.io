@@ -121,6 +121,7 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     search_aria = translate(i18n, locale, "accessibility.command_palette", "Command palette")
     supported_locales = i18n.get("supported_locales", [])
     locale_codes = " · ".join(str(code).split("-")[0].upper() for code in supported_locales if code)
+    compact_locale = str(locale).split("-")[0].upper()
     nav_items = [
         ("about", "nav.about", "/about/"),
         ("posts", "nav.posts", "/posts/"),
@@ -139,18 +140,44 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
         )
 
     primary_links = "".join(render_nav_link(key, i18n_key, url) for key, i18n_key, url in nav_items)
-    menu_aria = translate(i18n, locale, "nav.menu", "Menu")
+    menu_open_aria = translate(i18n, locale, "nav.menu_open", "Abrir menu")
+    home_url = site_href(site, "/")
 
     return f"""
     <nav class="navbar" data-nav-shell>
-      <div class="layout-container">
-        <div class="nav-brand">
-          <a class="nav-title" href="{site_href(site, "/")}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+      <div class="layout-container navbar-mobile">
+        <div class="navbar-left">
+          <button class="nav-btn-icon nav-btn-menu navbar-toggle mobile-only" type="button" data-nav-toggle aria-label="{html.escape(menu_open_aria)}" data-i18n-aria-label="nav.menu_open" aria-controls="mobile-drawer" aria-expanded="false">
+            <i data-lucide="menu" class="menu-icon-open"></i>
+            <i data-lucide="x" class="menu-icon-close hidden"></i>
+          </button>
+
+          <div class="nav-brand desktop-only">
+            <a class="nav-title" href="{home_url}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+          </div>
         </div>
-        
-        <div class="nav-primary-links desktop-only">{primary_links}</div>
-        
-        <div class="nav-actions">
+
+        <div class="navbar-center">
+          <div class="nav-brand navbar-brand-mobile mobile-only">
+            <a class="nav-title" href="{home_url}"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+          </div>
+
+          <div class="nav-primary-links desktop-only">{primary_links}</div>
+        </div>
+
+        <div class="nav-actions navbar-right">
+          <div class="nav-group nav-group-mobile mobile-only">
+            <button class="nav-btn-icon nav-btn-locale nav-btn-locale-mobile" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
+              <i data-lucide="languages"></i>
+              <span class="locale-label" data-locale-label data-locale-style="compact">{html.escape(compact_locale)}</span>
+            </button>
+
+            <button class="nav-btn-icon nav-btn-theme nav-btn-theme-mobile" type="button" data-theme-toggle aria-label="{html.escape(translate(i18n, locale, "nav.theme", "Toggle theme"))}" data-i18n-aria-label="nav.theme">
+              <i data-lucide="moon" class="theme-icon-moon"></i>
+              <i data-lucide="sun" class="theme-icon-sun hidden"></i>
+            </button>
+          </div>
+
           <div class="nav-group desktop-only">
             <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
               <i data-lucide="languages"></i>
@@ -163,11 +190,6 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
               <i data-lucide="sun" class="theme-icon-sun hidden"></i>
             </button>
           </div>
-
-          <button class="nav-btn-icon nav-btn-menu mobile-only" type="button" data-nav-toggle aria-label="{html.escape(menu_aria)}" data-i18n-aria-label="nav.menu">
-            <i data-lucide="menu" class="menu-icon-open"></i>
-            <i data-lucide="x" class="menu-icon-close hidden"></i>
-          </button>
         </div>
       </div>
     </nav>
@@ -176,18 +198,6 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
       <div class="drawer-backdrop" data-nav-toggle></div>
       <div class="drawer-content">
         <div class="drawer-links">{primary_links}</div>
-        <div class="drawer-actions">
-          <button class="drawer-action-btn" type="button" data-locale-toggle>
-            <i data-lucide="languages"></i>
-            <span data-i18n="nav.language">{html.escape(translate(i18n, locale, "nav.language", "Language"))}</span>
-            <span class="active-locale">{html.escape(locale.upper())}</span>
-          </button>
-          <button class="drawer-action-btn" type="button" data-theme-toggle>
-            <i data-lucide="moon" class="theme-icon-moon"></i>
-            <i data-lucide="sun" class="theme-icon-sun hidden"></i>
-            <span data-i18n="nav.theme">{html.escape(translate(i18n, locale, "nav.theme", "Toggle theme"))}</span>
-          </button>
-        </div>
       </div>
     </div>
     """
