@@ -3,7 +3,7 @@ import json
 import os
 import re
 from typing import Any
-from ..utils import site_href, normalize_string_list
+from ..utils import site_href, normalize_string_list, load_blog_config
 from ..i18n import translate
 from .components import NAV_ICON_BY_KEY, render_icon
 
@@ -142,6 +142,19 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     primary_links = "".join(render_nav_link(key, i18n_key, url) for key, i18n_key, url in nav_items)
     menu_open_aria = translate(i18n, locale, "nav.menu_open", "Abrir menu")
     home_url = site_href(site, "/")
+    search_button = (
+        f'<button class="nav-btn-icon nav-btn-search" type="button" data-search-open '
+        f'aria-label="{html.escape(search_aria)}" data-i18n-aria-label="accessibility.command_palette">'
+        f'{render_icon("search", "site-icon")}'
+        f'<span class="nav-btn-label" data-i18n="nav.search">{html.escape(search_label)}</span>'
+        f'<span class="nav-btn-shortcut" aria-hidden="true">⌘K</span>'
+        f'</button>'
+    )
+    mobile_search_button = search_button.replace(
+        'class="nav-btn-icon nav-btn-search"',
+        'class="nav-btn-icon nav-btn-search nav-btn-search-mobile"',
+        1,
+    )
 
     return f"""
     <nav class="navbar" data-nav-shell>
@@ -167,6 +180,8 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
 
         <div class="nav-actions navbar-right">
           <div class="nav-group nav-group-mobile mobile-only">
+            {mobile_search_button}
+
             <button class="nav-btn-icon nav-btn-locale nav-btn-locale-mobile" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
               <i data-lucide="languages"></i>
               <span class="locale-label" data-locale-label data-locale-style="compact">{html.escape(compact_locale)}</span>
@@ -179,6 +194,8 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
           </div>
 
           <div class="nav-group desktop-only">
+            {search_button}
+
             <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="{html.escape(translate(i18n, locale, "nav.language_action", "Switch language"))}" data-i18n-aria-label="nav.language_action">
               <i data-lucide="languages"></i>
               <span class="locale-label" data-locale-label>{html.escape(locale.upper())}</span>
@@ -201,6 +218,41 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
       </div>
     </div>
     """
+
+
+def render_search_palette(site: dict[str, str], i18n: dict[str, Any], locale: str) -> str:
+    config = load_blog_config()
+    search_index_file = config.get("build", {}).get("search_index_file", "assets/search-index.json")
+    search_index_url = site_href(site, "/" + str(search_index_file).lstrip("/"))
+    title = translate(i18n, locale, "accessibility.command_palette", "Command palette")
+    placeholder = translate(i18n, locale, "palette.placeholder", "Search posts, projects and documents")
+    hint = translate(i18n, locale, "palette.hint", "Ctrl/⌘ K opens search; Enter opens the first result and Esc closes it.")
+    close = translate(i18n, locale, "palette.close", "Close")
+    empty = translate(i18n, locale, "palette.empty", "No results found.")
+    return f"""
+    <div class="search-palette" data-search-palette data-search-index-url="{html.escape(search_index_url, quote=True)}" hidden>
+      <div class="search-palette-backdrop" data-search-close></div>
+      <section class="search-palette-dialog" role="dialog" aria-modal="true" aria-labelledby="search-palette-title" aria-describedby="search-palette-hint">
+        <header class="search-palette-head">
+          <div class="search-palette-title-block">
+            <p class="section-kicker" data-i18n="nav.search">{html.escape(translate(i18n, locale, "nav.search", "search"))}</p>
+            <h2 id="search-palette-title" data-i18n="accessibility.command_palette">{html.escape(title)}</h2>
+          </div>
+          <button class="search-palette-close" type="button" data-search-close aria-label="{html.escape(close)}" data-i18n-aria-label="palette.close">
+            {render_icon("x", "site-icon")}
+          </button>
+        </header>
+        <label class="search-input-shell" for="site-search-input">
+          {render_icon("search", "site-icon search-input-icon")}
+          <input id="site-search-input" type="search" data-search-input autocomplete="off" spellcheck="false" placeholder="{html.escape(placeholder)}" data-i18n-placeholder="palette.placeholder" aria-controls="search-palette-results">
+        </label>
+        <p id="search-palette-hint" class="search-palette-hint" data-i18n="palette.hint">{html.escape(hint)}</p>
+        <ol id="search-palette-results" class="search-results" data-search-results></ol>
+        <p class="search-empty" data-search-empty hidden data-i18n="palette.empty">{html.escape(empty)}</p>
+      </section>
+    </div>
+    """
+
 
 def render_footer(site: dict[str, str], system: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     github_url = site.get("github_url", "https://github.com/nhmatsumoto")
@@ -265,10 +317,13 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     def hashed(name: str) -> str:
         return asset_manifest.get(name, name)
 
-    scripts_html = "\n    ".join(
-        f'<script src="{site_href(site, f"/assets/{hashed(s.split(chr(63))[0])}")}" {"type=\"module\"" if "?module=true" in s else "defer"}></script>'
-        for s in (extra_scripts or [])
-    )
+    def script_tag(script_name: str) -> str:
+        asset_name = script_name.split("?")[0]
+        script_attr = 'type="module"' if "?module=true" in script_name else "defer"
+        asset_href = site_href(site, "/assets/" + hashed(asset_name))
+        return f'<script src="{asset_href}" {script_attr}></script>'
+
+    scripts_html = "\n    ".join(script_tag(script_name) for script_name in (extra_scripts or []))
 
     rss_file = config.get("build", {}).get("rss_file", "feed.xml")
     rss_link = f'<link rel="alternate" type="application/rss+xml" title="{html.escape(site.get("title", ""))} RSS" href="{html.escape(site_href(site, "/" + rss_file))}">'
@@ -292,9 +347,18 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     {rss_link}
     {og_html}
     <link rel="stylesheet" href="{site_href(site, '/assets/' + hashed('styles.css'))}">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>document.addEventListener('DOMContentLoaded', () => {{ mermaid.initialize({{ startOnLoad: false, theme: 'dark' }}); lucide.createIcons(); }});</script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {{
+        if (window.mermaid) {{
+          window.mermaid.initialize({{ startOnLoad: false, theme: 'dark' }});
+        }}
+        if (window.lucide) {{
+          window.lucide.createIcons();
+        }}
+      }});
+    </script>
     {math_meta}
     {import_map_html}
   </head>
@@ -309,6 +373,7 @@ def render_layout(*, page_title: str, page_description: str, site: dict[str, str
     </div>
 
     <div class="sidebar-backdrop" data-sidebar-toggle></div>
+    {render_search_palette(site, i18n, locale)}
     <script id="site-i18n" type="application/json">{i18n_payload}</script>
     <script src="{site_href(site, '/assets/' + hashed('blog.js'))}" type="module"></script>
     {scripts_html}

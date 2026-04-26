@@ -1,14 +1,31 @@
 import { createStore } from 'zustand'
+const safeStorage = {
+getItem: (key) => {
+try {
+return window.localStorage.getItem(key)
+} catch {
+return null
+}
+},
+setItem: (key, value) => {
+try {
+window.localStorage.setItem(key, value)
+} catch {
+}
+},
+}
+const defaultLocale = document.body?.dataset.defaultLocale || document.documentElement.lang || 'pt-BR'
+const defaultTheme = document.documentElement.dataset.theme || 'dark'
 const useStore = createStore((set) => ({
-locale: localStorage.getItem('site-locale') || 'pt-BR',
-theme: localStorage.getItem('site-theme') || 'dark',
+locale: safeStorage.getItem('site-locale') || defaultLocale,
+theme: safeStorage.getItem('site-theme') || defaultTheme,
 setLocale: (locale) => {
-localStorage.setItem('site-locale', locale)
+safeStorage.setItem('site-locale', locale)
 document.documentElement.setAttribute('lang', locale)
 set({ locale })
 },
 setTheme: (theme) => {
-localStorage.setItem('site-theme', theme)
+safeStorage.setItem('site-theme', theme)
 document.documentElement.setAttribute('data-theme', theme)
 set({ theme })
 },

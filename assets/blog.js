@@ -117,6 +117,10 @@ const initLocalization = () => {
   const strings = config.strings ?? {};
   const defaultLocale = config.defaultLocale ?? "pt-BR";
 
+  if (supportedLocales.length && !supportedLocales.includes(useStore.getState().locale)) {
+    useStore.getState().setLocale(defaultLocale);
+  }
+
   const translate = (key, fallback = "", locale = useStore.getState().locale) => {
     const primary = resolvePath(strings[locale], key);
     if (typeof primary === "string") return primary;
@@ -402,7 +406,233 @@ const initLocaleToggle = (loc) => {
   }));
 };
 
+const normalizeSearchText = (value) => {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+};
 
+const searchTokens = (query) => {
+  return normalizeSearchText(query)
+    .split(/\s+/)
+    .filter(Boolean);
+};
+
+const localizedSearchFields = (item, locale) => {
+  const title = resolveLocalizedField(item, "title", locale, item.title || "");
+  const summary = resolveLocalizedField(item, "summary", locale, item.summary || "");
+  const keywords = Array.isArray(item.keywords) ? item.keywords.join(" ") : "";
+  return { title, summary, keywords };
+};
+
+const scoreSearchItem = (item, terms, locale) => {
+  const { title, summary, keywords } = localizedSearchFields(item, locale);
+  const normalizedTitle = normalizeSearchText(title);
+  const normalizedSummary = normalizeSearchText(summary);
+  const normalizedKeywords = normalizeSearchText(keywords);
+  const normalizedKind = normalizeSearchText(item.kind);
+  const haystack = `${normalizedTitle} ${normalizedSummary} ${normalizedKeywords} ${normalizedKind}`;
+
+  let score = 0;
+  for (const term of terms) {
+    if (!haystack.includes(term)) return 0;
+    if (normalizedTitle === term) score += 80;
+    if (normalizedTitle.startsWith(term)) score += 34;
+    if (normalizedTitle.includes(term)) score += 22;
+    if (normalizedKeywords.includes(term)) score += 14;
+    if (normalizedSummary.includes(term)) score += 8;
+    if (normalizedKind.includes(term)) score += 6;
+  }
+
+  return score;
+};
+
+const initCommandPalette = (loc) => {
+  const palette = document.querySelector("[data-search-palette]");
+  const input = palette?.querySelector("[data-search-input]");
+  const resultsList = palette?.querySelector("[data-search-results]");
+  const emptyState = palette?.querySelector("[data-search-empty]");
+  const openers = document.querySelectorAll("[data-search-open]");
+  if (!palette || !input || !resultsList || !openers.length) return;
+
+  const translate = loc?.translate || ((_, fallback) => fallback);
+  let indexPromise = null;
+  let items = [];
+  let currentResults = [];
+  let activeIndex = 0;
+  let previousFocus = null;
+
+  const loadIndex = () => {
+    if (!indexPromise) {
+      indexPromise = fetch(palette.dataset.searchIndexUrl, { headers: { Accept: "application/json" } })
+        .then(response => {
+          if (!response.ok) throw new Error(`Search index failed: ${response.status}`);
+          return response.json();
+        })
+        .then(payload => {
+          items = Array.isArray(payload) ? payload : [];
+          return items;
+        })
+        .catch(error => {
+          console.error("Search index error:", error);
+          items = [];
+          return items;
+        });
+    }
+    return indexPromise;
+  };
+
+  const setActiveResult = (nextIndex) => {
+    if (!currentResults.length) {
+      activeIndex = 0;
+      return;
+    }
+    activeIndex = (nextIndex + currentResults.length) % currentResults.length;
+    resultsList.querySelectorAll("[data-search-result]").forEach((link, index) => {
+      link.classList.toggle("is-active", index === activeIndex);
+      if (index === activeIndex) {
+        link.setAttribute("aria-selected", "true");
+      } else {
+        link.removeAttribute("aria-selected");
+      }
+    });
+  };
+
+  const buildResultElement = (item, index, locale) => {
+    const { title, summary } = localizedSearchFields(item, locale);
+    const kind = String(item.kind || "item");
+    const kindLabel = translate(`kinds.${kind}`, kind, locale);
+
+    const li = document.createElement("li");
+    li.className = "search-result-item";
+
+    const link = document.createElement("a");
+    link.className = "search-result";
+    link.href = item.url || "#";
+    link.dataset.searchResult = String(index);
+    link.setAttribute("role", "option");
+
+    const meta = document.createElement("span");
+    meta.className = "search-result-kind";
+    meta.textContent = kindLabel;
+
+    const titleEl = document.createElement("span");
+    titleEl.className = "search-result-title";
+    titleEl.textContent = title || item.url || "";
+
+    const summaryEl = document.createElement("span");
+    summaryEl.className = "search-result-summary";
+    summaryEl.textContent = summary || item.url || "";
+
+    link.append(meta, titleEl, summaryEl);
+    li.append(link);
+    return li;
+  };
+
+  const searchItems = (query, locale) => {
+    const terms = searchTokens(query);
+    if (!terms.length) return items.slice(0, 8);
+
+    return items
+      .map(item => ({ item, score: scoreSearchItem(item, terms, locale) }))
+      .filter(result => result.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 10)
+      .map(result => result.item);
+  };
+
+  const renderResults = () => {
+    const locale = useStore.getState().locale;
+    currentResults = searchItems(input.value, locale);
+    activeIndex = 0;
+    resultsList.replaceChildren();
+    resultsList.setAttribute("role", "listbox");
+
+    currentResults.forEach((item, index) => {
+      resultsList.append(buildResultElement(item, index, locale));
+    });
+
+    const hasQuery = Boolean(input.value.trim());
+    if (emptyState) {
+      emptyState.hidden = currentResults.length > 0 || !hasQuery;
+    }
+    setActiveResult(0);
+  };
+
+  const openPalette = async () => {
+    previousFocus = document.activeElement;
+    palette.hidden = false;
+    document.body.dataset.searchOpen = "true";
+    await loadIndex();
+    renderResults();
+    requestAnimationFrame(() => input.focus());
+  };
+
+  const closePalette = () => {
+    palette.hidden = true;
+    delete document.body.dataset.searchOpen;
+    input.value = "";
+    resultsList.replaceChildren();
+    currentResults = [];
+    if (previousFocus && typeof previousFocus.focus === "function") {
+      previousFocus.focus();
+    }
+  };
+
+  openers.forEach(opener => {
+    opener.addEventListener("click", () => {
+      openPalette();
+      opener.animate([
+        { transform: "scale(1)" },
+        { transform: "scale(1.12)", offset: 0.45 },
+        { transform: "scale(1)" }
+      ], { duration: 220, easing: "ease-out" });
+    });
+  });
+
+  palette.querySelectorAll("[data-search-close]").forEach(closer => {
+    closer.addEventListener("click", closePalette);
+  });
+
+  input.addEventListener("input", renderResults);
+  input.addEventListener("keydown", event => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveResult(activeIndex + 1);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveResult(activeIndex - 1);
+    } else if (event.key === "Enter" && currentResults[activeIndex]) {
+      event.preventDefault();
+      window.location.href = currentResults[activeIndex].url;
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      closePalette();
+    }
+  });
+
+  document.addEventListener("keydown", event => {
+    const key = String(event.key || "").toLowerCase();
+    if ((event.metaKey || event.ctrlKey) && key === "k") {
+      event.preventDefault();
+      if (palette.hidden) openPalette();
+      else input.focus();
+      return;
+    }
+    if (event.key === "Escape" && !palette.hidden) {
+      event.preventDefault();
+      closePalette();
+    }
+  });
+
+  useStore.subscribe((state, prevState) => {
+    if (state.locale !== prevState.locale && !palette.hidden) {
+      renderResults();
+    }
+  });
+};
 
 const initCodeBlocks = (loc) => {
   document.addEventListener("click", async (event) => {
@@ -539,6 +769,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactCardsLocalization();
   initThemeManager();
   initLocaleToggle(loc);
+  initCommandPalette(loc);
   initCodeBlocks(loc);
   initInteractiveGlow();
   initNavDrawer();

@@ -23,8 +23,8 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <title>Documents | nhmatsumoto.github.io</title><meta name="description" content="Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis.">
-    <link rel="canonical" href="https://nhmatsumoto.github.io/documents/">
+    <title>Layout e renderers | nhmatsumoto.github.io</title><meta name="description" content="O dia reuniu 1 commit voltado a layout, renderers, e build estático. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/daily/20260425-010413-layout-and-renderers/">
     <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
     
     <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.4e7049bd.css">
@@ -43,7 +43,7 @@
     
     <script type="importmap">{"imports": {"zustand": "https://unpkg.com/zustand@4.4.1/esm/vanilla.mjs"}}</script>
   </head>
-  <body class="page-documents" data-has-math="false" data-default-locale="pt-BR" data-locale="pt-BR">
+  <body class="page-daily-entry" data-has-math="false" data-default-locale="pt-BR" data-locale="pt-BR">
     <noscript data-analytics-noscript="gtm" data-allowed-hostnames="[&quot;nhmatsumoto.github.io&quot;]"><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJJFQ4JM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
     
@@ -67,7 +67,7 @@
             <a class="nav-title" href="https://nhmatsumoto.github.io/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
           </div>
 
-          <div class="nav-primary-links desktop-only"><a class="nav-link" href="https://nhmatsumoto.github.io/about/"><i class="site-icon nav-link-icon" data-lucide="user-round" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.about">sobre</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/posts/"><i class="site-icon nav-link-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/daily/"><i class="site-icon nav-link-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/projects/"><i class="site-icon nav-link-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a><a class="nav-link is-active" aria-current="page" href="https://nhmatsumoto.github.io/documents/"><i class="site-icon nav-link-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></div>
+          <div class="nav-primary-links desktop-only"><a class="nav-link" href="https://nhmatsumoto.github.io/about/"><i class="site-icon nav-link-icon" data-lucide="user-round" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.about">sobre</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/posts/"><i class="site-icon nav-link-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a><a class="nav-link is-active" aria-current="page" href="https://nhmatsumoto.github.io/daily/"><i class="site-icon nav-link-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/projects/"><i class="site-icon nav-link-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/documents/"><i class="site-icon nav-link-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></div>
         </div>
 
         <div class="nav-actions navbar-right">
@@ -106,73 +106,107 @@
     <div class="nav-drawer" id="mobile-drawer" aria-hidden="true">
       <div class="drawer-backdrop" data-nav-toggle></div>
       <div class="drawer-content">
-        <div class="drawer-links"><a class="nav-link" href="https://nhmatsumoto.github.io/about/"><i class="site-icon nav-link-icon" data-lucide="user-round" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.about">sobre</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/posts/"><i class="site-icon nav-link-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/daily/"><i class="site-icon nav-link-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/projects/"><i class="site-icon nav-link-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a><a class="nav-link is-active" aria-current="page" href="https://nhmatsumoto.github.io/documents/"><i class="site-icon nav-link-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></div>
+        <div class="drawer-links"><a class="nav-link" href="https://nhmatsumoto.github.io/about/"><i class="site-icon nav-link-icon" data-lucide="user-round" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.about">sobre</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/posts/"><i class="site-icon nav-link-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a><a class="nav-link is-active" aria-current="page" href="https://nhmatsumoto.github.io/daily/"><i class="site-icon nav-link-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/projects/"><i class="site-icon nav-link-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/documents/"><i class="site-icon nav-link-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></div>
       </div>
     </div>
     
       <main class="site-main" id="content">
-    <div class="layout-container page-stack page-stack-wide">
+    <div class="layout-container post-reading-layout">
       <header class="page-header">
-        <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><span aria-current="page"><span class="icon-label" data-i18n="nav.documents">documentos</span></span></li></ol></nav>
-        <section class="page-heading">
-          <p class="section-kicker" data-i18n="nav.documents">documentos</p>
-          <h1 data-i18n="pages.documents.title">Sistema de documentos</h1>
-          <p data-i18n="pages.documents.description">Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis.</p>
-        </section>
+        <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/daily/"><i class="site-icon breadcrumb-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a></li><li><span aria-current="page">Layout e renderers</span></li></ol></nav>
       </header>
-      <div class="page-content">
-        
-    <section class="section-panel documents-panel documents-panel-condensed">
-      
-      <div class="documents-panel-body"><section class="document-group" id="category-architecture"><header class="document-group-head"><h2 class="document-group-title">architecture</h2></header><ol class="entry-list document-list"><li class="entry" data-entry-card>
-      <article class="entry-card entry-card-document document-item" aria-labelledby="document-title-system-architecture">
-        <p class="entry-eyebrow document-meta"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.document">documento</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="folder" aria-hidden="true"></i>architecture</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta entry-version"><i class="site-icon entry-icon" data-lucide="git-branch" aria-hidden="true"></i>v1</span></p>
-        <h3 class="entry-title document-title" id="document-title-system-architecture"><a href="https://nhmatsumoto.github.io/documents/system-architecture/" data-entry-title>Arquitetura do Sistema</a></h3>
-        <p class="entry-lede document-description" data-entry-lede>Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.</p>
-        <a class="entry-cta" href="https://nhmatsumoto.github.io/documents/system-architecture/"><span class="icon-label" data-i18n="actions.open_docs">abrir docs</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
-      </article>
-      <script type="application/json" data-entry-card-data>{"title": "Arquitetura do Sistema", "title_en_us": "System Architecture", "title_ja_jp": "システムアーキテクチャ", "summary": "Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.", "summary_en_us": "Structural view of the system's boundaries and its architectural rationale.", "summary_ja_jp": "システム境界の構造的俯瞰と、その背後にある設計根拠。"}</script>
-    </li></ol></section>
-<section class="document-group" id="category-agents"><header class="document-group-head"><h2 class="document-group-title">agents</h2></header><ol class="entry-list document-list"><li class="entry" data-entry-card>
-      <article class="entry-card entry-card-document document-item" aria-labelledby="document-title-adr-versioned-memory">
-        <p class="entry-eyebrow document-meta"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.document">documento</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="folder" aria-hidden="true"></i>agents</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta entry-version"><i class="site-icon entry-icon" data-lucide="git-branch" aria-hidden="true"></i>vADR 003</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-flag"><i class="site-icon entry-icon" data-lucide="bot" aria-hidden="true"></i><span class="icon-label" data-i18n="common.agent_generated">gerado por agente</span></span></p>
-        <h3 class="entry-title document-title" id="document-title-adr-versioned-memory"><a href="https://nhmatsumoto.github.io/documents/adr-versioned-memory/" data-entry-title>ADR 003 - Memória Versionada</a></h3>
-        <p class="entry-lede document-description" data-entry-lede>Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.</p>
-        <a class="entry-cta" href="https://nhmatsumoto.github.io/documents/adr-versioned-memory/"><span class="icon-label" data-i18n="actions.open_docs">abrir docs</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
-      </article>
-      <script type="application/json" data-entry-card-data>{"title": "ADR 003 - Memória Versionada", "title_en_us": "ADR 003 — Versioned Memory", "title_ja_jp": "ADR 003 — バージョン管理された記憶", "summary": "Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.", "summary_en_us": "Architectural decision on memory snapshots and context persistence in agent-oriented workflows.", "summary_ja_jp": "エージェント指向ワークフローにおける記憶スナップショットとコンテキスト永続化に関するアーキテクチャ決定。"}</script>
-    </li>
-<li class="entry" data-entry-card>
-      <article class="entry-card entry-card-document document-item" aria-labelledby="document-title-ronaldinho-architecture-overview">
-        <p class="entry-eyebrow document-meta"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.document">documento</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="folder" aria-hidden="true"></i>agents</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta entry-version"><i class="site-icon entry-icon" data-lucide="git-branch" aria-hidden="true"></i>v0.1</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-flag"><i class="site-icon entry-icon" data-lucide="bot" aria-hidden="true"></i><span class="icon-label" data-i18n="common.agent_generated">gerado por agente</span></span></p>
-        <h3 class="entry-title document-title" id="document-title-ronaldinho-architecture-overview"><a href="https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/" data-entry-title>Visão Geral da Arquitetura do Ronaldinho</a></h3>
-        <p class="entry-lede document-description" data-entry-lede>Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.</p>
-        <a class="entry-cta" href="https://nhmatsumoto.github.io/documents/ronaldinho-architecture-overview/"><span class="icon-label" data-i18n="actions.open_docs">abrir docs</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
-      </article>
-      <script type="application/json" data-entry-card-data>{"title": "Visão Geral da Arquitetura do Ronaldinho", "title_en_us": "Ronaldinho Architecture Overview", "title_ja_jp": "Ronaldinho アーキテクチャ概観", "summary": "Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.", "summary_en_us": "Overview of the Ronaldinho Agent architecture and runtime modularity choices.", "summary_ja_jp": "Ronaldinho Agent のアーキテクチャとランタイム・モジュラリティ選定の概観。"}</script>
-    </li></ol></section>
-<section class="document-group" id="category-apis"><header class="document-group-head"><h2 class="document-group-title">apis</h2></header><ol class="entry-list document-list"><li class="entry" data-entry-card>
-      <article class="entry-card entry-card-document document-item" aria-labelledby="document-title-agent-integration-surface">
-        <p class="entry-eyebrow document-meta"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.document">documento</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="folder" aria-hidden="true"></i>apis</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta entry-version"><i class="site-icon entry-icon" data-lucide="git-branch" aria-hidden="true"></i>v1</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-flag"><i class="site-icon entry-icon" data-lucide="bot" aria-hidden="true"></i><span class="icon-label" data-i18n="common.agent_generated">gerado por agente</span></span></p>
-        <h3 class="entry-title document-title" id="document-title-agent-integration-surface"><a href="https://nhmatsumoto.github.io/documents/agent-integration-surface/" data-entry-title>Superfície de Integração de Agentes</a></h3>
-        <p class="entry-lede document-description" data-entry-lede>Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes.</p>
-        <a class="entry-cta" href="https://nhmatsumoto.github.io/documents/agent-integration-surface/"><span class="icon-label" data-i18n="actions.open_docs">abrir docs</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
-      </article>
-      <script type="application/json" data-entry-card-data>{"title": "Superfície de Integração de Agentes", "title_en_us": "Agent Integration Surface", "title_ja_jp": "エージェント統合サーフェス", "summary": "Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes.", "summary_en_us": "Minimal contracts for exposing tools and services to an agent-oriented runtime.", "summary_ja_jp": "エージェント指向のランタイムに対して、ツールとサービスを公開する最小契約。"}</script>
-    </li></ol></section>
-<section class="document-group" id="category-domain"><header class="document-group-head"><h2 class="document-group-title">domain</h2></header><ol class="entry-list document-list"><li class="entry" data-entry-card>
-      <article class="entry-card entry-card-document document-item" aria-labelledby="document-title-technical-knowledge-os">
-        <p class="entry-eyebrow document-meta"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.document">documento</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="folder" aria-hidden="true"></i>domain</span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta entry-version"><i class="site-icon entry-icon" data-lucide="git-branch" aria-hidden="true"></i>v1</span></p>
-        <h3 class="entry-title document-title" id="document-title-technical-knowledge-os"><a href="https://nhmatsumoto.github.io/documents/technical-knowledge-os/" data-entry-title>Technical Knowledge OS</a></h3>
-        <p class="entry-lede document-description" data-entry-lede>A definição operacional do blog como sistema vivo de documentação técnica.</p>
-        <a class="entry-cta" href="https://nhmatsumoto.github.io/documents/technical-knowledge-os/"><span class="icon-label" data-i18n="actions.open_docs">abrir docs</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
-      </article>
-      <script type="application/json" data-entry-card-data>{"title": "Technical Knowledge OS", "title_en_us": "Technical Knowledge OS", "title_ja_jp": "Technical Knowledge OS", "summary": "A definição operacional do blog como sistema vivo de documentação técnica.", "summary_en_us": "The operational definition of the blog as a living system of technical documentation.", "summary_ja_jp": "ブログを生きた技術ドキュメンテーション・システムとして運用する定義。"}</script>
-    </li></ol></section></div>
-    </section>
-    
+      <div class="page-two-column">
+        <aside class="page-sidebar post-detail-sidebar">
+          <div class="sidebar-panel notebook-meta-panel post-meta-panel">
+            <div class="post-sidebar-section post-sidebar-section-meta">
+              <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">Contexto</h2></div>
+              <div class="card-metrics"><span class="metric"><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-25T01:04:13+09:00" data-localize-date="long">25 de abril de 2026</time></span></span> &middot; <span class="metric"><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></span></div>
+            </div>
+            <div class="post-sidebar-section"><div class="tag-list"><span class="tag">layout</span><span class="tag">renderer</span><span class="tag">build</span><span class="tag">i18n</span></div></div>
+            <div class="post-sidebar-section meta-stack"><p class="meta-stack-line"><strong data-i18n="pages.daily.source">Fonte</strong>: <span data-page-field="source">Atividade pública derivada do histórico Git local dos últimos 30 dias.</span></p><div class="daily-related-block"><p class="daily-related-heading" data-i18n="pages.daily.related_paths">Caminhos relacionados</p><ul class="daily-related-paths"><li><code>assets/styles.css</code></li><li><code>content/i18n.toml</code></li><li><code>scripts/engine/generator.py</code></li><li><code>scripts/engine/loader.py</code></li><li><code>scripts/engine/renderer/components.py</code></li></ul></div></div>
+          </div>
+        </aside>
+        <div class="page-main">
+          <article class="post-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.daily.kicker">daily</p>
+                <div class="post-meta post-meta-hero"><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-25T01:04:13+09:00" data-localize-date="long">25 de abril de 2026</time></span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></div>
+              </div>
+              <h1 data-page-title>Layout e renderers</h1>
+              <p class="post-summary post-deck" data-page-summary>O dia reuniu 1 commit voltado a layout, renderers, e build estático. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.</p>
+            </header>
+            <div class="post-body" data-page-body><p>O dia reuniu 1 commit voltado a layout, renderers, e build estático. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.</p>
+<h3>Destaques</h3>
+<ul><li>Ajustes no shell visual, no ritmo vertical e na largura de leitura compartilhada.</li> <li>Refatoração de renderers, componentes e shell compartilhado entre páginas.</li> <li>Ajustes no pipeline estático e na geração do site para manter a publicação consistente.</li></ul>
+<h3>Caminhos relacionados</h3>
+<ul><li><code>assets/styles.css</code></li> <li><code>content/i18n.toml</code></li> <li><code>scripts/engine/generator.py</code></li> <li><code>scripts/engine/loader.py</code></li> <li><code>scripts/engine/renderer/components.py</code></li></ul>
+<h3>Fonte</h3>
+<p>Atividade pública derivada do histórico Git local dos últimos 30 dias.</p></div>
+          </article>
+        </div>
       </div>
     </div>
+    
+    <div class="related-content-shell">
+      <div class="layout-container">
+        <section class="section-panel related-content-panel" aria-labelledby="related-content-title">
+          <header class="section-header">
+            <div>
+              <p class="section-kicker" data-i18n="sections.navigation_kicker">navegação</p>
+              <h2 id="related-content-title" data-i18n="sections.related_content">Continue explorando</h2>
+            </div>
+            <p class="section-copy" data-i18n="sections.related_content_copy">Conteudos conectados por tags, projeto e documentacao.</p>
+          </header>
+          <ol class="entry-list"><li class="entry" data-entry-card>
+      <article class="entry-card entry-card-daily">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.daily">daily</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-06T10:20:24+09:00" data-localize-date="short">06 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/daily/20260406-102024-renderers-and-static-build/" data-entry-title>Renderers e build estático</a></h3>
+        <p class="entry-lede" data-entry-lede>O dia reuniu 17 commits voltados a renderers, build estático, e localização. As mudanças passaram por interações do navbar, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.</p>
+        <div class="tag-list"><span class="tag">renderer</span><span class="tag">build</span><span class="tag">i18n</span><span class="tag">navbar</span></div>
+        <p class="entry-paths"><span class="entry-path-pill"><code>content/i18n.toml</code></span><span class="entry-path-pill"><code>scripts/engine/renderer/base.py</code></span><span class="entry-path-pill"><code>scripts/engine/renderer/components.py</code></span></p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/daily/20260406-102024-renderers-and-static-build/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Renderers e build estático", "title_en_us": "Renderers and static build", "title_ja_jp": "レンダラーと静的ビルド", "summary": "O dia reuniu 17 commits voltados a renderers, build estático, e localização. As mudanças passaram por interações do navbar, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.", "summary_en_us": "The day gathered 17 commits focused on renderers, static build, and localization. The work touched navbar interactions, site renderers, and static pipeline and refined the public notebook incrementally.", "summary_ja_jp": "この日はレンダラー、静的ビルドとローカライズを中心に17件のコミットがありました。変更はナビゲーションの挙動、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"}</script>
+    </li>
+<li class="entry" data-entry-card>
+      <article class="entry-card entry-card-daily">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.daily">daily</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-22T23:20:36+09:00" data-localize-date="short">22 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/daily/20260422-232036-layout-and-posts/" data-entry-title>Layout e posts</a></h3>
+        <p class="entry-lede" data-entry-lede>O dia reuniu 16 commits voltados a layout, posts, e renderers. As mudanças passaram por CSS global, interações do navbar, e renderers do site e refinaram o caderno público de forma incremental.</p>
+        <div class="tag-list"><span class="tag">layout</span><span class="tag">posts</span><span class="tag">renderer</span><span class="tag">content</span></div>
+        <p class="entry-paths"><span class="entry-path-pill"><code>assets/blog.js</code></span><span class="entry-path-pill"><code>assets/styles.css</code></span><span class="entry-path-pill"><code>content/system.toml</code></span></p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/daily/20260422-232036-layout-and-posts/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Layout e posts", "title_en_us": "Layout and posts", "title_ja_jp": "レイアウトと記事", "summary": "O dia reuniu 16 commits voltados a layout, posts, e renderers. As mudanças passaram por CSS global, interações do navbar, e renderers do site e refinaram o caderno público de forma incremental.", "summary_en_us": "The day gathered 16 commits focused on layout, posts, and renderers. The work touched global CSS, navbar interactions, and site renderers and refined the public notebook incrementally.", "summary_ja_jp": "この日はレイアウト、記事とレンダラーを中心に16件のコミットがありました。変更はグローバルCSS、ナビゲーションの挙動とサイトのレンダラーに及び、公開ノートブックを段階的に整えました。"}</script>
+    </li>
+<li class="entry" data-entry-card>
+      <article class="entry-card entry-card-daily">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.daily">daily</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-13T02:57:01+09:00" data-localize-date="short">13 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/daily/20260413-025701-static-build-and-navigation/" data-entry-title>Build estático e navegação</a></h3>
+        <p class="entry-lede" data-entry-lede>O dia reuniu 1 commit voltado a build estático, navegação, e renderers. As mudanças passaram por interações do navbar, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.</p>
+        <div class="tag-list"><span class="tag">build</span><span class="tag">navbar</span><span class="tag">renderer</span><span class="tag">mobile</span></div>
+        <p class="entry-paths"><span class="entry-path-pill"><code>assets/blog.js</code></span><span class="entry-path-pill"><code>scripts/engine/generator.py</code></span><span class="entry-path-pill"><code>scripts/engine/i18n.py</code></span></p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/daily/20260413-025701-static-build-and-navigation/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Build estático e navegação", "title_en_us": "Static build and navigation", "title_ja_jp": "静的ビルドとナビゲーション", "summary": "O dia reuniu 1 commit voltado a build estático, navegação, e renderers. As mudanças passaram por interações do navbar, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.", "summary_en_us": "The day gathered 1 commit focused on static build, navigation, and renderers. The work touched navbar interactions, site renderers, and static pipeline and refined the public notebook incrementally.", "summary_ja_jp": "この日は静的ビルド、ナビゲーションとレンダラーを中心に1件のコミットがありました。変更はナビゲーションの挙動、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"}</script>
+    </li>
+<li class="entry" data-entry-card>
+      <article class="entry-card entry-card-daily">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.daily">daily</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-21T23:51:01+09:00" data-localize-date="short">21 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1">1 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/daily/20260421-235101-posts-and-content/" data-entry-title>Posts e conteúdo</a></h3>
+        <p class="entry-lede" data-entry-lede>O dia reuniu 15 commits voltados a posts, conteúdo, e projetos. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.</p>
+        <div class="tag-list"><span class="tag">posts</span><span class="tag">content</span><span class="tag">projects</span><span class="tag">layout</span></div>
+        <p class="entry-paths"><span class="entry-path-pill"><code>assets/styles.css</code></span><span class="entry-path-pill"><code>assets/images/profile/profile.gif</code></span><span class="entry-path-pill"><code>content/system.toml</code></span></p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/daily/20260421-235101-posts-and-content/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Posts e conteúdo", "title_en_us": "Posts and content", "title_ja_jp": "記事とコンテンツ", "summary": "O dia reuniu 15 commits voltados a posts, conteúdo, e projetos. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.", "summary_en_us": "The day gathered 15 commits focused on posts, content, and projects. The work touched global CSS, site renderers, and static pipeline and refined the public notebook incrementally.", "summary_ja_jp": "この日は記事、コンテンツとプロジェクトを中心に15件のコミットがありました。変更はグローバルCSS、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"}</script>
+    </li></ol>
+        </section>
+      </div>
+    </div>
+    
+    <script id="page-content-data" type="application/json">{"title": "Layout e renderers", "summary": "O dia reuniu 1 commit voltado a layout, renderers, e build estático. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.", "body_html": "\u003cp>O dia reuniu 1 commit voltado a layout, renderers, e build estático. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.\u003c/p>\n\u003ch3>Destaques\u003c/h3>\n\u003cul>\u003cli>Ajustes no shell visual, no ritmo vertical e na largura de leitura compartilhada.\u003c/li> \u003cli>Refatoração de renderers, componentes e shell compartilhado entre páginas.\u003c/li> \u003cli>Ajustes no pipeline estático e na geração do site para manter a publicação consistente.\u003c/li>\u003c/ul>\n\u003ch3>Caminhos relacionados\u003c/h3>\n\u003cul>\u003cli>\u003ccode>assets/styles.css\u003c/code>\u003c/li> \u003cli>\u003ccode>content/i18n.toml\u003c/code>\u003c/li> \u003cli>\u003ccode>scripts/engine/generator.py\u003c/code>\u003c/li> \u003cli>\u003ccode>scripts/engine/loader.py\u003c/code>\u003c/li> \u003cli>\u003ccode>scripts/engine/renderer/components.py\u003c/code>\u003c/li>\u003c/ul>\n\u003ch3>Fonte\u003c/h3>\n\u003cp>Atividade pública derivada do histórico Git local dos últimos 30 dias.\u003c/p>", "source": "Atividade pública derivada do histórico Git local dos últimos 30 dias.", "title_en_us": "Layout and renderers", "title_ja_jp": "レイアウトとレンダラー", "summary_en_us": "The day gathered 1 commit focused on layout, renderers, and static build. The work touched global CSS, site renderers, and static pipeline and refined the public notebook incrementally.", "summary_ja_jp": "この日はレイアウト、レンダラーと静的ビルドを中心に1件のコミットがありました。変更はグローバルCSS、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。", "body_html_en_us": "\u003cp>The day gathered 1 commit focused on layout, renderers, and static build. The work touched global CSS, site renderers, and static pipeline and refined the public notebook incrementally.\u003c/p>\n\u003ch3>Highlights\u003c/h3>\n\u003cul>\u003cli>Adjusted the visual shell, vertical rhythm, and shared reading width.\u003c/li> \u003cli>Refactored renderers, components, and the shared shell across pages.\u003c/li> \u003cli>Adjusted the static pipeline and site generation flow to keep publishing consistent.\u003c/li>\u003c/ul>\n\u003ch3>Related paths\u003c/h3>\n\u003cul>\u003cli>\u003ccode>assets/styles.css\u003c/code>\u003c/li> \u003cli>\u003ccode>content/i18n.toml\u003c/code>\u003c/li> \u003cli>\u003ccode>scripts/engine/generator.py\u003c/code>\u003c/li> \u003cli>\u003ccode>scripts/engine/loader.py\u003c/code>\u003c/li> \u003cli>\u003ccode>scripts/engine/renderer/components.py\u003c/code>\u003c/li>\u003c/ul>\n\u003ch3>Source\u003c/h3>\n\u003cp>Public activity derived from the local Git history from the last 30 days.\u003c/p>", "body_html_ja_jp": "\u003cp>この日はレイアウト、レンダラーと静的ビルドを中心に1件のコミットがありました。変更はグローバルCSS、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。\u003c/p>\n\u003ch3>ハイライト\u003c/h3>\n\u003cul>\u003cli>ビジュアルシェル、縦方向のリズム、共通の読み幅を調整しました。\u003c/li> \u003cli>ページ間で共有するレンダラー、コンポーネント、シェルを整理しました。\u003c/li> \u003cli>公開の整合性を保つために静的パイプラインとサイト生成を調整しました。\u003c/li>\u003c/ul>\n\u003ch3>関連パス\u003c/h3>\n\u003cul>\u003cli>\u003ccode>assets/styles.css\u003c/code>\u003c/li> \u003cli>\u003ccode>content/i18n.toml\u003c/code>\u003c/li> \u003cli>\u003ccode>scripts/engine/generator.py\u003c/code>\u003c/li> \u003cli>\u003ccode>scripts/engine/loader.py\u003c/code>\u003c/li> \u003cli>\u003ccode>scripts/engine/renderer/components.py\u003c/code>\u003c/li>\u003c/ul>\n\u003ch3>ソース\u003c/h3>\n\u003cp>過去30日間のローカル Git 履歴から取得した公開アクティビティです。\u003c/p>", "source_en_us": "Public activity derived from the local Git history from the last 30 days.", "source_ja_jp": "過去30日間のローカル Git 履歴から取得した公開アクティビティです。"}</script>
     </main>
       
     <footer class="site-footer">

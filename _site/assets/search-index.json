@@ -728,6 +728,22 @@
   },
   {
     "title": "Layout e renderers",
+    "url": "https://nhmatsumoto.github.io/daily/20260425-010413-layout-and-renderers/",
+    "kind": "daily",
+    "summary": "O dia reuniu 1 commit voltado a layout, renderers, e build estático. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.",
+    "keywords": [
+      "layout",
+      "renderer",
+      "build",
+      "i18n"
+    ],
+    "title_en_us": "Layout and renderers",
+    "title_ja_jp": "レイアウトとレンダラー",
+    "summary_en_us": "The day gathered 1 commit focused on layout, renderers, and static build. The work touched global CSS, site renderers, and static pipeline and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日はレイアウト、レンダラーと静的ビルドを中心に1件のコミットがありました。変更はグローバルCSS、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"
+  },
+  {
+    "title": "Layout e renderers",
     "url": "https://nhmatsumoto.github.io/daily/20260424-223436-layout-and-renderers/",
     "kind": "daily",
     "summary": "O dia reuniu 21 commits voltados a layout, renderers, e build estático. As mudanças passaram por CSS global, interações do navbar, e renderers do site e refinaram o caderno público de forma incremental.",
