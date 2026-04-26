@@ -1,9 +1,13 @@
 id = "20260409-230000"
 slug = "daily-063-otimizacao-de-queries-com-indices-no-sql-server"
 title = "Daily #063: Otimização de queries com índices no SQL Server"
+title_en_us = "Daily #063: Query optimization with SQL Server indexes"
+title_ja_jp = "Daily #063: SQL Serverインデックスによるクエリ最適化"
 summary = "Relaciona padrões de acesso a índices adequados para reduzir varreduras e melhorar tempo de resposta."
+summary_en_us = "Covers Query optimization with SQL Server indexes in SOS Location with foundations, diagrams, formulas, examples and operational success criteria."
+summary_ja_jp = "「SQL Serverインデックスによるクエリ最適化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
 published_at = "2026-04-09T23:00:00+09:00"
-updated_at = "2026-04-09T23:00:00+09:00"
+updated_at = "2026-04-26T16:40:28+09:00"
 status = "published"
 category = "sos-location-daily"
 tags = ["sos-location", "daily", "performance", "escalabilidade"]
@@ -11,5 +15,196 @@ badges = ["performance", "escala"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = false
-body = "Este daily faz parte da trilha **Performance e Escalabilidade** do SOS Location.\n\n## Descrição\nRelaciona padrões de acesso a índices adequados para reduzir varreduras e melhorar tempo de resposta.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"
+has_math = true
+body = '''
+Este Daily aprofunda **Otimização de queries com índices no SQL Server** dentro da trilha **Performance e Escalabilidade** do SOS Location. A ideia é sair de uma nota curta e transformar o item em material de referência para produto, engenharia e operação.
+
+## Descrição
+Relaciona padrões de acesso a índices adequados para reduzir varreduras e melhorar tempo de resposta.
+
+## Fundamentos
+Performance útil é previsibilidade sob carga. Antes de otimizar, é preciso medir caminho crítico, cardinalidade, cache hit ratio, tamanho de payload e custo de serialização.
+
+O ponto central é tornar **Otimização de queries com índices no SQL Server** observável: deve existir um artefato que possa ser lido por outra pessoa, testado por código ou validado por uma equipe operacional. Quando a decisão fica apenas na conversa, ela não escala e não cria aprendizado institucional.
+
+## Modelo de decisão
+A decisão pode ser avaliada com uma métrica simples:
+
+$$
+T_{p95} = T_{db} + T_{network} + T_{serialize} + T_{render}
+$$
+
+A latência percebida é soma de várias camadas; melhorar apenas uma delas pode não mudar o p95 se o gargalo estiver em outro ponto.
+
+## Diagrama de fluxo
+```mermaid
+flowchart LR
+  A["Sinal de campo"] --> B["Otimização de queries com índices no SQL Server"]
+  B --> C["Contrato verificável"]
+  C --> D["Implementação incremental"]
+  D --> E["Métrica operacional"]
+```
+
+## Gráfico de maturidade
+```mermaid
+xychart-beta
+    title "Leitura de maturidade"
+    x-axis ["Clareza", "Risco", "Implementação"]
+    y-axis "Pontuação" 0 --> 10
+    bar [8, 7, 9]
+```
+
+## Exemplo de implementação
+```sql
+CREATE INDEX IX_Alerts_Tenant_Status_UpdatedAt
+ON Alerts (TenantId, Status, UpdatedAt DESC)
+INCLUDE (Severity, Latitude, Longitude);
+
+SELECT TOP 50 Id, Severity, Latitude, Longitude
+FROM Alerts
+WHERE TenantId = @tenantId AND Status = 'active'
+ORDER BY UpdatedAt DESC;
+```
+
+## Como aplicar no SOS Location
+- Defina o contrato mínimo: entrada, saída, dono da decisão e comportamento esperado em erro.
+- Registre a decisão perto do código ou do documento de arquitetura que será mantido junto com o sistema.
+- Crie um teste, consulta ou dashboard que mostre se o comportamento continua verdadeiro com dados reais.
+- Revise o impacto em operação: tempo de resposta, rastreabilidade, custo cognitivo e risco de interpretação.
+
+## Armadilhas comuns
+- Transformar o conceito em abstração genérica demais antes de validar um caso de uso real.
+- Misturar regra de negócio, integração externa e detalhe visual no mesmo lugar.
+- Medir apenas funcionamento técnico e esquecer o efeito para equipes de resgate, usuários afetados ou operadores.
+
+## Critério de sucesso
+O item está maduro quando uma pessoa nova consegue entender o motivo da decisão, executar um exemplo mínimo, ver o fluxo no diagrama e identificar qual métrica indicaria regressão.
+'''
+body_en_us = '''
+This Daily expands **Query optimization with SQL Server indexes** within the **Performance and Scalability** track of SOS Location. The goal is to turn a short note into reference material for product, engineering and operations.
+
+## Description
+Covers Query optimization with SQL Server indexes in SOS Location with context, operational criteria, diagrams, formulas and implementation examples.
+
+## Fundamentals
+Useful performance is predictability under load. Before optimizing, measure the critical path, cardinality, cache hit ratio, payload size and serialization cost.
+
+The core idea is to make **Query optimization with SQL Server indexes** observable: there should be an artifact that another person can read, code can test or an operations team can validate. If the decision stays only in conversation, it does not scale and it does not create institutional learning.
+
+## Decision model
+The decision can be evaluated with a simple metric:
+
+$$
+T_{p95} = T_{db} + T_{network} + T_{serialize} + T_{render}
+$$
+
+Perceived latency is the sum of several layers; improving only one may not change p95 if the bottleneck is elsewhere.
+
+## Flow diagram
+```mermaid
+flowchart LR
+  A["Field signal"] --> B["Query optimization with SQL Server indexes"]
+  B --> C["Verifiable contract"]
+  C --> D["Incremental implementation"]
+  D --> E["Operational metric"]
+```
+
+## Maturity chart
+```mermaid
+xychart-beta
+    title "Maturity reading"
+    x-axis ["Clarity", "Risk", "Implementation"]
+    y-axis "Score" 0 --> 10
+    bar [8, 7, 9]
+```
+
+## Implementation example
+```sql
+CREATE INDEX IX_Alerts_Tenant_Status_UpdatedAt
+ON Alerts (TenantId, Status, UpdatedAt DESC)
+INCLUDE (Severity, Latitude, Longitude);
+
+SELECT TOP 50 Id, Severity, Latitude, Longitude
+FROM Alerts
+WHERE TenantId = @tenantId AND Status = 'active'
+ORDER BY UpdatedAt DESC;
+```
+
+## How to apply it in SOS Location
+- Define the minimum contract: input, output, owner of the decision and expected behavior on failure.
+- Record the decision close to the code or architecture document that will evolve with the system.
+- Create a test, query or dashboard that shows whether the behavior remains true with real data.
+- Review the operational impact: response time, traceability, cognitive cost and interpretation risk.
+
+## Common pitfalls
+- Turning the concept into an overly generic abstraction before validating a real use case.
+- Mixing business rules, external integration and visual detail in the same place.
+- Measuring only technical execution while ignoring the effect on rescue teams, affected users or operators.
+
+## Success criteria
+The item is mature when a new person can understand why the decision exists, run a minimal example, read the diagram and identify which metric would reveal a regression.
+'''
+body_ja_jp = '''
+このDailyでは、SOS Locationの **性能とスケーラビリティ** トラックにおける **SQL Serverインデックスによるクエリ最適化** を詳しく整理します。短いメモを、プロダクト、エンジニアリング、運用で再利用できる参照資料にすることが目的です。
+
+## 説明
+「SQL Serverインデックスによるクエリ最適化」を、背景、運用基準、図、数式、実装例とともに整理します。
+
+## 基礎
+有用な性能とは、負荷下での予測可能性です。最適化の前に、クリティカルパス、カーディナリティ、キャッシュヒット率、ペイロードサイズ、シリアライズコストを測定します。
+
+中心となる考え方は、**SQL Serverインデックスによるクエリ最適化** を観測可能にすることです。別の人が読める成果物、コードでテストできる契約、運用チームが検証できる基準が必要です。判断が会話だけに残る場合、それはスケールせず、組織的な学習にもなりません。
+
+## 判断モデル
+この判断は、次のような単純な指標で評価できます。
+
+$$
+T_{p95} = T_{db} + T_{network} + T_{serialize} + T_{render}
+$$
+
+体感レイテンシは複数レイヤーの合計です。ボトルネックが別の場所にある場合、一部だけ改善してもp95は変わらないことがあります。
+
+## フロー図
+```mermaid
+flowchart LR
+  A["現場シグナル"] --> B["SQL Serverインデックスによるクエリ最適化"]
+  B --> C["検証可能な契約"]
+  C --> D["段階的な実装"]
+  D --> E["運用メトリクス"]
+```
+
+## 成熟度グラフ
+```mermaid
+xychart-beta
+    title "成熟度の見方"
+    x-axis ["明確さ", "リスク", "実装"]
+    y-axis "スコア" 0 --> 10
+    bar [8, 7, 9]
+```
+
+## 実装例
+```sql
+CREATE INDEX IX_Alerts_Tenant_Status_UpdatedAt
+ON Alerts (TenantId, Status, UpdatedAt DESC)
+INCLUDE (Severity, Latitude, Longitude);
+
+SELECT TOP 50 Id, Severity, Latitude, Longitude
+FROM Alerts
+WHERE TenantId = @tenantId AND Status = 'active'
+ORDER BY UpdatedAt DESC;
+```
+
+## SOS Locationでの適用方法
+- 最小契約を定義します。入力、出力、判断の責任者、失敗時の期待動作を明確にします。
+- 判断を、今後も保守されるコードまたはアーキテクチャ文書の近くに記録します。
+- 実データでも振る舞いが保たれているかを示すテスト、クエリ、ダッシュボードを作ります。
+- 応答時間、追跡可能性、認知負荷、解釈リスクという運用上の影響を見直します。
+
+## よくある落とし穴
+- 実際のユースケースを検証する前に、概念を過度に汎用化してしまうこと。
+- ビジネスルール、外部連携、表示上の詳細を同じ場所に混ぜること。
+- 技術的に動くことだけを測り、救助チーム、被災ユーザー、操作者への影響を忘れること。
+
+## 成功基準
+新しく参加した人が、判断の理由を理解し、最小例を実行し、図を読み、どの指標が回帰を示すかを説明できる状態なら、この項目は成熟しています。
+'''

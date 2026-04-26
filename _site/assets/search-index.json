@@ -27,7 +27,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #100: Product evolution into a complete emergency platform",
+    "title_ja_jp": "Daily #100: 完全な緊急対応プラットフォームへの製品進化",
+    "summary_en_us": "Covers Product evolution into a complete emergency platform in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「完全な緊急対応プラットフォームへの製品進化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #099: Estrutura de permissões para equipes de resgate",
@@ -39,7 +43,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #099: Permission structure for rescue teams",
+    "title_ja_jp": "Daily #099: 救助チーム向け権限構造",
+    "summary_en_us": "Covers Permission structure for rescue teams in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「救助チーム向け権限構造」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #098: Comunicação em tempo real com usuários afetados",
@@ -51,7 +59,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #098: Real-time communication with affected users",
+    "title_ja_jp": "Daily #098: 被災ユーザーとのリアルタイム通信",
+    "summary_en_us": "Covers Real-time communication with affected users in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「被災ユーザーとのリアルタイム通信」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #097: UX voltado para situações de crise",
@@ -63,7 +75,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #097: UX for crisis situations",
+    "title_ja_jp": "Daily #097: 危機状況向けUX",
+    "summary_en_us": "Covers UX for crisis situations in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「危機状況向けUX」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #096: Planejamento de expansão global",
@@ -75,7 +91,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #096: Global expansion planning",
+    "title_ja_jp": "Daily #096: グローバル展開計画",
+    "summary_en_us": "Covers Global expansion planning in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「グローバル展開計画」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #095: Integração com dados governamentais",
@@ -87,7 +107,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #095: Integration with government data",
+    "title_ja_jp": "Daily #095: 政府データ統合",
+    "summary_en_us": "Covers Integration with government data in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「政府データ統合」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #094: Sistema de doações com rastreabilidade",
@@ -99,7 +123,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #094: Donation system with traceability",
+    "title_ja_jp": "Daily #094: 追跡可能な寄付システム",
+    "summary_en_us": "Covers Donation system with traceability in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「追跡可能な寄付システム」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #093: Criação de dashboard público de transparência",
@@ -111,7 +139,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #093: Creating a public transparency dashboard",
+    "title_ja_jp": "Daily #093: 公開透明性ダッシュボード作成",
+    "summary_en_us": "Covers Creating a public transparency dashboard in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「公開透明性ダッシュボード作成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #092: Estratégia open-source para colaboração global",
@@ -123,7 +155,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #092: Open-source strategy for global collaboration",
+    "title_ja_jp": "Daily #092: グローバル協力のためのオープンソース戦略",
+    "summary_en_us": "Covers Open-source strategy for global collaboration in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「グローバル協力のためのオープンソース戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #091: Definição do propósito: software para salvar vidas",
@@ -135,7 +171,11 @@
       "daily",
       "produto",
       "emergencia"
-    ]
+    ],
+    "title_en_us": "Daily #091: Purpose definition: software to save lives",
+    "title_ja_jp": "Daily #091: 目的の定義：命を救うソフトウェア",
+    "summary_en_us": "Covers Purpose definition: software to save lives in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「目的の定義：命を救うソフトウェア」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #090: Redução de tokens com linguagem estruturada",
@@ -147,7 +187,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #090: Token reduction with structured language",
+    "title_ja_jp": "Daily #090: 構造化言語によるトークン削減",
+    "summary_en_us": "Covers Token reduction with structured language in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「構造化言語によるトークン削減」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #089: Estratégia de versionamento de prompts",
@@ -159,7 +203,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #089: Prompt versioning strategy",
+    "title_ja_jp": "Daily #089: プロンプトバージョニング戦略",
+    "summary_en_us": "Covers Prompt versioning strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「プロンプトバージョニング戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #088: Integração com ferramentas (Codex, Gemini)",
@@ -171,7 +219,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #088: Integration with tools such as Codex and Gemini",
+    "title_ja_jp": "Daily #088: ツール連携（Codex、Gemini）",
+    "summary_en_us": "Covers Integration with tools such as Codex and Gemini in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「ツール連携（Codex、Gemini）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #087: Pipeline: pensamento → especificação → execução",
@@ -183,7 +235,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #087: Pipeline from thinking to specification to execution",
+    "title_ja_jp": "Daily #087: パイプライン：思考 → 仕様 → 実行",
+    "summary_en_us": "Covers Pipeline from thinking to specification to execution in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「パイプライン：思考 → 仕様 → 実行」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #086: Implementação de “reflection agents”",
@@ -195,7 +251,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #086: Implementing reflection agents",
+    "title_ja_jp": "Daily #086: reflection agentsの実装",
+    "summary_en_us": "Covers Implementing reflection agents in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「reflection agentsの実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #085: Ajuste de comportamento com base em correções",
@@ -207,7 +267,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #085: Behavior adjustment based on corrections",
+    "title_ja_jp": "Daily #085: 修正に基づく振る舞い調整",
+    "summary_en_us": "Covers Behavior adjustment based on corrections in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「修正に基づく振る舞い調整」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #084: Sistema de memória para aprendizado contínuo",
@@ -219,7 +283,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #084: Memory system for continuous learning",
+    "title_ja_jp": "Daily #084: 継続学習のためのメモリシステム",
+    "summary_en_us": "Covers Memory system for continuous learning in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「継続学習のためのメモリシステム」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #083: Uso de linguagem ubíqua para comunicação entre agentes",
@@ -231,7 +299,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #083: Using ubiquitous language for agent communication",
+    "title_ja_jp": "Daily #083: エージェント間通信のためのユビキタス言語",
+    "summary_en_us": "Covers Using ubiquitous language for agent communication in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「エージェント間通信のためのユビキタス言語」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #082: Separação de agentes por responsabilidade",
@@ -243,7 +315,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #082: Separating agents by responsibility",
+    "title_ja_jp": "Daily #082: 責務ごとのエージェント分離",
+    "summary_en_us": "Covers Separating agents by responsibility in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「責務ごとのエージェント分離」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #081: Estrutura inicial de orquestrador de agentes",
@@ -255,7 +331,11 @@
       "daily",
       "agentes",
       "ia"
-    ]
+    ],
+    "title_en_us": "Daily #081: Initial structure for an agent orchestrator",
+    "title_ja_jp": "Daily #081: エージェントオーケストレーター初期構造",
+    "summary_en_us": "Covers Initial structure for an agent orchestrator in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「エージェントオーケストレーター初期構造」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #080: Estratégia de autenticação para APIs externas",
@@ -266,7 +346,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #080: Authentication strategy for external APIs",
+    "title_ja_jp": "Daily #080: 外部API向け認証戦略",
+    "summary_en_us": "Covers Authentication strategy for external APIs in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「外部API向け認証戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #079: Gestão segura de secrets",
@@ -277,7 +361,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #079: Secure secrets management",
+    "title_ja_jp": "Daily #079: secretsの安全な管理",
+    "summary_en_us": "Covers Secure secrets management in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「secretsの安全な管理」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #078: Proteção de endpoints sensíveis",
@@ -288,7 +376,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #078: Sensitive endpoint protection",
+    "title_ja_jp": "Daily #078: 機密エンドポイント保護",
+    "summary_en_us": "Covers Sensitive endpoint protection in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「機密エンドポイント保護」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #077: Logs de auditoria para ações críticas",
@@ -299,7 +391,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #077: Audit logs for critical actions",
+    "title_ja_jp": "Daily #077: 重要操作の監査ログ",
+    "summary_en_us": "Covers Audit logs for critical actions in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「重要操作の監査ログ」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #076: Controle de permissões por papel (RBAC)",
@@ -310,7 +406,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #076: Role-based permission control with RBAC",
+    "title_ja_jp": "Daily #076: ロールベース権限制御（RBAC）",
+    "summary_en_us": "Covers Role-based permission control with RBAC in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「ロールベース権限制御（RBAC）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #075: Sanitização de dados no frontend",
@@ -321,7 +421,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #075: Frontend data sanitization",
+    "title_ja_jp": "Daily #075: フロントエンドデータサニタイズ",
+    "summary_en_us": "Covers Frontend data sanitization in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「フロントエンドデータサニタイズ」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #074: Validação de inputs no backend (FluentValidation)",
@@ -332,7 +436,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #074: Backend input validation with FluentValidation",
+    "title_ja_jp": "Daily #074: バックエンド入力検証（FluentValidation）",
+    "summary_en_us": "Covers Backend input validation with FluentValidation in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「バックエンド入力検証（FluentValidation）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #073: Proteção contra ataques de repetição",
@@ -343,7 +451,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #073: Protection against replay attacks",
+    "title_ja_jp": "Daily #073: リプレイ攻撃対策",
+    "summary_en_us": "Covers Protection against replay attacks in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「リプレイ攻撃対策」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #072: Avaliação de Keycloak para controle de acesso",
@@ -354,7 +466,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #072: Keycloak evaluation for access control",
+    "title_ja_jp": "Daily #072: アクセス制御向けKeycloak評価",
+    "summary_en_us": "Covers Keycloak evaluation for access control in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「アクセス制御向けKeycloak評価」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #071: Implementação de autenticação baseada em JWT",
@@ -365,7 +481,11 @@
       "sos-location",
       "daily",
       "seguranca"
-    ]
+    ],
+    "title_en_us": "Daily #071: JWT-based authentication implementation",
+    "title_ja_jp": "Daily #071: JWTベース認証の実装",
+    "summary_en_us": "Covers JWT-based authentication implementation in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「JWTベース認証の実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #070: Compressão e otimização de assets frontend",
@@ -377,7 +497,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #070: Frontend asset compression and optimization",
+    "title_ja_jp": "Daily #070: フロントエンド資産の圧縮と最適化",
+    "summary_en_us": "Covers Frontend asset compression and optimization in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「フロントエンド資産の圧縮と最適化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #069: Redução de payload em APIs",
@@ -389,7 +513,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #069: API payload reduction",
+    "title_ja_jp": "Daily #069: APIペイロード削減",
+    "summary_en_us": "Covers API payload reduction in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「APIペイロード削減」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #068: Monitoramento de performance da aplicação",
@@ -401,7 +529,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #068: Application performance monitoring",
+    "title_ja_jp": "Daily #068: アプリケーション性能監視",
+    "summary_en_us": "Covers Application performance monitoring in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「アプリケーション性能監視」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #067: Pipeline CI/CD com Azure DevOps",
@@ -413,7 +545,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #067: CI/CD pipeline with Azure DevOps",
+    "title_ja_jp": "Daily #067: Azure DevOpsによるCI/CDパイプライン",
+    "summary_en_us": "Covers CI/CD pipeline with Azure DevOps in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「Azure DevOpsによるCI/CDパイプライン」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #066: Uso de Docker para ambientes consistentes",
@@ -425,7 +561,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #066: Using Docker for consistent environments",
+    "title_ja_jp": "Daily #066: 一貫した環境のためのDocker活用",
+    "summary_en_us": "Covers Using Docker for consistent environments in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「一貫した環境のためのDocker活用」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #065: Estratégia de pré-processamento de dados",
@@ -437,7 +577,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #065: Data preprocessing strategy",
+    "title_ja_jp": "Daily #065: データ前処理戦略",
+    "summary_en_us": "Covers Data preprocessing strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「データ前処理戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #064: Lazy loading vs eager loading",
@@ -449,7 +593,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #064: Lazy loading versus eager loading",
+    "title_ja_jp": "Daily #064: 遅延読み込みと即時読み込み",
+    "summary_en_us": "Covers Lazy loading versus eager loading in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「遅延読み込みと即時読み込み」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #063: Otimização de queries com índices no SQL Server",
@@ -461,7 +609,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #063: Query optimization with SQL Server indexes",
+    "title_ja_jp": "Daily #063: SQL Serverインデックスによるクエリ最適化",
+    "summary_en_us": "Covers Query optimization with SQL Server indexes in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「SQL Serverインデックスによるクエリ最適化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #062: Uso de Dapper para queries complexas",
@@ -473,7 +625,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #062: Using Dapper for complex queries",
+    "title_ja_jp": "Daily #062: 複雑なクエリに対するDapper活用",
+    "summary_en_us": "Covers Using Dapper for complex queries in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「複雑なクエリに対するDapper活用」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #061: Estratégia de cache com Redis",
@@ -485,7 +641,11 @@
       "daily",
       "performance",
       "escalabilidade"
-    ]
+    ],
+    "title_en_us": "Daily #061: Redis cache strategy",
+    "title_ja_jp": "Daily #061: Redisキャッシュ戦略",
+    "summary_en_us": "Covers Redis cache strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「Redisキャッシュ戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #060: Feedback visual para ações do usuário",
@@ -497,7 +657,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #060: Visual feedback for user actions",
+    "title_ja_jp": "Daily #060: ユーザー操作への視覚的フィードバック",
+    "summary_en_us": "Covers Visual feedback for user actions in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「ユーザー操作への視覚的フィードバック」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #059: Melhoria de acessibilidade (a11y)",
@@ -509,7 +673,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #059: Accessibility improvement with a11y practices",
+    "title_ja_jp": "Daily #059: アクセシビリティ改善（a11y）",
+    "summary_en_us": "Covers Accessibility improvement with a11y practices in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「アクセシビリティ改善（a11y）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #058: Criação de componentes reutilizáveis",
@@ -521,7 +689,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #058: Creating reusable components",
+    "title_ja_jp": "Daily #058: 再利用可能コンポーネントの作成",
+    "summary_en_us": "Covers Creating reusable components in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「再利用可能コンポーネントの作成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #057: Otimização de renderização com React + Zustand",
@@ -533,7 +705,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #057: Rendering optimization with React and Zustand",
+    "title_ja_jp": "Daily #057: React + Zustandによる描画最適化",
+    "summary_en_us": "Covers Rendering optimization with React and Zustand in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「React + Zustandによる描画最適化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #056: Sistema de internacionalização (PT/EN/JP)",
@@ -545,7 +721,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #056: Internationalization system for PT, EN and JP",
+    "title_ja_jp": "Daily #056: 国際化システム（PT/EN/JP）",
+    "summary_en_us": "Covers Internationalization system for PT, EN and JP in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「国際化システム（PT/EN/JP）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #055: Implementação de dark/light mode",
@@ -557,7 +737,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #055: Dark and light mode implementation",
+    "title_ja_jp": "Daily #055: ダーク/ライトモード実装",
+    "summary_en_us": "Covers Dark and light mode implementation in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「ダーク/ライトモード実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #054: Organização de espaçamento para leitura fluida",
@@ -569,7 +753,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #054: Spacing organization for fluid reading",
+    "title_ja_jp": "Daily #054: 流れるように読める余白設計",
+    "summary_en_us": "Covers Spacing organization for fluid reading in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「流れるように読める余白設計」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #053: Remoção de bordas arredondadas (design mais sólido)",
@@ -581,7 +769,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #053: Removing rounded borders for a more solid design",
+    "title_ja_jp": "Daily #053: より堅牢なデザインに向けた角丸削除",
+    "summary_en_us": "Covers Removing rounded borders for a more solid design in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「より堅牢なデザインに向けた角丸削除」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #052: Refatoração de navbar para design mais limpo",
@@ -593,7 +785,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #052: Navbar refactor for a cleaner design",
+    "title_ja_jp": "Daily #052: よりクリーンなデザインのためのナビバーリファクタ",
+    "summary_en_us": "Covers Navbar refactor for a cleaner design in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「よりクリーンなデザインのためのナビバーリファクタ」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #051: Ajustes de layout para mobile (texto “esmagado”)",
@@ -605,7 +801,11 @@
       "daily",
       "frontend",
       "ux"
-    ]
+    ],
+    "title_en_us": "Daily #051: Mobile layout adjustments for squeezed text",
+    "title_ja_jp": "Daily #051: モバイルレイアウト調整（押しつぶされたテキスト）",
+    "summary_en_us": "Covers Mobile layout adjustments for squeezed text in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「モバイルレイアウト調整（押しつぶされたテキスト）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #050: Monitoramento de falhas em pagamentos",
@@ -617,7 +817,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #050: Monitoring payment failures",
+    "title_ja_jp": "Daily #050: 決済障害監視",
+    "summary_en_us": "Covers Monitoring payment failures in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「決済障害監視」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #049: Garantia de consistência eventual",
@@ -629,7 +833,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #049: Guaranteeing eventual consistency",
+    "title_ja_jp": "Daily #049: 結果整合性の保証",
+    "summary_en_us": "Covers Guaranteeing eventual consistency in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「結果整合性の保証」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #048: Uso de filas (RabbitMQ) para processamento assíncrono",
@@ -641,7 +849,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #048: Using queues such as RabbitMQ for asynchronous processing",
+    "title_ja_jp": "Daily #048: 非同期処理のためのキュー（RabbitMQ）",
+    "summary_en_us": "Covers Using queues such as RabbitMQ for asynchronous processing in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「非同期処理のためのキュー（RabbitMQ）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #047: Auditoria de transações financeiras",
@@ -653,7 +865,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #047: Financial transaction auditing",
+    "title_ja_jp": "Daily #047: 金融トランザクション監査",
+    "summary_en_us": "Covers Financial transaction auditing in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「金融トランザクション監査」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #046: Estratégia de retry seguro em pagamentos",
@@ -665,7 +881,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #046: Safe retry strategy for payments",
+    "title_ja_jp": "Daily #046: 決済における安全なリトライ戦略",
+    "summary_en_us": "Covers Safe retry strategy for payments in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「決済における安全なリトライ戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #045: Lock otimista vs lock pessimista",
@@ -677,7 +897,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #045: Optimistic locking versus pessimistic locking",
+    "title_ja_jp": "Daily #045: 楽観ロックと悲観ロック",
+    "summary_en_us": "Covers Optimistic locking versus pessimistic locking in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「楽観ロックと悲観ロック」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #044: Controle de estado de pagamento (pending, completed)",
@@ -689,7 +913,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #044: Payment state control with pending and completed states",
+    "title_ja_jp": "Daily #044: 決済状態管理（pending、completed）",
+    "summary_en_us": "Covers Payment state control with pending and completed states in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「決済状態管理（pending、completed）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #043: Uso de tokens únicos por transação",
@@ -701,7 +929,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #043: Using unique tokens per transaction",
+    "title_ja_jp": "Daily #043: トランザクションごとの一意トークン",
+    "summary_en_us": "Covers Using unique tokens per transaction in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「トランザクションごとの一意トークン」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #042: Implementação de idempotência na API",
@@ -713,7 +945,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #042: Implementing idempotency in the API",
+    "title_ja_jp": "Daily #042: APIにおける冪等性実装",
+    "summary_en_us": "Covers Implementing idempotency in the API in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「APIにおける冪等性実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #041: Problema de pagamento duplicado por múltiplos cliques",
@@ -725,7 +961,11 @@
       "daily",
       "pagamentos",
       "consistencia"
-    ]
+    ],
+    "title_en_us": "Daily #041: Duplicate payment problem caused by multiple clicks",
+    "title_ja_jp": "Daily #041: 複数クリックによる重複決済問題",
+    "summary_en_us": "Covers Duplicate payment problem caused by multiple clicks in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「複数クリックによる重複決済問題」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #040: Logging estruturado para rastreabilidade",
@@ -738,7 +978,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #040: Structured logging for traceability",
+    "title_ja_jp": "Daily #040: 追跡可能性のための構造化ログ",
+    "summary_en_us": "Covers Structured logging for traceability in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「追跡可能性のための構造化ログ」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #039: Estratégia de versionamento de APIs",
@@ -751,7 +995,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #039: API versioning strategy",
+    "title_ja_jp": "Daily #039: APIバージョニング戦略",
+    "summary_en_us": "Covers API versioning strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「APIバージョニング戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #038: Tratamento de JSON inválido em integrações",
@@ -764,7 +1012,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #038: Handling invalid JSON in integrations",
+    "title_ja_jp": "Daily #038: 連携における不正JSON処理",
+    "summary_en_us": "Covers Handling invalid JSON in integrations in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「連携における不正JSON処理」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #037: Retry e fallback para APIs externas (GDACS)",
@@ -777,7 +1029,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #037: Retry and fallback for external APIs such as GDACS",
+    "title_ja_jp": "Daily #037: 外部API（GDACS）向けリトライとフォールバック",
+    "summary_en_us": "Covers Retry and fallback for external APIs such as GDACS in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「外部API（GDACS）向けリトライとフォールバック」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #036: Modelagem de API para pessoas desaparecidas",
@@ -790,7 +1046,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #036: API modeling for missing persons",
+    "title_ja_jp": "Daily #036: 行方不明者APIのモデリング",
+    "summary_en_us": "Covers API modeling for missing persons in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「行方不明者APIのモデリング」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #035: Criação de endpoint para snapshot de operações",
@@ -803,7 +1063,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #035: Creating an endpoint for operation snapshots",
+    "title_ja_jp": "Daily #035: オペレーションスナップショット用エンドポイント作成",
+    "summary_en_us": "Covers Creating an endpoint for operation snapshots in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「オペレーションスナップショット用エンドポイント作成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #034: Avaliação de uso do Keycloak para SSO",
@@ -816,7 +1080,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #034: Keycloak evaluation for SSO",
+    "title_ja_jp": "Daily #034: SSO向けKeycloak利用評価",
+    "summary_en_us": "Covers Keycloak evaluation for SSO in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「SSO向けKeycloak利用評価」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #033: Padronização de autenticação com JWT",
@@ -829,7 +1097,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #033: JWT authentication standardization",
+    "title_ja_jp": "Daily #033: JWT認証の標準化",
+    "summary_en_us": "Covers JWT authentication standardization in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「JWT認証の標準化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #032: Tratamento de erro 401 em chamadas Axios",
@@ -842,7 +1114,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #032: Handling 401 errors in Axios calls",
+    "title_ja_jp": "Daily #032: Axios呼び出しにおける401エラー処理",
+    "summary_en_us": "Covers Handling 401 errors in Axios calls in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「Axios呼び出しにおける401エラー処理」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #031: Problema de CORS entre frontend e backend",
@@ -855,7 +1131,11 @@
       "backend",
       "api",
       "dotnet"
-    ]
+    ],
+    "title_en_us": "Daily #031: CORS problem between frontend and backend",
+    "title_ja_jp": "Daily #031: フロントエンドとバックエンド間のCORS問題",
+    "summary_en_us": "Covers CORS problem between frontend and backend in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「フロントエンドとバックエンド間のCORS問題」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #030: Integração de dados meteorológicos no mapa em tempo real",
@@ -867,7 +1147,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #030: Real-time weather data integration on the map",
+    "title_ja_jp": "Daily #030: 地図へのリアルタイム気象データ統合",
+    "summary_en_us": "Covers Real-time weather data integration on the map in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「地図へのリアルタイム気象データ統合」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #029: Estratégia de LOD (Level of Detail) estilo Minecraft",
@@ -879,7 +1163,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #029: Minecraft-style Level of Detail strategy",
+    "title_ja_jp": "Daily #029: Minecraft風LOD戦略",
+    "summary_en_us": "Covers Minecraft-style Level of Detail strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「Minecraft風LOD戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #028: Carregamento assíncrono de camadas geográficas",
@@ -891,7 +1179,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #028: Asynchronous loading of geographic layers",
+    "title_ja_jp": "Daily #028: 地理レイヤーの非同期読み込み",
+    "summary_en_us": "Covers Asynchronous loading of geographic layers in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「地理レイヤーの非同期読み込み」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #027: Desenho de hotspots interativos com clique do usuário",
@@ -903,7 +1195,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #027: Designing interactive hotspots from user clicks",
+    "title_ja_jp": "Daily #027: ユーザークリックによるインタラクティブホットスポット描画",
+    "summary_en_us": "Covers Designing interactive hotspots from user clicks in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「ユーザークリックによるインタラクティブホットスポット描画」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #026: Criação de interface “map-first”",
@@ -915,7 +1211,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #026: Creating a map-first interface",
+    "title_ja_jp": "Daily #026: map-firstインターフェースの作成",
+    "summary_en_us": "Covers Creating a map-first interface in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「map-firstインターフェースの作成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #025: Uso de OpenStreetMap como base geográfica",
@@ -927,7 +1227,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #025: Using OpenStreetMap as the geographic base",
+    "title_ja_jp": "Daily #025: 地理基盤としてのOpenStreetMap活用",
+    "summary_en_us": "Covers Using OpenStreetMap as the geographic base in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「地理基盤としてのOpenStreetMap活用」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #024: Sistema de marcação de áreas de risco (1–10)",
@@ -939,7 +1243,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #024: Risk area marking system from 1 to 10",
+    "title_ja_jp": "Daily #024: リスク領域マーキングシステム（1-10）",
+    "summary_en_us": "Covers Risk area marking system from 1 to 10 in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「リスク領域マーキングシステム（1-10）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #023: Estratégia de overlays dinâmicos no mapa",
@@ -951,7 +1259,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #023: Dynamic overlay strategy on the map",
+    "title_ja_jp": "Daily #023: 地図上の動的オーバーレイ戦略",
+    "summary_en_us": "Covers Dynamic overlay strategy on the map in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「地図上の動的オーバーレイ戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #022: Problemas de performance com renderização de camadas",
@@ -963,7 +1275,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #022: Performance issues when rendering layers",
+    "title_ja_jp": "Daily #022: レイヤー描画のパフォーマンス課題",
+    "summary_en_us": "Covers Performance issues when rendering layers in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「レイヤー描画のパフォーマンス課題」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #021: Implementação inicial de mapa com Leaflet.js",
@@ -975,7 +1291,11 @@
       "daily",
       "mapas",
       "visualizacao"
-    ]
+    ],
+    "title_en_us": "Daily #021: Initial map implementation with Leaflet.js",
+    "title_ja_jp": "Daily #021: Leaflet.jsによる地図初期実装",
+    "summary_en_us": "Covers Initial map implementation with Leaflet.js in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「Leaflet.jsによる地図初期実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #020: Separação entre ambiente operacional e ambiente de simulação",
@@ -988,7 +1308,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #020: Separating the operational environment from the simulation environment",
+    "title_ja_jp": "Daily #020: 運用環境とシミュレーション環境の分離",
+    "summary_en_us": "Covers Separating the operational environment from the simulation environment in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「運用環境とシミュレーション環境の分離」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #019: Estrutura de processamento batch para simulações",
@@ -1001,7 +1325,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #019: Batch processing structure for simulations",
+    "title_ja_jp": "Daily #019: シミュレーション向けバッチ処理構造",
+    "summary_en_us": "Covers Batch processing structure for simulations in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「シミュレーション向けバッチ処理構造」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #018: Estratégia para previsão de áreas de risco com IA",
@@ -1014,7 +1342,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #018: Strategy for AI-based risk area prediction",
+    "title_ja_jp": "Daily #018: AIによるリスク領域予測戦略",
+    "summary_en_us": "Covers Strategy for AI-based risk area prediction in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「AIによるリスク領域予測戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #017: Modelagem inicial de simulação de tsunami",
@@ -1027,7 +1359,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #017: Initial tsunami simulation modeling",
+    "title_ja_jp": "Daily #017: 津波シミュレーションの初期モデリング",
+    "summary_en_us": "Covers Initial tsunami simulation modeling in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「津波シミュレーションの初期モデリング」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #016: Integração com dados de elevação para simulação de enchentes",
@@ -1040,7 +1376,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #016: Elevation data integration for flood simulation",
+    "title_ja_jp": "Daily #016: 洪水シミュレーション向け標高データ統合",
+    "summary_en_us": "Covers Elevation data integration for flood simulation in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「洪水シミュレーション向け標高データ統合」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #015: Uso de Open-Meteo para dados climáticos em tempo real",
@@ -1053,7 +1393,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #015: Using Open-Meteo for real-time weather data",
+    "title_ja_jp": "Daily #015: Open-Meteoによるリアルタイム気象データ活用",
+    "summary_en_us": "Covers Using Open-Meteo for real-time weather data in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「Open-Meteoによるリアルタイム気象データ活用」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #014: Pipeline de segmentação de imagens geográficas",
@@ -1066,7 +1410,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #014: Geographic image segmentation pipeline",
+    "title_ja_jp": "Daily #014: 地理画像セグメンテーションのパイプライン",
+    "summary_en_us": "Covers Geographic image segmentation pipeline in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「地理画像セグメンテーションのパイプライン」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #013: Geração de datasets sintéticos com Three.js",
@@ -1079,7 +1427,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #013: Generating synthetic datasets with Three.js",
+    "title_ja_jp": "Daily #013: Three.jsによる合成データセット生成",
+    "summary_en_us": "Covers Generating synthetic datasets with Three.js in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「Three.jsによる合成データセット生成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #012: Uso de sombras e posição do sol para inferência de altura",
@@ -1092,7 +1444,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #012: Using shadows and sun position to infer height",
+    "title_ja_jp": "Daily #012: 影と太陽位置を使った高さ推定",
+    "summary_en_us": "Covers Using shadows and sun position to infer height in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「影と太陽位置を使った高さ推定」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D",
@@ -1105,7 +1461,11 @@
       "ia",
       "simulacao",
       "dados"
-    ]
+    ],
+    "title_en_us": "Daily #011: 3D reconstruction strategy from 2D images",
+    "title_ja_jp": "Daily #011: 2D画像からの3D再構成戦略",
+    "summary_en_us": "Covers 3D reconstruction strategy from 2D images in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「2D画像からの3D再構成戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #010: Padronização de contratos de API (DTOs e validações)",
@@ -1117,7 +1477,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #010: API contract standardization with DTOs and validations",
+    "title_ja_jp": "Daily #010: API契約の標準化（DTOとバリデーション）",
+    "summary_en_us": "Covers API contract standardization with DTOs and validations in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「API契約の標準化（DTOとバリデーション）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #009: Modelagem de entidades: MissingPerson, Hotspot, Alert",
@@ -1129,7 +1493,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #009: Entity modeling: MissingPerson, Hotspot and Alert",
+    "title_ja_jp": "Daily #009: エンティティ設計：MissingPerson、Hotspot、Alert",
+    "summary_en_us": "Covers Entity modeling: MissingPerson, Hotspot and Alert in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「エンティティ設計：MissingPerson、Hotspot、Alert」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #008: Introdução de eventos de domínio para ações críticas",
@@ -1141,7 +1509,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #008: Introducing domain events for critical actions",
+    "title_ja_jp": "Daily #008: 重要アクション向けドメインイベントの導入",
+    "summary_en_us": "Covers Introducing domain events for critical actions in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「重要アクション向けドメインイベントの導入」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #007: Organização de pastas para backend escalável (.NET Core)",
@@ -1153,7 +1525,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #007: Folder organization for a scalable .NET Core backend",
+    "title_ja_jp": "Daily #007: スケーラブルな.NET Coreバックエンドのフォルダ構成",
+    "summary_en_us": "Covers Folder organization for a scalable .NET Core backend in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「スケーラブルな.NET Coreバックエンドのフォルダ構成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #006: Avaliação entre monolito modular vs microservices",
@@ -1165,7 +1541,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #006: Evaluation between modular monolith and microservices",
+    "title_ja_jp": "Daily #006: モジュラーモノリスとマイクロサービスの比較評価",
+    "summary_en_us": "Covers Evaluation between modular monolith and microservices in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「モジュラーモノリスとマイクロサービスの比較評価」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #005: Definição de bounded contexts: Resgate, Usuários, Alertas",
@@ -1177,7 +1557,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #005: Bounded context definition: Rescue, Users and Alerts",
+    "title_ja_jp": "Daily #005: 境界づけられたコンテキストの定義：救助、ユーザー、アラート",
+    "summary_en_us": "Covers Bounded context definition: Rescue, Users and Alerts in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「境界づけられたコンテキストの定義：救助、ユーザー、アラート」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #004: Estratégia de modularização para plataforma multitenant",
@@ -1189,7 +1573,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #004: Modularization strategy for a multitenant platform",
+    "title_ja_jp": "Daily #004: マルチテナント基盤のモジュール化戦略",
+    "summary_en_us": "Covers Modularization strategy for a multitenant platform in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「マルチテナント基盤のモジュール化戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #003: Separação de responsabilidades com CQRS no backend .NET",
@@ -1201,7 +1589,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #003: Responsibility separation with CQRS in the .NET backend",
+    "title_ja_jp": "Daily #003: .NETバックエンドにおけるCQRSによる責務分離",
+    "summary_en_us": "Covers Responsibility separation with CQRS in the .NET backend in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「.NETバックエンドにおけるCQRSによる責務分離」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #002: Estrutura inicial baseada em DDD para módulos de emergência",
@@ -1213,7 +1605,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #002: Initial DDD-based structure for emergency modules",
+    "title_ja_jp": "Daily #002: 緊急対応モジュール向けDDDベース初期構造",
+    "summary_en_us": "Covers Initial DDD-based structure for emergency modules in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「緊急対応モジュール向けDDDベース初期構造」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Daily #001: Definição de linguagem ubíqua para o domínio de desastres no SOS Location",
@@ -1225,7 +1621,11 @@
       "daily",
       "ddd",
       "arquitetura"
-    ]
+    ],
+    "title_en_us": "Daily #001: Ubiquitous language definition for the SOS Location disaster domain",
+    "title_ja_jp": "Daily #001: SOS Locationの災害ドメインにおけるユビキタス言語の定義",
+    "summary_en_us": "Covers Ubiquitous language definition for the SOS Location disaster domain in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
+    "summary_ja_jp": "「SOS Locationの災害ドメインにおけるユビキタス言語の定義」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
   },
   {
     "title": "Ronaldinho Agent: persona, memória curta e tool use sem virar produto separado",

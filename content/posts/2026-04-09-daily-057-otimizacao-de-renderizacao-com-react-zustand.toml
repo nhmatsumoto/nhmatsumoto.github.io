@@ -1,9 +1,13 @@
 id = "20260409-170000"
 slug = "daily-057-otimizacao-de-renderizacao-com-react-zustand"
 title = "Daily #057: Otimização de renderização com React + Zustand"
+title_en_us = "Daily #057: Rendering optimization with React and Zustand"
+title_ja_jp = "Daily #057: React + Zustandによる描画最適化"
 summary = "Reduz re-renderizações desnecessárias ao separar estado global, estado local e componentes de visualização."
+summary_en_us = "Covers Rendering optimization with React and Zustand in SOS Location with foundations, diagrams, formulas, examples and operational success criteria."
+summary_ja_jp = "「React + Zustandによる描画最適化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
 published_at = "2026-04-09T17:00:00+09:00"
-updated_at = "2026-04-09T17:00:00+09:00"
+updated_at = "2026-04-26T16:40:28+09:00"
 status = "published"
 category = "sos-location-daily"
 tags = ["sos-location", "daily", "frontend", "ux"]
@@ -11,5 +15,199 @@ badges = ["frontend", "ux"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = false
-body = "Este daily faz parte da trilha **Frontend e UX** do SOS Location.\n\n## Descrição\nReduz re-renderizações desnecessárias ao separar estado global, estado local e componentes de visualização.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"
+has_math = true
+body = '''
+Este Daily aprofunda **Otimização de renderização com React + Zustand** dentro da trilha **Frontend e UX** do SOS Location. A ideia é sair de uma nota curta e transformar o item em material de referência para produto, engenharia e operação.
+
+## Descrição
+Reduz re-renderizações desnecessárias ao separar estado global, estado local e componentes de visualização.
+
+## Fundamentos
+UX de emergência deve ser legível antes de ser bonita. Hierarquia visual, contraste, feedback e responsividade precisam proteger o usuário quando há estresse, ruído e pouco tempo.
+
+O ponto central é tornar **Otimização de renderização com React + Zustand** observável: deve existir um artefato que possa ser lido por outra pessoa, testado por código ou validado por uma equipe operacional. Quando a decisão fica apenas na conversa, ela não escala e não cria aprendizado institucional.
+
+## Modelo de decisão
+A decisão pode ser avaliada com uma métrica simples:
+
+$$
+UX_{cost} = T_{decision} + E_{error} + C_{cognitive}
+$$
+
+O objetivo do design é reduzir tempo de decisão, erro operacional e carga cognitiva sem esconder informação crítica.
+
+## Diagrama de fluxo
+```mermaid
+flowchart LR
+  A["Sinal de campo"] --> B["Otimização de renderização com React + Zustand"]
+  B --> C["Contrato verificável"]
+  C --> D["Implementação incremental"]
+  D --> E["Métrica operacional"]
+```
+
+## Gráfico de maturidade
+```mermaid
+xychart-beta
+    title "Leitura de maturidade"
+    x-axis ["Clareza", "Risco", "Implementação"]
+    y-axis "Pontuação" 0 --> 10
+    bar [6, 6, 8]
+```
+
+## Exemplo de implementação
+```tsx
+type RiskBadgeProps = { level: 1 | 2 | 3 | 4 | 5; label: string };
+
+export function RiskBadge({ level, label }: RiskBadgeProps) {
+  return (
+    <span className={`risk-badge risk-badge-${level}`} aria-label={`Risk level ${level}: ${label}`}>
+      {label}
+    </span>
+  );
+}
+```
+
+## Como aplicar no SOS Location
+- Defina o contrato mínimo: entrada, saída, dono da decisão e comportamento esperado em erro.
+- Registre a decisão perto do código ou do documento de arquitetura que será mantido junto com o sistema.
+- Crie um teste, consulta ou dashboard que mostre se o comportamento continua verdadeiro com dados reais.
+- Revise o impacto em operação: tempo de resposta, rastreabilidade, custo cognitivo e risco de interpretação.
+
+## Armadilhas comuns
+- Transformar o conceito em abstração genérica demais antes de validar um caso de uso real.
+- Misturar regra de negócio, integração externa e detalhe visual no mesmo lugar.
+- Medir apenas funcionamento técnico e esquecer o efeito para equipes de resgate, usuários afetados ou operadores.
+
+## Critério de sucesso
+O item está maduro quando uma pessoa nova consegue entender o motivo da decisão, executar um exemplo mínimo, ver o fluxo no diagrama e identificar qual métrica indicaria regressão.
+'''
+body_en_us = '''
+This Daily expands **Rendering optimization with React and Zustand** within the **Frontend and UX** track of SOS Location. The goal is to turn a short note into reference material for product, engineering and operations.
+
+## Description
+Covers Rendering optimization with React and Zustand in SOS Location with context, operational criteria, diagrams, formulas and implementation examples.
+
+## Fundamentals
+Emergency UX must be readable before it is beautiful. Visual hierarchy, contrast, feedback and responsiveness need to protect the user under stress, noise and time pressure.
+
+The core idea is to make **Rendering optimization with React and Zustand** observable: there should be an artifact that another person can read, code can test or an operations team can validate. If the decision stays only in conversation, it does not scale and it does not create institutional learning.
+
+## Decision model
+The decision can be evaluated with a simple metric:
+
+$$
+UX_{cost} = T_{decision} + E_{error} + C_{cognitive}
+$$
+
+The design goal is to reduce decision time, operational error and cognitive load without hiding critical information.
+
+## Flow diagram
+```mermaid
+flowchart LR
+  A["Field signal"] --> B["Rendering optimization with React and Zustand"]
+  B --> C["Verifiable contract"]
+  C --> D["Incremental implementation"]
+  D --> E["Operational metric"]
+```
+
+## Maturity chart
+```mermaid
+xychart-beta
+    title "Maturity reading"
+    x-axis ["Clarity", "Risk", "Implementation"]
+    y-axis "Score" 0 --> 10
+    bar [6, 6, 8]
+```
+
+## Implementation example
+```tsx
+type RiskBadgeProps = { level: 1 | 2 | 3 | 4 | 5; label: string };
+
+export function RiskBadge({ level, label }: RiskBadgeProps) {
+  return (
+    <span className={`risk-badge risk-badge-${level}`} aria-label={`Risk level ${level}: ${label}`}>
+      {label}
+    </span>
+  );
+}
+```
+
+## How to apply it in SOS Location
+- Define the minimum contract: input, output, owner of the decision and expected behavior on failure.
+- Record the decision close to the code or architecture document that will evolve with the system.
+- Create a test, query or dashboard that shows whether the behavior remains true with real data.
+- Review the operational impact: response time, traceability, cognitive cost and interpretation risk.
+
+## Common pitfalls
+- Turning the concept into an overly generic abstraction before validating a real use case.
+- Mixing business rules, external integration and visual detail in the same place.
+- Measuring only technical execution while ignoring the effect on rescue teams, affected users or operators.
+
+## Success criteria
+The item is mature when a new person can understand why the decision exists, run a minimal example, read the diagram and identify which metric would reveal a regression.
+'''
+body_ja_jp = '''
+このDailyでは、SOS Locationの **フロントエンドとUX** トラックにおける **React + Zustandによる描画最適化** を詳しく整理します。短いメモを、プロダクト、エンジニアリング、運用で再利用できる参照資料にすることが目的です。
+
+## 説明
+「React + Zustandによる描画最適化」を、背景、運用基準、図、数式、実装例とともに整理します。
+
+## 基礎
+緊急時のUXは、美しさより先に読みやすさが必要です。視覚階層、コントラスト、フィードバック、レスポンシブ性は、ストレス、ノイズ、時間制限の中にいるユーザーを守るためにあります。
+
+中心となる考え方は、**React + Zustandによる描画最適化** を観測可能にすることです。別の人が読める成果物、コードでテストできる契約、運用チームが検証できる基準が必要です。判断が会話だけに残る場合、それはスケールせず、組織的な学習にもなりません。
+
+## 判断モデル
+この判断は、次のような単純な指標で評価できます。
+
+$$
+UX_{cost} = T_{decision} + E_{error} + C_{cognitive}
+$$
+
+設計の目的は、重要情報を隠さずに、判断時間、運用エラー、認知負荷を下げることです。
+
+## フロー図
+```mermaid
+flowchart LR
+  A["現場シグナル"] --> B["React + Zustandによる描画最適化"]
+  B --> C["検証可能な契約"]
+  C --> D["段階的な実装"]
+  D --> E["運用メトリクス"]
+```
+
+## 成熟度グラフ
+```mermaid
+xychart-beta
+    title "成熟度の見方"
+    x-axis ["明確さ", "リスク", "実装"]
+    y-axis "スコア" 0 --> 10
+    bar [6, 6, 8]
+```
+
+## 実装例
+```tsx
+type RiskBadgeProps = { level: 1 | 2 | 3 | 4 | 5; label: string };
+
+export function RiskBadge({ level, label }: RiskBadgeProps) {
+  return (
+    <span className={`risk-badge risk-badge-${level}`} aria-label={`Risk level ${level}: ${label}`}>
+      {label}
+    </span>
+  );
+}
+```
+
+## SOS Locationでの適用方法
+- 最小契約を定義します。入力、出力、判断の責任者、失敗時の期待動作を明確にします。
+- 判断を、今後も保守されるコードまたはアーキテクチャ文書の近くに記録します。
+- 実データでも振る舞いが保たれているかを示すテスト、クエリ、ダッシュボードを作ります。
+- 応答時間、追跡可能性、認知負荷、解釈リスクという運用上の影響を見直します。
+
+## よくある落とし穴
+- 実際のユースケースを検証する前に、概念を過度に汎用化してしまうこと。
+- ビジネスルール、外部連携、表示上の詳細を同じ場所に混ぜること。
+- 技術的に動くことだけを測り、救助チーム、被災ユーザー、操作者への影響を忘れること。
+
+## 成功基準
+新しく参加した人が、判断の理由を理解し、最小例を実行し、図を読み、どの指標が回帰を示すかを説明できる状態なら、この項目は成熟しています。
+'''
