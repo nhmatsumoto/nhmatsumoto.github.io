@@ -17,8 +17,7 @@ from .i18n import load_i18n, default_locale
 from .renderer.pages import (
     render_home_page, render_archive_page, render_projects_index_page,
     render_documents_index_page, render_about_page, render_contact_page,
-    render_daily_index_page, render_post_page, render_daily_page,
-    render_project_page, render_document_page
+    render_post_page, render_project_page, render_document_page
 )
 
 LEGACY_DAILY_REDIRECTS = [
@@ -215,7 +214,8 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     site["language"] = locale
     
     posts = load_posts(include_drafts=False)
-    daily_entries = load_daily(include_drafts=False)
+    daily_redirect_entries = load_daily(include_drafts=False)
+    daily_entries: list[dict[str, Any]] = []
     projects = load_projects()
     documents = load_documents()
     
@@ -227,7 +227,7 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         p["resolved_repo_url"] = resolve_optional_url(site, p["repo_url"])
         p["resolved_code_url"] = resolve_optional_url(site, p["code_url"])
         p["resolved_project_url"] = resolve_optional_url(site, p.get("project_url", ""))
-    for entry in daily_entries:
+    for entry in daily_redirect_entries:
         entry["resolved_url"] = site_href(site, entry["url"])
     for p in projects:
         p["resolved_url"] = site_href(site, p["url"])
@@ -313,7 +313,8 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     write_text(target_root / config["home_file"], render_home_page(site, system, posts, daily_entries, projects, documents, i18n, locale))
     write_text(target_root / config["project_index_file"], render_projects_index_page(site, system, posts, projects, documents, i18n, locale))
     write_text(target_root / config["documents_index_file"], render_documents_index_page(site, system, documents, i18n, locale))
-    write_text(target_root / config["daily_index_file"], render_daily_index_page(site, system, daily_entries, i18n, locale))
+    daily_redirect_html = render_legacy_redirect_page(site, f"Publicações | {site['title']}", "/posts/")
+    write_text(target_root / config["daily_index_file"], daily_redirect_html)
     write_text(target_root / config["about_file"], render_about_page(site, system, i18n, locale))
     write_text(target_root / config["contact_file"], render_contact_page(site, system, i18n, locale))
 
@@ -353,28 +354,16 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
             redirect_html = render_legacy_redirect_page(site, f"{post['title']} | {site['title']}", post["url"])
             for directory in {config["publications_dir"], legacy_publications_dir}:
                 write_text(target_root / directory / legacy_output_dir_name / "index.html", redirect_html)
-    for idx, entry in enumerate(daily_entries):
-        dest = target_root / config.get("daily_output_dir", "daily") / entry["output_dir_name"] / "index.html"
-        write_text(
-            dest,
-            render_daily_page(
-                site,
-                system,
-                entry,
-                daily_entries[idx-1] if idx > 0 else None,
-                daily_entries[idx+1] if idx+1 < len(daily_entries) else None,
-                i18n,
-                locale,
-                related_items=find_related_content(entry, posts, daily_entries, projects, documents),
-            ),
-        )
-    active_daily_paths = {entry["output_dir_name"] for entry in daily_entries}
+    daily_output_dir = config.get("daily_output_dir", "daily")
+    active_daily_paths = {entry["output_dir_name"] for entry in daily_redirect_entries}
+    for entry in daily_redirect_entries:
+        write_text(target_root / daily_output_dir / entry["output_dir_name"] / "index.html", daily_redirect_html)
     for legacy_path in LEGACY_DAILY_REDIRECTS:
         if legacy_path in active_daily_paths:
             continue
         write_text(
-            target_root / config.get("daily_output_dir", "daily") / legacy_path / "index.html",
-            render_legacy_redirect_page(site, f"Daily | {site['title']}", "/daily/"),
+            target_root / daily_output_dir / legacy_path / "index.html",
+            daily_redirect_html,
         )
     for p in projects:
         write_text(

@@ -8,7 +8,6 @@ from .components import (
     render_entry_card,
     render_post_card,
     render_project_card,
-    render_daily_card,
     render_breadcrumbs,
     render_metric_list,
     render_localized_date,
@@ -73,20 +72,6 @@ def _build_post_localization_payload(post: dict[str, Any]) -> dict[str, Any]:
     copy_localized_fields(post, payload, "title")
     copy_localized_fields(post, payload, "summary")
     copy_localized_fields(post, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or ""), heading_offset=1))
-    return payload
-
-
-def _build_daily_localization_payload(entry: dict[str, Any]) -> dict[str, Any]:
-    payload = {
-        "title": entry["title"],
-        "summary": entry["summary"],
-        "body_html": render_markdown(entry.get("body", ""), heading_offset=1),
-        "source": entry.get("source", ""),
-    }
-    copy_localized_fields(entry, payload, "title")
-    copy_localized_fields(entry, payload, "summary")
-    copy_localized_fields(entry, payload, "body", target_field="body_html", transform=lambda value: render_markdown(str(value or ""), heading_offset=1))
-    copy_localized_fields(entry, payload, "source")
     return payload
 
 
@@ -433,7 +418,6 @@ def render_home_page(
 ) -> str:
     config = load_blog_config()["build"]
     posts_limit = int(config.get("posts_on_home", 6))
-    daily_limit = int(config.get("daily_on_home", 4))
     projects_limit = int(config.get("projects_on_home", 3))
 
     intro = site.get("home_intro", "").strip()
@@ -457,7 +441,6 @@ def render_home_page(
     quick_links = [
         ("nav.about", "/about/"),
         ("nav.posts", "/posts/"),
-        ("nav.daily", "/daily/"),
         ("nav.projects", "/projects/"),
     ]
     quick_links_html = "".join(
@@ -493,17 +476,6 @@ def render_home_page(
             </header>
             <ol class="entry-list">
               {"".join(render_post_card(post, i18n, locale) for post in posts[:posts_limit])}
-            </ol>
-          </section>
-
-          <section class="section-panel" aria-labelledby="daily-title">
-            <header class="section-header">
-              <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
-              <h2 id="daily-title" data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h2>
-              <p class="section-copy" data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git."))}</p>
-            </header>
-            <ol class="entry-list">
-              {"".join(render_daily_card(entry, i18n, locale, compact=True) for entry in daily_entries[:daily_limit])}
             </ol>
           </section>
 
@@ -839,76 +811,6 @@ def render_contact_page(site: dict[str, str], system: dict[str, Any], i18n: dict
     )
 
 
-def _render_daily_index_groups(daily_entries: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
-    groups: dict[str, list[dict[str, Any]]] = {}
-    for entry in daily_entries:
-        day_key = entry["published_dt"].date().isoformat()
-        groups.setdefault(day_key, []).append(entry)
-
-    if not groups:
-        empty_msg = translate(i18n, locale, "empty.daily", "No relevant public activity found in the last 30 days.")
-        return f'<p class="empty-state" data-i18n="empty.daily">{html.escape(empty_msg)}</p>'
-
-    blocks: list[str] = []
-    for day_key, entries in groups.items():
-        date_html = render_localized_date(entries[0]["published_dt"], locale, "long")
-        cards = "".join(render_daily_card(entry, i18n, locale) for entry in entries)
-        blocks.append(
-            f"""
-            <section class="daily-group" aria-labelledby="daily-group-{html.escape(day_key)}">
-              <header class="daily-group-header">
-                <h2 id="daily-group-{html.escape(day_key)}">{date_html}</h2>
-              </header>
-              <ol class="entry-list">
-                {cards}
-              </ol>
-            </section>
-            """.strip()
-        )
-    return "".join(blocks)
-
-
-def render_daily_index_page(site: dict[str, str], system: dict[str, Any], daily_entries: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
-    breadcrumbs = render_breadcrumbs(
-        [
-            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
-            {"label": translate(i18n, locale, "nav.daily", "daily"), "url": "", "key": "nav.daily"},
-        ],
-        i18n,
-        locale,
-    )
-    content = f"""
-    <div class="layout-container page-stack page-stack-wide">
-      <header class="page-header">
-        {breadcrumbs}
-        <section class="page-heading">
-          <p class="section-kicker" data-i18n="nav.daily">{html.escape(translate(i18n, locale, "nav.daily", "daily"))}</p>
-          <h1 data-i18n="pages.daily.title">{html.escape(translate(i18n, locale, "pages.daily.title", "Daily notes"))}</h1>
-          <p data-i18n="pages.daily.description">{html.escape(translate(i18n, locale, "pages.daily.description", "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git."))}</p>
-        </section>
-      </header>
-      <div class="page-content">
-        <section class="section-panel daily-timeline-panel">
-          {_render_daily_index_groups(daily_entries, i18n, locale)}
-        </section>
-      </div>
-    </div>
-    """
-    return render_layout(
-        page_title=f"Daily | {site['title']}",
-        page_description=translate(i18n, locale, "pages.daily.description", "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git."),
-        site=site,
-        system=system,
-        body_class="page-daily",
-        canonical_path="/daily/",
-        has_math=False,
-        content=content,
-        active_nav="daily",
-        i18n=i18n,
-        locale=locale,
-    )
-
-
 def render_post_page(
     site: dict[str, str],
     system: dict[str, Any],
@@ -1027,98 +929,6 @@ def render_post_page(
         i18n=i18n,
         locale=locale,
         og=og,
-    )
-
-
-def render_daily_page(
-    site: dict[str, str],
-    system: dict[str, Any],
-    entry: dict[str, Any],
-    previous_entry: Any,
-    next_entry: Any,
-    i18n: dict[str, Any],
-    locale: str,
-    *,
-    related_items: list | None = None,
-) -> str:
-    breadcrumbs = render_breadcrumbs(
-        [
-            {"label": translate(i18n, locale, "nav.home", "home"), "url": site_href(site, "/"), "key": "nav.home"},
-            {"label": translate(i18n, locale, "nav.daily", "daily"), "url": site_href(site, "/daily/"), "key": "nav.daily"},
-            {"label": entry["title"], "url": ""},
-        ],
-        i18n,
-        locale,
-    )
-    meta_lines = [
-        f'<span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(entry["published_dt"], locale, "long")}</span>',
-        f'<span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(entry["reading_time"], i18n, locale, entry.get("reading_time_by_locale"))}</span>',
-    ]
-    metrics_html = render_metric_list(meta_lines, escape_items=False)
-    tags_html = render_tag_list(entry.get("tags", []))
-    related_paths_html = "".join(
-        f'<li><code>{html.escape(path)}</code></li>'
-        for path in entry.get("related_paths", [])
-    )
-    source_line = (
-        f'<p class="meta-stack-line"><strong data-i18n="pages.daily.source">{html.escape(translate(i18n, locale, "pages.daily.source", "Fonte"))}</strong>: '
-        f'<span data-page-field="source">{html.escape(entry.get("source", ""))}</span></p>'
-    ) if entry.get("source") else ""
-    related_paths_block = (
-        f'<div class="daily-related-block">'
-        f'<p class="daily-related-heading" data-i18n="pages.daily.related_paths">{html.escape(translate(i18n, locale, "pages.daily.related_paths", "Caminhos relacionados"))}</p>'
-        f'<ul class="daily-related-paths">{related_paths_html}</ul>'
-        f'</div>'
-    ) if related_paths_html else ""
-    context_html = "".join(block for block in [source_line, related_paths_block] if block)
-
-    page_payload = json.dumps(_build_daily_localization_payload(entry), ensure_ascii=False).replace("<", "\\u003c")
-    content = f"""
-    <div class="layout-container post-reading-layout">
-      <header class="page-header">
-        {breadcrumbs}
-      </header>
-      <div class="page-two-column">
-        <aside class="page-sidebar post-detail-sidebar">
-          <div class="sidebar-panel notebook-meta-panel post-meta-panel">
-            <div class="post-sidebar-section post-sidebar-section-meta">
-              <div class="sidebar-header"><h2 data-i18n="pages.daily.meta">{html.escape(translate(i18n, locale, "pages.daily.meta", "Contexto"))}</h2></div>
-              {metrics_html}
-            </div>
-            {f'<div class="post-sidebar-section">{tags_html}</div>' if tags_html else ""}
-            {f'<div class="post-sidebar-section meta-stack">{context_html}</div>' if context_html else ""}
-          </div>
-        </aside>
-        <div class="page-main">
-          <article class="post-shell prose notebook-sheet post-reading-article">
-            <header class="post-header post-reading-header">
-              <div class="post-header-meta">
-                <p class="section-kicker" data-i18n="pages.daily.kicker">{html.escape(translate(i18n, locale, "pages.daily.kicker", "daily"))}</p>
-                <div class="post-meta post-meta-hero">{"".join(meta_lines)}</div>
-              </div>
-              <h1 data-page-title>{html.escape(entry['title'])}</h1>
-              <p class="post-summary post-deck" data-page-summary>{html.escape(entry['summary'])}</p>
-            </header>
-            <div class="post-body" data-page-body>{render_markdown(entry['body'], heading_offset=1)}</div>
-          </article>
-        </div>
-      </div>
-    </div>
-    {render_related_content(related_items or [], i18n, locale)}
-    <script id="page-content-data" type="application/json">{page_payload}</script>
-    """
-    return render_layout(
-        page_title=f"{entry['title']} | {site['title']}",
-        page_description=entry["summary"],
-        site=site,
-        system=system,
-        body_class="page-daily-entry",
-        canonical_path=entry["url"],
-        has_math=False,
-        content=content,
-        active_nav="daily",
-        i18n=i18n,
-        locale=locale,
     )
 
 

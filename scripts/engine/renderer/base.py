@@ -125,7 +125,6 @@ def render_site_nav(site: dict[str, str], system: dict[str, Any], active_nav: st
     nav_items = [
         ("about", "nav.about", "/about/"),
         ("posts", "nav.posts", "/posts/"),
-        ("daily", "nav.daily", "/daily/"),
         ("projects", "nav.projects", "/projects/"),
         ("documents", "nav.documents", "/documents/"),
     ]

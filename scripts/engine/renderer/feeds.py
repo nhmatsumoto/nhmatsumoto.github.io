@@ -40,7 +40,8 @@ def generate_sitemap(
     urls.append(entry(f"{base_url}/", "weekly", "1.0"))
     urls.append(entry(f"{base_url}/about/", "monthly", "0.7"))
     urls.append(entry(f"{base_url}/contact/", "monthly", "0.7"))
-    urls.append(entry(f"{base_url}/{daily_root}/", "weekly", "0.7"))
+    if daily_entries:
+        urls.append(entry(f"{base_url}/{daily_root}/", "weekly", "0.7"))
 
     # Paginated posts archive
     for p in range(1, total_pages + 1):

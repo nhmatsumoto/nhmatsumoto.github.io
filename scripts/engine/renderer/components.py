@@ -321,7 +321,6 @@ NAV_ICON_BY_KEY = {
     "nav.home": "home",
     "nav.about": "user-round",
     "nav.posts": "newspaper",
-    "nav.daily": "calendar-days",
     "nav.contact": "mail",
     "nav.projects": "folder-kanban",
     "nav.documents": "file-text",
@@ -682,7 +681,7 @@ def render_hero(site: dict[str, str], system: dict[str, Any], posts: list[dict[s
 
 def render_navigation_section(site: dict[str, str], system: dict[str, Any], documents: list[dict[str, Any]], i18n: dict[str, Any], locale: str) -> str:
     categories = sorted({d["category"] for d in documents if d.get("category")})
-    nav_items = [("nav.about", "/about/"), ("nav.posts", "/posts/"), ("nav.daily", "/daily/"), ("nav.projects", "/projects/"), ("nav.documents", "/documents/")]
+    nav_items = [("nav.about", "/about/"), ("nav.posts", "/posts/"), ("nav.projects", "/projects/"), ("nav.documents", "/documents/")]
     nav_items += [(f"sections.category_{c}", f"/documents/#category-{slugify(c)}") for c in categories]
     
     links = "\n".join(
