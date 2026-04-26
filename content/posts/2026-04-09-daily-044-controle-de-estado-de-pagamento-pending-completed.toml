@@ -3,11 +3,11 @@ slug = "daily-044-controle-de-estado-de-pagamento-pending-completed"
 title = "Daily #044: Controle de estado de pagamento (pending, completed)"
 title_en_us = "Daily #044: Payment state control with pending and completed states"
 title_ja_jp = "Daily #044: 決済状態管理（pending、completed）"
-summary = "Define estados explícitos para acompanhar o ciclo de vida financeiro e evitar decisões baseadas apenas em resposta imediata."
-summary_en_us = "Covers Payment state control with pending and completed states in SOS Location with foundations, diagrams, formulas, examples and operational success criteria."
-summary_ja_jp = "「決済状態管理（pending、completed）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+summary = "Explora Controle de estado de pagamento (pending, completed) com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência."
+summary_en_us = "Explores Payment state control with pending and completed states with fundamentals, formula, example and diagram for the payments and consistency track."
+summary_ja_jp = "決済状態管理（pending、completed） を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
 published_at = "2026-04-09T04:00:00+09:00"
-updated_at = "2026-04-26T16:40:28+09:00"
+updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
 tags = ["sos-location", "daily", "pagamentos", "consistencia"]
@@ -17,200 +17,137 @@ code_url = ""
 featured = false
 has_math = true
 body = '''
-Este Daily aprofunda **Controle de estado de pagamento (pending, completed)** dentro da trilha **Pagamentos e Consistência** do SOS Location. A ideia é sair de uma nota curta e transformar o item em material de referência para produto, engenharia e operação.
+Este Daily aprofunda **Controle de estado de pagamento (pending, completed)** dentro da trilha **pagamentos e consistência** do SOS Location.
 
 ## Descrição
-Define estados explícitos para acompanhar o ciclo de vida financeiro e evitar decisões baseadas apenas em resposta imediata.
+O objetivo é transformar **Controle de estado de pagamento (pending, completed)** em um artefato verificável no código, no contrato ou na operação.
 
 ## Fundamentos
-Pagamento é domínio financeiro, não apenas integração. Cada clique, retry e callback precisa ser tratado como evento possivelmente duplicado, fora de ordem ou tardio.
+Se o time não consegue responder quem decide, o que muda e como medir, **Controle de estado de pagamento (pending, completed)** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
 
-O ponto central é tornar **Controle de estado de pagamento (pending, completed)** observável: deve existir um artefato que possa ser lido por outra pessoa, testado por código ou validado por uma equipe operacional. Quando a decisão fica apenas na conversa, ela não escala e não cria aprendizado institucional.
+## Fórmula
+Leitura objetiva da decisão:
+Risco = duplicidade × impacto × demora na detecção
 
-## Modelo de decisão
-A decisão pode ser avaliada com uma métrica simples:
-
-$$
-B = \sum_{t \in T} amount(t) \cdot \mathbf{1}_{unique(idempotency\_key_t)}
-$$
-
-O saldo só muda para transações únicas. A chave de idempotência transforma repetição técnica em operação segura.
-
-## Diagrama de fluxo
+## Diagrama
 ```mermaid
 flowchart LR
-  A["Sinal de campo"] --> B["Controle de estado de pagamento (pending, completed)"]
-  B --> C["Contrato verificável"]
-  C --> D["Implementação incremental"]
-  D --> E["Métrica operacional"]
-```
-
-## Gráfico de maturidade
-```mermaid
-xychart-beta
-    title "Leitura de maturidade"
-    x-axis ["Clareza", "Risco", "Implementação"]
-    y-axis "Pontuação" 0 --> 10
-    bar [9, 8, 5]
+  A["Clique ou webhook"] --> B["Token único"]
+  B --> C["Estado pending"]
+  C --> D["Processamento assíncrono"]
+  D --> E["completed or failed"]
 ```
 
 ## Exemplo de implementação
-```csharp
-public async Task<PaymentResult> CreatePaymentAsync(CreatePayment command)
-{
-    var existing = await payments.FindByIdempotencyKeyAsync(command.IdempotencyKey);
-    if (existing is not null) return PaymentResult.From(existing);
+```typescript
+const seen = new Set<string>();
 
-    var payment = Payment.Start(command.UserId, command.Amount, command.IdempotencyKey);
-    await payments.SaveAsync(payment);
-    await outbox.EnqueueAsync(new PaymentRequested(payment.Id));
-    return PaymentResult.From(payment);
+export function processD044ControleDeEstadoDePagamentoPen(token: string) {
+  if (seen.has(token)) return 'duplicate';
+  seen.add(token);
+  return 'accepted';
 }
 ```
 
 ## Como aplicar no SOS Location
-- Defina o contrato mínimo: entrada, saída, dono da decisão e comportamento esperado em erro.
-- Registre a decisão perto do código ou do documento de arquitetura que será mantido junto com o sistema.
-- Crie um teste, consulta ou dashboard que mostre se o comportamento continua verdadeiro com dados reais.
-- Revise o impacto em operação: tempo de resposta, rastreabilidade, custo cognitivo e risco de interpretação.
+- Defina o contrato mínimo para Controle de estado de pagamento (pending, completed).
+- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
+- Valide com dado real, teste ou consulta verificável.
 
-## Armadilhas comuns
-- Transformar o conceito em abstração genérica demais antes de validar um caso de uso real.
-- Misturar regra de negócio, integração externa e detalhe visual no mesmo lugar.
-- Medir apenas funcionamento técnico e esquecer o efeito para equipes de resgate, usuários afetados ou operadores.
+## Erros comuns
+- Confiar em clique único sem proteger contra repetição.
+- Atualizar saldo ou estado antes de registrar a intenção.
 
 ## Critério de sucesso
-O item está maduro quando uma pessoa nova consegue entender o motivo da decisão, executar um exemplo mínimo, ver o fluxo no diagrama e identificar qual métrica indicaria regressão.
+O fluxo é confiável quando duplicidade cai, auditoria existe e rollback é previsível.
 '''
 body_en_us = '''
-This Daily expands **Payment state control with pending and completed states** within the **Payments and Consistency** track of SOS Location. The goal is to turn a short note into reference material for product, engineering and operations.
+This Daily expands **Payment state control with pending and completed states** within the **payments and consistency** track of SOS Location.
 
 ## Description
-Covers Payment state control with pending and completed states in SOS Location with context, operational criteria, diagrams, formulas and implementation examples.
+The goal is to turn **Payment state control with pending and completed states** into a verifiable artifact in code, contract, or operations.
 
 ## Fundamentals
-Payment is a financial domain, not just an integration. Every click, retry and callback must be treated as an event that may be duplicated, out of order or late.
+If the team cannot answer who decides, what changes, and how to measure it, **Payment state control with pending and completed states** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
 
-The core idea is to make **Payment state control with pending and completed states** observable: there should be an artifact that another person can read, code can test or an operations team can validate. If the decision stays only in conversation, it does not scale and it does not create institutional learning.
-
-## Decision model
-The decision can be evaluated with a simple metric:
-
-$$
-B = \sum_{t \in T} amount(t) \cdot \mathbf{1}_{unique(idempotency\_key_t)}
-$$
-
-The balance only changes for unique transactions. The idempotency key turns technical repetition into a safe operation.
+## Formula
+Practical reading of the decision:
+Risk = duplication × impact × detection delay
 
 ## Flow diagram
 ```mermaid
 flowchart LR
-  A["Field signal"] --> B["Payment state control with pending and completed states"]
-  B --> C["Verifiable contract"]
-  C --> D["Incremental implementation"]
-  D --> E["Operational metric"]
-```
-
-## Maturity chart
-```mermaid
-xychart-beta
-    title "Maturity reading"
-    x-axis ["Clarity", "Risk", "Implementation"]
-    y-axis "Score" 0 --> 10
-    bar [9, 8, 5]
+  A["Clique ou webhook"] --> B["Token único"]
+  B --> C["Estado pending"]
+  C --> D["Processamento assíncrono"]
+  D --> E["completed or failed"]
 ```
 
 ## Implementation example
-```csharp
-public async Task<PaymentResult> CreatePaymentAsync(CreatePayment command)
-{
-    var existing = await payments.FindByIdempotencyKeyAsync(command.IdempotencyKey);
-    if (existing is not null) return PaymentResult.From(existing);
+```typescript
+const seen = new Set<string>();
 
-    var payment = Payment.Start(command.UserId, command.Amount, command.IdempotencyKey);
-    await payments.SaveAsync(payment);
-    await outbox.EnqueueAsync(new PaymentRequested(payment.Id));
-    return PaymentResult.From(payment);
+export function processD044ControleDeEstadoDePagamentoPen(token: string) {
+  if (seen.has(token)) return 'duplicate';
+  seen.add(token);
+  return 'accepted';
 }
 ```
 
 ## How to apply it in SOS Location
-- Define the minimum contract: input, output, owner of the decision and expected behavior on failure.
-- Record the decision close to the code or architecture document that will evolve with the system.
-- Create a test, query or dashboard that shows whether the behavior remains true with real data.
-- Review the operational impact: response time, traceability, cognitive cost and interpretation risk.
+- Define the minimum contract for Payment state control with pending and completed states.
+- Record the decision where the team actually keeps it over time.
+- Validate it with real data, a test, or a verifiable query.
 
 ## Common pitfalls
-- Turning the concept into an overly generic abstraction before validating a real use case.
-- Mixing business rules, external integration and visual detail in the same place.
-- Measuring only technical execution while ignoring the effect on rescue teams, affected users or operators.
+- Trusting a single click without protecting against retries.
+- Updating balance or state before recording intent.
 
 ## Success criteria
-The item is mature when a new person can understand why the decision exists, run a minimal example, read the diagram and identify which metric would reveal a regression.
+The flow is reliable when duplicates drop, auditability exists, and rollback is predictable.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **決済と整合性** トラックにおける **決済状態管理（pending、completed）** を詳しく整理します。短いメモを、プロダクト、エンジニアリング、運用で再利用できる参照資料にすることが目的です。
+このDailyでは、SOS Locationの **決済と整合性** トラックにおける **決済状態管理（pending、completed）** を詳しく整理します。
 
 ## 説明
-「決済状態管理（pending、completed）」を、背景、運用基準、図、数式、実装例とともに整理します。
+目的は、**決済状態管理（pending、completed）** をコード、契約、運用で検証できる成果物にすることです。
 
 ## 基礎
-決済は単なる連携ではなく金融ドメインです。クリック、リトライ、コールバックは、重複、順序入れ替わり、遅延の可能性があるイベントとして扱う必要があります。
+チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**決済状態管理（pending、completed）** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
 
-中心となる考え方は、**決済状態管理（pending、completed）** を観測可能にすることです。別の人が読める成果物、コードでテストできる契約、運用チームが検証できる基準が必要です。判断が会話だけに残る場合、それはスケールせず、組織的な学習にもなりません。
-
-## 判断モデル
-この判断は、次のような単純な指標で評価できます。
-
-$$
-B = \sum_{t \in T} amount(t) \cdot \mathbf{1}_{unique(idempotency\_key_t)}
-$$
-
-残高は一意なトランザクションでのみ変化します。冪等性キーは技術的な繰り返しを安全な操作に変換します。
+## 数式
+判断を読むための指標:
+リスク = 重複 × 影響 × 検知遅延
 
 ## フロー図
 ```mermaid
 flowchart LR
-  A["現場シグナル"] --> B["決済状態管理（pending、completed）"]
-  B --> C["検証可能な契約"]
-  C --> D["段階的な実装"]
-  D --> E["運用メトリクス"]
-```
-
-## 成熟度グラフ
-```mermaid
-xychart-beta
-    title "成熟度の見方"
-    x-axis ["明確さ", "リスク", "実装"]
-    y-axis "スコア" 0 --> 10
-    bar [9, 8, 5]
+  A["Clique ou webhook"] --> B["Token único"]
+  B --> C["Estado pending"]
+  C --> D["Processamento assíncrono"]
+  D --> E["completed or failed"]
 ```
 
 ## 実装例
-```csharp
-public async Task<PaymentResult> CreatePaymentAsync(CreatePayment command)
-{
-    var existing = await payments.FindByIdempotencyKeyAsync(command.IdempotencyKey);
-    if (existing is not null) return PaymentResult.From(existing);
+```typescript
+const seen = new Set<string>();
 
-    var payment = Payment.Start(command.UserId, command.Amount, command.IdempotencyKey);
-    await payments.SaveAsync(payment);
-    await outbox.EnqueueAsync(new PaymentRequested(payment.Id));
-    return PaymentResult.From(payment);
+export function processD044ControleDeEstadoDePagamentoPen(token: string) {
+  if (seen.has(token)) return 'duplicate';
+  seen.add(token);
+  return 'accepted';
 }
 ```
 
-## SOS Locationでの適用方法
-- 最小契約を定義します。入力、出力、判断の責任者、失敗時の期待動作を明確にします。
-- 判断を、今後も保守されるコードまたはアーキテクチャ文書の近くに記録します。
-- 実データでも振る舞いが保たれているかを示すテスト、クエリ、ダッシュボードを作ります。
-- 応答時間、追跡可能性、認知負荷、解釈リスクという運用上の影響を見直します。
+## SOS Location での適用方法
+- 決済状態管理（pending、completed） の最小契約を定義します。
+- 判断を、チームが長期的に維持する場所に記録します。
+- 実データ、テスト、検証可能なクエリで確認します。
 
 ## よくある落とし穴
-- 実際のユースケースを検証する前に、概念を過度に汎用化してしまうこと。
-- ビジネスルール、外部連携、表示上の詳細を同じ場所に混ぜること。
-- 技術的に動くことだけを測り、救助チーム、被災ユーザー、操作者への影響を忘れること。
+- 再実行対策なしに1回のクリックを信頼する。
+- 意図を記録する前に残高や状態を更新する。
 
 ## 成功基準
-新しく参加した人が、判断の理由を理解し、最小例を実行し、図を読み、どの指標が回帰を示すかを説明できる状態なら、この項目は成熟しています。
+重複が減り、監査可能で、ロールバックが予測できれば成功です。
 '''

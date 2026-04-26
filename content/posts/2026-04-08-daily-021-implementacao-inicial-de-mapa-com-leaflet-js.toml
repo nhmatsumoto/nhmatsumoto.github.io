@@ -3,11 +3,11 @@ slug = "daily-021-implementacao-inicial-de-mapa-com-leaflet-js"
 title = "Daily #021: Implementação inicial de mapa com Leaflet.js"
 title_en_us = "Daily #021: Initial map implementation with Leaflet.js"
 title_ja_jp = "Daily #021: Leaflet.jsによる地図初期実装"
-summary = "Introduz um mapa web leve para visualizar ocorrências, áreas de risco e pontos de interesse sem exigir stack geoespacial complexa no início."
-summary_en_us = "Covers Initial map implementation with Leaflet.js in SOS Location with foundations, diagrams, formulas, examples and operational success criteria."
-summary_ja_jp = "「Leaflet.jsによる地図初期実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+summary = "Explora Implementação inicial de mapa com Leaflet.js com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização."
+summary_en_us = "Explores Initial map implementation with Leaflet.js with fundamentals, formula, example and diagram for the maps and visualization track."
+summary_ja_jp = "Leaflet.jsによる地図初期実装 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
 published_at = "2026-04-08T05:00:00+09:00"
-updated_at = "2026-04-26T16:40:28+09:00"
+updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
 tags = ["sos-location", "daily", "mapas", "visualizacao"]
@@ -17,200 +17,134 @@ code_url = ""
 featured = false
 has_math = true
 body = '''
-Este Daily aprofunda **Implementação inicial de mapa com Leaflet.js** dentro da trilha **Mapas e Visualização** do SOS Location. A ideia é sair de uma nota curta e transformar o item em material de referência para produto, engenharia e operação.
+Este Daily aprofunda **Implementação inicial de mapa com Leaflet.js** dentro da trilha **mapas e visualização** do SOS Location.
 
 ## Descrição
-Introduz um mapa web leve para visualizar ocorrências, áreas de risco e pontos de interesse sem exigir stack geoespacial complexa no início.
+O objetivo é transformar **Implementação inicial de mapa com Leaflet.js** em um artefato verificável no código, no contrato ou na operação.
 
 ## Fundamentos
-Mapa operacional não é decoração. Ele deve reduzir carga cognitiva, priorizar camadas acionáveis e manter a relação entre posição, tempo e severidade visível para quem decide sob pressão.
+Se o time não consegue responder quem decide, o que muda e como medir, **Implementação inicial de mapa com Leaflet.js** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
 
-O ponto central é tornar **Implementação inicial de mapa com Leaflet.js** observável: deve existir um artefato que possa ser lido por outra pessoa, testado por código ou validado por uma equipe operacional. Quando a decisão fica apenas na conversa, ela não escala e não cria aprendizado institucional.
+## Fórmula
+Leitura objetiva da decisão:
+Custo = camadas × geometrias / zoom
 
-## Modelo de decisão
-A decisão pode ser avaliada com uma métrica simples:
-
-$$
-L(z) = \min(L_{max}, \max(L_{min}, \lfloor \alpha z + \beta \rfloor))
-$$
-
-A função de LOD liga zoom a detalhe visual para evitar excesso de elementos quando o operador vê uma área grande.
-
-## Diagrama de fluxo
+## Diagrama
 ```mermaid
 flowchart LR
-  A["Sinal de campo"] --> B["Implementação inicial de mapa com Leaflet.js"]
-  B --> C["Contrato verificável"]
-  C --> D["Implementação incremental"]
-  D --> E["Métrica operacional"]
-```
-
-## Gráfico de maturidade
-```mermaid
-xychart-beta
-    title "Leitura de maturidade"
-    x-axis ["Clareza", "Risco", "Implementação"]
-    y-axis "Pontuação" 0 --> 10
-    bar [6, 5, 7]
+  A["OpenStreetMap"] --> B["Camada base"]
+  B --> C["Overlays"]
+  C --> D["Hotspots e eventos"]
+  D --> E["Atualização incremental"]
 ```
 
 ## Exemplo de implementação
 ```typescript
-type RiskFeature = { id: string; severity: number; coordinates: [number, number] };
+const map = L.map('D021ImplementacaoInicialDeMapaComL-map');
+const layer = L.layerGroup().addTo(map);
 
-function styleBySeverity(feature: RiskFeature) {
-  const opacity = Math.min(0.9, 0.25 + feature.severity / 12);
-  return { color: '#d9480f', weight: 2, fillOpacity: opacity };
-}
-
-export function addRiskLayer(map: L.Map, features: RiskFeature[]) {
-  return L.geoJSON(features as any, { style: styleBySeverity }).addTo(map);
+function addD021ImplementacaoInicialDeMapaComL(lat: number, lng: number) {
+  L.circleMarker([lat, lng], { radius: 8 }).addTo(layer);
 }
 ```
 
 ## Como aplicar no SOS Location
-- Defina o contrato mínimo: entrada, saída, dono da decisão e comportamento esperado em erro.
-- Registre a decisão perto do código ou do documento de arquitetura que será mantido junto com o sistema.
-- Crie um teste, consulta ou dashboard que mostre se o comportamento continua verdadeiro com dados reais.
-- Revise o impacto em operação: tempo de resposta, rastreabilidade, custo cognitivo e risco de interpretação.
+- Defina o contrato mínimo para Implementação inicial de mapa com Leaflet.js.
+- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
+- Valide com dado real, teste ou consulta verificável.
 
-## Armadilhas comuns
-- Transformar o conceito em abstração genérica demais antes de validar um caso de uso real.
-- Misturar regra de negócio, integração externa e detalhe visual no mesmo lugar.
-- Medir apenas funcionamento técnico e esquecer o efeito para equipes de resgate, usuários afetados ou operadores.
+## Erros comuns
+- Carregar camadas demais antes de saber o zoom efetivo.
+- Ignorar latência de rede e tamanho dos vetores.
 
 ## Critério de sucesso
-O item está maduro quando uma pessoa nova consegue entender o motivo da decisão, executar um exemplo mínimo, ver o fluxo no diagrama e identificar qual métrica indicaria regressão.
+A leitura fica fluida quando a interação continua responsiva em zoom e mobilidade reais.
 '''
 body_en_us = '''
-This Daily expands **Initial map implementation with Leaflet.js** within the **Maps and Visualization** track of SOS Location. The goal is to turn a short note into reference material for product, engineering and operations.
+This Daily expands **Initial map implementation with Leaflet.js** within the **maps and visualization** track of SOS Location.
 
 ## Description
-Covers Initial map implementation with Leaflet.js in SOS Location with context, operational criteria, diagrams, formulas and implementation examples.
+The goal is to turn **Initial map implementation with Leaflet.js** into a verifiable artifact in code, contract, or operations.
 
 ## Fundamentals
-An operational map is not decoration. It must reduce cognitive load, prioritize actionable layers and keep the relationship between position, time and severity visible to people deciding under pressure.
+If the team cannot answer who decides, what changes, and how to measure it, **Initial map implementation with Leaflet.js** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
 
-The core idea is to make **Initial map implementation with Leaflet.js** observable: there should be an artifact that another person can read, code can test or an operations team can validate. If the decision stays only in conversation, it does not scale and it does not create institutional learning.
-
-## Decision model
-The decision can be evaluated with a simple metric:
-
-$$
-L(z) = \min(L_{max}, \max(L_{min}, \lfloor \alpha z + \beta \rfloor))
-$$
-
-The LOD function maps zoom to visual detail to avoid too many elements when the operator sees a large area.
+## Formula
+Practical reading of the decision:
+Cost = layers × geometries / zoom
 
 ## Flow diagram
 ```mermaid
 flowchart LR
-  A["Field signal"] --> B["Initial map implementation with Leaflet.js"]
-  B --> C["Verifiable contract"]
-  C --> D["Incremental implementation"]
-  D --> E["Operational metric"]
-```
-
-## Maturity chart
-```mermaid
-xychart-beta
-    title "Maturity reading"
-    x-axis ["Clarity", "Risk", "Implementation"]
-    y-axis "Score" 0 --> 10
-    bar [6, 5, 7]
+  A["OpenStreetMap"] --> B["Camada base"]
+  B --> C["Overlays"]
+  C --> D["Hotspots e eventos"]
+  D --> E["Atualização incremental"]
 ```
 
 ## Implementation example
 ```typescript
-type RiskFeature = { id: string; severity: number; coordinates: [number, number] };
+const map = L.map('D021ImplementacaoInicialDeMapaComL-map');
+const layer = L.layerGroup().addTo(map);
 
-function styleBySeverity(feature: RiskFeature) {
-  const opacity = Math.min(0.9, 0.25 + feature.severity / 12);
-  return { color: '#d9480f', weight: 2, fillOpacity: opacity };
-}
-
-export function addRiskLayer(map: L.Map, features: RiskFeature[]) {
-  return L.geoJSON(features as any, { style: styleBySeverity }).addTo(map);
+function addD021ImplementacaoInicialDeMapaComL(lat: number, lng: number) {
+  L.circleMarker([lat, lng], { radius: 8 }).addTo(layer);
 }
 ```
 
 ## How to apply it in SOS Location
-- Define the minimum contract: input, output, owner of the decision and expected behavior on failure.
-- Record the decision close to the code or architecture document that will evolve with the system.
-- Create a test, query or dashboard that shows whether the behavior remains true with real data.
-- Review the operational impact: response time, traceability, cognitive cost and interpretation risk.
+- Define the minimum contract for Initial map implementation with Leaflet.js.
+- Record the decision where the team actually keeps it over time.
+- Validate it with real data, a test, or a verifiable query.
 
 ## Common pitfalls
-- Turning the concept into an overly generic abstraction before validating a real use case.
-- Mixing business rules, external integration and visual detail in the same place.
-- Measuring only technical execution while ignoring the effect on rescue teams, affected users or operators.
+- Loading too many layers before knowing the effective zoom.
+- Ignoring network latency and vector size.
 
 ## Success criteria
-The item is mature when a new person can understand why the decision exists, run a minimal example, read the diagram and identify which metric would reveal a regression.
+The experience is fluid when interaction remains responsive at real zoom levels and on mobile.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **地図と可視化** トラックにおける **Leaflet.jsによる地図初期実装** を詳しく整理します。短いメモを、プロダクト、エンジニアリング、運用で再利用できる参照資料にすることが目的です。
+このDailyでは、SOS Locationの **地図と可視化** トラックにおける **Leaflet.jsによる地図初期実装** を詳しく整理します。
 
 ## 説明
-「Leaflet.jsによる地図初期実装」を、背景、運用基準、図、数式、実装例とともに整理します。
+目的は、**Leaflet.jsによる地図初期実装** をコード、契約、運用で検証できる成果物にすることです。
 
 ## 基礎
-運用地図は装飾ではありません。認知負荷を下げ、行動可能なレイヤーを優先し、位置・時間・深刻度の関係を、プレッシャー下で判断する人に見える形に保つ必要があります。
+チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**Leaflet.jsによる地図初期実装** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
 
-中心となる考え方は、**Leaflet.jsによる地図初期実装** を観測可能にすることです。別の人が読める成果物、コードでテストできる契約、運用チームが検証できる基準が必要です。判断が会話だけに残る場合、それはスケールせず、組織的な学習にもなりません。
-
-## 判断モデル
-この判断は、次のような単純な指標で評価できます。
-
-$$
-L(z) = \min(L_{max}, \max(L_{min}, \lfloor \alpha z + \beta \rfloor))
-$$
-
-LOD関数はズームを表示詳細度に対応させ、操作者が広域を見るときに要素が過剰にならないようにします。
+## 数式
+判断を読むための指標:
+コスト = レイヤー × ジオメトリ / ズーム
 
 ## フロー図
 ```mermaid
 flowchart LR
-  A["現場シグナル"] --> B["Leaflet.jsによる地図初期実装"]
-  B --> C["検証可能な契約"]
-  C --> D["段階的な実装"]
-  D --> E["運用メトリクス"]
-```
-
-## 成熟度グラフ
-```mermaid
-xychart-beta
-    title "成熟度の見方"
-    x-axis ["明確さ", "リスク", "実装"]
-    y-axis "スコア" 0 --> 10
-    bar [6, 5, 7]
+  A["OpenStreetMap"] --> B["Camada base"]
+  B --> C["Overlays"]
+  C --> D["Hotspots e eventos"]
+  D --> E["Atualização incremental"]
 ```
 
 ## 実装例
 ```typescript
-type RiskFeature = { id: string; severity: number; coordinates: [number, number] };
+const map = L.map('D021ImplementacaoInicialDeMapaComL-map');
+const layer = L.layerGroup().addTo(map);
 
-function styleBySeverity(feature: RiskFeature) {
-  const opacity = Math.min(0.9, 0.25 + feature.severity / 12);
-  return { color: '#d9480f', weight: 2, fillOpacity: opacity };
-}
-
-export function addRiskLayer(map: L.Map, features: RiskFeature[]) {
-  return L.geoJSON(features as any, { style: styleBySeverity }).addTo(map);
+function addD021ImplementacaoInicialDeMapaComL(lat: number, lng: number) {
+  L.circleMarker([lat, lng], { radius: 8 }).addTo(layer);
 }
 ```
 
-## SOS Locationでの適用方法
-- 最小契約を定義します。入力、出力、判断の責任者、失敗時の期待動作を明確にします。
-- 判断を、今後も保守されるコードまたはアーキテクチャ文書の近くに記録します。
-- 実データでも振る舞いが保たれているかを示すテスト、クエリ、ダッシュボードを作ります。
-- 応答時間、追跡可能性、認知負荷、解釈リスクという運用上の影響を見直します。
+## SOS Location での適用方法
+- Leaflet.jsによる地図初期実装 の最小契約を定義します。
+- 判断を、チームが長期的に維持する場所に記録します。
+- 実データ、テスト、検証可能なクエリで確認します。
 
 ## よくある落とし穴
-- 実際のユースケースを検証する前に、概念を過度に汎用化してしまうこと。
-- ビジネスルール、外部連携、表示上の詳細を同じ場所に混ぜること。
-- 技術的に動くことだけを測り、救助チーム、被災ユーザー、操作者への影響を忘れること。
+- 実際のズームが分かる前にレイヤーを読み込みすぎる。
+- ネットワーク遅延とベクターサイズを無視する。
 
 ## 成功基準
-新しく参加した人が、判断の理由を理解し、最小例を実行し、図を読み、どの指標が回帰を示すかを説明できる状態なら、この項目は成熟しています。
+実際のズームやモバイル環境でも応答性が保てれば成功です。
 '''

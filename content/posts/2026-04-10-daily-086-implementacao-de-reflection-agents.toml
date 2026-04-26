@@ -3,11 +3,11 @@ slug = "daily-086-implementacao-de-reflection-agents"
 title = "Daily #086: Implementação de “reflection agents”"
 title_en_us = "Daily #086: Implementing reflection agents"
 title_ja_jp = "Daily #086: reflection agentsの実装"
-summary = "Inclui agentes revisores para avaliar plano, execução e riscos antes de finalizar uma mudança."
-summary_en_us = "Covers Implementing reflection agents in SOS Location with foundations, diagrams, formulas, examples and operational success criteria."
-summary_ja_jp = "「reflection agentsの実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+summary = "Explora Implementação de “reflection agents” com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes."
+summary_en_us = "Explores Implementing reflection agents with fundamentals, formula, example and diagram for the agent orchestration track."
+summary_ja_jp = "reflection agentsの実装 を、基礎、数式、例、図とともに エージェントオーケストレーション トラック向けに整理します。"
 published_at = "2026-04-10T22:00:00+09:00"
-updated_at = "2026-04-26T16:40:28+09:00"
+updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
 tags = ["sos-location", "daily", "agentes", "ia"]
@@ -17,203 +17,125 @@ code_url = ""
 featured = false
 has_math = true
 body = '''
-Este Daily aprofunda **Implementação de “reflection agents”** dentro da trilha **Orquestração de Agentes** do SOS Location. A ideia é sair de uma nota curta e transformar o item em material de referência para produto, engenharia e operação.
+Este Daily aprofunda **Implementação de “reflection agents”** dentro da trilha **orquestração de agentes** do SOS Location.
 
 ## Descrição
-Inclui agentes revisores para avaliar plano, execução e riscos antes de finalizar uma mudança.
+O objetivo é transformar **Implementação de “reflection agents”** em um artefato verificável no código, no contrato ou na operação.
 
 ## Fundamentos
-Agentes só escalam quando responsabilidades, memória, ferramentas e critérios de aceitação são explícitos. Sem isso, o sistema vira conversação longa em vez de execução rastreável.
+Se o time não consegue responder quem decide, o que muda e como medir, **Implementação de “reflection agents”** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
 
-O ponto central é tornar **Implementação de “reflection agents”** observável: deve existir um artefato que possa ser lido por outra pessoa, testado por código ou validado por uma equipe operacional. Quando a decisão fica apenas na conversa, ela não escala e não cria aprendizado institucional.
+## Fórmula
+Leitura objetiva da decisão:
+Sucesso = contexto × ferramenta / custo de token
 
-## Modelo de decisão
-A decisão pode ser avaliada com uma métrica simples:
-
-$$
-Tokens_{saved} = 1 - \frac{Tokens_{structured}}{Tokens_{raw}}
-$$
-
-Linguagem estruturada reduz tokens e ambiguidade ao transformar intenção em campos, estados e comandos verificáveis.
-
-## Diagrama de fluxo
+## Diagrama
 ```mermaid
 flowchart LR
-  A["Sinal de campo"] --> B["Implementação de “reflection agents”"]
-  B --> C["Contrato verificável"]
-  C --> D["Implementação incremental"]
-  D --> E["Métrica operacional"]
-```
-
-## Gráfico de maturidade
-```mermaid
-xychart-beta
-    title "Leitura de maturidade"
-    x-axis ["Clareza", "Risco", "Implementação"]
-    y-axis "Pontuação" 0 --> 10
-    bar [7, 5, 7]
+  A["Pedido"] --> B["Orquestrador"]
+  B --> C["Agente especialista"]
+  C --> D["Reflection / correção"]
+  D --> E["Memória e versão"]
 ```
 
 ## Exemplo de implementação
 ```python
-from dataclasses import dataclass
-
-@dataclass(frozen=True)
-class AgentTask:
-    goal: str
-    context_refs: list[str]
-    acceptance_criteria: list[str]
-
-class Orchestrator:
-    def plan(self, task: AgentTask) -> list[str]:
-        return ["inspect", "specify", "execute", "verify"]
+class D086ImplementacaoDeReflectionAgentAgent:
+    def run(self, task: str) -> str:
+        return f"Processing {task} with memory and reflection"
 ```
 
 ## Como aplicar no SOS Location
-- Defina o contrato mínimo: entrada, saída, dono da decisão e comportamento esperado em erro.
-- Registre a decisão perto do código ou do documento de arquitetura que será mantido junto com o sistema.
-- Crie um teste, consulta ou dashboard que mostre se o comportamento continua verdadeiro com dados reais.
-- Revise o impacto em operação: tempo de resposta, rastreabilidade, custo cognitivo e risco de interpretação.
+- Defina o contrato mínimo para Implementação de “reflection agents”.
+- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
+- Valide com dado real, teste ou consulta verificável.
 
-## Armadilhas comuns
-- Transformar o conceito em abstração genérica demais antes de validar um caso de uso real.
-- Misturar regra de negócio, integração externa e detalhe visual no mesmo lugar.
-- Medir apenas funcionamento técnico e esquecer o efeito para equipes de resgate, usuários afetados ou operadores.
+## Erros comuns
+- Deixar vários agentes com responsabilidade sobre a mesma decisão.
+- Escrever memória demais e contexto útil de menos.
 
 ## Critério de sucesso
-O item está maduro quando uma pessoa nova consegue entender o motivo da decisão, executar um exemplo mínimo, ver o fluxo no diagrama e identificar qual métrica indicaria regressão.
+A orquestração está boa quando a resposta melhora sem inflar o custo de forma desnecessária.
 '''
 body_en_us = '''
-This Daily expands **Implementing reflection agents** within the **Agent Orchestration** track of SOS Location. The goal is to turn a short note into reference material for product, engineering and operations.
+This Daily expands **Implementing reflection agents** within the **agent orchestration** track of SOS Location.
 
 ## Description
-Covers Implementing reflection agents in SOS Location with context, operational criteria, diagrams, formulas and implementation examples.
+The goal is to turn **Implementing reflection agents** into a verifiable artifact in code, contract, or operations.
 
 ## Fundamentals
-Agents scale only when responsibilities, memory, tools and acceptance criteria are explicit. Without that, the system becomes a long conversation instead of traceable execution.
+If the team cannot answer who decides, what changes, and how to measure it, **Implementing reflection agents** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
 
-The core idea is to make **Implementing reflection agents** observable: there should be an artifact that another person can read, code can test or an operations team can validate. If the decision stays only in conversation, it does not scale and it does not create institutional learning.
-
-## Decision model
-The decision can be evaluated with a simple metric:
-
-$$
-Tokens_{saved} = 1 - \frac{Tokens_{structured}}{Tokens_{raw}}
-$$
-
-Structured language reduces tokens and ambiguity by turning intent into verifiable fields, states and commands.
+## Formula
+Practical reading of the decision:
+Success = context × tool_accuracy / token_cost
 
 ## Flow diagram
 ```mermaid
 flowchart LR
-  A["Field signal"] --> B["Implementing reflection agents"]
-  B --> C["Verifiable contract"]
-  C --> D["Incremental implementation"]
-  D --> E["Operational metric"]
-```
-
-## Maturity chart
-```mermaid
-xychart-beta
-    title "Maturity reading"
-    x-axis ["Clarity", "Risk", "Implementation"]
-    y-axis "Score" 0 --> 10
-    bar [7, 5, 7]
+  A["Pedido"] --> B["Orquestrador"]
+  B --> C["Agente especialista"]
+  C --> D["Reflection / correção"]
+  D --> E["Memória e versão"]
 ```
 
 ## Implementation example
 ```python
-from dataclasses import dataclass
-
-@dataclass(frozen=True)
-class AgentTask:
-    goal: str
-    context_refs: list[str]
-    acceptance_criteria: list[str]
-
-class Orchestrator:
-    def plan(self, task: AgentTask) -> list[str]:
-        return ["inspect", "specify", "execute", "verify"]
+class D086ImplementacaoDeReflectionAgentAgent:
+    def run(self, task: str) -> str:
+        return f"Processing {task} with memory and reflection"
 ```
 
 ## How to apply it in SOS Location
-- Define the minimum contract: input, output, owner of the decision and expected behavior on failure.
-- Record the decision close to the code or architecture document that will evolve with the system.
-- Create a test, query or dashboard that shows whether the behavior remains true with real data.
-- Review the operational impact: response time, traceability, cognitive cost and interpretation risk.
+- Define the minimum contract for Implementing reflection agents.
+- Record the decision where the team actually keeps it over time.
+- Validate it with real data, a test, or a verifiable query.
 
 ## Common pitfalls
-- Turning the concept into an overly generic abstraction before validating a real use case.
-- Mixing business rules, external integration and visual detail in the same place.
-- Measuring only technical execution while ignoring the effect on rescue teams, affected users or operators.
+- Letting multiple agents own the same decision.
+- Writing too much memory and too little useful context.
 
 ## Success criteria
-The item is mature when a new person can understand why the decision exists, run a minimal example, read the diagram and identify which metric would reveal a regression.
+Orchestration is good when the answer improves without unnecessary cost growth.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **エージェントオーケストレーション** トラックにおける **reflection agentsの実装** を詳しく整理します。短いメモを、プロダクト、エンジニアリング、運用で再利用できる参照資料にすることが目的です。
+このDailyでは、SOS Locationの **エージェントオーケストレーション** トラックにおける **reflection agentsの実装** を詳しく整理します。
 
 ## 説明
-「reflection agentsの実装」を、背景、運用基準、図、数式、実装例とともに整理します。
+目的は、**reflection agentsの実装** をコード、契約、運用で検証できる成果物にすることです。
 
 ## 基礎
-エージェントは、責務、メモリ、ツール、受け入れ基準が明示されている場合にだけスケールします。そうでなければ、追跡可能な実行ではなく長い会話になります。
+チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**reflection agentsの実装** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
 
-中心となる考え方は、**reflection agentsの実装** を観測可能にすることです。別の人が読める成果物、コードでテストできる契約、運用チームが検証できる基準が必要です。判断が会話だけに残る場合、それはスケールせず、組織的な学習にもなりません。
-
-## 判断モデル
-この判断は、次のような単純な指標で評価できます。
-
-$$
-Tokens_{saved} = 1 - \frac{Tokens_{structured}}{Tokens_{raw}}
-$$
-
-構造化言語は、意図を検証可能なフィールド、状態、コマンドに変換することで、トークンと曖昧さを減らします。
+## 数式
+判断を読むための指標:
+成功 = 文脈 × ツール精度 / トークンコスト
 
 ## フロー図
 ```mermaid
 flowchart LR
-  A["現場シグナル"] --> B["reflection agentsの実装"]
-  B --> C["検証可能な契約"]
-  C --> D["段階的な実装"]
-  D --> E["運用メトリクス"]
-```
-
-## 成熟度グラフ
-```mermaid
-xychart-beta
-    title "成熟度の見方"
-    x-axis ["明確さ", "リスク", "実装"]
-    y-axis "スコア" 0 --> 10
-    bar [7, 5, 7]
+  A["Pedido"] --> B["Orquestrador"]
+  B --> C["Agente especialista"]
+  C --> D["Reflection / correção"]
+  D --> E["Memória e versão"]
 ```
 
 ## 実装例
 ```python
-from dataclasses import dataclass
-
-@dataclass(frozen=True)
-class AgentTask:
-    goal: str
-    context_refs: list[str]
-    acceptance_criteria: list[str]
-
-class Orchestrator:
-    def plan(self, task: AgentTask) -> list[str]:
-        return ["inspect", "specify", "execute", "verify"]
+class D086ImplementacaoDeReflectionAgentAgent:
+    def run(self, task: str) -> str:
+        return f"Processing {task} with memory and reflection"
 ```
 
-## SOS Locationでの適用方法
-- 最小契約を定義します。入力、出力、判断の責任者、失敗時の期待動作を明確にします。
-- 判断を、今後も保守されるコードまたはアーキテクチャ文書の近くに記録します。
-- 実データでも振る舞いが保たれているかを示すテスト、クエリ、ダッシュボードを作ります。
-- 応答時間、追跡可能性、認知負荷、解釈リスクという運用上の影響を見直します。
+## SOS Location での適用方法
+- reflection agentsの実装 の最小契約を定義します。
+- 判断を、チームが長期的に維持する場所に記録します。
+- 実データ、テスト、検証可能なクエリで確認します。
 
 ## よくある落とし穴
-- 実際のユースケースを検証する前に、概念を過度に汎用化してしまうこと。
-- ビジネスルール、外部連携、表示上の詳細を同じ場所に混ぜること。
-- 技術的に動くことだけを測り、救助チーム、被災ユーザー、操作者への影響を忘れること。
+- 同じ判断を複数のエージェントに持たせる。
+- 有用な文脈よりもメモリばかりを書き込む。
 
 ## 成功基準
-新しく参加した人が、判断の理由を理解し、最小例を実行し、図を読み、どの指標が回帰を示すかを説明できる状態なら、この項目は成熟しています。
+不要なコスト増なしに答えが良くなれば、オーケストレーションは成功です。
 '''
