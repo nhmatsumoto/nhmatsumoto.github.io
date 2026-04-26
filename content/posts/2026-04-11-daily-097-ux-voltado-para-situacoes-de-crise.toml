@@ -1,0 +1,15 @@
+id = "20260411-090000"
+slug = "daily-097-ux-voltado-para-situacoes-de-crise"
+title = "Daily #097: UX voltado para situações de crise"
+summary = "Prioriza clareza, baixo atrito e tolerância a estresse, pois usuários podem estar sob pressão ou conectividade ruim."
+published_at = "2026-04-11T09:00:00+09:00"
+updated_at = "2026-04-11T09:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "produto", "emergencia"]
+badges = ["produto", "visao"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **Produto e Visão** do SOS Location.\n\n## Descrição\nPrioriza clareza, baixo atrito e tolerância a estresse, pois usuários podem estar sob pressão ou conectividade ruim.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

@@ -1,0 +1,15 @@
+id = "20260410-180000"
+slug = "daily-082-separacao-de-agentes-por-responsabilidade"
+title = "Daily #082: Separação de agentes por responsabilidade"
+summary = "Divide agentes por papéis claros para evitar sobreposição, reduzir ruído e facilitar avaliação de resultado."
+published_at = "2026-04-10T18:00:00+09:00"
+updated_at = "2026-04-10T18:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "agentes", "ia"]
+badges = ["agentes", "ia"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **Orquestração de Agentes** do SOS Location.\n\n## Descrição\nDivide agentes por papéis claros para evitar sobreposição, reduzir ruído e facilitar avaliação de resultado.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

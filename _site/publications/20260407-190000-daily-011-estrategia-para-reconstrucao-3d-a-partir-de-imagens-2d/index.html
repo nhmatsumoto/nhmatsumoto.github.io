@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+  <head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i, allowedHostnames) {
+        var hostname = w.location.hostname;
+        if (allowedHostnames.length && allowedHostnames.indexOf(hostname) === -1) {
+          return;
+        }
+
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0];
+        var j = d.createElement(s);
+        var dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', "GTM-NJJFQ4JM", ["nhmatsumoto.github.io"]);
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D | nhmatsumoto.github.io</title><meta name="description" content="Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.">
+    <link rel="canonical" href="https://nhmatsumoto.github.io/posts/20260407-190000-daily-011-estrategia-para-reconstrucao-3d-a-partir-de-imagens-2d/">
+    <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
+    
+    <meta property="og:title" content="Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D">
+    <meta property="og:description" content="Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.">
+    <meta property="og:url" content="https://nhmatsumoto.github.io/posts/20260407-190000-daily-011-estrategia-para-reconstrucao-3d-a-partir-de-imagens-2d/">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D">
+    <meta name="twitter:description" content="Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.4e7049bd.css">
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.mermaid) {
+          window.mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+        }
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      });
+    </script>
+    
+    <script type="importmap">{"imports": {"zustand": "https://unpkg.com/zustand@4.4.1/esm/vanilla.mjs"}}</script>
+  </head>
+  <body class="page-post" data-has-math="false" data-default-locale="pt-BR" data-locale="pt-BR">
+    <noscript data-analytics-noscript="gtm" data-allowed-hostnames="[&quot;nhmatsumoto.github.io&quot;]"><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJJFQ4JM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <a class="skip-link" href="#content" data-i18n="accessibility.skip_to_content">Ir para o conteúdo</a>
+    
+    <div class="site-shell">
+      
+    <nav class="navbar" data-nav-shell>
+      <div class="layout-container navbar-mobile">
+        <div class="navbar-left">
+          <button class="nav-btn-icon nav-btn-menu navbar-toggle mobile-only" type="button" data-nav-toggle aria-label="Abrir menu" data-i18n-aria-label="nav.menu_open" aria-controls="mobile-drawer" aria-expanded="false">
+            <i data-lucide="menu" class="menu-icon-open"></i>
+            <i data-lucide="x" class="menu-icon-close hidden"></i>
+          </button>
+
+          <div class="nav-brand desktop-only">
+            <a class="nav-title" href="https://nhmatsumoto.github.io/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+          </div>
+        </div>
+
+        <div class="navbar-center">
+          <div class="nav-brand navbar-brand-mobile mobile-only">
+            <a class="nav-title" href="https://nhmatsumoto.github.io/"><span class="brand-accent">NHM</span>ATSUMOTO</a>
+          </div>
+
+          <div class="nav-primary-links desktop-only"><a class="nav-link" href="https://nhmatsumoto.github.io/about/"><i class="site-icon nav-link-icon" data-lucide="user-round" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.about">sobre</span></a><a class="nav-link is-active" aria-current="page" href="https://nhmatsumoto.github.io/posts/"><i class="site-icon nav-link-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/daily/"><i class="site-icon nav-link-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/projects/"><i class="site-icon nav-link-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/documents/"><i class="site-icon nav-link-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></div>
+        </div>
+
+        <div class="nav-actions navbar-right">
+          <div class="nav-group nav-group-mobile mobile-only">
+            <button class="nav-btn-icon nav-btn-search nav-btn-search-mobile" type="button" data-search-open aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette"><i class="site-icon" data-lucide="search" aria-hidden="true"></i><span class="nav-btn-label" data-i18n="nav.search">buscar</span><span class="nav-btn-shortcut" aria-hidden="true">⌘K</span></button>
+
+            <button class="nav-btn-icon nav-btn-locale nav-btn-locale-mobile" type="button" data-locale-toggle aria-label="trocar idioma" data-i18n-aria-label="nav.language_action">
+              <i data-lucide="languages"></i>
+              <span class="locale-label" data-locale-label data-locale-style="compact">PT</span>
+            </button>
+
+            <button class="nav-btn-icon nav-btn-theme nav-btn-theme-mobile" type="button" data-theme-toggle aria-label="alternar tema" data-i18n-aria-label="nav.theme">
+              <i data-lucide="moon" class="theme-icon-moon"></i>
+              <i data-lucide="sun" class="theme-icon-sun hidden"></i>
+            </button>
+          </div>
+
+          <div class="nav-group desktop-only">
+            <button class="nav-btn-icon nav-btn-search" type="button" data-search-open aria-label="Palette de comandos" data-i18n-aria-label="accessibility.command_palette"><i class="site-icon" data-lucide="search" aria-hidden="true"></i><span class="nav-btn-label" data-i18n="nav.search">buscar</span><span class="nav-btn-shortcut" aria-hidden="true">⌘K</span></button>
+
+            <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="trocar idioma" data-i18n-aria-label="nav.language_action">
+              <i data-lucide="languages"></i>
+              <span class="locale-label" data-locale-label>PT-BR</span>
+              <span class="locale-available" aria-hidden="true">PT · EN · JA</span>
+            </button>
+            
+            <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="alternar tema" data-i18n-aria-label="nav.theme">
+              <i data-lucide="moon" class="theme-icon-moon"></i>
+              <i data-lucide="sun" class="theme-icon-sun hidden"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav-drawer" id="mobile-drawer" aria-hidden="true">
+      <div class="drawer-backdrop" data-nav-toggle></div>
+      <div class="drawer-content">
+        <div class="drawer-links"><a class="nav-link" href="https://nhmatsumoto.github.io/about/"><i class="site-icon nav-link-icon" data-lucide="user-round" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.about">sobre</span></a><a class="nav-link is-active" aria-current="page" href="https://nhmatsumoto.github.io/posts/"><i class="site-icon nav-link-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/daily/"><i class="site-icon nav-link-icon" data-lucide="calendar-days" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.daily">daily</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/projects/"><i class="site-icon nav-link-icon" data-lucide="folder-kanban" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.projects">projetos</span></a><a class="nav-link" href="https://nhmatsumoto.github.io/documents/"><i class="site-icon nav-link-icon" data-lucide="file-text" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.documents">documentos</span></a></div>
+      </div>
+    </div>
+    
+      <main class="site-main" id="content">
+    <div class="layout-container post-reading-layout">
+      <header class="page-header">
+        <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-aria-label="accessibility.breadcrumbs"><ol class="breadcrumb-list"><li><a href="https://nhmatsumoto.github.io/"><i class="site-icon breadcrumb-icon" data-lucide="home" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.home">início</span></a></li><li><a href="https://nhmatsumoto.github.io/posts/"><i class="site-icon breadcrumb-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="nav.posts">publicações</span></a></li><li><span aria-current="page">Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D</span></li></ol></nav>
+      </header>
+      <div class="page-two-column">
+        <aside class="page-sidebar post-detail-sidebar">
+      <div class="sidebar-panel notebook-meta-panel post-meta-panel">
+        <div class="post-sidebar-section post-sidebar-section-meta">
+          <div class="sidebar-header"><h2 data-i18n="pages.post.metadata">Metadados</h2></div>
+          <div class="card-metrics"><span class="metric"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-07T19:00:00+09:00" data-localize-date="long">7 de abril de 2026</time></span> &middot; <span class="metric"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1" data-reading-time-values="{&quot;default&quot;: 1}">1 min de leitura</span></span></div>
+        </div>
+        <div class="post-sidebar-section"><div class="badge-list"><span class="badge">ia</span><span class="badge">dados</span></div></div>
+        <div class="post-sidebar-section"><div class="tag-list"><span class="tag">sos-location</span><span class="tag">daily</span><span class="tag">ia</span><span class="tag">simulacao</span><span class="tag">dados</span></div></div>
+      </div>
+    </aside>
+        <div class="page-main">
+          <article class="post-shell prose notebook-sheet post-reading-article">
+            <header class="post-header post-reading-header">
+              <div class="post-header-meta">
+                <p class="section-kicker" data-i18n="pages.post.kicker">publicação</p>
+                <div class="post-meta post-meta-hero"><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-07T19:00:00+09:00" data-localize-date="long">7 de abril de 2026</time></span><span class="post-meta-item"><i class="site-icon meta-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1" data-reading-time-values="{&quot;default&quot;: 1}">1 min de leitura</span></span></div>
+              </div>
+              <h1 data-page-title>Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D</h1>
+              <p class="post-summary post-deck" data-page-summary>Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.</p>
+            </header>
+            <div class="post-body" data-page-body><p>Este daily faz parte da trilha <strong>IA, Simulação e Dados</strong> do SOS Location.</p>
+<h3>Descrição</h3>
+<p>Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.</p>
+<h3>Aplicação no SOS Location</h3>
+<p>A decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.</p>
+<h3>Critério de sucesso</h3>
+<p>O item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.</p></div>
+          </article>
+        </div>
+      </div>
+    </div>
+    
+    <div class="related-content-shell">
+      <div class="layout-container">
+        <section class="section-panel related-content-panel" aria-labelledby="related-content-title">
+          <header class="section-header">
+            <div>
+              <p class="section-kicker" data-i18n="sections.navigation_kicker">navegação</p>
+              <h2 id="related-content-title" data-i18n="sections.related_content">Continue explorando</h2>
+            </div>
+            <p class="section-copy" data-i18n="sections.related_content_copy">Conteudos conectados por tags, projeto e documentacao.</p>
+          </header>
+          <ol class="entry-list"><li class="entry" data-entry-card>
+      <article class="entry-card entry-card-post">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-08T04:00:00+09:00" data-localize-date="short">08 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1" data-reading-time-values="{&quot;default&quot;: 1}">1 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260408-040000-daily-020-separacao-entre-ambiente-operacional-e-ambiente-de-simulacao/" data-entry-title>Daily #020: Separação entre ambiente operacional e ambiente de simulação</a></h3>
+        <p class="entry-lede" data-entry-lede>Evita que experimentos, modelos e cargas analíticas afetem o ambiente usado por equipes em operação real.</p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260408-040000-daily-020-separacao-entre-ambiente-operacional-e-ambiente-de-simulacao/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Daily #020: Separação entre ambiente operacional e ambiente de simulação", "summary": "Evita que experimentos, modelos e cargas analíticas afetem o ambiente usado por equipes em operação real."}</script>
+    </li>
+<li class="entry" data-entry-card>
+      <article class="entry-card entry-card-post">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-08T03:00:00+09:00" data-localize-date="short">08 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1" data-reading-time-values="{&quot;default&quot;: 1}">1 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260408-030000-daily-019-estrutura-de-processamento-batch-para-simulacoes/" data-entry-title>Daily #019: Estrutura de processamento batch para simulações</a></h3>
+        <p class="entry-lede" data-entry-lede>Organiza execuções pesadas em lotes reproduzíveis, com entradas versionadas, resultados persistidos e rastreabilidade de parâmetros.</p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260408-030000-daily-019-estrutura-de-processamento-batch-para-simulacoes/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Daily #019: Estrutura de processamento batch para simulações", "summary": "Organiza execuções pesadas em lotes reproduzíveis, com entradas versionadas, resultados persistidos e rastreabilidade de parâmetros."}</script>
+    </li>
+<li class="entry" data-entry-card>
+      <article class="entry-card entry-card-post">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-08T02:00:00+09:00" data-localize-date="short">08 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1" data-reading-time-values="{&quot;default&quot;: 1}">1 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260408-020000-daily-018-estrategia-para-previsao-de-areas-de-risco-com-ia/" data-entry-title>Daily #018: Estratégia para previsão de áreas de risco com IA</a></h3>
+        <p class="entry-lede" data-entry-lede>Define sinais, fontes e saídas esperadas para modelos que priorizam locais com maior probabilidade de impacto ou necessidade de resposta.</p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260408-020000-daily-018-estrategia-para-previsao-de-areas-de-risco-com-ia/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Daily #018: Estratégia para previsão de áreas de risco com IA", "summary": "Define sinais, fontes e saídas esperadas para modelos que priorizam locais com maior probabilidade de impacto ou necessidade de resposta."}</script>
+    </li>
+<li class="entry" data-entry-card>
+      <article class="entry-card entry-card-post">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-08T01:00:00+09:00" data-localize-date="short">08 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1" data-reading-time-values="{&quot;default&quot;: 1}">1 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260408-010000-daily-017-modelagem-inicial-de-simulacao-de-tsunami/" data-entry-title>Daily #017: Modelagem inicial de simulação de tsunami</a></h3>
+        <p class="entry-lede" data-entry-lede>Estrutura um modelo conceitual para propagação costeira, zonas de impacto e priorização de evacuação em eventos extremos.</p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260408-010000-daily-017-modelagem-inicial-de-simulacao-de-tsunami/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Daily #017: Modelagem inicial de simulação de tsunami", "summary": "Estrutura um modelo conceitual para propagação costeira, zonas de impacto e priorização de evacuação em eventos extremos."}</script>
+    </li></ol>
+        </section>
+      </div>
+    </div>
+    
+    <script id="page-content-data" type="application/json">{"title": "Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D", "summary": "Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.", "body_html": "\u003cp>Este daily faz parte da trilha \u003cstrong>IA, Simulação e Dados\u003c/strong> do SOS Location.\u003c/p>\n\u003ch3>Descrição\u003c/h3>\n\u003cp>Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.\u003c/p>\n\u003ch3>Aplicação no SOS Location\u003c/h3>\n\u003cp>A decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\u003c/p>\n\u003ch3>Critério de sucesso\u003c/h3>\n\u003cp>O item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\u003c/p>"}</script>
+    </main>
+      
+    <footer class="site-footer">
+      <div class="layout-container site-footer-inner">
+        <p>
+          <span data-i18n="footer.developed_by">desenvolvido por</span>
+          <a href="https://github.com/nhmatsumoto" target="_blank" rel="noopener noreferrer"><i class="site-icon footer-icon" data-lucide="git-branch" aria-hidden="true"></i><span>NHMatsumoto</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+          <span class="footer-separator" aria-hidden="true">|</span>
+          <a href="https://github.com/nhmatsumoto/nhmatsumoto.github.io" target="_blank" rel="noopener noreferrer"><i class="site-icon footer-icon" data-lucide="square-terminal" aria-hidden="true"></i><span data-i18n="footer.blog_engine">blog engine</span><i class="site-icon external-icon" data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+        </p>
+      </div>
+    </footer>
+    
+    </div>
+
+    <div class="sidebar-backdrop" data-sidebar-toggle></div>
+    
+    <div class="search-palette" data-search-palette data-search-index-url="https://nhmatsumoto.github.io/assets/search-index.json" hidden>
+      <div class="search-palette-backdrop" data-search-close></div>
+      <section class="search-palette-dialog" role="dialog" aria-modal="true" aria-labelledby="search-palette-title" aria-describedby="search-palette-hint">
+        <header class="search-palette-head">
+          <div class="search-palette-title-block">
+            <p class="section-kicker" data-i18n="nav.search">buscar</p>
+            <h2 id="search-palette-title" data-i18n="accessibility.command_palette">Palette de comandos</h2>
+          </div>
+          <button class="search-palette-close" type="button" data-search-close aria-label="Fechar" data-i18n-aria-label="palette.close">
+            <i class="site-icon" data-lucide="x" aria-hidden="true"></i>
+          </button>
+        </header>
+        <label class="search-input-shell" for="site-search-input">
+          <i class="site-icon search-input-icon" data-lucide="search" aria-hidden="true"></i>
+          <input id="site-search-input" type="search" data-search-input autocomplete="off" spellcheck="false" placeholder="Buscar publicações, daily notes, projetos e documentos" data-i18n-placeholder="palette.placeholder" aria-controls="search-palette-results">
+        </label>
+        <p id="search-palette-hint" class="search-palette-hint" data-i18n="palette.hint">Toque ou clique em buscar para abrir. Ctrl/⌘ K tambem funciona; Enter abre o primeiro resultado e Esc fecha.</p>
+        <ol id="search-palette-results" class="search-results" data-search-results></ol>
+        <p class="search-empty" data-search-empty hidden data-i18n="palette.empty">Nenhum resultado encontrado.</p>
+      </section>
+    </div>
+    
+    <script id="site-i18n" type="application/json">{"defaultLocale": "pt-BR", "supportedLocales": ["pt-BR", "en-US", "ja-JP"], "languageNames": {"pt-BR": "Português (Brasil)", "pt-PT": "Português", "ja-JP": "日本語", "en-US": "English (US)"}, "strings": {"pt-BR": {"accessibility": {"skip_to_content": "Ir para o conteúdo", "primary_navigation": "Navegação principal", "breadcrumbs": "Você está aqui", "language_switcher": "Selecionar idioma", "command_palette": "Palette de comandos", "pagination": "Paginação"}, "nav": {"home": "início", "posts": "publicações", "daily": "daily", "projects": "projetos", "documents": "documentos", "about": "sobre", "contact": "contato", "search": "buscar", "cta": "trabalho aberto / contato", "language": "idioma", "language_action": "trocar idioma", "theme": "alternar tema", "menu_open": "Abrir menu", "menu_close": "Fechar menu"}, "palette": {"placeholder": "Buscar publicações, daily notes, projetos e documentos", "close": "Fechar", "hint": "Toque ou clique em buscar para abrir. Ctrl/⌘ K tambem funciona; Enter abre o primeiro resultado e Esc fecha.", "empty": "Nenhum resultado encontrado."}, "home": {"highlight_main_project": "projeto principal", "highlight_recent_article": "artigo recente", "kicker": "engineering notebook", "focus_kicker": "foco atual", "start_here_kicker": "comece por aqui", "start_here_title": "Trilha curta de entrada", "start_here_copy": "Uma sequencia curta para entender a proposta do site, ver o sistema principal e chegar na documentacao conectada."}, "sections": {"posts_title": "Publicações recentes", "posts_copy": "Textos com tempo de leitura, tags, badges e links diretos para repositórios quando fizer sentido.", "projects_title": "Sistemas centrais", "projects_copy": "Projetos tratados como ativos de longo prazo: arquitetura, stack, status, roadmap e documentos de apoio.", "documents_title": "Sistema de documentação", "documents_copy": "Notas em markdown organizadas por domínio, arquitetura, agentes e APIs, com versionamento e marcação de conteúdo gerado por agente.", "about_copy": "O site é organizado mais como uma base de código do que como uma landing page pessoal.", "welcome_message": "SO de Conhecimento Técnico", "navigation_kicker": "navegação", "navigation_title": "Sitemap e categorias", "navigation_copy": "Links diretos para publicações, projetos, documentos e as categorias mais relevantes.", "publications_title": "Publicações", "publications_copy": "Fluxo unificado de documentos de arquitetura, artigos técnicos e notas de pesquisa.", "related_posts": "Posts relacionados", "related_content": "Continue explorando", "related_content_copy": "Conteudos conectados por tags, projeto e documentacao.", "evidence_kicker": "evidência", "evidence_title": "Resultados em produção", "evidence_copy": "Métricas, decisões arquiteturais e resultados concretos documentados nos projetos e publicações."}, "pages": {"archive": {"title": "Todas as publicações", "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."}, "projects": {"title": "Sistemas centrais", "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."}, "documents": {"title": "Sistema de documentos", "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."}, "about": {"title": "Hiro Matsumoto", "facts": "Snapshot", "location": "Base", "role": "Atuação", "focus": "Foco"}, "post": {"kicker": "publicação", "metadata": "Metadados", "back": "Voltar para publicações", "copy_link": "Copiar link", "navigation": "Navegação da publicação", "newer_empty": "Nenhum texto mais novo", "older_empty": "Nenhum texto mais antigo"}, "daily": {"title": "Daily notes", "description": "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git.", "kicker": "daily", "meta": "Contexto", "source": "Fonte", "related_paths": "Caminhos relacionados"}, "contact": {"title": "Contato", "description": "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."}, "project": {"kicker": "projeto", "status": "Status", "stack": "Stack", "actions": "Ações", "overview": "Visão geral", "problem_solution": "Problema e solução", "architecture": "Arquitetura", "adr": "ADRs", "roadmap": "Roadmap", "stack_notes": "Stack & Tecnologias", "impact": "Impacto & Resultados", "trade_offs": "Trade-offs & Decisões", "lessons": "Lições Aprendidas", "production_notes": "Notas de Produção"}, "document": {"kicker": "documento", "meta": "Metadados do documento", "version": "Versão", "category": "Categoria"}}, "common": {"preview": "prévia", "content_in_preparation": "Conteúdo em preparação.", "agent_generated": "gerado por agente"}, "empty": {"posts": "Nenhuma publicação publicada ainda.", "projects": "Nenhum projeto disponível.", "documents": "Nenhum documento indexado ainda.", "publications": "Nenhuma publicação encontrada.", "daily": "Nenhuma atividade pública relevante encontrada nos últimos 30 dias."}, "actions": {"copy": "copiar", "copied": "copiado", "done": "feito", "repo": "repo", "code": "código", "view_architecture": "ver arquitetura", "view_code": "ver código", "open_docs": "abrir docs", "link_copied": "Link copiado", "copy_from_address": "Copie pela barra de endereço", "view_project": "Ver", "read_article": "Abrir", "close": "Fechar"}, "status": {"draft": "rascunho", "published": "publicado", "research": "pesquisa", "active": "ativo", "archived": "arquivado", "in_progress": "em andamento", "production": "produção"}, "kinds": {"home": "início", "about": "sobre", "post": "publicação", "daily": "daily", "project": "projeto", "document": "documento", "contact": "contato", "developer": "desenvolvedor"}, "templates": {"reading_time": "{minutes} min de leitura"}, "pagination": {"prev": "anterior", "next": "próxima"}, "view": {"list": "lista", "grid": "grade"}, "footer": {"developed_by": "desenvolvido por", "blog_engine": "blog engine"}, "profile": {"handle": "@nhmatsumoto · Brasil / Japão", "alt": "Avatar de Hiro Matsumoto"}}, "en-US": {"accessibility": {"skip_to_content": "Skip to content", "primary_navigation": "Primary navigation", "breadcrumbs": "You are here", "language_switcher": "Select language", "command_palette": "Command palette", "pagination": "Pagination"}, "nav": {"home": "home", "posts": "posts", "daily": "daily", "projects": "projects", "documents": "documents", "about": "about", "contact": "contact", "search": "search", "cta": "open work / contact", "language": "language", "language_action": "switch language", "theme": "toggle theme", "menu_open": "Open menu", "menu_close": "Close menu"}, "palette": {"placeholder": "Search posts, daily notes, projects and documents", "close": "Close", "hint": "Tap or click search to open. Ctrl/⌘ K also works; Enter opens the first result and Esc closes it.", "empty": "No results found."}, "home": {"highlight_main_project": "main project", "highlight_recent_article": "recent article", "kicker": "engineering notebook", "focus_kicker": "current focus", "start_here_kicker": "start here", "start_here_title": "A short guided path", "start_here_copy": "A compact route to understand the notebook, inspect the core system and jump into the connected documentation."}, "sections": {"posts_title": "Recent posts", "posts_copy": "Articles with reading time, tags, badges and direct repository links when applicable.", "projects_title": "Core systems", "projects_copy": "Projects managed as long-term assets: architecture, stack, status, roadmap and support docs.", "documents_title": "Documentation system", "documents_copy": "Markdown notes organized by domain, architecture, agents and APIs, with versioning and agent-generated markers.", "about_copy": "The site is organized more like a codebase than a personal landing page.", "welcome_message": "Technical Knowledge OS", "navigation_kicker": "navigation", "navigation_title": "Sitemap & categories", "navigation_copy": "Direct links to publications, projects, documents and the most relevant categories.", "publications_title": "Publications", "publications_copy": "Unified stream of architecture documents, technical articles and research notes.", "related_posts": "Related posts", "related_content": "Keep exploring", "related_content_copy": "Content connected by tags, project links and documentation references.", "evidence_kicker": "evidence", "evidence_title": "Production results", "evidence_copy": "Metrics, architectural decisions and concrete outcomes documented across projects and publications."}, "pages": {"archive": {"title": "All posts", "description": "Writing flow on architecture, experiments, domain modeling and operational heuristics."}, "projects": {"title": "Core systems", "description": "Projects presented as systems: problem, solution, architecture, stack, ADRs and roadmap."}, "documents": {"title": "Document system", "description": "Documents grouped by domain, architecture, agents and APIs to keep decisions accessible."}, "about": {"title": "Hiro Matsumoto", "facts": "Snapshot", "location": "Base", "role": "Role", "focus": "Focus"}, "post": {"kicker": "post", "metadata": "Metadata", "back": "Back to posts", "copy_link": "Copy link", "navigation": "Post navigation", "newer_empty": "No newer posts", "older_empty": "No older posts"}, "daily": {"title": "Daily notes", "description": "Engineering activity timeline generated from the last 30 days of Git history.", "kicker": "daily", "meta": "Context", "source": "Source", "related_paths": "Related paths"}, "contact": {"title": "Contact", "description": "Primary channels to follow the work, reach out and keep up with the public trail of the site."}, "project": {"kicker": "project", "status": "Status", "stack": "Stack", "actions": "Actions", "overview": "Overview", "problem_solution": "Problem and solution", "architecture": "Architecture", "adr": "ADRs", "roadmap": "Roadmap", "stack_notes": "Stack & Technologies", "impact": "Impact & Results", "trade_offs": "Trade-offs & Decisions", "lessons": "Lessons Learned", "production_notes": "Production Notes"}, "document": {"kicker": "document", "meta": "Document metadata", "version": "Version", "category": "Category"}}, "common": {"preview": "preview", "content_in_preparation": "Content in preparation.", "agent_generated": "agent generated"}, "pagination": {"prev": "previous", "next": "next"}, "empty": {"posts": "No posts published yet.", "projects": "No projects available.", "documents": "No documents indexed yet.", "publications": "No publications found.", "daily": "No relevant public activity found in the last 30 days."}, "actions": {"copy": "copy", "copied": "copied", "done": "done", "repo": "repo", "code": "code", "view_architecture": "view architecture", "view_code": "view code", "open_docs": "open docs", "link_copied": "Link copied", "copy_from_address": "Copy from address bar", "view_project": "View", "read_article": "Open", "close": "Close"}, "status": {"draft": "draft", "published": "published", "research": "research", "active": "active", "archived": "archived", "in_progress": "in progress", "production": "production"}, "kinds": {"home": "home", "about": "about", "post": "post", "daily": "daily", "project": "project", "document": "document", "contact": "contact", "developer": "developer"}, "templates": {"reading_time": "{minutes} min read"}, "view": {"list": "list", "grid": "grid"}, "footer": {"developed_by": "developed by", "blog_engine": "blog engine"}, "profile": {"handle": "@nhmatsumoto · Brazil / Japan", "alt": "Hiro Matsumoto profile picture"}}, "ja-JP": {"accessibility": {"skip_to_content": "コンテンツへ移動", "primary_navigation": "メインナビゲーション", "breadcrumbs": "現在位置", "language_switcher": "言語を切り替える", "command_palette": "コマンドパレット", "pagination": "ページネーション"}, "nav": {"home": "ホーム", "posts": "記事", "daily": "daily", "projects": "プロジェクト", "documents": "ドキュメント", "about": "プロフィール", "contact": "連絡先", "search": "検索", "cta": "お問い合わせ", "language": "言語", "language_action": "言語切替", "theme": "テーマ切替", "menu_open": "メニューを開く", "menu_close": "メニューを閉じる"}, "palette": {"placeholder": "記事、daily notes、プロジェクト、ドキュメントを検索", "close": "閉じる", "hint": "検索ボタンをタップまたはクリックして開けます。Ctrl/⌘ K でも開き、Enter で最初の結果、Esc で閉じます。", "empty": "結果が見つかりませんでした。"}, "home": {"highlight_main_project": "主要プロジェクト", "highlight_recent_article": "最近の記事", "kicker": "engineering notebook", "focus_kicker": "現在の焦点", "start_here_kicker": "最初の導線", "start_here_title": "最短で入るためのルート", "start_here_copy": "サイトの意図を掴み、主力システムを見て、つながったドキュメントへ入るための短い導線です。"}, "sections": {"posts_title": "最近の記事", "posts_copy": "読了時間、タグ、リポジトリリンクを備えたテクニカルな記事。", "projects_title": "主要システム", "projects_copy": "長期資産としてのプロジェクト：アーキテクチャ、スタック、ロードマップ、補足資料。", "documents_title": "ドキュメントシステム", "documents_copy": "ドメイン、アーキテクチャ、エージェント、APIごとに分類されたMarkdownドキュメント。", "about_copy": "このサイトは、個人のウェブサイトというよりも、コードベースのように構成されています。", "welcome_message": "技術ナレッジ OS", "navigation_kicker": "ナビゲーション", "navigation_title": "サイトマップ & カテゴリー", "navigation_copy": "記事、プロジェクト、ドキュメント、および最も関連性の高いカテゴリーへの直接リンク。", "publications_title": "公開記事", "publications_copy": "アーキテクチャドキュメント、技術記事、研究メモの統合ストリーム。", "related_posts": "関連記事", "related_content": "関連コンテンツ", "related_content_copy": "タグ、プロジェクトの導線、ドキュメント参照でつながる内容。", "evidence_kicker": "エビデンス", "evidence_title": "本番環境での成果", "evidence_copy": "プロジェクトと公開記事に記録されたメトリクス、アーキテクチャの決定、具体的な成果。"}, "pages": {"archive": {"title": "すべての記事", "description": "アーキテクチャ、実験、ドメインモデリング、運用に関する書き込みのフロー。"}, "projects": {"title": "主要システム", "description": "システムとしてのプロジェクト：課題、解決策、アーキテクチャ、スタック、ADR、ロードマップ。"}, "documents": {"title": "ドキュメントシステム", "description": "意思決定を容易にするために、ドメイン、アーキテクチャ、エージェント、APIごとにグループ化された文書。"}, "about": {"title": "Hiro Matsumoto", "facts": "スナップショット", "location": "拠点", "role": "役割", "focus": "フォーカス"}, "post": {"kicker": "記事", "metadata": "メタデータ", "back": "記事一覧に戻る", "copy_link": "リンクをコピー", "navigation": "記事ナビゲーション", "newer_empty": "新しい記事はありません", "older_empty": "古い記事はありません"}, "daily": {"title": "Daily notes", "description": "過去30日間の Git 履歴から生成したエンジニアリング活動のタイムライン。", "kicker": "daily", "meta": "コンテキスト", "source": "ソース", "related_paths": "関連パス"}, "contact": {"title": "連絡先", "description": "仕事を追い、連絡を取り、このサイトの公開トレイルをたどるための主要チャネル。"}, "project": {"kicker": "プロジェクト", "status": "ステータス", "stack": "スタック", "actions": "アクション", "overview": "概要", "problem_solution": "課題と解決策", "architecture": "アーキテクチャ", "adr": "ADRs", "roadmap": "ロードマップ", "stack_notes": "スタック & テクノロジー", "impact": "インパクト & 成果", "trade_offs": "トレードオフ & 決定事項", "lessons": "学んだ教訓", "production_notes": "本番環境メモ"}, "document": {"kicker": "ドキュメント", "meta": "ドキュメント・メタデータ", "version": "バージョン", "category": "カテゴリー"}}, "common": {"preview": "プレビュー", "content_in_preparation": "準備中のコンテンツ。", "agent_generated": "エージェント生成済み"}, "pagination": {"prev": "前へ", "next": "次へ"}, "empty": {"posts": "まだ公開された記事はありません。", "projects": "利用可能なプロジェクトはありません。", "documents": "まだ索引付けされたドキュメントはありません。", "publications": "公開記事が見つかりませんでした。", "daily": "過去30日間に表示できる関連アクティビティは見つかりませんでした。"}, "actions": {"copy": "コピー", "copied": "コピー済み", "done": "完了", "repo": "リポ", "code": "コード", "view_architecture": "アーキテクチャを表示", "view_code": "コードを表示", "open_docs": "ドキュメントを開く", "link_copied": "リンクをコピーしました", "copy_from_address": "アドレスバーからコピーしてください", "view_project": "表示", "read_article": "開く", "close": "閉じる"}, "status": {"draft": "ドラフト", "published": "公開済み", "research": "研究中", "active": "進行中", "archived": "アーカイブ", "in_progress": "進行中", "production": "プロダクション"}, "kinds": {"home": "ホーム", "about": "プロフィール", "post": "記事", "daily": "daily", "project": "プロジェクト", "document": "ドキュメント", "contact": "連絡先", "developer": "開発者"}, "templates": {"reading_time": "読了時間 {minutes} 分"}, "view": {"list": "リスト", "grid": "グリッド"}, "footer": {"developed_by": "開発", "blog_engine": "ブログエンジン"}, "profile": {"handle": "@nhmatsumoto · ブラジル / 日本", "alt": "Hiro Matsumoto のプロフィール画像"}}}}</script>
+    <script src="https://nhmatsumoto.github.io/assets/blog.2f9c51a1.js" type="module"></script>
+    
+  </body>
+</html>

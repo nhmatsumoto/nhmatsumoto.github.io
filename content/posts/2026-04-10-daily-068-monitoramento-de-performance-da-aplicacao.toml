@@ -1,0 +1,15 @@
+id = "20260410-040000"
+slug = "daily-068-monitoramento-de-performance-da-aplicacao"
+title = "Daily #068: Monitoramento de performance da aplicação"
+summary = "Define métricas, traces e alertas para identificar gargalos antes que impactem operação."
+published_at = "2026-04-10T04:00:00+09:00"
+updated_at = "2026-04-10T04:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "performance", "escalabilidade"]
+badges = ["performance", "escala"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **Performance e Escalabilidade** do SOS Location.\n\n## Descrição\nDefine métricas, traces e alertas para identificar gargalos antes que impactem operação.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

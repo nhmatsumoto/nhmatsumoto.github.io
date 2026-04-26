@@ -1,0 +1,15 @@
+id = "20260409-210000"
+slug = "daily-061-estrategia-de-cache-com-redis"
+title = "Daily #061: Estratégia de cache com Redis"
+summary = "Usa cache distribuído para reduzir latência, aliviar banco de dados e sustentar leituras frequentes."
+published_at = "2026-04-09T21:00:00+09:00"
+updated_at = "2026-04-09T21:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "performance", "escalabilidade"]
+badges = ["performance", "escala"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **Performance e Escalabilidade** do SOS Location.\n\n## Descrição\nUsa cache distribuído para reduzir latência, aliviar banco de dados e sustentar leituras frequentes.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

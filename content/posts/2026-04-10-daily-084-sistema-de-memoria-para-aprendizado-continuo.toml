@@ -1,0 +1,15 @@
+id = "20260410-200000"
+slug = "daily-084-sistema-de-memoria-para-aprendizado-continuo"
+title = "Daily #084: Sistema de memória para aprendizado contínuo"
+summary = "Registra decisões, correções e padrões recorrentes para melhorar consistência sem depender apenas do prompt atual."
+published_at = "2026-04-10T20:00:00+09:00"
+updated_at = "2026-04-10T20:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "agentes", "ia"]
+badges = ["agentes", "ia"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **Orquestração de Agentes** do SOS Location.\n\n## Descrição\nRegistra decisões, correções e padrões recorrentes para melhorar consistência sem depender apenas do prompt atual.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

@@ -1,0 +1,15 @@
+id = "20260410-030000"
+slug = "daily-067-pipeline-ci-cd-com-azure-devops"
+title = "Daily #067: Pipeline CI/CD com Azure DevOps"
+summary = "Automatiza build, testes e publicação para reduzir erro manual e aumentar previsibilidade de entrega."
+published_at = "2026-04-10T03:00:00+09:00"
+updated_at = "2026-04-10T03:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "performance", "escalabilidade"]
+badges = ["performance", "escala"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **Performance e Escalabilidade** do SOS Location.\n\n## Descrição\nAutomatiza build, testes e publicação para reduzir erro manual e aumentar previsibilidade de entrega.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

@@ -1,0 +1,15 @@
+id = "20260407-170000"
+slug = "daily-009-modelagem-de-entidades-missingperson-hotspot-alert"
+title = "Daily #009: Modelagem de entidades: MissingPerson, Hotspot, Alert"
+summary = "Define entidades centrais do domínio, seus atributos essenciais e os relacionamentos que sustentam busca, risco e comunicação de emergência."
+published_at = "2026-04-07T17:00:00+09:00"
+updated_at = "2026-04-07T17:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "ddd", "arquitetura"]
+badges = ["ddd", "arquitetura"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **Fundamentos e Arquitetura** do SOS Location.\n\n## Descrição\nDefine entidades centrais do domínio, seus atributos essenciais e os relacionamentos que sustentam busca, risco e comunicação de emergência.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

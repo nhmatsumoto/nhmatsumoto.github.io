@@ -1,0 +1,15 @@
+id = "20260409-020000"
+slug = "daily-042-implementacao-de-idempotencia-na-api"
+title = "Daily #042: Implementação de idempotência na API"
+summary = "Garante que a mesma intenção de pagamento produza um único efeito, mesmo com retries, cliques repetidos ou falhas transitórias."
+published_at = "2026-04-09T02:00:00+09:00"
+updated_at = "2026-04-09T02:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "pagamentos", "consistencia"]
+badges = ["pagamentos", "consistencia"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **Pagamentos e Consistência** do SOS Location.\n\n## Descrição\nGarante que a mesma intenção de pagamento produza um único efeito, mesmo com retries, cliques repetidos ou falhas transitórias.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

@@ -1,0 +1,15 @@
+id = "20260407-190000"
+slug = "daily-011-estrategia-para-reconstrucao-3d-a-partir-de-imagens-2d"
+title = "Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D"
+summary = "Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas."
+published_at = "2026-04-07T19:00:00+09:00"
+updated_at = "2026-04-07T19:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "ia", "simulacao", "dados"]
+badges = ["ia", "dados"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **IA, Simulação e Dados** do SOS Location.\n\n## Descrição\nDescreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

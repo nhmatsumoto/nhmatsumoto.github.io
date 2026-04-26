@@ -1,0 +1,15 @@
+id = "20260407-220000"
+slug = "daily-014-pipeline-de-segmentacao-de-imagens-geograficas"
+title = "Daily #014: Pipeline de segmentação de imagens geográficas"
+summary = "Define etapas para classificar pixels e regiões em mapas ou fotos aéreas, separando água, vias, edificações, vegetação e áreas de risco."
+published_at = "2026-04-07T22:00:00+09:00"
+updated_at = "2026-04-07T22:00:00+09:00"
+status = "published"
+category = "sos-location-daily"
+tags = ["sos-location", "daily", "ia", "simulacao", "dados"]
+badges = ["ia", "dados"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+body = "Este daily faz parte da trilha **IA, Simulação e Dados** do SOS Location.\n\n## Descrição\nDefine etapas para classificar pixels e regiões em mapas ou fotos aéreas, separando água, vias, edificações, vegetação e áreas de risco.\n\n## Aplicação no SOS Location\nA decisão conecta produto, arquitetura e operação para transformar uma ideia técnica em uma capacidade utilizável por equipes de emergência. O foco é manter o sistema simples o bastante para evoluir, mas explícito o bastante para ser auditado quando uma decisão afetar pessoas, dados ou recursos em campo.\n\n## Critério de sucesso\nO item é considerado bem encaminhado quando existe uma decisão documentada, um contrato ou fluxo verificável e um caminho claro para implementação incremental sem bloquear o restante da plataforma.\n"

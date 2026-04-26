@@ -18,6 +18,1216 @@
     "summary": "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."
   },
   {
+    "title": "Daily #100: Evolução do produto para plataforma completa de emergência",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-120000-daily-100-evolucao-do-produto-para-plataforma-completa-de-emergencia/",
+    "kind": "post",
+    "summary": "Consolida mapa, alertas, resgate, dados, doações e simulações em uma plataforma integrada de resposta a crises.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #099: Estrutura de permissões para equipes de resgate",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-110000-daily-099-estrutura-de-permissoes-para-equipes-de-resgate/",
+    "kind": "post",
+    "summary": "Define acesso granular para equipes oficiais, voluntários, operadores e administradores.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #098: Comunicação em tempo real com usuários afetados",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-100000-daily-098-comunicacao-em-tempo-real-com-usuarios-afetados/",
+    "kind": "post",
+    "summary": "Estrutura canais de atualização rápida para alertas, instruções e confirmação de segurança.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #097: UX voltado para situações de crise",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-090000-daily-097-ux-voltado-para-situacoes-de-crise/",
+    "kind": "post",
+    "summary": "Prioriza clareza, baixo atrito e tolerância a estresse, pois usuários podem estar sob pressão ou conectividade ruim.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #096: Planejamento de expansão global",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-080000-daily-096-planejamento-de-expansao-global/",
+    "kind": "post",
+    "summary": "Define requisitos para operar em múltiplos países, idiomas, fusos, mapas e estruturas institucionais.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #095: Integração com dados governamentais",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-070000-daily-095-integracao-com-dados-governamentais/",
+    "kind": "post",
+    "summary": "Planeja ingestão de fontes oficiais para enriquecer alertas, mapas e validação de eventos.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #094: Sistema de doações com rastreabilidade",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-060000-daily-094-sistema-de-doacoes-com-rastreabilidade/",
+    "kind": "post",
+    "summary": "Conecta contribuição financeira a destino, estado e auditoria, reduzindo opacidade no uso de recursos.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #093: Criação de dashboard público de transparência",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-050000-daily-093-criacao-de-dashboard-publico-de-transparencia/",
+    "kind": "post",
+    "summary": "Mostra dados agregados de operação, doações e impacto para fortalecer confiança pública.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #092: Estratégia open-source para colaboração global",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-040000-daily-092-estrategia-open-source-para-colaboracao-global/",
+    "kind": "post",
+    "summary": "Propõe abertura do projeto para permitir auditoria, contribuição e adaptação por comunidades e instituições.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #091: Definição do propósito: software para salvar vidas",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-030000-daily-091-definicao-do-proposito-software-para-salvar-vidas/",
+    "kind": "post",
+    "summary": "Estabelece o critério central de produto: decisões técnicas devem aumentar velocidade, confiabilidade e alcance da resposta a emergências.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "produto",
+      "emergencia"
+    ]
+  },
+  {
+    "title": "Daily #090: Redução de tokens com linguagem estruturada",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-020000-daily-090-reducao-de-tokens-com-linguagem-estruturada/",
+    "kind": "post",
+    "summary": "Usa formatos compactos e vocabulário estável para reduzir custo e aumentar precisão de comunicação.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #089: Estratégia de versionamento de prompts",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-010000-daily-089-estrategia-de-versionamento-de-prompts/",
+    "kind": "post",
+    "summary": "Trata prompts como artefatos evolutivos, com histórico, comparação e rollback.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #088: Integração com ferramentas (Codex, Gemini)",
+    "url": "https://nhmatsumoto.github.io/posts/20260411-000000-daily-088-integracao-com-ferramentas-codex-gemini/",
+    "kind": "post",
+    "summary": "Define como agentes acessam ferramentas especializadas sem perder controle, contexto e auditoria.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #087: Pipeline: pensamento → especificação → execução",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-230000-daily-087-pipeline-pensamento-especificacao-execucao/",
+    "kind": "post",
+    "summary": "Estrutura o fluxo de trabalho em etapas explícitas para transformar intenção em implementação verificável.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #086: Implementação de “reflection agents”",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-220000-daily-086-implementacao-de-reflection-agents/",
+    "kind": "post",
+    "summary": "Inclui agentes revisores para avaliar plano, execução e riscos antes de finalizar uma mudança.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #085: Ajuste de comportamento com base em correções",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-210000-daily-085-ajuste-de-comportamento-com-base-em-correcoes/",
+    "kind": "post",
+    "summary": "Transforma feedback em regras operacionais para reduzir reincidência de erros.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #084: Sistema de memória para aprendizado contínuo",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-200000-daily-084-sistema-de-memoria-para-aprendizado-continuo/",
+    "kind": "post",
+    "summary": "Registra decisões, correções e padrões recorrentes para melhorar consistência sem depender apenas do prompt atual.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #083: Uso de linguagem ubíqua para comunicação entre agentes",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-190000-daily-083-uso-de-linguagem-ubiqua-para-comunicacao-entre-agentes/",
+    "kind": "post",
+    "summary": "Aplica o mesmo vocabulário do domínio para que agentes e humanos compartilhem contexto operacional.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #082: Separação de agentes por responsabilidade",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-180000-daily-082-separacao-de-agentes-por-responsabilidade/",
+    "kind": "post",
+    "summary": "Divide agentes por papéis claros para evitar sobreposição, reduzir ruído e facilitar avaliação de resultado.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #081: Estrutura inicial de orquestrador de agentes",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-170000-daily-081-estrutura-inicial-de-orquestrador-de-agentes/",
+    "kind": "post",
+    "summary": "Define um núcleo responsável por distribuir tarefas, coordenar ferramentas e manter rastreabilidade entre intenção e execução.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "agentes",
+      "ia"
+    ]
+  },
+  {
+    "title": "Daily #080: Estratégia de autenticação para APIs externas",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-160000-daily-080-estrategia-de-autenticacao-para-apis-externas/",
+    "kind": "post",
+    "summary": "Define como armazenar, renovar e auditar credenciais usadas em integrações com provedores externos.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #079: Gestão segura de secrets",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-150000-daily-079-gestao-segura-de-secrets/",
+    "kind": "post",
+    "summary": "Evita credenciais no código e organiza rotação, armazenamento e injeção segura por ambiente.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #078: Proteção de endpoints sensíveis",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-140000-daily-078-protecao-de-endpoints-sensiveis/",
+    "kind": "post",
+    "summary": "Aplica autenticação forte, autorização explícita e menor exposição para rotas de alto impacto.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #077: Logs de auditoria para ações críticas",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-130000-daily-077-logs-de-auditoria-para-acoes-criticas/",
+    "kind": "post",
+    "summary": "Registra quem fez o quê, quando e em qual contexto para sustentar investigação e responsabilidade.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #076: Controle de permissões por papel (RBAC)",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-120000-daily-076-controle-de-permissoes-por-papel-rbac/",
+    "kind": "post",
+    "summary": "Define quais ações cada tipo de usuário pode executar, separando operadores, administradores e equipes externas.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #075: Sanitização de dados no frontend",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-110000-daily-075-sanitizacao-de-dados-no-frontend/",
+    "kind": "post",
+    "summary": "Reduz risco de injeção e renderização insegura ao tratar dados antes de exibi-los ao usuário.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #074: Validação de inputs no backend (FluentValidation)",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-100000-daily-074-validacao-de-inputs-no-backend-fluentvalidation/",
+    "kind": "post",
+    "summary": "Centraliza regras de entrada para rejeitar dados inválidos antes que alcancem o domínio.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #073: Proteção contra ataques de repetição",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-090000-daily-073-protecao-contra-ataques-de-repeticao/",
+    "kind": "post",
+    "summary": "Usa expiração, nonce, idempotência e validação temporal para impedir reutilização maliciosa de requisições.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #072: Avaliação de Keycloak para controle de acesso",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-080000-daily-072-avaliacao-de-keycloak-para-controle-de-acesso/",
+    "kind": "post",
+    "summary": "Considera uma solução dedicada para centralizar identidade, papéis, grupos e políticas de login.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #071: Implementação de autenticação baseada em JWT",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-070000-daily-071-implementacao-de-autenticacao-baseada-em-jwt/",
+    "kind": "post",
+    "summary": "Protege endpoints com tokens assinados e validação consistente de emissor, audiência e expiração.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "seguranca"
+    ]
+  },
+  {
+    "title": "Daily #070: Compressão e otimização de assets frontend",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-060000-daily-070-compressao-e-otimizacao-de-assets-frontend/",
+    "kind": "post",
+    "summary": "Reduz tamanho de JS, CSS e imagens para melhorar carregamento inicial e experiência em redes ruins.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #069: Redução de payload em APIs",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-050000-daily-069-reducao-de-payload-em-apis/",
+    "kind": "post",
+    "summary": "Remove campos desnecessários e ajusta contratos para diminuir latência e consumo de banda.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #068: Monitoramento de performance da aplicação",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-040000-daily-068-monitoramento-de-performance-da-aplicacao/",
+    "kind": "post",
+    "summary": "Define métricas, traces e alertas para identificar gargalos antes que impactem operação.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #067: Pipeline CI/CD com Azure DevOps",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-030000-daily-067-pipeline-ci-cd-com-azure-devops/",
+    "kind": "post",
+    "summary": "Automatiza build, testes e publicação para reduzir erro manual e aumentar previsibilidade de entrega.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #066: Uso de Docker para ambientes consistentes",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-020000-daily-066-uso-de-docker-para-ambientes-consistentes/",
+    "kind": "post",
+    "summary": "Padroniza execução local, testes e deploy, reduzindo divergências entre máquinas e ambientes.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #065: Estratégia de pré-processamento de dados",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-010000-daily-065-estrategia-de-pre-processamento-de-dados/",
+    "kind": "post",
+    "summary": "Prepara dados pesados antes do consumo interativo para acelerar dashboards, mapas e simulações.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #064: Lazy loading vs eager loading",
+    "url": "https://nhmatsumoto.github.io/posts/20260410-000000-daily-064-lazy-loading-vs-eager-loading/",
+    "kind": "post",
+    "summary": "Compara estratégias de carregamento para evitar tanto excesso de dados quanto múltiplas consultas pequenas.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #063: Otimização de queries com índices no SQL Server",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-230000-daily-063-otimizacao-de-queries-com-indices-no-sql-server/",
+    "kind": "post",
+    "summary": "Relaciona padrões de acesso a índices adequados para reduzir varreduras e melhorar tempo de resposta.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #062: Uso de Dapper para queries complexas",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-220000-daily-062-uso-de-dapper-para-queries-complexas/",
+    "kind": "post",
+    "summary": "Aplica SQL explícito em consultas críticas para obter previsibilidade e desempenho sem abandonar o modelo de domínio.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #061: Estratégia de cache com Redis",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-210000-daily-061-estrategia-de-cache-com-redis/",
+    "kind": "post",
+    "summary": "Usa cache distribuído para reduzir latência, aliviar banco de dados e sustentar leituras frequentes.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "performance",
+      "escalabilidade"
+    ]
+  },
+  {
+    "title": "Daily #060: Feedback visual para ações do usuário",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-200000-daily-060-feedback-visual-para-acoes-do-usuario/",
+    "kind": "post",
+    "summary": "Mostra estados de carregamento, confirmação e erro para reduzir incerteza após ações críticas.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #059: Melhoria de acessibilidade (a11y)",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-190000-daily-059-melhoria-de-acessibilidade-a11y/",
+    "kind": "post",
+    "summary": "Ajusta semântica, contraste, navegação por teclado e textos auxiliares para ampliar acesso em cenários reais.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #058: Criação de componentes reutilizáveis",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-180000-daily-058-criacao-de-componentes-reutilizaveis/",
+    "kind": "post",
+    "summary": "Padroniza blocos de interface para acelerar evolução e manter consistência entre telas.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #057: Otimização de renderização com React + Zustand",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-170000-daily-057-otimizacao-de-renderizacao-com-react-zustand/",
+    "kind": "post",
+    "summary": "Reduz re-renderizações desnecessárias ao separar estado global, estado local e componentes de visualização.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #056: Sistema de internacionalização (PT/EN/JP)",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-160000-daily-056-sistema-de-internacionalizacao-pt-en-jp/",
+    "kind": "post",
+    "summary": "Estrutura a interface para múltiplos idiomas, preparando a plataforma para colaboração e uso global.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #055: Implementação de dark/light mode",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-150000-daily-055-implementacao-de-dark-light-mode/",
+    "kind": "post",
+    "summary": "Oferece alternância de tema para uso em diferentes ambientes, horários e condições de visibilidade.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #054: Organização de espaçamento para leitura fluida",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-140000-daily-054-organizacao-de-espacamento-para-leitura-fluida/",
+    "kind": "post",
+    "summary": "Reequilibra margens, largura de texto e ritmo vertical para melhorar compreensão em páginas longas.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #053: Remoção de bordas arredondadas (design mais sólido)",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-130000-daily-053-remocao-de-bordas-arredondadas-design-mais-solido/",
+    "kind": "post",
+    "summary": "Ajusta a linguagem visual para transmitir robustez, clareza e densidade operacional.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #052: Refatoração de navbar para design mais limpo",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-120000-daily-052-refatoracao-de-navbar-para-design-mais-limpo/",
+    "kind": "post",
+    "summary": "Simplifica a navegação para reduzir ruído visual e deixar ações principais mais fáceis de encontrar.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #051: Ajustes de layout para mobile (texto “esmagado”)",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-110000-daily-051-ajustes-de-layout-para-mobile-texto-esmagado/",
+    "kind": "post",
+    "summary": "Corrige quebras visuais em telas pequenas, garantindo leitura confortável e botões acionáveis em contexto de urgência.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "frontend",
+      "ux"
+    ]
+  },
+  {
+    "title": "Daily #050: Monitoramento de falhas em pagamentos",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-100000-daily-050-monitoramento-de-falhas-em-pagamentos/",
+    "kind": "post",
+    "summary": "Cria alertas e métricas para detectar anomalias, transações presas e falhas recorrentes antes de afetarem muitos usuários.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #049: Garantia de consistência eventual",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-090000-daily-049-garantia-de-consistencia-eventual/",
+    "kind": "post",
+    "summary": "Aceita atualização assíncrona entre componentes desde que o sistema convirja para um estado correto e auditável.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #048: Uso de filas (RabbitMQ) para processamento assíncrono",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-080000-daily-048-uso-de-filas-rabbitmq-para-processamento-assincrono/",
+    "kind": "post",
+    "summary": "Move etapas demoradas ou instáveis para processamento em background, preservando a experiência do usuário e a consistência.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #047: Auditoria de transações financeiras",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-070000-daily-047-auditoria-de-transacoes-financeiras/",
+    "kind": "post",
+    "summary": "Registra eventos financeiros com trilha completa para investigação, suporte e conformidade.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #046: Estratégia de retry seguro em pagamentos",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-060000-daily-046-estrategia-de-retry-seguro-em-pagamentos/",
+    "kind": "post",
+    "summary": "Permite repetir chamadas com segurança sem multiplicar efeitos colaterais financeiros.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #045: Lock otimista vs lock pessimista",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-050000-daily-045-lock-otimista-vs-lock-pessimista/",
+    "kind": "post",
+    "summary": "Compara estratégias de concorrência para decidir quando aceitar conflito posterior ou bloquear acesso durante atualização crítica.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #044: Controle de estado de pagamento (pending, completed)",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-040000-daily-044-controle-de-estado-de-pagamento-pending-completed/",
+    "kind": "post",
+    "summary": "Define estados explícitos para acompanhar o ciclo de vida financeiro e evitar decisões baseadas apenas em resposta imediata.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #043: Uso de tokens únicos por transação",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/",
+    "kind": "post",
+    "summary": "Associa cada operação financeira a uma chave única para controlar reprocessamento e impedir duplicidade.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #042: Implementação de idempotência na API",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/",
+    "kind": "post",
+    "summary": "Garante que a mesma intenção de pagamento produza um único efeito, mesmo com retries, cliques repetidos ou falhas transitórias.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #041: Problema de pagamento duplicado por múltiplos cliques",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-010000-daily-041-problema-de-pagamento-duplicado-por-multiplos-cliques/",
+    "kind": "post",
+    "summary": "Identifica o risco de múltiplas submissões gerarem cobranças duplicadas quando o usuário repete uma ação em estado de incerteza.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "pagamentos",
+      "consistencia"
+    ]
+  },
+  {
+    "title": "Daily #040: Logging estruturado para rastreabilidade",
+    "url": "https://nhmatsumoto.github.io/posts/20260409-000000-daily-040-logging-estruturado-para-rastreabilidade/",
+    "kind": "post",
+    "summary": "Transforma logs em eventos pesquisáveis com correlação, contexto e severidade, facilitando auditoria e diagnóstico.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #039: Estratégia de versionamento de APIs",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-230000-daily-039-estrategia-de-versionamento-de-apis/",
+    "kind": "post",
+    "summary": "Define como evoluir contratos sem quebrar clientes existentes, especialmente em cenários com múltiplos consumidores.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #038: Tratamento de JSON inválido em integrações",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-220000-daily-038-tratamento-de-json-invalido-em-integracoes/",
+    "kind": "post",
+    "summary": "Protege o backend contra payloads malformados, respostas incompletas e mudanças inesperadas em APIs de terceiros.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #037: Retry e fallback para APIs externas (GDACS)",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-210000-daily-037-retry-e-fallback-para-apis-externas-gdacs/",
+    "kind": "post",
+    "summary": "Evita que instabilidade de serviços externos interrompa o fluxo principal, usando retentativas controladas, cache e degradação segura.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #036: Modelagem de API para pessoas desaparecidas",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-200000-daily-036-modelagem-de-api-para-pessoas-desaparecidas/",
+    "kind": "post",
+    "summary": "Define recursos, campos e transições de estado para cadastro, busca, atualização e encerramento de casos de pessoas desaparecidas.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #035: Criação de endpoint para snapshot de operações",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-190000-daily-035-criacao-de-endpoint-para-snapshot-de-operacoes/",
+    "kind": "post",
+    "summary": "Propõe uma API consolidada para entregar o estado atual da operação sem exigir várias chamadas pequenas do frontend.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #034: Avaliação de uso do Keycloak para SSO",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-180000-daily-034-avaliacao-de-uso-do-keycloak-para-sso/",
+    "kind": "post",
+    "summary": "Analisa se um provedor dedicado de identidade reduz risco e esforço ao lidar com login, federação e controle de acesso.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #033: Padronização de autenticação com JWT",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-170000-daily-033-padronizacao-de-autenticacao-com-jwt/",
+    "kind": "post",
+    "summary": "Define o uso de tokens assinados para autenticar chamadas, carregar claims e proteger endpoints de operação.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #032: Tratamento de erro 401 em chamadas Axios",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-160000-daily-032-tratamento-de-erro-401-em-chamadas-axios/",
+    "kind": "post",
+    "summary": "Padroniza a resposta do frontend a sessões expiradas ou tokens inválidos, evitando falhas silenciosas e loops de requisição.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #031: Problema de CORS entre frontend e backend",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-150000-daily-031-problema-de-cors-entre-frontend-e-backend/",
+    "kind": "post",
+    "summary": "Registra a necessidade de configurar origens permitidas corretamente para evitar bloqueios no navegador sem abrir superfície desnecessária.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "backend",
+      "api",
+      "dotnet"
+    ]
+  },
+  {
+    "title": "Daily #030: Integração de dados meteorológicos no mapa em tempo real",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-140000-daily-030-integracao-de-dados-meteorologicos-no-mapa-em-tempo-real/",
+    "kind": "post",
+    "summary": "Sobrepõe dados de clima ao mapa para apoiar decisões sobre deslocamento, evacuação, risco de enchente e prioridade de atendimento.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #029: Estratégia de LOD (Level of Detail) estilo Minecraft",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-130000-daily-029-estrategia-de-lod-level-of-detail-estilo-minecraft/",
+    "kind": "post",
+    "summary": "Aplica níveis de detalhe conforme zoom e relevância, exibindo menos informação de longe e mais precisão quando o usuário aproxima.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #028: Carregamento assíncrono de camadas geográficas",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-120000-daily-028-carregamento-assincrono-de-camadas-geograficas/",
+    "kind": "post",
+    "summary": "Carrega dados geográficos sob demanda para reduzir tempo inicial de abertura e preservar responsividade em redes instáveis.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #027: Desenho de hotspots interativos com clique do usuário",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-110000-daily-027-desenho-de-hotspots-interativos-com-clique-do-usuario/",
+    "kind": "post",
+    "summary": "Permite que operadores criem ou ajustem pontos críticos diretamente no mapa, acelerando o ciclo entre observação e ação.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #026: Criação de interface “map-first”",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-100000-daily-026-criacao-de-interface-map-first/",
+    "kind": "post",
+    "summary": "Coloca o mapa como superfície principal de decisão, mantendo listas, filtros e painéis como apoio ao contexto espacial.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #025: Uso de OpenStreetMap como base geográfica",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-090000-daily-025-uso-de-openstreetmap-como-base-geografica/",
+    "kind": "post",
+    "summary": "Adota uma base aberta e global para reduzir custo inicial e facilitar expansão territorial da plataforma.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #024: Sistema de marcação de áreas de risco (1–10)",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-080000-daily-024-sistema-de-marcacao-de-areas-de-risco-110/",
+    "kind": "post",
+    "summary": "Cria uma escala visual simples para comunicar severidade de risco sem depender de explicações longas durante uma crise.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #023: Estratégia de overlays dinâmicos no mapa",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-070000-daily-023-estrategia-de-overlays-dinamicos-no-mapa/",
+    "kind": "post",
+    "summary": "Permite ligar e desligar camadas de clima, risco, alertas e operações conforme o contexto do usuário.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #022: Problemas de performance com renderização de camadas",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-060000-daily-022-problemas-de-performance-com-renderizacao-de-camadas/",
+    "kind": "post",
+    "summary": "Identifica gargalos ao desenhar muitos marcadores, polígonos ou overlays, orientando decisões de agrupamento e carregamento progressivo.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #021: Implementação inicial de mapa com Leaflet.js",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-050000-daily-021-implementacao-inicial-de-mapa-com-leaflet-js/",
+    "kind": "post",
+    "summary": "Introduz um mapa web leve para visualizar ocorrências, áreas de risco e pontos de interesse sem exigir stack geoespacial complexa no início.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "mapas",
+      "visualizacao"
+    ]
+  },
+  {
+    "title": "Daily #020: Separação entre ambiente operacional e ambiente de simulação",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-040000-daily-020-separacao-entre-ambiente-operacional-e-ambiente-de-simulacao/",
+    "kind": "post",
+    "summary": "Evita que experimentos, modelos e cargas analíticas afetem o ambiente usado por equipes em operação real.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #019: Estrutura de processamento batch para simulações",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-030000-daily-019-estrutura-de-processamento-batch-para-simulacoes/",
+    "kind": "post",
+    "summary": "Organiza execuções pesadas em lotes reproduzíveis, com entradas versionadas, resultados persistidos e rastreabilidade de parâmetros.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #018: Estratégia para previsão de áreas de risco com IA",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-020000-daily-018-estrategia-para-previsao-de-areas-de-risco-com-ia/",
+    "kind": "post",
+    "summary": "Define sinais, fontes e saídas esperadas para modelos que priorizam locais com maior probabilidade de impacto ou necessidade de resposta.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #017: Modelagem inicial de simulação de tsunami",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-010000-daily-017-modelagem-inicial-de-simulacao-de-tsunami/",
+    "kind": "post",
+    "summary": "Estrutura um modelo conceitual para propagação costeira, zonas de impacto e priorização de evacuação em eventos extremos.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #016: Integração com dados de elevação para simulação de enchentes",
+    "url": "https://nhmatsumoto.github.io/posts/20260408-000000-daily-016-integracao-com-dados-de-elevacao-para-simulacao-de-enchentes/",
+    "kind": "post",
+    "summary": "Combina altitude, terreno e hidrologia simplificada para estimar propagação de água e identificar regiões vulneráveis.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #015: Uso de Open-Meteo para dados climáticos em tempo real",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-230000-daily-015-uso-de-open-meteo-para-dados-climaticos-em-tempo-real/",
+    "kind": "post",
+    "summary": "Integra clima atual e previsões de curto prazo para contextualizar risco operacional, chuva acumulada e condições de deslocamento.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #014: Pipeline de segmentação de imagens geográficas",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-220000-daily-014-pipeline-de-segmentacao-de-imagens-geograficas/",
+    "kind": "post",
+    "summary": "Define etapas para classificar pixels e regiões em mapas ou fotos aéreas, separando água, vias, edificações, vegetação e áreas de risco.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #013: Geração de datasets sintéticos com Three.js",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-210000-daily-013-geracao-de-datasets-sinteticos-com-three-js/",
+    "kind": "post",
+    "summary": "Usa cenas controladas em 3D para gerar imagens anotadas, ampliando o volume de dados de treino sem depender apenas de ocorrências reais.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #012: Uso de sombras e posição do sol para inferência de altura",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-200000-daily-012-uso-de-sombras-e-posicao-do-sol-para-inferencia-de-altura/",
+    "kind": "post",
+    "summary": "Explora a relação entre horário, latitude, sombra projetada e altura estimada de objetos para enriquecer modelos de cena.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-190000-daily-011-estrategia-para-reconstrucao-3d-a-partir-de-imagens-2d/",
+    "kind": "post",
+    "summary": "Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ia",
+      "simulacao",
+      "dados"
+    ]
+  },
+  {
+    "title": "Daily #010: Padronização de contratos de API (DTOs e validações)",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-180000-daily-010-padronizacao-de-contratos-de-api-dtos-e-validacoes/",
+    "kind": "post",
+    "summary": "Cria contratos previsíveis para entrada e saída de dados, reduzindo inconsistências entre frontend, backend e integrações externas.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
+    "title": "Daily #009: Modelagem de entidades: MissingPerson, Hotspot, Alert",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-170000-daily-009-modelagem-de-entidades-missingperson-hotspot-alert/",
+    "kind": "post",
+    "summary": "Define entidades centrais do domínio, seus atributos essenciais e os relacionamentos que sustentam busca, risco e comunicação de emergência.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
+    "title": "Daily #008: Introdução de eventos de domínio para ações críticas",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-160000-daily-008-introducao-de-eventos-de-dominio-para-acoes-criticas/",
+    "kind": "post",
+    "summary": "Registra mudanças importantes do domínio, como alerta criado ou pessoa localizada, para desacoplar reações e preservar rastreabilidade.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
+    "title": "Daily #007: Organização de pastas para backend escalável (.NET Core)",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-150000-daily-007-organizacao-de-pastas-para-backend-escalavel-net-core/",
+    "kind": "post",
+    "summary": "Propõe uma estrutura de projeto que deixa explícitas camadas, módulos, contratos e dependências, facilitando manutenção e onboarding.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
+    "title": "Daily #006: Avaliação entre monolito modular vs microservices",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-140000-daily-006-avaliacao-entre-monolito-modular-vs-microservices/",
+    "kind": "post",
+    "summary": "Compara simplicidade operacional, deploy, observabilidade e custo de evolução antes de fragmentar o sistema em serviços independentes.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
+    "title": "Daily #005: Definição de bounded contexts: Resgate, Usuários, Alertas",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-130000-daily-005-definicao-de-bounded-contexts-resgate-usuarios-alertas/",
+    "kind": "post",
+    "summary": "Delimita os contextos principais do SOS Location para impedir que regras de autenticação, acionamento de alertas e coordenação de resgate se misturem no mesmo modelo.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
+    "title": "Daily #004: Estratégia de modularização para plataforma multitenant",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-120000-daily-004-estrategia-de-modularizacao-para-plataforma-multitenant/",
+    "kind": "post",
+    "summary": "Define limites internos para que múltiplas organizações usem a plataforma com isolamento de dados, configuração e políticas de operação.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
+    "title": "Daily #003: Separação de responsabilidades com CQRS no backend .NET",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-110000-daily-003-separacao-de-responsabilidades-com-cqrs-no-backend-net/",
+    "kind": "post",
+    "summary": "Divide comandos e consultas para simplificar leituras intensivas, preservar invariantes nas escritas e permitir otimizações específicas para cada fluxo.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
+    "title": "Daily #002: Estrutura inicial baseada em DDD para módulos de emergência",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-100000-daily-002-estrutura-inicial-baseada-em-ddd-para-modulos-de-emergencia/",
+    "kind": "post",
+    "summary": "Organiza o backend em módulos alinhados ao domínio de emergência, mantendo regras críticas próximas dos agregados e separando decisões operacionais de detalhes de infraestrutura.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
+    "title": "Daily #001: Definição de linguagem ubíqua para o domínio de desastres no SOS Location",
+    "url": "https://nhmatsumoto.github.io/posts/20260407-090000-daily-001-definicao-de-linguagem-ubiqua-para-o-dominio-de-desastres-no-sos-location/",
+    "kind": "post",
+    "summary": "Estabelece um vocabulário comum para equipes técnicas, operadores e especialistas em resposta a desastres, reduzindo ambiguidades em termos como alerta, hotspot, resgate, vítima e operação.",
+    "keywords": [
+      "sos-location",
+      "daily",
+      "ddd",
+      "arquitetura"
+    ]
+  },
+  {
     "title": "Ronaldinho Agent: persona, memória curta e tool use sem virar produto separado",
     "url": "https://nhmatsumoto.github.io/posts/20260406-093000-ronaldinho-agent-persona-tooling/",
     "kind": "post",
@@ -727,20 +1937,20 @@
     "summary_ja_jp": "Technical Knowledge OS の出発点：アーキテクチャ、分散システム、生きたドキュメンテーションに焦点を当てた、バージョン管理されたエンジニアリング・ノートブック。"
   },
   {
-    "title": "Layout e navegação",
-    "url": "https://nhmatsumoto.github.io/daily/20260426-094710-layout-and-navigation/",
+    "title": "Layout e renderers",
+    "url": "https://nhmatsumoto.github.io/daily/20260426-101131-layout-and-renderers/",
     "kind": "daily",
-    "summary": "O dia reuniu 1 commit voltado a layout, navegação, e renderers. As mudanças passaram por CSS global, interações do navbar, e renderers do site e refinaram o caderno público de forma incremental.",
+    "summary": "O dia reuniu 2 commits voltados a layout, renderers, e navegação. As mudanças passaram por interações do navbar, renderers do site, e pipeline estático e refinaram o caderno público de forma incremental.",
     "keywords": [
       "layout",
-      "navbar",
       "renderer",
-      "mobile"
+      "navbar",
+      "build"
     ],
-    "title_en_us": "Layout and navigation",
-    "title_ja_jp": "レイアウトとナビゲーション",
-    "summary_en_us": "The day gathered 1 commit focused on layout, navigation, and renderers. The work touched global CSS, navbar interactions, and site renderers and refined the public notebook incrementally.",
-    "summary_ja_jp": "この日はレイアウト、ナビゲーションとレンダラーを中心に1件のコミットがありました。変更はグローバルCSS、ナビゲーションの挙動とサイトのレンダラーに及び、公開ノートブックを段階的に整えました。"
+    "title_en_us": "Layout and renderers",
+    "title_ja_jp": "レイアウトとレンダラー",
+    "summary_en_us": "The day gathered 2 commits focused on layout, renderers, and navigation. The work touched navbar interactions, site renderers, and static pipeline and refined the public notebook incrementally.",
+    "summary_ja_jp": "この日はレイアウト、レンダラーとナビゲーションを中心に2件のコミットがありました。変更はナビゲーションの挙動、サイトのレンダラーと静的パイプラインに及び、公開ノートブックを段階的に整えました。"
   },
   {
     "title": "Layout e renderers",
