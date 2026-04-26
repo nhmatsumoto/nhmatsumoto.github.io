@@ -40,6 +40,27 @@ const localeFieldKeys = (locale) => {
   return keys;
 };
 
+const parseReadingTimeValues = (element) => {
+  const raw = element?.dataset?.readingTimeValues;
+  if (!raw) return {};
+  try {
+    const values = JSON.parse(raw);
+    return values && typeof values === "object" ? values : {};
+  } catch {
+    return {};
+  }
+};
+
+const resolveReadingMinutes = (element, locale) => {
+  const values = parseReadingTimeValues(element);
+  for (const suffix of localeFieldKeys(locale)) {
+    const value = Number(values[suffix]);
+    if (Number.isFinite(value) && value > 0) return value;
+  }
+  const fallback = Number(values.default ?? element.dataset.readingTime);
+  return Number.isFinite(fallback) && fallback > 0 ? fallback : element.dataset.readingTime;
+};
+
 const resolveLocalizedField = (data, fields, locale, fallback = "") => {
   if (!data) return fallback;
   const candidates = Array.isArray(fields) ? fields : [fields];
@@ -162,7 +183,7 @@ const initLocalization = () => {
 
     const rtTemplate = translate("templates.reading_time", "{minutes} min read", locale);
     document.querySelectorAll("[data-reading-time]").forEach(el => {
-      el.textContent = formatTemplate(rtTemplate, { minutes: el.dataset.readingTime });
+      el.textContent = formatTemplate(rtTemplate, { minutes: resolveReadingMinutes(el, locale) });
     });
 
     document.querySelectorAll("[data-status-key]").forEach(el => {

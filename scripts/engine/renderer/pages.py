@@ -933,7 +933,7 @@ def render_post_page(
     metrics_html = render_metric_list(
         [
             f'{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(post["published_dt"], locale, "long")}',
-            f'{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post["reading_time"], i18n, locale)}',
+            f'{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post["reading_time"], i18n, locale, post.get("reading_time_by_locale"))}',
         ],
         escape_items=False,
     )
@@ -994,7 +994,7 @@ def render_post_page(
             <header class="post-header post-reading-header">
               <div class="post-header-meta">
                 <p class="section-kicker" data-i18n="pages.post.kicker">{html.escape(translate(i18n, locale, "pages.post.kicker", "post"))}</p>
-                <div class="post-meta post-meta-hero"><span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(post['published_dt'], locale, 'long')}</span><span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post['reading_time'], i18n, locale)}</span></div>
+                <div class="post-meta post-meta-hero"><span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(post['published_dt'], locale, 'long')}</span><span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(post['reading_time'], i18n, locale, post.get('reading_time_by_locale'))}</span></div>
               </div>
               <h1 data-page-title>{html.escape(post['title'])}</h1>
               <p class="post-summary post-deck" data-page-summary>{html.escape(post['summary'])}</p>
@@ -1052,7 +1052,7 @@ def render_daily_page(
     )
     meta_lines = [
         f'<span class="post-meta-item">{render_icon("calendar-days", "site-icon meta-icon")}{render_localized_date(entry["published_dt"], locale, "long")}</span>',
-        f'<span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(entry["reading_time"], i18n, locale)}</span>',
+        f'<span class="post-meta-item">{render_icon("clock-3", "site-icon meta-icon")}{render_reading_time(entry["reading_time"], i18n, locale, entry.get("reading_time_by_locale"))}</span>',
     ]
     metrics_html = render_metric_list(meta_lines, escape_items=False)
     tags_html = render_tag_list(entry.get("tags", []))

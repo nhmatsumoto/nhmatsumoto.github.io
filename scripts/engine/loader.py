@@ -234,6 +234,21 @@ def _ordered_unique(values: list[str]) -> list[str]:
     return result
 
 
+def _publication_stamp(value: Any) -> str:
+    if hasattr(value, "strftime"):
+        return value.strftime("%Y%m%d-%H%M%S")
+    return parse_datetime(str(value or "")).strftime("%Y%m%d-%H%M%S")
+
+
+def _localized_reading_times(raw: dict[str, Any], body: str) -> dict[str, int]:
+    reading_times = {"default": reading_time_minutes(body)}
+    for suffix, value in localized_field_entries(raw, "body"):
+        text = str(value or "")
+        if text.strip():
+            reading_times[suffix] = reading_time_minutes(text)
+    return reading_times
+
+
 def _daily_should_keep_path(path: str) -> bool:
     clean = str(path or "").strip()
     if not clean:
@@ -627,7 +642,8 @@ def _build_git_daily_entries(include_drafts: bool = False) -> list[dict[str, Any
 def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict[str, Any]:
     published_dt = parse_datetime(str(raw.get("published_at", "") or ""))
     updated_dt = parse_datetime(str(raw.get("updated_at", "") or ""))
-    post_id = str(raw.get("id", "") or "").strip() or published_dt.strftime("%Y%m%d-%H%M%S")
+    publication_id = _publication_stamp(published_dt)
+    post_id = str(raw.get("id", "") or "").strip() or publication_id
     title = str(raw.get("title", "") or "").strip()
     if not title:
         title = str(next((value for _, value in localized_field_entries(raw, "title")), "") or "").strip() or "Sem título"
@@ -642,12 +658,17 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
     tags = normalize_string_list(raw.get("tags", []))
     badges = normalize_string_list(raw.get("badges", []))
     has_math = bool(raw.get("has_math", raw.get("has_asciimath", False)))
-    output_dir_name = f"{post_id}-{slug}"
+    output_dir_name = f"{publication_id}-{slug}"
+    legacy_output_dir_name = f"{post_id}-{slug}" if post_id else ""
+    if legacy_output_dir_name == output_dir_name:
+        legacy_output_dir_name = ""
     config = load_blog_config()
     publications_dir = config["build"]["publications_dir"]
+    reading_times = _localized_reading_times(raw, body)
 
     res = {
         "id": post_id,
+        "publication_id": publication_id,
         "slug": slug,
         "kind": "article",
         "category": str(raw.get("category", "") or (tags[0] if tags else "engineering")).strip().lower(),
@@ -667,9 +688,11 @@ def normalise_post(raw: dict[str, Any], source_path: Path | None = None) -> dict
         "body": body.rstrip() + "\n" if body.strip() else "",
         "published_dt": published_dt,
         "updated_dt": updated_dt,
-        "reading_time": reading_time_minutes(body),
+        "reading_time": reading_times["default"],
+        "reading_time_by_locale": reading_times,
         "source_path": source_path,
         "output_dir_name": output_dir_name,
+        "legacy_output_dir_name": legacy_output_dir_name,
         "url": f"/{publications_dir}/{output_dir_name}/",
         "impact": normalize_string_list(raw.get("impact", [])),
         "trade_offs": normalize_string_list(raw.get("trade_offs", [])),
@@ -706,6 +729,7 @@ def normalise_daily(raw: dict[str, Any], source_path: Path | None = None) -> dic
     output_dir_name = f"{daily_id}-{slug}"
     config = load_blog_config()
     daily_output_dir = config["build"].get("daily_output_dir", "daily")
+    reading_times = _localized_reading_times(raw, body)
 
     res = {
         "id": daily_id,
@@ -721,7 +745,8 @@ def normalise_daily(raw: dict[str, Any], source_path: Path | None = None) -> dic
         "body": body.rstrip() + "\n" if body.strip() else "",
         "published_dt": published_dt,
         "updated_dt": updated_dt,
-        "reading_time": reading_time_minutes(body),
+        "reading_time": reading_times["default"],
+        "reading_time_by_locale": reading_times,
         "source_path": source_path,
         "output_dir_name": output_dir_name,
         "url": f"/{daily_output_dir}/{output_dir_name}/",
@@ -864,16 +889,22 @@ def load_posts(include_drafts: bool = False) -> list[dict[str, Any]]:
 
     database_posts = postgres_store.load_raw_posts(include_drafts=include_drafts)
     if database_posts is not None:
-        posts = [normalise_post(raw, source_path=None) for raw in database_posts]
+        cutoff = now_local()
+        posts = [
+            post
+            for post in (normalise_post(raw, source_path=None) for raw in database_posts)
+            if include_drafts or (post["status"] == "published" and post["published_dt"] <= cutoff)
+        ]
         return sorted(posts, key=lambda x: x["published_dt"], reverse=True)
 
     config = load_blog_config()
     posts_dir = ROOT / config["build"]["posts_dir"]
     posts = []
+    cutoff = now_local()
     if posts_dir.exists():
         for path in posts_dir.glob("*.toml"):
             post = normalise_post(load_toml(path), source_path=path)
-            if include_drafts or post["status"] == "published":
+            if include_drafts or (post["status"] == "published" and post["published_dt"] <= cutoff):
                 posts.append(post)
     return sorted(posts, key=lambda x: x["published_dt"], reverse=True)
 

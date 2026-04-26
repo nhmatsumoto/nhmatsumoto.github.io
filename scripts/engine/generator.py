@@ -1,3 +1,4 @@
+import html
 import json
 import math
 import shutil
@@ -29,17 +30,20 @@ LEGACY_DAILY_REDIRECTS = [
 
 def render_legacy_redirect_page(site: dict[str, str], title: str, target_path: str) -> str:
     target_href = site_href(site, target_path)
+    title_html = html.escape(title)
+    target_href_html = html.escape(target_href, quote=True)
+    target_href_text = html.escape(target_href)
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{title}</title>
-    <meta http-equiv="refresh" content="0; url={target_href}">
-    <link rel="canonical" href="{target_href}">
+    <title>{title_html}</title>
+    <meta http-equiv="refresh" content="0; url={target_href_html}">
+    <link rel="canonical" href="{target_href_html}">
   </head>
   <body>
-    <p><a href="{target_href}">Redirecting to {target_href}</a></p>
+    <p><a href="{target_href_html}">Redirecting to {target_href_text}</a></p>
   </body>
 </html>
 """
@@ -327,6 +331,7 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         write_text(legacy_dest, page_html)
 
     # Render items
+    active_post_paths = {post["output_dir_name"] for post in posts}
     for idx, post in enumerate(posts):
         dest = target_root / config["publications_dir"] / post["output_dir_name"] / "index.html"
         related = find_related_content(post, posts, daily_entries, projects, documents)
@@ -343,6 +348,11 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
         write_text(dest, page_html)
         legacy_publications_dir = config.get("legacy_publications_dir", "publications")
         write_text(target_root / legacy_publications_dir / post["output_dir_name"] / "index.html", page_html)
+        legacy_output_dir_name = str(post.get("legacy_output_dir_name") or "").strip()
+        if legacy_output_dir_name and legacy_output_dir_name not in active_post_paths:
+            redirect_html = render_legacy_redirect_page(site, f"{post['title']} | {site['title']}", post["url"])
+            for directory in {config["publications_dir"], legacy_publications_dir}:
+                write_text(target_root / directory / legacy_output_dir_name / "index.html", redirect_html)
     for idx, entry in enumerate(daily_entries):
         dest = target_root / config.get("daily_output_dir", "daily") / entry["output_dir_name"] / "index.html"
         write_text(

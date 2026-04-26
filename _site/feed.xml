@@ -14,136 +14,136 @@
     </item>
     <item>
       <title>SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260405-150000-sos-location-ml-risk-neural-models/</link>
       <description><![CDATA[O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.]]></description>
       <pubDate>Sun, 05 Apr 2026 15:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260405-150000-sos-location-ml-risk-neural-models/</guid>
     </item>
     <item>
       <title>SOS Location: PostGIS e inteligência espacial para resposta a desastres</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260405-140000-sos-location-postgis-spatial-intelligence/</link>
       <description><![CDATA[PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.]]></description>
       <pubDate>Sun, 05 Apr 2026 14:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260405-140000-sos-location-postgis-spatial-intelligence/</guid>
     </item>
     <item>
       <title>SOS Location: Clean Architecture + CQRS em .NET 10</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260405-130000-sos-location-clean-architecture-dotnet10/</link>
       <description><![CDATA[Arquitetura limpa, CQRS com MediatR e domain events no backend do SOS Location. Como estruturamos o código para resiliência em cenários de crise.]]></description>
       <pubDate>Sun, 05 Apr 2026 13:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260405-130000-sos-location-clean-architecture-dotnet10/</guid>
     </item>
     <item>
       <title>SOS Location: Motor WebGL 3D de visualização de cidades em tempo real</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260405-120000-sos-location-webgl-3d-city-engine/</link>
       <description><![CDATA[Como construímos um motor WebGL 2.0 com Three.js para renderizar cidades completas com terreno, edificações 3D e camadas de desastre ao vivo.]]></description>
       <pubDate>Sun, 05 Apr 2026 12:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260405-120000-sos-location-webgl-3d-city-engine/</guid>
     </item>
     <item>
       <title>SOS Location: Tecnologias, ferramentas e exemplos</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1100-sos-location-stack/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260405-110000-sos-location-stack/</link>
       <description><![CDATA[Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location.]]></description>
       <pubDate>Sun, 05 Apr 2026 11:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1100-sos-location-stack/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260405-110000-sos-location-stack/</guid>
     </item>
     <item>
       <title>SOS Location: Fluxos, arquitetura e diagramas</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1000-sos-location-flow-architecture/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260405-100000-sos-location-flow-architecture/</link>
       <description><![CDATA[Descrição dos pipelines do SOS Location, diagramas e exemplos de código.]]></description>
       <pubDate>Sun, 05 Apr 2026 10:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1000-sos-location-flow-architecture/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260405-100000-sos-location-flow-architecture/</guid>
     </item>
     <item>
       <title>SOS Location: Regras de negócio, contratos e operação</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-0900-sos-location-business-rules/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260405-090000-sos-location-business-rules/</link>
       <description><![CDATA[Catálogo completo das regras de negócio que sustentam o SOS Location.]]></description>
       <pubDate>Sun, 05 Apr 2026 09:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-0900-sos-location-business-rules/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260405-090000-sos-location-business-rules/</guid>
     </item>
     <item>
       <title>A Bio-matemática da Araucária: Modelagem e Simetria</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260405-040000-biomatematica-araucaria-angustifolia/</link>
       <description><![CDATA[Uma exploração sobre os padrões matemáticos que regem a estrutura da Araucaria angustifolia, de verticilos a séries exponenciais de crescimento.]]></description>
       <pubDate>Sun, 05 Apr 2026 04:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260405-040000-biomatematica-araucaria-angustifolia/</guid>
     </item>
     <item>
       <title>Tecnologia de Pulso: Do HEMP ao Micro-ondas de Alta Potência</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260404-225000-tecnologia-pulso-hemp-hpm/</link>
       <description><![CDATA[Uma análise técnica sobre a geração artificial de pulsos eletromagnéticos, do Efeito Compton ao Gerador de Compressão de Fluxo.]]></description>
       <pubDate>Sat, 04 Apr 2026 22:50:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-225000-tecnologia-pulso-hemp-hpm/</guid>
     </item>
     <item>
       <title>Sopros Estelares: De Supernovas a Space Weather</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260404-224500-sopros-estelares-astrofisica-impulso/</link>
       <description><![CDATA[Anatomia dos fenômenos astrofísicos que geram emissões eletromagnéticas extremas e seu impacto nos sistemas tecnológicos.]]></description>
       <pubDate>Sat, 04 Apr 2026 22:45:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-224500-sopros-estelares-astrofisica-impulso/</guid>
     </item>
     <item>
       <title>Engenharia de Resiliência Eletromagnética e Acoplamento</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260404-224000-resiliencia-eletromagnetica-acoplamento/</link>
       <description><![CDATA[Do ponto zero à ruptura de junções: como circuitos reais falham sob transientes de alta intensidade.]]></description>
       <pubDate>Sat, 04 Apr 2026 22:40:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-224000-resiliencia-eletromagnetica-acoplamento/</guid>
     </item>
     <item>
       <title>A Física dos Pulsos Dispersos: Além do EMP Convencional</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-demp-physics-fisica-demp-pulsos-dispersos/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260404-223000-fisica-demp-pulsos-dispersos/</link>
       <description><![CDATA[Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos.]]></description>
       <pubDate>Sat, 04 Apr 2026 22:30:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-demp-physics-fisica-demp-pulsos-dispersos/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-223000-fisica-demp-pulsos-dispersos/</guid>
     </item>
     <item>
       <title>O Despertar do Technical Knowledge OS v2</title>
-      <link>https://nhmatsumoto.github.io/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260404-221500-technical-knowledge-os-v2/</link>
       <description><![CDATA[Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico.]]></description>
       <pubDate>Sat, 04 Apr 2026 22:15:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260404-221500-technical-knowledge-os-v2/</guid>
     </item>
     <item>
       <title>IA Inspirada pela Física: Entropia e Energia nas Redes Neurais</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260403-230000-ia-inspirada-pela-fisica-redes-neurais/</link>
       <description><![CDATA[Como conceitos térmicos e de mecânica estatística moldam o treinamento de IAs modernas, de Hopfield Networks a Diffusion Models.]]></description>
       <pubDate>Fri, 03 Apr 2026 23:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260403-230000-ia-inspirada-pela-fisica-redes-neurais/</guid>
     </item>
     <item>
       <title>Computação Quântica: O Poder Além dos Bits</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2500-computacao-quantica-qbits-vs-bits/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260403-220000-computacao-quantica-qbits-vs-bits/</link>
       <description><![CDATA[Uma visão clara sobre os Qubits, superposição e como o poder quântico pode resolver problemas impossíveis para computadores clássicos.]]></description>
       <pubDate>Fri, 03 Apr 2026 22:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2500-computacao-quantica-qbits-vs-bits/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260403-220000-computacao-quantica-qbits-vs-bits/</guid>
     </item>
     <item>
       <title>O Universo Quântico: Além da Lógica Clássica</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2400-introducao-intuitiva-fisica-quantica/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260403-210000-introducao-intuitiva-fisica-quantica/</link>
       <description><![CDATA[Uma jornada intuitiva pela física quântica. Superposição, entrelaçamento e por que o observador muda a realidade.]]></description>
       <pubDate>Fri, 03 Apr 2026 21:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2400-introducao-intuitiva-fisica-quantica/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260403-210000-introducao-intuitiva-fisica-quantica/</guid>
     </item>
     <item>
       <title>Simulação de Partículas: O poder dos Métodos de Monte Carlo</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260403-200000-simulacao-fisica-particulas-monte-carlo/</link>
       <description><![CDATA[Explorando a simulação do universo e sistemas complexos usando estatística, caminhos aleatórios e leis da física codificadas.]]></description>
       <pubDate>Fri, 03 Apr 2026 20:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260403-200000-simulacao-fisica-particulas-monte-carlo/</guid>
     </item>
     <item>
       <title>Excelência em Dados: Pilhas, Filas e Árvores</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260403-180000-estruturas-de-dados-pilha-fila-arvores/</link>
       <description><![CDATA[Por que a escolha da estrutura de dados correta é mais importante do que o próprio algoritmo para a performance de sistemas complexos.]]></description>
       <pubDate>Fri, 03 Apr 2026 18:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260403-180000-estruturas-de-dados-pilha-fila-arvores/</guid>
     </item>
     <item>
       <title>Algoritmos e Big O: Entendendo a Eficiência do Código</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/</link>
+      <link>https://nhmatsumoto.github.io/posts/20260403-170000-algoritmos-busca-ordenacao-com-big-o/</link>
       <description><![CDATA[Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade.]]></description>
       <pubDate>Fri, 03 Apr 2026 17:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/</guid>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260403-170000-algoritmos-busca-ordenacao-com-big-o/</guid>
     </item>
   </channel>
 </rss>

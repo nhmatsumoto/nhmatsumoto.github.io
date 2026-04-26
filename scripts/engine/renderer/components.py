@@ -289,10 +289,26 @@ def render_localized_date(value: datetime, locale: str, style: str = "long") -> 
         f'data-localize-date="{html.escape(style, quote=True)}">{html.escape(label)}</time>'
     )
 
-def render_reading_time(minutes: int, i18n: dict[str, Any], locale: str) -> str:
+def render_reading_time(
+    minutes: int,
+    i18n: dict[str, Any],
+    locale: str,
+    reading_times: dict[str, int] | None = None,
+) -> str:
+    values: dict[str, int] = {}
+    for key, value in (reading_times or {}).items():
+        try:
+            values[str(key)] = int(value)
+        except (TypeError, ValueError):
+            continue
+    values.setdefault("default", int(minutes))
     template = translate(i18n, locale, "templates.reading_time", "{minutes} min read")
-    label = template.replace("{minutes}", str(minutes))
-    return f'<span data-reading-time="{minutes}">{html.escape(label)}</span>'
+    label = template.replace("{minutes}", str(values.get("default", minutes)))
+    attrs = f' data-reading-time="{html.escape(str(values.get("default", minutes)), quote=True)}"'
+    if values:
+        payload = json.dumps(values, ensure_ascii=False).replace("<", "\\u003c")
+        attrs += f' data-reading-time-values="{html.escape(payload, quote=True)}"'
+    return f"<span{attrs}>{html.escape(label)}</span>"
 
 def render_icon(name: str, class_name: str = "site-icon") -> str:
     classes = " ".join(part for part in [class_name] if part)
@@ -402,7 +418,7 @@ def _build_entry_card_payload(item: dict[str, Any], fields: list[str], i18n: dic
 def render_post_card(post: dict[str, Any], i18n: dict[str, Any], locale: str) -> str:
     kind_label = translate(i18n, locale, "kinds.post", "post")
     date_html = render_localized_date(post["published_dt"], locale, "short")
-    reading_html = render_reading_time(post["reading_time"], i18n, locale)
+    reading_html = render_reading_time(post["reading_time"], i18n, locale, post.get("reading_time_by_locale"))
     eyebrow = _entry_eyebrow([
         _entry_kind("post", kind_label, "kinds.post"),
         _entry_meta("calendar-days", date_html),
@@ -426,7 +442,7 @@ def render_post_card(post: dict[str, Any], i18n: dict[str, Any], locale: str) ->
 def render_daily_card(entry: dict[str, Any], i18n: dict[str, Any], locale: str, *, compact: bool = False) -> str:
     kind_label = translate(i18n, locale, "kinds.daily", "daily")
     date_html = render_localized_date(entry["published_dt"], locale, "short")
-    reading_html = render_reading_time(entry["reading_time"], i18n, locale)
+    reading_html = render_reading_time(entry["reading_time"], i18n, locale, entry.get("reading_time_by_locale"))
     eyebrow = _entry_eyebrow([
         _entry_kind("daily", kind_label, "kinds.daily"),
         _entry_meta("calendar-days", date_html),
@@ -648,7 +664,7 @@ def render_hero(site: dict[str, str], system: dict[str, Any], posts: list[dict[s
           <p class="card-type" data-i18n="home.highlight_recent_article">{html.escape(translate(i18n, locale, "home.highlight_recent_article", "recent article"))}</p>
           <h2 class="text-3xl font-bold tracking-tighter mb-2"><a href="{html.escape(p['resolved_url'])}">{html.escape(p['title'])}</a></h2>
           <p class="text-muted text-sm leading-relaxed">{html.escape(p['summary'])}</p>
-          <div class="mt-auto pt-4 flex items-center justify-between">{render_localized_date(p["published_dt"], locale, "short")}<span class="text-xs font-mono opacity-50">{p["reading_time"]}m</span></div>
+          <div class="mt-auto pt-4 flex items-center justify-between">{render_localized_date(p["published_dt"], locale, "short")}<span class="text-xs font-mono opacity-50">{render_reading_time(p["reading_time"], i18n, locale, p.get("reading_time_by_locale"))}</span></div>
         </article>
         """.strip())
 
