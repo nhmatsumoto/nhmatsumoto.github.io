@@ -21,7 +21,7 @@
     "title": "Daily #100: Evolução do produto para plataforma completa de emergência",
     "url": "https://nhmatsumoto.github.io/posts/20260411-120000-daily-100-evolucao-do-produto-para-plataforma-completa-de-emergencia/",
     "kind": "post",
-    "summary": "Consolida mapa, alertas, resgate, dados, doações e simulações em uma plataforma integrada de resposta a crises.",
+    "summary": "Explora Evolução do produto para plataforma completa de emergência com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -30,14 +30,14 @@
     ],
     "title_en_us": "Daily #100: Product evolution into a complete emergency platform",
     "title_ja_jp": "Daily #100: 完全な緊急対応プラットフォームへの製品進化",
-    "summary_en_us": "Covers Product evolution into a complete emergency platform in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「完全な緊急対応プラットフォームへの製品進化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Product evolution into a complete emergency platform with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "完全な緊急対応プラットフォームへの製品進化 を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #099: Estrutura de permissões para equipes de resgate",
     "url": "https://nhmatsumoto.github.io/posts/20260411-110000-daily-099-estrutura-de-permissoes-para-equipes-de-resgate/",
     "kind": "post",
-    "summary": "Define acesso granular para equipes oficiais, voluntários, operadores e administradores.",
+    "summary": "Explora Estrutura de permissões para equipes de resgate com fundamentos, fórmula, exemplo e diagrama para a trilha segurança.",
     "keywords": [
       "sos-location",
       "daily",
@@ -46,14 +46,14 @@
     ],
     "title_en_us": "Daily #099: Permission structure for rescue teams",
     "title_ja_jp": "Daily #099: 救助チーム向け権限構造",
-    "summary_en_us": "Covers Permission structure for rescue teams in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「救助チーム向け権限構造」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Permission structure for rescue teams with fundamentals, formula, example and diagram for the security track.",
+    "summary_ja_jp": "救助チーム向け権限構造 を、基礎、数式、例、図とともに セキュリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #098: Comunicação em tempo real com usuários afetados",
     "url": "https://nhmatsumoto.github.io/posts/20260411-100000-daily-098-comunicacao-em-tempo-real-com-usuarios-afetados/",
     "kind": "post",
-    "summary": "Estrutura canais de atualização rápida para alertas, instruções e confirmação de segurança.",
+    "summary": "Explora Comunicação em tempo real com usuários afetados com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -62,14 +62,14 @@
     ],
     "title_en_us": "Daily #098: Real-time communication with affected users",
     "title_ja_jp": "Daily #098: 被災ユーザーとのリアルタイム通信",
-    "summary_en_us": "Covers Real-time communication with affected users in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「被災ユーザーとのリアルタイム通信」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Real-time communication with affected users with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "被災ユーザーとのリアルタイム通信 を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #097: UX voltado para situações de crise",
     "url": "https://nhmatsumoto.github.io/posts/20260411-090000-daily-097-ux-voltado-para-situacoes-de-crise/",
     "kind": "post",
-    "summary": "Prioriza clareza, baixo atrito e tolerância a estresse, pois usuários podem estar sob pressão ou conectividade ruim.",
+    "summary": "Explora UX voltado para situações de crise com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -78,14 +78,14 @@
     ],
     "title_en_us": "Daily #097: UX for crisis situations",
     "title_ja_jp": "Daily #097: 危機状況向けUX",
-    "summary_en_us": "Covers UX for crisis situations in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「危機状況向けUX」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores UX for crisis situations with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "危機状況向けUX を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #096: Planejamento de expansão global",
     "url": "https://nhmatsumoto.github.io/posts/20260411-080000-daily-096-planejamento-de-expansao-global/",
     "kind": "post",
-    "summary": "Define requisitos para operar em múltiplos países, idiomas, fusos, mapas e estruturas institucionais.",
+    "summary": "Explora Planejamento de expansão global com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -94,14 +94,14 @@
     ],
     "title_en_us": "Daily #096: Global expansion planning",
     "title_ja_jp": "Daily #096: グローバル展開計画",
-    "summary_en_us": "Covers Global expansion planning in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「グローバル展開計画」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Global expansion planning with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "グローバル展開計画 を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #095: Integração com dados governamentais",
     "url": "https://nhmatsumoto.github.io/posts/20260411-070000-daily-095-integracao-com-dados-governamentais/",
     "kind": "post",
-    "summary": "Planeja ingestão de fontes oficiais para enriquecer alertas, mapas e validação de eventos.",
+    "summary": "Explora Integração com dados governamentais com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -110,14 +110,14 @@
     ],
     "title_en_us": "Daily #095: Integration with government data",
     "title_ja_jp": "Daily #095: 政府データ統合",
-    "summary_en_us": "Covers Integration with government data in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「政府データ統合」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Integration with government data with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "政府データ統合 を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #094: Sistema de doações com rastreabilidade",
     "url": "https://nhmatsumoto.github.io/posts/20260411-060000-daily-094-sistema-de-doacoes-com-rastreabilidade/",
     "kind": "post",
-    "summary": "Conecta contribuição financeira a destino, estado e auditoria, reduzindo opacidade no uso de recursos.",
+    "summary": "Explora Sistema de doações com rastreabilidade com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -126,14 +126,14 @@
     ],
     "title_en_us": "Daily #094: Donation system with traceability",
     "title_ja_jp": "Daily #094: 追跡可能な寄付システム",
-    "summary_en_us": "Covers Donation system with traceability in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「追跡可能な寄付システム」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Donation system with traceability with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "追跡可能な寄付システム を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #093: Criação de dashboard público de transparência",
     "url": "https://nhmatsumoto.github.io/posts/20260411-050000-daily-093-criacao-de-dashboard-publico-de-transparencia/",
     "kind": "post",
-    "summary": "Mostra dados agregados de operação, doações e impacto para fortalecer confiança pública.",
+    "summary": "Explora Criação de dashboard público de transparência com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -142,14 +142,14 @@
     ],
     "title_en_us": "Daily #093: Creating a public transparency dashboard",
     "title_ja_jp": "Daily #093: 公開透明性ダッシュボード作成",
-    "summary_en_us": "Covers Creating a public transparency dashboard in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「公開透明性ダッシュボード作成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Creating a public transparency dashboard with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "公開透明性ダッシュボード作成 を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #092: Estratégia open-source para colaboração global",
     "url": "https://nhmatsumoto.github.io/posts/20260411-040000-daily-092-estrategia-open-source-para-colaboracao-global/",
     "kind": "post",
-    "summary": "Propõe abertura do projeto para permitir auditoria, contribuição e adaptação por comunidades e instituições.",
+    "summary": "Explora Estratégia open-source para colaboração global com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -158,14 +158,14 @@
     ],
     "title_en_us": "Daily #092: Open-source strategy for global collaboration",
     "title_ja_jp": "Daily #092: グローバル協力のためのオープンソース戦略",
-    "summary_en_us": "Covers Open-source strategy for global collaboration in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「グローバル協力のためのオープンソース戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Open-source strategy for global collaboration with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "グローバル協力のためのオープンソース戦略 を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #091: Definição do propósito: software para salvar vidas",
     "url": "https://nhmatsumoto.github.io/posts/20260411-030000-daily-091-definicao-do-proposito-software-para-salvar-vidas/",
     "kind": "post",
-    "summary": "Estabelece o critério central de produto: decisões técnicas devem aumentar velocidade, confiabilidade e alcance da resposta a emergências.",
+    "summary": "Explora Definição do propósito: software para salvar vidas com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -174,14 +174,14 @@
     ],
     "title_en_us": "Daily #091: Purpose definition: software to save lives",
     "title_ja_jp": "Daily #091: 目的の定義：命を救うソフトウェア",
-    "summary_en_us": "Covers Purpose definition: software to save lives in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「目的の定義：命を救うソフトウェア」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Purpose definition: software to save lives with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "目的の定義：命を救うソフトウェア を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #090: Redução de tokens com linguagem estruturada",
     "url": "https://nhmatsumoto.github.io/posts/20260411-020000-daily-090-reducao-de-tokens-com-linguagem-estruturada/",
     "kind": "post",
-    "summary": "Usa formatos compactos e vocabulário estável para reduzir custo e aumentar precisão de comunicação.",
+    "summary": "Explora Redução de tokens com linguagem estruturada com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -190,14 +190,14 @@
     ],
     "title_en_us": "Daily #090: Token reduction with structured language",
     "title_ja_jp": "Daily #090: 構造化言語によるトークン削減",
-    "summary_en_us": "Covers Token reduction with structured language in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「構造化言語によるトークン削減」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Token reduction with structured language with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "構造化言語によるトークン削減 を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #089: Estratégia de versionamento de prompts",
     "url": "https://nhmatsumoto.github.io/posts/20260411-010000-daily-089-estrategia-de-versionamento-de-prompts/",
     "kind": "post",
-    "summary": "Trata prompts como artefatos evolutivos, com histórico, comparação e rollback.",
+    "summary": "Explora Estratégia de versionamento de prompts com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -206,14 +206,14 @@
     ],
     "title_en_us": "Daily #089: Prompt versioning strategy",
     "title_ja_jp": "Daily #089: プロンプトバージョニング戦略",
-    "summary_en_us": "Covers Prompt versioning strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「プロンプトバージョニング戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Prompt versioning strategy with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "プロンプトバージョニング戦略 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #088: Integração com ferramentas (Codex, Gemini)",
     "url": "https://nhmatsumoto.github.io/posts/20260411-000000-daily-088-integracao-com-ferramentas-codex-gemini/",
     "kind": "post",
-    "summary": "Define como agentes acessam ferramentas especializadas sem perder controle, contexto e auditoria.",
+    "summary": "Explora Integração com ferramentas (Codex, Gemini) com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.",
     "keywords": [
       "sos-location",
       "daily",
@@ -222,14 +222,14 @@
     ],
     "title_en_us": "Daily #088: Integration with tools such as Codex and Gemini",
     "title_ja_jp": "Daily #088: ツール連携（Codex、Gemini）",
-    "summary_en_us": "Covers Integration with tools such as Codex and Gemini in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「ツール連携（Codex、Gemini）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Integration with tools such as Codex and Gemini with fundamentals, formula, example and diagram for the agent orchestration track.",
+    "summary_ja_jp": "ツール連携（Codex、Gemini） を、基礎、数式、例、図とともに エージェントオーケストレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #087: Pipeline: pensamento → especificação → execução",
     "url": "https://nhmatsumoto.github.io/posts/20260410-230000-daily-087-pipeline-pensamento-especificacao-execucao/",
     "kind": "post",
-    "summary": "Estrutura o fluxo de trabalho em etapas explícitas para transformar intenção em implementação verificável.",
+    "summary": "Explora Pipeline: pensamento → especificação → execução com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.",
     "keywords": [
       "sos-location",
       "daily",
@@ -238,14 +238,14 @@
     ],
     "title_en_us": "Daily #087: Pipeline from thinking to specification to execution",
     "title_ja_jp": "Daily #087: パイプライン：思考 → 仕様 → 実行",
-    "summary_en_us": "Covers Pipeline from thinking to specification to execution in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「パイプライン：思考 → 仕様 → 実行」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Pipeline from thinking to specification to execution with fundamentals, formula, example and diagram for the performance and scalability track.",
+    "summary_ja_jp": "パイプライン：思考 → 仕様 → 実行 を、基礎、数式、例、図とともに パフォーマンスとスケーラビリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #086: Implementação de “reflection agents”",
     "url": "https://nhmatsumoto.github.io/posts/20260410-220000-daily-086-implementacao-de-reflection-agents/",
     "kind": "post",
-    "summary": "Inclui agentes revisores para avaliar plano, execução e riscos antes de finalizar uma mudança.",
+    "summary": "Explora Implementação de “reflection agents” com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.",
     "keywords": [
       "sos-location",
       "daily",
@@ -254,14 +254,14 @@
     ],
     "title_en_us": "Daily #086: Implementing reflection agents",
     "title_ja_jp": "Daily #086: reflection agentsの実装",
-    "summary_en_us": "Covers Implementing reflection agents in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「reflection agentsの実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Implementing reflection agents with fundamentals, formula, example and diagram for the agent orchestration track.",
+    "summary_ja_jp": "reflection agentsの実装 を、基礎、数式、例、図とともに エージェントオーケストレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #085: Ajuste de comportamento com base em correções",
     "url": "https://nhmatsumoto.github.io/posts/20260410-210000-daily-085-ajuste-de-comportamento-com-base-em-correcoes/",
     "kind": "post",
-    "summary": "Transforma feedback em regras operacionais para reduzir reincidência de erros.",
+    "summary": "Explora Ajuste de comportamento com base em correções com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -270,14 +270,14 @@
     ],
     "title_en_us": "Daily #085: Behavior adjustment based on corrections",
     "title_ja_jp": "Daily #085: 修正に基づく振る舞い調整",
-    "summary_en_us": "Covers Behavior adjustment based on corrections in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「修正に基づく振る舞い調整」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Behavior adjustment based on corrections with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "修正に基づく振る舞い調整 を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #084: Sistema de memória para aprendizado contínuo",
     "url": "https://nhmatsumoto.github.io/posts/20260410-200000-daily-084-sistema-de-memoria-para-aprendizado-continuo/",
     "kind": "post",
-    "summary": "Registra decisões, correções e padrões recorrentes para melhorar consistência sem depender apenas do prompt atual.",
+    "summary": "Explora Sistema de memória para aprendizado contínuo com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.",
     "keywords": [
       "sos-location",
       "daily",
@@ -286,14 +286,14 @@
     ],
     "title_en_us": "Daily #084: Memory system for continuous learning",
     "title_ja_jp": "Daily #084: 継続学習のためのメモリシステム",
-    "summary_en_us": "Covers Memory system for continuous learning in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「継続学習のためのメモリシステム」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Memory system for continuous learning with fundamentals, formula, example and diagram for the agent orchestration track.",
+    "summary_ja_jp": "継続学習のためのメモリシステム を、基礎、数式、例、図とともに エージェントオーケストレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #083: Uso de linguagem ubíqua para comunicação entre agentes",
     "url": "https://nhmatsumoto.github.io/posts/20260410-190000-daily-083-uso-de-linguagem-ubiqua-para-comunicacao-entre-agentes/",
     "kind": "post",
-    "summary": "Aplica o mesmo vocabulário do domínio para que agentes e humanos compartilhem contexto operacional.",
+    "summary": "Explora Uso de linguagem ubíqua para comunicação entre agentes com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -302,14 +302,14 @@
     ],
     "title_en_us": "Daily #083: Using ubiquitous language for agent communication",
     "title_ja_jp": "Daily #083: エージェント間通信のためのユビキタス言語",
-    "summary_en_us": "Covers Using ubiquitous language for agent communication in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「エージェント間通信のためのユビキタス言語」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Using ubiquitous language for agent communication with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "エージェント間通信のためのユビキタス言語 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #082: Separação de agentes por responsabilidade",
     "url": "https://nhmatsumoto.github.io/posts/20260410-180000-daily-082-separacao-de-agentes-por-responsabilidade/",
     "kind": "post",
-    "summary": "Divide agentes por papéis claros para evitar sobreposição, reduzir ruído e facilitar avaliação de resultado.",
+    "summary": "Explora Separação de agentes por responsabilidade com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.",
     "keywords": [
       "sos-location",
       "daily",
@@ -318,14 +318,14 @@
     ],
     "title_en_us": "Daily #082: Separating agents by responsibility",
     "title_ja_jp": "Daily #082: 責務ごとのエージェント分離",
-    "summary_en_us": "Covers Separating agents by responsibility in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「責務ごとのエージェント分離」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Separating agents by responsibility with fundamentals, formula, example and diagram for the agent orchestration track.",
+    "summary_ja_jp": "責務ごとのエージェント分離 を、基礎、数式、例、図とともに エージェントオーケストレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #081: Estrutura inicial de orquestrador de agentes",
     "url": "https://nhmatsumoto.github.io/posts/20260410-170000-daily-081-estrutura-inicial-de-orquestrador-de-agentes/",
     "kind": "post",
-    "summary": "Define um núcleo responsável por distribuir tarefas, coordenar ferramentas e manter rastreabilidade entre intenção e execução.",
+    "summary": "Explora Estrutura inicial de orquestrador de agentes com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.",
     "keywords": [
       "sos-location",
       "daily",
@@ -334,14 +334,14 @@
     ],
     "title_en_us": "Daily #081: Initial structure for an agent orchestrator",
     "title_ja_jp": "Daily #081: エージェントオーケストレーター初期構造",
-    "summary_en_us": "Covers Initial structure for an agent orchestrator in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「エージェントオーケストレーター初期構造」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Initial structure for an agent orchestrator with fundamentals, formula, example and diagram for the agent orchestration track.",
+    "summary_ja_jp": "エージェントオーケストレーター初期構造 を、基礎、数式、例、図とともに エージェントオーケストレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #080: Estratégia de autenticação para APIs externas",
     "url": "https://nhmatsumoto.github.io/posts/20260410-160000-daily-080-estrategia-de-autenticacao-para-apis-externas/",
     "kind": "post",
-    "summary": "Define como armazenar, renovar e auditar credenciais usadas em integrações com provedores externos.",
+    "summary": "Explora Estratégia de autenticação para APIs externas com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -349,14 +349,14 @@
     ],
     "title_en_us": "Daily #080: Authentication strategy for external APIs",
     "title_ja_jp": "Daily #080: 外部API向け認証戦略",
-    "summary_en_us": "Covers Authentication strategy for external APIs in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「外部API向け認証戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Authentication strategy for external APIs with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "外部API向け認証戦略 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #079: Gestão segura de secrets",
     "url": "https://nhmatsumoto.github.io/posts/20260410-150000-daily-079-gestao-segura-de-secrets/",
     "kind": "post",
-    "summary": "Evita credenciais no código e organiza rotação, armazenamento e injeção segura por ambiente.",
+    "summary": "Explora Gestão segura de secrets com fundamentos, fórmula, exemplo e diagrama para a trilha segurança.",
     "keywords": [
       "sos-location",
       "daily",
@@ -364,14 +364,14 @@
     ],
     "title_en_us": "Daily #079: Secure secrets management",
     "title_ja_jp": "Daily #079: secretsの安全な管理",
-    "summary_en_us": "Covers Secure secrets management in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「secretsの安全な管理」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Secure secrets management with fundamentals, formula, example and diagram for the security track.",
+    "summary_ja_jp": "secretsの安全な管理 を、基礎、数式、例、図とともに セキュリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #078: Proteção de endpoints sensíveis",
     "url": "https://nhmatsumoto.github.io/posts/20260410-140000-daily-078-protecao-de-endpoints-sensiveis/",
     "kind": "post",
-    "summary": "Aplica autenticação forte, autorização explícita e menor exposição para rotas de alto impacto.",
+    "summary": "Explora Proteção de endpoints sensíveis com fundamentos, fórmula, exemplo e diagrama para a trilha segurança.",
     "keywords": [
       "sos-location",
       "daily",
@@ -379,14 +379,14 @@
     ],
     "title_en_us": "Daily #078: Sensitive endpoint protection",
     "title_ja_jp": "Daily #078: 機密エンドポイント保護",
-    "summary_en_us": "Covers Sensitive endpoint protection in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「機密エンドポイント保護」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Sensitive endpoint protection with fundamentals, formula, example and diagram for the security track.",
+    "summary_ja_jp": "機密エンドポイント保護 を、基礎、数式、例、図とともに セキュリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #077: Logs de auditoria para ações críticas",
     "url": "https://nhmatsumoto.github.io/posts/20260410-130000-daily-077-logs-de-auditoria-para-acoes-criticas/",
     "kind": "post",
-    "summary": "Registra quem fez o quê, quando e em qual contexto para sustentar investigação e responsabilidade.",
+    "summary": "Explora Logs de auditoria para ações críticas com fundamentos, fórmula, exemplo e diagrama para a trilha segurança.",
     "keywords": [
       "sos-location",
       "daily",
@@ -394,14 +394,14 @@
     ],
     "title_en_us": "Daily #077: Audit logs for critical actions",
     "title_ja_jp": "Daily #077: 重要操作の監査ログ",
-    "summary_en_us": "Covers Audit logs for critical actions in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「重要操作の監査ログ」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Audit logs for critical actions with fundamentals, formula, example and diagram for the security track.",
+    "summary_ja_jp": "重要操作の監査ログ を、基礎、数式、例、図とともに セキュリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #076: Controle de permissões por papel (RBAC)",
     "url": "https://nhmatsumoto.github.io/posts/20260410-120000-daily-076-controle-de-permissoes-por-papel-rbac/",
     "kind": "post",
-    "summary": "Define quais ações cada tipo de usuário pode executar, separando operadores, administradores e equipes externas.",
+    "summary": "Explora Controle de permissões por papel (RBAC) com fundamentos, fórmula, exemplo e diagrama para a trilha segurança.",
     "keywords": [
       "sos-location",
       "daily",
@@ -409,14 +409,14 @@
     ],
     "title_en_us": "Daily #076: Role-based permission control with RBAC",
     "title_ja_jp": "Daily #076: ロールベース権限制御（RBAC）",
-    "summary_en_us": "Covers Role-based permission control with RBAC in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「ロールベース権限制御（RBAC）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Role-based permission control with RBAC with fundamentals, formula, example and diagram for the security track.",
+    "summary_ja_jp": "ロールベース権限制御（RBAC） を、基礎、数式、例、図とともに セキュリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #075: Sanitização de dados no frontend",
     "url": "https://nhmatsumoto.github.io/posts/20260410-110000-daily-075-sanitizacao-de-dados-no-frontend/",
     "kind": "post",
-    "summary": "Reduz risco de injeção e renderização insegura ao tratar dados antes de exibi-los ao usuário.",
+    "summary": "Explora Sanitização de dados no frontend com fundamentos, fórmula, exemplo e diagrama para a trilha segurança.",
     "keywords": [
       "sos-location",
       "daily",
@@ -424,14 +424,14 @@
     ],
     "title_en_us": "Daily #075: Frontend data sanitization",
     "title_ja_jp": "Daily #075: フロントエンドデータサニタイズ",
-    "summary_en_us": "Covers Frontend data sanitization in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「フロントエンドデータサニタイズ」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Frontend data sanitization with fundamentals, formula, example and diagram for the security track.",
+    "summary_ja_jp": "フロントエンドデータサニタイズ を、基礎、数式、例、図とともに セキュリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #074: Validação de inputs no backend (FluentValidation)",
     "url": "https://nhmatsumoto.github.io/posts/20260410-100000-daily-074-validacao-de-inputs-no-backend-fluentvalidation/",
     "kind": "post",
-    "summary": "Centraliza regras de entrada para rejeitar dados inválidos antes que alcancem o domínio.",
+    "summary": "Explora Validação de inputs no backend (FluentValidation) com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -439,14 +439,14 @@
     ],
     "title_en_us": "Daily #074: Backend input validation with FluentValidation",
     "title_ja_jp": "Daily #074: バックエンド入力検証（FluentValidation）",
-    "summary_en_us": "Covers Backend input validation with FluentValidation in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「バックエンド入力検証（FluentValidation）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Backend input validation with FluentValidation with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "バックエンド入力検証（FluentValidation） を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #073: Proteção contra ataques de repetição",
     "url": "https://nhmatsumoto.github.io/posts/20260410-090000-daily-073-protecao-contra-ataques-de-repeticao/",
     "kind": "post",
-    "summary": "Usa expiração, nonce, idempotência e validação temporal para impedir reutilização maliciosa de requisições.",
+    "summary": "Explora Proteção contra ataques de repetição com fundamentos, fórmula, exemplo e diagrama para a trilha segurança.",
     "keywords": [
       "sos-location",
       "daily",
@@ -454,14 +454,14 @@
     ],
     "title_en_us": "Daily #073: Protection against replay attacks",
     "title_ja_jp": "Daily #073: リプレイ攻撃対策",
-    "summary_en_us": "Covers Protection against replay attacks in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「リプレイ攻撃対策」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Protection against replay attacks with fundamentals, formula, example and diagram for the security track.",
+    "summary_ja_jp": "リプレイ攻撃対策 を、基礎、数式、例、図とともに セキュリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #072: Avaliação de Keycloak para controle de acesso",
     "url": "https://nhmatsumoto.github.io/posts/20260410-080000-daily-072-avaliacao-de-keycloak-para-controle-de-acesso/",
     "kind": "post",
-    "summary": "Considera uma solução dedicada para centralizar identidade, papéis, grupos e políticas de login.",
+    "summary": "Explora Avaliação de Keycloak para controle de acesso com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -469,14 +469,14 @@
     ],
     "title_en_us": "Daily #072: Keycloak evaluation for access control",
     "title_ja_jp": "Daily #072: アクセス制御向けKeycloak評価",
-    "summary_en_us": "Covers Keycloak evaluation for access control in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「アクセス制御向けKeycloak評価」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Keycloak evaluation for access control with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "アクセス制御向けKeycloak評価 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #071: Implementação de autenticação baseada em JWT",
     "url": "https://nhmatsumoto.github.io/posts/20260410-070000-daily-071-implementacao-de-autenticacao-baseada-em-jwt/",
     "kind": "post",
-    "summary": "Protege endpoints com tokens assinados e validação consistente de emissor, audiência e expiração.",
+    "summary": "Explora Implementação de autenticação baseada em JWT com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -484,14 +484,14 @@
     ],
     "title_en_us": "Daily #071: JWT-based authentication implementation",
     "title_ja_jp": "Daily #071: JWTベース認証の実装",
-    "summary_en_us": "Covers JWT-based authentication implementation in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「JWTベース認証の実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores JWT-based authentication implementation with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "JWTベース認証の実装 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #070: Compressão e otimização de assets frontend",
     "url": "https://nhmatsumoto.github.io/posts/20260410-060000-daily-070-compressao-e-otimizacao-de-assets-frontend/",
     "kind": "post",
-    "summary": "Reduz tamanho de JS, CSS e imagens para melhorar carregamento inicial e experiência em redes ruins.",
+    "summary": "Explora Compressão e otimização de assets frontend com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.",
     "keywords": [
       "sos-location",
       "daily",
@@ -500,14 +500,14 @@
     ],
     "title_en_us": "Daily #070: Frontend asset compression and optimization",
     "title_ja_jp": "Daily #070: フロントエンド資産の圧縮と最適化",
-    "summary_en_us": "Covers Frontend asset compression and optimization in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「フロントエンド資産の圧縮と最適化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Frontend asset compression and optimization with fundamentals, formula, example and diagram for the performance and scalability track.",
+    "summary_ja_jp": "フロントエンド資産の圧縮と最適化 を、基礎、数式、例、図とともに パフォーマンスとスケーラビリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #069: Redução de payload em APIs",
     "url": "https://nhmatsumoto.github.io/posts/20260410-050000-daily-069-reducao-de-payload-em-apis/",
     "kind": "post",
-    "summary": "Remove campos desnecessários e ajusta contratos para diminuir latência e consumo de banda.",
+    "summary": "Explora Redução de payload em APIs com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -516,14 +516,14 @@
     ],
     "title_en_us": "Daily #069: API payload reduction",
     "title_ja_jp": "Daily #069: APIペイロード削減",
-    "summary_en_us": "Covers API payload reduction in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「APIペイロード削減」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores API payload reduction with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "APIペイロード削減 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #068: Monitoramento de performance da aplicação",
     "url": "https://nhmatsumoto.github.io/posts/20260410-040000-daily-068-monitoramento-de-performance-da-aplicacao/",
     "kind": "post",
-    "summary": "Define métricas, traces e alertas para identificar gargalos antes que impactem operação.",
+    "summary": "Explora Monitoramento de performance da aplicação com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -532,14 +532,14 @@
     ],
     "title_en_us": "Daily #068: Application performance monitoring",
     "title_ja_jp": "Daily #068: アプリケーション性能監視",
-    "summary_en_us": "Covers Application performance monitoring in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「アプリケーション性能監視」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Application performance monitoring with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "アプリケーション性能監視 を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #067: Pipeline CI/CD com Azure DevOps",
     "url": "https://nhmatsumoto.github.io/posts/20260410-030000-daily-067-pipeline-ci-cd-com-azure-devops/",
     "kind": "post",
-    "summary": "Automatiza build, testes e publicação para reduzir erro manual e aumentar previsibilidade de entrega.",
+    "summary": "Explora Pipeline CI/CD com Azure DevOps com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.",
     "keywords": [
       "sos-location",
       "daily",
@@ -548,14 +548,14 @@
     ],
     "title_en_us": "Daily #067: CI/CD pipeline with Azure DevOps",
     "title_ja_jp": "Daily #067: Azure DevOpsによるCI/CDパイプライン",
-    "summary_en_us": "Covers CI/CD pipeline with Azure DevOps in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「Azure DevOpsによるCI/CDパイプライン」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores CI/CD pipeline with Azure DevOps with fundamentals, formula, example and diagram for the performance and scalability track.",
+    "summary_ja_jp": "Azure DevOpsによるCI/CDパイプライン を、基礎、数式、例、図とともに パフォーマンスとスケーラビリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #066: Uso de Docker para ambientes consistentes",
     "url": "https://nhmatsumoto.github.io/posts/20260410-020000-daily-066-uso-de-docker-para-ambientes-consistentes/",
     "kind": "post",
-    "summary": "Padroniza execução local, testes e deploy, reduzindo divergências entre máquinas e ambientes.",
+    "summary": "Explora Uso de Docker para ambientes consistentes com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.",
     "keywords": [
       "sos-location",
       "daily",
@@ -564,14 +564,14 @@
     ],
     "title_en_us": "Daily #066: Using Docker for consistent environments",
     "title_ja_jp": "Daily #066: 一貫した環境のためのDocker活用",
-    "summary_en_us": "Covers Using Docker for consistent environments in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「一貫した環境のためのDocker活用」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Using Docker for consistent environments with fundamentals, formula, example and diagram for the performance and scalability track.",
+    "summary_ja_jp": "一貫した環境のためのDocker活用 を、基礎、数式、例、図とともに パフォーマンスとスケーラビリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #065: Estratégia de pré-processamento de dados",
     "url": "https://nhmatsumoto.github.io/posts/20260410-010000-daily-065-estrategia-de-pre-processamento-de-dados/",
     "kind": "post",
-    "summary": "Prepara dados pesados antes do consumo interativo para acelerar dashboards, mapas e simulações.",
+    "summary": "Explora Estratégia de pré-processamento de dados com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.",
     "keywords": [
       "sos-location",
       "daily",
@@ -580,14 +580,14 @@
     ],
     "title_en_us": "Daily #065: Data preprocessing strategy",
     "title_ja_jp": "Daily #065: データ前処理戦略",
-    "summary_en_us": "Covers Data preprocessing strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「データ前処理戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Data preprocessing strategy with fundamentals, formula, example and diagram for the performance and scalability track.",
+    "summary_ja_jp": "データ前処理戦略 を、基礎、数式、例、図とともに パフォーマンスとスケーラビリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #064: Lazy loading vs eager loading",
     "url": "https://nhmatsumoto.github.io/posts/20260410-000000-daily-064-lazy-loading-vs-eager-loading/",
     "kind": "post",
-    "summary": "Compara estratégias de carregamento para evitar tanto excesso de dados quanto múltiplas consultas pequenas.",
+    "summary": "Explora Lazy loading vs eager loading com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.",
     "keywords": [
       "sos-location",
       "daily",
@@ -596,14 +596,14 @@
     ],
     "title_en_us": "Daily #064: Lazy loading versus eager loading",
     "title_ja_jp": "Daily #064: 遅延読み込みと即時読み込み",
-    "summary_en_us": "Covers Lazy loading versus eager loading in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「遅延読み込みと即時読み込み」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Lazy loading versus eager loading with fundamentals, formula, example and diagram for the performance and scalability track.",
+    "summary_ja_jp": "遅延読み込みと即時読み込み を、基礎、数式、例、図とともに パフォーマンスとスケーラビリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #063: Otimização de queries com índices no SQL Server",
     "url": "https://nhmatsumoto.github.io/posts/20260409-230000-daily-063-otimizacao-de-queries-com-indices-no-sql-server/",
     "kind": "post",
-    "summary": "Relaciona padrões de acesso a índices adequados para reduzir varreduras e melhorar tempo de resposta.",
+    "summary": "Explora Otimização de queries com índices no SQL Server com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.",
     "keywords": [
       "sos-location",
       "daily",
@@ -612,14 +612,14 @@
     ],
     "title_en_us": "Daily #063: Query optimization with SQL Server indexes",
     "title_ja_jp": "Daily #063: SQL Serverインデックスによるクエリ最適化",
-    "summary_en_us": "Covers Query optimization with SQL Server indexes in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「SQL Serverインデックスによるクエリ最適化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Query optimization with SQL Server indexes with fundamentals, formula, example and diagram for the performance and scalability track.",
+    "summary_ja_jp": "SQL Serverインデックスによるクエリ最適化 を、基礎、数式、例、図とともに パフォーマンスとスケーラビリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #062: Uso de Dapper para queries complexas",
     "url": "https://nhmatsumoto.github.io/posts/20260409-220000-daily-062-uso-de-dapper-para-queries-complexas/",
     "kind": "post",
-    "summary": "Aplica SQL explícito em consultas críticas para obter previsibilidade e desempenho sem abandonar o modelo de domínio.",
+    "summary": "Explora Uso de Dapper para queries complexas com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.",
     "keywords": [
       "sos-location",
       "daily",
@@ -628,14 +628,14 @@
     ],
     "title_en_us": "Daily #062: Using Dapper for complex queries",
     "title_ja_jp": "Daily #062: 複雑なクエリに対するDapper活用",
-    "summary_en_us": "Covers Using Dapper for complex queries in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「複雑なクエリに対するDapper活用」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Using Dapper for complex queries with fundamentals, formula, example and diagram for the performance and scalability track.",
+    "summary_ja_jp": "複雑なクエリに対するDapper活用 を、基礎、数式、例、図とともに パフォーマンスとスケーラビリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #061: Estratégia de cache com Redis",
     "url": "https://nhmatsumoto.github.io/posts/20260409-210000-daily-061-estrategia-de-cache-com-redis/",
     "kind": "post",
-    "summary": "Usa cache distribuído para reduzir latência, aliviar banco de dados e sustentar leituras frequentes.",
+    "summary": "Explora Estratégia de cache com Redis com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.",
     "keywords": [
       "sos-location",
       "daily",
@@ -644,14 +644,14 @@
     ],
     "title_en_us": "Daily #061: Redis cache strategy",
     "title_ja_jp": "Daily #061: Redisキャッシュ戦略",
-    "summary_en_us": "Covers Redis cache strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「Redisキャッシュ戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Redis cache strategy with fundamentals, formula, example and diagram for the performance and scalability track.",
+    "summary_ja_jp": "Redisキャッシュ戦略 を、基礎、数式、例、図とともに パフォーマンスとスケーラビリティ トラック向けに整理します。"
   },
   {
     "title": "Daily #060: Feedback visual para ações do usuário",
     "url": "https://nhmatsumoto.github.io/posts/20260409-200000-daily-060-feedback-visual-para-acoes-do-usuario/",
     "kind": "post",
-    "summary": "Mostra estados de carregamento, confirmação e erro para reduzir incerteza após ações críticas.",
+    "summary": "Explora Feedback visual para ações do usuário com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -660,14 +660,14 @@
     ],
     "title_en_us": "Daily #060: Visual feedback for user actions",
     "title_ja_jp": "Daily #060: ユーザー操作への視覚的フィードバック",
-    "summary_en_us": "Covers Visual feedback for user actions in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「ユーザー操作への視覚的フィードバック」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Visual feedback for user actions with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "ユーザー操作への視覚的フィードバック を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #059: Melhoria de acessibilidade (a11y)",
     "url": "https://nhmatsumoto.github.io/posts/20260409-190000-daily-059-melhoria-de-acessibilidade-a11y/",
     "kind": "post",
-    "summary": "Ajusta semântica, contraste, navegação por teclado e textos auxiliares para ampliar acesso em cenários reais.",
+    "summary": "Explora Melhoria de acessibilidade (a11y) com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -676,14 +676,14 @@
     ],
     "title_en_us": "Daily #059: Accessibility improvement with a11y practices",
     "title_ja_jp": "Daily #059: アクセシビリティ改善（a11y）",
-    "summary_en_us": "Covers Accessibility improvement with a11y practices in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「アクセシビリティ改善（a11y）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Accessibility improvement with a11y practices with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "アクセシビリティ改善（a11y） を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #058: Criação de componentes reutilizáveis",
     "url": "https://nhmatsumoto.github.io/posts/20260409-180000-daily-058-criacao-de-componentes-reutilizaveis/",
     "kind": "post",
-    "summary": "Padroniza blocos de interface para acelerar evolução e manter consistência entre telas.",
+    "summary": "Explora Criação de componentes reutilizáveis com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -692,14 +692,14 @@
     ],
     "title_en_us": "Daily #058: Creating reusable components",
     "title_ja_jp": "Daily #058: 再利用可能コンポーネントの作成",
-    "summary_en_us": "Covers Creating reusable components in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「再利用可能コンポーネントの作成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Creating reusable components with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "再利用可能コンポーネントの作成 を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #057: Otimização de renderização com React + Zustand",
     "url": "https://nhmatsumoto.github.io/posts/20260409-170000-daily-057-otimizacao-de-renderizacao-com-react-zustand/",
     "kind": "post",
-    "summary": "Reduz re-renderizações desnecessárias ao separar estado global, estado local e componentes de visualização.",
+    "summary": "Explora Otimização de renderização com React + Zustand com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -708,14 +708,14 @@
     ],
     "title_en_us": "Daily #057: Rendering optimization with React and Zustand",
     "title_ja_jp": "Daily #057: React + Zustandによる描画最適化",
-    "summary_en_us": "Covers Rendering optimization with React and Zustand in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「React + Zustandによる描画最適化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Rendering optimization with React and Zustand with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "React + Zustandによる描画最適化 を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #056: Sistema de internacionalização (PT/EN/JP)",
     "url": "https://nhmatsumoto.github.io/posts/20260409-160000-daily-056-sistema-de-internacionalizacao-pt-en-jp/",
     "kind": "post",
-    "summary": "Estrutura a interface para múltiplos idiomas, preparando a plataforma para colaboração e uso global.",
+    "summary": "Explora Sistema de internacionalização (PT/EN/JP) com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -724,14 +724,14 @@
     ],
     "title_en_us": "Daily #056: Internationalization system for PT, EN and JP",
     "title_ja_jp": "Daily #056: 国際化システム（PT/EN/JP）",
-    "summary_en_us": "Covers Internationalization system for PT, EN and JP in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「国際化システム（PT/EN/JP）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Internationalization system for PT, EN and JP with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "国際化システム（PT/EN/JP） を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #055: Implementação de dark/light mode",
     "url": "https://nhmatsumoto.github.io/posts/20260409-150000-daily-055-implementacao-de-dark-light-mode/",
     "kind": "post",
-    "summary": "Oferece alternância de tema para uso em diferentes ambientes, horários e condições de visibilidade.",
+    "summary": "Explora Implementação de dark/light mode com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -740,14 +740,14 @@
     ],
     "title_en_us": "Daily #055: Dark and light mode implementation",
     "title_ja_jp": "Daily #055: ダーク/ライトモード実装",
-    "summary_en_us": "Covers Dark and light mode implementation in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「ダーク/ライトモード実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Dark and light mode implementation with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "ダーク/ライトモード実装 を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #054: Organização de espaçamento para leitura fluida",
     "url": "https://nhmatsumoto.github.io/posts/20260409-140000-daily-054-organizacao-de-espacamento-para-leitura-fluida/",
     "kind": "post",
-    "summary": "Reequilibra margens, largura de texto e ritmo vertical para melhorar compreensão em páginas longas.",
+    "summary": "Explora Organização de espaçamento para leitura fluida com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -756,14 +756,14 @@
     ],
     "title_en_us": "Daily #054: Spacing organization for fluid reading",
     "title_ja_jp": "Daily #054: 流れるように読める余白設計",
-    "summary_en_us": "Covers Spacing organization for fluid reading in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「流れるように読める余白設計」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Spacing organization for fluid reading with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "流れるように読める余白設計 を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #053: Remoção de bordas arredondadas (design mais sólido)",
     "url": "https://nhmatsumoto.github.io/posts/20260409-130000-daily-053-remocao-de-bordas-arredondadas-design-mais-solido/",
     "kind": "post",
-    "summary": "Ajusta a linguagem visual para transmitir robustez, clareza e densidade operacional.",
+    "summary": "Explora Remoção de bordas arredondadas (design mais sólido) com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -772,14 +772,14 @@
     ],
     "title_en_us": "Daily #053: Removing rounded borders for a more solid design",
     "title_ja_jp": "Daily #053: より堅牢なデザインに向けた角丸削除",
-    "summary_en_us": "Covers Removing rounded borders for a more solid design in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「より堅牢なデザインに向けた角丸削除」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Removing rounded borders for a more solid design with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "より堅牢なデザインに向けた角丸削除 を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #052: Refatoração de navbar para design mais limpo",
     "url": "https://nhmatsumoto.github.io/posts/20260409-120000-daily-052-refatoracao-de-navbar-para-design-mais-limpo/",
     "kind": "post",
-    "summary": "Simplifica a navegação para reduzir ruído visual e deixar ações principais mais fáceis de encontrar.",
+    "summary": "Explora Refatoração de navbar para design mais limpo com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -788,14 +788,14 @@
     ],
     "title_en_us": "Daily #052: Navbar refactor for a cleaner design",
     "title_ja_jp": "Daily #052: よりクリーンなデザインのためのナビバーリファクタ",
-    "summary_en_us": "Covers Navbar refactor for a cleaner design in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「よりクリーンなデザインのためのナビバーリファクタ」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Navbar refactor for a cleaner design with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "よりクリーンなデザインのためのナビバーリファクタ を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #051: Ajustes de layout para mobile (texto “esmagado”)",
     "url": "https://nhmatsumoto.github.io/posts/20260409-110000-daily-051-ajustes-de-layout-para-mobile-texto-esmagado/",
     "kind": "post",
-    "summary": "Corrige quebras visuais em telas pequenas, garantindo leitura confortável e botões acionáveis em contexto de urgência.",
+    "summary": "Explora Ajustes de layout para mobile (texto “esmagado”) com fundamentos, fórmula, exemplo e diagrama para a trilha frontend e UX.",
     "keywords": [
       "sos-location",
       "daily",
@@ -804,14 +804,14 @@
     ],
     "title_en_us": "Daily #051: Mobile layout adjustments for squeezed text",
     "title_ja_jp": "Daily #051: モバイルレイアウト調整（押しつぶされたテキスト）",
-    "summary_en_us": "Covers Mobile layout adjustments for squeezed text in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「モバイルレイアウト調整（押しつぶされたテキスト）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Mobile layout adjustments for squeezed text with fundamentals, formula, example and diagram for the frontend and UX track.",
+    "summary_ja_jp": "モバイルレイアウト調整（押しつぶされたテキスト） を、基礎、数式、例、図とともに フロントエンドとUX トラック向けに整理します。"
   },
   {
     "title": "Daily #050: Monitoramento de falhas em pagamentos",
     "url": "https://nhmatsumoto.github.io/posts/20260409-100000-daily-050-monitoramento-de-falhas-em-pagamentos/",
     "kind": "post",
-    "summary": "Cria alertas e métricas para detectar anomalias, transações presas e falhas recorrentes antes de afetarem muitos usuários.",
+    "summary": "Explora Monitoramento de falhas em pagamentos com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -820,14 +820,14 @@
     ],
     "title_en_us": "Daily #050: Monitoring payment failures",
     "title_ja_jp": "Daily #050: 決済障害監視",
-    "summary_en_us": "Covers Monitoring payment failures in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「決済障害監視」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Monitoring payment failures with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "決済障害監視 を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #049: Garantia de consistência eventual",
     "url": "https://nhmatsumoto.github.io/posts/20260409-090000-daily-049-garantia-de-consistencia-eventual/",
     "kind": "post",
-    "summary": "Aceita atualização assíncrona entre componentes desde que o sistema convirja para um estado correto e auditável.",
+    "summary": "Explora Garantia de consistência eventual com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -836,14 +836,14 @@
     ],
     "title_en_us": "Daily #049: Guaranteeing eventual consistency",
     "title_ja_jp": "Daily #049: 結果整合性の保証",
-    "summary_en_us": "Covers Guaranteeing eventual consistency in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「結果整合性の保証」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Guaranteeing eventual consistency with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "結果整合性の保証 を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #048: Uso de filas (RabbitMQ) para processamento assíncrono",
     "url": "https://nhmatsumoto.github.io/posts/20260409-080000-daily-048-uso-de-filas-rabbitmq-para-processamento-assincrono/",
     "kind": "post",
-    "summary": "Move etapas demoradas ou instáveis para processamento em background, preservando a experiência do usuário e a consistência.",
+    "summary": "Explora Uso de filas (RabbitMQ) para processamento assíncrono com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -852,14 +852,14 @@
     ],
     "title_en_us": "Daily #048: Using queues such as RabbitMQ for asynchronous processing",
     "title_ja_jp": "Daily #048: 非同期処理のためのキュー（RabbitMQ）",
-    "summary_en_us": "Covers Using queues such as RabbitMQ for asynchronous processing in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「非同期処理のためのキュー（RabbitMQ）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Using queues such as RabbitMQ for asynchronous processing with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "非同期処理のためのキュー（RabbitMQ） を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #047: Auditoria de transações financeiras",
     "url": "https://nhmatsumoto.github.io/posts/20260409-070000-daily-047-auditoria-de-transacoes-financeiras/",
     "kind": "post",
-    "summary": "Registra eventos financeiros com trilha completa para investigação, suporte e conformidade.",
+    "summary": "Explora Auditoria de transações financeiras com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -868,14 +868,14 @@
     ],
     "title_en_us": "Daily #047: Financial transaction auditing",
     "title_ja_jp": "Daily #047: 金融トランザクション監査",
-    "summary_en_us": "Covers Financial transaction auditing in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「金融トランザクション監査」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Financial transaction auditing with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "金融トランザクション監査 を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #046: Estratégia de retry seguro em pagamentos",
     "url": "https://nhmatsumoto.github.io/posts/20260409-060000-daily-046-estrategia-de-retry-seguro-em-pagamentos/",
     "kind": "post",
-    "summary": "Permite repetir chamadas com segurança sem multiplicar efeitos colaterais financeiros.",
+    "summary": "Explora Estratégia de retry seguro em pagamentos com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -884,14 +884,14 @@
     ],
     "title_en_us": "Daily #046: Safe retry strategy for payments",
     "title_ja_jp": "Daily #046: 決済における安全なリトライ戦略",
-    "summary_en_us": "Covers Safe retry strategy for payments in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「決済における安全なリトライ戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Safe retry strategy for payments with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "決済における安全なリトライ戦略 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #045: Lock otimista vs lock pessimista",
     "url": "https://nhmatsumoto.github.io/posts/20260409-050000-daily-045-lock-otimista-vs-lock-pessimista/",
     "kind": "post",
-    "summary": "Compara estratégias de concorrência para decidir quando aceitar conflito posterior ou bloquear acesso durante atualização crítica.",
+    "summary": "Explora Lock otimista vs lock pessimista com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -900,14 +900,14 @@
     ],
     "title_en_us": "Daily #045: Optimistic locking versus pessimistic locking",
     "title_ja_jp": "Daily #045: 楽観ロックと悲観ロック",
-    "summary_en_us": "Covers Optimistic locking versus pessimistic locking in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「楽観ロックと悲観ロック」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Optimistic locking versus pessimistic locking with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "楽観ロックと悲観ロック を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #044: Controle de estado de pagamento (pending, completed)",
     "url": "https://nhmatsumoto.github.io/posts/20260409-040000-daily-044-controle-de-estado-de-pagamento-pending-completed/",
     "kind": "post",
-    "summary": "Define estados explícitos para acompanhar o ciclo de vida financeiro e evitar decisões baseadas apenas em resposta imediata.",
+    "summary": "Explora Controle de estado de pagamento (pending, completed) com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -916,14 +916,14 @@
     ],
     "title_en_us": "Daily #044: Payment state control with pending and completed states",
     "title_ja_jp": "Daily #044: 決済状態管理（pending、completed）",
-    "summary_en_us": "Covers Payment state control with pending and completed states in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「決済状態管理（pending、completed）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Payment state control with pending and completed states with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "決済状態管理（pending、completed） を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #043: Uso de tokens únicos por transação",
     "url": "https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/",
     "kind": "post",
-    "summary": "Associa cada operação financeira a uma chave única para controlar reprocessamento e impedir duplicidade.",
+    "summary": "Explora Uso de tokens únicos por transação com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -932,14 +932,14 @@
     ],
     "title_en_us": "Daily #043: Using unique tokens per transaction",
     "title_ja_jp": "Daily #043: トランザクションごとの一意トークン",
-    "summary_en_us": "Covers Using unique tokens per transaction in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「トランザクションごとの一意トークン」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Using unique tokens per transaction with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "トランザクションごとの一意トークン を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #042: Implementação de idempotência na API",
     "url": "https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/",
     "kind": "post",
-    "summary": "Garante que a mesma intenção de pagamento produza um único efeito, mesmo com retries, cliques repetidos ou falhas transitórias.",
+    "summary": "Explora Implementação de idempotência na API com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -948,14 +948,14 @@
     ],
     "title_en_us": "Daily #042: Implementing idempotency in the API",
     "title_ja_jp": "Daily #042: APIにおける冪等性実装",
-    "summary_en_us": "Covers Implementing idempotency in the API in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「APIにおける冪等性実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Implementing idempotency in the API with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "APIにおける冪等性実装 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #041: Problema de pagamento duplicado por múltiplos cliques",
     "url": "https://nhmatsumoto.github.io/posts/20260409-010000-daily-041-problema-de-pagamento-duplicado-por-multiplos-cliques/",
     "kind": "post",
-    "summary": "Identifica o risco de múltiplas submissões gerarem cobranças duplicadas quando o usuário repete uma ação em estado de incerteza.",
+    "summary": "Explora Problema de pagamento duplicado por múltiplos cliques com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.",
     "keywords": [
       "sos-location",
       "daily",
@@ -964,14 +964,14 @@
     ],
     "title_en_us": "Daily #041: Duplicate payment problem caused by multiple clicks",
     "title_ja_jp": "Daily #041: 複数クリックによる重複決済問題",
-    "summary_en_us": "Covers Duplicate payment problem caused by multiple clicks in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「複数クリックによる重複決済問題」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Duplicate payment problem caused by multiple clicks with fundamentals, formula, example and diagram for the payments and consistency track.",
+    "summary_ja_jp": "複数クリックによる重複決済問題 を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
   },
   {
     "title": "Daily #040: Logging estruturado para rastreabilidade",
     "url": "https://nhmatsumoto.github.io/posts/20260409-000000-daily-040-logging-estruturado-para-rastreabilidade/",
     "kind": "post",
-    "summary": "Transforma logs em eventos pesquisáveis com correlação, contexto e severidade, facilitando auditoria e diagnóstico.",
+    "summary": "Explora Logging estruturado para rastreabilidade com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -981,14 +981,14 @@
     ],
     "title_en_us": "Daily #040: Structured logging for traceability",
     "title_ja_jp": "Daily #040: 追跡可能性のための構造化ログ",
-    "summary_en_us": "Covers Structured logging for traceability in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「追跡可能性のための構造化ログ」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Structured logging for traceability with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "追跡可能性のための構造化ログ を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #039: Estratégia de versionamento de APIs",
     "url": "https://nhmatsumoto.github.io/posts/20260408-230000-daily-039-estrategia-de-versionamento-de-apis/",
     "kind": "post",
-    "summary": "Define como evoluir contratos sem quebrar clientes existentes, especialmente em cenários com múltiplos consumidores.",
+    "summary": "Explora Estratégia de versionamento de APIs com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -998,14 +998,14 @@
     ],
     "title_en_us": "Daily #039: API versioning strategy",
     "title_ja_jp": "Daily #039: APIバージョニング戦略",
-    "summary_en_us": "Covers API versioning strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「APIバージョニング戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores API versioning strategy with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "APIバージョニング戦略 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #038: Tratamento de JSON inválido em integrações",
     "url": "https://nhmatsumoto.github.io/posts/20260408-220000-daily-038-tratamento-de-json-invalido-em-integracoes/",
     "kind": "post",
-    "summary": "Protege o backend contra payloads malformados, respostas incompletas e mudanças inesperadas em APIs de terceiros.",
+    "summary": "Explora Tratamento de JSON inválido em integrações com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1015,14 +1015,14 @@
     ],
     "title_en_us": "Daily #038: Handling invalid JSON in integrations",
     "title_ja_jp": "Daily #038: 連携における不正JSON処理",
-    "summary_en_us": "Covers Handling invalid JSON in integrations in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「連携における不正JSON処理」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Handling invalid JSON in integrations with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "連携における不正JSON処理 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #037: Retry e fallback para APIs externas (GDACS)",
     "url": "https://nhmatsumoto.github.io/posts/20260408-210000-daily-037-retry-e-fallback-para-apis-externas-gdacs/",
     "kind": "post",
-    "summary": "Evita que instabilidade de serviços externos interrompa o fluxo principal, usando retentativas controladas, cache e degradação segura.",
+    "summary": "Explora Retry e fallback para APIs externas (GDACS) com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1032,14 +1032,14 @@
     ],
     "title_en_us": "Daily #037: Retry and fallback for external APIs such as GDACS",
     "title_ja_jp": "Daily #037: 外部API（GDACS）向けリトライとフォールバック",
-    "summary_en_us": "Covers Retry and fallback for external APIs such as GDACS in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「外部API（GDACS）向けリトライとフォールバック」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Retry and fallback for external APIs such as GDACS with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "外部API（GDACS）向けリトライとフォールバック を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #036: Modelagem de API para pessoas desaparecidas",
     "url": "https://nhmatsumoto.github.io/posts/20260408-200000-daily-036-modelagem-de-api-para-pessoas-desaparecidas/",
     "kind": "post",
-    "summary": "Define recursos, campos e transições de estado para cadastro, busca, atualização e encerramento de casos de pessoas desaparecidas.",
+    "summary": "Explora Modelagem de API para pessoas desaparecidas com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1049,14 +1049,14 @@
     ],
     "title_en_us": "Daily #036: API modeling for missing persons",
     "title_ja_jp": "Daily #036: 行方不明者APIのモデリング",
-    "summary_en_us": "Covers API modeling for missing persons in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「行方不明者APIのモデリング」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores API modeling for missing persons with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "行方不明者APIのモデリング を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #035: Criação de endpoint para snapshot de operações",
     "url": "https://nhmatsumoto.github.io/posts/20260408-190000-daily-035-criacao-de-endpoint-para-snapshot-de-operacoes/",
     "kind": "post",
-    "summary": "Propõe uma API consolidada para entregar o estado atual da operação sem exigir várias chamadas pequenas do frontend.",
+    "summary": "Explora Criação de endpoint para snapshot de operações com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1066,14 +1066,14 @@
     ],
     "title_en_us": "Daily #035: Creating an endpoint for operation snapshots",
     "title_ja_jp": "Daily #035: オペレーションスナップショット用エンドポイント作成",
-    "summary_en_us": "Covers Creating an endpoint for operation snapshots in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「オペレーションスナップショット用エンドポイント作成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Creating an endpoint for operation snapshots with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "オペレーションスナップショット用エンドポイント作成 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #034: Avaliação de uso do Keycloak para SSO",
     "url": "https://nhmatsumoto.github.io/posts/20260408-180000-daily-034-avaliacao-de-uso-do-keycloak-para-sso/",
     "kind": "post",
-    "summary": "Analisa se um provedor dedicado de identidade reduz risco e esforço ao lidar com login, federação e controle de acesso.",
+    "summary": "Explora Avaliação de uso do Keycloak para SSO com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1083,14 +1083,14 @@
     ],
     "title_en_us": "Daily #034: Keycloak evaluation for SSO",
     "title_ja_jp": "Daily #034: SSO向けKeycloak利用評価",
-    "summary_en_us": "Covers Keycloak evaluation for SSO in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「SSO向けKeycloak利用評価」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Keycloak evaluation for SSO with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "SSO向けKeycloak利用評価 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #033: Padronização de autenticação com JWT",
     "url": "https://nhmatsumoto.github.io/posts/20260408-170000-daily-033-padronizacao-de-autenticacao-com-jwt/",
     "kind": "post",
-    "summary": "Define o uso de tokens assinados para autenticar chamadas, carregar claims e proteger endpoints de operação.",
+    "summary": "Explora Padronização de autenticação com JWT com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1100,14 +1100,14 @@
     ],
     "title_en_us": "Daily #033: JWT authentication standardization",
     "title_ja_jp": "Daily #033: JWT認証の標準化",
-    "summary_en_us": "Covers JWT authentication standardization in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「JWT認証の標準化」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores JWT authentication standardization with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "JWT認証の標準化 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #032: Tratamento de erro 401 em chamadas Axios",
     "url": "https://nhmatsumoto.github.io/posts/20260408-160000-daily-032-tratamento-de-erro-401-em-chamadas-axios/",
     "kind": "post",
-    "summary": "Padroniza a resposta do frontend a sessões expiradas ou tokens inválidos, evitando falhas silenciosas e loops de requisição.",
+    "summary": "Explora Tratamento de erro 401 em chamadas Axios com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1117,14 +1117,14 @@
     ],
     "title_en_us": "Daily #032: Handling 401 errors in Axios calls",
     "title_ja_jp": "Daily #032: Axios呼び出しにおける401エラー処理",
-    "summary_en_us": "Covers Handling 401 errors in Axios calls in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「Axios呼び出しにおける401エラー処理」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Handling 401 errors in Axios calls with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "Axios呼び出しにおける401エラー処理 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #031: Problema de CORS entre frontend e backend",
     "url": "https://nhmatsumoto.github.io/posts/20260408-150000-daily-031-problema-de-cors-entre-frontend-e-backend/",
     "kind": "post",
-    "summary": "Registra a necessidade de configurar origens permitidas corretamente para evitar bloqueios no navegador sem abrir superfície desnecessária.",
+    "summary": "Explora Problema de CORS entre frontend e backend com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1134,14 +1134,14 @@
     ],
     "title_en_us": "Daily #031: CORS problem between frontend and backend",
     "title_ja_jp": "Daily #031: フロントエンドとバックエンド間のCORS問題",
-    "summary_en_us": "Covers CORS problem between frontend and backend in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「フロントエンドとバックエンド間のCORS問題」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores CORS problem between frontend and backend with fundamentals, formula, example and diagram for the backend and APIs track.",
+    "summary_ja_jp": "フロントエンドとバックエンド間のCORS問題 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
   },
   {
     "title": "Daily #030: Integração de dados meteorológicos no mapa em tempo real",
     "url": "https://nhmatsumoto.github.io/posts/20260408-140000-daily-030-integracao-de-dados-meteorologicos-no-mapa-em-tempo-real/",
     "kind": "post",
-    "summary": "Sobrepõe dados de clima ao mapa para apoiar decisões sobre deslocamento, evacuação, risco de enchente e prioridade de atendimento.",
+    "summary": "Explora Integração de dados meteorológicos no mapa em tempo real com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1150,14 +1150,14 @@
     ],
     "title_en_us": "Daily #030: Real-time weather data integration on the map",
     "title_ja_jp": "Daily #030: 地図へのリアルタイム気象データ統合",
-    "summary_en_us": "Covers Real-time weather data integration on the map in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「地図へのリアルタイム気象データ統合」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Real-time weather data integration on the map with fundamentals, formula, example and diagram for the maps and visualization track.",
+    "summary_ja_jp": "地図へのリアルタイム気象データ統合 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
   },
   {
     "title": "Daily #029: Estratégia de LOD (Level of Detail) estilo Minecraft",
     "url": "https://nhmatsumoto.github.io/posts/20260408-130000-daily-029-estrategia-de-lod-level-of-detail-estilo-minecraft/",
     "kind": "post",
-    "summary": "Aplica níveis de detalhe conforme zoom e relevância, exibindo menos informação de longe e mais precisão quando o usuário aproxima.",
+    "summary": "Explora Estratégia de LOD (Level of Detail) estilo Minecraft com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1166,14 +1166,14 @@
     ],
     "title_en_us": "Daily #029: Minecraft-style Level of Detail strategy",
     "title_ja_jp": "Daily #029: Minecraft風LOD戦略",
-    "summary_en_us": "Covers Minecraft-style Level of Detail strategy in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「Minecraft風LOD戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Minecraft-style Level of Detail strategy with fundamentals, formula, example and diagram for the maps and visualization track.",
+    "summary_ja_jp": "Minecraft風LOD戦略 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
   },
   {
     "title": "Daily #028: Carregamento assíncrono de camadas geográficas",
     "url": "https://nhmatsumoto.github.io/posts/20260408-120000-daily-028-carregamento-assincrono-de-camadas-geograficas/",
     "kind": "post",
-    "summary": "Carrega dados geográficos sob demanda para reduzir tempo inicial de abertura e preservar responsividade em redes instáveis.",
+    "summary": "Explora Carregamento assíncrono de camadas geográficas com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1182,14 +1182,14 @@
     ],
     "title_en_us": "Daily #028: Asynchronous loading of geographic layers",
     "title_ja_jp": "Daily #028: 地理レイヤーの非同期読み込み",
-    "summary_en_us": "Covers Asynchronous loading of geographic layers in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「地理レイヤーの非同期読み込み」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Asynchronous loading of geographic layers with fundamentals, formula, example and diagram for the maps and visualization track.",
+    "summary_ja_jp": "地理レイヤーの非同期読み込み を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
   },
   {
     "title": "Daily #027: Desenho de hotspots interativos com clique do usuário",
     "url": "https://nhmatsumoto.github.io/posts/20260408-110000-daily-027-desenho-de-hotspots-interativos-com-clique-do-usuario/",
     "kind": "post",
-    "summary": "Permite que operadores criem ou ajustem pontos críticos diretamente no mapa, acelerando o ciclo entre observação e ação.",
+    "summary": "Explora Desenho de hotspots interativos com clique do usuário com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1198,14 +1198,14 @@
     ],
     "title_en_us": "Daily #027: Designing interactive hotspots from user clicks",
     "title_ja_jp": "Daily #027: ユーザークリックによるインタラクティブホットスポット描画",
-    "summary_en_us": "Covers Designing interactive hotspots from user clicks in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「ユーザークリックによるインタラクティブホットスポット描画」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Designing interactive hotspots from user clicks with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "ユーザークリックによるインタラクティブホットスポット描画 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #026: Criação de interface “map-first”",
     "url": "https://nhmatsumoto.github.io/posts/20260408-100000-daily-026-criacao-de-interface-map-first/",
     "kind": "post",
-    "summary": "Coloca o mapa como superfície principal de decisão, mantendo listas, filtros e painéis como apoio ao contexto espacial.",
+    "summary": "Explora Criação de interface “map-first” com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1214,14 +1214,14 @@
     ],
     "title_en_us": "Daily #026: Creating a map-first interface",
     "title_ja_jp": "Daily #026: map-firstインターフェースの作成",
-    "summary_en_us": "Covers Creating a map-first interface in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「map-firstインターフェースの作成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Creating a map-first interface with fundamentals, formula, example and diagram for the maps and visualization track.",
+    "summary_ja_jp": "map-firstインターフェースの作成 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
   },
   {
     "title": "Daily #025: Uso de OpenStreetMap como base geográfica",
     "url": "https://nhmatsumoto.github.io/posts/20260408-090000-daily-025-uso-de-openstreetmap-como-base-geografica/",
     "kind": "post",
-    "summary": "Adota uma base aberta e global para reduzir custo inicial e facilitar expansão territorial da plataforma.",
+    "summary": "Explora Uso de OpenStreetMap como base geográfica com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1230,14 +1230,14 @@
     ],
     "title_en_us": "Daily #025: Using OpenStreetMap as the geographic base",
     "title_ja_jp": "Daily #025: 地理基盤としてのOpenStreetMap活用",
-    "summary_en_us": "Covers Using OpenStreetMap as the geographic base in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「地理基盤としてのOpenStreetMap活用」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Using OpenStreetMap as the geographic base with fundamentals, formula, example and diagram for the maps and visualization track.",
+    "summary_ja_jp": "地理基盤としてのOpenStreetMap活用 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
   },
   {
     "title": "Daily #024: Sistema de marcação de áreas de risco (1–10)",
     "url": "https://nhmatsumoto.github.io/posts/20260408-080000-daily-024-sistema-de-marcacao-de-areas-de-risco-110/",
     "kind": "post",
-    "summary": "Cria uma escala visual simples para comunicar severidade de risco sem depender de explicações longas durante uma crise.",
+    "summary": "Explora Sistema de marcação de áreas de risco (1–10) com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1246,14 +1246,14 @@
     ],
     "title_en_us": "Daily #024: Risk area marking system from 1 to 10",
     "title_ja_jp": "Daily #024: リスク領域マーキングシステム（1-10）",
-    "summary_en_us": "Covers Risk area marking system from 1 to 10 in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「リスク領域マーキングシステム（1-10）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Risk area marking system from 1 to 10 with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "リスク領域マーキングシステム（1-10） を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #023: Estratégia de overlays dinâmicos no mapa",
     "url": "https://nhmatsumoto.github.io/posts/20260408-070000-daily-023-estrategia-de-overlays-dinamicos-no-mapa/",
     "kind": "post",
-    "summary": "Permite ligar e desligar camadas de clima, risco, alertas e operações conforme o contexto do usuário.",
+    "summary": "Explora Estratégia de overlays dinâmicos no mapa com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1262,14 +1262,14 @@
     ],
     "title_en_us": "Daily #023: Dynamic overlay strategy on the map",
     "title_ja_jp": "Daily #023: 地図上の動的オーバーレイ戦略",
-    "summary_en_us": "Covers Dynamic overlay strategy on the map in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「地図上の動的オーバーレイ戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Dynamic overlay strategy on the map with fundamentals, formula, example and diagram for the maps and visualization track.",
+    "summary_ja_jp": "地図上の動的オーバーレイ戦略 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
   },
   {
     "title": "Daily #022: Problemas de performance com renderização de camadas",
     "url": "https://nhmatsumoto.github.io/posts/20260408-060000-daily-022-problemas-de-performance-com-renderizacao-de-camadas/",
     "kind": "post",
-    "summary": "Identifica gargalos ao desenhar muitos marcadores, polígonos ou overlays, orientando decisões de agrupamento e carregamento progressivo.",
+    "summary": "Explora Problemas de performance com renderização de camadas com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1278,14 +1278,14 @@
     ],
     "title_en_us": "Daily #022: Performance issues when rendering layers",
     "title_ja_jp": "Daily #022: レイヤー描画のパフォーマンス課題",
-    "summary_en_us": "Covers Performance issues when rendering layers in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「レイヤー描画のパフォーマンス課題」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Performance issues when rendering layers with fundamentals, formula, example and diagram for the maps and visualization track.",
+    "summary_ja_jp": "レイヤー描画のパフォーマンス課題 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
   },
   {
     "title": "Daily #021: Implementação inicial de mapa com Leaflet.js",
     "url": "https://nhmatsumoto.github.io/posts/20260408-050000-daily-021-implementacao-inicial-de-mapa-com-leaflet-js/",
     "kind": "post",
-    "summary": "Introduz um mapa web leve para visualizar ocorrências, áreas de risco e pontos de interesse sem exigir stack geoespacial complexa no início.",
+    "summary": "Explora Implementação inicial de mapa com Leaflet.js com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1294,14 +1294,14 @@
     ],
     "title_en_us": "Daily #021: Initial map implementation with Leaflet.js",
     "title_ja_jp": "Daily #021: Leaflet.jsによる地図初期実装",
-    "summary_en_us": "Covers Initial map implementation with Leaflet.js in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「Leaflet.jsによる地図初期実装」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Initial map implementation with Leaflet.js with fundamentals, formula, example and diagram for the maps and visualization track.",
+    "summary_ja_jp": "Leaflet.jsによる地図初期実装 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
   },
   {
     "title": "Daily #020: Separação entre ambiente operacional e ambiente de simulação",
     "url": "https://nhmatsumoto.github.io/posts/20260408-040000-daily-020-separacao-entre-ambiente-operacional-e-ambiente-de-simulacao/",
     "kind": "post",
-    "summary": "Evita que experimentos, modelos e cargas analíticas afetem o ambiente usado por equipes em operação real.",
+    "summary": "Explora Separação entre ambiente operacional e ambiente de simulação com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1311,14 +1311,14 @@
     ],
     "title_en_us": "Daily #020: Separating the operational environment from the simulation environment",
     "title_ja_jp": "Daily #020: 運用環境とシミュレーション環境の分離",
-    "summary_en_us": "Covers Separating the operational environment from the simulation environment in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「運用環境とシミュレーション環境の分離」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Separating the operational environment from the simulation environment with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "運用環境とシミュレーション環境の分離 を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #019: Estrutura de processamento batch para simulações",
     "url": "https://nhmatsumoto.github.io/posts/20260408-030000-daily-019-estrutura-de-processamento-batch-para-simulacoes/",
     "kind": "post",
-    "summary": "Organiza execuções pesadas em lotes reproduzíveis, com entradas versionadas, resultados persistidos e rastreabilidade de parâmetros.",
+    "summary": "Explora Estrutura de processamento batch para simulações com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1328,14 +1328,14 @@
     ],
     "title_en_us": "Daily #019: Batch processing structure for simulations",
     "title_ja_jp": "Daily #019: シミュレーション向けバッチ処理構造",
-    "summary_en_us": "Covers Batch processing structure for simulations in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「シミュレーション向けバッチ処理構造」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Batch processing structure for simulations with fundamentals, formula, example and diagram for the product and vision track.",
+    "summary_ja_jp": "シミュレーション向けバッチ処理構造 を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
   },
   {
     "title": "Daily #018: Estratégia para previsão de áreas de risco com IA",
     "url": "https://nhmatsumoto.github.io/posts/20260408-020000-daily-018-estrategia-para-previsao-de-areas-de-risco-com-ia/",
     "kind": "post",
-    "summary": "Define sinais, fontes e saídas esperadas para modelos que priorizam locais com maior probabilidade de impacto ou necessidade de resposta.",
+    "summary": "Explora Estratégia para previsão de áreas de risco com IA com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1345,14 +1345,14 @@
     ],
     "title_en_us": "Daily #018: Strategy for AI-based risk area prediction",
     "title_ja_jp": "Daily #018: AIによるリスク領域予測戦略",
-    "summary_en_us": "Covers Strategy for AI-based risk area prediction in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「AIによるリスク領域予測戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Strategy for AI-based risk area prediction with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "AIによるリスク領域予測戦略 を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #017: Modelagem inicial de simulação de tsunami",
     "url": "https://nhmatsumoto.github.io/posts/20260408-010000-daily-017-modelagem-inicial-de-simulacao-de-tsunami/",
     "kind": "post",
-    "summary": "Estrutura um modelo conceitual para propagação costeira, zonas de impacto e priorização de evacuação em eventos extremos.",
+    "summary": "Explora Modelagem inicial de simulação de tsunami com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1362,14 +1362,14 @@
     ],
     "title_en_us": "Daily #017: Initial tsunami simulation modeling",
     "title_ja_jp": "Daily #017: 津波シミュレーションの初期モデリング",
-    "summary_en_us": "Covers Initial tsunami simulation modeling in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「津波シミュレーションの初期モデリング」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Initial tsunami simulation modeling with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "津波シミュレーションの初期モデリング を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #016: Integração com dados de elevação para simulação de enchentes",
     "url": "https://nhmatsumoto.github.io/posts/20260408-000000-daily-016-integracao-com-dados-de-elevacao-para-simulacao-de-enchentes/",
     "kind": "post",
-    "summary": "Combina altitude, terreno e hidrologia simplificada para estimar propagação de água e identificar regiões vulneráveis.",
+    "summary": "Explora Integração com dados de elevação para simulação de enchentes com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1379,14 +1379,14 @@
     ],
     "title_en_us": "Daily #016: Elevation data integration for flood simulation",
     "title_ja_jp": "Daily #016: 洪水シミュレーション向け標高データ統合",
-    "summary_en_us": "Covers Elevation data integration for flood simulation in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「洪水シミュレーション向け標高データ統合」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Elevation data integration for flood simulation with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "洪水シミュレーション向け標高データ統合 を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #015: Uso de Open-Meteo para dados climáticos em tempo real",
     "url": "https://nhmatsumoto.github.io/posts/20260407-230000-daily-015-uso-de-open-meteo-para-dados-climaticos-em-tempo-real/",
     "kind": "post",
-    "summary": "Integra clima atual e previsões de curto prazo para contextualizar risco operacional, chuva acumulada e condições de deslocamento.",
+    "summary": "Explora Uso de Open-Meteo para dados climáticos em tempo real com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1396,14 +1396,14 @@
     ],
     "title_en_us": "Daily #015: Using Open-Meteo for real-time weather data",
     "title_ja_jp": "Daily #015: Open-Meteoによるリアルタイム気象データ活用",
-    "summary_en_us": "Covers Using Open-Meteo for real-time weather data in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「Open-Meteoによるリアルタイム気象データ活用」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Using Open-Meteo for real-time weather data with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "Open-Meteoによるリアルタイム気象データ活用 を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #014: Pipeline de segmentação de imagens geográficas",
     "url": "https://nhmatsumoto.github.io/posts/20260407-220000-daily-014-pipeline-de-segmentacao-de-imagens-geograficas/",
     "kind": "post",
-    "summary": "Define etapas para classificar pixels e regiões em mapas ou fotos aéreas, separando água, vias, edificações, vegetação e áreas de risco.",
+    "summary": "Explora Pipeline de segmentação de imagens geográficas com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1413,14 +1413,14 @@
     ],
     "title_en_us": "Daily #014: Geographic image segmentation pipeline",
     "title_ja_jp": "Daily #014: 地理画像セグメンテーションのパイプライン",
-    "summary_en_us": "Covers Geographic image segmentation pipeline in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「地理画像セグメンテーションのパイプライン」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Geographic image segmentation pipeline with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "地理画像セグメンテーションのパイプライン を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #013: Geração de datasets sintéticos com Three.js",
     "url": "https://nhmatsumoto.github.io/posts/20260407-210000-daily-013-geracao-de-datasets-sinteticos-com-three-js/",
     "kind": "post",
-    "summary": "Usa cenas controladas em 3D para gerar imagens anotadas, ampliando o volume de dados de treino sem depender apenas de ocorrências reais.",
+    "summary": "Explora Geração de datasets sintéticos com Three.js com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1430,14 +1430,14 @@
     ],
     "title_en_us": "Daily #013: Generating synthetic datasets with Three.js",
     "title_ja_jp": "Daily #013: Three.jsによる合成データセット生成",
-    "summary_en_us": "Covers Generating synthetic datasets with Three.js in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「Three.jsによる合成データセット生成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Generating synthetic datasets with Three.js with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "Three.jsによる合成データセット生成 を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #012: Uso de sombras e posição do sol para inferência de altura",
     "url": "https://nhmatsumoto.github.io/posts/20260407-200000-daily-012-uso-de-sombras-e-posicao-do-sol-para-inferencia-de-altura/",
     "kind": "post",
-    "summary": "Explora a relação entre horário, latitude, sombra projetada e altura estimada de objetos para enriquecer modelos de cena.",
+    "summary": "Explora Uso de sombras e posição do sol para inferência de altura com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1447,14 +1447,14 @@
     ],
     "title_en_us": "Daily #012: Using shadows and sun position to infer height",
     "title_ja_jp": "Daily #012: 影と太陽位置を使った高さ推定",
-    "summary_en_us": "Covers Using shadows and sun position to infer height in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「影と太陽位置を使った高さ推定」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Using shadows and sun position to infer height with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "影と太陽位置を使った高さ推定 を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D",
     "url": "https://nhmatsumoto.github.io/posts/20260407-190000-daily-011-estrategia-para-reconstrucao-3d-a-partir-de-imagens-2d/",
     "kind": "post",
-    "summary": "Descreve como imagens planas podem ser usadas para inferir geometria, profundidade aproximada e contexto espacial em áreas afetadas.",
+    "summary": "Explora Estratégia para reconstrução 3D a partir de imagens 2D com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1464,14 +1464,14 @@
     ],
     "title_en_us": "Daily #011: 3D reconstruction strategy from 2D images",
     "title_ja_jp": "Daily #011: 2D画像からの3D再構成戦略",
-    "summary_en_us": "Covers 3D reconstruction strategy from 2D images in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「2D画像からの3D再構成戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores 3D reconstruction strategy from 2D images with fundamentals, formula, example and diagram for the AI and simulation track.",
+    "summary_ja_jp": "2D画像からの3D再構成戦略 を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
   },
   {
     "title": "Daily #010: Padronização de contratos de API (DTOs e validações)",
     "url": "https://nhmatsumoto.github.io/posts/20260407-180000-daily-010-padronizacao-de-contratos-de-api-dtos-e-validacoes/",
     "kind": "post",
-    "summary": "Cria contratos previsíveis para entrada e saída de dados, reduzindo inconsistências entre frontend, backend e integrações externas.",
+    "summary": "Explora Padronização de contratos de API (DTOs e validações) com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1480,14 +1480,14 @@
     ],
     "title_en_us": "Daily #010: API contract standardization with DTOs and validations",
     "title_ja_jp": "Daily #010: API契約の標準化（DTOとバリデーション）",
-    "summary_en_us": "Covers API contract standardization with DTOs and validations in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「API契約の標準化（DTOとバリデーション）」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores API contract standardization with DTOs and validations with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "API契約の標準化（DTOとバリデーション） を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #009: Modelagem de entidades: MissingPerson, Hotspot, Alert",
     "url": "https://nhmatsumoto.github.io/posts/20260407-170000-daily-009-modelagem-de-entidades-missingperson-hotspot-alert/",
     "kind": "post",
-    "summary": "Define entidades centrais do domínio, seus atributos essenciais e os relacionamentos que sustentam busca, risco e comunicação de emergência.",
+    "summary": "Explora Modelagem de entidades: MissingPerson, Hotspot, Alert com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1496,14 +1496,14 @@
     ],
     "title_en_us": "Daily #009: Entity modeling: MissingPerson, Hotspot and Alert",
     "title_ja_jp": "Daily #009: エンティティ設計：MissingPerson、Hotspot、Alert",
-    "summary_en_us": "Covers Entity modeling: MissingPerson, Hotspot and Alert in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「エンティティ設計：MissingPerson、Hotspot、Alert」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Entity modeling: MissingPerson, Hotspot and Alert with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "エンティティ設計：MissingPerson、Hotspot、Alert を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #008: Introdução de eventos de domínio para ações críticas",
     "url": "https://nhmatsumoto.github.io/posts/20260407-160000-daily-008-introducao-de-eventos-de-dominio-para-acoes-criticas/",
     "kind": "post",
-    "summary": "Registra mudanças importantes do domínio, como alerta criado ou pessoa localizada, para desacoplar reações e preservar rastreabilidade.",
+    "summary": "Explora Introdução de eventos de domínio para ações críticas com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1512,14 +1512,14 @@
     ],
     "title_en_us": "Daily #008: Introducing domain events for critical actions",
     "title_ja_jp": "Daily #008: 重要アクション向けドメインイベントの導入",
-    "summary_en_us": "Covers Introducing domain events for critical actions in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「重要アクション向けドメインイベントの導入」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Introducing domain events for critical actions with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "重要アクション向けドメインイベントの導入 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #007: Organização de pastas para backend escalável (.NET Core)",
     "url": "https://nhmatsumoto.github.io/posts/20260407-150000-daily-007-organizacao-de-pastas-para-backend-escalavel-net-core/",
     "kind": "post",
-    "summary": "Propõe uma estrutura de projeto que deixa explícitas camadas, módulos, contratos e dependências, facilitando manutenção e onboarding.",
+    "summary": "Explora Organização de pastas para backend escalável (.NET Core) com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1528,14 +1528,14 @@
     ],
     "title_en_us": "Daily #007: Folder organization for a scalable .NET Core backend",
     "title_ja_jp": "Daily #007: スケーラブルな.NET Coreバックエンドのフォルダ構成",
-    "summary_en_us": "Covers Folder organization for a scalable .NET Core backend in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「スケーラブルな.NET Coreバックエンドのフォルダ構成」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Folder organization for a scalable .NET Core backend with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "スケーラブルな.NET Coreバックエンドのフォルダ構成 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #006: Avaliação entre monolito modular vs microservices",
     "url": "https://nhmatsumoto.github.io/posts/20260407-140000-daily-006-avaliacao-entre-monolito-modular-vs-microservices/",
     "kind": "post",
-    "summary": "Compara simplicidade operacional, deploy, observabilidade e custo de evolução antes de fragmentar o sistema em serviços independentes.",
+    "summary": "Explora Avaliação entre monolito modular vs microservices com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1544,14 +1544,14 @@
     ],
     "title_en_us": "Daily #006: Evaluation between modular monolith and microservices",
     "title_ja_jp": "Daily #006: モジュラーモノリスとマイクロサービスの比較評価",
-    "summary_en_us": "Covers Evaluation between modular monolith and microservices in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「モジュラーモノリスとマイクロサービスの比較評価」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Evaluation between modular monolith and microservices with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "モジュラーモノリスとマイクロサービスの比較評価 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #005: Definição de bounded contexts: Resgate, Usuários, Alertas",
     "url": "https://nhmatsumoto.github.io/posts/20260407-130000-daily-005-definicao-de-bounded-contexts-resgate-usuarios-alertas/",
     "kind": "post",
-    "summary": "Delimita os contextos principais do SOS Location para impedir que regras de autenticação, acionamento de alertas e coordenação de resgate se misturem no mesmo modelo.",
+    "summary": "Explora Definição de bounded contexts: Resgate, Usuários, Alertas com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1560,14 +1560,14 @@
     ],
     "title_en_us": "Daily #005: Bounded context definition: Rescue, Users and Alerts",
     "title_ja_jp": "Daily #005: 境界づけられたコンテキストの定義：救助、ユーザー、アラート",
-    "summary_en_us": "Covers Bounded context definition: Rescue, Users and Alerts in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「境界づけられたコンテキストの定義：救助、ユーザー、アラート」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Bounded context definition: Rescue, Users and Alerts with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "境界づけられたコンテキストの定義：救助、ユーザー、アラート を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #004: Estratégia de modularização para plataforma multitenant",
     "url": "https://nhmatsumoto.github.io/posts/20260407-120000-daily-004-estrategia-de-modularizacao-para-plataforma-multitenant/",
     "kind": "post",
-    "summary": "Define limites internos para que múltiplas organizações usem a plataforma com isolamento de dados, configuração e políticas de operação.",
+    "summary": "Explora Estratégia de modularização para plataforma multitenant com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1576,14 +1576,14 @@
     ],
     "title_en_us": "Daily #004: Modularization strategy for a multitenant platform",
     "title_ja_jp": "Daily #004: マルチテナント基盤のモジュール化戦略",
-    "summary_en_us": "Covers Modularization strategy for a multitenant platform in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「マルチテナント基盤のモジュール化戦略」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Modularization strategy for a multitenant platform with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "マルチテナント基盤のモジュール化戦略 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #003: Separação de responsabilidades com CQRS no backend .NET",
     "url": "https://nhmatsumoto.github.io/posts/20260407-110000-daily-003-separacao-de-responsabilidades-com-cqrs-no-backend-net/",
     "kind": "post",
-    "summary": "Divide comandos e consultas para simplificar leituras intensivas, preservar invariantes nas escritas e permitir otimizações específicas para cada fluxo.",
+    "summary": "Explora Separação de responsabilidades com CQRS no backend .NET com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1592,14 +1592,14 @@
     ],
     "title_en_us": "Daily #003: Responsibility separation with CQRS in the .NET backend",
     "title_ja_jp": "Daily #003: .NETバックエンドにおけるCQRSによる責務分離",
-    "summary_en_us": "Covers Responsibility separation with CQRS in the .NET backend in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「.NETバックエンドにおけるCQRSによる責務分離」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Responsibility separation with CQRS in the .NET backend with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": ".NETバックエンドにおけるCQRSによる責務分離 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #002: Estrutura inicial baseada em DDD para módulos de emergência",
     "url": "https://nhmatsumoto.github.io/posts/20260407-100000-daily-002-estrutura-inicial-baseada-em-ddd-para-modulos-de-emergencia/",
     "kind": "post",
-    "summary": "Organiza o backend em módulos alinhados ao domínio de emergência, mantendo regras críticas próximas dos agregados e separando decisões operacionais de detalhes de infraestrutura.",
+    "summary": "Explora Estrutura inicial baseada em DDD para módulos de emergência com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1608,14 +1608,14 @@
     ],
     "title_en_us": "Daily #002: Initial DDD-based structure for emergency modules",
     "title_ja_jp": "Daily #002: 緊急対応モジュール向けDDDベース初期構造",
-    "summary_en_us": "Covers Initial DDD-based structure for emergency modules in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「緊急対応モジュール向けDDDベース初期構造」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Initial DDD-based structure for emergency modules with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "緊急対応モジュール向けDDDベース初期構造 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Daily #001: Definição de linguagem ubíqua para o domínio de desastres no SOS Location",
     "url": "https://nhmatsumoto.github.io/posts/20260407-090000-daily-001-definicao-de-linguagem-ubiqua-para-o-dominio-de-desastres-no-sos-location/",
     "kind": "post",
-    "summary": "Estabelece um vocabulário comum para equipes técnicas, operadores e especialistas em resposta a desastres, reduzindo ambiguidades em termos como alerta, hotspot, resgate, vítima e operação.",
+    "summary": "Explora Definição de linguagem ubíqua para o domínio de desastres no SOS Location com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -1624,8 +1624,8 @@
     ],
     "title_en_us": "Daily #001: Ubiquitous language definition for the SOS Location disaster domain",
     "title_ja_jp": "Daily #001: SOS Locationの災害ドメインにおけるユビキタス言語の定義",
-    "summary_en_us": "Covers Ubiquitous language definition for the SOS Location disaster domain in SOS Location with foundations, diagrams, formulas, examples and operational success criteria.",
-    "summary_ja_jp": "「SOS Locationの災害ドメインにおけるユビキタス言語の定義」を、基礎、図、数式、例、運用上の成功基準とともに説明します。"
+    "summary_en_us": "Explores Ubiquitous language definition for the SOS Location disaster domain with fundamentals, formula, example and diagram for the architecture track.",
+    "summary_ja_jp": "SOS Locationの災害ドメインにおけるユビキタス言語の定義 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
   },
   {
     "title": "Ronaldinho Agent: persona, memória curta e tool use sem virar produto separado",
