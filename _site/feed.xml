@@ -6,144 +6,144 @@
     <description>um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção</description>
     <atom:link href="https://nhmatsumoto.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Daily #100: Evolução do produto para plataforma completa de emergência</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-120000-daily-100-evolucao-do-produto-para-plataforma-completa-de-emergencia/</link>
-      <description><![CDATA[Explora Evolução do produto para plataforma completa de emergência com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Sat, 11 Apr 2026 12:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-120000-daily-100-evolucao-do-produto-para-plataforma-completa-de-emergencia/</guid>
+      <title>Daily #045: Lock otimista vs lock pessimista</title>
+      <link>https://nhmatsumoto.github.io/posts/20260409-050000-daily-045-lock-otimista-vs-lock-pessimista/</link>
+      <description><![CDATA[Como o SOS Location usa lock pessimista (SELECT FOR UPDATE) para atualizar saldo de campanhas de doação com alta concorrência, e lock otimista (xmin/rowversion) para edições de dados de operações com baixa concorrência de escrita.]]></description>
+      <pubDate>Thu, 09 Apr 2026 05:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-050000-daily-045-lock-otimista-vs-lock-pessimista/</guid>
     </item>
     <item>
-      <title>Daily #099: Estrutura de permissões para equipes de resgate</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-110000-daily-099-estrutura-de-permissoes-para-equipes-de-resgate/</link>
-      <description><![CDATA[Explora Estrutura de permissões para equipes de resgate com fundamentos, fórmula, exemplo e diagrama para a trilha segurança.]]></description>
-      <pubDate>Sat, 11 Apr 2026 11:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-110000-daily-099-estrutura-de-permissoes-para-equipes-de-resgate/</guid>
+      <title>Daily #044: Controle de estado de pagamento (pending, completed)</title>
+      <link>https://nhmatsumoto.github.io/posts/20260409-040000-daily-044-controle-de-estado-de-pagamento-pending-completed/</link>
+      <description><![CDATA[Como o SOS Location modela a máquina de estados de Doacao — transições válidas entre pending, processing, completed, failed e refunded, com enforcement no domínio e auditoria de cada transição em tabela separada.]]></description>
+      <pubDate>Thu, 09 Apr 2026 04:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-040000-daily-044-controle-de-estado-de-pagamento-pending-completed/</guid>
     </item>
     <item>
-      <title>Daily #098: Comunicação em tempo real com usuários afetados</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-100000-daily-098-comunicacao-em-tempo-real-com-usuarios-afetados/</link>
-      <description><![CDATA[Explora Comunicação em tempo real com usuários afetados com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Sat, 11 Apr 2026 10:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-100000-daily-098-comunicacao-em-tempo-real-com-usuarios-afetados/</guid>
+      <title>Daily #043: Uso de tokens únicos por transação</title>
+      <link>https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/</link>
+      <description><![CDATA[Como o SOS Location emite tokens CSRF de uso único para formulários de doação — gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission.]]></description>
+      <pubDate>Thu, 09 Apr 2026 03:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/</guid>
     </item>
     <item>
-      <title>Daily #097: UX voltado para situações de crise</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-090000-daily-097-ux-voltado-para-situacoes-de-crise/</link>
-      <description><![CDATA[Explora UX voltado para situações de crise com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Sat, 11 Apr 2026 09:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-090000-daily-097-ux-voltado-para-situacoes-de-crise/</guid>
+      <title>Daily #042: Implementação de idempotência na API</title>
+      <link>https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/</link>
+      <description><![CDATA[Como o SOS Location implementou idempotência via header Idempotency-Key no nível da API — armazenamento de respostas em Redis com TTL de 24 horas, replay automático e proteção contra double-submit em qualquer cliente HTTP.]]></description>
+      <pubDate>Thu, 09 Apr 2026 02:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/</guid>
     </item>
     <item>
-      <title>Daily #096: Planejamento de expansão global</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-080000-daily-096-planejamento-de-expansao-global/</link>
-      <description><![CDATA[Explora Planejamento de expansão global com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Sat, 11 Apr 2026 08:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-080000-daily-096-planejamento-de-expansao-global/</guid>
+      <title>Daily #041: Problema de pagamento duplicado por múltiplos cliques</title>
+      <link>https://nhmatsumoto.github.io/posts/20260409-010000-daily-041-problema-de-pagamento-duplicado-por-multiplos-cliques/</link>
+      <description><![CDATA[Como o SOS Location resolveu o problema de doações duplicadas causado por duplo-clique no botão de doação — botão desabilitado após primeiro clique no frontend e chave de idempotência no backend.]]></description>
+      <pubDate>Thu, 09 Apr 2026 01:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-010000-daily-041-problema-de-pagamento-duplicado-por-multiplos-cliques/</guid>
     </item>
     <item>
-      <title>Daily #095: Integração com dados governamentais</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-070000-daily-095-integracao-com-dados-governamentais/</link>
-      <description><![CDATA[Explora Integração com dados governamentais com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Sat, 11 Apr 2026 07:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-070000-daily-095-integracao-com-dados-governamentais/</guid>
+      <title>Daily #040: Logging estruturado para rastreabilidade</title>
+      <link>https://nhmatsumoto.github.io/posts/20260409-000000-daily-040-logging-estruturado-para-rastreabilidade/</link>
+      <description><![CDATA[Como o SOS Location configura Serilog com Seq para logging estruturado, enriquece logs com tenantId e traceId via middleware, e usa structured properties para investigar incidentes em segundos em vez de minutos.]]></description>
+      <pubDate>Thu, 09 Apr 2026 00:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-000000-daily-040-logging-estruturado-para-rastreabilidade/</guid>
     </item>
     <item>
-      <title>Daily #094: Sistema de doações com rastreabilidade</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-060000-daily-094-sistema-de-doacoes-com-rastreabilidade/</link>
-      <description><![CDATA[Explora Sistema de doações com rastreabilidade com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Sat, 11 Apr 2026 06:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-060000-daily-094-sistema-de-doacoes-com-rastreabilidade/</guid>
+      <title>Daily #039: Estratégia de versionamento de APIs</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-230000-daily-039-estrategia-de-versionamento-de-apis/</link>
+      <description><![CDATA[Como o SOS Location implementou versionamento de API via URL path (/api/v1/, /api/v2/) com Asp.Versioning, a política de deprecação de 90 dias e o header Sunset para notificação automática de clientes.]]></description>
+      <pubDate>Wed, 08 Apr 2026 23:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-230000-daily-039-estrategia-de-versionamento-de-apis/</guid>
     </item>
     <item>
-      <title>Daily #093: Criação de dashboard público de transparência</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-050000-daily-093-criacao-de-dashboard-publico-de-transparencia/</link>
-      <description><![CDATA[Explora Criação de dashboard público de transparência com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Sat, 11 Apr 2026 05:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-050000-daily-093-criacao-de-dashboard-publico-de-transparencia/</guid>
+      <title>Daily #038: Tratamento de JSON inválido em integrações</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-220000-daily-038-tratamento-de-json-invalido-em-integracoes/</link>
+      <description><![CDATA[Como o SOS Location usa System.Text.Json com JsonDocument para validar e parsear JSON de fontes externas (GDACS, Open-Meteo), e como o tratamento de campos opcionais e tipos inesperados evita crashes silenciosos.]]></description>
+      <pubDate>Wed, 08 Apr 2026 22:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-220000-daily-038-tratamento-de-json-invalido-em-integracoes/</guid>
     </item>
     <item>
-      <title>Daily #092: Estratégia open-source para colaboração global</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-040000-daily-092-estrategia-open-source-para-colaboracao-global/</link>
-      <description><![CDATA[Explora Estratégia open-source para colaboração global com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Sat, 11 Apr 2026 04:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-040000-daily-092-estrategia-open-source-para-colaboracao-global/</guid>
+      <title>Daily #037: Retry e fallback para APIs externas (GDACS)</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-210000-daily-037-retry-e-fallback-para-apis-externas-gdacs/</link>
+      <description><![CDATA[Como o SOS Location implementou Polly com retry exponential backoff e circuit breaker para o GDACS (Global Disaster Alert and Coordination System), e como o fallback para dados em cache evita alertas perdidos em falhas de API.]]></description>
+      <pubDate>Wed, 08 Apr 2026 21:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-210000-daily-037-retry-e-fallback-para-apis-externas-gdacs/</guid>
     </item>
     <item>
-      <title>Daily #091: Definição do propósito: software para salvar vidas</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-030000-daily-091-definicao-do-proposito-software-para-salvar-vidas/</link>
-      <description><![CDATA[Explora Definição do propósito: software para salvar vidas com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Sat, 11 Apr 2026 03:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-030000-daily-091-definicao-do-proposito-software-para-salvar-vidas/</guid>
+      <title>Daily #036: Modelagem de API para pessoas desaparecidas</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-200000-daily-036-modelagem-de-api-para-pessoas-desaparecidas/</link>
+      <description><![CDATA[Como o SOS Location modelou os endpoints de PessoaDesaparecida: POST /api/pessoas-desaparecidas com geolocalização do último avistamento, PATCH para atualizar status (encontrada/óbito), e GET com raio de busca via ST_DWithin.]]></description>
+      <pubDate>Wed, 08 Apr 2026 20:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-200000-daily-036-modelagem-de-api-para-pessoas-desaparecidas/</guid>
     </item>
     <item>
-      <title>Daily #090: Redução de tokens com linguagem estruturada</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-020000-daily-090-reducao-de-tokens-com-linguagem-estruturada/</link>
-      <description><![CDATA[Explora Redução de tokens com linguagem estruturada com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência.]]></description>
-      <pubDate>Sat, 11 Apr 2026 02:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-020000-daily-090-reducao-de-tokens-com-linguagem-estruturada/</guid>
+      <title>Daily #035: Criação de endpoint para snapshot de operações</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-190000-daily-035-criacao-de-endpoint-para-snapshot-de-operacoes/</link>
+      <description><![CDATA[Como o SOS Location implementou GET /api/operacoes/{id}/snapshot que retorna o estado completo de uma OperacaoDeResgate em um único response — areas, hotspots, pessoas desaparecidas, rotas — eliminando 4 requests paralelos.]]></description>
+      <pubDate>Wed, 08 Apr 2026 19:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-190000-daily-035-criacao-de-endpoint-para-snapshot-de-operacoes/</guid>
     </item>
     <item>
-      <title>Daily #089: Estratégia de versionamento de prompts</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-010000-daily-089-estrategia-de-versionamento-de-prompts/</link>
-      <description><![CDATA[Explora Estratégia de versionamento de prompts com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs.]]></description>
-      <pubDate>Sat, 11 Apr 2026 01:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-010000-daily-089-estrategia-de-versionamento-de-prompts/</guid>
+      <title>Daily #034: Avaliação de uso do Keycloak para SSO</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-180000-daily-034-avaliacao-de-uso-do-keycloak-para-sso/</link>
+      <description><![CDATA[Por que o SOS Location avaliou Keycloak para SSO e decidiu por JWT próprio na v1, o critério de decisão baseado em número de tenants e integrações, e o plano de migração para quando Keycloak fizer sentido.]]></description>
+      <pubDate>Wed, 08 Apr 2026 18:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-180000-daily-034-avaliacao-de-uso-do-keycloak-para-sso/</guid>
     </item>
     <item>
-      <title>Daily #088: Integração com ferramentas (Codex, Gemini)</title>
-      <link>https://nhmatsumoto.github.io/posts/20260411-000000-daily-088-integracao-com-ferramentas-codex-gemini/</link>
-      <description><![CDATA[Explora Integração com ferramentas (Codex, Gemini) com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.]]></description>
-      <pubDate>Sat, 11 Apr 2026 00:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260411-000000-daily-088-integracao-com-ferramentas-codex-gemini/</guid>
+      <title>Daily #033: Padronização de autenticação com JWT</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-170000-daily-033-padronizacao-de-autenticacao-com-jwt/</link>
+      <description><![CDATA[Como o SOS Location padronizou os claims JWT (sub, role, tenantId, municipioId), validação de token no middleware .NET e como o tenantId no claim garante o isolamento multitenant sem query adicional.]]></description>
+      <pubDate>Wed, 08 Apr 2026 17:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-170000-daily-033-padronizacao-de-autenticacao-com-jwt/</guid>
     </item>
     <item>
-      <title>Daily #087: Pipeline: pensamento → especificação → execução</title>
-      <link>https://nhmatsumoto.github.io/posts/20260410-230000-daily-087-pipeline-pensamento-especificacao-execucao/</link>
-      <description><![CDATA[Explora Pipeline: pensamento → especificação → execução com fundamentos, fórmula, exemplo e diagrama para a trilha performance e escalabilidade.]]></description>
-      <pubDate>Fri, 10 Apr 2026 23:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260410-230000-daily-087-pipeline-pensamento-especificacao-execucao/</guid>
+      <title>Daily #032: Tratamento de erro 401 em chamadas Axios</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-160000-daily-032-tratamento-de-erro-401-em-chamadas-axios/</link>
+      <description><![CDATA[Como o SOS Location implementou um Axios interceptor para renovar o JWT silenciosamente no 401, usando refresh token com fila de requests pendentes para evitar múltiplas chamadas de renovação simultâneas.]]></description>
+      <pubDate>Wed, 08 Apr 2026 16:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-160000-daily-032-tratamento-de-erro-401-em-chamadas-axios/</guid>
     </item>
     <item>
-      <title>Daily #086: Implementação de “reflection agents”</title>
-      <link>https://nhmatsumoto.github.io/posts/20260410-220000-daily-086-implementacao-de-reflection-agents/</link>
-      <description><![CDATA[Explora Implementação de “reflection agents” com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.]]></description>
-      <pubDate>Fri, 10 Apr 2026 22:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260410-220000-daily-086-implementacao-de-reflection-agents/</guid>
+      <title>Daily #031: Problema de CORS entre frontend e backend</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-150000-daily-031-problema-de-cors-entre-frontend-e-backend/</link>
+      <description><![CDATA[Como o SOS Location resolveu o bloqueio CORS entre o frontend React (porta 5173) e o backend .NET (porta 7001), e como a política de CORS é diferente em desenvolvimento, staging e produção.]]></description>
+      <pubDate>Wed, 08 Apr 2026 15:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-150000-daily-031-problema-de-cors-entre-frontend-e-backend/</guid>
     </item>
     <item>
-      <title>Daily #085: Ajuste de comportamento com base em correções</title>
-      <link>https://nhmatsumoto.github.io/posts/20260410-210000-daily-085-ajuste-de-comportamento-com-base-em-correcoes/</link>
-      <description><![CDATA[Explora Ajuste de comportamento com base em correções com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão.]]></description>
-      <pubDate>Fri, 10 Apr 2026 21:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260410-210000-daily-085-ajuste-de-comportamento-com-base-em-correcoes/</guid>
+      <title>Daily #030: Integração de dados meteorológicos no mapa em tempo real</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-140000-daily-030-integracao-de-dados-meteorologicos-no-mapa-em-tempo-real/</link>
+      <description><![CDATA[Como o SOS Location renderiza o overlay de precipitação no Leaflet usando gradiente de intensidade de chuva por célula de 0.1°, atualizado a cada 30 minutos via polling Open-Meteo e interpolado visualmente com canvas.]]></description>
+      <pubDate>Wed, 08 Apr 2026 14:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-140000-daily-030-integracao-de-dados-meteorologicos-no-mapa-em-tempo-real/</guid>
     </item>
     <item>
-      <title>Daily #084: Sistema de memória para aprendizado contínuo</title>
-      <link>https://nhmatsumoto.github.io/posts/20260410-200000-daily-084-sistema-de-memoria-para-aprendizado-continuo/</link>
-      <description><![CDATA[Explora Sistema de memória para aprendizado contínuo com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.]]></description>
-      <pubDate>Fri, 10 Apr 2026 20:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260410-200000-daily-084-sistema-de-memoria-para-aprendizado-continuo/</guid>
+      <title>Daily #029: Estratégia de LOD (Level of Detail) estilo Minecraft</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-130000-daily-029-estrategia-de-lod-level-of-detail-estilo-minecraft/</link>
+      <description><![CDATA[Como o SOS Location aplica LOD no mapa: zoom < 10 exibe hexágonos H3 de contagem de risco por região, zoom 10–13 exibe polígonos simplificados de AreaDeRisco, zoom > 13 exibe geometria completa com popup de detalhes.]]></description>
+      <pubDate>Wed, 08 Apr 2026 13:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-130000-daily-029-estrategia-de-lod-level-of-detail-estilo-minecraft/</guid>
     </item>
     <item>
-      <title>Daily #083: Uso de linguagem ubíqua para comunicação entre agentes</title>
-      <link>https://nhmatsumoto.github.io/posts/20260410-190000-daily-083-uso-de-linguagem-ubiqua-para-comunicacao-entre-agentes/</link>
-      <description><![CDATA[Explora Uso de linguagem ubíqua para comunicação entre agentes com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura.]]></description>
-      <pubDate>Fri, 10 Apr 2026 19:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260410-190000-daily-083-uso-de-linguagem-ubiqua-para-comunicacao-entre-agentes/</guid>
+      <title>Daily #028: Carregamento assíncrono de camadas geográficas</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-120000-daily-028-carregamento-assincrono-de-camadas-geograficas/</link>
+      <description><![CDATA[Como o SOS Location carrega camadas geográficas em paralelo com Promise.allSettled, prioriza AreaDeRisco e exibe skeleton loader por camada enquanto outras ainda carregam, sem bloquear a interface.]]></description>
+      <pubDate>Wed, 08 Apr 2026 12:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-120000-daily-028-carregamento-assincrono-de-camadas-geograficas/</guid>
     </item>
     <item>
-      <title>Daily #082: Separação de agentes por responsabilidade</title>
-      <link>https://nhmatsumoto.github.io/posts/20260410-180000-daily-082-separacao-de-agentes-por-responsabilidade/</link>
-      <description><![CDATA[Explora Separação de agentes por responsabilidade com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.]]></description>
-      <pubDate>Fri, 10 Apr 2026 18:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260410-180000-daily-082-separacao-de-agentes-por-responsabilidade/</guid>
+      <title>Daily #027: Desenho de hotspots interativos com clique do usuário</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-110000-daily-027-desenho-de-hotspots-interativos-com-clique-do-usuario/</link>
+      <description><![CDATA[Como coordenadores desenham HotspotAtivo no mapa do SOS Location via Leaflet.Draw: sequência de cliques para polígono, validação de área mínima (0.1 km²), submit via POST e exibição imediata sem reload.]]></description>
+      <pubDate>Wed, 08 Apr 2026 11:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-110000-daily-027-desenho-de-hotspots-interativos-com-clique-do-usuario/</guid>
     </item>
     <item>
-      <title>Daily #081: Estrutura inicial de orquestrador de agentes</title>
-      <link>https://nhmatsumoto.github.io/posts/20260410-170000-daily-081-estrutura-inicial-de-orquestrador-de-agentes/</link>
-      <description><![CDATA[Explora Estrutura inicial de orquestrador de agentes com fundamentos, fórmula, exemplo e diagrama para a trilha orquestração de agentes.]]></description>
-      <pubDate>Fri, 10 Apr 2026 17:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260410-170000-daily-081-estrutura-inicial-de-orquestrador-de-agentes/</guid>
+      <title>Daily #026: Criação de interface &quot;map-first&quot;</title>
+      <link>https://nhmatsumoto.github.io/posts/20260408-100000-daily-026-criacao-de-interface-map-first/</link>
+      <description><![CDATA[Como o SOS Location organizou o layout para que o mapa ocupe 100% da viewport, com painéis flutuantes semi-transparentes sobrepostos e como essa decisão afetou o React layout e o z-index management.]]></description>
+      <pubDate>Wed, 08 Apr 2026 10:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-100000-daily-026-criacao-de-interface-map-first/</guid>
     </item>
   </channel>
 </rss>

@@ -2139,66 +2139,6 @@ body[data-sidebar-open="true"] .sidebar-backdrop {
   color: var(--accent);
   transform: translateY(-1px);
 }
-/* --- Enhanced Code Blocks --- */
-.code-shell {
-  margin: 2rem 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-
-.code-shell-header {
-  padding: 0.75rem 1.25rem;
-  background: var(--surface-strong);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.code-shell-label {
-  font-family: var(--font-code);
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-}
-
-.code-shell-copy {
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.code-shell-copy:hover {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.code-shell pre {
-  margin: 0;
-  padding: 1.5rem;
-  overflow-x: auto;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-/* Base Syntax Highlighting (Themes) */
-.token.comment { color: var(--muted); font-style: italic; }
-.token.keyword { color: #f97316; font-weight: 700; }
-.token.string { color: #10b981; }
-.token.function { color: #8b5cf6; }
-.token.number { color: #06b6d4; }
 
 /* Glow Effects Utility */
 .glow-card {
@@ -5174,8 +5114,7 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 }
 
 .prose pre,
-.reader-article-prose pre,
-.code-shell {
+.reader-article-prose pre {
   border: 1px solid var(--border);
   background: rgba(4, 12, 20, 0.82);
   border-radius: var(--radius-md);
@@ -6107,6 +6046,30 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 .code-shell-content pre.shiki .line {
   display: block;
   min-height: 1.5rem;
+}
+
+.code-shell.no-line-numbers .code-shell-content pre.shiki .line::before {
+  display: none;
+  content: none;
+}
+
+.code-shell-ln-toggle {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.code-shell-ln-toggle:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* ── Final Polish for Code Blocks ───────────────────────────────────────── */

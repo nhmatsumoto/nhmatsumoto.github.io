@@ -102,7 +102,10 @@ def render_markdown(text: str, *, heading_offset: int = 0) -> str:
 
         # 1. Code Blocks
         if stripped.startswith("```"):
-            language = stripped[3:].strip()
+            lang_and_rest = stripped[3:].strip()
+            lang_parts = lang_and_rest.split(None, 1)
+            language = lang_parts[0] if lang_parts else ""
+            filename = lang_parts[1].strip() if len(lang_parts) > 1 else ""
             block = []
             i += 1
             while i < len(lines) and not lines[i].strip().startswith("```"):
@@ -152,14 +155,21 @@ def render_markdown(text: str, *, heading_offset: int = 0) -> str:
                     "xml": "XML",
                     "powershell": "PowerShell",
                     "ps1": "PowerShell",
+                    "diff": "Diff",
+                    "git": "Git",
                 }
                 lang_label = language_labels.get((language or "text").lower(), (language or "text").upper())
-                
+
+                title_content = f'<span class="code-shell-label">{html.escape(lang_label)}</span>'
+                if filename:
+                    title_content += f'<span class="code-shell-subtitle">{html.escape(filename)}</span>'
+
                 parts.append(
                     f'<div class="code-shell" data-language="{html.escape(language or "text")}">'
                     f'  <div class="code-shell-header">'
                     f'    <div class="code-shell-controls"><span class="control-dot close"></span><span class="control-dot minimize"></span><span class="control-dot maximize"></span></div>'
-                    f'    <div class="code-shell-title"><span class="code-shell-label">{html.escape(lang_label)}</span></div>'
+                    f'    <div class="code-shell-title">{title_content}</div>'
+                    f'    <button class="code-shell-ln-toggle" type="button" aria-label="Toggle line numbers" title="Toggle line numbers"><i data-lucide="hash"></i></button>'
                     f'    <button class="code-shell-copy" type="button" aria-label="Copy code" data-i18n-aria-label="actions.copy"><i data-lucide="copy" class="copy-icon"></i><span class="copy-feedback" data-i18n="actions.copied">Copiado!</span></button>'
                     f'  </div>'
                     f'  <div class="code-shell-content">{highlighted_html}</div>'

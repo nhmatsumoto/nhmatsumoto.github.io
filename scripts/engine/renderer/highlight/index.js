@@ -27,6 +27,8 @@ async function run() {
         'md': 'markdown',
         'tf': 'terraform',
         'dockerfile': 'dockerfile',
+        'diff': 'diff',
+        'git': 'git',
       };
 
       const resolvedLang = langMap[lang?.toLowerCase()] || lang || 'text';

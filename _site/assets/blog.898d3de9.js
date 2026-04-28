@@ -549,6 +549,12 @@ renderResults();
 });
 };
 const initCodeBlocks = (loc) => {
+document.addEventListener("click", (event) => {
+const btn = event.target.closest(".code-shell-ln-toggle");
+if (!btn) return;
+const shell = btn.closest(".code-shell");
+if (shell) shell.classList.toggle("no-line-numbers");
+});
 document.addEventListener("click", async (event) => {
 const btn = event.target.closest(".code-shell-copy");
 if (!btn) return;
