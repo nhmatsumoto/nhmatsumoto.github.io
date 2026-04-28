@@ -1,0 +1,27 @@
+id = "20260429-092000"
+slug = "idempotency-apis"
+title = "Idempotência em APIs: requisito obrigatório"
+published_at = "2026-04-29T09:20:00+09:00"
+updated_at = "2026-04-29T09:20:00+09:00"
+status = "published"
+tags = ["api", "distributed_systems", "backend"]
+body = '''
+## Problema
+Requisições duplicadas geram inconsistência.
+
+## Solução
+Idempotência.
+
+## Exemplo
+```csharp
+if (requestIdAlreadyProcessed)
+    return cachedResponse;
+```
+
+## Regra
+Cliente precisa enviar chave estável por tentativa.
+
+## Insight
+Sem idempotência, retry vira risco operacional.
+'''
+

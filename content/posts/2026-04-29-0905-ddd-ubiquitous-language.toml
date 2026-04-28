@@ -1,0 +1,25 @@
+id = "20260429-090500"
+slug = "ddd-ubiquitous-language"
+title = "DDD na prática: linguagem ubíqua como ativo estratégico"
+published_at = "2026-04-29T09:05:00+09:00"
+updated_at = "2026-04-29T09:05:00+09:00"
+status = "published"
+tags = ["ddd", "arquitetura", "design"]
+body = '''
+## Problema
+Código não reflete negócio.
+
+## Solução
+Linguagem ubíqua.
+
+## Exemplo
+Order, Invoice, Payment -> não são tabelas, são conceitos.
+
+## Regra
+- Nomear baseado no domínio
+- Evitar termos genéricos
+
+## Insight
+DDD reduz tradução mental entre negócio e código.
+'''
+

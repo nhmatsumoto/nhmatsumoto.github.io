@@ -1,0 +1,29 @@
+id = "20260429-090000"
+slug = "modular-monolith-vs-microservices"
+title = "Monólito modular vs Microservices: decisão arquitetural real"
+published_at = "2026-04-29T09:00:00+09:00"
+updated_at = "2026-04-29T09:00:00+09:00"
+status = "published"
+tags = ["arquitetura", "microservices", "ddd", "scalability"]
+body = '''
+## Problema
+Microservices cedo demais geram custo operacional alto.
+
+## Regra
+Comece com monólito modular bem definido.
+
+## Estrutura
+- Boundaries claros (DDD)
+- Camadas isoladas
+- Comunicação interna explícita
+
+## Evolução
+Extrair serviços apenas quando:
+- Escala exige
+- Times independentes
+- Deploy isolado necessário
+
+## Insight
+Microservices resolvem problemas organizacionais, não técnicos.
+'''
+

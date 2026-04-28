@@ -1,0 +1,22 @@
+id = "20260429-092500"
+slug = "outbox-pattern"
+title = "Outbox Pattern: garantindo consistência entre serviços"
+published_at = "2026-04-29T09:25:00+09:00"
+updated_at = "2026-04-29T09:25:00+09:00"
+status = "published"
+tags = ["microservices", "event_driven", "consistency"]
+body = '''
+## Problema
+Salvar no banco e publicar evento não é atômico.
+
+## Solução
+Outbox.
+
+## Fluxo
+1. Salva dados + evento na mesma transação
+2. Worker publica evento
+
+## Insight
+Outbox elimina inconsistência entre DB e mensageria.
+'''
+

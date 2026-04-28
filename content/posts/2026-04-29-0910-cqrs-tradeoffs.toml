@@ -1,0 +1,29 @@
+id = "20260429-091000"
+slug = "cqrs-tradeoffs"
+title = "CQRS: quando usar e quando evitar"
+published_at = "2026-04-29T09:10:00+09:00"
+updated_at = "2026-04-29T09:10:00+09:00"
+status = "published"
+tags = ["cqrs", "arquitetura", "scalability"]
+body = '''
+## Problema
+CRUD não escala para leitura complexa.
+
+## Solução
+Separar leitura e escrita.
+
+## Benefícios
+- Performance
+- Modelos otimizados
+
+## Custos
+- Complexidade
+- Consistência eventual
+
+## Regra
+Use CQRS apenas com necessidade real de leitura escalável.
+
+## Insight
+CQRS sem necessidade vira overengineering.
+'''
+

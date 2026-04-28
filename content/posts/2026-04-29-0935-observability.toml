@@ -1,0 +1,23 @@
+id = "20260429-093500"
+slug = "observability"
+title = "Observabilidade: logs, métricas e tracing"
+published_at = "2026-04-29T09:35:00+09:00"
+updated_at = "2026-04-29T09:35:00+09:00"
+status = "published"
+tags = ["observability", "devops"]
+body = '''
+## Problema
+Não saber o que está acontecendo.
+
+## Pilares
+- Logs
+- Métricas
+- Tracing
+
+## Regra
+Sistema sem observabilidade é cego.
+
+## Insight
+Debug em produção exige dados.
+'''
+

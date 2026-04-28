@@ -1,0 +1,24 @@
+id = "20260429-094000"
+slug = "orchestration-vs-choreography"
+title = "Orquestração vs coreografia em microservices"
+published_at = "2026-04-29T09:40:00+09:00"
+updated_at = "2026-04-29T09:40:00+09:00"
+status = "published"
+tags = ["microservices", "event_driven"]
+body = '''
+## Orquestração
+Fluxo centralizado.
+
+## Coreografia
+Eventos distribuídos.
+
+## Trade-off
+- Orquestração -> controle
+- Coreografia -> flexibilidade
+
+## Regra
+Comece simples, evolua para eventos.
+
+## Insight
+Coreografia mal definida vira caos distribuído.
+'''

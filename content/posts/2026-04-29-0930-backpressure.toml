@@ -1,0 +1,23 @@
+id = "20260429-093000"
+slug = "backpressure"
+title = "Backpressure e controle de carga em sistemas distribuídos"
+published_at = "2026-04-29T09:30:00+09:00"
+updated_at = "2026-04-29T09:30:00+09:00"
+status = "published"
+tags = ["distributed_systems", "performance"]
+body = '''
+## Problema
+Sistema recebe mais carga do que suporta.
+
+## Solução
+Backpressure.
+
+## Estratégias
+- Queue limitada
+- Rate limit
+- Retry com delay
+
+## Insight
+Sistema saudável sabe dizer "não".
+'''
+

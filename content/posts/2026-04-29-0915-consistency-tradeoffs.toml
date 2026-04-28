@@ -1,0 +1,26 @@
+id = "20260429-091500"
+slug = "consistency-tradeoffs"
+title = "Consistência eventual vs forte: trade-off inevitável"
+published_at = "2026-04-29T09:15:00+09:00"
+updated_at = "2026-04-29T09:15:00+09:00"
+status = "published"
+tags = ["distributed_systems", "consistency", "scalability"]
+body = '''
+## Problema
+Sistemas distribuídos não têm consistência perfeita.
+
+## Escolhas
+- Forte -> bloqueio, menor escala
+- Eventual -> mais rápido, menos garantia imediata
+
+## Regra
+Negócio define consistência.
+
+## Exemplo
+Pagamento -> forte
+Feed -> eventual
+
+## Insight
+Consistência é decisão de produto, não técnica.
+'''
+
