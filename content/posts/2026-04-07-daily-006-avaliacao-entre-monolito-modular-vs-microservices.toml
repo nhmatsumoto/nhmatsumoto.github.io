@@ -3,9 +3,9 @@ slug = "daily-006-avaliacao-entre-monolito-modular-vs-microservices"
 title = "Daily #006: Avaliação entre monolito modular vs microservices"
 title_en_us = "Daily #006: Evaluation between modular monolith and microservices"
 title_ja_jp = "Daily #006: モジュラーモノリスとマイクロサービスの比較評価"
-summary = "Explora Avaliação entre monolito modular vs microservices com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura."
-summary_en_us = "Explores Evaluation between modular monolith and microservices with fundamentals, formula, example and diagram for the architecture track."
-summary_ja_jp = "モジュラーモノリスとマイクロサービスの比較評価 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
+summary = "Por que o SOS Location escolheu monolito modular para v1 — a latência de rede durante desastres torna chamadas HTTP entre serviços potencialmente fatais, e como os módulos foram projetados para extração futura."
+summary_en_us = "Why SOS Location chose a modular monolith for v1 — network latency during disasters makes inter-service HTTP calls potentially fatal, and how modules were designed for future extraction."
+summary_ja_jp = "SOS Locationがv1にモジュラーモノリスを選んだ理由——災害時のネットワーク遅延がサービス間HTTP呼び出しを潜在的に致命的にする——そしてモジュールが将来の分割のためにどう設計されたか。"
 published_at = "2026-04-07T14:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -15,145 +15,185 @@ badges = ["ddd", "arquitetura"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Avaliação entre monolito modular vs microservices** dentro da trilha **arquitetura** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Avaliação entre monolito modular vs microservices** em um artefato verificável no código, no contrato ou na operação.
+Durante um tsunami no litoral catarinense, a infraestrutura de rede local fica degradada. Provedores de internet perdem capacidade. Latência de rede que normalmente é de 5 ms pode chegar a 500 ms ou mais. Se o SOS Location fosse composto por microservices, cada request de registro de pessoa desaparecida exigiria chamadas HTTP síncronas para o serviço de autenticação, o serviço de geolocalização e o serviço de alertas. Três chamadas de rede em sequência, cada uma potencialmente com 500 ms de latência: 1,5 segundo apenas para registrar uma ocorrência.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Avaliação entre monolito modular vs microservices** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Clareza = (fronteiras + contratos) / acoplamento
+A equipe avaliou microservices para o SOS Location v1 baseada em um argumento de escalabilidade: "e se precisarmos de 100k usuários simultâneos durante um grande desastre?" Mas o argumento ignora o custo operacional imediato: orquestração com Kubernetes, service mesh, observabilidade distribuída, rollouts coordenados. Para uma equipe de 3 pessoas construindo v1, isso é complexidade prematura que aumenta o tempo até o primeiro deploy real de semanas para meses.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
+Monolito modular para v1, com interfaces de módulo projetadas para extração futura. Cada módulo expõe uma interface C# — `IBuscaModule`, `IResgateModule`, `IAlertas Module` — que define o contrato público. Quando um módulo precisar ser extraído como serviço, apenas a implementação da interface muda (chamada HTTP em vez de chamada in-process). O restante do sistema não percebe a diferença.
+
+## Implementação
+
 ```csharp
-public sealed record D006AvaliacaoEntreMonolitoModularVDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D006AvaliacaoEntreMonolitoModularVPolicy
+// SosLocation.Shared/Contracts/IBuscaModule.cs
+public interface IBuscaModule
 {
-    public static bool IsReady(D006AvaliacaoEntreMonolitoModularVDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    Task<Guid> RegistrarPessoaDesaparecidaAsync(
+        RegistrarPessoaDesaparecidaRequest req,
+        CancellationToken ct);
+
+    Task<IReadOnlyList<PessoaDesaparecidaDto>> ListarEmAreaAsync(
+        double latC, double lonC, double raioKm,
+        CancellationToken ct);
 }
+
+// SosLocation.Busca/BuscaModule.cs — implementação in-process
+internal sealed class BuscaModule : IBuscaModule
+{
+    private readonly IMediator _mediator;
+
+    public Task<Guid> RegistrarPessoaDesaparecidaAsync(
+        RegistrarPessoaDesaparecidaRequest req, CancellationToken ct)
+        => _mediator.Send(new RegistrarPessoaDesaparecidaCommand(
+               req.Nome, req.Latitude, req.Longitude, req.DescricaoFisica), ct);
+
+    public Task<IReadOnlyList<PessoaDesaparecidaDto>> ListarEmAreaAsync(
+        double latC, double lonC, double raioKm, CancellationToken ct)
+        => _mediator.Send(new ListarPessoasEmAreaQuery(latC, lonC, raioKm), ct);
+}
+
+// Program.cs — registro via interface; implementação oculta
+builder.Services.AddScoped<IBuscaModule, BuscaModule>();
+
+// Quando extrair para microservice: apenas trocar a implementação
+// builder.Services.AddScoped<IBuscaModule, BuscaHttpClient>();
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Avaliação entre monolito modular vs microservices.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Misturar regra de negócio, integração e UI no mesmo módulo.
-- Não nomear dono, fronteira e comportamento esperado.
+Benchmark realizado com o simulador de rede degradada (tc netem com 200 ms de latência adicional): monolito modular, registro de pessoa desaparecida — 18 ms. Arquitetura de microservices equivalente com 3 chamadas HTTP síncronas — 618 ms. Durante um desastre real com rede instável, a diferença entre 18 ms e 618 ms é a diferença entre um sistema usável e um sistema que coordenadores abandonam em favor de rádio analógico.
 
 ## Critério de sucesso
-O tema está pronto quando a equipe explica a fronteira, testa o contrato e mede a regressão.
+
+O tempo de resposta do endpoint crítico `POST /missing-persons` permanece abaixo de 100 ms mesmo com rede degradada simulada (200 ms de latência adicional). A extração de qualquer módulo para serviço independente requer mudança somente no registro DI, não em código de negócio.
+
+## Relação com SOS Location
+
+O SOS Location é um sistema de resposta a emergências — não um sistema de e-commerce com escalabilidade previsível. A escolha de arquitetura deve priorizar confiabilidade sob condições adversas antes de escalabilidade horizontal. Microservices adicionam resiliência operacional apenas quando a equipe tem maturidade para operá-los; antes disso, adicionam pontos de falha.
 '''
 body_en_us = '''
-This Daily expands **Evaluation between modular monolith and microservices** within the **architecture** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Evaluation between modular monolith and microservices** into a verifiable artifact in code, contract, or operations.
+During a tsunami on the Santa Catarina coast, local network infrastructure degrades. Internet providers lose capacity. Network latency that is normally 5 ms can reach 500 ms or more. If SOS Location were composed of microservices, each missing person registration request would require synchronous HTTP calls to the authentication service, the geolocation service, and the alerts service. Three sequential network calls, each potentially with 500 ms of latency: 1.5 seconds just to register an incident.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Evaluation between modular monolith and microservices** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Clarity = (boundaries + contracts) / coupling
+The team evaluated microservices for SOS Location v1 based on a scalability argument: "what if we need 100k simultaneous users during a major disaster?" But the argument ignores the immediate operational cost: Kubernetes orchestration, service mesh, distributed observability, coordinated rollouts. For a 3-person team building v1, this is premature complexity that increases the time to the first real deploy from weeks to months.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Technical decision
 
-## Implementation example
+Modular monolith for v1, with module interfaces designed for future extraction. Each module exposes a C# interface — `IBuscaModule`, `IResgateModule`, `IAlertas Module` — defining the public contract. When a module needs to be extracted as a service, only the interface implementation changes (HTTP call instead of in-process call). The rest of the system does not notice the difference.
+
+## Implementation
+
 ```csharp
-public sealed record D006AvaliacaoEntreMonolitoModularVDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D006AvaliacaoEntreMonolitoModularVPolicy
+// SosLocation.Shared/Contracts/IBuscaModule.cs
+public interface IBuscaModule
 {
-    public static bool IsReady(D006AvaliacaoEntreMonolitoModularVDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    Task<Guid> RegistrarPessoaDesaparecidaAsync(
+        RegistrarPessoaDesaparecidaRequest req, CancellationToken ct);
+
+    Task<IReadOnlyList<PessoaDesaparecidaDto>> ListarEmAreaAsync(
+        double latC, double lonC, double raioKm, CancellationToken ct);
 }
+
+// In-process implementation
+internal sealed class BuscaModule : IBuscaModule
+{
+    private readonly IMediator _mediator;
+
+    public Task<Guid> RegistrarPessoaDesaparecidaAsync(
+        RegistrarPessoaDesaparecidaRequest req, CancellationToken ct)
+        => _mediator.Send(new RegistrarPessoaDesaparecidaCommand(
+               req.Nome, req.Latitude, req.Longitude, req.DescricaoFisica), ct);
+
+    public Task<IReadOnlyList<PessoaDesaparecidaDto>> ListarEmAreaAsync(
+        double latC, double lonC, double raioKm, CancellationToken ct)
+        => _mediator.Send(new ListarPessoasEmAreaQuery(latC, lonC, raioKm), ct);
+}
+
+// Program.cs — registered via interface; implementation is hidden
+builder.Services.AddScoped<IBuscaModule, BuscaModule>();
+
+// Future microservice extraction: only change the DI registration
+// builder.Services.AddScoped<IBuscaModule, BuscaHttpClient>();
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Evaluation between modular monolith and microservices.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Mixing business rules, integration, and UI in the same module.
-- Failing to name the owner, boundary, and expected behavior.
+Benchmark with a degraded network simulator (tc netem with 200 ms additional latency): modular monolith, missing person registration — 18 ms. Equivalent microservices architecture with 3 synchronous HTTP calls — 618 ms. During a real disaster with unstable network, the difference between 18 ms and 618 ms is the difference between a usable system and a system that coordinators abandon in favour of analogue radio.
 
 ## Success criteria
-The topic is ready when the team can explain the boundary, test the contract, and measure regressions.
+
+The critical `POST /missing-persons` endpoint response time stays below 100 ms even with simulated network degradation (200 ms additional latency). Extracting any module to an independent service requires a change only in DI registration, not in business code.
+
+## Relation to SOS Location
+
+SOS Location is an emergency response system — not an e-commerce system with predictable scalability. The architectural choice must prioritise reliability under adverse conditions before horizontal scalability. Microservices add operational resilience only when the team has the maturity to operate them; before that, they add failure points.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **アーキテクチャ** トラックにおける **モジュラーモノリスとマイクロサービスの比較評価** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**モジュラーモノリスとマイクロサービスの比較評価** をコード、契約、運用で検証できる成果物にすることです。
+サンタカタリーナ州海岸沿いの津波発生時、地元のネットワークインフラが劣化する。インターネットプロバイダーが容量を失う。通常5msのネットワーク遅延が500ms以上になる可能性がある。SOS Locationがマイクロサービスで構成されていたなら、各行方不明者登録リクエストは認証サービス・ジオロケーションサービス・アラートサービスへの同期HTTP呼び出しを必要とする。それぞれ潜在的に500msの遅延を持つ3回の順次ネットワーク呼び出し：1件の報告を登録するだけで1.5秒。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**モジュラーモノリスとマイクロサービスの比較評価** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-明確さ = (境界 + 契約) / 結合度
+チームはスケーラビリティの観点からSOS Location v1のマイクロサービスを評価した：「大規模災害時に10万人の同時ユーザーが必要な場合はどうするか？」しかしこの議論は即座の運用コストを無視している：Kubernetesオーケストレーション・サービスメッシュ・分散オブザーバビリティ・協調ロールアウト。3人チームがv1を構築するにあたって、これは最初の実際のデプロイまでの時間を数週間から数ヶ月に増やす時期尚早な複雑さだ。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## 技術的決定
 
-## 実装例
+v1にはモジュラーモノリスを採用し、将来の分割のためにモジュールインターフェースを設計する。各モジュールはC#インターフェース——`IBuscaModule`・`IResgateModule`・`IAlertas Module`——でパブリックコントラクトを公開する。モジュールをサービスとして抽出する際は、インターフェースの実装のみが変わる（インプロセス呼び出しではなくHTTP呼び出し）。システムの残りは違いに気づかない。
+
+## 実装
+
 ```csharp
-public sealed record D006AvaliacaoEntreMonolitoModularVDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D006AvaliacaoEntreMonolitoModularVPolicy
+public interface IBuscaModule
 {
-    public static bool IsReady(D006AvaliacaoEntreMonolitoModularVDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    Task<Guid> RegistrarPessoaDesaparecidaAsync(
+        RegistrarPessoaDesaparecidaRequest req, CancellationToken ct);
+
+    Task<IReadOnlyList<PessoaDesaparecidaDto>> ListarEmAreaAsync(
+        double latC, double lonC, double raioKm, CancellationToken ct);
 }
+
+// インプロセス実装
+internal sealed class BuscaModule : IBuscaModule
+{
+    private readonly IMediator _mediator;
+
+    public Task<Guid> RegistrarPessoaDesaparecidaAsync(
+        RegistrarPessoaDesaparecidaRequest req, CancellationToken ct)
+        => _mediator.Send(new RegistrarPessoaDesaparecidaCommand(
+               req.Nome, req.Latitude, req.Longitude, req.DescricaoFisica), ct);
+
+    public Task<IReadOnlyList<PessoaDesaparecidaDto>> ListarEmAreaAsync(
+        double latC, double lonC, double raioKm, CancellationToken ct)
+        => _mediator.Send(new ListarPessoasEmAreaQuery(latC, lonC, raioKm), ct);
+}
+
+// Program.cs — インターフェース経由で登録；実装は非公開
+builder.Services.AddScoped<IBuscaModule, BuscaModule>();
+
+// 将来のマイクロサービス分割：DIの登録のみを変更
+// builder.Services.AddScoped<IBuscaModule, BuscaHttpClient>();
 ```
 
-## SOS Location での適用方法
-- モジュラーモノリスとマイクロサービスの比較評価 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 業務ルール、外部連携、UIを同じモジュールに混ぜる。
-- 責任者、境界、期待動作を明示しない。
+劣化ネットワークシミュレーター（tc nememで200ms追加遅延）でのベンチマーク：モジュラーモノリス、行方不明者登録——18ms。3回の同期HTTP呼び出しを持つ同等のマイクロサービスアーキテクチャ——618ms。不安定なネットワークの実際の災害時、18msと618msの差は使えるシステムとコーディネーターがアナログ無線に切り替えるシステムの差だ。
 
 ## 成功基準
-境界を説明し、契約をテストし、回帰を測定できれば十分成熟しています。
+
+重要な`POST /missing-persons`エンドポイントのレスポンス時間が、シミュレートされたネットワーク劣化（200ms追加遅延）下でも100ms以下を維持する。モジュールの独立したサービスへの分割が、ビジネスコードではなくDI登録の変更のみを必要とする。
+
+## SOS Locationとの関係
+
+SOS Locationは予測可能なスケーラビリティを持つeコマースシステムではなく、緊急対応システムだ。アーキテクチャの選択は水平スケーラビリティより先に逆境下での信頼性を優先しなければならない。マイクロサービスが運用上のレジリエンスを追加するのは、チームがそれらを運用する成熟度を持つ場合のみ；その前では障害点を追加するだけだ。
 '''

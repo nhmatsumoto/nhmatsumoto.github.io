@@ -3,145 +3,208 @@ slug = "daily-039-estrategia-de-versionamento-de-apis"
 title = "Daily #039: Estratégia de versionamento de APIs"
 title_en_us = "Daily #039: API versioning strategy"
 title_ja_jp = "Daily #039: APIバージョニング戦略"
-summary = "Explora Estratégia de versionamento de APIs com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs."
-summary_en_us = "Explores API versioning strategy with fundamentals, formula, example and diagram for the backend and APIs track."
-summary_ja_jp = "APIバージョニング戦略 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
+summary = "Como o SOS Location implementou versionamento de API via URL path (/api/v1/, /api/v2/) com Asp.Versioning, a política de deprecação de 90 dias e o header Sunset para notificação automática de clientes."
+summary_en_us = "How SOS Location implemented API versioning via URL path (/api/v1/, /api/v2/) with Asp.Versioning, the 90-day deprecation policy and the Sunset header for automatic client notification."
+summary_ja_jp = "SOS LocationがAsp.Versioningを使ってURLパス（/api/v1/、/api/v2/）でAPIバージョニングを実装し、90日の廃止ポリシーとクライアントへの自動通知のためのSunsetヘッダーを設定した方法。"
 published_at = "2026-04-08T23:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
-tags = ["sos-location", "daily", "backend", "api", "dotnet"]
+tags = ["sos-location", "daily", "backend", "api"]
 badges = ["backend", "api"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Estratégia de versionamento de APIs** dentro da trilha **backend e APIs** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Estratégia de versionamento de APIs** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location tem dois grupos de consumidores de API: o frontend próprio (controlado, atualiza junto com o backend) e APIs de integração com prefeituras (externas, ciclo de atualização independente). Para o frontend, breaking changes são coordenadas no mesmo deploy. Para prefeituras, uma breaking change sem aviso pode derrubar um sistema que uma secretaria municipal não tem orçamento para atualizar rapidamente.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Estratégia de versionamento de APIs** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Confiabilidade = sucesso × observabilidade / falhas não tratadas
+Na v1 do SOS Location, o endpoint `GET /api/areas-de-risco` retornava um campo `risco` (inteiro 1–10). Em março de 2026, foi necessário renomear para `nivel_risco` para alinhar com a linguagem ubíqua (#001). Alterar o campo quebraria qualquer integração de prefeitura que dependia de `risco`. Sem versionamento, a escolha era: não fazer a mudança ou quebrar todos os clientes externos — nem uma, nem outra é aceitável.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
+Versionamento via URL path: `/api/v1/` e `/api/v2/`. Biblioteca `Asp.Versioning` para decorar endpoints com `[ApiVersion("2.0")]`. Política de deprecação: versão anterior mantida por 90 dias após lançamento da nova, com header `Sunset: {data}` em cada response da versão depreciada. Versão default: sempre a mais recente (clientes sem versão explícita usam v2).
+
+## Implementação
+
 ```csharp
-app.Use(async (context, next) =>
+// Program.cs
+builder.Services.AddApiVersioning(options =>
 {
-    context.Response.Headers["X-Trace-Topic"] = "D039EstrategiaDeVersionamentoDeApi";
-    await next();
+    options.DefaultApiVersion    = new ApiVersion(2, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions    = true;  // header Api-Supported-Versions nas responses
+});
+
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat           = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
 });
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Estratégia de versionamento de APIs.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+```csharp
+// SosLocation.Service/Endpoints/V1/AreaDeRiscoV1Endpoints.cs
+[ApiVersion("1.0")]
+[ApiVersion("1.0", Deprecated = true)]
+public static class AreaDeRiscoV1Endpoints
+{
+    public static void Map(IEndpointRouteBuilder app)
+    {
+        var group = app.MapGroup("/api/v1/areas-de-risco").RequireAuthorization();
 
-## Erros comuns
-- Responder sem rastreabilidade suficiente para depurar produção.
-- Tratar erro de integração como caso excepcional e não como fluxo normal.
+        group.MapGet("/", async (ISender sender, ClaimsPrincipal user, HttpResponse response) =>
+        {
+            // Sunset: 90 dias após lançamento da v2 (2026-04-08 + 90d = 2026-07-07)
+            response.Headers.Append("Sunset", "Tue, 07 Jul 2026 00:00:00 GMT");
+            response.Headers.Append("Deprecation", "true");
+
+            var result = await sender.Send(new ListarAreasDeRiscoQuery(user.GetTenantId()));
+            // v1 retorna campo "risco" (nome antigo)
+            return Results.Ok(result.Select(a => new { a.Id, risco = a.NivelRisco, a.Geometry }));
+        });
+    }
+}
+
+// SosLocation.Service/Endpoints/V2/AreaDeRiscoV2Endpoints.cs
+[ApiVersion("2.0")]
+public static class AreaDeRiscoV2Endpoints
+{
+    public static void Map(IEndpointRouteBuilder app)
+    {
+        var group = app.MapGroup("/api/v2/areas-de-risco").RequireAuthorization();
+
+        group.MapGet("/", async (ISender sender, ClaimsPrincipal user) =>
+        {
+            var result = await sender.Send(new ListarAreasDeRiscoQuery(user.GetTenantId()));
+            // v2 retorna campo "nivel_risco" (linguagem ubíqua correta)
+            return Results.Ok(result.Select(a => new { a.Id, nivel_risco = a.NivelRisco, a.Geometry }));
+        });
+    }
+}
+```
+
+## Exemplo concreto
+
+Prefeitura de Joinville usa `/api/v1/areas-de-risco` desde janeiro de 2026. Após lançamento da v2 em abril de 2026: cada response v1 passa a incluir `Sunset: Tue, 07 Jul 2026 00:00:00 GMT`. Time de TI da prefeitura recebe alerta automático do monitoring que detecta o header `Sunset`. 90 dias para atualizar o sistema municipal de `risco` para `nivel_risco` — um campo de texto, mudança de 15 minutos. Zero breaking change abrupta, zero necessidade de coordenação manual.
 
 ## Critério de sucesso
-A solução está boa quando o time encontra causa, impacto e correção em poucos minutos.
+
+100% dos endpoints com breaking change entre versões cobertos por versionamento URL path. Header `Sunset` presente em 100% das responses de versões depreciadas. Versão v1 removida exatamente 90 dias após o `Sunset` — sem extensões ad-hoc.
+
+## Relação com SOS Location
+
+Versionamento de API é o contrato de confiança com integrações externas. Prefeituras que integram com o SOS Location precisam saber que mudanças não vão quebrar seus sistemas de forma silenciosa. O header `Sunset` transforma a deprecação em comunicação automática — sem emails, sem reuniões de alinhamento.
 '''
 body_en_us = '''
-This Daily expands **API versioning strategy** within the **backend and APIs** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **API versioning strategy** into a verifiable artifact in code, contract, or operations.
+SOS Location has two groups of API consumers: its own frontend (controlled, updates together with the backend) and integration APIs with city halls (external, independent update cycle). For the frontend, breaking changes are coordinated in the same deploy. For city halls, a breaking change without notice can bring down a system that a municipal department does not have the budget to update quickly.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **API versioning strategy** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Reliability = success × observability / unhandled failures
+In SOS Location v1, the `GET /api/areas-de-risco` endpoint returned a field called `risco` (integer 1–10). In March 2026, it needed to be renamed to `nivel_risco` to align with ubiquitous language (#001). Changing the field would break any city hall integration depending on `risco`. Without versioning, the choice was: don't make the change or break all external clients — neither is acceptable.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## Technical decision
 
-## Implementation example
+Versioning via URL path: `/api/v1/` and `/api/v2/`. `Asp.Versioning` library to decorate endpoints with `[ApiVersion("2.0")]`. Deprecation policy: previous version maintained for 90 days after the new one launches, with a `Sunset: {date}` header on each response from the deprecated version. Default version: always the latest (clients without an explicit version use v2).
+
+## Implementation
+
 ```csharp
-app.Use(async (context, next) =>
+builder.Services.AddApiVersioning(options =>
 {
-    context.Response.Headers["X-Trace-Topic"] = "D039EstrategiaDeVersionamentoDeApi";
-    await next();
+    options.DefaultApiVersion    = new ApiVersion(2, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions    = true;
 });
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for API versioning strategy.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+```csharp
+// v1 — deprecated, field "risco"
+group.MapGet("/", async (ISender sender, ClaimsPrincipal user, HttpResponse response) =>
+{
+    response.Headers.Append("Sunset",      "Tue, 07 Jul 2026 00:00:00 GMT");
+    response.Headers.Append("Deprecation", "true");
+    var result = await sender.Send(new ListarAreasDeRiscoQuery(user.GetTenantId()));
+    return Results.Ok(result.Select(a => new { a.Id, risco = a.NivelRisco, a.Geometry }));
+});
 
-## Common pitfalls
-- Responding without enough traceability to debug production.
-- Treating integration failures as exceptions instead of a normal flow.
+// v2 — current, field "nivel_risco"
+group.MapGet("/", async (ISender sender, ClaimsPrincipal user) =>
+{
+    var result = await sender.Send(new ListarAreasDeRiscoQuery(user.GetTenantId()));
+    return Results.Ok(result.Select(a => new { a.Id, nivel_risco = a.NivelRisco, a.Geometry }));
+});
+```
+
+## Concrete example
+
+Joinville city hall uses `/api/v1/areas-de-risco` since January 2026. After v2 launches in April 2026: every v1 response starts including `Sunset: Tue, 07 Jul 2026 00:00:00 GMT`. The city hall IT team receives an automatic alert from monitoring that detects the `Sunset` header. 90 days to update the municipal system from `risco` to `nivel_risco` — a text field, a 15-minute change. Zero abrupt breaking change, zero need for manual coordination.
 
 ## Success criteria
-The solution is good when the team can find cause, impact, and fix in minutes.
+
+100% of endpoints with breaking changes between versions covered by URL path versioning. `Sunset` header present on 100% of responses from deprecated versions. v1 removed exactly 90 days after the `Sunset` — no ad-hoc extensions.
+
+## Relation to SOS Location
+
+API versioning is the trust contract with external integrations. City halls that integrate with SOS Location need to know that changes will not silently break their systems. The `Sunset` header turns deprecation into automatic communication — no emails, no alignment meetings.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **バックエンドとAPI** トラックにおける **APIバージョニング戦略** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**APIバージョニング戦略** をコード、契約、運用で検証できる成果物にすることです。
+SOS LocationにはAPIの消費者が2つのグループある：独自のフロントエンド（制御済み、バックエンドと一緒に更新）と市区町村との統合API（外部、独立した更新サイクル）。フロントエンドの場合、破壊的変更は同じデプロイで調整される。市区町村の場合、予告なしの破壊的変更は、市の部署が迅速に更新する予算を持っていないシステムをダウンさせる可能性がある。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**APIバージョニング戦略** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-信頼性 = 成功率 × 可観測性 / 未処理失敗
+SOS Location v1では、`GET /api/areas-de-risco`エンドポイントが`risco`（整数1〜10）というフィールドを返していた。2026年3月、ユビキタス言語（#001）に合わせるために`nivel_risco`にリネームする必要があった。フィールドを変更すると`risco`に依存する市区町村の統合が壊れる。バージョニングなしでは、選択肢は：変更しないかすべての外部クライアントを壊すか——どちらも許容できない。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## 技術的決定
 
-## 実装例
+URLパスによるバージョニング：`/api/v1/`と`/api/v2/`。エンドポイントを`[ApiVersion("2.0")]`でデコレートする`Asp.Versioning`ライブラリ。廃止ポリシー：新しいバージョンのリリース後90日間は以前のバージョンを維持、廃止バージョンの各レスポンスに`Sunset: {date}`ヘッダー付き。デフォルトバージョン：常に最新（明示的なバージョンなしのクライアントはv2を使用）。
+
+## 実装
+
 ```csharp
-app.Use(async (context, next) =>
+builder.Services.AddApiVersioning(options =>
 {
-    context.Response.Headers["X-Trace-Topic"] = "D039EstrategiaDeVersionamentoDeApi";
-    await next();
+    options.DefaultApiVersion    = new ApiVersion(2, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions    = true;
 });
 ```
 
-## SOS Location での適用方法
-- APIバージョニング戦略 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+```csharp
+// v1 — 廃止、フィールド「risco」
+group.MapGet("/", async (ISender sender, ClaimsPrincipal user, HttpResponse response) =>
+{
+    response.Headers.Append("Sunset",      "Tue, 07 Jul 2026 00:00:00 GMT");
+    response.Headers.Append("Deprecation", "true");
+    var result = await sender.Send(new ListarAreasDeRiscoQuery(user.GetTenantId()));
+    return Results.Ok(result.Select(a => new { a.Id, risco = a.NivelRisco, a.Geometry }));
+});
 
-## よくある落とし穴
-- 本番調査に必要な追跡性を確保せずに応答する。
-- 連携障害を例外ではなく通常フローとして扱わない。
+// v2 — 現在、フィールド「nivel_risco」
+group.MapGet("/", async (ISender sender, ClaimsPrincipal user) =>
+{
+    var result = await sender.Send(new ListarAreasDeRiscoQuery(user.GetTenantId()));
+    return Results.Ok(result.Select(a => new { a.Id, nivel_risco = a.NivelRisco, a.Geometry }));
+});
+```
+
+## 具体的な例
+
+ジョインヴィル市区町村は2026年1月から`/api/v1/areas-de-risco`を使用。2026年4月にv2が起動後：すべてのv1レスポンスに`Sunset: Tue, 07 Jul 2026 00:00:00 GMT`が含まれ始める。市のITチームは`Sunset`ヘッダーを検出する監視から自動アラートを受け取る。市町村システムを`risco`から`nivel_risco`に更新する90日——テキストフィールド、15分の変更。突然の破壊的変更ゼロ、手動調整の必要ゼロ。
 
 ## 成功基準
-原因、影響、修正を数分で追えるなら十分です。
+
+バージョン間で破壊的変更があるすべてのエンドポイントがURLパスバージョニングでカバーされる。廃止バージョンのすべてのレスポンスに`Sunset`ヘッダーが存在する。`Sunset`から正確に90日後にv1が削除——アドホックな延長なし。
+
+## SOS Locationとの関係
+
+APIバージョニングは外部統合との信頼契約だ。SOS Locationと統合する市区町村は、変更が自分たちのシステムをサイレントに壊さないことを知る必要がある。`Sunset`ヘッダーは廃止を自動的なコミュニケーションに変える——メールなし、調整会議なし。
 '''

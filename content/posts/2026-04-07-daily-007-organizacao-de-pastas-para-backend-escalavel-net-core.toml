@@ -3,9 +3,9 @@ slug = "daily-007-organizacao-de-pastas-para-backend-escalavel-net-core"
 title = "Daily #007: Organização de pastas para backend escalável (.NET Core)"
 title_en_us = "Daily #007: Folder organization for a scalable .NET Core backend"
 title_ja_jp = "Daily #007: スケーラブルな.NET Coreバックエンドのフォルダ構成"
-summary = "Explora Organização de pastas para backend escalável (.NET Core) com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura."
-summary_en_us = "Explores Folder organization for a scalable .NET Core backend with fundamentals, formula, example and diagram for the architecture track."
-summary_ja_jp = "スケーラブルな.NET Coreバックエンドのフォルダ構成 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
+summary = "A estrutura de pastas real do SOS Location em vertical slices — cada feature contém seu próprio command, handler, validator e endpoint — e por que isso é superior à separação por camada técnica."
+summary_en_us = "The real SOS Location folder structure in vertical slices — each feature contains its own command, handler, validator and endpoint — and why this is superior to separation by technical layer."
+summary_ja_jp = "SOS Locationの実際のフォルダ構造（垂直スライス）——各フィーチャーが独自のコマンド・ハンドラー・バリデーター・エンドポイントを含む——そしてなぜこれが技術レイヤー別分離より優れているか。"
 published_at = "2026-04-07T15:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -15,145 +15,272 @@ badges = ["ddd", "arquitetura"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Organização de pastas para backend escalável (.NET Core)** dentro da trilha **arquitetura** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Organização de pastas para backend escalável (.NET Core)** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location começou com a estrutura clássica por camada técnica: `Controllers/`, `Services/`, `Repositories/`, `Models/`. Após 3 meses, para entender o que acontecia ao registrar uma pessoa desaparecida, um desenvolvedor novo precisava abrir 6 arquivos em 6 pastas diferentes. O fluxo estava espalhado horizontalmente pelo codebase.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Organização de pastas para backend escalável (.NET Core)** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Clareza = (fronteiras + contratos) / acoplamento
+A estrutura por camada técnica escala mal com features novas. Adicionar "snapshot de operações" exige criar `OperationSnapshotController.cs`, `OperationSnapshotService.cs`, `OperationSnapshotRepository.cs`, `OperationSnapshotDto.cs` em quatro pastas diferentes. Um PR de feature toca 4 diretórios. Code review perde contexto porque os arquivos relacionados estão espalhados.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
+## Decisão técnica
+
+Vertical slices: cada feature em sua própria pasta com todos os arquivos necessários. A feature `RegistrarPessoaDesaparecida` contém seu command, handler, validator, endpoint e DTO de resposta no mesmo diretório. Para entender o fluxo completo, abra uma pasta.
+
+## Implementação
+
+```
+SosLocation/
+├── src/
+│   ├── SosLocation.Api/
+│   │   └── Features/
+│   │       ├── RegistrarPessoaDesaparecida/
+│   │       │   ├── Endpoint.cs          ← MapPost("/missing-persons")
+│   │       │   ├── Command.cs           ← record + IRequest<Guid>
+│   │       │   ├── Handler.cs           ← IRequestHandler<Command, Guid>
+│   │       │   ├── Validator.cs         ← AbstractValidator<Command>
+│   │       │   └── Response.cs          ← record PessoaRegistradaResponse(Guid Id)
+│   │       ├── BuscarHotspotsProximos/
+│   │       │   ├── Endpoint.cs
+│   │       │   ├── Query.cs
+│   │       │   ├── Handler.cs
+│   │       │   └── HotspotProximoDto.cs
+│   │       └── EmitirAlerta/
+│   │           ├── Endpoint.cs
+│   │           ├── Command.cs
+│   │           ├── Handler.cs
+│   │           └── Validator.cs
+│   ├── SosLocation.Domain/
+│   │   ├── Busca/
+│   │   │   ├── PessoaDesaparecida.cs    ← aggregate root
+│   │   │   ├── Coordenadas.cs           ← value object
+│   │   │   └── Events/
+│   │   │       └── PessoaDesaparecidaReportadaEvent.cs
+│   │   ├── Resgate/
+│   │   │   └── OperacaoDeResgate.cs
+│   │   └── Alertas/
+│   │       └── AlertaDeEmergencia.cs
+│   └── SosLocation.Infrastructure/
+│       ├── Persistence/
+│       │   ├── TenantScopedDbContext.cs
+│       │   └── Configurations/
+│       │       ├── PessoaDesaparecidaConfiguration.cs
+│       │       └── HotspotConfiguration.cs
+│       └── ExternalServices/
+│           └── GdacsClient.cs
+└── tests/
+    ├── SosLocation.Domain.Tests/
+    │   └── Busca/
+    │       └── PessoaDesaparecidaTests.cs
+    └── SosLocation.Api.Tests/
+        └── Features/
+            └── RegistrarPessoaDesaparecida/
+                └── HandlerTests.cs
 ```
 
-## Exemplo de implementação
 ```csharp
-public sealed record D007OrganizacaoDePastasParaBackendDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D007OrganizacaoDePastasParaBackendPolicy
+// Features/RegistrarPessoaDesaparecida/Endpoint.cs
+public static class RegistrarPessoaDesaparecidaEndpoint
 {
-    public static bool IsReady(D007OrganizacaoDePastasParaBackendDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public static void Map(IEndpointRouteBuilder app)
+    {
+        app.MapPost("/api/v1/missing-persons",
+            async (RegistrarPessoaDesaparecidaCommand cmd, IMediator mediator, CancellationToken ct) =>
+            {
+                var id = await mediator.Send(cmd, ct);
+                return Results.Created($"/api/v1/missing-persons/{id}",
+                    new PessoaRegistradaResponse(id));
+            })
+           .RequireAuthorization()
+           .WithTags("Busca");
+    }
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Organização de pastas para backend escalável (.NET Core).
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Misturar regra de negócio, integração e UI no mesmo módulo.
-- Não nomear dono, fronteira e comportamento esperado.
+Ao receber a task "adicionar validação de CPF opcional ao registro de pessoa desaparecida", o desenvolvedor abre `Features/RegistrarPessoaDesaparecida/` e encontra todos os arquivos relevantes: `Command.cs` (adicionar campo `Cpf?`), `Validator.cs` (adicionar regra opcional), `Handler.cs` (nenhuma mudança necessária). PR com 2 arquivos modificados, revisão em 10 minutos.
 
 ## Critério de sucesso
-O tema está pronto quando a equipe explica a fronteira, testa o contrato e mede a regressão.
+
+Qualquer desenvolvedor novo consegue localizar todos os arquivos relevantes para uma feature específica em menos de 30 segundos, abrindo uma única pasta. PRs de features novas tocam no máximo 2 diretórios (a pasta da feature + o domain se necessário).
+
+## Relação com SOS Location
+
+Durante emergências, o SOS Location recebe requisições de novas features operacionais com urgência ("adicionar campo de foto ao registro de desaparecido", "adicionar canal de SMS ao alerta"). A estrutura vertical permite que essas features sejam implementadas, revisadas e deployed em horas, não dias.
 '''
 body_en_us = '''
-This Daily expands **Folder organization for a scalable .NET Core backend** within the **architecture** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Folder organization for a scalable .NET Core backend** into a verifiable artifact in code, contract, or operations.
+SOS Location started with the classic technical-layer structure: `Controllers/`, `Services/`, `Repositories/`, `Models/`. After 3 months, understanding what happened when registering a missing person required a new developer to open 6 files across 6 different folders. The flow was spread horizontally across the codebase.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Folder organization for a scalable .NET Core backend** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Clarity = (boundaries + contracts) / coupling
+The technical-layer structure scales poorly with new features. Adding "operation snapshot" requires creating `OperationSnapshotController.cs`, `OperationSnapshotService.cs`, `OperationSnapshotRepository.cs`, `OperationSnapshotDto.cs` in four different folders. A feature PR touches 4 directories. Code review loses context because related files are spread apart.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
+## Technical decision
+
+Vertical slices: each feature in its own folder with all necessary files. The `RegistrarPessoaDesaparecida` feature contains its command, handler, validator, endpoint, and response DTO in the same directory. To understand the complete flow, open one folder.
+
+## Implementation
+
+```
+SosLocation/
+├── src/
+│   ├── SosLocation.Api/
+│   │   └── Features/
+│   │       ├── RegistrarPessoaDesaparecida/
+│   │       │   ├── Endpoint.cs          ← MapPost("/missing-persons")
+│   │       │   ├── Command.cs           ← record + IRequest<Guid>
+│   │       │   ├── Handler.cs           ← IRequestHandler<Command, Guid>
+│   │       │   ├── Validator.cs         ← AbstractValidator<Command>
+│   │       │   └── Response.cs          ← record PessoaRegistradaResponse(Guid Id)
+│   │       ├── BuscarHotspotsProximos/
+│   │       │   ├── Endpoint.cs
+│   │       │   ├── Query.cs
+│   │       │   ├── Handler.cs
+│   │       │   └── HotspotProximoDto.cs
+│   │       └── EmitirAlerta/
+│   │           ├── Endpoint.cs
+│   │           ├── Command.cs
+│   │           ├── Handler.cs
+│   │           └── Validator.cs
+│   ├── SosLocation.Domain/
+│   │   ├── Busca/
+│   │   │   ├── PessoaDesaparecida.cs
+│   │   │   ├── Coordenadas.cs
+│   │   │   └── Events/
+│   │   │       └── PessoaDesaparecidaReportadaEvent.cs
+│   │   ├── Resgate/
+│   │   │   └── OperacaoDeResgate.cs
+│   │   └── Alertas/
+│   │       └── AlertaDeEmergencia.cs
+│   └── SosLocation.Infrastructure/
+│       ├── Persistence/
+│       │   └── TenantScopedDbContext.cs
+│       └── ExternalServices/
+│           └── GdacsClient.cs
+└── tests/
+    └── SosLocation.Api.Tests/
+        └── Features/
+            └── RegistrarPessoaDesaparecida/
+                └── HandlerTests.cs
 ```
 
-## Implementation example
 ```csharp
-public sealed record D007OrganizacaoDePastasParaBackendDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D007OrganizacaoDePastasParaBackendPolicy
+// Features/RegistrarPessoaDesaparecida/Endpoint.cs
+public static class RegistrarPessoaDesaparecidaEndpoint
 {
-    public static bool IsReady(D007OrganizacaoDePastasParaBackendDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public static void Map(IEndpointRouteBuilder app)
+    {
+        app.MapPost("/api/v1/missing-persons",
+            async (RegistrarPessoaDesaparecidaCommand cmd, IMediator mediator, CancellationToken ct) =>
+            {
+                var id = await mediator.Send(cmd, ct);
+                return Results.Created($"/api/v1/missing-persons/{id}",
+                    new PessoaRegistradaResponse(id));
+            })
+           .RequireAuthorization()
+           .WithTags("Busca");
+    }
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Folder organization for a scalable .NET Core backend.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Mixing business rules, integration, and UI in the same module.
-- Failing to name the owner, boundary, and expected behavior.
+When receiving the task "add optional CPF validation to missing person registration," the developer opens `Features/RegistrarPessoaDesaparecida/` and finds all relevant files: `Command.cs` (add `Cpf?` field), `Validator.cs` (add optional rule), `Handler.cs` (no change needed). PR with 2 modified files, reviewed in 10 minutes.
 
 ## Success criteria
-The topic is ready when the team can explain the boundary, test the contract, and measure regressions.
+
+Any new developer can locate all relevant files for a specific feature in under 30 seconds by opening a single folder. New feature PRs touch at most 2 directories (the feature folder + domain if needed).
+
+## Relation to SOS Location
+
+During emergencies, SOS Location receives urgent requests for new operational features ("add photo field to missing person registration", "add SMS channel to alert"). The vertical structure allows these features to be implemented, reviewed, and deployed in hours, not days.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **アーキテクチャ** トラックにおける **スケーラブルな.NET Coreバックエンドのフォルダ構成** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**スケーラブルな.NET Coreバックエンドのフォルダ構成** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationは古典的な技術レイヤー別構造で始まった：`Controllers/`・`Services/`・`Repositories/`・`Models/`。3ヶ月後、行方不明者の登録で何が起こるかを理解するには、新しい開発者が6つの異なるフォルダの6つのファイルを開く必要があった。フローはコードベース全体に水平に散在していた。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**スケーラブルな.NET Coreバックエンドのフォルダ構成** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-明確さ = (境界 + 契約) / 結合度
+技術レイヤー別構造は新しいフィーチャーに対してスケールしない。「作戦スナップショット」を追加するには、4つの異なるフォルダに`OperationSnapshotController.cs`・`OperationSnapshotService.cs`・`OperationSnapshotRepository.cs`・`OperationSnapshotDto.cs`を作成する必要がある。フィーチャーのPRが4つのディレクトリに触れる。関連ファイルが分散しているため、コードレビューがコンテキストを失う。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
+## 技術的決定
+
+垂直スライス：各フィーチャーが必要なすべてのファイルを持つ独自のフォルダに配置される。`RegistrarPessoaDesaparecida`フィーチャーには、コマンド・ハンドラー・バリデーター・エンドポイント・レスポンスDTOが同じディレクトリに含まれる。完全なフローを理解するには、1つのフォルダを開くだけでよい。
+
+## 実装
+
+```
+SosLocation/
+├── src/
+│   ├── SosLocation.Api/
+│   │   └── Features/
+│   │       ├── RegistrarPessoaDesaparecida/
+│   │       │   ├── Endpoint.cs
+│   │       │   ├── Command.cs
+│   │       │   ├── Handler.cs
+│   │       │   ├── Validator.cs
+│   │       │   └── Response.cs
+│   │       ├── BuscarHotspotsProximos/
+│   │       │   ├── Endpoint.cs
+│   │       │   ├── Query.cs
+│   │       │   ├── Handler.cs
+│   │       │   └── HotspotProximoDto.cs
+│   │       └── EmitirAlerta/
+│   │           ├── Endpoint.cs
+│   │           ├── Command.cs
+│   │           ├── Handler.cs
+│   │           └── Validator.cs
+│   ├── SosLocation.Domain/
+│   │   ├── Busca/
+│   │   │   ├── PessoaDesaparecida.cs
+│   │   │   └── Events/
+│   │   │       └── PessoaDesaparecidaReportadaEvent.cs
+│   │   └── Resgate/
+│   │       └── OperacaoDeResgate.cs
+│   └── SosLocation.Infrastructure/
+│       └── Persistence/
+│           └── TenantScopedDbContext.cs
+└── tests/
+    └── SosLocation.Api.Tests/
+        └── Features/
+            └── RegistrarPessoaDesaparecida/
+                └── HandlerTests.cs
 ```
 
-## 実装例
 ```csharp
-public sealed record D007OrganizacaoDePastasParaBackendDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D007OrganizacaoDePastasParaBackendPolicy
+// Features/RegistrarPessoaDesaparecida/Endpoint.cs
+public static class RegistrarPessoaDesaparecidaEndpoint
 {
-    public static bool IsReady(D007OrganizacaoDePastasParaBackendDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public static void Map(IEndpointRouteBuilder app)
+    {
+        app.MapPost("/api/v1/missing-persons",
+            async (RegistrarPessoaDesaparecidaCommand cmd, IMediator mediator, CancellationToken ct) =>
+            {
+                var id = await mediator.Send(cmd, ct);
+                return Results.Created($"/api/v1/missing-persons/{id}",
+                    new PessoaRegistradaResponse(id));
+            })
+           .RequireAuthorization()
+           .WithTags("Busca");
+    }
 }
 ```
 
-## SOS Location での適用方法
-- スケーラブルな.NET Coreバックエンドのフォルダ構成 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 業務ルール、外部連携、UIを同じモジュールに混ぜる。
-- 責任者、境界、期待動作を明示しない。
+「行方不明者登録にオプションのCPF検証を追加する」というタスクを受け取ったとき、開発者は`Features/RegistrarPessoaDesaparecida/`を開いて関連ファイルをすべて見つける：`Command.cs`（`Cpf?`フィールドを追加）・`Validator.cs`（オプションルールを追加）・`Handler.cs`（変更不要）。変更ファイル2つのPR、10分でレビュー完了。
 
 ## 成功基準
-境界を説明し、契約をテストし、回帰を測定できれば十分成熟しています。
+
+新しい開発者が1つのフォルダを開くことで、特定のフィーチャーの関連ファイルをすべて30秒以内に見つけられる。新しいフィーチャーのPRが最大2つのディレクトリに触れる（フィーチャーフォルダ＋必要に応じてドメイン）。
+
+## SOS Locationとの関係
+
+緊急時、SOS Locationは新しい運用フィーチャーへの緊急リクエストを受ける（「行方不明者登録に写真フィールドを追加」「アラートにSMSチャネルを追加」）。垂直構造により、これらのフィーチャーを日ではなく時間単位で実装・レビュー・デプロイできる。
 '''

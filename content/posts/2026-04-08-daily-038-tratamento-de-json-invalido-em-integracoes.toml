@@ -3,145 +3,242 @@ slug = "daily-038-tratamento-de-json-invalido-em-integracoes"
 title = "Daily #038: Tratamento de JSON inválido em integrações"
 title_en_us = "Daily #038: Handling invalid JSON in integrations"
 title_ja_jp = "Daily #038: 連携における不正JSON処理"
-summary = "Explora Tratamento de JSON inválido em integrações com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs."
-summary_en_us = "Explores Handling invalid JSON in integrations with fundamentals, formula, example and diagram for the backend and APIs track."
-summary_ja_jp = "連携における不正JSON処理 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
+summary = "Como o SOS Location usa System.Text.Json com JsonDocument para validar e parsear JSON de fontes externas (GDACS, Open-Meteo), e como o tratamento de campos opcionais e tipos inesperados evita crashes silenciosos."
+summary_en_us = "How SOS Location uses System.Text.Json with JsonDocument to validate and parse JSON from external sources (GDACS, Open-Meteo), and how handling optional fields and unexpected types avoids silent crashes."
+summary_ja_jp = "SOS LocationがSystem.Text.JsonとJsonDocumentを使って外部ソース（GDACS・Open-Meteo）からのJSONを検証・パースし、オプションフィールドと予期しない型の処理がサイレントクラッシュを防ぐ方法。"
 published_at = "2026-04-08T22:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
-tags = ["sos-location", "daily", "backend", "api", "dotnet"]
+tags = ["sos-location", "daily", "backend", "api"]
 badges = ["backend", "api"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Tratamento de JSON inválido em integrações** dentro da trilha **backend e APIs** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Tratamento de JSON inválido em integrações** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location integra APIs de terceiros que não controlamos: GDACS, Open-Meteo, INMET, sistemas de prefeituras. Essas APIs retornam JSON que pode ser inválido (malformed), incompleto (campos ausentes), ou com tipos inesperados (null onde esperava número, string onde esperava array). Em produção, um JSON mal formado de uma API externa causou `NullReferenceException` em cadeia que derrubou o serviço de alertas por 12 minutos.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Tratamento de JSON inválido em integrações** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Confiabilidade = sucesso × observabilidade / falhas não tratadas
+A versão inicial usava `JsonSerializer.Deserialize<T>` diretamente sem tratamento de exceção. Quando a Open-Meteo retornou um campo `precipitation` como `null` em vez de `0.0` durante uma falta de dados, o deserializer lançou `JsonException` não tratada que propagou pelo handler e fez o worker do Hangfire falhar — e como o retry não discriminava o tipo de erro, a mesma falha ocorreu nas 3 tentativas, desperdiçando 45 segundos de retry e não processando dados válidos das outras APIs.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
+`JsonDocument` para validação estrutural antes do deserialize. Campos obrigatórios verificados com `TryGetProperty`. Campos opcionais com valor default explícito. Wrapper `ExternalApiParser<T>` que captura `JsonException` e retorna `Result<T, ParseError>` — sem exceções propagadas. Log de campos inválidos com o JSON original truncado (500 chars).
+
+## Implementação
+
 ```csharp
-app.Use(async (context, next) =>
+// SosLocation.Infrastructure/ExternalServices/ExternalApiParser.cs
+public sealed class ExternalApiParser<T>
 {
-    context.Response.Headers["X-Trace-Topic"] = "D038TratamentoDeJsonInvalidoEmInte";
-    await next();
-});
+    private readonly ILogger _logger;
+
+    public Result<T, ParseError> Parse(string json, Func<JsonDocument, T> extractor)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+            return Result.Failure<T, ParseError>(new ParseError("JSON vazio ou nulo."));
+
+        try
+        {
+            using var doc = JsonDocument.Parse(json);
+            var value = extractor(doc);
+            return Result.Success<T, ParseError>(value);
+        }
+        catch (JsonException ex)
+        {
+            _logger.LogWarning(
+                "Falha ao parsear JSON externo: {Error}. JSON (primeiros 500 chars): {Json}",
+                ex.Message,
+                json.Length > 500 ? json[..500] + "..." : json);
+
+            return Result.Failure<T, ParseError>(new ParseError(ex.Message));
+        }
+    }
+}
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Tratamento de JSON inválido em integrações.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+```csharp
+// SosLocation.Infrastructure/ExternalServices/OpenMeteoParser.cs
+public sealed class OpenMeteoParser
+{
+    private readonly ExternalApiParser<OpenMeteoData> _parser;
 
-## Erros comuns
-- Responder sem rastreabilidade suficiente para depurar produção.
-- Tratar erro de integração como caso excepcional e não como fluxo normal.
+    public Result<OpenMeteoData, ParseError> Parse(string json) =>
+        _parser.Parse(json, doc =>
+        {
+            var root    = doc.RootElement;
+            var hourly  = root.GetProperty("hourly");  // obrigatório — lança se ausente
+
+            // precipitation pode ser null durante gaps de dados — default 0.0
+            var precipitation = hourly.TryGetProperty("precipitation", out var precipEl)
+                ? precipEl.EnumerateArray()
+                          .Select(e => e.ValueKind == JsonValueKind.Number ? e.GetDouble() : 0.0)
+                          .ToList()
+                : new List<double>();
+
+            // precipitation_probability pode ser ausente em versões antigas da API
+            var probability = hourly.TryGetProperty("precipitation_probability", out var probEl)
+                ? probEl.EnumerateArray()
+                        .Select(e => e.ValueKind == JsonValueKind.Number ? e.GetInt32() : 0)
+                        .ToList()
+                : Enumerable.Repeat(0, precipitation.Count).ToList();
+
+            return new OpenMeteoData(precipitation, probability);
+        });
+}
+```
+
+## Exemplo concreto
+
+Open-Meteo retorna JSON com campo `precipitation` como array de nulls durante manutenção de dados: `[0.2, null, null, 1.5, null]`. Versão antiga: `JsonException` não tratada derruba o worker. Versão nova: `ExternalApiParser` substitui nulls por `0.0` via `e.ValueKind == JsonValueKind.Number ? e.GetDouble() : 0.0`, retorna dados parcialmente válidos, loga os 3 campos null. Worker processa normalmente, modelo de risco recebe `[0.2, 0.0, 0.0, 1.5, 0.0]`.
 
 ## Critério de sucesso
-A solução está boa quando o time encontra causa, impacto e correção em poucos minutos.
+
+Zero exceções não tratadas de `JsonException` propagando para fora da camada de infraestrutura. Log gerado para 100% dos JSONs inválidos recebidos de APIs externas. `Result<T, ParseError>` permite que o caller decida entre degradação graciosa e falha explícita.
+
+## Relação com SOS Location
+
+Integrações com APIs externas são o perímetro do sistema — onde o código do SOS Location encontra dados que não controlamos. Defensividade no parsing não é paranoia — é a única forma de garantir que um bug da API do GDACS não derrube o serviço de alertas do SOS Location.
 '''
 body_en_us = '''
-This Daily expands **Handling invalid JSON in integrations** within the **backend and APIs** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Handling invalid JSON in integrations** into a verifiable artifact in code, contract, or operations.
+SOS Location integrates third-party APIs it does not control: GDACS, Open-Meteo, INMET, city hall systems. These APIs return JSON that may be invalid (malformed), incomplete (missing fields), or have unexpected types (null where a number was expected, string where an array was expected). In production, a malformed JSON from an external API caused a cascading `NullReferenceException` that brought down the alert service for 12 minutes.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Handling invalid JSON in integrations** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Reliability = success × observability / unhandled failures
+The initial version used `JsonSerializer.Deserialize<T>` directly without exception handling. When Open-Meteo returned a `precipitation` field as `null` instead of `0.0` during a data gap, the deserializer threw an unhandled `JsonException` that propagated through the handler and caused the Hangfire worker to fail — and since the retry did not discriminate error types, the same failure occurred on all 3 attempts, wasting 45 seconds of retries and not processing valid data from other APIs.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## Technical decision
 
-## Implementation example
+`JsonDocument` for structural validation before deserialisation. Required fields checked with `TryGetProperty`. Optional fields with explicit default values. `ExternalApiParser<T>` wrapper that catches `JsonException` and returns `Result<T, ParseError>` — no propagated exceptions. Log of invalid fields with the original JSON truncated to 500 chars.
+
+## Implementation
+
 ```csharp
-app.Use(async (context, next) =>
+public sealed class ExternalApiParser<T>
 {
-    context.Response.Headers["X-Trace-Topic"] = "D038TratamentoDeJsonInvalidoEmInte";
-    await next();
-});
+    public Result<T, ParseError> Parse(string json, Func<JsonDocument, T> extractor)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+            return Result.Failure<T, ParseError>(new ParseError("Empty or null JSON."));
+
+        try
+        {
+            using var doc = JsonDocument.Parse(json);
+            return Result.Success<T, ParseError>(extractor(doc));
+        }
+        catch (JsonException ex)
+        {
+            _logger.LogWarning(
+                "Failed to parse external JSON: {Error}. JSON (first 500 chars): {Json}",
+                ex.Message,
+                json.Length > 500 ? json[..500] + "..." : json);
+
+            return Result.Failure<T, ParseError>(new ParseError(ex.Message));
+        }
+    }
+}
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Handling invalid JSON in integrations.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+```csharp
+public Result<OpenMeteoData, ParseError> Parse(string json) =>
+    _parser.Parse(json, doc =>
+    {
+        var hourly = doc.RootElement.GetProperty("hourly");
 
-## Common pitfalls
-- Responding without enough traceability to debug production.
-- Treating integration failures as exceptions instead of a normal flow.
+        var precipitation = hourly.TryGetProperty("precipitation", out var precipEl)
+            ? precipEl.EnumerateArray()
+                      .Select(e => e.ValueKind == JsonValueKind.Number ? e.GetDouble() : 0.0)
+                      .ToList()
+            : new List<double>();
+
+        return new OpenMeteoData(precipitation, ...);
+    });
+```
+
+## Concrete example
+
+Open-Meteo returns JSON with `precipitation` as an array of nulls during data maintenance: `[0.2, null, null, 1.5, null]`. Old version: unhandled `JsonException` brings down the worker. New version: `ExternalApiParser` replaces nulls with `0.0` via `e.ValueKind == JsonValueKind.Number ? e.GetDouble() : 0.0`, returns partially valid data, logs the 3 null fields. Worker processes normally, risk model receives `[0.2, 0.0, 0.0, 1.5, 0.0]`.
 
 ## Success criteria
-The solution is good when the team can find cause, impact, and fix in minutes.
+
+Zero unhandled `JsonException` exceptions propagating outside the infrastructure layer. Log generated for 100% of invalid JSONs received from external APIs. `Result<T, ParseError>` lets the caller decide between graceful degradation and explicit failure.
+
+## Relation to SOS Location
+
+External API integrations are the system's perimeter — where SOS Location's code meets data it does not control. Defensive parsing is not paranoia — it is the only way to ensure that a GDACS API bug does not bring down SOS Location's alert service.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **バックエンドとAPI** トラックにおける **連携における不正JSON処理** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**連携における不正JSON処理** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationは制御できないサードパーティAPIと統合する：GDACS、Open-Meteo、INMET、市区町村システム。これらのAPIは無効（不正形式）、不完全（フィールドが欠落）、または予期しない型（数値が期待されるところにnull、配列が期待されるところにstring）のJSONを返す可能性がある。本番環境で、外部APIからの不正形式のJSONがカスケードした`NullReferenceException`を引き起こし、アラートサービスが12分間ダウンした。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**連携における不正JSON処理** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-信頼性 = 成功率 × 可観測性 / 未処理失敗
+最初のバージョンは例外処理なしで`JsonSerializer.Deserialize<T>`を直接使っていた。Open-Meteoがデータギャップ中に`precipitation`フィールドを`0.0`ではなく`null`として返すと、デシリアライザーはハンドラーを通じて伝播した未処理の`JsonException`をスローし、Hangfireワーカーが失敗した——リトライがエラータイプを区別しなかったため、同じ失敗が3回すべての試行で発生し、45秒のリトライを無駄にして他のAPIからの有効なデータを処理しなかった。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## 技術的決定
 
-## 実装例
+デシリアライズ前の構造的バリデーションのための`JsonDocument`。`TryGetProperty`でチェックされる必須フィールド。明示的なデフォルト値を持つオプションフィールド。`JsonException`をキャッチして`Result<T, ParseError>`を返す`ExternalApiParser<T>`ラッパー——例外の伝播なし。元のJSONを500文字に切り詰めた無効フィールドのログ。
+
+## 実装
+
 ```csharp
-app.Use(async (context, next) =>
+public sealed class ExternalApiParser<T>
 {
-    context.Response.Headers["X-Trace-Topic"] = "D038TratamentoDeJsonInvalidoEmInte";
-    await next();
-});
+    public Result<T, ParseError> Parse(string json, Func<JsonDocument, T> extractor)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+            return Result.Failure<T, ParseError>(new ParseError("空またはnullのJSON。"));
+
+        try
+        {
+            using var doc = JsonDocument.Parse(json);
+            return Result.Success<T, ParseError>(extractor(doc));
+        }
+        catch (JsonException ex)
+        {
+            _logger.LogWarning(
+                "外部JSONのパース失敗: {Error}。JSON（最初の500文字）: {Json}",
+                ex.Message,
+                json.Length > 500 ? json[..500] + "..." : json);
+
+            return Result.Failure<T, ParseError>(new ParseError(ex.Message));
+        }
+    }
+}
 ```
 
-## SOS Location での適用方法
-- 連携における不正JSON処理 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+```csharp
+public Result<OpenMeteoData, ParseError> Parse(string json) =>
+    _parser.Parse(json, doc =>
+    {
+        var hourly = doc.RootElement.GetProperty("hourly");
 
-## よくある落とし穴
-- 本番調査に必要な追跡性を確保せずに応答する。
-- 連携障害を例外ではなく通常フローとして扱わない。
+        var precipitation = hourly.TryGetProperty("precipitation", out var precipEl)
+            ? precipEl.EnumerateArray()
+                      .Select(e => e.ValueKind == JsonValueKind.Number ? e.GetDouble() : 0.0)
+                      .ToList()
+            : new List<double>();
+
+        return new OpenMeteoData(precipitation, ...);
+    });
+```
+
+## 具体的な例
+
+Open-Meteoがデータメンテナンス中に`precipitation`をnullの配列として返す：`[0.2, null, null, 1.5, null]`。旧バージョン：未処理の`JsonException`がワーカーをダウンさせる。新バージョン：`ExternalApiParser`が`e.ValueKind == JsonValueKind.Number ? e.GetDouble() : 0.0`でnullを`0.0`に置き換え、部分的に有効なデータを返し、3つのnullフィールドをログに記録。ワーカーは正常に処理し、リスクモデルは`[0.2, 0.0, 0.0, 1.5, 0.0]`を受け取る。
 
 ## 成功基準
-原因、影響、修正を数分で追えるなら十分です。
+
+インフラレイヤーの外に伝播する未処理の`JsonException`ゼロ。外部APIから受け取った無効なJSONの100%に対してログが生成される。`Result<T, ParseError>`でコーラーがグレースフルデグラデーションと明示的な失敗を選択できる。
+
+## SOS Locationとの関係
+
+外部API統合はシステムの境界——SOS Locationのコードが制御できないデータと出会う場所だ。防御的なパーシングは偏執狂ではなく——GDACSのAPIバグがSOS Locationのアラートサービスをダウンさせないことを保証する唯一の方法だ。
 '''

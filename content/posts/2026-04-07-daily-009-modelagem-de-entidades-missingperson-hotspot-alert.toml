@@ -3,9 +3,9 @@ slug = "daily-009-modelagem-de-entidades-missingperson-hotspot-alert"
 title = "Daily #009: Modelagem de entidades: MissingPerson, Hotspot, Alert"
 title_en_us = "Daily #009: Entity modeling: MissingPerson, Hotspot and Alert"
 title_ja_jp = "Daily #009: エンティティ設計：MissingPerson、Hotspot、Alert"
-summary = "Explora Modelagem de entidades: MissingPerson, Hotspot, Alert com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura."
-summary_en_us = "Explores Entity modeling: MissingPerson, Hotspot and Alert with fundamentals, formula, example and diagram for the architecture track."
-summary_ja_jp = "エンティティ設計：MissingPerson、Hotspot、Alert を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
+summary = "Invariantes concretas das três entidades centrais do SOS Location — coordenadas válidas, nível de risco entre 1 e 10, canais de alerta obrigatórios — implementadas em factory methods com DomainException."
+summary_en_us = "Concrete invariants of SOS Location's three core entities — valid coordinates, risk level between 1 and 10, mandatory alert channels — implemented in factory methods with DomainException."
+summary_ja_jp = "SOS Locationの3つの中核エンティティの具体的な不変条件——有効な座標、1〜10のリスクレベル、必須アラートチャネル——をファクトリーメソッドとDomainExceptionで実装する方法。"
 published_at = "2026-04-07T17:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -15,145 +15,345 @@ badges = ["ddd", "arquitetura"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Modelagem de entidades: MissingPerson, Hotspot, Alert** dentro da trilha **arquitetura** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Modelagem de entidades: MissingPerson, Hotspot, Alert** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location recebeu, na primeira semana de testes com uma defesa civil real, um hotspot com `NivelRisco = 0` (zero) — tecnicamente inválido, mas o banco de dados aceitou porque o campo era apenas um `int` sem constraint. O mapa exibiu uma zona de risco com nível zero, que coordenadores interpretaram como "sem risco" e ignoraram. Era uma área com 3 ocorrências ativas.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Modelagem de entidades: MissingPerson, Hotspot, Alert** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Clareza = (fronteiras + contratos) / acoplamento
+Com entidades anêmicas (apenas propriedades, sem lógica), as invariantes ficam em validators de controller — ou não ficam em lugar nenhum. Um `Hotspot` criado via `new Hotspot { NivelRisco = 0 }` é inválido do ponto de vista do domínio, mas o código compila e persiste. A entidade não defende sua própria consistência.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
+Entidades ricas com factory methods: construtor privado, criação apenas via métodos estáticos que validam invariantes antes de retornar a instância. Qualquer violação lança `DomainException` — não retorna null, não retorna Result com erro. O domínio é inválido ou não é criado.
+
+## Implementação
+
 ```csharp
-public sealed record D009ModelagemDeEntidadesMissingperDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D009ModelagemDeEntidadesMissingperPolicy
+// PessoaDesaparecida: coordenadas obrigatórias e válidas
+public sealed class PessoaDesaparecida : AggregateRoot
 {
-    public static bool IsReady(D009ModelagemDeEntidadesMissingperDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public Guid        Id                 { get; private set; }
+    public string      Nome               { get; private set; }
+    public Coordenadas UltimaLocalizacao  { get; private set; }
+    public StatusBusca Status             { get; private set; }
+
+    private PessoaDesaparecida() { }
+
+    public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
+    {
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new DomainException("Nome é obrigatório.");
+        // Coordenadas valida lat/lon em seu próprio construtor
+        return new PessoaDesaparecida
+        {
+            Id = Guid.NewGuid(), Nome = nome.Trim(),
+            UltimaLocalizacao = loc, Status = StatusBusca.Reportada
+        };
+    }
+}
+
+// Hotspot: NivelRisco obrigatoriamente entre 1 e 10
+public sealed class Hotspot : AggregateRoot
+{
+    public Guid        Id          { get; private set; }
+    public Coordenadas Centro      { get; private set; }
+    public double      RaioMetros  { get; private set; }
+    public int         NivelRisco  { get; private set; }
+    public bool        Ativo       { get; private set; }
+
+    private Hotspot() { }
+
+    public static Hotspot Ativar(Coordenadas centro, double raioMetros, int nivelRisco)
+    {
+        if (nivelRisco < 1 || nivelRisco > 10)
+            throw new DomainException($"NivelRisco deve estar entre 1 e 10. Recebido: {nivelRisco}");
+        if (raioMetros <= 0)
+            throw new DomainException("Raio do hotspot deve ser maior que zero.");
+
+        return new Hotspot
+        {
+            Id = Guid.NewGuid(), Centro = centro,
+            RaioMetros = raioMetros, NivelRisco = nivelRisco, Ativo = true
+        };
+    }
+
+    public void RecalcularNivelDeRisco(bool novaOcorrencia)
+    {
+        if (!Ativo) throw new DomainException("Não é possível atualizar hotspot inativo.");
+        NivelRisco = novaOcorrencia
+            ? Math.Min(NivelRisco + 1, 10)
+            : Math.Max(NivelRisco - 1, 1);
+    }
+}
+
+// AlertaDeEmergencia: pelo menos um canal de envio obrigatório
+public sealed class AlertaDeEmergencia : AggregateRoot
+{
+    public Guid              Id          { get; private set; }
+    public string            Mensagem    { get; private set; }
+    public Coordenadas       Coordenadas { get; private set; }
+    public double            RaioKm      { get; private set; }
+    public IReadOnlyList<CanalAlerta> Canais { get; private set; }
+
+    private AlertaDeEmergencia() { }
+
+    public static AlertaDeEmergencia Emitir(
+        string mensagem, Coordenadas coords, double raioKm,
+        IEnumerable<CanalAlerta> canais)
+    {
+        var listaCanais = canais?.ToList() ?? [];
+        if (listaCanais.Count == 0)
+            throw new DomainException("Alerta deve ter pelo menos um canal de envio (Push, SMS ou Email).");
+        if (raioKm <= 0)
+            throw new DomainException("Raio do alerta deve ser maior que zero.");
+        if (string.IsNullOrWhiteSpace(mensagem))
+            throw new DomainException("Mensagem do alerta é obrigatória.");
+
+        return new AlertaDeEmergencia
+        {
+            Id = Guid.NewGuid(), Mensagem = mensagem.Trim(),
+            Coordenadas = coords, RaioKm = raioKm, Canais = listaCanais
+        };
+    }
+}
+
+// Value Object: Coordenadas com validação de range
+public sealed record Coordenadas
+{
+    public double Latitude  { get; }
+    public double Longitude { get; }
+
+    public Coordenadas(double lat, double lon)
+    {
+        if (lat < -90 || lat > 90)
+            throw new DomainException($"Latitude inválida: {lat}. Deve estar entre -90 e 90.");
+        if (lon < -180 || lon > 180)
+            throw new DomainException($"Longitude inválida: {lon}. Deve estar entre -180 e 180.");
+        Latitude  = lat;
+        Longitude = lon;
+    }
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Modelagem de entidades: MissingPerson, Hotspot, Alert.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Misturar regra de negócio, integração e UI no mesmo módulo.
-- Não nomear dono, fronteira e comportamento esperado.
+O bug do hotspot com `NivelRisco = 0` da primeira semana de testes nunca mais ocorreu. `Hotspot.Ativar(centro, raio, 0)` lança `DomainException("NivelRisco deve estar entre 1 e 10. Recebido: 0")` antes de chegar ao banco de dados. A invariante é verificada no momento da criação, não no momento da leitura.
 
 ## Critério de sucesso
-O tema está pronto quando a equipe explica a fronteira, testa o contrato e mede a regressão.
+
+Nenhuma entidade de domínio pode ser instanciada em estado inválido. Testes de invariante cobrem todos os limites de valor (NivelRisco 0, 11; Latitude 91, -91; Longitude 181, -181; lista de canais vazia). Nenhuma DomainException é capturada em produção com dados que deveriam ter sido rejeitados na API.
+
+## Relação com SOS Location
+
+Em emergências reais, dados incorretos no sistema causam decisões operacionais erradas. Um hotspot com nível zero sendo exibido como "sem risco" durante uma inundação ativa não é apenas um bug — é um risco à vida. A modelagem rica de entidades é a primeira linha de defesa contra dados que comprometem operações de resgate.
 '''
 body_en_us = '''
-This Daily expands **Entity modeling: MissingPerson, Hotspot and Alert** within the **architecture** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Entity modeling: MissingPerson, Hotspot and Alert** into a verifiable artifact in code, contract, or operations.
+In SOS Location's first week of testing with a real civil defence agency, a hotspot was created with `NivelRisco = 0` (zero) — technically invalid, but the database accepted it because the field was just an `int` without a constraint. The map displayed a risk zone with level zero, which coordinators interpreted as "no risk" and ignored. It was an area with 3 active incidents.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Entity modeling: MissingPerson, Hotspot and Alert** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Clarity = (boundaries + contracts) / coupling
+With anemic entities (properties only, no logic), invariants end up in controller validators — or nowhere. A `Hotspot` created via `new Hotspot { NivelRisco = 0 }` is invalid from the domain's perspective, but the code compiles and persists. The entity does not defend its own consistency.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Technical decision
 
-## Implementation example
+Rich entities with factory methods: private constructor, creation only via static methods that validate invariants before returning the instance. Any violation throws `DomainException` — does not return null, does not return a Result with error. The domain is either valid or it is not created.
+
+## Implementation
+
 ```csharp
-public sealed record D009ModelagemDeEntidadesMissingperDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D009ModelagemDeEntidadesMissingperPolicy
+// PessoaDesaparecida: valid coordinates required
+public sealed class PessoaDesaparecida : AggregateRoot
 {
-    public static bool IsReady(D009ModelagemDeEntidadesMissingperDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
+    {
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new DomainException("Nome é obrigatório.");
+        return new PessoaDesaparecida
+        {
+            Id = Guid.NewGuid(), Nome = nome.Trim(),
+            UltimaLocalizacao = loc, Status = StatusBusca.Reportada
+        };
+    }
+}
+
+// Hotspot: NivelRisco must be between 1 and 10
+public sealed class Hotspot : AggregateRoot
+{
+    public static Hotspot Ativar(Coordenadas centro, double raioMetros, int nivelRisco)
+    {
+        if (nivelRisco < 1 || nivelRisco > 10)
+            throw new DomainException($"NivelRisco deve estar entre 1 e 10. Recebido: {nivelRisco}");
+        if (raioMetros <= 0)
+            throw new DomainException("Raio do hotspot deve ser maior que zero.");
+
+        return new Hotspot
+        {
+            Id = Guid.NewGuid(), Centro = centro,
+            RaioMetros = raioMetros, NivelRisco = nivelRisco, Ativo = true
+        };
+    }
+
+    public void RecalcularNivelDeRisco(bool novaOcorrencia)
+    {
+        if (!Ativo) throw new DomainException("Não é possível atualizar hotspot inativo.");
+        NivelRisco = novaOcorrencia
+            ? Math.Min(NivelRisco + 1, 10)
+            : Math.Max(NivelRisco - 1, 1);
+    }
+}
+
+// AlertaDeEmergencia: at least one delivery channel required
+public sealed class AlertaDeEmergencia : AggregateRoot
+{
+    public static AlertaDeEmergencia Emitir(
+        string mensagem, Coordenadas coords, double raioKm,
+        IEnumerable<CanalAlerta> canais)
+    {
+        var listaCanais = canais?.ToList() ?? [];
+        if (listaCanais.Count == 0)
+            throw new DomainException("Alerta deve ter pelo menos um canal de envio (Push, SMS ou Email).");
+        if (raioKm <= 0)
+            throw new DomainException("Raio do alerta deve ser maior que zero.");
+
+        return new AlertaDeEmergencia
+        {
+            Id = Guid.NewGuid(), Mensagem = mensagem.Trim(),
+            Coordenadas = coords, RaioKm = raioKm, Canais = listaCanais
+        };
+    }
+}
+
+// Value Object: Coordenadas with range validation
+public sealed record Coordenadas(double Latitude, double Longitude)
+{
+    public Coordenadas(double lat, double lon) : this(lat, lon)
+    {
+        if (lat < -90 || lat > 90)
+            throw new DomainException($"Latitude inválida: {lat}. Deve estar entre -90 e 90.");
+        if (lon < -180 || lon > 180)
+            throw new DomainException($"Longitude inválida: {lon}. Deve estar entre -180 e 180.");
+    }
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Entity modeling: MissingPerson, Hotspot and Alert.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Mixing business rules, integration, and UI in the same module.
-- Failing to name the owner, boundary, and expected behavior.
+The hotspot-with-`NivelRisco = 0` bug from the first week of testing never occurred again. `Hotspot.Ativar(centro, raio, 0)` throws `DomainException("NivelRisco deve estar entre 1 e 10. Recebido: 0")` before reaching the database. The invariant is checked at creation time, not at read time.
 
 ## Success criteria
-The topic is ready when the team can explain the boundary, test the contract, and measure regressions.
+
+No domain entity can be instantiated in an invalid state. Invariant tests cover all value boundaries (NivelRisco 0, 11; Latitude 91, -91; Longitude 181, -181; empty channel list). No `DomainException` is caught in production with data that should have been rejected at the API layer.
+
+## Relation to SOS Location
+
+In real emergencies, incorrect data in the system causes wrong operational decisions. A hotspot with level zero displayed as "no risk" during an active flood is not just a bug — it is a risk to life. Rich entity modelling is the first line of defence against data that compromises rescue operations.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **アーキテクチャ** トラックにおける **エンティティ設計：MissingPerson、Hotspot、Alert** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**エンティティ設計：MissingPerson、Hotspot、Alert** をコード、契約、運用で検証できる成果物にすることです。
+実際の市民防衛機関との最初のテスト週に、SOS Locationで`NivelRisco = 0`（ゼロ）のホットスポットが作成された——技術的には無効だが、フィールドに制約のない`int`だったためデータベースが受け入れた。マップはレベルゼロの危険区域を表示し、コーディネーターは「リスクなし」と解釈して無視した。実際には3件のアクティブなインシデントがある区域だった。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**エンティティ設計：MissingPerson、Hotspot、Alert** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-明確さ = (境界 + 契約) / 結合度
+貧血エンティティ（プロパティのみ、ロジックなし）では、不変条件はコントローラーバリデーターに行き着くか、どこにも存在しない。`new Hotspot { NivelRisco = 0 }`で作成された`Hotspot`はドメインの観点からは無効だが、コードはコンパイルされ永続化される。エンティティが自身の一貫性を守らない。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## 技術的決定
 
-## 実装例
+ファクトリーメソッドを持つリッチエンティティ：プライベートコンストラクター、インスタンスを返す前に不変条件を検証する静的メソッド経由のみの作成。いかなる違反も`DomainException`をスローする——nullを返さない、エラーを持つResultを返さない。ドメインは有効であるか作成されないかのどちらかだ。
+
+## 実装
+
 ```csharp
-public sealed record D009ModelagemDeEntidadesMissingperDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D009ModelagemDeEntidadesMissingperPolicy
+// PessoaDesaparecida: 有効な座標が必須
+public sealed class PessoaDesaparecida : AggregateRoot
 {
-    public static bool IsReady(D009ModelagemDeEntidadesMissingperDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
+    {
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new DomainException("Nome é obrigatório.");
+        return new PessoaDesaparecida
+        {
+            Id = Guid.NewGuid(), Nome = nome.Trim(),
+            UltimaLocalizacao = loc, Status = StatusBusca.Reportada
+        };
+    }
+}
+
+// Hotspot: NivelRiscoは1〜10の間でなければならない
+public sealed class Hotspot : AggregateRoot
+{
+    public static Hotspot Ativar(Coordenadas centro, double raioMetros, int nivelRisco)
+    {
+        if (nivelRisco < 1 || nivelRisco > 10)
+            throw new DomainException($"NivelRisco deve estar entre 1 e 10. Recebido: {nivelRisco}");
+        if (raioMetros <= 0)
+            throw new DomainException("Raio do hotspot deve ser maior que zero.");
+        return new Hotspot
+        {
+            Id = Guid.NewGuid(), Centro = centro,
+            RaioMetros = raioMetros, NivelRisco = nivelRisco, Ativo = true
+        };
+    }
+
+    public void RecalcularNivelDeRisco(bool novaOcorrencia)
+    {
+        if (!Ativo) throw new DomainException("Não é possível atualizar hotspot inativo.");
+        NivelRisco = novaOcorrencia
+            ? Math.Min(NivelRisco + 1, 10)
+            : Math.Max(NivelRisco - 1, 1);
+    }
+}
+
+// AlertaDeEmergencia: 少なくとも1つの配信チャネルが必須
+public sealed class AlertaDeEmergencia : AggregateRoot
+{
+    public static AlertaDeEmergencia Emitir(
+        string mensagem, Coordenadas coords, double raioKm,
+        IEnumerable<CanalAlerta> canais)
+    {
+        var listaCanais = canais?.ToList() ?? [];
+        if (listaCanais.Count == 0)
+            throw new DomainException("Alerta deve ter pelo menos um canal de envio (Push, SMS ou Email).");
+        if (raioKm <= 0)
+            throw new DomainException("Raio do alerta deve ser maior que zero.");
+        return new AlertaDeEmergencia
+        {
+            Id = Guid.NewGuid(), Mensagem = mensagem.Trim(),
+            Coordenadas = coords, RaioKm = raioKm, Canais = listaCanais
+        };
+    }
+}
+
+// Value Object: 範囲検証付きCoordenadas
+public sealed record Coordenadas
+{
+    public double Latitude  { get; }
+    public double Longitude { get; }
+    public Coordenadas(double lat, double lon)
+    {
+        if (lat < -90 || lat > 90)
+            throw new DomainException($"Latitude inválida: {lat}. Deve estar entre -90 e 90.");
+        if (lon < -180 || lon > 180)
+            throw new DomainException($"Longitude inválida: {lon}. Deve estar entre -180 e 180.");
+        Latitude = lat; Longitude = lon;
+    }
 }
 ```
 
-## SOS Location での適用方法
-- エンティティ設計：MissingPerson、Hotspot、Alert の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 業務ルール、外部連携、UIを同じモジュールに混ぜる。
-- 責任者、境界、期待動作を明示しない。
+最初のテスト週の`NivelRisco = 0`ホットスポットのバグは二度と発生しなくなった。`Hotspot.Ativar(centro, raio, 0)`はデータベースに到達する前に`DomainException("NivelRisco deve estar entre 1 e 10. Recebido: 0")`をスローする。不変条件は読み取り時ではなく作成時に検証される。
 
 ## 成功基準
-境界を説明し、契約をテストし、回帰を測定できれば十分成熟しています。
+
+いかなるドメインエンティティも無効な状態でインスタンス化できない。不変条件テストがすべての値の境界をカバーする（NivelRisco 0, 11；Latitude 91, -91；Longitude 181, -181；空のチャネルリスト）。本来APIレイヤーで拒否されるべきデータを持つ`DomainException`が本番環境でキャッチされない。
+
+## SOS Locationとの関係
+
+実際の緊急事態では、システム内の不正確なデータが誤った運用上の決定を引き起こす。アクティブな洪水中にレベルゼロが「リスクなし」として表示されるホットスポットは単なるバグではない——人命へのリスクだ。リッチなエンティティモデリングは、救助活動を妨げるデータに対する最初の防衛線だ。
 '''

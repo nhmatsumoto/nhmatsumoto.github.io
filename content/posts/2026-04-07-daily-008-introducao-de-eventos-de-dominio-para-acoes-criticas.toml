@@ -3,9 +3,9 @@ slug = "daily-008-introducao-de-eventos-de-dominio-para-acoes-criticas"
 title = "Daily #008: Introdução de eventos de domínio para ações críticas"
 title_en_us = "Daily #008: Introducing domain events for critical actions"
 title_ja_jp = "Daily #008: 重要アクション向けドメインイベントの導入"
-summary = "Explora Introdução de eventos de domínio para ações críticas com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura."
-summary_en_us = "Explores Introducing domain events for critical actions with fundamentals, formula, example and diagram for the architecture track."
-summary_ja_jp = "重要アクション向けドメインイベントの導入 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
+summary = "Como o SOS Location usa eventos de domínio para decompor a ação 'registrar pessoa desaparecida' em três handlers independentes, evitando a god class que concentra lógica de notificação, auditoria e hotspot."
+summary_en_us = "How SOS Location uses domain events to decompose 'register missing person' into three independent handlers, avoiding the god class that concentrates notification, audit and hotspot logic."
+summary_ja_jp = "SOS Locationがドメインイベントを使って「行方不明者登録」を3つの独立したハンドラーに分解し、通知・監査・ホットスポットロジックを集中させるゴッドクラスを回避する方法。"
 published_at = "2026-04-07T16:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -15,145 +15,248 @@ badges = ["ddd", "arquitetura"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Introdução de eventos de domínio para ações críticas** dentro da trilha **arquitetura** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Introdução de eventos de domínio para ações críticas** em um artefato verificável no código, no contrato ou na operação.
+Quando uma pessoa é registrada como desaparecida no SOS Location, três coisas devem acontecer imediatamente: (1) resgatadores próximos devem ser notificados, (2) o hotspot da área deve ter seu nível de risco recalculado, (3) a ação deve ser registrada no log de auditoria para rastreabilidade. Originalmente, tudo isso estava em `EmergencyService.RegisterMissingPersonAsync()` — 80 linhas que injetava `INotificationService`, `IHotspotService` e `IAuditService` diretamente.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Introdução de eventos de domínio para ações críticas** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Clareza = (fronteiras + contratos) / acoplamento
+O método `RegisterMissingPersonAsync` tinha acoplamento direto com três responsabilidades distintas. Quando a equipe de operações pediu para adicionar "atualizar o mapa de calor em tempo real" como quarta consequência do registro, o método cresceu para 120 linhas. Cada mudança em qualquer das quatro consequências exigia abrir o mesmo arquivo de serviço. Testar o registro de pessoa desaparecida requeria mockar todos os três (depois quatro) serviços.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
+Domínio dispara `PessoaDesaparecidaReportadaEvent` ao concluir o registro. Três handlers independentes subscrevem ao evento, cada um com uma única responsabilidade. Adicionar uma quinta consequência não requer tocar no método de registro — apenas criar um novo handler.
+
+## Implementação
+
 ```csharp
-public sealed record D008IntroducaoDeEventosDeDominioPaDecision(string Boundary, string Owner, string ExpectedOutcome);
+// SosLocation.Domain/Busca/Events/PessoaDesaparecidaReportadaEvent.cs
+public sealed record PessoaDesaparecidaReportadaEvent(
+    PessoaDesaparecidaId PessoaId,
+    Coordenadas          Localizacao,
+    DateTimeOffset       ReportadaEm
+) : IDomainEvent;
 
-public static class D008IntroducaoDeEventosDeDominioPaPolicy
+// PessoaDesaparecida.cs — o aggregate root dispara o evento
+public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
 {
-    public static bool IsReady(D008IntroducaoDeEventosDeDominioPaDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    var pessoa = new PessoaDesaparecida { ... };
+    pessoa.AddDomainEvent(
+        new PessoaDesaparecidaReportadaEvent(pessoa.Id, loc, DateTimeOffset.UtcNow));
+    return pessoa;
+}
+
+// Handler 1: notificar resgatadores
+public sealed class NotificarResgatadoresHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+        => await _pushService.EnviarParaResgatadoresEmAsync(
+               evt.Localizacao, raioKm: 2.0, ct);
+}
+
+// Handler 2: atualizar nível de risco do hotspot
+public sealed class AtualizarHotspotHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+    {
+        var hotspot = await _hotspotRepo.GetByLocalizacaoAsync(evt.Localizacao, ct);
+        hotspot?.RecalcularNivelDeRisco(novaOcorrencia: true);
+        await _uow.CommitAsync(ct);
+    }
+}
+
+// Handler 3: registrar auditoria
+public sealed class RegistrarAuditoriaHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+        => await _auditLog.RegistrarAsync(
+               $"PessoaDesaparecida {evt.PessoaId} reportada em {evt.ReportadaEm:O}", ct);
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Introdução de eventos de domínio para ações críticas.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Misturar regra de negócio, integração e UI no mesmo módulo.
-- Não nomear dono, fronteira e comportamento esperado.
+A equipe de operações pediu para adicionar "enviar SMS para o familiar que fez o reporte". Novo handler criado em 15 minutos:
+
+```csharp
+public sealed class NotificarFamiliarHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+        => await _smsService.EnviarConfirmacaoAsync(evt.PessoaId, ct);
+}
+```
+
+Nenhum arquivo existente foi modificado. O handler foi registrado no DI e passou em testes isolados.
 
 ## Critério de sucesso
-O tema está pronto quando a equipe explica a fronteira, testa o contrato e mede a regressão.
+
+Adicionar uma nova consequência ao registro de pessoa desaparecida não requer modificar código existente. Cada handler tem testes unitários com apenas um mock (seu próprio serviço de infraestrutura). O comando `RegistrarPessoaDesaparecida` tem zero dependências de infraestrutura direta.
+
+## Relação com SOS Location
+
+Em operações de emergência, as consequências de uma ação crítica são descobertas progressivamente conforme o sistema é usado em campo. Eventos de domínio permitem que o SOS Location evolua essas consequências sem reabrir o núcleo do fluxo de registro, que é estável e crítico para a missão.
 '''
 body_en_us = '''
-This Daily expands **Introducing domain events for critical actions** within the **architecture** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Introducing domain events for critical actions** into a verifiable artifact in code, contract, or operations.
+When a person is registered as missing in SOS Location, three things must happen immediately: (1) nearby rescuers must be notified, (2) the area hotspot must have its risk level recalculated, (3) the action must be recorded in the audit log for traceability. Originally, all of this was in `EmergencyService.RegisterMissingPersonAsync()` — 80 lines that directly injected `INotificationService`, `IHotspotService`, and `IAuditService`.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Introducing domain events for critical actions** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Clarity = (boundaries + contracts) / coupling
+The `RegisterMissingPersonAsync` method had direct coupling to three distinct responsibilities. When the operations team asked to add "update the real-time heat map" as a fourth consequence of registration, the method grew to 120 lines. Every change to any of the four consequences required opening the same service file. Testing missing person registration required mocking all three (then four) services.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Technical decision
 
-## Implementation example
+The domain raises `PessoaDesaparecidaReportadaEvent` upon completing registration. Three independent handlers subscribe to the event, each with a single responsibility. Adding a fifth consequence does not require touching the registration method — only creating a new handler.
+
+## Implementation
+
 ```csharp
-public sealed record D008IntroducaoDeEventosDeDominioPaDecision(string Boundary, string Owner, string ExpectedOutcome);
+// Domain event
+public sealed record PessoaDesaparecidaReportadaEvent(
+    PessoaDesaparecidaId PessoaId,
+    Coordenadas          Localizacao,
+    DateTimeOffset       ReportadaEm
+) : IDomainEvent;
 
-public static class D008IntroducaoDeEventosDeDominioPaPolicy
+// Aggregate root raises the event
+public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
 {
-    public static bool IsReady(D008IntroducaoDeEventosDeDominioPaDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    var pessoa = new PessoaDesaparecida { ... };
+    pessoa.AddDomainEvent(
+        new PessoaDesaparecidaReportadaEvent(pessoa.Id, loc, DateTimeOffset.UtcNow));
+    return pessoa;
+}
+
+// Handler 1: notify rescuers
+public sealed class NotificarResgatadoresHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+        => await _pushService.EnviarParaResgatadoresEmAsync(evt.Localizacao, raioKm: 2.0, ct);
+}
+
+// Handler 2: update hotspot risk level
+public sealed class AtualizarHotspotHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+    {
+        var hotspot = await _hotspotRepo.GetByLocalizacaoAsync(evt.Localizacao, ct);
+        hotspot?.RecalcularNivelDeRisco(novaOcorrencia: true);
+        await _uow.CommitAsync(ct);
+    }
+}
+
+// Handler 3: audit log
+public sealed class RegistrarAuditoriaHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+        => await _auditLog.RegistrarAsync(
+               $"PessoaDesaparecida {evt.PessoaId} reportada em {evt.ReportadaEm:O}", ct);
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Introducing domain events for critical actions.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Mixing business rules, integration, and UI in the same module.
-- Failing to name the owner, boundary, and expected behavior.
+The operations team asked to add "send SMS to the family member who made the report." New handler created in 15 minutes. No existing file was modified. The handler was registered in DI and passed isolated tests.
 
 ## Success criteria
-The topic is ready when the team can explain the boundary, test the contract, and measure regressions.
+
+Adding a new consequence to missing person registration requires no modification to existing code. Each handler has unit tests with only one mock (its own infrastructure service). The `RegistrarPessoaDesaparecida` command has zero direct infrastructure dependencies.
+
+## Relation to SOS Location
+
+In emergency operations, the consequences of a critical action are discovered progressively as the system is used in the field. Domain events allow SOS Location to evolve those consequences without reopening the registration flow core, which is stable and mission-critical.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **アーキテクチャ** トラックにおける **重要アクション向けドメインイベントの導入** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**重要アクション向けドメインイベントの導入** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationで行方不明者が登録されると、3つのことが即座に起こらなければならない：(1) 近くの救助者への通知、(2) エリアホットスポットのリスクレベル再計算、(3) トレーサビリティのための監査ログへの記録。当初、これらはすべて`EmergencyService.RegisterMissingPersonAsync()`——`INotificationService`・`IHotspotService`・`IAuditService`を直接注入する80行——に集中していた。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**重要アクション向けドメインイベントの導入** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-明確さ = (境界 + 契約) / 結合度
+`RegisterMissingPersonAsync`メソッドが3つの異なる責務に直接結合していた。運用チームが「リアルタイムヒートマップの更新」を4番目の結果として追加するよう要求した際、メソッドは120行に成長した。4つの結果のいずれかへの変更が同じサービスファイルを開くことを必要とした。行方不明者登録のテストには3つ（後に4つ）すべてのサービスのモックが必要だった。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## 技術的決定
 
-## 実装例
+ドメインが登録完了時に`PessoaDesaparecidaReportadaEvent`を発生させる。3つの独立したハンドラーがイベントをサブスクライブし、それぞれが単一の責任を持つ。5番目の結果を追加するには、登録メソッドに触れる必要はなく、新しいハンドラーを作成するだけでよい。
+
+## 実装
+
 ```csharp
-public sealed record D008IntroducaoDeEventosDeDominioPaDecision(string Boundary, string Owner, string ExpectedOutcome);
+// ドメインイベント
+public sealed record PessoaDesaparecidaReportadaEvent(
+    PessoaDesaparecidaId PessoaId,
+    Coordenadas          Localizacao,
+    DateTimeOffset       ReportadaEm
+) : IDomainEvent;
 
-public static class D008IntroducaoDeEventosDeDominioPaPolicy
+// 集約ルートがイベントを発生させる
+public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
 {
-    public static bool IsReady(D008IntroducaoDeEventosDeDominioPaDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    var pessoa = new PessoaDesaparecida { ... };
+    pessoa.AddDomainEvent(
+        new PessoaDesaparecidaReportadaEvent(pessoa.Id, loc, DateTimeOffset.UtcNow));
+    return pessoa;
+}
+
+// ハンドラー1: 救助者への通知
+public sealed class NotificarResgatadoresHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+        => await _pushService.EnviarParaResgatadoresEmAsync(evt.Localizacao, raioKm: 2.0, ct);
+}
+
+// ハンドラー2: ホットスポットリスクレベル更新
+public sealed class AtualizarHotspotHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+    {
+        var hotspot = await _hotspotRepo.GetByLocalizacaoAsync(evt.Localizacao, ct);
+        hotspot?.RecalcularNivelDeRisco(novaOcorrencia: true);
+        await _uow.CommitAsync(ct);
+    }
+}
+
+// ハンドラー3: 監査ログ
+public sealed class RegistrarAuditoriaHandler
+    : INotificationHandler<PessoaDesaparecidaReportadaEvent>
+{
+    public async Task Handle(
+        PessoaDesaparecidaReportadaEvent evt, CancellationToken ct)
+        => await _auditLog.RegistrarAsync(
+               $"PessoaDesaparecida {evt.PessoaId} reportada em {evt.ReportadaEm:O}", ct);
 }
 ```
 
-## SOS Location での適用方法
-- 重要アクション向けドメインイベントの導入 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 業務ルール、外部連携、UIを同じモジュールに混ぜる。
-- 責任者、境界、期待動作を明示しない。
+運用チームが「報告を行った家族にSMSを送信する」の追加を要求した。新しいハンドラーを15分で作成。既存のファイルは変更されなかった。ハンドラーはDIに登録され、独立したテストを通過した。
 
 ## 成功基準
-境界を説明し、契約をテストし、回帰を測定できれば十分成熟しています。
+
+行方不明者登録への新しい結果の追加が既存コードの変更を必要としない。各ハンドラーが1つのモック（自身のインフラサービス）のみでユニットテストを持つ。`RegistrarPessoaDesaparecida`コマンドが直接のインフラ依存をゼロ持つ。
+
+## SOS Locationとの関係
+
+緊急作戦において、重要なアクションの結果はシステムが現場で使われるにつれて段階的に発見される。ドメインイベントにより、SOS Locationはこれらの結果を、安定していてミッションクリティカルな登録フローのコアに再度触れることなく進化させることができる。
 '''

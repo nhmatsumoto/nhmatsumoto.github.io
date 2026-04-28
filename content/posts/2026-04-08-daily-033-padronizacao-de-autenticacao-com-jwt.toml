@@ -3,145 +3,250 @@ slug = "daily-033-padronizacao-de-autenticacao-com-jwt"
 title = "Daily #033: Padronização de autenticação com JWT"
 title_en_us = "Daily #033: JWT authentication standardization"
 title_ja_jp = "Daily #033: JWT認証の標準化"
-summary = "Explora Padronização de autenticação com JWT com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs."
-summary_en_us = "Explores JWT authentication standardization with fundamentals, formula, example and diagram for the backend and APIs track."
-summary_ja_jp = "JWT認証の標準化 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
+summary = "Como o SOS Location padronizou os claims JWT (sub, role, tenantId, municipioId), validação de token no middleware .NET e como o tenantId no claim garante o isolamento multitenant sem query adicional."
+summary_en_us = "How SOS Location standardised JWT claims (sub, role, tenantId, municipioId), token validation in .NET middleware and how the tenantId claim ensures multitenant isolation without an extra query."
+summary_ja_jp = "SOS LocationがJWTクレーム（sub・role・tenantId・municipioId）を標準化し、.NETミドルウェアでトークンを検証し、tenantIdクレームが追加クエリなしでマルチテナント分離を保証する方法。"
 published_at = "2026-04-08T17:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
-tags = ["sos-location", "daily", "backend", "api", "dotnet"]
+tags = ["sos-location", "daily", "backend", "api"]
 badges = ["backend", "api"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Padronização de autenticação com JWT** dentro da trilha **backend e APIs** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Padronização de autenticação com JWT** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location é multitenant: a Defesa Civil de Florianópolis e a Defesa Civil de Recife são tenants diferentes, com dados completamente isolados. A autenticação JWT precisa carregar o `tenantId` no token para que o middleware de isolamento (#004) funcione sem fazer query adicional ao banco a cada request.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Padronização de autenticação com JWT** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Confiabilidade = sucesso × observabilidade / falhas não tratadas
+A versão inicial emitia tokens com apenas `sub` (userId) e `role`. Quando o handler precisava do `tenantId`, fazia uma query ao banco: `SELECT tenant_id FROM users WHERE id = @userId`. Com 500 requests simultâneos durante um evento, eram 500 queries extras por request — latência adicional de 8–12ms por request, 4–6 GB de queries desnecessárias por mês. Além disso, não havia padronização: alguns endpoints liam `User.FindFirst("tenantId")`, outros liam `User.FindFirst(ClaimTypes.System)`, gerando erros silenciosos quando um dos lados mudava o nome do claim.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
+Claims padronizados definidos em constante `SosClaims`. Token inclui: `sub` (userId), `role` (CoordenaçãoMunicipal|CoordenaçãoEstadual|Admin), `tenantId`, `municipioId` (para roles municipais). Validação de token centralizada em `JwtTokenValidator` — reutilizado em API REST e SignalR Hub. Expiração: access token 15min, refresh token 7 dias.
+
+## Implementação
+
 ```csharp
-app.Use(async (context, next) =>
+// SosLocation.Application/Auth/SosClaims.cs
+public static class SosClaims
 {
-    context.Response.Headers["X-Trace-Topic"] = "D033PadronizacaoDeAutenticacaoComJ";
-    await next();
-});
+    public const string UserId     = "sub";
+    public const string Role       = "role";
+    public const string TenantId   = "tenant_id";
+    public const string MunicipioId = "municipio_id";
+}
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Padronização de autenticação com JWT.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+```csharp
+// SosLocation.Infrastructure/Auth/JwtTokenService.cs
+public sealed class JwtTokenService
+{
+    private readonly JwtSettings _settings;
 
-## Erros comuns
-- Responder sem rastreabilidade suficiente para depurar produção.
-- Tratar erro de integração como caso excepcional e não como fluxo normal.
+    public string GenerateAccessToken(ApplicationUser user)
+    {
+        var claims = new[]
+        {
+            new Claim(SosClaims.UserId,      user.Id.ToString()),
+            new Claim(SosClaims.Role,        user.Role.ToString()),
+            new Claim(SosClaims.TenantId,    user.TenantId.ToString()),
+            new Claim(SosClaims.MunicipioId, user.MunicipioId?.ToString() ?? ""),
+        };
+
+        var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));
+        var token = new JwtSecurityToken(
+            issuer:   _settings.Issuer,
+            audience: _settings.Audience,
+            claims:   claims,
+            expires:  DateTime.UtcNow.AddMinutes(15),
+            signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+}
+```
+
+```csharp
+// SosLocation.Application/Auth/ClaimsPrincipalExtensions.cs
+public static class ClaimsPrincipalExtensions
+{
+    public static Guid GetTenantId(this ClaimsPrincipal user) =>
+        Guid.Parse(user.FindFirstValue(SosClaims.TenantId)
+            ?? throw new UnauthorizedException("tenant_id claim ausente."));
+
+    public static Guid GetUserId(this ClaimsPrincipal user) =>
+        Guid.Parse(user.FindFirstValue(SosClaims.UserId)
+            ?? throw new UnauthorizedException("sub claim ausente."));
+}
+```
+
+```csharp
+// Uso em handler — sem query ao banco para obter tenantId
+public sealed class ListarAreasDeRiscoQueryHandler
+    : IRequestHandler<ListarAreasDeRiscoQuery, IReadOnlyList<AreaDeRiscoDto>>
+{
+    public async Task<IReadOnlyList<AreaDeRiscoDto>> Handle(
+        ListarAreasDeRiscoQuery query, CancellationToken ct)
+    {
+        var tenantId = query.User.GetTenantId(); // do claim, sem DB roundtrip
+        return await _repo.ListarByTenantAsync(tenantId, ct);
+    }
+}
+```
+
+## Exemplo concreto
+
+Request de coordenador de Florianópolis: token contém `tenant_id: "f1a2b3-..."`. Middleware `TenantScopedDbContext` (#004) lê `HttpContext.User.GetTenantId()` — extraído do JWT sem query. Filtro global aplica `WHERE tenant_id = 'f1a2b3-...'` em todas as queries. Nenhuma query extra ao banco por request. Benchmark: handler `ListarAreasDeRisco` passou de 22ms (com query de tenant) para 14ms (tenant do claim).
 
 ## Critério de sucesso
-A solução está boa quando o time encontra causa, impacto e correção em poucos minutos.
+
+Zero queries ao banco para obter `tenantId` em requests autenticados. Todos os endpoints que necessitam de `tenantId` usam `User.GetTenantId()` — sem alternativas (`FindFirstValue`, `Claims.First`). Token inválido (assinatura errada, expirado) retorna 401 antes de chegar ao handler.
+
+## Relação com SOS Location
+
+O `tenantId` no JWT é o que permite que o sistema multitenant funcione sem custo de DB por request. A padronização em `SosClaims` garante que uma mudança no nome do claim seja um erro de compilação, não um bug silencioso em produção.
 '''
 body_en_us = '''
-This Daily expands **JWT authentication standardization** within the **backend and APIs** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **JWT authentication standardization** into a verifiable artifact in code, contract, or operations.
+SOS Location is multitenant: the Florianópolis Civil Defence and the Recife Civil Defence are different tenants with completely isolated data. JWT authentication must carry the `tenantId` in the token so that the isolation middleware (#004) works without making an extra database query on every request.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **JWT authentication standardization** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Reliability = success × observability / unhandled failures
+The initial version issued tokens with only `sub` (userId) and `role`. When a handler needed `tenantId`, it queried the database: `SELECT tenant_id FROM users WHERE id = @userId`. With 500 simultaneous requests during an event, that was 500 extra queries per request — 8–12ms additional latency per request, 4–6 GB of unnecessary queries per month. Additionally, there was no standardisation: some endpoints read `User.FindFirst("tenantId")`, others read `User.FindFirst(ClaimTypes.System)`, causing silent errors when one side changed the claim name.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## Technical decision
 
-## Implementation example
+Standardised claims defined in the `SosClaims` constant. Token includes: `sub` (userId), `role` (CoordenaçãoMunicipal|CoordenaçãoEstadual|Admin), `tenantId`, `municipioId` (for municipal roles). Centralised token validation in `JwtTokenValidator` — reused in the REST API and SignalR Hub. Expiry: access token 15 min, refresh token 7 days.
+
+## Implementation
+
 ```csharp
-app.Use(async (context, next) =>
+public static class SosClaims
 {
-    context.Response.Headers["X-Trace-Topic"] = "D033PadronizacaoDeAutenticacaoComJ";
-    await next();
-});
+    public const string UserId      = "sub";
+    public const string Role        = "role";
+    public const string TenantId    = "tenant_id";
+    public const string MunicipioId = "municipio_id";
+}
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for JWT authentication standardization.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+```csharp
+public sealed class JwtTokenService
+{
+    public string GenerateAccessToken(ApplicationUser user)
+    {
+        var claims = new[]
+        {
+            new Claim(SosClaims.UserId,       user.Id.ToString()),
+            new Claim(SosClaims.Role,         user.Role.ToString()),
+            new Claim(SosClaims.TenantId,     user.TenantId.ToString()),
+            new Claim(SosClaims.MunicipioId,  user.MunicipioId?.ToString() ?? ""),
+        };
 
-## Common pitfalls
-- Responding without enough traceability to debug production.
-- Treating integration failures as exceptions instead of a normal flow.
+        var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));
+        var token = new JwtSecurityToken(
+            issuer:             _settings.Issuer,
+            audience:           _settings.Audience,
+            claims:             claims,
+            expires:            DateTime.UtcNow.AddMinutes(15),
+            signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+        );
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+}
+```
+
+```csharp
+public static Guid GetTenantId(this ClaimsPrincipal user) =>
+    Guid.Parse(user.FindFirstValue(SosClaims.TenantId)
+        ?? throw new UnauthorizedException("tenant_id claim missing."));
+```
+
+## Concrete example
+
+Request from a Florianópolis coordinator: token contains `tenant_id: "f1a2b3-..."`. The `TenantScopedDbContext` middleware (#004) reads `HttpContext.User.GetTenantId()` — extracted from the JWT without a DB query. The global filter applies `WHERE tenant_id = 'f1a2b3-...'` to all queries. No extra DB query per request. Benchmark: `ListarAreasDeRisco` handler went from 22ms (with tenant query) to 14ms (tenant from claim).
 
 ## Success criteria
-The solution is good when the team can find cause, impact, and fix in minutes.
+
+Zero DB queries to obtain `tenantId` on authenticated requests. All endpoints requiring `tenantId` use `User.GetTenantId()` — no alternatives (`FindFirstValue`, `Claims.First`). Invalid token (wrong signature, expired) returns 401 before reaching the handler.
+
+## Relation to SOS Location
+
+The `tenantId` in the JWT is what allows the multitenant system to work without a DB cost per request. The standardisation in `SosClaims` ensures that changing a claim name is a compilation error, not a silent production bug.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **バックエンドとAPI** トラックにおける **JWT認証の標準化** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**JWT認証の標準化** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationはマルチテナント：フロリアノーポリス民間防衛とレシフェ民間防衛は完全に分離されたデータを持つ異なるテナントだ。JWTアクセスは、分離ミドルウェア（#004）がリクエストごとに追加のデータベースクエリなしに動作するよう、トークンに`tenantId`を持つ必要がある。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**JWT認証の標準化** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-信頼性 = 成功率 × 可観測性 / 未処理失敗
+最初のバージョンは`sub`（userId）と`role`のみでトークンを発行していた。ハンドラーが`tenantId`を必要とすると、データベースにクエリした：`SELECT tenant_id FROM users WHERE id = @userId`。イベント中の500の同時リクエストでは、リクエストごとに500の追加クエリ——リクエストごとに8〜12msの追加レイテンシ、月に4〜6 GBの不要なクエリ。さらに、標準化がなかった：一部のエンドポイントは`User.FindFirst("tenantId")`を読み、他は`User.FindFirst(ClaimTypes.System)`を読み、一方がクレーム名を変更するとサイレントエラーが発生した。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## 技術的決定
 
-## 実装例
+`SosClaims`定数で定義された標準化されたクレーム。トークンに含まれる：`sub`（userId）、`role`（CoordenaçãoMunicipal|CoordenaçãoEstadual|Admin）、`tenantId`、`municipioId`（市町村ロール用）。`JwtTokenValidator`での集中型トークン検証——REST APIとSignalR Hubで再利用。期限：アクセストークン15分、リフレッシュトークン7日。
+
+## 実装
+
 ```csharp
-app.Use(async (context, next) =>
+public static class SosClaims
 {
-    context.Response.Headers["X-Trace-Topic"] = "D033PadronizacaoDeAutenticacaoComJ";
-    await next();
-});
+    public const string UserId      = "sub";
+    public const string Role        = "role";
+    public const string TenantId    = "tenant_id";
+    public const string MunicipioId = "municipio_id";
+}
 ```
 
-## SOS Location での適用方法
-- JWT認証の標準化 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+```csharp
+public sealed class JwtTokenService
+{
+    public string GenerateAccessToken(ApplicationUser user)
+    {
+        var claims = new[]
+        {
+            new Claim(SosClaims.UserId,       user.Id.ToString()),
+            new Claim(SosClaims.Role,         user.Role.ToString()),
+            new Claim(SosClaims.TenantId,     user.TenantId.ToString()),
+            new Claim(SosClaims.MunicipioId,  user.MunicipioId?.ToString() ?? ""),
+        };
 
-## よくある落とし穴
-- 本番調査に必要な追跡性を確保せずに応答する。
-- 連携障害を例外ではなく通常フローとして扱わない。
+        var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));
+        var token = new JwtSecurityToken(
+            issuer:             _settings.Issuer,
+            audience:           _settings.Audience,
+            claims:             claims,
+            expires:            DateTime.UtcNow.AddMinutes(15),
+            signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+        );
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+}
+```
+
+```csharp
+public static Guid GetTenantId(this ClaimsPrincipal user) =>
+    Guid.Parse(user.FindFirstValue(SosClaims.TenantId)
+        ?? throw new UnauthorizedException("tenant_idクレームがない。"));
+```
+
+## 具体的な例
+
+フロリアノーポリスコーディネーターのリクエスト：トークンに`tenant_id: "f1a2b3-..."`が含まれる。`TenantScopedDbContext`ミドルウェア（#004）がDBクエリなしでJWTから抽出した`HttpContext.User.GetTenantId()`を読む。グローバルフィルターがすべてのクエリに`WHERE tenant_id = 'f1a2b3-...'`を適用。リクエストごとの追加DBクエリなし。ベンチマーク：`ListarAreasDeRisco`ハンドラーが22ms（テナントクエリあり）から14ms（クレームからのテナント）に改善。
 
 ## 成功基準
-原因、影響、修正を数分で追えるなら十分です。
+
+認証済みリクエストで`tenantId`を取得するためのDBクエリゼロ。`tenantId`が必要なすべてのエンドポイントが`User.GetTenantId()`を使用——代替なし（`FindFirstValue`、`Claims.First`）。無効なトークン（署名が間違い、期限切れ）がハンドラーに到達する前に401を返す。
+
+## SOS Locationとの関係
+
+JWTの`tenantId`は、マルチテナントシステムがリクエストごとのDBコストなしに動作することを可能にするものだ。`SosClaims`の標準化は、クレーム名の変更がサイレントな本番バグではなくコンパイルエラーになることを保証する。
 '''

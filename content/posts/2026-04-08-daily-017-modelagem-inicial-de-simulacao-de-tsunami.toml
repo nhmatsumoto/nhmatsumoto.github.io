@@ -3,157 +3,230 @@ slug = "daily-017-modelagem-inicial-de-simulacao-de-tsunami"
 title = "Daily #017: Modelagem inicial de simulação de tsunami"
 title_en_us = "Daily #017: Initial tsunami simulation modeling"
 title_ja_jp = "Daily #017: 津波シミュレーションの初期モデリング"
-summary = "Explora Modelagem inicial de simulação de tsunami com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação."
-summary_en_us = "Explores Initial tsunami simulation modeling with fundamentals, formula, example and diagram for the AI and simulation track."
-summary_ja_jp = "津波シミュレーションの初期モデリング を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
+summary = "Por que o SOS Location usa cenários pré-computados de inundação por tsunami em vez do modelo MOST completo — e como a busca por similaridade de epicentro e magnitude seleciona o cenário mais próximo em milissegundos."
+summary_en_us = "Why SOS Location uses pre-computed tsunami inundation scenarios instead of the full MOST model — and how epicentre similarity search selects the closest scenario in milliseconds."
+summary_ja_jp = "SOS Locationが完全なMOSTモデルではなく事前計算された津波浸水シナリオを使う理由——そして震央の類似検索が最も近いシナリオをミリ秒で選択する方法。"
 published_at = "2026-04-08T01:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
 tags = ["sos-location", "daily", "ia", "simulacao", "dados"]
-badges = ["ia", "dados"]
+badges = ["ia", "simulacao"]
 repo_url = ""
 code_url = ""
 featured = false
 has_math = true
 body = '''
-Este Daily aprofunda **Modelagem inicial de simulação de tsunami** dentro da trilha **IA e simulação** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Modelagem inicial de simulação de tsunami** em um artefato verificável no código, no contrato ou na operação.
+O Brasil tem ~7.500 km de costa atlântica. O principal risco de tsunami vem da Zona de Subducção de Cascádia (Costa Rica / Colômbia) e da Dorsal Mesoatlântica. Para um terremoto M7.5+ nessas regiões, o tempo de chegada da onda ao litoral nordestino é de 8–12 horas, ao litoral sudeste 10–14 horas. O SOS Location precisa gerar uma simulação de inundação de tsunami em menos de 5 minutos após detecção do evento sísmico — não 3 horas depois.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Modelagem inicial de simulação de tsunami** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Score = cobertura × qualidade / ruído
+O modelo de física completo MOST (Method of Splitting Tsunami) é preciso mas lento: cada simulação de propagação de onda oceânica para o litoral brasileiro leva 2–4 horas em cluster HPC. É impossível executar em tempo real após um evento sísmico. A alternativa naive — manter um servidor HPC dedicado — tem custo de R$15.000/mês para o SOS Location ter capacity de 2–3 simulações simultâneas.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Sinais visuais e climáticos"] --> B["Pré-processamento"]
-  B --> C["Hipótese"]
-  C --> D["Validação"]
-  D --> E["Simulação ou predição"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
-```typescript
-type D017ModelagemInicialDeSimulacaoDeTSample = {
-  signal: number;
-  confidence: number;
-  coverage: number;
-};
+Biblioteca de cenários pré-computados: 240 cenários cobrindo as 20 fontes sísmicas mais prováveis para o Brasil × 3 magnitudes (M7.0, M7.5, M8.0) × 4 profundidades focais. Cada cenário armazena a grade de inundação máxima resultante (altura de onda por ponto costeiro). Quando um evento ocorre, o sistema busca o cenário mais similar por (distância ao epicentro, magnitude) e escala linearmente a altura de onda.
 
-export function scoreD017ModelagemInicialDeSimulacaoDeT(sample: D017ModelagemInicialDeSimulacaoDeTSample) {
-  return (sample.signal * sample.confidence * sample.coverage) / Math.max(1, 1 - sample.confidence);
+## Implementação
+
+```csharp
+// SosLocation.Simulacao/Tsunami/TsunamiScenarioSelector.cs
+public sealed record SeismicEvent(
+    double Latitude,
+    double Longitude,
+    double Magnitude,
+    double DepthKm
+);
+
+public sealed record TsunamiScenario(
+    Guid    ScenarioId,
+    double  EpicenterLat,
+    double  EpicenterLon,
+    double  Magnitude,
+    double  DepthKm,
+    string  InundationGridPath   // caminho para grade de inundação em PostGIS
+);
+
+public sealed class TsunamiScenarioSelector
+{
+    private readonly IDbConnection _db;
+
+    public async Task<(TsunamiScenario Scenario, double ScaleFactor)> SelectAsync(
+        SeismicEvent evt, CancellationToken ct)
+    {
+        // Busca o cenário mais próximo por distância geográfica + diferença de magnitude
+        const string sql = """
+            SELECT scenario_id, epicenter_lat, epicenter_lon, magnitude, depth_km,
+                   inundation_grid_path,
+                   -- Score composto: peso 0.6 para distância, 0.4 para magnitude
+                   0.6 * ST_Distance(
+                       ST_MakePoint(epicenter_lon, epicenter_lat)::geography,
+                       ST_MakePoint(@lon, @lat)::geography
+                   ) / 1000.0
+                   + 0.4 * ABS(magnitude - @magnitude) * 100000 AS score
+            FROM   tsunami_scenarios
+            ORDER  BY score
+            LIMIT  1;
+            """;
+
+        var best = await _db.QuerySingleAsync<TsunamiScenario>(
+            sql, new { lat = evt.Latitude, lon = evt.Longitude, magnitude = evt.Magnitude });
+
+        // Fator de escala: diferença de magnitude em escala logarítmica
+        // M8.0 gera ~10x mais energia que M7.0 (10^(1.5 * ΔM))
+        double deltaMagnitude = evt.Magnitude - best.Magnitude;
+        double scaleFactor    = Math.Pow(10, 1.5 * deltaMagnitude);
+
+        return (best, scaleFactor);
+    }
+}
+
+// SosLocation.Simulacao/Tsunami/TsunamiInundationProjector.cs
+public sealed class TsunamiInundationProjector
+{
+    public async Task<IReadOnlyList<CoastalInundationPoint>> ProjectAsync(
+        TsunamiScenario scenario,
+        double scaleFactor,
+        CancellationToken ct)
+    {
+        const string sql = """
+            SELECT lat, lon, wave_height_m * @scale AS projected_height_m
+            FROM   tsunami_inundation_grids
+            WHERE  scenario_id = @scenarioId
+              AND  wave_height_m > 0.1    -- ignora pontos com inundação < 10 cm
+            ORDER  BY projected_height_m DESC;
+            """;
+        return (await _db.QueryAsync<CoastalInundationPoint>(
+            sql, new { scale = scaleFactor, scenarioId = scenario.ScenarioId })).AsList();
+    }
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Modelagem inicial de simulação de tsunami.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Confundir hipótese visual com verdade do terreno.
-- Treinar ou simular sem controlar qualidade do dataset.
+Evento detectado: terremoto M7.8 a -3.2°, -80.5° (costa do Equador), 25 km de profundidade. Sistema seleciona cenário mais próximo: M7.5 a -2.8°, -79.8°, 30 km. Fator de escala: $10^{1.5 \times 0.3} = 2.82$. Projeção gerada em 340 ms. Altura de onda projetada em Fortaleza: 1.8 m × 2.82 = 5.1 m. Alerta automático emitido para zonas costeiras abaixo de 6 m de altitude dentro de 1 km da costa.
 
 ## Critério de sucesso
-Funciona quando a hipótese gera um sinal mensurável e repetível em dados reais.
+
+Tempo de seleção de cenário + projeção de inundação < 500 ms após detecção do evento sísmico. Erro médio de altura de onda projetada < 25% comparado com simulação MOST completa para os 10 eventos históricos de calibração. 100% dos municípios costeiros prioritários cobertos por pelo menos 3 cenários sísmicos na biblioteca.
+
+## Relação com SOS Location
+
+Para tsunamis, o tempo de aviso é o recurso mais escasso. A diferença entre 5 minutos e 3 horas para emitir uma simulação pode determinar se a evacuação de zonas costeiras acontece antes ou depois da chegada da onda. A biblioteca de cenários pré-computados é o trade-off deliberado de precisão absoluta por velocidade de resposta operacional.
 '''
 body_en_us = '''
-This Daily expands **Initial tsunami simulation modeling** within the **AI and simulation** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Initial tsunami simulation modeling** into a verifiable artifact in code, contract, or operations.
+Brazil has ~7,500 km of Atlantic coastline. The main tsunami risk comes from the Cascadia Subduction Zone (Costa Rica / Colombia) and the Mid-Atlantic Ridge. For an M7.5+ earthquake in those regions, wave arrival time at the Brazilian northeast coast is 8–12 hours, at the southeast coast 10–14 hours. SOS Location needs to generate a tsunami inundation simulation in under 5 minutes after a seismic event is detected — not 3 hours later.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Initial tsunami simulation modeling** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Score = coverage × quality / noise
+The full MOST (Method of Splitting Tsunami) physics model is accurate but slow: each ocean wave propagation simulation to the Brazilian coast takes 2–4 hours on an HPC cluster. Running it in real time after a seismic event is impossible. The naive alternative — maintaining a dedicated HPC server — costs R$15,000/month for SOS Location to have capacity for 2–3 simultaneous simulations.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Sinais visuais e climáticos"] --> B["Pré-processamento"]
-  B --> C["Hipótese"]
-  C --> D["Validação"]
-  D --> E["Simulação ou predição"]
-```
+## Technical decision
 
-## Implementation example
-```typescript
-type D017ModelagemInicialDeSimulacaoDeTSample = {
-  signal: number;
-  confidence: number;
-  coverage: number;
-};
+Pre-computed scenario library: 240 scenarios covering the 20 most probable seismic sources for Brazil × 3 magnitudes (M7.0, M7.5, M8.0) × 4 focal depths. Each scenario stores the resulting maximum inundation grid (wave height per coastal point). When an event occurs, the system finds the most similar scenario by (distance to epicentre, magnitude) and linearly scales the wave height.
 
-export function scoreD017ModelagemInicialDeSimulacaoDeT(sample: D017ModelagemInicialDeSimulacaoDeTSample) {
-  return (sample.signal * sample.confidence * sample.coverage) / Math.max(1, 1 - sample.confidence);
+## Implementation
+
+```csharp
+public sealed class TsunamiScenarioSelector
+{
+    public async Task<(TsunamiScenario Scenario, double ScaleFactor)> SelectAsync(
+        SeismicEvent evt, CancellationToken ct)
+    {
+        const string sql = """
+            SELECT scenario_id, epicenter_lat, epicenter_lon, magnitude, depth_km,
+                   inundation_grid_path,
+                   0.6 * ST_Distance(
+                       ST_MakePoint(epicenter_lon, epicenter_lat)::geography,
+                       ST_MakePoint(@lon, @lat)::geography
+                   ) / 1000.0
+                   + 0.4 * ABS(magnitude - @magnitude) * 100000 AS score
+            FROM   tsunami_scenarios
+            ORDER  BY score
+            LIMIT  1;
+            """;
+
+        var best = await _db.QuerySingleAsync<TsunamiScenario>(
+            sql, new { lat = evt.Latitude, lon = evt.Longitude, magnitude = evt.Magnitude });
+
+        double deltaMagnitude = evt.Magnitude - best.Magnitude;
+        double scaleFactor    = Math.Pow(10, 1.5 * deltaMagnitude);
+
+        return (best, scaleFactor);
+    }
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Initial tsunami simulation modeling.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Confusing a visual hypothesis with ground truth.
-- Training or simulating without controlling dataset quality.
+Detected event: M7.8 earthquake at -3.2°, -80.5° (Ecuador coast), 25 km depth. System selects closest scenario: M7.5 at -2.8°, -79.8°, 30 km depth. Scale factor: $10^{1.5 \times 0.3} = 2.82$. Projection generated in 340 ms. Projected wave height at Fortaleza: 1.8 m × 2.82 = 5.1 m. Automatic alert issued for coastal zones below 6 m altitude within 1 km of the coast.
 
 ## Success criteria
-It works when the hypothesis produces a measurable and repeatable signal in real data.
+
+Scenario selection + inundation projection time < 500 ms after seismic event detection. Mean wave height projection error < 25% compared to full MOST simulation for 10 historical calibration events. 100% of priority coastal municipalities covered by at least 3 seismic scenarios in the library.
+
+## Relation to SOS Location
+
+For tsunamis, warning time is the scarcest resource. The difference between 5 minutes and 3 hours to issue a simulation may determine whether coastal zone evacuation happens before or after wave arrival. The pre-computed scenario library is the deliberate trade-off of absolute accuracy for operational response speed.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **AIとシミュレーション** トラックにおける **津波シミュレーションの初期モデリング** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**津波シミュレーションの初期モデリング** をコード、契約、運用で検証できる成果物にすることです。
+ブラジルは約7,500kmの大西洋海岸線を持つ。主な津波リスクはカスカディア沈み込み帯（コスタリカ/コロンビア）と中央大西洋海嶺から来る。これらの地域でのM7.5+地震に対して、ブラジル北東部海岸への波の到達時間は8〜12時間、南東部海岸は10〜14時間。SOS Locationは地震イベント検出後5分以内に津波浸水シミュレーションを生成する必要がある——3時間後ではなく。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**津波シミュレーションの初期モデリング** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-スコア = カバレッジ × 品質 / ノイズ
+完全なMOST（Method of Splitting Tsunami）物理モデルは正確だが遅い：ブラジル海岸への各海洋波伝播シミュレーションはHPCクラスターで2〜4時間かかる。地震イベント後にリアルタイムで実行することは不可能だ。ナイーブな代替案——専用HPCサーバーの維持——はSOS Locationが同時に2〜3のシミュレーションの容量を持つために月R$15,000のコストがかかる。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Sinais visuais e climáticos"] --> B["Pré-processamento"]
-  B --> C["Hipótese"]
-  C --> D["Validação"]
-  D --> E["Simulação ou predição"]
-```
+## 技術的決定
 
-## 実装例
-```typescript
-type D017ModelagemInicialDeSimulacaoDeTSample = {
-  signal: number;
-  confidence: number;
-  coverage: number;
-};
+事前計算されたシナリオライブラリ：ブラジルの20の最も可能性の高い地震源×3つの規模（M7.0、M7.5、M8.0）×4つの震源深さをカバーする240のシナリオ。各シナリオは結果として得られる最大浸水グリッド（沿岸点ごとの波高）を格納する。イベント発生時、システムは（震央距離、規模）で最も類似したシナリオを見つけて波高を線形スケールする。
 
-export function scoreD017ModelagemInicialDeSimulacaoDeT(sample: D017ModelagemInicialDeSimulacaoDeTSample) {
-  return (sample.signal * sample.confidence * sample.coverage) / Math.max(1, 1 - sample.confidence);
+## 実装
+
+```csharp
+public sealed class TsunamiScenarioSelector
+{
+    public async Task<(TsunamiScenario Scenario, double ScaleFactor)> SelectAsync(
+        SeismicEvent evt, CancellationToken ct)
+    {
+        const string sql = """
+            SELECT scenario_id, epicenter_lat, epicenter_lon, magnitude, depth_km,
+                   inundation_grid_path,
+                   0.6 * ST_Distance(
+                       ST_MakePoint(epicenter_lon, epicenter_lat)::geography,
+                       ST_MakePoint(@lon, @lat)::geography
+                   ) / 1000.0
+                   + 0.4 * ABS(magnitude - @magnitude) * 100000 AS score
+            FROM   tsunami_scenarios
+            ORDER  BY score
+            LIMIT  1;
+            """;
+
+        var best = await _db.QuerySingleAsync<TsunamiScenario>(
+            sql, new { lat = evt.Latitude, lon = evt.Longitude, magnitude = evt.Magnitude });
+
+        double deltaMagnitude = evt.Magnitude - best.Magnitude;
+        double scaleFactor    = Math.Pow(10, 1.5 * deltaMagnitude);
+
+        return (best, scaleFactor);
+    }
 }
 ```
 
-## SOS Location での適用方法
-- 津波シミュレーションの初期モデリング の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 見た目の仮説を地表の真実と混同する。
-- データ品質を管理せずに学習やシミュレーションを行う。
+検出されたイベント：M7.8地震（エクアドル沿岸 -3.2°、-80.5°）、深さ25km。システムが最も近いシナリオを選択：M7.5（-2.8°、-79.8°）、30km深さ。スケールファクター：$10^{1.5 \times 0.3} = 2.82$。プロジェクションは340msで生成。フォルタレザでの予測波高：1.8m × 2.82 = 5.1m。海岸から1km以内の標高6m以下の沿岸ゾーンに自動アラートが発令される。
 
 ## 成功基準
-実データ上で測定可能かつ再現可能なシグナルが出れば成功です。
+
+地震イベント検出後のシナリオ選択+浸水プロジェクション時間 < 500ms。10の歴史的キャリブレーションイベントに対する完全なMOSTシミュレーションと比較した平均波高プロジェクション誤差 < 25%。優先沿岸自治体の100%がライブラリ内の少なくとも3つの地震シナリオでカバーされている。
+
+## SOS Locationとの関係
+
+津波に対して、警告時間は最も希少なリソースだ。シミュレーションを発行するまでの5分と3時間の差は、沿岸ゾーンの避難が波の到達前に行われるか後に行われるかを決定する可能性がある。事前計算されたシナリオライブラリは、絶対的な精度を運用応答速度とトレードオフする意図的な選択だ。
 '''

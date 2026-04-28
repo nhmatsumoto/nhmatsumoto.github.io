@@ -3,145 +3,195 @@ slug = "daily-031-problema-de-cors-entre-frontend-e-backend"
 title = "Daily #031: Problema de CORS entre frontend e backend"
 title_en_us = "Daily #031: CORS problem between frontend and backend"
 title_ja_jp = "Daily #031: フロントエンドとバックエンド間のCORS問題"
-summary = "Explora Problema de CORS entre frontend e backend com fundamentos, fórmula, exemplo e diagrama para a trilha backend e APIs."
-summary_en_us = "Explores CORS problem between frontend and backend with fundamentals, formula, example and diagram for the backend and APIs track."
-summary_ja_jp = "フロントエンドとバックエンド間のCORS問題 を、基礎、数式、例、図とともに バックエンドとAPI トラック向けに整理します。"
+summary = "Como o SOS Location resolveu o bloqueio CORS entre o frontend React (porta 5173) e o backend .NET (porta 7001), e como a política de CORS é diferente em desenvolvimento, staging e produção."
+summary_en_us = "How SOS Location resolved the CORS block between the React frontend (port 5173) and the .NET backend (port 7001), and how the CORS policy differs between development, staging and production."
+summary_ja_jp = "SOS LocationがReactフロントエンド（ポート5173）と.NETバックエンド（ポート7001）間のCORSブロックを解決した方法と、開発・ステージング・本番間でCORSポリシーがどう異なるか。"
 published_at = "2026-04-08T15:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
-tags = ["sos-location", "daily", "backend", "api", "dotnet"]
+tags = ["sos-location", "daily", "backend", "api"]
 badges = ["backend", "api"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Problema de CORS entre frontend e backend** dentro da trilha **backend e APIs** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Problema de CORS entre frontend e backend** em um artefato verificável no código, no contrato ou na operação.
+O frontend do SOS Location roda em `http://localhost:5173` (Vite dev server) e o backend .NET em `https://localhost:7001`. Durante o desenvolvimento, toda requisição do frontend ao backend era bloqueada pelo browser com `Access-Control-Allow-Origin` missing. Em produção, o frontend serve de `https://app.sos-location.com.br` e o backend de `https://api.sos-location.com.br` — origens diferentes, CORS necessário.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Problema de CORS entre frontend e backend** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Confiabilidade = sucesso × observabilidade / falhas não tratadas
+A configuração inicial usava `AllowAnyOrigin()` em todos os ambientes, incluindo produção. Isso gerou dois problemas: (1) em produção, qualquer site poderia fazer requisições autenticadas ao backend usando os cookies de sessão do usuário (CSRF via CORS irrestrito); (2) o SignalR Hub de tempo real rejeitava conexões com `wildcard origin` quando credentials eram enviados (`withCredentials: true` é incompatível com `AllowAnyOrigin` no .NET CORS).
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
-```csharp
-app.Use(async (context, next) =>
+Política CORS por ambiente: desenvolvimento permite `localhost:5173`, staging permite o domínio de staging, produção permite apenas `https://app.sos-location.com.br`. Origens configuradas via `appsettings.{Environment}.json`, não hardcoded. SignalR Hub recebe a mesma política CORS que a API REST — resolvendo o erro de wildcard+credentials.
+
+## Implementação
+
+```json
+// appsettings.Development.json
 {
-    context.Response.Headers["X-Trace-Topic"] = "D031ProblemaDeCorsEntreFrontendEBa";
-    await next();
-});
+  "Cors": {
+    "AllowedOrigins": ["http://localhost:5173", "http://localhost:3000"]
+  }
+}
+
+// appsettings.Production.json
+{
+  "Cors": {
+    "AllowedOrigins": ["https://app.sos-location.com.br"]
+  }
+}
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Problema de CORS entre frontend e backend.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+```csharp
+// Program.cs
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>()
+    ?? throw new InvalidOperationException("Cors:AllowedOrigins não configurado.");
 
-## Erros comuns
-- Responder sem rastreabilidade suficiente para depurar produção.
-- Tratar erro de integração como caso excepcional e não como fluxo normal.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("SosLocationPolicy", policy =>
+    {
+        policy
+            .WithOrigins(allowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();   // necessário para SignalR com cookies
+    });
+});
+
+// ...
+
+app.UseCors("SosLocationPolicy");  // antes de UseAuthentication e UseAuthorization
+
+app.MapHub<RiskHub>("/hubs/risk"); // SignalR herda a política CORS do middleware
+```
+
+## Exemplo concreto
+
+Erro original em desenvolvimento: `Access to fetch at 'https://localhost:7001/api/areas-de-risco' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header`. Após a configuração: zero erros CORS em dev. Em produção, tentativa de acesso de `https://outro-site.com` retorna `403 Forbidden` — backend rejeita a preflight `OPTIONS` da origem não autorizada. SignalR conecta sem erro de wildcard.
 
 ## Critério de sucesso
-A solução está boa quando o time encontra causa, impacto e correção em poucos minutos.
+
+Zero erros CORS em desenvolvimento com Vite (`localhost:5173`). Zero erros CORS em produção para requests do domínio autorizado. Requests de origens não autorizadas bloqueadas com `403` na preflight OPTIONS. SignalR funcional com `withCredentials: true` em todos os ambientes.
+
+## Relação com SOS Location
+
+CORS não é uma formalidade de segurança — é a fronteira que impede que outros sites façam requests autenticados ao SOS Location em nome dos coordenadores logados. Configurar CORS incorretamente em produção seria um vetor de CSRF funcional.
 '''
 body_en_us = '''
-This Daily expands **CORS problem between frontend and backend** within the **backend and APIs** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **CORS problem between frontend and backend** into a verifiable artifact in code, contract, or operations.
+SOS Location's frontend runs at `http://localhost:5173` (Vite dev server) and the .NET backend at `https://localhost:7001`. During development, every frontend-to-backend request was blocked by the browser with a missing `Access-Control-Allow-Origin`. In production, the frontend serves from `https://app.sos-location.com.br` and the backend from `https://api.sos-location.com.br` — different origins, CORS required.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **CORS problem between frontend and backend** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Reliability = success × observability / unhandled failures
+The initial configuration used `AllowAnyOrigin()` in all environments, including production. This caused two problems: (1) in production, any site could make authenticated requests to the backend using the user's session cookies (CSRF via unrestricted CORS); (2) the real-time SignalR Hub rejected connections with `wildcard origin` when credentials were sent (`withCredentials: true` is incompatible with `AllowAnyOrigin` in .NET CORS).
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
+## Technical decision
+
+CORS policy per environment: development allows `localhost:5173`, staging allows the staging domain, production allows only `https://app.sos-location.com.br`. Origins configured via `appsettings.{Environment}.json`, not hardcoded. The SignalR Hub receives the same CORS policy as the REST API — resolving the wildcard+credentials error.
+
+## Implementation
+
+```json
+// appsettings.Development.json
+{ "Cors": { "AllowedOrigins": ["http://localhost:5173"] } }
+
+// appsettings.Production.json
+{ "Cors": { "AllowedOrigins": ["https://app.sos-location.com.br"] } }
 ```
 
-## Implementation example
 ```csharp
-app.Use(async (context, next) =>
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>()
+    ?? throw new InvalidOperationException("Cors:AllowedOrigins not configured.");
+
+builder.Services.AddCors(options =>
 {
-    context.Response.Headers["X-Trace-Topic"] = "D031ProblemaDeCorsEntreFrontendEBa";
-    await next();
+    options.AddPolicy("SosLocationPolicy", policy =>
+        policy
+            .WithOrigins(allowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
 });
+
+app.UseCors("SosLocationPolicy");
+app.MapHub<RiskHub>("/hubs/risk");
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for CORS problem between frontend and backend.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Responding without enough traceability to debug production.
-- Treating integration failures as exceptions instead of a normal flow.
+Original error in development: `Access to fetch at 'https://localhost:7001/api/areas-de-risco' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header`. After configuration: zero CORS errors in dev. In production, an access attempt from `https://another-site.com` returns `403 Forbidden` — the backend rejects the preflight `OPTIONS` from the unauthorised origin. SignalR connects without a wildcard error.
 
 ## Success criteria
-The solution is good when the team can find cause, impact, and fix in minutes.
+
+Zero CORS errors in development with Vite (`localhost:5173`). Zero CORS errors in production for requests from the authorised domain. Requests from unauthorised origins blocked with `403` on the OPTIONS preflight. SignalR functional with `withCredentials: true` in all environments.
+
+## Relation to SOS Location
+
+CORS is not a security formality — it is the boundary that prevents other sites from making authenticated requests to SOS Location on behalf of logged-in coordinators. Configuring CORS incorrectly in production would be a functional CSRF vector.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **バックエンドとAPI** トラックにおける **フロントエンドとバックエンド間のCORS問題** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**フロントエンドとバックエンド間のCORS問題** をコード、契約、運用で検証できる成果物にすることです。
+SOS LocationのフロントエンドはVite devサーバーの`http://localhost:5173`で実行され、.NETバックエンドは`https://localhost:7001`で実行される。開発中、フロントエンドからバックエンドへのすべてのリクエストは、`Access-Control-Allow-Origin`ヘッダーが欠落しているためにブラウザによってブロックされた。本番では、フロントエンドは`https://app.sos-location.com.br`からサーブされ、バックエンドは`https://api.sos-location.com.br`からサーブされる——異なるオリジン、CORSが必要。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**フロントエンドとバックエンド間のCORS問題** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-信頼性 = 成功率 × 可観測性 / 未処理失敗
+最初の設定は本番を含むすべての環境で`AllowAnyOrigin()`を使っていた。これは2つの問題を引き起こした：(1) 本番では、どのサイトでもユーザーのセッションクッキーを使ってバックエンドに認証済みリクエストを送れた（無制限CORSを通じたCSRF）；(2) リアルタイムSignalR Hubはクレデンシャルが送信される時に`wildcard origin`での接続を拒否した（`withCredentials: true`は.NET CORSの`AllowAnyOrigin`と互換性がない）。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Request"] --> B["Auth/CORS/Versioning"]
-  B --> C["Handler"]
-  C --> D["External API or DB"]
-  D --> E["Structured log and response"]
+## 技術的決定
+
+環境ごとのCORSポリシー：開発は`localhost:5173`を許可、ステージングはステージングドメインを許可、本番は`https://app.sos-location.com.br`のみ許可。オリジンはハードコードではなく`appsettings.{Environment}.json`で設定。SignalR HubはREST APIと同じCORSポリシーを受け取る——wildcard+credentialsエラーを解決。
+
+## 実装
+
+```json
+// appsettings.Development.json
+{ "Cors": { "AllowedOrigins": ["http://localhost:5173"] } }
+
+// appsettings.Production.json
+{ "Cors": { "AllowedOrigins": ["https://app.sos-location.com.br"] } }
 ```
 
-## 実装例
 ```csharp
-app.Use(async (context, next) =>
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>()
+    ?? throw new InvalidOperationException("Cors:AllowedOriginsが設定されていない。");
+
+builder.Services.AddCors(options =>
 {
-    context.Response.Headers["X-Trace-Topic"] = "D031ProblemaDeCorsEntreFrontendEBa";
-    await next();
+    options.AddPolicy("SosLocationPolicy", policy =>
+        policy
+            .WithOrigins(allowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
 });
+
+app.UseCors("SosLocationPolicy");
+app.MapHub<RiskHub>("/hubs/risk");
 ```
 
-## SOS Location での適用方法
-- フロントエンドとバックエンド間のCORS問題 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 本番調査に必要な追跡性を確保せずに応答する。
-- 連携障害を例外ではなく通常フローとして扱わない。
+開発での元のエラー：`Access to fetch at 'https://localhost:7001/api/areas-de-risco' from origin 'http://localhost:5173' has been blocked by CORS policy`。設定後：devでのCORSエラーゼロ。本番では、`https://another-site.com`からのアクセス試行は`403 Forbidden`を返す——バックエンドが不正なオリジンからのOPTIONSプリフライトを拒否。SignalRはワイルドカードエラーなしに接続。
 
 ## 成功基準
-原因、影響、修正を数分で追えるなら十分です。
+
+Vite（`localhost:5173`）での開発でのCORSエラーゼロ。許可ドメインからのリクエストに対して本番でのCORSエラーゼロ。不正なオリジンからのリクエストがOPTIONSプリフライトで`403`でブロックされる。すべての環境で`withCredentials: true`でSignalRが機能する。
+
+## SOS Locationとの関係
+
+CORSはセキュリティの形式的なものではなく——他のサイトがログインしているコーディネーターに代わってSOS Locationに認証済みリクエストを送ることを防ぐ境界だ。本番でCORSを誤って設定することは機能するCSRFベクターになる。
 '''

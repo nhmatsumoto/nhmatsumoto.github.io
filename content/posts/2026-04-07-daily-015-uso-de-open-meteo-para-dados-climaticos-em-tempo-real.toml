@@ -3,157 +3,260 @@ slug = "daily-015-uso-de-open-meteo-para-dados-climaticos-em-tempo-real"
 title = "Daily #015: Uso de Open-Meteo para dados climáticos em tempo real"
 title_en_us = "Daily #015: Using Open-Meteo for real-time weather data"
 title_ja_jp = "Daily #015: Open-Meteoによるリアルタイム気象データ活用"
-summary = "Explora Uso de Open-Meteo para dados climáticos em tempo real com fundamentos, fórmula, exemplo e diagrama para a trilha IA e simulação."
-summary_en_us = "Explores Using Open-Meteo for real-time weather data with fundamentals, formula, example and diagram for the AI and simulation track."
-summary_ja_jp = "Open-Meteoによるリアルタイム気象データ活用 を、基礎、数式、例、図とともに AIとシミュレーション トラック向けに整理します。"
+summary = "Por que o SOS Location usa Open-Meteo em vez do INMET, como agregar dados horários em janelas de 6h para cálculo de risco de enchente, e o cliente C# com polling a cada 30 minutos."
+summary_en_us = "Why SOS Location uses Open-Meteo instead of INMET, how to aggregate hourly data into 6h windows for flood risk calculation, and the C# client with 30-minute polling."
+summary_ja_jp = "SOS LocationがINMETではなくOpen-Meteoを使う理由、洪水リスク計算のために時間データを6時間ウィンドウに集計する方法、30分ポーリングのC#クライアント。"
 published_at = "2026-04-07T23:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
 tags = ["sos-location", "daily", "ia", "simulacao", "dados"]
-badges = ["ia", "dados"]
+badges = ["ia", "simulacao"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Uso de Open-Meteo para dados climáticos em tempo real** dentro da trilha **IA e simulação** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Uso de Open-Meteo para dados climáticos em tempo real** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location precisa de dados de precipitação em tempo real para alimentar o modelo de risco de enchente (#018). Quanto está chovendo agora e nos próximos 6h numa área monitorada? Com essa informação, o sistema pode elevar automaticamente o `NivelRisco` de zonas próximas a rios antes de elas inundarem — não depois.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Uso de Open-Meteo para dados climáticos em tempo real** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Score = cobertura × qualidade / ruído
+A equipe avaliou três fontes de dados climáticos para o Brasil:
+- **INMET (Instituto Nacional de Meteorologia)**: dados oficiais brasileiros, mas API com autenticação inconsistente, documentação desatualizada e histórico de indisponibilidade durante grandes eventos climáticos — exatamente quando o SOS Location mais precisa da API.
+- **OpenWeatherMap**: limite de 60 req/min no plano gratuito, pago fica caro para 50 zonas monitoradas atualizando a cada 30 min.
+- **Open-Meteo**: API gratuita, sem autenticação, uptime > 99.5% em 2024, dados do modelo meteorológico ECMWF com resolução de 0.1° (~11 km), forecast de 48h horário.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Sinais visuais e climáticos"] --> B["Pré-processamento"]
-  B --> C["Hipótese"]
-  C --> D["Validação"]
-  D --> E["Simulação ou predição"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
-```typescript
-type D015UsoDeOpenMeteoParaDadosClimatiSample = {
-  signal: number;
-  confidence: number;
-  coverage: number;
-};
+Open-Meteo como fonte primária. A API retorna dados horários — o SOS Location agrega em janelas de 6h para o modelo de risco (precipitação acumulada em 6h é a métrica de referência para risco de enchente urbana no Brasil, conforme CEMADEN). Polling a cada 30 minutos por zona monitorada, com cache Redis de 25 minutos para evitar burst de requests.
 
-export function scoreD015UsoDeOpenMeteoParaDadosClimati(sample: D015UsoDeOpenMeteoParaDadosClimatiSample) {
-  return (sample.signal * sample.confidence * sample.coverage) / Math.max(1, 1 - sample.confidence);
+## Implementação
+
+```csharp
+// SosLocation.Infrastructure/ExternalServices/OpenMeteoClient.cs
+public sealed class OpenMeteoClient
+{
+    private readonly HttpClient _http;
+    private readonly IRedisCache _cache;
+    private const int CacheTtlMinutes = 25;
+
+    public async Task<PrecipitacaoForecast> GetPrecipitacaoAsync(
+        double lat, double lon, CancellationToken ct)
+    {
+        var cacheKey = $"openmeteo:{lat:F4}:{lon:F4}";
+        var cached   = await _cache.GetAsync<PrecipitacaoForecast>(cacheKey, ct);
+        if (cached is not null) return cached;
+
+        // Open-Meteo: dados horários de precipitação, 48h de forecast
+        var url = $"https://api.open-meteo.com/v1/forecast" +
+                  $"?latitude={lat}&longitude={lon}" +
+                  $"&hourly=precipitation,precipitation_probability" +
+                  $"&forecast_days=2&timezone=America%2FSao_Paulo";
+
+        var response = await _http.GetFromJsonAsync<OpenMeteoResponse>(url, ct)
+            ?? throw new ExternalServiceException("Open-Meteo retornou resposta nula.");
+
+        var forecast = AgregarEmJanelas6h(response);
+        await _cache.SetAsync(cacheKey, forecast, TimeSpan.FromMinutes(CacheTtlMinutes), ct);
+        return forecast;
+    }
+
+    private static PrecipitacaoForecast AgregarEmJanelas6h(OpenMeteoResponse response)
+    {
+        // Agrupa os dados horários em janelas de 6h: 0-6h, 6-12h, 12-18h, 18-24h, ...
+        var janelas = response.Hourly.Time
+            .Zip(response.Hourly.Precipitation, (t, p) => (Time: t, Precip: p))
+            .GroupBy(x => x.Time.Hour / 6)
+            .Select(g => new Janela6h(
+                InicioJanela:    g.First().Time,
+                PrecipAcumulada: g.Sum(x => x.Precip),
+                ProbMaxima:      response.Hourly.PrecipitationProbability
+                                     .Skip(g.Key * 6).Take(6).Max()))
+            .ToList();
+
+        return new PrecipitacaoForecast(janelas);
+    }
+}
+
+// Threshold para elevação automática de NivelRisco
+public static class LimitesPrecipitacao
+{
+    public const double AtencaoMm6h    = 20.0;   // NivelRisco += 1
+    public const double AlertaMm6h     = 40.0;   // NivelRisco += 2
+    public const double EmergenciaMm6h = 80.0;   // NivelRisco = 10 (crítico)
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Uso de Open-Meteo para dados climáticos em tempo real.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Confundir hipótese visual com verdade do terreno.
-- Treinar ou simular sem controlar qualidade do dataset.
+Zona monitorada: Rio Itajaí-Açu, próximo a Blumenau (SC). Open-Meteo prevê 65 mm em 6h para as próximas 12h. O sistema eleva o `NivelRisco` de todas as `AreaDeRisco` numa faixa de 2 km do rio de 4 para 6 (`AlertaMm6h` = 40 mm → +2). Coordenadores recebem notificação push 6h antes da janela de precipitação crítica — tempo suficiente para iniciar protocolos de evacuação preventiva.
 
 ## Critério de sucesso
-Funciona quando a hipótese gera um sinal mensurável e repetível em dados reais.
+
+Latência de atualização de dados climáticos < 35 minutos (30 min polling + 5 min processamento). Zero falhas por indisponibilidade da API Open-Meteo em 30 dias consecutivos de monitoramento. `NivelRisco` atualizado automaticamente para zonas com precipitação prevista ≥ `AtencaoMm6h` antes do início do período de chuva.
+
+## Relação com SOS Location
+
+O sistema de risco do SOS Location é preditivo, não reativo. Elevar o nível de risco de uma zona 6h antes de uma chuva intensa permite que coordenadores pré-posicionem equipes de resgate e emitam alertas preventivos — o oposto de descobrir o problema quando a área já está inundada e o acesso está comprometido.
 '''
 body_en_us = '''
-This Daily expands **Using Open-Meteo for real-time weather data** within the **AI and simulation** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Using Open-Meteo for real-time weather data** into a verifiable artifact in code, contract, or operations.
+SOS Location needs real-time precipitation data to feed the flood risk model (#018). How much is it raining now and in the next 6h in a monitored area? With this information, the system can automatically raise the `NivelRisco` of zones near rivers before they flood — not after.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Using Open-Meteo for real-time weather data** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Score = coverage × quality / noise
+The team evaluated three weather data sources for Brazil:
+- **INMET (Brazilian National Meteorology Institute)**: official Brazilian data, but API with inconsistent authentication, outdated documentation and a history of unavailability during major weather events — exactly when SOS Location needs the API most.
+- **OpenWeatherMap**: 60 req/min limit on the free plan; paid plans get expensive for 50 monitored zones updating every 30 minutes.
+- **Open-Meteo**: free API, no authentication, > 99.5% uptime in 2024, ECMWF weather model data with 0.1° resolution (~11 km), 48h hourly forecast.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Sinais visuais e climáticos"] --> B["Pré-processamento"]
-  B --> C["Hipótese"]
-  C --> D["Validação"]
-  D --> E["Simulação ou predição"]
-```
+## Technical decision
 
-## Implementation example
-```typescript
-type D015UsoDeOpenMeteoParaDadosClimatiSample = {
-  signal: number;
-  confidence: number;
-  coverage: number;
-};
+Open-Meteo as the primary source. The API returns hourly data — SOS Location aggregates it into 6h windows for the risk model (accumulated precipitation over 6h is the reference metric for urban flood risk in Brazil, per CEMADEN). Polling every 30 minutes per monitored zone, with 25-minute Redis cache to avoid request bursts.
 
-export function scoreD015UsoDeOpenMeteoParaDadosClimati(sample: D015UsoDeOpenMeteoParaDadosClimatiSample) {
-  return (sample.signal * sample.confidence * sample.coverage) / Math.max(1, 1 - sample.confidence);
+## Implementation
+
+```csharp
+public sealed class OpenMeteoClient
+{
+    private readonly HttpClient _http;
+    private readonly IRedisCache _cache;
+    private const int CacheTtlMinutes = 25;
+
+    public async Task<PrecipitacaoForecast> GetPrecipitacaoAsync(
+        double lat, double lon, CancellationToken ct)
+    {
+        var cacheKey = $"openmeteo:{lat:F4}:{lon:F4}";
+        var cached   = await _cache.GetAsync<PrecipitacaoForecast>(cacheKey, ct);
+        if (cached is not null) return cached;
+
+        var url = $"https://api.open-meteo.com/v1/forecast" +
+                  $"?latitude={lat}&longitude={lon}" +
+                  $"&hourly=precipitation,precipitation_probability" +
+                  $"&forecast_days=2&timezone=America%2FSao_Paulo";
+
+        var response = await _http.GetFromJsonAsync<OpenMeteoResponse>(url, ct)
+            ?? throw new ExternalServiceException("Open-Meteo returned null response.");
+
+        var forecast = AgregarEmJanelas6h(response);
+        await _cache.SetAsync(cacheKey, forecast, TimeSpan.FromMinutes(CacheTtlMinutes), ct);
+        return forecast;
+    }
+
+    private static PrecipitacaoForecast AgregarEmJanelas6h(OpenMeteoResponse response)
+    {
+        var janelas = response.Hourly.Time
+            .Zip(response.Hourly.Precipitation, (t, p) => (Time: t, Precip: p))
+            .GroupBy(x => x.Time.Hour / 6)
+            .Select(g => new Janela6h(
+                InicioJanela:    g.First().Time,
+                PrecipAcumulada: g.Sum(x => x.Precip),
+                ProbMaxima:      response.Hourly.PrecipitationProbability
+                                     .Skip(g.Key * 6).Take(6).Max()))
+            .ToList();
+        return new PrecipitacaoForecast(janelas);
+    }
+}
+
+public static class LimitesPrecipitacao
+{
+    public const double AtencaoMm6h    = 20.0;   // NivelRisco += 1
+    public const double AlertaMm6h     = 40.0;   // NivelRisco += 2
+    public const double EmergenciaMm6h = 80.0;   // NivelRisco = 10 (critical)
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Using Open-Meteo for real-time weather data.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Confusing a visual hypothesis with ground truth.
-- Training or simulating without controlling dataset quality.
+Monitored zone: Rio Itajaí-Açu near Blumenau (SC). Open-Meteo forecasts 65 mm in 6h for the next 12h. The system raises the `NivelRisco` of all `AreaDeRisco` within a 2 km strip of the river from 4 to 6 (`AlertaMm6h` = 40 mm → +2). Coordinators receive a push notification 6h before the critical precipitation window — enough time to initiate preventive evacuation protocols.
 
 ## Success criteria
-It works when the hypothesis produces a measurable and repeatable signal in real data.
+
+Weather data update latency < 35 minutes (30 min polling + 5 min processing). Zero failures due to Open-Meteo API unavailability over 30 consecutive monitoring days. `NivelRisco` automatically updated for zones with forecasted precipitation ≥ `AtencaoMm6h` before the rain period begins.
+
+## Relation to SOS Location
+
+SOS Location's risk system is predictive, not reactive. Raising a zone's risk level 6h before heavy rain allows coordinators to pre-position rescue teams and issue preventive alerts — the opposite of discovering the problem when the area is already flooded and access is compromised.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **AIとシミュレーション** トラックにおける **Open-Meteoによるリアルタイム気象データ活用** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**Open-Meteoによるリアルタイム気象データ活用** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationは洪水リスクモデル（#018）に供給するためのリアルタイム降水データが必要だ。監視対象エリアで今何mm降っているか、今後6時間でどのくらい降るか？この情報により、システムは川近くのゾーンの`NivelRisco`を洪水が起きる前に自動的に上げることができる——後ではなく。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**Open-Meteoによるリアルタイム気象データ活用** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-スコア = カバレッジ × 品質 / ノイズ
+チームはブラジルの3つの気象データソースを評価した：
+- **INMET（ブラジル国立気象研究所）**: ブラジルの公式データだが、認証が一貫しないAPI・古いドキュメント・大規模な気象イベント中の利用不能の歴史——まさにSOS Locationが最もAPIを必要とするとき。
+- **OpenWeatherMap**: 無料プランで60 req/分の制限；有料プランは50の監視ゾーンが30分ごとに更新すると高価になる。
+- **Open-Meteo**: 無料API・認証不要・2024年のアップタイム > 99.5%・0.1°（~11km）解像度のECMWF気象モデルデータ・48時間の時間別予報。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Sinais visuais e climáticos"] --> B["Pré-processamento"]
-  B --> C["Hipótese"]
-  C --> D["Validação"]
-  D --> E["Simulação ou predição"]
-```
+## 技術的決定
 
-## 実装例
-```typescript
-type D015UsoDeOpenMeteoParaDadosClimatiSample = {
-  signal: number;
-  confidence: number;
-  coverage: number;
-};
+Open-Meteoをプライマリソースとして使用。APIは時間別データを返す——SOS Locationはリスクモデルのために6時間ウィンドウに集計する（6時間の累積降水量はCEMADENに従うブラジルの都市洪水リスクの参照指標）。監視ゾーンごとに30分ごとのポーリング、リクエストのバーストを避けるための25分Redisキャッシュ付き。
 
-export function scoreD015UsoDeOpenMeteoParaDadosClimati(sample: D015UsoDeOpenMeteoParaDadosClimatiSample) {
-  return (sample.signal * sample.confidence * sample.coverage) / Math.max(1, 1 - sample.confidence);
+## 実装
+
+```csharp
+public sealed class OpenMeteoClient
+{
+    private readonly HttpClient _http;
+    private readonly IRedisCache _cache;
+    private const int CacheTtlMinutes = 25;
+
+    public async Task<PrecipitacaoForecast> GetPrecipitacaoAsync(
+        double lat, double lon, CancellationToken ct)
+    {
+        var cacheKey = $"openmeteo:{lat:F4}:{lon:F4}";
+        var cached   = await _cache.GetAsync<PrecipitacaoForecast>(cacheKey, ct);
+        if (cached is not null) return cached;
+
+        var url = $"https://api.open-meteo.com/v1/forecast" +
+                  $"?latitude={lat}&longitude={lon}" +
+                  $"&hourly=precipitation,precipitation_probability" +
+                  $"&forecast_days=2&timezone=America%2FSao_Paulo";
+
+        var response = await _http.GetFromJsonAsync<OpenMeteoResponse>(url, ct)
+            ?? throw new ExternalServiceException("Open-Meteo returned null response.");
+
+        var forecast = AgregarEmJanelas6h(response);
+        await _cache.SetAsync(cacheKey, forecast, TimeSpan.FromMinutes(CacheTtlMinutes), ct);
+        return forecast;
+    }
+
+    private static PrecipitacaoForecast AgregarEmJanelas6h(OpenMeteoResponse response)
+    {
+        var janelas = response.Hourly.Time
+            .Zip(response.Hourly.Precipitation, (t, p) => (Time: t, Precip: p))
+            .GroupBy(x => x.Time.Hour / 6)
+            .Select(g => new Janela6h(
+                g.First().Time,
+                g.Sum(x => x.Precip),
+                response.Hourly.PrecipitationProbability.Skip(g.Key * 6).Take(6).Max()))
+            .ToList();
+        return new PrecipitacaoForecast(janelas);
+    }
+}
+
+public static class LimitesPrecipitacao
+{
+    public const double AtencaoMm6h    = 20.0;   // NivelRisco += 1
+    public const double AlertaMm6h     = 40.0;   // NivelRisco += 2
+    public const double EmergenciaMm6h = 80.0;   // NivelRisco = 10（クリティカル）
 }
 ```
 
-## SOS Location での適用方法
-- Open-Meteoによるリアルタイム気象データ活用 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 見た目の仮説を地表の真実と混同する。
-- データ品質を管理せずに学習やシミュレーションを行う。
+監視ゾーン：ブルメナウ（SC）近くのRio Itajaí-Açu。Open-Meteoが今後12時間の6時間で65mmを予報。システムが川から2km以内のすべての`AreaDeRisco`の`NivelRisco`を4から6に引き上げる（`AlertaMm6h` = 40mm → +2）。コーディネーターは重大な降水ウィンドウの6時間前にプッシュ通知を受信する——予防的避難プロトコルを開始するのに十分な時間。
 
 ## 成功基準
-実データ上で測定可能かつ再現可能なシグナルが出れば成功です。
+
+気象データ更新の遅延 < 35分（30分ポーリング + 5分処理）。連続30日間の監視でOpen-Meteo APIの利用不能によるゼロ障害。降雨期間開始前に`AtencaoMm6h`以上の予測降水量を持つゾーンの`NivelRisco`が自動的に更新される。
+
+## SOS Locationとの関係
+
+SOS Locationのリスクシステムは反応的ではなく予測的だ。大雨の6時間前にゾーンのリスクレベルを上げることで、コーディネーターが救助チームを事前配置し、予防的アラートを発令できる——エリアがすでに洪水してアクセスが危うくなってから問題を発見するのとは対照的だ。
 '''

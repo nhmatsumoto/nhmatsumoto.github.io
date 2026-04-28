@@ -3,9 +3,9 @@ slug = "daily-001-definicao-de-linguagem-ubiqua-para-o-dominio-de-desastres-no-s
 title = "Daily #001: Definição de linguagem ubíqua para o domínio de desastres no SOS Location"
 title_en_us = "Daily #001: Ubiquitous language definition for the SOS Location disaster domain"
 title_ja_jp = "Daily #001: SOS Locationの災害ドメインにおけるユビキタス言語の定義"
-summary = "Explora Definição de linguagem ubíqua para o domínio de desastres no SOS Location com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura."
-summary_en_us = "Explores Ubiquitous language definition for the SOS Location disaster domain with fundamentals, formula, example and diagram for the architecture track."
-summary_ja_jp = "SOS Locationの災害ドメインにおけるユビキタス言語の定義 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
+summary = "Como estabelecer vocabulário canônico para que desenvolvedores, coordenadores de emergência e equipes de campo leiam o mesmo código e entendam o mesmo contexto operacional."
+summary_en_us = "How to establish canonical vocabulary so that developers, emergency coordinators, and field teams read the same code and understand the same operational context."
+summary_ja_jp = "開発者・緊急対応コーディネーター・現場チームが同じコードを読んで同じ運用コンテキストを理解できる正規語彙の確立方法。"
 published_at = "2026-04-07T09:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -15,145 +15,253 @@ badges = ["ddd", "arquitetura"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Definição de linguagem ubíqua para o domínio de desastres no SOS Location** dentro da trilha **arquitetura** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Definição de linguagem ubíqua para o domínio de desastres no SOS Location** em um artefato verificável no código, no contrato ou na operação.
+No SOS Location, três grupos usam o sistema ao mesmo tempo: desenvolvedores, coordenadores de emergência e equipes de campo. Cada grupo chama a mesma coisa por um nome diferente. "Location" no código, "área afetada" nos relatórios operacionais, "zona de risco" nos boletins de campo. Quando um alerta é emitido para a "location" errada porque o desenvolvedor usou coordenadas GPS em vez do polígono de área, o resultado é um resgate mal direcionado.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Definição de linguagem ubíqua para o domínio de desastres no SOS Location** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Clareza = (fronteiras + contratos) / acoplamento
+Sem vocabulário canônico, cada módulo inventa seus próprios termos. O módulo de alertas usa `AffectedZone`, o módulo de busca usa `SearchArea`, o módulo de resgate usa `OperationRegion`. Todos representam o mesmo conceito. Um desenvolvedor novo não consegue rastrear o fluxo entre módulos porque os termos não se conectam. E um coordenador de emergência lendo logs de auditoria não reconhece nenhum deles.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
+Estabelecer um glossário de domínio em português como código — termos que aparecem tanto no C# quanto na documentação operacional, garantindo que qualquer leitura do código produza frases que um coordenador de emergência reconhece.
+
+| Termo no código | Significado operacional |
+|---|---|
+| `AreaDeRisco` | Polígono geográfico com nível de perigo 1–10 |
+| `HotspotAtivo` | Concentração de ocorrências ativas em raio de 500 m |
+| `PessoaDesaparecida` | Indivíduo reportado sem localização confirmada |
+| `AlertaDeEmergencia` | Notificação enviada a todos os dispositivos de uma área |
+| `OperacaoDeResgate` | Conjunto de ações coordenadas para localizar e resgatar |
+| `ZonaDeExclusao` | Área de acesso proibido durante operação ativa |
+
+## Implementação
+
 ```csharp
-public sealed record D001DefinicaoDeLinguagemUbiquaParaDecision(string Boundary, string Owner, string ExpectedOutcome);
+// SosLocation.Domain.Shared/DomainGlossary.cs
+namespace SosLocation.Domain.Shared;
 
-public static class D001DefinicaoDeLinguagemUbiquaParaPolicy
+public static class DomainGlossary
 {
-    public static bool IsReady(D001DefinicaoDeLinguagemUbiquaParaDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public const int NivelRiscoMinimo = 1;
+    public const int NivelRiscoMaximo = 10;
+    public const double RaioHotspotPadraoMetros = 500.0;
+
+    public static class StatusPessoaDesaparecida
+    {
+        public const string Reportada  = "Reportada";
+        public const string EmBusca    = "EmBusca";
+        public const string Localizada = "Localizada";
+        public const string Confirmada = "Confirmada";
+    }
+}
+
+// SosLocation.Domain.Busca/PessoaDesaparecida.cs
+public sealed class PessoaDesaparecida
+{
+    public Guid   Id                        { get; private set; }
+    public string Nome                      { get; private set; }
+    public Coordenadas UltimaLocalizacao    { get; private set; }
+    public DateTimeOffset ReportadaEm       { get; private set; }
+    public string Status                    { get; private set; }
+
+    private PessoaDesaparecida() { }
+
+    public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
+    {
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new DomainException("Nome é obrigatório para registrar pessoa desaparecida.");
+
+        return new PessoaDesaparecida
+        {
+            Id               = Guid.NewGuid(),
+            Nome             = nome,
+            UltimaLocalizacao = loc,
+            ReportadaEm      = DateTimeOffset.UtcNow,
+            Status           = DomainGlossary.StatusPessoaDesaparecida.Reportada
+        };
+    }
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Definição de linguagem ubíqua para o domínio de desastres no SOS Location.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Misturar regra de negócio, integração e UI no mesmo módulo.
-- Não nomear dono, fronteira e comportamento esperado.
+Coordenador de emergência lê o log de auditoria: `"PessoaDesaparecida.Status alterado de 'EmBusca' para 'Localizada' às 14:32"`. Sem consultar documentação, ele entende o fluxo. Um desenvolvedor lendo o mesmo código vê `StatusPessoaDesaparecida.Localizada` e sabe exatamente o que aconteceu operacionalmente. A linguagem é a mesma nos dois contextos.
 
 ## Critério de sucesso
-O tema está pronto quando a equipe explica a fronteira, testa o contrato e mede a regressão.
+
+Um coordenador de emergência sem background técnico consegue ler um stack trace ou log de auditoria e identificar em qual fase da operação o erro ocorreu, sem precisar de tradução de um desenvolvedor. O glossário cobre 100% das entidades do domínio principal.
+
+## Relação com SOS Location
+
+O domínio de desastres tem terminologia que não existe no vocabulário padrão de software. `PessoaDesaparecida` não é um `User` com status diferente — ela tem `UltimaLocalizacao`, não `Address`. `AreaDeRisco` não é uma `Category` — ela tem `NivelRisco` e `PoligonoGeografico`. A linguagem ubíqua é o que torna o SOS Location compreensível para equipes mistas de TI e defesa civil.
 '''
 body_en_us = '''
-This Daily expands **Ubiquitous language definition for the SOS Location disaster domain** within the **architecture** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Ubiquitous language definition for the SOS Location disaster domain** into a verifiable artifact in code, contract, or operations.
+In SOS Location, three groups use the system simultaneously: developers, emergency coordinators, and field teams. Each group refers to the same concept by a different name. "Location" in the code, "affected area" in operational reports, "risk zone" in field bulletins. When an alert targets the wrong "location" because a developer used GPS coordinates instead of the area polygon, the result is a misdirected rescue operation.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Ubiquitous language definition for the SOS Location disaster domain** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Clarity = (boundaries + contracts) / coupling
+Without canonical vocabulary, each module invents its own terms. The alert module uses `AffectedZone`, the search module uses `SearchArea`, the rescue module uses `OperationRegion`. All represent the same concept. A new developer cannot trace the flow between modules because the terms do not connect. And an emergency coordinator reading audit logs recognises none of them.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Technical decision
 
-## Implementation example
+Establish a Portuguese-language domain glossary as code — terms that appear in both the C# codebase and operational documentation, ensuring that reading the code produces sentences an emergency coordinator recognises.
+
+| Code term | Operational meaning |
+|---|---|
+| `AreaDeRisco` | Geographic polygon with danger level 1–10 |
+| `HotspotAtivo` | Concentration of active incidents within a 500 m radius |
+| `PessoaDesaparecida` | Individual reported without confirmed location |
+| `AlertaDeEmergencia` | Notification sent to all devices in an area |
+| `OperacaoDeResgate` | Set of coordinated actions to locate and rescue |
+| `ZonaDeExclusao` | Area with restricted access during an active operation |
+
+## Implementation
+
 ```csharp
-public sealed record D001DefinicaoDeLinguagemUbiquaParaDecision(string Boundary, string Owner, string ExpectedOutcome);
+// SosLocation.Domain.Shared/DomainGlossary.cs
+namespace SosLocation.Domain.Shared;
 
-public static class D001DefinicaoDeLinguagemUbiquaParaPolicy
+public static class DomainGlossary
 {
-    public static bool IsReady(D001DefinicaoDeLinguagemUbiquaParaDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public const int NivelRiscoMinimo = 1;
+    public const int NivelRiscoMaximo = 10;
+    public const double RaioHotspotPadraoMetros = 500.0;
+
+    public static class StatusPessoaDesaparecida
+    {
+        public const string Reportada  = "Reportada";
+        public const string EmBusca    = "EmBusca";
+        public const string Localizada = "Localizada";
+        public const string Confirmada = "Confirmada";
+    }
+}
+
+// SosLocation.Domain.Busca/PessoaDesaparecida.cs
+public sealed class PessoaDesaparecida
+{
+    public Guid   Id                        { get; private set; }
+    public string Nome                      { get; private set; }
+    public Coordenadas UltimaLocalizacao    { get; private set; }
+    public DateTimeOffset ReportadaEm       { get; private set; }
+    public string Status                    { get; private set; }
+
+    private PessoaDesaparecida() { }
+
+    public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
+    {
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new DomainException("Nome é obrigatório para registrar pessoa desaparecida.");
+
+        return new PessoaDesaparecida
+        {
+            Id               = Guid.NewGuid(),
+            Nome             = nome,
+            UltimaLocalizacao = loc,
+            ReportadaEm      = DateTimeOffset.UtcNow,
+            Status           = DomainGlossary.StatusPessoaDesaparecida.Reportada
+        };
+    }
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Ubiquitous language definition for the SOS Location disaster domain.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Mixing business rules, integration, and UI in the same module.
-- Failing to name the owner, boundary, and expected behavior.
+An emergency coordinator reads the audit log: `"PessoaDesaparecida.Status changed from 'EmBusca' to 'Localizada' at 14:32"`. Without consulting documentation, they understand the flow. A developer reading the same code sees `StatusPessoaDesaparecida.Localizada` and knows exactly what happened operationally. The language is the same in both contexts.
 
 ## Success criteria
-The topic is ready when the team can explain the boundary, test the contract, and measure regressions.
+
+An emergency coordinator without a technical background can read a stack trace or audit log and identify which phase of the operation an error occurred in, without needing a developer to translate. The glossary covers 100% of the primary domain entities.
+
+## Relation to SOS Location
+
+The disaster domain has terminology that does not exist in standard software vocabulary. `PessoaDesaparecida` is not a `User` with a different status — she has `UltimaLocalizacao`, not `Address`. `AreaDeRisco` is not a `Category` — it has `NivelRisco` and `PoligonoGeografico`. The ubiquitous language is what makes SOS Location comprehensible to mixed teams of IT and civil defence professionals.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **アーキテクチャ** トラックにおける **SOS Locationの災害ドメインにおけるユビキタス言語の定義** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**SOS Locationの災害ドメインにおけるユビキタス言語の定義** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationでは、開発者・緊急対応コーディネーター・現場チームの3グループが同時にシステムを使用する。それぞれが同じ概念を異なる名前で呼ぶ。コードでは「location」、運用報告では「被災地」、現場報告では「危険区域」。開発者がポリゴンエリアではなくGPS座標を使ったために誤った「location」へのアラートが発令されれば、救助活動が誤方向に向かう。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**SOS Locationの災害ドメインにおけるユビキタス言語の定義** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-明確さ = (境界 + 契約) / 結合度
+標準的な語彙なしでは、各モジュールが独自の用語を作る。アラートモジュールは `AffectedZone`、捜索モジュールは `SearchArea`、救助モジュールは `OperationRegion` を使う。すべて同じ概念を表している。新しい開発者はモジュール間のフローを追跡できない。緊急対応コーディネーターが監査ログを読んでも、いずれの用語も認識できない。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## 技術的決定
 
-## 実装例
+コードとしてポルトガル語のドメイン用語集を確立する。C#コードと運用文書の両方に登場する用語により、コードを読んだ際に緊急対応コーディネーターが認識できる文章が生成される。
+
+| コード用語 | 運用上の意味 |
+|---|---|
+| `AreaDeRisco` | 危険レベル1〜10の地理的ポリゴン |
+| `HotspotAtivo` | 500m半径内の活発なインシデントの集中 |
+| `PessoaDesaparecida` | 確認された位置情報なしで報告された個人 |
+| `AlertaDeEmergencia` | エリア内の全デバイスへの通知 |
+| `OperacaoDeResgate` | 位置特定と救助のための協調行動 |
+| `ZonaDeExclusao` | 活動中の作戦における立入禁止区域 |
+
+## 実装
+
 ```csharp
-public sealed record D001DefinicaoDeLinguagemUbiquaParaDecision(string Boundary, string Owner, string ExpectedOutcome);
+// SosLocation.Domain.Shared/DomainGlossary.cs
+namespace SosLocation.Domain.Shared;
 
-public static class D001DefinicaoDeLinguagemUbiquaParaPolicy
+public static class DomainGlossary
 {
-    public static bool IsReady(D001DefinicaoDeLinguagemUbiquaParaDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public const int NivelRiscoMinimo = 1;
+    public const int NivelRiscoMaximo = 10;
+    public const double RaioHotspotPadraoMetros = 500.0;
+
+    public static class StatusPessoaDesaparecida
+    {
+        public const string Reportada  = "Reportada";
+        public const string EmBusca    = "EmBusca";
+        public const string Localizada = "Localizada";
+        public const string Confirmada = "Confirmada";
+    }
+}
+
+// SosLocation.Domain.Busca/PessoaDesaparecida.cs
+public sealed class PessoaDesaparecida
+{
+    public Guid   Id                        { get; private set; }
+    public string Nome                      { get; private set; }
+    public Coordenadas UltimaLocalizacao    { get; private set; }
+    public DateTimeOffset ReportadaEm       { get; private set; }
+    public string Status                    { get; private set; }
+
+    private PessoaDesaparecida() { }
+
+    public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
+    {
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new DomainException("Nome é obrigatório para registrar pessoa desaparecida.");
+
+        return new PessoaDesaparecida
+        {
+            Id               = Guid.NewGuid(),
+            Nome             = nome,
+            UltimaLocalizacao = loc,
+            ReportadaEm      = DateTimeOffset.UtcNow,
+            Status           = DomainGlossary.StatusPessoaDesaparecida.Reportada
+        };
+    }
 }
 ```
 
-## SOS Location での適用方法
-- SOS Locationの災害ドメインにおけるユビキタス言語の定義 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 業務ルール、外部連携、UIを同じモジュールに混ぜる。
-- 責任者、境界、期待動作を明示しない。
+緊急対応コーディネーターが監査ログを読む：`"PessoaDesaparecida.Status が 'EmBusca' から 'Localizada' へ 14:32 に変更されました"`。ドキュメントを参照せずにフローを理解できる。同じコードを読んだ開発者は `StatusPessoaDesaparecida.Localizada` を見て、運用上で何が起きたかを正確に把握できる。
 
 ## 成功基準
-境界を説明し、契約をテストし、回帰を測定できれば十分成熟しています。
+
+技術的バックグラウンドのない緊急対応コーディネーターが、開発者の翻訳なしにスタックトレースや監査ログを読み、エラーが操作のどのフェーズで発生したかを特定できる。用語集が主要ドメインエンティティの100%をカバーしている。
+
+## SOS Locationとの関係
+
+災害ドメインには標準的なソフトウェア語彙に存在しない固有の用語がある。`PessoaDesaparecida` は異なるステータスを持つ `User` ではなく、`Address` ではなく `UltimaLocalizacao` を持つ。`AreaDeRisco` は `Category` ではなく、`NivelRisco` と `PoligonoGeografico` を持つ。ユビキタス言語こそが、SOS LocationをITと市民防衛の混成チームに理解可能にするものだ。
 '''

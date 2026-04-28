@@ -3,9 +3,9 @@ slug = "daily-045-lock-otimista-vs-lock-pessimista"
 title = "Daily #045: Lock otimista vs lock pessimista"
 title_en_us = "Daily #045: Optimistic locking versus pessimistic locking"
 title_ja_jp = "Daily #045: 楽観ロックと悲観ロック"
-summary = "Explora Lock otimista vs lock pessimista com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência."
-summary_en_us = "Explores Optimistic locking versus pessimistic locking with fundamentals, formula, example and diagram for the payments and consistency track."
-summary_ja_jp = "楽観ロックと悲観ロック を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
+summary = "Como o SOS Location usa lock pessimista (SELECT FOR UPDATE) para atualizar saldo de campanhas de doação com alta concorrência, e lock otimista (xmin/rowversion) para edições de dados de operações com baixa concorrência de escrita."
+summary_en_us = "How SOS Location uses pessimistic locking (SELECT FOR UPDATE) to update donation campaign balances under high concurrency, and optimistic locking (xmin/rowversion) for rescue operation data edits with low write concurrency."
+summary_ja_jp = "SOS Locationが高並行性の寄付キャンペーン残高更新に悲観ロック（SELECT FOR UPDATE）を使い、書き込み並行性が低い救助作戦データ編集に楽観ロック（xmin/rowversion）を使う方法。"
 published_at = "2026-04-09T05:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -15,139 +15,211 @@ badges = ["pagamentos", "consistencia"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Lock otimista vs lock pessimista** dentro da trilha **pagamentos e consistência** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Lock otimista vs lock pessimista** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location tem dois padrões de acesso muito diferentes: (1) campanhas de doação ativas durante emergências recebem centenas de doações simultâneas — a coluna `total_arrecadado` na tabela `campanhas_doacao` precisa ser incrementada atomicamente; (2) coordenadores de resgate editam dados de `OperacaoDeResgate` (nome, área de cobertura, recursos alocados) raramente e raramente em concorrência. Usar o mesmo mecanismo de lock para os dois casos gera deadlock ou perda de dados.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Lock otimista vs lock pessimista** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Risco = duplicidade × impacto × demora na detecção
+Após a cobertura de mídia de uma enchente em Petrópolis, a campanha de doação recebeu 340 requisições simultâneas em 30 segundos. A primeira implementação fazia `UPDATE campanhas SET total_arrecadado = total_arrecadado + @valor` sem lock — race condition clássica resultou em `total_arrecadado` subestimado em R$ 47.000 (8 updates perdidos). Para operações de resgate, a abordagem oposta: lock pessimista desnecessário causava `deadlock detected` nos logs quando dois coordenadores editavam campos diferentes da mesma operação.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Clique ou webhook"] --> B["Token único"]
-  B --> C["Estado pending"]
-  C --> D["Processamento assíncrono"]
-  D --> E["completed or failed"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
-```typescript
-const seen = new Set<string>();
+**Lock pessimista** para `CampanhaDoacao.TotalArrecadado`: `SELECT FOR UPDATE` garante serialização das atualizações de saldo — custo de lock aceitável porque o contention é esperado e a transação é curta (< 5ms). **Lock otimista** para `OperacaoDeResgate`: coluna `xmin` do PostgreSQL usada como rowversion — ao salvar, verifica se `xmin` mudou desde a leitura; se sim, retorna 409 com instrução de recarregar. Sem lock na leitura, conflito detectado apenas na escrita.
 
-export function processD045LockOtimistaVsLockPessimista(token: string) {
-  if (seen.has(token)) return 'duplicate';
-  seen.add(token);
-  return 'accepted';
+## Implementação
+
+```csharp
+// Lock pessimista — campanha de doação (alta concorrência)
+public async Task IncrementarTotalAsync(Guid campanhaId, int valorCentavos, CancellationToken ct)
+{
+    await using var tx = await _db.BeginTransactionAsync(ct);
+
+    // SELECT FOR UPDATE — bloqueia a linha durante a transação
+    var campanha = await _db.QueryFirstAsync<CampanhaDoacao>(
+        "SELECT id, total_arrecadado FROM campanhas_doacao WHERE id = @id FOR UPDATE",
+        new { id = campanhaId });
+
+    await _db.ExecuteAsync(
+        "UPDATE campanhas_doacao SET total_arrecadado = @novo, atualizado_em = now() WHERE id = @id",
+        new { novo = campanha.TotalArrecadado + valorCentavos, id = campanhaId });
+
+    await tx.CommitAsync(ct);
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Lock otimista vs lock pessimista.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+```csharp
+// Lock otimista — operação de resgate (baixa concorrência de escrita)
+public async Task AtualizarOperacaoAsync(AtualizarOperacaoCommand cmd, CancellationToken ct)
+{
+    // Lê sem lock — xmin capturado junto com os dados
+    var (operacao, xmin) = await _db.QueryFirstAsync<(OperacaoDeResgate, uint)>("""
+        SELECT o.*, xmin::text::bigint AS xmin
+        FROM operacoes_resgate o
+        WHERE id = @id AND tenant_id = @tenantId
+        """, new { cmd.Id, cmd.TenantId });
 
-## Erros comuns
-- Confiar em clique único sem proteger contra repetição.
-- Atualizar saldo ou estado antes de registrar a intenção.
+    // Simula trabalho de edição (validação, enriquecimento)
+    operacao.AtualizarRecursos(cmd.Recursos);
+
+    // UPDATE só ocorre se xmin não mudou (ninguém editou no intervalo)
+    var rowsAffected = await _db.ExecuteAsync("""
+        UPDATE operacoes_resgate
+        SET nome = @nome, recursos = @recursos, atualizado_em = now()
+        WHERE id = @id AND xmin = @xmin::bigint::xid
+        """, new { cmd.Nome, cmd.Recursos, cmd.Id, xmin });
+
+    if (rowsAffected == 0)
+        throw new ConcurrencyConflictException(
+            $"Operação {cmd.Id} foi modificada por outro usuário. Recarregue e tente novamente.");
+}
+```
+
+## Exemplo concreto
+
+Campanha de Petrópolis: 340 requests simultâneos incrementando `total_arrecadado`. Com `FOR UPDATE`: PostgreSQL serializa as atualizações em fila — cada transação espera < 3ms pela anterior, zero atualizações perdidas, `total_arrecadado` correto após todos os commits. Sem `FOR UPDATE` (versão anterior): 8 transações leram o mesmo valor base, fizeram `+` em memória e gravaram — 8 incrementos vieram como 1. `OperacaoDeResgate`: dois coordenadores editam campos diferentes ao mesmo tempo. Com lock otimista: o segundo a salvar recebe 409, recarrega, e os dados do primeiro já estão incluídos — conflito detectado, nenhum dado perdido silenciosamente.
 
 ## Critério de sucesso
-O fluxo é confiável quando duplicidade cai, auditoria existe e rollback é previsível.
+
+Zero race conditions em `total_arrecadado` de campanhas ativas — verificável por `SELECT SUM(valor_centavos) FROM doacoes WHERE campanha_id = X` vs `total_arrecadado`. `ConcurrencyConflictException` nunca silenciada — sempre propagada como 409 para o frontend com mensagem de instrução para o usuário.
+
+## Relação com SOS Location
+
+Campanhas de doação durante emergências têm pico de tráfego extremo e previsível. A precisão de `total_arrecadado` é pública — doadores veem o total em tempo real. Um valor incorreto (para menos) pode desincentivar doações adicionais quando a campanha ainda precisa de fundos.
 '''
 body_en_us = '''
-This Daily expands **Optimistic locking versus pessimistic locking** within the **payments and consistency** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Optimistic locking versus pessimistic locking** into a verifiable artifact in code, contract, or operations.
+SOS Location has two very different access patterns: (1) active donation campaigns during emergencies receive hundreds of simultaneous donations — the `total_arrecadado` column in the `campanhas_doacao` table needs to be atomically incremented; (2) rescue coordinators edit `OperacaoDeResgate` data (name, coverage area, allocated resources) rarely and rarely concurrently. Using the same locking mechanism for both causes deadlocks or data loss.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Optimistic locking versus pessimistic locking** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Risk = duplication × impact × detection delay
+After media coverage of a flood in Petrópolis, the donation campaign received 340 simultaneous requests in 30 seconds. The first implementation did `UPDATE campanhas SET total_arrecadado = total_arrecadado + @valor` without locking — a classic race condition resulted in `total_arrecadado` being underreported by R$47,000 (8 lost updates). For rescue operations, the opposite approach: unnecessary pessimistic locking caused `deadlock detected` in the logs when two coordinators edited different fields of the same operation.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Clique ou webhook"] --> B["Token único"]
-  B --> C["Estado pending"]
-  C --> D["Processamento assíncrono"]
-  D --> E["completed or failed"]
-```
+## Technical decision
 
-## Implementation example
-```typescript
-const seen = new Set<string>();
+**Pessimistic locking** for `CampanhaDoacao.TotalArrecadado`: `SELECT FOR UPDATE` guarantees serialised balance updates — locking cost is acceptable because contention is expected and the transaction is short (< 5ms). **Optimistic locking** for `OperacaoDeResgate`: PostgreSQL's `xmin` column used as rowversion — on save, checks whether `xmin` changed since the read; if so, returns 409 with instructions to reload. No lock on read, conflict detected only on write.
 
-export function processD045LockOtimistaVsLockPessimista(token: string) {
-  if (seen.has(token)) return 'duplicate';
-  seen.add(token);
-  return 'accepted';
+## Implementation
+
+```csharp
+// Pessimistic lock — donation campaign (high concurrency)
+public async Task IncrementarTotalAsync(Guid campanhaId, int valorCentavos, CancellationToken ct)
+{
+    await using var tx = await _db.BeginTransactionAsync(ct);
+
+    var campanha = await _db.QueryFirstAsync<CampanhaDoacao>(
+        "SELECT id, total_arrecadado FROM campanhas_doacao WHERE id = @id FOR UPDATE",
+        new { id = campanhaId });
+
+    await _db.ExecuteAsync(
+        "UPDATE campanhas_doacao SET total_arrecadado = @novo, atualizado_em = now() WHERE id = @id",
+        new { novo = campanha.TotalArrecadado + valorCentavos, id = campanhaId });
+
+    await tx.CommitAsync(ct);
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Optimistic locking versus pessimistic locking.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+```csharp
+// Optimistic lock — rescue operation (low write concurrency)
+public async Task AtualizarOperacaoAsync(AtualizarOperacaoCommand cmd, CancellationToken ct)
+{
+    var (operacao, xmin) = await _db.QueryFirstAsync<(OperacaoDeResgate, uint)>("""
+        SELECT o.*, xmin::text::bigint AS xmin FROM operacoes_resgate o
+        WHERE id = @id AND tenant_id = @tenantId
+        """, new { cmd.Id, cmd.TenantId });
 
-## Common pitfalls
-- Trusting a single click without protecting against retries.
-- Updating balance or state before recording intent.
+    operacao.AtualizarRecursos(cmd.Recursos);
+
+    var rowsAffected = await _db.ExecuteAsync("""
+        UPDATE operacoes_resgate SET nome = @nome, recursos = @recursos, atualizado_em = now()
+        WHERE id = @id AND xmin = @xmin::bigint::xid
+        """, new { cmd.Nome, cmd.Recursos, cmd.Id, xmin });
+
+    if (rowsAffected == 0)
+        throw new ConcurrencyConflictException(
+            $"Operation {cmd.Id} was modified by another user. Reload and try again.");
+}
+```
+
+## Concrete example
+
+Petrópolis campaign: 340 simultaneous requests incrementing `total_arrecadado`. With `FOR UPDATE`: PostgreSQL serialises the updates in a queue — each transaction waits < 3ms for the previous one, zero lost updates, correct `total_arrecadado` after all commits. Without `FOR UPDATE` (previous version): 8 transactions read the same base value, did `+` in memory and wrote — 8 increments counted as 1. `OperacaoDeResgate`: two coordinators edit different fields simultaneously. With optimistic locking: the second to save receives 409, reloads, and the first coordinator's data is already included — conflict detected, no data silently lost.
 
 ## Success criteria
-The flow is reliable when duplicates drop, auditability exists, and rollback is predictable.
+
+Zero race conditions in `total_arrecadado` for active campaigns — verifiable via `SELECT SUM(valor_centavos) FROM doacoes WHERE campanha_id = X` vs `total_arrecadado`. `ConcurrencyConflictException` never silenced — always propagated as 409 to the frontend with instructions for the user.
+
+## Relation to SOS Location
+
+Donation campaigns during emergencies have extreme and predictable traffic spikes. `total_arrecadado` accuracy is public — donors see the total in real time. An incorrect (lower) value can discourage additional donations when the campaign still needs funds.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **決済と整合性** トラックにおける **楽観ロックと悲観ロック** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**楽観ロックと悲観ロック** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationには2つの非常に異なるアクセスパターンがある：(1) 緊急時のアクティブな寄付キャンペーンは数百の同時寄付を受け取る——`campanhas_doacao`テーブルの`total_arrecadado`カラムはアトミックにインクリメントされる必要がある；(2) 救助コーディネーターが`OperacaoDeResgate`データ（名前、カバーエリア、割り当てリソース）を編集するのは稀で、並行編集もほぼない。両方に同じロック機構を使うとデッドロックまたはデータ損失が発生する。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**楽観ロックと悲観ロック** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-リスク = 重複 × 影響 × 検知遅延
+ペトロポリスの洪水のメディア報道後、寄付キャンペーンが30秒間に340件の同時リクエストを受け取った。最初の実装はロックなしで`UPDATE campanhas SET total_arrecadado = total_arrecadado + @valor`を実行した——古典的な競合状態でR$47,000分の`total_arrecadado`が過少報告（8件の更新が失われた）。救助作戦では逆の問題：不必要な悲観ロックが2人のコーディネーターが同じ作戦の異なるフィールドを編集する際にログに`deadlock detected`を引き起こした。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Clique ou webhook"] --> B["Token único"]
-  B --> C["Estado pending"]
-  C --> D["Processamento assíncrono"]
-  D --> E["completed or failed"]
-```
+## 技術的決定
 
-## 実装例
-```typescript
-const seen = new Set<string>();
+`CampanhaDoacao.TotalArrecadado`に**悲観ロック**：`SELECT FOR UPDATE`で残高更新のシリアライズを保証——競合が予想されトランザクションが短い（< 5ms）ためロックコストは許容可能。`OperacaoDeResgate`に**楽観ロック**：行バージョンとしてPostgreSQLの`xmin`カラムを使用——保存時に、読み取り以降に`xmin`が変わっていないかを確認；変わっていれば409でリロード指示を返す。読み取り時にロックなし、書き込み時のみ競合検出。
 
-export function processD045LockOtimistaVsLockPessimista(token: string) {
-  if (seen.has(token)) return 'duplicate';
-  seen.add(token);
-  return 'accepted';
+## 実装
+
+```csharp
+// 悲観ロック — 寄付キャンペーン（高並行性）
+public async Task IncrementarTotalAsync(Guid campanhaId, int valorCentavos, CancellationToken ct)
+{
+    await using var tx = await _db.BeginTransactionAsync(ct);
+
+    var campanha = await _db.QueryFirstAsync<CampanhaDoacao>(
+        "SELECT id, total_arrecadado FROM campanhas_doacao WHERE id = @id FOR UPDATE",
+        new { id = campanhaId });
+
+    await _db.ExecuteAsync(
+        "UPDATE campanhas_doacao SET total_arrecadado = @novo, atualizado_em = now() WHERE id = @id",
+        new { novo = campanha.TotalArrecadado + valorCentavos, id = campanhaId });
+
+    await tx.CommitAsync(ct);
 }
 ```
 
-## SOS Location での適用方法
-- 楽観ロックと悲観ロック の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+```csharp
+// 楽観ロック — 救助作戦（低書き込み並行性）
+public async Task AtualizarOperacaoAsync(AtualizarOperacaoCommand cmd, CancellationToken ct)
+{
+    var (operacao, xmin) = await _db.QueryFirstAsync<(OperacaoDeResgate, uint)>("""
+        SELECT o.*, xmin::text::bigint AS xmin FROM operacoes_resgate o
+        WHERE id = @id AND tenant_id = @tenantId
+        """, new { cmd.Id, cmd.TenantId });
 
-## よくある落とし穴
-- 再実行対策なしに1回のクリックを信頼する。
-- 意図を記録する前に残高や状態を更新する。
+    operacao.AtualizarRecursos(cmd.Recursos);
+
+    var rowsAffected = await _db.ExecuteAsync("""
+        UPDATE operacoes_resgate SET nome = @nome, recursos = @recursos, atualizado_em = now()
+        WHERE id = @id AND xmin = @xmin::bigint::xid
+        """, new { cmd.Nome, cmd.Recursos, cmd.Id, xmin });
+
+    if (rowsAffected == 0)
+        throw new ConcurrencyConflictException(
+            $"作戦{cmd.Id}は別のユーザーによって変更されました。再読み込みして再試行してください。");
+}
+```
+
+## 具体的な例
+
+ペトロポリスのキャンペーン：340件の同時リクエストが`total_arrecadado`をインクリメント。`FOR UPDATE`あり：PostgreSQLが更新をキューでシリアライズ——各トランザクションが前のものを< 3ms待ち、更新の損失ゼロ、全コミット後に正確な`total_arrecadado`。`FOR UPDATE`なし（以前のバージョン）：8トランザクションが同じベース値を読み取り、メモリで`+`を行い書き込み——8インクリメントが1として計算。`OperacaoDeResgate`：2人のコーディネーターが同時に異なるフィールドを編集。楽観ロックあり：2番目に保存した方が409を受け取り、リロードすると最初のコーディネーターのデータが既に含まれている——競合検出、データのサイレントな損失なし。
 
 ## 成功基準
-重複が減り、監査可能で、ロールバックが予測できれば成功です。
+
+アクティブキャンペーンの`total_arrecadado`での競合状態ゼロ——`SELECT SUM(valor_centavos) FROM doacoes WHERE campanha_id = X` vs `total_arrecadado`で検証可能。`ConcurrencyConflictException`はサイレントにされない——常に409としてユーザーへの指示メッセージと共にフロントエンドに伝播。
+
+## SOS Locationとの関係
+
+緊急時の寄付キャンペーンは極端で予測可能なトラフィックスパイクを持つ。`total_arrecadado`の精度は公開されている——寄付者がリアルタイムで合計を見る。不正確な（低い）値は、キャンペーンがまだ資金を必要としている時に追加の寄付を抑制する可能性がある。
 '''

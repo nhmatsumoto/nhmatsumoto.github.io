@@ -3,145 +3,282 @@ slug = "daily-019-estrutura-de-processamento-batch-para-simulacoes"
 title = "Daily #019: Estrutura de processamento batch para simulações"
 title_en_us = "Daily #019: Batch processing structure for simulations"
 title_ja_jp = "Daily #019: シミュレーション向けバッチ処理構造"
-summary = "Explora Estrutura de processamento batch para simulações com fundamentos, fórmula, exemplo e diagrama para a trilha produto e visão."
-summary_en_us = "Explores Batch processing structure for simulations with fundamentals, formula, example and diagram for the product and vision track."
-summary_ja_jp = "シミュレーション向けバッチ処理構造 を、基礎、数式、例、図とともに プロダクトとビジョン トラック向けに整理します。"
+summary = "Como o SOS Location usa Hangfire com 8 workers para rodar 150 simulações noturnas de inundação em 50 zonas, com agendamento shortest-first, idempotência por chave e reprocessamento automático de falhas."
+summary_en_us = "How SOS Location uses Hangfire with 8 workers to run 150 nightly flood simulations across 50 zones, with shortest-first scheduling, idempotency keys and automatic failure reprocessing."
+summary_ja_jp = "SOS LocationがHangfireの8ワーカーを使って50ゾーンで150件の夜間洪水シミュレーションを実行する方法——最短優先スケジュール・冪等性キー・自動障害再処理付き。"
 published_at = "2026-04-08T03:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
 tags = ["sos-location", "daily", "ia", "simulacao", "dados"]
-badges = ["ia", "dados"]
+badges = ["ia", "simulacao"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Estrutura de processamento batch para simulações** dentro da trilha **produto e visão** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Estrutura de processamento batch para simulações** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location roda simulações de enchente para 50 municípios prioritários toda noite entre 01h e 05h. Cada município tem 1–5 zonas monitoradas, cada zona tem 3 cenários de precipitação (esperado, pessimista, extremo). Total: ~150 simulações por ciclo noturno. O resultado atualiza os `NivelRisco` base de cada `AreaDeRisco` para o dia seguinte. Se o batch falhar silenciosamente, o SOS Location inicia o dia com dados de risco desatualizados.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Estrutura de processamento batch para simulações** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Impacto = alcance × confiança × prontidão
+A primeira versão usava `IHostedService` com loop simples. Problemas: (1) sem visibilidade — quando o processo morria às 2h da manhã, a equipe só descobria às 8h; (2) sem retry automático — uma falha de rede momentânea descartava a simulação inteira; (3) sem controle de concorrência — em cenários de restart, a mesma simulação rodava duas vezes e gravava resultados duplicados no banco; (4) sem priorização — simulações de 2 horas (municípios grandes) e de 5 minutos (municípios pequenos) disputavam workers em igualdade, atrasando as rápidas.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Necessidade"] --> B["Proposta de valor"]
-  B --> C["Entrega"]
-  C --> D["Medição pública"]
-  D --> E["Ajuste de rota"]
+## Decisão técnica
+
+Hangfire com SQL Server como backend de persistência. 8 workers paralelos. Job de enfileiramento `EnqueueNightlySimulacoesJob` roda às 01h via cron. Cada simulação individual é um job Hangfire com chave de idempotência `sim:{municipioId}:{data}:{cenario}`. Shortest-first: simulações estimadas em < 30 minutos entram na fila `fast`, demais entram em `default`. Dashboard Hangfire na rota `/hangfire` com autenticação de role `Admin`.
+
+## Implementação
+
+```csharp
+// SosLocation.Infrastructure/Jobs/EnqueueNightlySimulacoesJob.cs
+[AutomaticRetry(Attempts = 0)] // job de enfileiramento não tem retry próprio
+public sealed class EnqueueNightlySimulacoesJob
+{
+    private readonly IAreaDeRiscoRepository _areas;
+    private readonly IBackgroundJobClient   _jobs;
+
+    [JobDisplayName("Enfileirar simulações noturnas")]
+    public async Task ExecuteAsync()
+    {
+        var areas = await _areas.ListarAtivas();
+        var data  = DateOnly.FromDateTime(DateTime.Today);
+
+        foreach (var area in areas)
+        {
+            var cenarios = new[] { "esperado", "pessimista", "extremo" };
+            foreach (var cenario in cenarios)
+            {
+                var idempotencyKey = $"sim:{area.MunicipioId}:{data}:{cenario}";
+                var queue = area.EstimativaMinutos < 30 ? "fast" : "default";
+
+                _jobs.Enqueue<SimulacaoEnchenteBatchJob>(
+                    queue,
+                    job => job.ExecuteAsync(area.Id, cenario, idempotencyKey));
+            }
+        }
+    }
+}
+
+// SosLocation.Infrastructure/Jobs/SimulacaoEnchenteBatchJob.cs
+[AutomaticRetry(Attempts = 3, DelaysInSeconds = new[] { 60, 300, 900 })]
+public sealed class SimulacaoEnchenteBatchJob
+{
+    private readonly ISimulacaoService _simulacao;
+    private readonly IDbConnection     _db;
+
+    public async Task ExecuteAsync(
+        Guid areaId, string cenario, string idempotencyKey)
+    {
+        // Previne execução duplicada por restart ou retry em job já concluído
+        var existe = await _db.ExecuteScalarAsync<bool>(
+            "SELECT EXISTS(SELECT 1 FROM simulacao_log WHERE idempotency_key = @key)",
+            new { key = idempotencyKey });
+
+        if (existe) return;
+
+        var resultado = await _simulacao.SimularAsync(areaId, cenario);
+
+        await _db.ExecuteAsync("""
+            INSERT INTO simulacao_log (idempotency_key, area_id, cenario, nivel_risco, executado_em)
+            VALUES (@key, @areaId, @cenario, @nivelRisco, now())
+            ON CONFLICT (idempotency_key) DO NOTHING;
+            """,
+            new { key = idempotencyKey, areaId, cenario, nivelRisco = resultado.NivelRisco });
+    }
+}
 ```
 
-## Exemplo de implementação
-```typescript
-export const D019EstruturaDeProcessamentoBatchPCapability = {
-  name: 'D019EstruturaDeProcessamentoBatchP',
-  status: 'planned',
-  owner: 'product',
-};
+```csharp
+// Program.cs — registro
+builder.Services.AddHangfire(cfg => cfg
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseSqlServerStorage(connectionString));
+
+builder.Services.AddHangfireServer(opts =>
+{
+    opts.WorkerCount = 8;
+    opts.Queues      = new[] { "fast", "default" };
+});
+
+// Cron diário às 01:00 (horário de Brasília = UTC-3)
+RecurringJob.AddOrUpdate<EnqueueNightlySimulacoesJob>(
+    "nightly-simulations",
+    job => job.ExecuteAsync(),
+    "0 4 * * *");    // 01h Brasília = 04h UTC
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Estrutura de processamento batch para simulações.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Prometer valor sem um caminho operacional claro.
-- Medir só entrega e ignorar confiança ou transparência.
+Ciclo noturno de 2026-04-15: 148 jobs enfileirados (2 zonas inativas excluídas). Fila `fast`: 89 jobs (estimativa < 30 min). Fila `default`: 59 jobs. Duração total do batch: 2h 14min com 8 workers. 3 jobs falharam na primeira tentativa por timeout de banco às 02h17 — reprocessados automaticamente com delay de 60s, todos concluídos na segunda tentativa. 0 duplicações detectadas (verificação por `idempotency_key`). Dados de risco do dia disponíveis às 03h22.
 
 ## Critério de sucesso
-O produto evolui bem quando o impacto é visível e explicável para qualquer equipe.
+
+100% das 150 simulações noturnas concluídas antes das 05h00 em condições normais. Zero duplicações de resultado para a mesma `(areaId, data, cenario)`. Taxa de sucesso após retries ≥ 99.5% medida em 30 dias consecutivos. Alerta Slack quando batch completo com > 5 falhas não recuperadas.
+
+## Relação com SOS Location
+
+Os `NivelRisco` base de cada `AreaDeRisco` que os coordenadores veem na abertura do turno manhã são o produto desse batch. Um batch que falha silenciosamente em 20% das zonas é mais perigoso que um batch que falha completamente — porque dá falsa sensação de cobertura. A idempotência e o dashboard Hangfire existem para tornar falhas visíveis e recuperáveis.
 '''
 body_en_us = '''
-This Daily expands **Batch processing structure for simulations** within the **product and vision** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Batch processing structure for simulations** into a verifiable artifact in code, contract, or operations.
+SOS Location runs flood simulations for 50 priority municipalities every night between 01:00 and 05:00. Each municipality has 1–5 monitored zones, and each zone has 3 precipitation scenarios (expected, pessimistic, extreme). Total: ~150 simulations per nightly cycle. The results update the base `NivelRisco` of each `AreaDeRisco` for the following day. If the batch fails silently, SOS Location starts the day with outdated risk data.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Batch processing structure for simulations** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Impact = reach × trust × readiness
+The first version used `IHostedService` with a simple loop. Problems: (1) no visibility — when the process died at 2 am, the team only found out at 8 am; (2) no automatic retry — a momentary network failure discarded the entire simulation; (3) no concurrency control — on restart scenarios, the same simulation ran twice and wrote duplicate results to the database; (4) no prioritisation — 2-hour simulations (large municipalities) and 5-minute simulations (small municipalities) competed for workers equally, delaying the fast ones.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Necessidade"] --> B["Proposta de valor"]
-  B --> C["Entrega"]
-  C --> D["Medição pública"]
-  D --> E["Ajuste de rota"]
+## Technical decision
+
+Hangfire with SQL Server as the persistence backend. 8 parallel workers. `EnqueueNightlySimulacoesJob` enqueuing job runs at 01:00 via cron. Each individual simulation is a Hangfire job with idempotency key `sim:{municipioId}:{date}:{scenario}`. Shortest-first: simulations estimated at < 30 minutes go to the `fast` queue, the rest to `default`. Hangfire dashboard at `/hangfire` with `Admin` role authentication.
+
+## Implementation
+
+```csharp
+[AutomaticRetry(Attempts = 0)]
+public sealed class EnqueueNightlySimulacoesJob
+{
+    public async Task ExecuteAsync()
+    {
+        var areas = await _areas.ListarAtivas();
+        var data  = DateOnly.FromDateTime(DateTime.Today);
+
+        foreach (var area in areas)
+        {
+            foreach (var cenario in new[] { "esperado", "pessimista", "extremo" })
+            {
+                var key   = $"sim:{area.MunicipioId}:{data}:{cenario}";
+                var queue = area.EstimativaMinutos < 30 ? "fast" : "default";
+                _jobs.Enqueue<SimulacaoEnchenteBatchJob>(
+                    queue, job => job.ExecuteAsync(area.Id, cenario, key));
+            }
+        }
+    }
+}
+
+[AutomaticRetry(Attempts = 3, DelaysInSeconds = new[] { 60, 300, 900 })]
+public sealed class SimulacaoEnchenteBatchJob
+{
+    public async Task ExecuteAsync(Guid areaId, string cenario, string idempotencyKey)
+    {
+        var existe = await _db.ExecuteScalarAsync<bool>(
+            "SELECT EXISTS(SELECT 1 FROM simulacao_log WHERE idempotency_key = @key)",
+            new { key = idempotencyKey });
+
+        if (existe) return;
+
+        var resultado = await _simulacao.SimularAsync(areaId, cenario);
+
+        await _db.ExecuteAsync("""
+            INSERT INTO simulacao_log (idempotency_key, area_id, cenario, nivel_risco, executado_em)
+            VALUES (@key, @areaId, @cenario, @nivelRisco, now())
+            ON CONFLICT (idempotency_key) DO NOTHING;
+            """,
+            new { key = idempotencyKey, areaId, cenario, nivelRisco = resultado.NivelRisco });
+    }
+}
 ```
 
-## Implementation example
-```typescript
-export const D019EstruturaDeProcessamentoBatchPCapability = {
-  name: 'D019EstruturaDeProcessamentoBatchP',
-  status: 'planned',
-  owner: 'product',
-};
+```csharp
+// Cron: 01:00 Brasília = 04:00 UTC
+RecurringJob.AddOrUpdate<EnqueueNightlySimulacoesJob>(
+    "nightly-simulations",
+    job => job.ExecuteAsync(),
+    "0 4 * * *");
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Batch processing structure for simulations.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Promising value without a clear operational path.
-- Measuring delivery only and ignoring trust or transparency.
+Nightly cycle of 2026-04-15: 148 jobs enqueued (2 inactive zones excluded). `fast` queue: 89 jobs (estimate < 30 min). `default` queue: 59 jobs. Total batch duration: 2h 14min with 8 workers. 3 jobs failed on first attempt due to a database timeout at 02:17 — automatically reprocessed with 60s delay, all completed on the second attempt. 0 duplications detected (verified by `idempotency_key`). Day's risk data available at 03:22.
 
 ## Success criteria
-The product evolves well when impact is visible and explainable to any team.
+
+100% of 150 nightly simulations completed before 05:00 under normal conditions. Zero result duplications for the same `(areaId, date, scenario)`. Success rate after retries ≥ 99.5% measured over 30 consecutive days. Slack alert when the batch completes with > 5 unrecovered failures.
+
+## Relation to SOS Location
+
+The base `NivelRisco` of each `AreaDeRisco` that coordinators see at the start of the morning shift is the product of this batch. A batch that silently fails in 20% of zones is more dangerous than one that fails completely — because it gives a false sense of coverage. Idempotency and the Hangfire dashboard exist to make failures visible and recoverable.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **プロダクトとビジョン** トラックにおける **シミュレーション向けバッチ処理構造** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**シミュレーション向けバッチ処理構造** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationは毎晩01時から05時の間に50の優先市町村の洪水シミュレーションを実行する。各市町村には1〜5の監視ゾーンがあり、各ゾーンには3つの降水シナリオ（予想・悲観・極端）がある。合計：夜間サイクルあたり約150のシミュレーション。結果は翌日の各`AreaDeRisco`の基準`NivelRisco`を更新する。バッチがサイレントに失敗すると、SOS Locationは古いリスクデータで1日を開始する。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**シミュレーション向けバッチ処理構造** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-インパクト = 到達範囲 × 信頼 × 準備度
+最初のバージョンはシンプルなループを持つ`IHostedService`を使っていた。問題：(1) 可視性なし——プロセスが午前2時に死ぬと、チームは8時まで気づかない；(2) 自動リトライなし——瞬間的なネットワーク障害でシミュレーション全体が破棄される；(3) 同時実行制御なし——再起動シナリオで同じシミュレーションが2回実行され、重複結果がデータベースに書き込まれる；(4) 優先順位付けなし——2時間のシミュレーション（大きな市町村）と5分のシミュレーション（小さな市町村）が等しくワーカーを競い合い、速いものを遅らせる。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Necessidade"] --> B["Proposta de valor"]
-  B --> C["Entrega"]
-  C --> D["Medição pública"]
-  D --> E["Ajuste de rota"]
+## 技術的決定
+
+SQL Serverを永続化バックエンドとするHangfire。8つの並列ワーカー。`EnqueueNightlySimulacoesJob`エンキュージョブはcronで01:00に実行。各個別シミュレーションは冪等性キー`sim:{municipioId}:{date}:{scenario}`を持つHangfireジョブ。最短優先：30分未満と推定されるシミュレーションは`fast`キューに、残りは`default`に入る。Hangfireダッシュボードは`/hangfire`ルートに`Admin`ロール認証付き。
+
+## 実装
+
+```csharp
+[AutomaticRetry(Attempts = 0)]
+public sealed class EnqueueNightlySimulacoesJob
+{
+    public async Task ExecuteAsync()
+    {
+        var areas = await _areas.ListarAtivas();
+        var data  = DateOnly.FromDateTime(DateTime.Today);
+
+        foreach (var area in areas)
+        {
+            foreach (var cenario in new[] { "esperado", "pessimista", "extremo" })
+            {
+                var key   = $"sim:{area.MunicipioId}:{data}:{cenario}";
+                var queue = area.EstimativaMinutos < 30 ? "fast" : "default";
+                _jobs.Enqueue<SimulacaoEnchenteBatchJob>(
+                    queue, job => job.ExecuteAsync(area.Id, cenario, key));
+            }
+        }
+    }
+}
+
+[AutomaticRetry(Attempts = 3, DelaysInSeconds = new[] { 60, 300, 900 })]
+public sealed class SimulacaoEnchenteBatchJob
+{
+    public async Task ExecuteAsync(Guid areaId, string cenario, string idempotencyKey)
+    {
+        var existe = await _db.ExecuteScalarAsync<bool>(
+            "SELECT EXISTS(SELECT 1 FROM simulacao_log WHERE idempotency_key = @key)",
+            new { key = idempotencyKey });
+
+        if (existe) return;
+
+        var resultado = await _simulacao.SimularAsync(areaId, cenario);
+
+        await _db.ExecuteAsync("""
+            INSERT INTO simulacao_log (idempotency_key, area_id, cenario, nivel_risco, executado_em)
+            VALUES (@key, @areaId, @cenario, @nivelRisco, now())
+            ON CONFLICT (idempotency_key) DO NOTHING;
+            """,
+            new { key = idempotencyKey, areaId, cenario, nivelRisco = resultado.NivelRisco });
+    }
+}
 ```
 
-## 実装例
-```typescript
-export const D019EstruturaDeProcessamentoBatchPCapability = {
-  name: 'D019EstruturaDeProcessamentoBatchP',
-  status: 'planned',
-  owner: 'product',
-};
+```csharp
+// Cron：01:00 ブラジリア = 04:00 UTC
+RecurringJob.AddOrUpdate<EnqueueNightlySimulacoesJob>(
+    "nightly-simulations",
+    job => job.ExecuteAsync(),
+    "0 4 * * *");
 ```
 
-## SOS Location での適用方法
-- シミュレーション向けバッチ処理構造 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 運用の道筋なしに価値を約束する。
-- 提供量だけを測り、信頼や透明性を無視する。
+2026-04-15の夜間サイクル：148ジョブをエンキュー（2つの非アクティブゾーンを除外）。`fast`キュー：89ジョブ（推定 < 30分）。`default`キュー：59ジョブ。8ワーカーでのバッチ総時間：2時間14分。02:17のデータベースタイムアウトで3ジョブが初回試行で失敗——60秒の遅延で自動再処理、すべてが2回目の試行で完了。0件の重複検出（`idempotency_key`で確認）。当日のリスクデータは03:22に利用可能。
 
 ## 成功基準
-どのチームにも影響が見えて説明できれば、プロダクトは順調に進化しています。
+
+通常条件下で150件の夜間シミュレーション100%が05:00前に完了。同じ`(areaId, date, scenario)`に対するゼロ重複結果。30日連続で測定したリトライ後の成功率 ≥ 99.5%。5件以上の未回復障害でバッチ完了時にSlackアラート。
+
+## SOS Locationとの関係
+
+コーディネーターが朝番開始時に見る各`AreaDeRisco`の基準`NivelRisco`は、このバッチの産物だ。20%のゾーンでサイレントに失敗するバッチは、完全に失敗するバッチより危険だ——偽のカバレッジ感を与えるから。冪等性とHangfireダッシュボードは障害を可視化して回復可能にするために存在する。
 '''

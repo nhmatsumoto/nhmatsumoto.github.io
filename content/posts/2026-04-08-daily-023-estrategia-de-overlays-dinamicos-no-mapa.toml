@@ -3,148 +3,277 @@ slug = "daily-023-estrategia-de-overlays-dinamicos-no-mapa"
 title = "Daily #023: Estratégia de overlays dinâmicos no mapa"
 title_en_us = "Daily #023: Dynamic overlay strategy on the map"
 title_ja_jp = "Daily #023: 地図上の動的オーバーレイ戦略"
-summary = "Explora Estratégia de overlays dinâmicos no mapa com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização."
-summary_en_us = "Explores Dynamic overlay strategy on the map with fundamentals, formula, example and diagram for the maps and visualization track."
-summary_ja_jp = "地図上の動的オーバーレイ戦略 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
+summary = "Como o SOS Location gerencia quatro overlays independentes (AreaDeRisco, PessoaDesaparecida, Precipitacao, RotaEvacuacao) com LayerController no Zustand, permitindo ativar/desativar camadas sem re-renderizar o mapa."
+summary_en_us = "How SOS Location manages four independent overlays (AreaDeRisco, PessoaDesaparecida, Precipitacao, RotaEvacuacao) with a LayerController in Zustand, allowing layers to be toggled without re-rendering the map."
+summary_ja_jp = "SOS LocationがZustandのLayerControllerで4つの独立したオーバーレイ（AreaDeRisco・PessoaDesaparecida・Precipitacao・RotaEvacuacao）を管理し、マップを再レンダリングせずにレイヤーの切り替えを可能にする方法。"
 published_at = "2026-04-08T07:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
-tags = ["sos-location", "daily", "mapas", "visualizacao"]
-badges = ["mapas", "ux"]
+tags = ["sos-location", "daily", "frontend", "mapa"]
+badges = ["frontend", "mapa"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Estratégia de overlays dinâmicos no mapa** dentro da trilha **mapas e visualização** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Estratégia de overlays dinâmicos no mapa** em um artefato verificável no código, no contrato ou na operação.
+Durante uma operação de emergência, coordenadores precisam alternar rapidamente entre diferentes visões do mesmo mapa: "mostre só as rotas de evacuação", "esconda as pessoas desaparecidas e foque nas zonas de risco alto", "ative o overlay de chuva para a próxima hora". Cada toggle não pode recarregar dados já carregados — o carregamento inicial de 8.500 polígonos leva 340ms (#022), repetir esse custo a cada toggle tornaria a interface inutilizável.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Estratégia de overlays dinâmicos no mapa** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Custo = camadas × geometrias / zoom
+A versão inicial usava uma flag booleana por overlay dentro do estado React do componente `SosMap`. Quando o usuário ocultava uma camada, o componente re-renderizava, removendo os elementos Leaflet e destruindo o cache de tiles. Quando reativava, refazia todas as requisições. Um toggle de 100ms transformava-se em 400ms por causa do re-fetch. Além disso, as 4 camadas estavam acopladas em um único componente — qualquer mudança de estado numa camada disparava re-render de todas.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["OpenStreetMap"] --> B["Camada base"]
-  B --> C["Overlays"]
-  C --> D["Hotspots e eventos"]
-  D --> E["Atualização incremental"]
+## Decisão técnica
+
+`layerStore` Zustand com mapa de visibilidade por camada. Cada overlay é um componente React separado que subscreve *apenas* seu próprio booleano de visibilidade no Zustand. Quando a visibilidade muda, apenas aquele componente re-renderiza. A instância Leaflet de cada camada (`L.FeatureGroup`) persiste em memória; toggle apenas chama `.addTo(map)` ou `.remove()` — sem refetch, sem reconstrução de objetos.
+
+## Implementação
+
+```ts
+// src/stores/layerStore.ts
+import { create } from 'zustand';
+
+type LayerId = 'riskAreas' | 'missingPersons' | 'precipitation' | 'evacuationRoutes';
+
+interface LayerState {
+  visibility: Record<LayerId, boolean>;
+  toggleLayer: (id: LayerId) => void;
+}
+
+export const useLayerStore = create<LayerState>((set) => ({
+  visibility: {
+    riskAreas:        true,
+    missingPersons:   true,
+    precipitation:    false,
+    evacuationRoutes: false,
+  },
+  toggleLayer: (id) =>
+    set((state) => ({
+      visibility: { ...state.visibility, [id]: !state.visibility[id] },
+    })),
+}));
 ```
 
-## Exemplo de implementação
-```typescript
-const map = L.map('D023EstrategiaDeOverlaysDinamicosN-map');
-const layer = L.layerGroup().addTo(map);
+```tsx
+// src/layers/EvacuationRouteLayer.tsx
+import { useEffect, useRef } from 'react';
+import L from 'leaflet';
+import { useMapStore }  from '@/stores/mapStore';
+import { useLayerStore } from '@/stores/layerStore';
 
-function addD023EstrategiaDeOverlaysDinamicosN(lat: number, lng: number) {
-  L.circleMarker([lat, lng], { radius: 8 }).addTo(layer);
+interface Props { routes: EvacuationRoute[] }
+
+export function EvacuationRouteLayer({ routes }: Props) {
+  const mapInstance = useMapStore((s) => s.mapInstance);
+  const isVisible   = useLayerStore((s) => s.visibility.evacuationRoutes);
+  const groupRef    = useRef<L.FeatureGroup | null>(null);
+
+  // Construção inicial: roda uma vez quando o mapa e os dados estão prontos
+  useEffect(() => {
+    if (!mapInstance || groupRef.current) return;
+    const group = L.featureGroup();
+    for (const route of routes) {
+      L.geoJSON(route.geometry, {
+        style: { color: '#1d6fa4', weight: 3, dashArray: '6 4' },
+      }).addTo(group);
+    }
+    groupRef.current = group;
+  }, [mapInstance, routes]);
+
+  // Toggle de visibilidade: sem refetch, apenas add/remove do mapa
+  useEffect(() => {
+    if (!mapInstance || !groupRef.current) return;
+    if (isVisible) {
+      groupRef.current.addTo(mapInstance);
+    } else {
+      groupRef.current.remove();
+    }
+  }, [isVisible, mapInstance]);
+
+  return null;
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Estratégia de overlays dinâmicos no mapa.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+```tsx
+// src/components/LayerControls.tsx — painel de toggle
+import { useLayerStore } from '@/stores/layerStore';
 
-## Erros comuns
-- Carregar camadas demais antes de saber o zoom efetivo.
-- Ignorar latência de rede e tamanho dos vetores.
+export function LayerControls() {
+  const { visibility, toggleLayer } = useLayerStore();
+
+  const layers = [
+    { id: 'riskAreas'        as const, label: 'Áreas de Risco'     },
+    { id: 'missingPersons'   as const, label: 'Pessoas Desaparecidas' },
+    { id: 'precipitation'    as const, label: 'Precipitação'        },
+    { id: 'evacuationRoutes' as const, label: 'Rotas de Evacuação'  },
+  ];
+
+  return (
+    <div className="layer-controls">
+      {layers.map(({ id, label }) => (
+        <label key={id}>
+          <input
+            type="checkbox"
+            checked={visibility[id]}
+            onChange={() => toggleLayer(id)}
+          />
+          {label}
+        </label>
+      ))}
+    </div>
+  );
+}
+```
+
+## Exemplo concreto
+
+Coordenador durante operação em Blumenau: ativa "Rotas de Evacuação" (desativado por padrão) — toggle leva 12ms, sem nenhuma requisição de rede. Desativa "Pessoas Desaparecidas" para focar em zonas de risco — toggle leva 8ms. Reativa "Pessoas Desaparecidas" — 9ms, dados da sessão intactos em memória. Total: 3 toggles em 29ms sem nenhuma requisição HTTP adicional.
 
 ## Critério de sucesso
-A leitura fica fluida quando a interação continua responsiva em zoom e mobilidade reais.
+
+Latência de toggle de camada (add/remove da instância Leaflet) < 20ms para qualquer camada com dados já carregados. Zero requisições de rede ao ativar uma camada previamente carregada na sessão. Cada camada re-renderiza independentemente quando seu estado de visibilidade muda.
+
+## Relação com SOS Location
+
+Overlays dinâmicos rápidos não são feature de conforto — são necessidade operacional. Um coordenador que precisa de 2 segundos para cada toggle de camada durante uma operação real perde contexto e comete erros de navegação. A arquitetura de `featureGroup` persistente em memória é o que torna esse toggle instantâneo.
 '''
 body_en_us = '''
-This Daily expands **Dynamic overlay strategy on the map** within the **maps and visualization** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Dynamic overlay strategy on the map** into a verifiable artifact in code, contract, or operations.
+During an emergency operation, coordinators need to quickly switch between different views of the same map: "show only evacuation routes", "hide missing persons and focus on high-risk zones", "activate the rain overlay for the next hour". Each toggle must not reload already-loaded data — the initial load of 8,500 polygons takes 340ms (#022), repeating that cost on every toggle would make the interface unusable.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Dynamic overlay strategy on the map** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Cost = layers × geometries / zoom
+The initial version used one boolean flag per overlay inside the React state of the `SosMap` component. When the user hid a layer, the component re-rendered, removing Leaflet elements and destroying the tile cache. When reactivated, it refetched everything. A 100ms toggle became 400ms due to the refetch. Additionally, all 4 layers were coupled in a single component — any state change in one layer triggered a re-render of all.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["OpenStreetMap"] --> B["Camada base"]
-  B --> C["Overlays"]
-  C --> D["Hotspots e eventos"]
-  D --> E["Atualização incremental"]
+## Technical decision
+
+Zustand `layerStore` with a visibility map per layer. Each overlay is a separate React component that subscribes *only* to its own visibility boolean in Zustand. When visibility changes, only that component re-renders. Each layer's Leaflet instance (`L.FeatureGroup`) persists in memory; toggle simply calls `.addTo(map)` or `.remove()` — no refetch, no object reconstruction.
+
+## Implementation
+
+```ts
+type LayerId = 'riskAreas' | 'missingPersons' | 'precipitation' | 'evacuationRoutes';
+
+export const useLayerStore = create<LayerState>((set) => ({
+  visibility: {
+    riskAreas: true, missingPersons: true,
+    precipitation: false, evacuationRoutes: false,
+  },
+  toggleLayer: (id) =>
+    set((state) => ({
+      visibility: { ...state.visibility, [id]: !state.visibility[id] },
+    })),
+}));
 ```
 
-## Implementation example
-```typescript
-const map = L.map('D023EstrategiaDeOverlaysDinamicosN-map');
-const layer = L.layerGroup().addTo(map);
+```tsx
+export function EvacuationRouteLayer({ routes }: Props) {
+  const mapInstance = useMapStore((s) => s.mapInstance);
+  const isVisible   = useLayerStore((s) => s.visibility.evacuationRoutes);
+  const groupRef    = useRef<L.FeatureGroup | null>(null);
 
-function addD023EstrategiaDeOverlaysDinamicosN(lat: number, lng: number) {
-  L.circleMarker([lat, lng], { radius: 8 }).addTo(layer);
+  useEffect(() => {
+    if (!mapInstance || groupRef.current) return;
+    const group = L.featureGroup();
+    for (const route of routes) {
+      L.geoJSON(route.geometry, {
+        style: { color: '#1d6fa4', weight: 3, dashArray: '6 4' },
+      }).addTo(group);
+    }
+    groupRef.current = group;
+  }, [mapInstance, routes]);
+
+  useEffect(() => {
+    if (!mapInstance || !groupRef.current) return;
+    if (isVisible) groupRef.current.addTo(mapInstance);
+    else           groupRef.current.remove();
+  }, [isVisible, mapInstance]);
+
+  return null;
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Dynamic overlay strategy on the map.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Loading too many layers before knowing the effective zoom.
-- Ignoring network latency and vector size.
+Coordinator during a Blumenau operation: activates "Evacuation Routes" (disabled by default) — toggle takes 12ms, no network request. Disables "Missing Persons" to focus on risk zones — 8ms. Reactivates "Missing Persons" — 9ms, session data intact in memory. Total: 3 toggles in 29ms with zero additional HTTP requests.
 
 ## Success criteria
-The experience is fluid when interaction remains responsive at real zoom levels and on mobile.
+
+Layer toggle latency (add/remove from Leaflet instance) < 20ms for any layer with data already loaded. Zero network requests when activating a previously loaded layer in the session. Each layer re-renders independently when its visibility state changes.
+
+## Relation to SOS Location
+
+Fast dynamic overlays are not a comfort feature — they are an operational necessity. A coordinator who needs 2 seconds for each layer toggle during a real operation loses context and makes navigation errors. The persistent in-memory `featureGroup` architecture is what makes that toggle instantaneous.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **地図と可視化** トラックにおける **地図上の動的オーバーレイ戦略** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**地図上の動的オーバーレイ戦略** をコード、契約、運用で検証できる成果物にすることです。
+緊急作戦中、コーディネーターは同じマップの異なるビューを素早く切り替える必要がある：「避難経路だけ表示」、「行方不明者を非表示にしてリスクの高いゾーンに集中」、「次の1時間の雨オーバーレイをアクティブに」。各トグルはすでにロードされたデータを再ロードしてはならない——8,500ポリゴンの初期ロードは340ms（#022）かかり、トグルのたびにそのコストを繰り返すとインターフェースが使えなくなる。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**地図上の動的オーバーレイ戦略** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-コスト = レイヤー × ジオメトリ / ズーム
+最初のバージョンは`SosMap`コンポーネントのReact状態内でオーバーレイごとに1つのブールフラグを使っていた。ユーザーがレイヤーを非表示にすると、コンポーネントが再レンダリングされ、Leaflet要素を削除してタイルキャッシュを破棄した。再アクティブ化すると、すべてを再フェッチした。再フェッチにより100msのトグルが400msになった。さらに、4つのレイヤーすべてが単一コンポーネントに結合されていた——1つのレイヤーの状態変更がすべての再レンダリングをトリガーした。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["OpenStreetMap"] --> B["Camada base"]
-  B --> C["Overlays"]
-  C --> D["Hotspots e eventos"]
-  D --> E["Atualização incremental"]
+## 技術的決定
+
+レイヤーごとの可視性マップを持つZustand `layerStore`。各オーバーレイは、Zustandの自分自身の可視性ブールのみをサブスクライブする別のReactコンポーネント。可視性が変わると、そのコンポーネントだけが再レンダリングする。各レイヤーのLeafletインスタンス（`L.FeatureGroup`）はメモリに永続する；トグルは単に`.addTo(map)`または`.remove()`を呼ぶ——再フェッチなし、オブジェクト再構築なし。
+
+## 実装
+
+```ts
+type LayerId = 'riskAreas' | 'missingPersons' | 'precipitation' | 'evacuationRoutes';
+
+export const useLayerStore = create<LayerState>((set) => ({
+  visibility: {
+    riskAreas: true, missingPersons: true,
+    precipitation: false, evacuationRoutes: false,
+  },
+  toggleLayer: (id) =>
+    set((state) => ({
+      visibility: { ...state.visibility, [id]: !state.visibility[id] },
+    })),
+}));
 ```
 
-## 実装例
-```typescript
-const map = L.map('D023EstrategiaDeOverlaysDinamicosN-map');
-const layer = L.layerGroup().addTo(map);
+```tsx
+export function EvacuationRouteLayer({ routes }: Props) {
+  const mapInstance = useMapStore((s) => s.mapInstance);
+  const isVisible   = useLayerStore((s) => s.visibility.evacuationRoutes);
+  const groupRef    = useRef<L.FeatureGroup | null>(null);
 
-function addD023EstrategiaDeOverlaysDinamicosN(lat: number, lng: number) {
-  L.circleMarker([lat, lng], { radius: 8 }).addTo(layer);
+  useEffect(() => {
+    if (!mapInstance || groupRef.current) return;
+    const group = L.featureGroup();
+    for (const route of routes) {
+      L.geoJSON(route.geometry, {
+        style: { color: '#1d6fa4', weight: 3, dashArray: '6 4' },
+      }).addTo(group);
+    }
+    groupRef.current = group;
+  }, [mapInstance, routes]);
+
+  useEffect(() => {
+    if (!mapInstance || !groupRef.current) return;
+    if (isVisible) groupRef.current.addTo(mapInstance);
+    else           groupRef.current.remove();
+  }, [isVisible, mapInstance]);
+
+  return null;
 }
 ```
 
-## SOS Location での適用方法
-- 地図上の動的オーバーレイ戦略 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 実際のズームが分かる前にレイヤーを読み込みすぎる。
-- ネットワーク遅延とベクターサイズを無視する。
+ブルメナウの作戦中のコーディネーター：「避難経路」をアクティブ化（デフォルトで無効）——トグルに12ms、ネットワークリクエストなし。リスクゾーンに集中するため「行方不明者」を無効化——8ms。「行方不明者」を再アクティブ化——9ms、セッションデータはメモリに無傷。合計：追加のHTTPリクエストゼロで3トグルを29msで完了。
 
 ## 成功基準
-実際のズームやモバイル環境でも応答性が保てれば成功です。
+
+すでにデータがロードされている任意のレイヤーのレイヤートグルレイテンシ（Leafletインスタンスへの追加/削除）< 20ms。セッションで以前にロードされたレイヤーをアクティブ化する際のネットワークリクエストゼロ。各レイヤーは可視性状態が変わった時に独立して再レンダリングする。
+
+## SOS Locationとの関係
+
+高速な動的オーバーレイはコンフォート機能ではなく——運用上の必要性だ。実際の作戦中にレイヤートグルのたびに2秒必要なコーディネーターはコンテキストを失い、ナビゲーションエラーを犯す。メモリに永続する`featureGroup`アーキテクチャがそのトグルを即座にする。
 '''

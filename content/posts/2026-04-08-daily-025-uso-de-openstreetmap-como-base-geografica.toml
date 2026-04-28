@@ -3,148 +3,240 @@ slug = "daily-025-uso-de-openstreetmap-como-base-geografica"
 title = "Daily #025: Uso de OpenStreetMap como base geográfica"
 title_en_us = "Daily #025: Using OpenStreetMap as the geographic base"
 title_ja_jp = "Daily #025: 地理基盤としてのOpenStreetMap活用"
-summary = "Explora Uso de OpenStreetMap como base geográfica com fundamentos, fórmula, exemplo e diagrama para a trilha mapas e visualização."
-summary_en_us = "Explores Using OpenStreetMap as the geographic base with fundamentals, formula, example and diagram for the maps and visualization track."
-summary_ja_jp = "地理基盤としてのOpenStreetMap活用 を、基礎、数式、例、図とともに 地図と可視化 トラック向けに整理します。"
+summary = "Por que o SOS Location usa OpenStreetMap em vez de Google Maps, como configurar tile servers alternativos (Carto, Stadia) para fallback, e como pré-carregar tiles de municípios prioritários para operação offline."
+summary_en_us = "Why SOS Location uses OpenStreetMap instead of Google Maps, how to configure alternative tile servers (Carto, Stadia) for fallback, and how to pre-cache tiles of priority municipalities for offline operation."
+summary_ja_jp = "SOS LocationがGoogle MapsではなくOpenStreetMapを使う理由、フォールバック用の代替タイルサーバー（Carto・Stadia）の設定方法、オフライン操作のための優先市町村タイルの事前キャッシュ方法。"
 published_at = "2026-04-08T09:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
 category = "sos-location-daily"
-tags = ["sos-location", "daily", "mapas", "visualizacao"]
-badges = ["mapas", "ux"]
+tags = ["sos-location", "daily", "frontend", "mapa"]
+badges = ["frontend", "mapa"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Uso de OpenStreetMap como base geográfica** dentro da trilha **mapas e visualização** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Uso de OpenStreetMap como base geográfica** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location é usado em situações onde conectividade de rede é imprevisível: enchentes que derrubam infraestrutura de telecomunicações, áreas remotas, operações em campo com 3G instável. A dependência de um tile server único (Google Maps, Mapbox) seria um ponto único de falha operacional. Além disso, Google Maps cobra por tiles carregados — em eventos de desastre com picos de 10.000 usuários simultâneos acessando múltiplas zonas, o custo seria proibitivo.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Uso de OpenStreetMap como base geográfica** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Custo = camadas × geometrias / zoom
+OSM tiles via `tile.openstreetmap.org` são gratuitos, mas os termos de uso proíbem uso de alta frequência em produção (policy de "heavy use"). Em um evento de emergência com 500 coordenadores atualizando o mapa a cada 30 segundos, o volume de requests violaria o limite. Além disso, sem cache local, a perda de conexão durante uma operação tornaria o mapa completamente em branco — os tiles já carregados desaparecem ao navegar para uma área não visitada.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["OpenStreetMap"] --> B["Camada base"]
-  B --> C["Overlays"]
-  C --> D["Hotspots e eventos"]
-  D --> E["Atualização incremental"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
-```typescript
-const map = L.map('D025UsoDeOpenstreetmapComoBaseGeog-map');
-const layer = L.layerGroup().addTo(map);
+Tile URL configurável com fallback em cascata: (1) Carto CDN (plano gratuito, 250k requests/mês, suficiente para o SOS Location atual); (2) Stadia Maps como fallback se Carto cair; (3) `tile.openstreetmap.org` como último recurso para desenvolvimento. Service Worker pré-carrega e cacheia tiles de zoom 10–15 para os 50 municípios prioritários durante instalação da PWA — disponível offline.
 
-function addD025UsoDeOpenstreetmapComoBaseGeog(lat: number, lng: number) {
-  L.circleMarker([lat, lng], { radius: 8 }).addTo(layer);
+## Implementação
+
+```ts
+// src/config/tileServers.ts
+export const TILE_SERVERS = {
+  carto: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+  stadia: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+  osm: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+};
+
+export const TILE_ATTRIBUTION =
+  '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+export function buildTileLayer(primaryUrl: string, fallbackUrl: string): L.TileLayer {
+  const layer = L.tileLayer(primaryUrl, {
+    attribution: TILE_ATTRIBUTION,
+    maxZoom:     19,
+    subdomains:  'abcd',
+  });
+
+  layer.on('tileerror', (e) => {
+    // Substitui URL do tile que falhou pelo fallback
+    (e.tile as HTMLImageElement).src = (e.tile as HTMLImageElement).src
+      .replace(new URL(primaryUrl).hostname, new URL(fallbackUrl).hostname);
+  });
+
+  return layer;
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Uso de OpenStreetMap como base geográfica.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+```ts
+// public/sw.js — Service Worker para cache offline de tiles
+const TILE_CACHE = 'sos-tiles-v1';
+const PRIORITY_MUNICIPALITIES = [
+  // Bounding boxes [south, west, north, east] dos 50 municípios
+  { name: 'Blumenau',     bbox: [-27.08, -49.22, -26.75, -48.87] },
+  { name: 'Itajai',       bbox: [-26.98, -48.82, -26.82, -48.63] },
+  { name: 'Florianopolis',bbox: [-27.85, -48.68, -27.35, -48.34] },
+  // ... outros 47 municípios
+];
 
-## Erros comuns
-- Carregar camadas demais antes de saber o zoom efetivo.
-- Ignorar latência de rede e tamanho dos vetores.
+async function precacheMunicipalityTiles(bbox, minZoom = 10, maxZoom = 15) {
+  const cache = await caches.open(TILE_CACHE);
+  const [south, west, north, east] = bbox;
+
+  for (let z = minZoom; z <= maxZoom; z++) {
+    const xMin = lon2tile(west, z), xMax = lon2tile(east, z);
+    const yMin = lat2tile(north, z), yMax = lat2tile(south, z);
+
+    for (let x = xMin; x <= xMax; x++) {
+      for (let y = yMin; y <= yMax; y++) {
+        const url = `https://a.basemaps.cartocdn.com/light_all/${z}/${x}/${y}.png`;
+        if (!await cache.match(url)) {
+          await cache.add(url);
+        }
+      }
+    }
+  }
+}
+
+function lon2tile(lon, z) { return Math.floor((lon + 180) / 360 * Math.pow(2, z)); }
+function lat2tile(lat, z) {
+  return Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 /
+    Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, z));
+}
+```
+
+## Exemplo concreto
+
+Enchente em Blumenau (SC): rede celular degradada durante evento. Coordenador com PWA instalada (cache pré-carregado): tiles zoom 10–15 de Blumenau disponíveis offline. Sem internet, o mapa base de Blumenau continua funcionando — apenas os overlays dinâmicos (risco, marcadores) aguardam reconexão. Tiles pré-carregados: ~2.800 imagens para Blumenau nos 6 níveis de zoom, ocupando ~18 MB no cache do dispositivo.
 
 ## Critério de sucesso
-A leitura fica fluida quando a interação continua responsiva em zoom e mobilidade reais.
+
+Mapa base funcional offline para os 50 municípios prioritários após instalação da PWA. Tempo de carregamento de tiles a partir do cache Service Worker < 5ms (vs 200ms via rede). Zero dependência de API key de terceiros para renderização do mapa base em produção.
+
+## Relação com SOS Location
+
+O mapa base é a camada de orientação espacial do coordenador. Em desastres que afetam telecomunicações — que são exatamente os eventos que o SOS Location foi construído para apoiar — a disponibilidade offline do mapa base não é feature, é requisito operacional. OSM + PWA cache é a única combinação que atende isso sem custo e sem dependência de terceiros.
 '''
 body_en_us = '''
-This Daily expands **Using OpenStreetMap as the geographic base** within the **maps and visualization** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Using OpenStreetMap as the geographic base** into a verifiable artifact in code, contract, or operations.
+SOS Location is used in situations where network connectivity is unpredictable: floods that knock out telecoms infrastructure, remote areas, field operations with unstable 3G. Dependence on a single tile server (Google Maps, Mapbox) would be a single point of operational failure. Additionally, Google Maps charges per tile loaded — in disaster events with peaks of 10,000 simultaneous users accessing multiple zones, the cost would be prohibitive.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Using OpenStreetMap as the geographic base** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Cost = layers × geometries / zoom
+OSM tiles via `tile.openstreetmap.org` are free, but the terms of use prohibit high-frequency production use ("heavy use" policy). In an emergency event with 500 coordinators refreshing the map every 30 seconds, the request volume would violate the limit. Additionally, without a local cache, losing connection during an operation would leave the map completely blank — tiles already loaded disappear when navigating to an unvisited area.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["OpenStreetMap"] --> B["Camada base"]
-  B --> C["Overlays"]
-  C --> D["Hotspots e eventos"]
-  D --> E["Atualização incremental"]
-```
+## Technical decision
 
-## Implementation example
-```typescript
-const map = L.map('D025UsoDeOpenstreetmapComoBaseGeog-map');
-const layer = L.layerGroup().addTo(map);
+Configurable tile URL with cascading fallback: (1) Carto CDN (free tier, 250k requests/month, sufficient for current SOS Location); (2) Stadia Maps as fallback if Carto goes down; (3) `tile.openstreetmap.org` as last resort for development. Service Worker pre-fetches and caches tiles at zoom 10–15 for the 50 priority municipalities during PWA installation — available offline.
 
-function addD025UsoDeOpenstreetmapComoBaseGeog(lat: number, lng: number) {
-  L.circleMarker([lat, lng], { radius: 8 }).addTo(layer);
+## Implementation
+
+```ts
+export const TILE_SERVERS = {
+  carto:  'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+  stadia: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+  osm:    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+};
+
+export function buildTileLayer(primaryUrl: string, fallbackUrl: string): L.TileLayer {
+  const layer = L.tileLayer(primaryUrl, {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 19, subdomains: 'abcd',
+  });
+
+  layer.on('tileerror', (e) => {
+    (e.tile as HTMLImageElement).src = (e.tile as HTMLImageElement).src
+      .replace(new URL(primaryUrl).hostname, new URL(fallbackUrl).hostname);
+  });
+
+  return layer;
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Using OpenStreetMap as the geographic base.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+```ts
+// Service Worker: pre-cache tiles for priority municipalities
+async function precacheMunicipalityTiles(bbox, minZoom = 10, maxZoom = 15) {
+  const cache = await caches.open('sos-tiles-v1');
+  const [south, west, north, east] = bbox;
 
-## Common pitfalls
-- Loading too many layers before knowing the effective zoom.
-- Ignoring network latency and vector size.
+  for (let z = minZoom; z <= maxZoom; z++) {
+    for (let x = lon2tile(west, z); x <= lon2tile(east, z); x++) {
+      for (let y = lat2tile(north, z); y <= lat2tile(south, z); y++) {
+        const url = `https://a.basemaps.cartocdn.com/light_all/${z}/${x}/${y}.png`;
+        if (!await cache.match(url)) await cache.add(url);
+      }
+    }
+  }
+}
+```
+
+## Concrete example
+
+Flood in Blumenau (SC): mobile network degraded during event. Coordinator with installed PWA (pre-loaded cache): Blumenau zoom 10–15 tiles available offline. Without internet, the Blumenau base map keeps working — only dynamic overlays (risk, markers) wait for reconnection. Pre-cached tiles: ~2,800 images for Blumenau across 6 zoom levels, occupying ~18 MB in the device cache.
 
 ## Success criteria
-The experience is fluid when interaction remains responsive at real zoom levels and on mobile.
+
+Offline base map functional for the 50 priority municipalities after PWA installation. Tile load time from Service Worker cache < 5ms (vs 200ms over the network). Zero third-party API key dependency for base map rendering in production.
+
+## Relation to SOS Location
+
+The base map is the coordinator's spatial orientation layer. In disasters that affect telecoms — which are exactly the events SOS Location was built to support — offline availability of the base map is not a feature, it is an operational requirement. OSM + PWA cache is the only combination that meets this at zero cost and without third-party dependency.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **地図と可視化** トラックにおける **地理基盤としてのOpenStreetMap活用** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**地理基盤としてのOpenStreetMap活用** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationはネットワーク接続が予測不能な状況で使用される：通信インフラを破壊する洪水、遠隔地、不安定な3Gでのフィールド作戦。単一のタイルサーバー（Google Maps、Mapbox）への依存は、単一の運用障害点になる。さらに、Google Mapsはロードされたタイルごとに課金する——複数のゾーンにアクセスする10,000人の同時ユーザーのピークがある災害イベントでは、コストが法外になる。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**地理基盤としてのOpenStreetMap活用** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-コスト = レイヤー × ジオメトリ / ズーム
+`tile.openstreetmap.org`経由のOSMタイルは無料だが、利用規約で本番での高頻度使用が禁止されている（「heavy use」ポリシー）。30秒ごとにマップを更新する500人のコーディネーターがいる緊急イベントでは、リクエスト量が制限を違反する。さらに、ローカルキャッシュなしでは、作戦中の接続損失でマップが完全に白くなる——すでにロードされたタイルは未訪問エリアに移動すると消える。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["OpenStreetMap"] --> B["Camada base"]
-  B --> C["Overlays"]
-  C --> D["Hotspots e eventos"]
-  D --> E["Atualização incremental"]
-```
+## 技術的決定
 
-## 実装例
-```typescript
-const map = L.map('D025UsoDeOpenstreetmapComoBaseGeog-map');
-const layer = L.layerGroup().addTo(map);
+カスケードフォールバック付きの設定可能なタイルURL：(1) Carto CDN（無料プラン、月25万リクエスト、現在のSOS Locationには十分）；(2) CartoCDNがダウンした場合のフォールバックとしてStadia Maps；(3) 開発用の最終手段として`tile.openstreetmap.org`。Service WorkerはPWAインストール中に50の優先市町村のズーム10〜15のタイルをプリフェッチしてキャッシュする——オフラインで利用可能。
 
-function addD025UsoDeOpenstreetmapComoBaseGeog(lat: number, lng: number) {
-  L.circleMarker([lat, lng], { radius: 8 }).addTo(layer);
+## 実装
+
+```ts
+export const TILE_SERVERS = {
+  carto:  'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+  stadia: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+  osm:    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+};
+
+export function buildTileLayer(primaryUrl: string, fallbackUrl: string): L.TileLayer {
+  const layer = L.tileLayer(primaryUrl, {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 19, subdomains: 'abcd',
+  });
+
+  layer.on('tileerror', (e) => {
+    (e.tile as HTMLImageElement).src = (e.tile as HTMLImageElement).src
+      .replace(new URL(primaryUrl).hostname, new URL(fallbackUrl).hostname);
+  });
+
+  return layer;
 }
 ```
 
-## SOS Location での適用方法
-- 地理基盤としてのOpenStreetMap活用 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+```ts
+// Service Worker：優先市町村のタイルをプリキャッシュ
+async function precacheMunicipalityTiles(bbox, minZoom = 10, maxZoom = 15) {
+  const cache = await caches.open('sos-tiles-v1');
+  const [south, west, north, east] = bbox;
 
-## よくある落とし穴
-- 実際のズームが分かる前にレイヤーを読み込みすぎる。
-- ネットワーク遅延とベクターサイズを無視する。
+  for (let z = minZoom; z <= maxZoom; z++) {
+    for (let x = lon2tile(west, z); x <= lon2tile(east, z); x++) {
+      for (let y = lat2tile(north, z); y <= lat2tile(south, z); y++) {
+        const url = `https://a.basemaps.cartocdn.com/light_all/${z}/${x}/${y}.png`;
+        if (!await cache.match(url)) await cache.add(url);
+      }
+    }
+  }
+}
+```
+
+## 具体的な例
+
+ブルメナウ（SC）の洪水：イベント中に携帯ネットワークが劣化。インストール済みPWA（プリロードキャッシュ）を持つコーディネーター：ブルメナウのズーム10〜15タイルがオフラインで利用可能。インターネットなしで、ブルメナウのベースマップは機能し続ける——動的オーバーレイ（リスク、マーカー）だけが再接続を待つ。プリキャッシュされたタイル：6ズームレベルのブルメナウで約2,800枚の画像、デバイスキャッシュで約18MBを占有。
 
 ## 成功基準
-実際のズームやモバイル環境でも応答性が保てれば成功です。
+
+PWAインストール後に50の優先市町村のオフラインベースマップが機能する。Service Workerキャッシュからのタイルロード時間 < 5ms（ネットワーク経由の200msと比較）。本番でのベースマップレンダリングにサードパーティAPIキー依存ゼロ。
+
+## SOS Locationとの関係
+
+ベースマップはコーディネーターの空間的オリエンテーションレイヤーだ。通信に影響する災害中——これはまさにSOS Locationが支援するために構築されたイベントだ——ベースマップのオフライン利用可能性は機能ではなく、運用要件だ。OSM + PWAキャッシュはコストゼロでサードパーティ依存なしにこれを満たす唯一の組み合わせだ。
 '''

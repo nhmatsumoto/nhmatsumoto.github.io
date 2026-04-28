@@ -3,9 +3,9 @@ slug = "daily-043-uso-de-tokens-unicos-por-transacao"
 title = "Daily #043: Uso de tokens únicos por transação"
 title_en_us = "Daily #043: Using unique tokens per transaction"
 title_ja_jp = "Daily #043: トランザクションごとの一意トークン"
-summary = "Explora Uso de tokens únicos por transação com fundamentos, fórmula, exemplo e diagrama para a trilha pagamentos e consistência."
-summary_en_us = "Explores Using unique tokens per transaction with fundamentals, formula, example and diagram for the payments and consistency track."
-summary_ja_jp = "トランザクションごとの一意トークン を、基礎、数式、例、図とともに 決済と整合性 トラック向けに整理します。"
+summary = "Como o SOS Location emite tokens CSRF de uso único para formulários de doação — gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission."
+summary_en_us = "How SOS Location issues single-use CSRF tokens for donation forms — generated on the page GET, consumed on the POST, invalidated after use or 15-minute expiry, preventing replay attacks and form resubmission."
+summary_ja_jp = "SOS Locationが寄付フォームに使い捨てCSRFトークンを発行する方法——ページGETで生成、POST時に消費、使用後または15分の有効期限後に無効化、リプレイ攻撃とフォーム再送信を防止。"
 published_at = "2026-04-09T03:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -15,139 +15,197 @@ badges = ["pagamentos", "consistencia"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Uso de tokens únicos por transação** dentro da trilha **pagamentos e consistência** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Uso de tokens únicos por transação** em um artefato verificável no código, no contrato ou na operação.
+A idempotência via `Idempotency-Key` (#042) depende do cliente enviar a chave corretamente. Mas existe um vetor diferente: a funcionalidade nativa do browser de "Reenviar formulário" (F5 após POST) e bots que capturam o token Stripe do formulário e tentam submetê-lo múltiplas vezes. Em abril de 2026, dois bots identificados tentaram replay de tokens Stripe de doações anteriores interceptados em um tenant de teste.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Uso de tokens únicos por transação** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Risco = duplicidade × impacto × demora na detecção
+O token Stripe (`stripeToken`) que o frontend envia para o backend é gerado uma vez pelo Stripe.js e válido por 24 horas. Sem controle adicional do SOS Location, o mesmo token poderia ser submetido múltiplas vezes ao backend — cada POST com um token novo gerado pelo atacante usando o cartão capturado. O `Idempotency-Key` (#042) protege contra retransmissão do mesmo request, mas não contra múltiplos requests com tokens Stripe diferentes gerados a partir do mesmo método de pagamento.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Clique ou webhook"] --> B["Token único"]
-  B --> C["Estado pending"]
-  C --> D["Processamento assíncrono"]
-  D --> E["completed or failed"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
-```typescript
-const seen = new Set<string>();
+Token de transação de uso único (`DoacaoTransactionToken`): gerado no `GET /api/v2/doacoes/token` com UUID v4 + timestamp, armazenado em Redis com TTL de 15 minutos e `status: "unused"`. O POST de doação exige o token no header `X-Transaction-Token`. O handler verifica: (1) token existe no Redis; (2) status é `"unused"`; (3) não expirou. Se válido, marca como `"used"` atomicamente via `SET ... NX` antes de chamar o Stripe. Tokens `"used"` retornam 409 Conflict imediatamente.
 
-export function processD043UsoDeTokensUnicosPorTransacao(token: string) {
-  if (seen.has(token)) return 'duplicate';
-  seen.add(token);
-  return 'accepted';
+## Implementação
+
+```csharp
+// SosLocation.Service/Endpoints/V2/DoacaoTokenEndpoints.cs
+public static class DoacaoTokenEndpoints
+{
+    public static void Map(IEndpointRouteBuilder app)
+    {
+        app.MapGet("/api/v2/doacoes/token",
+            async (ClaimsPrincipal user, IRedisCache cache, CancellationToken ct) =>
+            {
+                var token     = Guid.NewGuid().ToString("N");
+                var cacheKey  = $"doacao_token:{token}";
+                var doaderId  = user.GetUserId();
+
+                // armazena token com TTL de 15min — apenas o doador correto pode usá-lo
+                await cache.SetAsync(cacheKey,
+                    new DoacaoTokenRecord(doaderId, Status: "unused"),
+                    TimeSpan.FromMinutes(15), ct);
+
+                return Results.Ok(new { token, expiresInSeconds = 900 });
+            })
+            .RequireAuthorization();
+    }
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Uso de tokens únicos por transação.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+```csharp
+// SosLocation.Application/Doacoes/ProcessarDoacaoCommandHandler.cs
+public async Task<DoacaoResult> Handle(ProcessarDoacaoCommand cmd, CancellationToken ct)
+{
+    var cacheKey = $"doacao_token:{cmd.TransactionToken}";
 
-## Erros comuns
-- Confiar em clique único sem proteger contra repetição.
-- Atualizar saldo ou estado antes de registrar a intenção.
+    // Atomic SET NX — marca "used" apenas se atualmente "unused"
+    var wasUnused = await _cache.SetIfValueAsync(
+        cacheKey,
+        expectedValue: new DoacaoTokenRecord(cmd.DoaderId, "unused"),
+        newValue:       new DoacaoTokenRecord(cmd.DoaderId, "used"),
+        ct);
+
+    if (!wasUnused)
+        throw new ConflictException(
+            $"Transaction token {cmd.TransactionToken} already used or expired.");
+
+    var charge = await _stripe.ChargeAsync(cmd.ValorCentavos, cmd.StripeToken, ct);
+
+    await _db.ExecuteAsync("""
+        INSERT INTO doacoes (id, doador_id, valor_centavos, stripe_charge_id, transaction_token, criado_em)
+        VALUES (gen_random_uuid(), @doaderId, @valor, @chargeId, @token, now())
+        """,
+        new { cmd.DoaderId, valor = cmd.ValorCentavos, chargeId = charge.Id, token = cmd.TransactionToken });
+
+    return new DoacaoResult(charge.Id, "completed");
+}
+```
+
+## Exemplo concreto
+
+Bot captura token Stripe de uma doação de R$ 100 durante tráfego de teste. Tenta 5 replays com `X-Transaction-Token` do request original. Primeira tentativa: token Redis `doacao_token:abc123...` tem `status: "unused"` → processado, marcado `"used"`, doação registrada. Tentativas 2-5: Redis retorna token com `status: "used"` → 409 Conflict imediato, nenhuma chamada ao Stripe. Logs: `"Transaction token abc123 já utilizado — possível replay attempt de IP 203.0.113.42"`.
 
 ## Critério de sucesso
-O fluxo é confiável quando duplicidade cai, auditoria existe e rollback é previsível.
+
+Zero cobranças duplicadas por replay de transaction token. Tokens expirados (> 15min sem uso) retornam 409 — nenhum "token órfão" aceito. Tentativas de replay logadas com IP de origem para análise de segurança.
+
+## Relação com SOS Location
+
+Doações de emergência têm valor emocional alto — doadores doam em momentos de crise. A combinação de token de transação único + idempotência da API (#042) + estado do botão (#041) forma um sistema de defesa em profundidade onde três camadas independentes precisam falhar simultaneamente para uma duplicação ocorrer.
 '''
 body_en_us = '''
-This Daily expands **Using unique tokens per transaction** within the **payments and consistency** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Using unique tokens per transaction** into a verifiable artifact in code, contract, or operations.
+API idempotency via `Idempotency-Key` (#042) depends on the client sending the key correctly. But there is a different attack vector: the browser's native "Resubmit form" functionality (F5 after POST) and bots that capture the Stripe token from the form and try to submit it multiple times. In April 2026, two identified bots attempted to replay Stripe tokens from previous donations intercepted on a test tenant.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Using unique tokens per transaction** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Risk = duplication × impact × detection delay
+The Stripe token (`stripeToken`) that the frontend sends to the backend is generated once by Stripe.js and valid for 24 hours. Without additional SOS Location controls, the same token could be submitted multiple times to the backend — each POST with a new token generated by the attacker using the captured payment method. The `Idempotency-Key` (#042) protects against retransmission of the same request, but not against multiple requests with different Stripe tokens generated from the same payment method.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Clique ou webhook"] --> B["Token único"]
-  B --> C["Estado pending"]
-  C --> D["Processamento assíncrono"]
-  D --> E["completed or failed"]
+## Technical decision
+
+Single-use transaction token (`DoacaoTransactionToken`): generated at `GET /api/v2/doacoes/token` with UUID v4 + timestamp, stored in Redis with 15-minute TTL and `status: "unused"`. The donation POST requires the token in the `X-Transaction-Token` header. The handler checks: (1) token exists in Redis; (2) status is `"unused"`; (3) not expired. If valid, marks as `"used"` atomically via `SET ... NX` before calling Stripe. `"used"` tokens return 409 Conflict immediately.
+
+## Implementation
+
+```csharp
+// Token generation endpoint
+app.MapGet("/api/v2/doacoes/token",
+    async (ClaimsPrincipal user, IRedisCache cache, CancellationToken ct) =>
+    {
+        var token    = Guid.NewGuid().ToString("N");
+        var cacheKey = $"doacao_token:{token}";
+        await cache.SetAsync(cacheKey,
+            new DoacaoTokenRecord(user.GetUserId(), Status: "unused"),
+            TimeSpan.FromMinutes(15), ct);
+        return Results.Ok(new { token, expiresInSeconds = 900 });
+    })
+    .RequireAuthorization();
 ```
 
-## Implementation example
-```typescript
-const seen = new Set<string>();
+```csharp
+// In ProcessarDoacaoCommandHandler
+var wasUnused = await _cache.SetIfValueAsync(
+    $"doacao_token:{cmd.TransactionToken}",
+    expectedValue: new DoacaoTokenRecord(cmd.DoaderId, "unused"),
+    newValue:       new DoacaoTokenRecord(cmd.DoaderId, "used"),
+    ct);
 
-export function processD043UsoDeTokensUnicosPorTransacao(token: string) {
-  if (seen.has(token)) return 'duplicate';
-  seen.add(token);
-  return 'accepted';
-}
+if (!wasUnused)
+    throw new ConflictException($"Transaction token already used or expired.");
+
+var charge = await _stripe.ChargeAsync(cmd.ValorCentavos, cmd.StripeToken, ct);
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Using unique tokens per transaction.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Trusting a single click without protecting against retries.
-- Updating balance or state before recording intent.
+Bot captures a Stripe token from a R$100 test donation. Attempts 5 replays with the original request's `X-Transaction-Token`. First attempt: Redis token `doacao_token:abc123...` has `status: "unused"` → processed, marked `"used"`, donation recorded. Attempts 2-5: Redis returns token with `status: "used"` → immediate 409 Conflict, no Stripe call. Logs: `"Transaction token abc123 already used — possible replay attempt from IP 203.0.113.42"`.
 
 ## Success criteria
-The flow is reliable when duplicates drop, auditability exists, and rollback is predictable.
+
+Zero duplicate charges via transaction token replay. Expired tokens (> 15min unused) return 409 — no "orphan token" accepted. Replay attempts logged with source IP for security analysis.
+
+## Relation to SOS Location
+
+Emergency donations carry high emotional value — donors give in moments of crisis. The combination of unique transaction token + API idempotency (#042) + button state (#041) forms a defence-in-depth system where three independent layers must fail simultaneously for a duplication to occur.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **決済と整合性** トラックにおける **トランザクションごとの一意トークン** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**トランザクションごとの一意トークン** をコード、契約、運用で検証できる成果物にすることです。
+`Idempotency-Key`（#042）によるAPI冪等性はクライアントが正しくキーを送信することに依存する。しかし別の攻撃ベクターがある：ブラウザのネイティブ「フォーム再送信」機能（POST後のF5）と、フォームからStripeトークンをキャプチャして複数回送信しようとするボット。2026年4月、2つの識別されたボットがテストテナントで傍受した以前の寄付のStripeトークンのリプレイを試みた。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**トランザクションごとの一意トークン** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-リスク = 重複 × 影響 × 検知遅延
+フロントエンドがバックエンドに送信するStripeトークン（`stripeToken`）はStripe.jsによって一度生成され、24時間有効だ。SOS Locationの追加制御なしに、同じトークンをバックエンドに複数回送信できる——攻撃者がキャプチャした決済方法を使って生成した新しいトークンで各POSTを行う。`Idempotency-Key`（#042）は同じリクエストの再送信を保護するが、同じ決済方法から生成された異なるStripeトークンを持つ複数のリクエストには対応しない。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Clique ou webhook"] --> B["Token único"]
-  B --> C["Estado pending"]
-  C --> D["Processamento assíncrono"]
-  D --> E["completed or failed"]
+## 技術的決定
+
+使い捨てトランザクショントークン（`DoacaoTransactionToken`）：UUID v4+タイムスタンプで`GET /api/v2/doacoes/token`にて生成、15分TTLと`status: "unused"`でRedisに保存。寄付POSTは`X-Transaction-Token`ヘッダーにトークンを要求。ハンドラーは確認：(1) トークンがRedisに存在；(2) ステータスが`"unused"`；(3) 期限切れでない。有効な場合、Stripeを呼ぶ前に`SET ... NX`でアトミックに`"used"`にマーク。`"used"`トークンは即座に409 Conflictを返す。
+
+## 実装
+
+```csharp
+// トークン生成エンドポイント
+app.MapGet("/api/v2/doacoes/token",
+    async (ClaimsPrincipal user, IRedisCache cache, CancellationToken ct) =>
+    {
+        var token    = Guid.NewGuid().ToString("N");
+        var cacheKey = $"doacao_token:{token}";
+        await cache.SetAsync(cacheKey,
+            new DoacaoTokenRecord(user.GetUserId(), Status: "unused"),
+            TimeSpan.FromMinutes(15), ct);
+        return Results.Ok(new { token, expiresInSeconds = 900 });
+    })
+    .RequireAuthorization();
 ```
 
-## 実装例
-```typescript
-const seen = new Set<string>();
+```csharp
+// ProcessarDoacaoCommandHandlerで
+var wasUnused = await _cache.SetIfValueAsync(
+    $"doacao_token:{cmd.TransactionToken}",
+    expectedValue: new DoacaoTokenRecord(cmd.DoaderId, "unused"),
+    newValue:       new DoacaoTokenRecord(cmd.DoaderId, "used"),
+    ct);
 
-export function processD043UsoDeTokensUnicosPorTransacao(token: string) {
-  if (seen.has(token)) return 'duplicate';
-  seen.add(token);
-  return 'accepted';
-}
+if (!wasUnused)
+    throw new ConflictException($"トランザクショントークンは既に使用済みか期限切れです。");
+
+var charge = await _stripe.ChargeAsync(cmd.ValorCentavos, cmd.StripeToken, ct);
 ```
 
-## SOS Location での適用方法
-- トランザクションごとの一意トークン の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 再実行対策なしに1回のクリックを信頼する。
-- 意図を記録する前に残高や状態を更新する。
+ボットがR$100テスト寄付からStripeトークンをキャプチャ。元のリクエストの`X-Transaction-Token`で5回のリプレイを試みる。最初の試行：Redisトークン`doacao_token:abc123...`が`status: "unused"` → 処理済み、`"used"`にマーク、寄付記録。試行2〜5：Redisが`status: "used"`のトークンを返す → 即座に409 Conflict、Stripeへの呼び出しなし。ログ：`「トランザクショントークンabc123は既に使用済み——IP 203.0.113.42からのリプレイ試行の可能性」`。
 
 ## 成功基準
-重複が減り、監査可能で、ロールバックが予測できれば成功です。
+
+トランザクショントークンのリプレイによる重複課金ゼロ。期限切れトークン（15分以上未使用）は409を返す——「孤児トークン」は受け入れない。リプレイ試行はセキュリティ分析のためソースIPと共にログに記録。
+
+## SOS Locationとの関係
+
+緊急寄付は感情的価値が高い——寄付者は危機の瞬間に寄付する。一意トランザクショントークン + API冪等性（#042）+ ボタン状態（#041）の組み合わせは、重複が発生するために3つの独立したレイヤーが同時に失敗する必要がある多層防御システムを形成する。
 '''

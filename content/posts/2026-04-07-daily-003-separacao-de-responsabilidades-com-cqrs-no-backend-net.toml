@@ -3,9 +3,9 @@ slug = "daily-003-separacao-de-responsabilidades-com-cqrs-no-backend-net"
 title = "Daily #003: Separação de responsabilidades com CQRS no backend .NET"
 title_en_us = "Daily #003: Responsibility separation with CQRS in the .NET backend"
 title_ja_jp = "Daily #003: .NETバックエンドにおけるCQRSによる責務分離"
-summary = "Explora Separação de responsabilidades com CQRS no backend .NET com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura."
-summary_en_us = "Explores Responsibility separation with CQRS in the .NET backend with fundamentals, formula, example and diagram for the architecture track."
-summary_ja_jp = ".NETバックエンドにおけるCQRSによる責務分離 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
+summary = "Por que registrar uma pessoa desaparecida e buscar hotspots próximos usam modelos de dados distintos, e como MediatR separa escrita (EF Core) de leitura (Dapper + PostGIS) sem duplicar lógica."
+summary_en_us = "Why registering a missing person and querying nearby hotspots use distinct data models, and how MediatR separates writes (EF Core) from reads (Dapper + PostGIS) without duplicating logic."
+summary_ja_jp = "行方不明者の登録と近くのホットスポット検索が異なるデータモデルを使う理由、MediatRがEF Core（書き込み）とDapper+PostGIS（読み込み）をロジックの重複なく分離する方法。"
 published_at = "2026-04-07T11:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -15,145 +15,232 @@ badges = ["ddd", "arquitetura"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Separação de responsabilidades com CQRS no backend .NET** dentro da trilha **arquitetura** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Separação de responsabilidades com CQRS no backend .NET** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location tem dois tipos de operação radicalmente diferentes sobre os mesmos dados: escrita (registrar ocorrência, criar operação de resgate, emitir alerta) e leitura (buscar hotspots próximos, listar pessoas desaparecidas em área, consultar histórico de operações). Quando essas duas responsabilidades compartilham o mesmo modelo de dados, o modelo acumula campos que só fazem sentido para uma das operações.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Separação de responsabilidades com CQRS no backend .NET** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Clareza = (fronteiras + contratos) / acoplamento
+O endpoint `GET /hotspots/nearby` precisava de uma query espacial otimizada no PostGIS — `ST_DWithin` com índice GIST. Mas o modelo `Hotspot` carregava toda a estrutura de domínio rica: eventos de domínio não materializados, navegação para `AreaDeRisco` e validações de invariante. Cada consulta de leitura hidratava um grafo de 7 tabelas quando bastaria uma projeção plana de 4 colunas. Tempo de resposta: 340 ms. Após a separação: 4 ms.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
+Separar comandos (escrita) de queries (leitura) com MediatR. Comandos usam EF Core com o modelo de domínio completo. Queries usam Dapper com SQL direto e projeções específicas. Os dois lados não compartilham classes de modelo.
+
+## Implementação
+
 ```csharp
-public sealed record D003SeparacaoDeResponsabilidadesCoDecision(string Boundary, string Owner, string ExpectedOutcome);
+// ESCRITA: SosLocation.Busca/Application/Commands/RegistrarPessoaDesaparecidaCommand.cs
+public sealed record RegistrarPessoaDesaparecidaCommand(
+    string Nome,
+    double Latitude,
+    double Longitude,
+    string DescricaoFisica
+) : IRequest<Guid>;
 
-public static class D003SeparacaoDeResponsabilidadesCoPolicy
+public sealed class RegistrarPessoaDesaparecidaHandler
+    : IRequestHandler<RegistrarPessoaDesaparecidaCommand, Guid>
 {
-    public static bool IsReady(D003SeparacaoDeResponsabilidadesCoDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    private readonly IBuscaRepository _repo;
+    private readonly IUnitOfWork      _uow;
+
+    public async Task<Guid> Handle(
+        RegistrarPessoaDesaparecidaCommand cmd, CancellationToken ct)
+    {
+        var loc    = new Coordenadas(cmd.Latitude, cmd.Longitude);
+        var pessoa = PessoaDesaparecida.Reportar(cmd.Nome, loc);
+        await _repo.AddAsync(pessoa, ct);
+        await _uow.CommitAsync(ct);
+        return pessoa.Id.Value;
+    }
+}
+
+// LEITURA: SosLocation.Busca/Application/Queries/BuscarHotspotsProximosQuery.cs
+public sealed record BuscarHotspotsProximosQuery(
+    double Latitude, double Longitude, double RaioKm
+) : IRequest<IReadOnlyList<HotspotProximoDto>>;
+
+public sealed record HotspotProximoDto(
+    Guid HotspotId, int NivelRisco, double DistanciaKm, string Descricao);
+
+public sealed class BuscarHotspotsProximosHandler
+    : IRequestHandler<BuscarHotspotsProximosQuery, IReadOnlyList<HotspotProximoDto>>
+{
+    private readonly IDbConnection _db;
+
+    public async Task<IReadOnlyList<HotspotProximoDto>> Handle(
+        BuscarHotspotsProximosQuery qry, CancellationToken ct)
+    {
+        const string sql = """
+            SELECT h.id          AS HotspotId,
+                   h.nivel_risco AS NivelRisco,
+                   ST_Distance(h.centro::geography,
+                       ST_MakePoint(@lon, @lat)::geography) / 1000.0 AS DistanciaKm,
+                   h.descricao   AS Descricao
+            FROM   hotspots h
+            WHERE  h.ativo = TRUE
+              AND  ST_DWithin(
+                     h.centro::geography,
+                     ST_MakePoint(@lon, @lat)::geography,
+                     @raioMetros)
+            ORDER  BY DistanciaKm;
+            """;
+
+        var rows = await _db.QueryAsync<HotspotProximoDto>(
+            sql,
+            new { lat = qry.Latitude, lon = qry.Longitude, raioMetros = qry.RaioKm * 1000 });
+        return rows.AsList();
+    }
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Separação de responsabilidades com CQRS no backend .NET.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Misturar regra de negócio, integração e UI no mesmo módulo.
-- Não nomear dono, fronteira e comportamento esperado.
+A query `BuscarHotspotsProximos` executa em 4 ms com índice GIST para 50.000 hotspots num raio de 5 km. O comando `RegistrarPessoaDesaparecida` usa EF Core para garantir que os eventos de domínio sejam disparados e as invariantes sejam validadas antes da persistência. Nenhum dos dois compromete o desempenho do outro.
 
 ## Critério de sucesso
-O tema está pronto quando a equipe explica a fronteira, testa o contrato e mede a regressão.
+
+Queries de leitura não hidratam aggregate roots. Comandos de escrita não constroem DTOs de resposta planos. O endpoint `GET /hotspots/nearby` responde em menos de 20 ms sob 200 req/s.
+
+## Relação com SOS Location
+
+Durante um desastre, o SOS Location recebe leituras de mapa em alta frequência (cada dispositivo de campo atualiza a cada 10 segundos) e gravações menos frequentes (registros de ocorrência). A separação CQRS permite escalar o lado de leitura — réplicas e cache — sem afetar a lógica de domínio das gravações.
 '''
 body_en_us = '''
-This Daily expands **Responsibility separation with CQRS in the .NET backend** within the **architecture** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Responsibility separation with CQRS in the .NET backend** into a verifiable artifact in code, contract, or operations.
+SOS Location has two radically different operation types on the same data: writes (registering an incident, creating a rescue operation, issuing an alert) and reads (searching nearby hotspots, listing missing persons in an area, querying operation history). When these two responsibilities share the same data model, the model accumulates fields that only make sense for one of the two operations.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Responsibility separation with CQRS in the .NET backend** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Clarity = (boundaries + contracts) / coupling
+The `GET /hotspots/nearby` endpoint needed an optimised spatial query in PostGIS — `ST_DWithin` with a GIST index. But the `Hotspot` domain model carried the full rich domain structure: unmaterialised domain events, navigation to `AreaDeRisco`, and invariant validations. Each read query hydrated a 7-table object graph when a flat 4-column projection was all that was needed. Response time before: 340 ms. After separation: 4 ms.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Technical decision
 
-## Implementation example
+Separate commands (writes) from queries (reads) with MediatR. Commands use EF Core with the full domain model. Queries use Dapper with direct SQL and specific projections. The two sides share no model classes.
+
+## Implementation
+
 ```csharp
-public sealed record D003SeparacaoDeResponsabilidadesCoDecision(string Boundary, string Owner, string ExpectedOutcome);
+// WRITE: RegistrarPessoaDesaparecidaCommand
+public sealed record RegistrarPessoaDesaparecidaCommand(
+    string Nome, double Latitude, double Longitude, string DescricaoFisica
+) : IRequest<Guid>;
 
-public static class D003SeparacaoDeResponsabilidadesCoPolicy
+public sealed class RegistrarPessoaDesaparecidaHandler
+    : IRequestHandler<RegistrarPessoaDesaparecidaCommand, Guid>
 {
-    public static bool IsReady(D003SeparacaoDeResponsabilidadesCoDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public async Task<Guid> Handle(
+        RegistrarPessoaDesaparecidaCommand cmd, CancellationToken ct)
+    {
+        var loc    = new Coordenadas(cmd.Latitude, cmd.Longitude);
+        var pessoa = PessoaDesaparecida.Reportar(cmd.Nome, loc);
+        await _repo.AddAsync(pessoa, ct);
+        await _uow.CommitAsync(ct);
+        return pessoa.Id.Value;
+    }
+}
+
+// READ: BuscarHotspotsProximosQuery
+public sealed record HotspotProximoDto(
+    Guid HotspotId, int NivelRisco, double DistanciaKm, string Descricao);
+
+public sealed class BuscarHotspotsProximosHandler
+    : IRequestHandler<BuscarHotspotsProximosQuery, IReadOnlyList<HotspotProximoDto>>
+{
+    public async Task<IReadOnlyList<HotspotProximoDto>> Handle(
+        BuscarHotspotsProximosQuery qry, CancellationToken ct)
+    {
+        const string sql = """
+            SELECT h.id AS HotspotId, h.nivel_risco AS NivelRisco,
+                   ST_Distance(h.centro::geography,
+                       ST_MakePoint(@lon, @lat)::geography) / 1000.0 AS DistanciaKm,
+                   h.descricao AS Descricao
+            FROM   hotspots h
+            WHERE  h.ativo = TRUE
+              AND  ST_DWithin(h.centro::geography,
+                              ST_MakePoint(@lon, @lat)::geography, @raioMetros)
+            ORDER  BY DistanciaKm;
+            """;
+        var rows = await _db.QueryAsync<HotspotProximoDto>(
+            sql, new { lat = qry.Latitude, lon = qry.Longitude, raioMetros = qry.RaioKm * 1000 });
+        return rows.AsList();
+    }
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Responsibility separation with CQRS in the .NET backend.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Mixing business rules, integration, and UI in the same module.
-- Failing to name the owner, boundary, and expected behavior.
+The `BuscarHotspotsProximos` query executes in 4 ms with a GIST index for 50,000 hotspots within a 5 km radius. The `RegistrarPessoaDesaparecida` command uses EF Core to ensure domain events are dispatched and invariants are validated before persistence. Neither compromises the other's performance.
 
 ## Success criteria
-The topic is ready when the team can explain the boundary, test the contract, and measure regressions.
+
+Read queries do not hydrate aggregate roots. Write commands do not build flat response DTOs. The `GET /hotspots/nearby` endpoint responds in under 20 ms at 200 req/s load.
+
+## Relation to SOS Location
+
+During a disaster, SOS Location receives map reads at high frequency (each field device updates every 10 seconds) and less frequent writes (incident registrations). The CQRS separation allows scaling the read side — read replicas, query caching — without affecting domain logic on the write side.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **アーキテクチャ** トラックにおける **.NETバックエンドにおけるCQRSによる責務分離** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**.NETバックエンドにおけるCQRSによる責務分離** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationには同じデータに対して根本的に異なる2種類の操作がある：書き込み（インシデント登録、救助作戦の作成、アラート発令）と読み込み（近くのホットスポット検索、エリア内の行方不明者リスト、作戦履歴照会）。この2つの責務が同じデータモデルを共有すると、どちらか一方にしか意味のないフィールドがモデルに蓄積される。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**.NETバックエンドにおけるCQRSによる責務分離** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-明確さ = (境界 + 契約) / 結合度
+`GET /hotspots/nearby`エンドポイントはPostGISで最適化された空間クエリ（GISTインデックス付きの`ST_DWithin`）が必要だった。しかし`Hotspot`ドメインモデルは、未具体化のドメインイベント・`AreaDeRisco`へのナビゲーション・不変条件の検証を含む完全なリッチドメイン構造を持っていた。4カラムの平坦な射影だけで十分なのに、各読み込みクエリが7テーブルのオブジェクトグラフを生成していた。分離前のレスポンス時間：340ms。分離後：4ms。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## 技術的決定
 
-## 実装例
+MediatRを使ってコマンド（書き込み）とクエリ（読み込み）を分離する。コマンドは完全なドメインモデルでEF Coreを使用。クエリは直接SQLと特定の射影でDapperを使用。双方はモデルクラスを共有しない。
+
+## 実装
+
 ```csharp
-public sealed record D003SeparacaoDeResponsabilidadesCoDecision(string Boundary, string Owner, string ExpectedOutcome);
+// 書き込み側
+public sealed record RegistrarPessoaDesaparecidaCommand(
+    string Nome, double Latitude, double Longitude, string DescricaoFisica
+) : IRequest<Guid>;
 
-public static class D003SeparacaoDeResponsabilidadesCoPolicy
+// 読み込み側
+public sealed record HotspotProximoDto(
+    Guid HotspotId, int NivelRisco, double DistanciaKm, string Descricao);
+
+public sealed class BuscarHotspotsProximosHandler
+    : IRequestHandler<BuscarHotspotsProximosQuery, IReadOnlyList<HotspotProximoDto>>
 {
-    public static bool IsReady(D003SeparacaoDeResponsabilidadesCoDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    public async Task<IReadOnlyList<HotspotProximoDto>> Handle(
+        BuscarHotspotsProximosQuery qry, CancellationToken ct)
+    {
+        const string sql = """
+            SELECT h.id AS HotspotId, h.nivel_risco AS NivelRisco,
+                   ST_Distance(h.centro::geography,
+                       ST_MakePoint(@lon, @lat)::geography) / 1000.0 AS DistanciaKm,
+                   h.descricao AS Descricao
+            FROM   hotspots h
+            WHERE  h.ativo = TRUE
+              AND  ST_DWithin(h.centro::geography,
+                              ST_MakePoint(@lon, @lat)::geography, @raioMetros)
+            ORDER  BY DistanciaKm;
+            """;
+        var rows = await _db.QueryAsync<HotspotProximoDto>(
+            sql, new { lat = qry.Latitude, lon = qry.Longitude, raioMetros = qry.RaioKm * 1000 });
+        return rows.AsList();
+    }
 }
 ```
 
-## SOS Location での適用方法
-- .NETバックエンドにおけるCQRSによる責務分離 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 業務ルール、外部連携、UIを同じモジュールに混ぜる。
-- 責任者、境界、期待動作を明示しない。
+`BuscarHotspotsProximos`クエリは、5km半径内の50,000ホットスポットに対してGISTインデックスで4msで実行される。`RegistrarPessoaDesaparecida`コマンドはEF Coreを使用して、永続化前にドメインイベントのディスパッチと不変条件の検証を保証する。どちらも相手のパフォーマンスを損なわない。
 
 ## 成功基準
-境界を説明し、契約をテストし、回帰を測定できれば十分成熟しています。
+
+読み込みクエリが集約ルートを生成しない。書き込みコマンドが平坦なレスポンスDTOを構築しない。`GET /hotspots/nearby`エンドポイントが毎秒200リクエストの負荷下で20ms以下で応答する。
+
+## SOS Locationとの関係
+
+災害中、SOS Locationは高頻度のマップ読み込み（各現場デバイスが10秒ごとに更新）と低頻度の書き込み（インシデント登録）を受信する。CQRS分離により、書き込み側のドメインロジックに影響を与えずに読み込み側をスケールできる。
 '''

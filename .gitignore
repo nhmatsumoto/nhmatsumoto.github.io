@@ -12,6 +12,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Local editor database
+data/*.sqlite3
+data/*.sqlite3-*
+data/*.db
+data/*.db-*
+
 # Runtime data
 pids
 *.pid

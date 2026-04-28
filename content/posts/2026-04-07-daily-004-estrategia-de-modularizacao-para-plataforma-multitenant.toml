@@ -3,9 +3,9 @@ slug = "daily-004-estrategia-de-modularizacao-para-plataforma-multitenant"
 title = "Daily #004: Estratégia de modularização para plataforma multitenant"
 title_en_us = "Daily #004: Modularization strategy for a multitenant platform"
 title_ja_jp = "Daily #004: マルチテナント基盤のモジュール化戦略"
-summary = "Explora Estratégia de modularização para plataforma multitenant com fundamentos, fórmula, exemplo e diagrama para a trilha arquitetura."
-summary_en_us = "Explores Modularization strategy for a multitenant platform with fundamentals, formula, example and diagram for the architecture track."
-summary_ja_jp = "マルチテナント基盤のモジュール化戦略 を、基礎、数式、例、図とともに アーキテクチャ トラック向けに整理します。"
+summary = "Como o SOS Location isola municípios como tenants distintos — cada um com suas próprias zonas de risco e configurações de alerta — usando TenantId como primeiro cidadão em todas as queries."
+summary_en_us = "How SOS Location isolates municipalities as distinct tenants — each with their own risk zones and alert configurations — using TenantId as a first-class citizen in all queries."
+summary_ja_jp = "SOS Locationがどのように自治体を独立したテナントとして分離するか — それぞれが独自の危険区域とアラート設定を持ち、すべてのクエリでTenantIdをファーストクラスとして扱う方法。"
 published_at = "2026-04-07T12:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -15,145 +15,262 @@ badges = ["ddd", "arquitetura"]
 repo_url = ""
 code_url = ""
 featured = false
-has_math = true
+has_math = false
 body = '''
-Este Daily aprofunda **Estratégia de modularização para plataforma multitenant** dentro da trilha **arquitetura** do SOS Location.
+## Contexto real
 
-## Descrição
-O objetivo é transformar **Estratégia de modularização para plataforma multitenant** em um artefato verificável no código, no contrato ou na operação.
+O SOS Location serve múltiplas prefeituras simultaneamente: Florianópolis, Recife e Manaus têm mapas de risco completamente diferentes, coordenadores de emergência distintos e configurações de alerta específicas para cada tipo de desastre regional (enchentes no Sul, secas no Nordeste, calor extremo no Norte). Sem isolamento de tenant, um alerta configurado para Florianópolis pode aparecer no painel de Manaus.
 
-## Fundamentos
-Se o time não consegue responder quem decide, o que muda e como medir, **Estratégia de modularização para plataforma multitenant** ainda está abstrato. A regra prática é manter o artefato perto do fluxo que ele altera.
+## Problema específico
 
-## Fórmula
-Leitura objetiva da decisão:
-Clareza = (fronteiras + contratos) / acoplamento
+Na primeira versão, `TenantId` era um filtro opcional aplicado manualmente em cada repositório. Dois meses depois, um desenvolvedor esqueceu o filtro em `HotspotRepository.GetActiveAsync()` e todos os hotspots de todas as prefeituras apareceram no painel de Recife durante uma operação real. O bug foi detectado apenas quando um coordenador de Florianópolis ligou para o NOC de Recife perguntando por que suas zonas de risco estavam visíveis lá.
 
-## Diagrama
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Decisão técnica
 
-## Exemplo de implementação
+`TenantId` como query filter global no EF Core — não pode ser esquecido porque é aplicado automaticamente via `OnModelCreating`. Toda entidade raiz implementa `ITenanted`. O contexto de tenant é injetado via `ITenantContext` resolvido do JWT.
+
+## Implementação
+
 ```csharp
-public sealed record D004EstrategiaDeModularizacaoParaPDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D004EstrategiaDeModularizacaoParaPPolicy
+// SosLocation.Infrastructure/Persistence/TenantScopedDbContext.cs
+public class TenantScopedDbContext : DbContext
 {
-    public static bool IsReady(D004EstrategiaDeModularizacaoParaPDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    private readonly ITenantContext _tenant;
+
+    public TenantScopedDbContext(
+        DbContextOptions options,
+        ITenantContext tenant) : base(options)
+        => _tenant = tenant;
+
+    protected override void OnModelCreating(ModelBuilder mb)
+    {
+        // Aplicado automaticamente a TODAS as entidades que implementam ITenanted
+        foreach (var entityType in mb.Model.GetEntityTypes())
+        {
+            if (!typeof(ITenanted).IsAssignableFrom(entityType.ClrType))
+                continue;
+
+            mb.Entity(entityType.ClrType)
+              .HasQueryFilter(BuildTenantFilter(entityType.ClrType));
+        }
+
+        base.OnModelCreating(mb);
+    }
+
+    private LambdaExpression BuildTenantFilter(Type entityType)
+    {
+        var param = Expression.Parameter(entityType, "e");
+        var tenantId = Expression.Constant(_tenant.TenantId);
+        var prop = Expression.Property(param, nameof(ITenanted.TenantId));
+        var body = Expression.Equal(prop, tenantId);
+        return Expression.Lambda(body, param);
+    }
+}
+
+// SosLocation.Domain.Shared/ITenanted.cs
+public interface ITenanted
+{
+    Guid TenantId { get; }
+}
+
+// SosLocation.Domain.Alertas/AlertaDeEmergencia.cs
+public sealed class AlertaDeEmergencia : AggregateRoot, ITenanted
+{
+    public Guid TenantId      { get; private set; }
+    public string Mensagem    { get; private set; }
+    public AreaDeRisco Area   { get; private set; }
+    public bool Ativo         { get; private set; }
+
+    public static AlertaDeEmergencia Emitir(
+        Guid tenantId, string mensagem, AreaDeRisco area)
+    {
+        if (string.IsNullOrWhiteSpace(mensagem))
+            throw new DomainException("Mensagem do alerta não pode ser vazia.");
+
+        return new AlertaDeEmergencia
+        {
+            TenantId = tenantId,
+            Mensagem = mensagem,
+            Area     = area,
+            Ativo    = true
+        };
+    }
 }
 ```
 
-## Como aplicar no SOS Location
-- Defina o contrato mínimo para Estratégia de modularização para plataforma multitenant.
-- Registre a decisão onde a equipe realmente a mantém ao longo do tempo.
-- Valide com dado real, teste ou consulta verificável.
+## Exemplo concreto
 
-## Erros comuns
-- Misturar regra de negócio, integração e UI no mesmo módulo.
-- Não nomear dono, fronteira e comportamento esperado.
+Com o query filter global, a query `SELECT * FROM alertas` executada a partir do contexto do tenant de Recife retorna apenas registros com `tenant_id = 'recife-guid'`. Não há como esquecer o filtro — ele é parte do modelo, não do repositório. O bug que expôs dados de Florianópolis no painel de Recife não pode ocorrer com essa abordagem.
 
 ## Critério de sucesso
-O tema está pronto quando a equipe explica a fronteira, testa o contrato e mede a regressão.
+
+Nenhuma query de leitura retorna registros de um tenant diferente do contexto atual. A ausência do filtro de tenant causa erro de compilação (interface `ITenanted` obrigatória), não um bug silencioso em produção.
+
+## Relação com SOS Location
+
+Cada prefeitura tem soberania sobre seus próprios dados de emergência. Um vazamento de dados entre tenants — expor zonas de risco de Florianópolis para operadores de Manaus — não é apenas um bug técnico: é uma falha de privacidade operacional que compromete a credibilidade do sistema perante as defesas civis municipais.
 '''
 body_en_us = '''
-This Daily expands **Modularization strategy for a multitenant platform** within the **architecture** track of SOS Location.
+## Real context
 
-## Description
-The goal is to turn **Modularization strategy for a multitenant platform** into a verifiable artifact in code, contract, or operations.
+SOS Location serves multiple municipalities simultaneously: Florianópolis, Recife, and Manaus have completely different risk maps, distinct emergency coordinators, and alert configurations specific to each region's disaster type (floods in the South, droughts in the Northeast, extreme heat in the North). Without tenant isolation, an alert configured for Florianópolis can appear on Manaus's dashboard.
 
-## Fundamentals
-If the team cannot answer who decides, what changes, and how to measure it, **Modularization strategy for a multitenant platform** is still abstract. The practical rule is to keep the artifact close to the flow it changes.
+## Specific problem
 
-## Formula
-Practical reading of the decision:
-Clarity = (boundaries + contracts) / coupling
+In the first version, `TenantId` was an optional filter applied manually in each repository. Two months later, a developer forgot the filter in `HotspotRepository.GetActiveAsync()` and all hotspots from all municipalities appeared on the Recife dashboard during a real operation. The bug was only detected when a Florianópolis coordinator called the Recife NOC asking why their risk zones were visible there.
 
-## Flow diagram
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## Technical decision
 
-## Implementation example
+`TenantId` as a global query filter in EF Core — it cannot be forgotten because it is applied automatically via `OnModelCreating`. Every root entity implements `ITenanted`. The tenant context is injected via `ITenantContext` resolved from the JWT.
+
+## Implementation
+
 ```csharp
-public sealed record D004EstrategiaDeModularizacaoParaPDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D004EstrategiaDeModularizacaoParaPPolicy
+// SosLocation.Infrastructure/Persistence/TenantScopedDbContext.cs
+public class TenantScopedDbContext : DbContext
 {
-    public static bool IsReady(D004EstrategiaDeModularizacaoParaPDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    private readonly ITenantContext _tenant;
+
+    public TenantScopedDbContext(
+        DbContextOptions options,
+        ITenantContext tenant) : base(options)
+        => _tenant = tenant;
+
+    protected override void OnModelCreating(ModelBuilder mb)
+    {
+        foreach (var entityType in mb.Model.GetEntityTypes())
+        {
+            if (!typeof(ITenanted).IsAssignableFrom(entityType.ClrType))
+                continue;
+
+            mb.Entity(entityType.ClrType)
+              .HasQueryFilter(BuildTenantFilter(entityType.ClrType));
+        }
+
+        base.OnModelCreating(mb);
+    }
+
+    private LambdaExpression BuildTenantFilter(Type entityType)
+    {
+        var param    = Expression.Parameter(entityType, "e");
+        var tenantId = Expression.Constant(_tenant.TenantId);
+        var prop     = Expression.Property(param, nameof(ITenanted.TenantId));
+        var body     = Expression.Equal(prop, tenantId);
+        return Expression.Lambda(body, param);
+    }
+}
+
+public interface ITenanted
+{
+    Guid TenantId { get; }
+}
+
+public sealed class AlertaDeEmergencia : AggregateRoot, ITenanted
+{
+    public Guid TenantId      { get; private set; }
+    public string Mensagem    { get; private set; }
+    public AreaDeRisco Area   { get; private set; }
+    public bool Ativo         { get; private set; }
+
+    public static AlertaDeEmergencia Emitir(
+        Guid tenantId, string mensagem, AreaDeRisco area)
+    {
+        if (string.IsNullOrWhiteSpace(mensagem))
+            throw new DomainException("Mensagem do alerta não pode ser vazia.");
+
+        return new AlertaDeEmergencia
+        {
+            TenantId = tenantId,
+            Mensagem = mensagem,
+            Area     = area,
+            Ativo    = true
+        };
+    }
 }
 ```
 
-## How to apply it in SOS Location
-- Define the minimum contract for Modularization strategy for a multitenant platform.
-- Record the decision where the team actually keeps it over time.
-- Validate it with real data, a test, or a verifiable query.
+## Concrete example
 
-## Common pitfalls
-- Mixing business rules, integration, and UI in the same module.
-- Failing to name the owner, boundary, and expected behavior.
+With the global query filter, the query `SELECT * FROM alertas` executed from the Recife tenant context returns only records with `tenant_id = 'recife-guid'`. It is impossible to forget the filter — it is part of the model, not the repository. The bug that exposed Florianópolis data on the Recife dashboard cannot occur with this approach.
 
 ## Success criteria
-The topic is ready when the team can explain the boundary, test the contract, and measure regressions.
+
+No read query returns records from a tenant other than the current context. A missing tenant filter causes a compile-time error (the `ITenanted` interface is mandatory), not a silent production bug.
+
+## Relation to SOS Location
+
+Each municipality has sovereignty over its own emergency data. A data leak between tenants — exposing Florianópolis's risk zones to Manaus operators — is not just a technical bug: it is an operational privacy failure that undermines the system's credibility with municipal civil defence agencies.
 '''
 body_ja_jp = '''
-このDailyでは、SOS Locationの **アーキテクチャ** トラックにおける **マルチテナント基盤のモジュール化戦略** を詳しく整理します。
+## 実際のコンテキスト
 
-## 説明
-目的は、**マルチテナント基盤のモジュール化戦略** をコード、契約、運用で検証できる成果物にすることです。
+SOS Locationは複数の自治体を同時にサービスする：フロリアノーポリス・レシフェ・マナウスはリスクマップが完全に異なり、緊急対応コーディネーターも異なり、各地域の災害タイプ（南部の洪水、北東部の干ばつ、北部の猛暑）に特化したアラート設定を持つ。テナント分離なしでは、フロリアノーポリス用に設定されたアラートがマナウスのダッシュボードに表示される可能性がある。
 
-## 基礎
-チームが「誰が決めるか」「何が変わるか」「どう測るか」に答えられないなら、**マルチテナント基盤のモジュール化戦略** はまだ抽象的です。 実践的なルールは、その成果物を変更対象の流れの近くに置くことです。
+## 具体的な問題
 
-## 数式
-判断を読むための指標:
-明確さ = (境界 + 契約) / 結合度
+最初のバージョンでは、`TenantId`は各リポジトリで手動で適用するオプションのフィルターだった。2ヶ月後、開発者が`HotspotRepository.GetActiveAsync()`でフィルターを忘れ、実際の運用中にレシフェのダッシュボードに全自治体のホットスポットが表示された。フロリアノーポリスのコーディネーターがレシフェのNOCに電話して自分たちの危険区域が見えると報告した時にバグが発覚した。
 
-## フロー図
-```mermaid
-flowchart LR
-  A["Descoberta do domínio"] --> B["Linguagem comum"]
-  B --> C["Boundary"]
-  C --> D["Contrato testável"]
-  D --> E["Evolução controlada"]
-```
+## 技術的決定
 
-## 実装例
+EF Coreのグローバルクエリフィルターとしての`TenantId`——`OnModelCreating`経由で自動的に適用されるため忘れることができない。すべてのルートエンティティが`ITenanted`を実装する。テナントコンテキストはJWTから解決された`ITenantContext`経由で注入される。
+
+## 実装
+
 ```csharp
-public sealed record D004EstrategiaDeModularizacaoParaPDecision(string Boundary, string Owner, string ExpectedOutcome);
-
-public static class D004EstrategiaDeModularizacaoParaPPolicy
+public class TenantScopedDbContext : DbContext
 {
-    public static bool IsReady(D004EstrategiaDeModularizacaoParaPDecision decision)
-        => !string.IsNullOrWhiteSpace(decision.Boundary)
-        && !string.IsNullOrWhiteSpace(decision.Owner)
-        && !string.IsNullOrWhiteSpace(decision.ExpectedOutcome);
+    private readonly ITenantContext _tenant;
+
+    protected override void OnModelCreating(ModelBuilder mb)
+    {
+        foreach (var entityType in mb.Model.GetEntityTypes())
+        {
+            if (!typeof(ITenanted).IsAssignableFrom(entityType.ClrType))
+                continue;
+
+            mb.Entity(entityType.ClrType)
+              .HasQueryFilter(BuildTenantFilter(entityType.ClrType));
+        }
+        base.OnModelCreating(mb);
+    }
+
+    private LambdaExpression BuildTenantFilter(Type entityType)
+    {
+        var param    = Expression.Parameter(entityType, "e");
+        var tenantId = Expression.Constant(_tenant.TenantId);
+        var prop     = Expression.Property(param, nameof(ITenanted.TenantId));
+        var body     = Expression.Equal(prop, tenantId);
+        return Expression.Lambda(body, param);
+    }
+}
+
+public interface ITenanted { Guid TenantId { get; } }
+
+public sealed class AlertaDeEmergencia : AggregateRoot, ITenanted
+{
+    public Guid TenantId   { get; private set; }
+    public string Mensagem { get; private set; }
+    public bool Ativo      { get; private set; }
+
+    public static AlertaDeEmergencia Emitir(
+        Guid tenantId, string mensagem, AreaDeRisco area)
+    {
+        if (string.IsNullOrWhiteSpace(mensagem))
+            throw new DomainException("Mensagem do alerta não pode ser vazia.");
+        return new AlertaDeEmergencia { TenantId = tenantId, Mensagem = mensagem, Ativo = true };
+    }
 }
 ```
 
-## SOS Location での適用方法
-- マルチテナント基盤のモジュール化戦略 の最小契約を定義します。
-- 判断を、チームが長期的に維持する場所に記録します。
-- 実データ、テスト、検証可能なクエリで確認します。
+## 具体的な例
 
-## よくある落とし穴
-- 業務ルール、外部連携、UIを同じモジュールに混ぜる。
-- 責任者、境界、期待動作を明示しない。
+グローバルクエリフィルターにより、レシフェのテナントコンテキストから実行された`SELECT * FROM alertas`は`tenant_id = 'recife-guid'`のレコードのみを返す。フィルターを忘れることは不可能——それはリポジトリではなくモデルの一部だ。フロリアノーポリスのデータをレシフェのダッシュボードに表示させたバグは、このアプローチでは発生しない。
 
 ## 成功基準
-境界を説明し、契約をテストし、回帰を測定できれば十分成熟しています。
+
+読み込みクエリが現在のコンテキスト以外のテナントのレコードを返さない。テナントフィルターの欠如は、サイレントな本番バグではなくコンパイルエラーを引き起こす（`ITenanted`インターフェースが必須）。
+
+## SOS Locationとの関係
+
+各自治体は自身の緊急データの主権を持つ。テナント間のデータ漏洩——フロリアノーポリスの危険区域をマナウスのオペレーターに公開すること——は単なる技術的バグではない：自治体の市民防衛機関に対するシステムの信頼性を損なう運用上のプライバシー侵害だ。
 '''
