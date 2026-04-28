@@ -5182,9 +5182,17 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 }
 
 [data-theme="light"] .prose pre,
-[data-theme="light"] .reader-article-prose pre,
-[data-theme="light"] .code-shell {
+[data-theme="light"] .reader-article-prose pre {
   background: rgba(232, 243, 250, 0.86);
+}
+
+/* Code shells always stay dark — Shiki tokens are github-dark and rely on dark bg */
+[data-theme="light"] .code-shell,
+[data-theme="light"] .post-body .code-shell,
+[data-theme="light"] .prose .code-shell {
+  background: #161b22;
+  border-color: rgba(48, 54, 61, 0.75);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(48, 54, 61, 0.35);
 }
 
 .prose blockquote,

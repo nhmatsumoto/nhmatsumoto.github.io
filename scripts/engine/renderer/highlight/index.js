@@ -14,13 +14,19 @@ async function run() {
       // Normalização de alias para o Shiki
       const langMap = {
         'ts': 'typescript',
+        'tsx': 'tsx',
         'js': 'javascript',
+        'jsx': 'jsx',
         'cs': 'csharp',
         'py': 'python',
         'sh': 'bash',
+        'shell': 'bash',
         'sql': 'sql',
         'yml': 'yaml',
         'json': 'json',
+        'md': 'markdown',
+        'tf': 'terraform',
+        'dockerfile': 'dockerfile',
       };
 
       const resolvedLang = langMap[lang?.toLowerCase()] || lang || 'text';
