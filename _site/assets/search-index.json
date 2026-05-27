@@ -18,6 +18,122 @@
     "summary": "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."
   },
   {
+    "title": "Litografia de Semicondutores: A Máquina Mais Complexa da Humanidade",
+    "url": "https://nhmatsumoto.github.io/posts/20260527-090000-litografia-de-semicondutores-euv/",
+    "kind": "post",
+    "summary": "Do plasma de estanho aos espelhos polidos com precisão atômica: como a ASML e seus parceiros criaram a única máquina capaz de imprimir transistores menores que um vírus, e por que isso determina o futuro do poder computacional global.",
+    "keywords": [
+      "semicondutores",
+      "hardware",
+      "física",
+      "engenharia",
+      "euv",
+      "asml",
+      "chips"
+    ],
+    "title_en_us": "Semiconductor Lithography: The Most Complex Machine Ever Built",
+    "title_ja_jp": "半導体リソグラフィ：人類が作った最も複雑な機械",
+    "summary_en_us": "From tin plasma to atomically polished mirrors: how ASML and its partners built the only machine capable of printing transistors smaller than a virus, and why this determines the future of global computational power.",
+    "summary_ja_jp": "スズのプラズマから原子レベルで研磨されたミラーまで：ASMLとそのパートナーが、ウイルスより小さなトランジスタを印刷できる唯一の機械をいかに作り上げたか、そしてそれが世界の計算能力の未来をいかに左右するか。"
+  },
+  {
+    "title": "Orquestração vs coreografia em microservices",
+    "url": "https://nhmatsumoto.github.io/posts/20260429-094000-orchestration-vs-choreography/",
+    "kind": "post",
+    "summary": "Orquestração Fluxo centralizado. Coreografia Eventos distribuídos. Trade off Orquestração controle Coreografia flexibilidade Regra Comece simples, evolua para eventos. Insight Cor…",
+    "keywords": [
+      "microservices",
+      "event_driven"
+    ]
+  },
+  {
+    "title": "Observabilidade: logs, métricas e tracing",
+    "url": "https://nhmatsumoto.github.io/posts/20260429-093500-observability/",
+    "kind": "post",
+    "summary": "Problema Não saber o que está acontecendo. Pilares Logs Métricas Tracing Regra Sistema sem observabilidade é cego. Insight Debug em produção exige dados.",
+    "keywords": [
+      "observability",
+      "devops"
+    ]
+  },
+  {
+    "title": "Backpressure e controle de carga em sistemas distribuídos",
+    "url": "https://nhmatsumoto.github.io/posts/20260429-093000-backpressure/",
+    "kind": "post",
+    "summary": "Problema Sistema recebe mais carga do que suporta. Solução Backpressure. Estratégias Queue limitada Rate limit Retry com delay Insight Sistema saudável sabe dizer \"não\".",
+    "keywords": [
+      "distributed_systems",
+      "performance"
+    ]
+  },
+  {
+    "title": "Outbox Pattern: garantindo consistência entre serviços",
+    "url": "https://nhmatsumoto.github.io/posts/20260429-092500-outbox-pattern/",
+    "kind": "post",
+    "summary": "Problema Salvar no banco e publicar evento não é atômico. Solução Outbox. Fluxo 1. Salva dados + evento na mesma transação 2. Worker publica evento Insight Outbox elimina inconsis…",
+    "keywords": [
+      "microservices",
+      "event_driven",
+      "consistency"
+    ]
+  },
+  {
+    "title": "Idempotência em APIs: requisito obrigatório",
+    "url": "https://nhmatsumoto.github.io/posts/20260429-092000-idempotency-apis/",
+    "kind": "post",
+    "summary": "Problema Requisições duplicadas geram inconsistência. Solução Idempotência. Exemplo Regra Cliente precisa enviar chave estável por tentativa. Insight Sem idempotência, retry vira…",
+    "keywords": [
+      "api",
+      "distributed_systems",
+      "backend"
+    ]
+  },
+  {
+    "title": "Consistência eventual vs forte: trade-off inevitável",
+    "url": "https://nhmatsumoto.github.io/posts/20260429-091500-consistency-tradeoffs/",
+    "kind": "post",
+    "summary": "Problema Sistemas distribuídos não têm consistência perfeita. Escolhas Forte bloqueio, menor escala Eventual mais rápido, menos garantia imediata Regra Negócio define consistência…",
+    "keywords": [
+      "distributed_systems",
+      "consistency",
+      "scalability"
+    ]
+  },
+  {
+    "title": "CQRS: quando usar e quando evitar",
+    "url": "https://nhmatsumoto.github.io/posts/20260429-091000-cqrs-tradeoffs/",
+    "kind": "post",
+    "summary": "Problema CRUD não escala para leitura complexa. Solução Separar leitura e escrita. Benefícios Performance Modelos otimizados Custos Complexidade Consistência eventual Regra Use CQ…",
+    "keywords": [
+      "cqrs",
+      "arquitetura",
+      "scalability"
+    ]
+  },
+  {
+    "title": "DDD na prática: linguagem ubíqua como ativo estratégico",
+    "url": "https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/",
+    "kind": "post",
+    "summary": "Problema Código não reflete negócio. Solução Linguagem ubíqua. Exemplo Order, Invoice, Payment não são tabelas, são conceitos. Regra Nomear baseado no domínio Evitar termos genéri…",
+    "keywords": [
+      "ddd",
+      "arquitetura",
+      "design"
+    ]
+  },
+  {
+    "title": "Monólito modular vs Microservices: decisão arquitetural real",
+    "url": "https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/",
+    "kind": "post",
+    "summary": "Problema Microservices cedo demais geram custo operacional alto. Regra Comece com monólito modular bem definido. Estrutura Boundaries claros (DDD) Camadas isoladas Comunicação int…",
+    "keywords": [
+      "arquitetura",
+      "microservices",
+      "ddd",
+      "scalability"
+    ]
+  },
+  {
     "title": "Daily #045: Lock otimista vs lock pessimista",
     "url": "https://nhmatsumoto.github.io/posts/20260409-050000-daily-045-lock-otimista-vs-lock-pessimista/",
     "kind": "post",

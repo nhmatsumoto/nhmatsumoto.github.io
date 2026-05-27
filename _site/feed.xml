@@ -6,6 +6,76 @@
     <description>um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção</description>
     <atom:link href="https://nhmatsumoto.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Litografia de Semicondutores: A Máquina Mais Complexa da Humanidade</title>
+      <link>https://nhmatsumoto.github.io/posts/20260527-090000-litografia-de-semicondutores-euv/</link>
+      <description><![CDATA[Do plasma de estanho aos espelhos polidos com precisão atômica: como a ASML e seus parceiros criaram a única máquina capaz de imprimir transistores menores que um vírus, e por que isso determina o futuro do poder computacional global.]]></description>
+      <pubDate>Wed, 27 May 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260527-090000-litografia-de-semicondutores-euv/</guid>
+    </item>
+    <item>
+      <title>Orquestração vs coreografia em microservices</title>
+      <link>https://nhmatsumoto.github.io/posts/20260429-094000-orchestration-vs-choreography/</link>
+      <description><![CDATA[Orquestração Fluxo centralizado. Coreografia Eventos distribuídos. Trade off Orquestração controle Coreografia flexibilidade Regra Comece simples, evolua para eventos. Insight Cor…]]></description>
+      <pubDate>Wed, 29 Apr 2026 09:40:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-094000-orchestration-vs-choreography/</guid>
+    </item>
+    <item>
+      <title>Observabilidade: logs, métricas e tracing</title>
+      <link>https://nhmatsumoto.github.io/posts/20260429-093500-observability/</link>
+      <description><![CDATA[Problema Não saber o que está acontecendo. Pilares Logs Métricas Tracing Regra Sistema sem observabilidade é cego. Insight Debug em produção exige dados.]]></description>
+      <pubDate>Wed, 29 Apr 2026 09:35:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-093500-observability/</guid>
+    </item>
+    <item>
+      <title>Backpressure e controle de carga em sistemas distribuídos</title>
+      <link>https://nhmatsumoto.github.io/posts/20260429-093000-backpressure/</link>
+      <description><![CDATA[Problema Sistema recebe mais carga do que suporta. Solução Backpressure. Estratégias Queue limitada Rate limit Retry com delay Insight Sistema saudável sabe dizer "não".]]></description>
+      <pubDate>Wed, 29 Apr 2026 09:30:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-093000-backpressure/</guid>
+    </item>
+    <item>
+      <title>Outbox Pattern: garantindo consistência entre serviços</title>
+      <link>https://nhmatsumoto.github.io/posts/20260429-092500-outbox-pattern/</link>
+      <description><![CDATA[Problema Salvar no banco e publicar evento não é atômico. Solução Outbox. Fluxo 1. Salva dados + evento na mesma transação 2. Worker publica evento Insight Outbox elimina inconsis…]]></description>
+      <pubDate>Wed, 29 Apr 2026 09:25:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-092500-outbox-pattern/</guid>
+    </item>
+    <item>
+      <title>Idempotência em APIs: requisito obrigatório</title>
+      <link>https://nhmatsumoto.github.io/posts/20260429-092000-idempotency-apis/</link>
+      <description><![CDATA[Problema Requisições duplicadas geram inconsistência. Solução Idempotência. Exemplo Regra Cliente precisa enviar chave estável por tentativa. Insight Sem idempotência, retry vira…]]></description>
+      <pubDate>Wed, 29 Apr 2026 09:20:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-092000-idempotency-apis/</guid>
+    </item>
+    <item>
+      <title>Consistência eventual vs forte: trade-off inevitável</title>
+      <link>https://nhmatsumoto.github.io/posts/20260429-091500-consistency-tradeoffs/</link>
+      <description><![CDATA[Problema Sistemas distribuídos não têm consistência perfeita. Escolhas Forte bloqueio, menor escala Eventual mais rápido, menos garantia imediata Regra Negócio define consistência…]]></description>
+      <pubDate>Wed, 29 Apr 2026 09:15:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-091500-consistency-tradeoffs/</guid>
+    </item>
+    <item>
+      <title>CQRS: quando usar e quando evitar</title>
+      <link>https://nhmatsumoto.github.io/posts/20260429-091000-cqrs-tradeoffs/</link>
+      <description><![CDATA[Problema CRUD não escala para leitura complexa. Solução Separar leitura e escrita. Benefícios Performance Modelos otimizados Custos Complexidade Consistência eventual Regra Use CQ…]]></description>
+      <pubDate>Wed, 29 Apr 2026 09:10:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-091000-cqrs-tradeoffs/</guid>
+    </item>
+    <item>
+      <title>DDD na prática: linguagem ubíqua como ativo estratégico</title>
+      <link>https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/</link>
+      <description><![CDATA[Problema Código não reflete negócio. Solução Linguagem ubíqua. Exemplo Order, Invoice, Payment não são tabelas, são conceitos. Regra Nomear baseado no domínio Evitar termos genéri…]]></description>
+      <pubDate>Wed, 29 Apr 2026 09:05:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/</guid>
+    </item>
+    <item>
+      <title>Monólito modular vs Microservices: decisão arquitetural real</title>
+      <link>https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/</link>
+      <description><![CDATA[Problema Microservices cedo demais geram custo operacional alto. Regra Comece com monólito modular bem definido. Estrutura Boundaries claros (DDD) Camadas isoladas Comunicação int…]]></description>
+      <pubDate>Wed, 29 Apr 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/</guid>
+    </item>
+    <item>
       <title>Daily #045: Lock otimista vs lock pessimista</title>
       <link>https://nhmatsumoto.github.io/posts/20260409-050000-daily-045-lock-otimista-vs-lock-pessimista/</link>
       <description><![CDATA[Como o SOS Location usa lock pessimista (SELECT FOR UPDATE) para atualizar saldo de campanhas de doação com alta concorrência, e lock otimista (xmin/rowversion) para edições de dados de operações com baixa concorrência de escrita.]]></description>
@@ -74,76 +144,6 @@
       <description><![CDATA[Como o SOS Location modelou os endpoints de PessoaDesaparecida: POST /api/pessoas-desaparecidas com geolocalização do último avistamento, PATCH para atualizar status (encontrada/óbito), e GET com raio de busca via ST_DWithin.]]></description>
       <pubDate>Wed, 08 Apr 2026 20:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-200000-daily-036-modelagem-de-api-para-pessoas-desaparecidas/</guid>
-    </item>
-    <item>
-      <title>Daily #035: Criação de endpoint para snapshot de operações</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-190000-daily-035-criacao-de-endpoint-para-snapshot-de-operacoes/</link>
-      <description><![CDATA[Como o SOS Location implementou GET /api/operacoes/{id}/snapshot que retorna o estado completo de uma OperacaoDeResgate em um único response — areas, hotspots, pessoas desaparecidas, rotas — eliminando 4 requests paralelos.]]></description>
-      <pubDate>Wed, 08 Apr 2026 19:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-190000-daily-035-criacao-de-endpoint-para-snapshot-de-operacoes/</guid>
-    </item>
-    <item>
-      <title>Daily #034: Avaliação de uso do Keycloak para SSO</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-180000-daily-034-avaliacao-de-uso-do-keycloak-para-sso/</link>
-      <description><![CDATA[Por que o SOS Location avaliou Keycloak para SSO e decidiu por JWT próprio na v1, o critério de decisão baseado em número de tenants e integrações, e o plano de migração para quando Keycloak fizer sentido.]]></description>
-      <pubDate>Wed, 08 Apr 2026 18:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-180000-daily-034-avaliacao-de-uso-do-keycloak-para-sso/</guid>
-    </item>
-    <item>
-      <title>Daily #033: Padronização de autenticação com JWT</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-170000-daily-033-padronizacao-de-autenticacao-com-jwt/</link>
-      <description><![CDATA[Como o SOS Location padronizou os claims JWT (sub, role, tenantId, municipioId), validação de token no middleware .NET e como o tenantId no claim garante o isolamento multitenant sem query adicional.]]></description>
-      <pubDate>Wed, 08 Apr 2026 17:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-170000-daily-033-padronizacao-de-autenticacao-com-jwt/</guid>
-    </item>
-    <item>
-      <title>Daily #032: Tratamento de erro 401 em chamadas Axios</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-160000-daily-032-tratamento-de-erro-401-em-chamadas-axios/</link>
-      <description><![CDATA[Como o SOS Location implementou um Axios interceptor para renovar o JWT silenciosamente no 401, usando refresh token com fila de requests pendentes para evitar múltiplas chamadas de renovação simultâneas.]]></description>
-      <pubDate>Wed, 08 Apr 2026 16:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-160000-daily-032-tratamento-de-erro-401-em-chamadas-axios/</guid>
-    </item>
-    <item>
-      <title>Daily #031: Problema de CORS entre frontend e backend</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-150000-daily-031-problema-de-cors-entre-frontend-e-backend/</link>
-      <description><![CDATA[Como o SOS Location resolveu o bloqueio CORS entre o frontend React (porta 5173) e o backend .NET (porta 7001), e como a política de CORS é diferente em desenvolvimento, staging e produção.]]></description>
-      <pubDate>Wed, 08 Apr 2026 15:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-150000-daily-031-problema-de-cors-entre-frontend-e-backend/</guid>
-    </item>
-    <item>
-      <title>Daily #030: Integração de dados meteorológicos no mapa em tempo real</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-140000-daily-030-integracao-de-dados-meteorologicos-no-mapa-em-tempo-real/</link>
-      <description><![CDATA[Como o SOS Location renderiza o overlay de precipitação no Leaflet usando gradiente de intensidade de chuva por célula de 0.1°, atualizado a cada 30 minutos via polling Open-Meteo e interpolado visualmente com canvas.]]></description>
-      <pubDate>Wed, 08 Apr 2026 14:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-140000-daily-030-integracao-de-dados-meteorologicos-no-mapa-em-tempo-real/</guid>
-    </item>
-    <item>
-      <title>Daily #029: Estratégia de LOD (Level of Detail) estilo Minecraft</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-130000-daily-029-estrategia-de-lod-level-of-detail-estilo-minecraft/</link>
-      <description><![CDATA[Como o SOS Location aplica LOD no mapa: zoom < 10 exibe hexágonos H3 de contagem de risco por região, zoom 10–13 exibe polígonos simplificados de AreaDeRisco, zoom > 13 exibe geometria completa com popup de detalhes.]]></description>
-      <pubDate>Wed, 08 Apr 2026 13:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-130000-daily-029-estrategia-de-lod-level-of-detail-estilo-minecraft/</guid>
-    </item>
-    <item>
-      <title>Daily #028: Carregamento assíncrono de camadas geográficas</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-120000-daily-028-carregamento-assincrono-de-camadas-geograficas/</link>
-      <description><![CDATA[Como o SOS Location carrega camadas geográficas em paralelo com Promise.allSettled, prioriza AreaDeRisco e exibe skeleton loader por camada enquanto outras ainda carregam, sem bloquear a interface.]]></description>
-      <pubDate>Wed, 08 Apr 2026 12:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-120000-daily-028-carregamento-assincrono-de-camadas-geograficas/</guid>
-    </item>
-    <item>
-      <title>Daily #027: Desenho de hotspots interativos com clique do usuário</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-110000-daily-027-desenho-de-hotspots-interativos-com-clique-do-usuario/</link>
-      <description><![CDATA[Como coordenadores desenham HotspotAtivo no mapa do SOS Location via Leaflet.Draw: sequência de cliques para polígono, validação de área mínima (0.1 km²), submit via POST e exibição imediata sem reload.]]></description>
-      <pubDate>Wed, 08 Apr 2026 11:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-110000-daily-027-desenho-de-hotspots-interativos-com-clique-do-usuario/</guid>
-    </item>
-    <item>
-      <title>Daily #026: Criação de interface &quot;map-first&quot;</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-100000-daily-026-criacao-de-interface-map-first/</link>
-      <description><![CDATA[Como o SOS Location organizou o layout para que o mapa ocupe 100% da viewport, com painéis flutuantes semi-transparentes sobrepostos e como essa decisão afetou o React layout e o z-index management.]]></description>
-      <pubDate>Wed, 08 Apr 2026 10:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-100000-daily-026-criacao-de-interface-map-first/</guid>
     </item>
   </channel>
 </rss>

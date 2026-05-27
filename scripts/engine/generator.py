@@ -21,9 +21,18 @@ from .renderer.pages import (
 )
 
 LEGACY_DAILY_REDIRECTS = [
+    "20260403-151038-posts-and-layout",
+    "20260404-234431-posts-and-content",
+    "20260405-161120-projects-and-content",
+    "20260406-102024-renderers-and-static-build",
+    "20260413-025701-static-build-and-navigation",
     "20260417-201000-field-notes-gis-reading",
     "20260419-071500-agent-boundaries-note",
     "20260420-223000-blueprint-refresh",
+    "20260421-235101-posts-and-content",
+    "20260422-232036-layout-and-posts",
+    "20260423-175300-layout-and-renderers",
+    "20260424-223436-layout-and-renderers",
 ]
 
 
@@ -392,6 +401,8 @@ def build_site(output_dir: Path | None = None) -> dict[str, Any]:
     rss_xml = generate_rss_feed(site, posts, config)
     if rss_xml:
         write_text(target_root / config.get("rss_file", "feed.xml"), rss_xml)
+
+    (target_root / ".nojekyll").touch()
 
     return {
         "published_posts": len(posts),
