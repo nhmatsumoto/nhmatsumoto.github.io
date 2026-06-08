@@ -1,26 +1,141 @@
 id = "20260429-091500"
 slug = "consistency-tradeoffs"
-title = "Consistência eventual vs forte: trade-off inevitável"
+title = "Consistência forte vs eventual: o trade-off que o teorema CAP só começa a explicar"
+title_en_us = "Strong vs eventual consistency: the trade-off the CAP theorem only begins to explain"
+title_ja_jp = "強整合性 vs 結果整合性：CAP 定理が説明を始めるにすぎないトレードオフ"
+summary = "Não existe sistema distribuído perfeitamente consistente sem custo. Entre o CAP, o PACELC e a consistência eventual, o que realmente está em jogo é latência contra garantia — e essa é uma decisão de negócio antes de ser técnica."
+summary_en_us = "There is no perfectly consistent distributed system without a cost. Between CAP, PACELC, and eventual consistency, what is really at stake is latency versus guarantee — and that is a business decision before it is a technical one."
+summary_ja_jp = "コストなしに完全な整合性を持つ分散システムは存在しない。CAP、PACELC、結果整合性の間で本当に問われているのはレイテンシ対保証であり、それは技術判断である前にビジネス判断である。"
 published_at = "2026-04-29T09:15:00+09:00"
-updated_at = "2026-04-29T09:15:00+09:00"
+updated_at = "2026-06-07T09:15:00+09:00"
 status = "published"
 tags = ["distributed_systems", "consistency", "scalability"]
+badges = ["CAP", "Distribuídos"]
+featured = false
+has_math = false
 body = '''
-## Problema
-Sistemas distribuídos não têm consistência perfeita.
+No instante em que um dado existe em mais de uma máquina, você herda um problema que não tem solução grátis: manter as cópias de acordo. Toda a discussão sobre consistência forte versus eventual é, no fundo, sobre **quanto você está disposto a esperar para ter certeza**.
 
-## Escolhas
-- Forte -> bloqueio, menor escala
-- Eventual -> mais rápido, menos garantia imediata
+## CAP: a regra que todos citam e poucos leem direito
 
-## Regra
-Negócio define consistência.
+O teorema CAP (Brewer, 2000; provado por Gilbert e Lynch, 2002) afirma: durante uma **partição de rede (P)**, um sistema distribuído só pode garantir **uma** entre **consistência (C)** e **disponibilidade (A)**. O ponto sutil, quase sempre ignorado, é que CAP só fala da situação de partição. Não é um menu "escolha 2 de 3" permanente.
 
-## Exemplo
-Pagamento -> forte
-Feed -> eventual
+- **CP** (consistência + tolerância a partição): durante a falha, o sistema **recusa** responder em vez de devolver dado possivelmente desatualizado. Ex.: ZooKeeper, etcd.
+- **AP** (disponibilidade + tolerância a partição): durante a falha, o sistema **responde** com o que tem, podendo estar desatualizado. Ex.: Cassandra, DynamoDB.
 
-## Insight
-Consistência é decisão de produto, não técnica.
+## PACELC: a parte que o CAP esquece
+
+CAP só descreve o comportamento *durante* uma partição — que é rara. O modelo **PACELC** (Abadi, 2012) completa o quadro:
+
+> Se há **P**artição, escolha entre **A** e **C**; **E**lse (operação normal), escolha entre **L**atência e **C**onsistência.
+
+Ou seja: mesmo sem nenhuma falha, manter consistência forte custa **latência**, porque exige coordenação entre réplicas (quórum, consenso, locks). Esse é o trade-off que você paga *todos os dias*, não só quando a rede quebra.
+
+## O espectro real (não é binário)
+
+"Forte" e "eventual" são os extremos de um espectro com níveis úteis no meio:
+
+| Modelo | Garantia | Custo | Uso típico |
+| :--- | :--- | :--- | :--- |
+| **Linearizável (forte)** | Toda leitura vê a última escrita | Latência alta, coordenação | Saldo bancário, estoque |
+| **Read-your-writes** | Você vê suas próprias alterações | Médio (sticky session) | Perfil do usuário |
+| **Monotônica** | Nunca "volta no tempo" | Médio | Timelines, contadores |
+| **Eventual** | Converge se as escritas pararem | Baixíssimo, alta disponibilidade | Feed, cache, contagem de likes |
+
+## Por que é decisão de negócio
+
+A pergunta certa não é "qual é mais correto?", e sim "**qual é o custo de estar errado por alguns milissegundos?**":
+
+- **Débito em conta / reserva de estoque**: ler um valor desatualizado pode vender o mesmo item duas vezes. Exige consistência forte, mesmo que custe latência.
+- **Curtidas, visualizações, feed**: ver "1.204" em vez de "1.205" por dois segundos não machuca ninguém. Consistência eventual é não só aceitável — é desejável, pela escala e disponibilidade.
+
+A mesma aplicação mistura os dois: o checkout do e-commerce é forte; a vitrine de recomendações é eventual. Definir essa fronteira é trabalho de produto e domínio, não de infraestrutura.
+
+## Conclusão
+
+Consistência não é um interruptor global; é uma escolha por **caso de uso**, guiada pela pergunta "qual o dano de ler algo levemente velho?". Engenheiros que tratam consistência forte como *default* universal pagam latência onde ninguém precisava; engenheiros que tratam eventual como universal acabam vendendo estoque inexistente. O CAP te diz que não há almoço grátis — o PACELC te diz que você está pagando a conta mesmo quando tudo está funcionando.
 '''
+body_en_us = '''
+The moment a piece of data exists on more than one machine, you inherit a problem with no free solution: keeping the copies in agreement. The whole debate of strong versus eventual consistency is, at heart, about **how long you are willing to wait to be sure**.
 
+## CAP: the rule everyone quotes and few read correctly
+
+The CAP theorem (Brewer, 2000; proven by Gilbert and Lynch, 2002) states: during a **network partition (P)**, a distributed system can only guarantee **one** of **consistency (C)** and **availability (A)**. The subtle point, almost always missed, is that CAP only talks about the partition case. It is not a permanent "pick 2 of 3" menu.
+
+- **CP** (consistency + partition tolerance): during the fault, the system **refuses** to answer rather than return possibly stale data. E.g., ZooKeeper, etcd.
+- **AP** (availability + partition tolerance): during the fault, the system **answers** with what it has, which may be stale. E.g., Cassandra, DynamoDB.
+
+## PACELC: the part CAP forgets
+
+CAP only describes behavior *during* a partition — which is rare. The **PACELC** model (Abadi, 2012) completes the picture:
+
+> If there is a **P**artition, choose between **A** and **C**; **E**lse (normal operation), choose between **L**atency and **C**onsistency.
+
+In other words: even with no fault at all, maintaining strong consistency costs **latency**, because it requires coordination between replicas (quorum, consensus, locks). That's the trade-off you pay *every day*, not only when the network breaks.
+
+## The real spectrum (it's not binary)
+
+"Strong" and "eventual" are the ends of a spectrum with useful levels in between:
+
+| Model | Guarantee | Cost | Typical use |
+| :--- | :--- | :--- | :--- |
+| **Linearizable (strong)** | Every read sees the latest write | High latency, coordination | Bank balance, inventory |
+| **Read-your-writes** | You see your own changes | Medium (sticky session) | User profile |
+| **Monotonic** | Never "goes back in time" | Medium | Timelines, counters |
+| **Eventual** | Converges if writes stop | Very low, high availability | Feed, cache, like counts |
+
+## Why it's a business decision
+
+The right question isn't "which is more correct?" but "**what is the cost of being wrong for a few milliseconds?**":
+
+- **Account debit / inventory reservation**: reading a stale value can sell the same item twice. It demands strong consistency, even at the cost of latency.
+- **Likes, views, feed**: seeing "1,204" instead of "1,205" for two seconds harms no one. Eventual consistency is not only acceptable — it is desirable, for scale and availability.
+
+The same application mixes both: the e-commerce checkout is strong; the recommendations shelf is eventual. Drawing that boundary is product and domain work, not infrastructure.
+
+## Conclusion
+
+Consistency is not a global switch; it's a choice per **use case**, guided by the question "how much does it hurt to read something slightly stale?". Engineers who treat strong consistency as a universal default pay latency where nobody needed it; engineers who treat eventual as universal end up selling inventory that doesn't exist. CAP tells you there's no free lunch — PACELC tells you you're paying the bill even when everything works.
+'''
+body_ja_jp = '''
+あるデータが複数のマシンに存在した瞬間、無料の解決策がない問題を引き継ぐことになります。コピーを一致させ続けることです。強整合性 対 結果整合性の議論はすべて、根本的には **確信を得るためにどれだけ待てるか** をめぐるものです。
+
+## CAP：誰もが引用し、ほとんど正しく読まれない規則
+
+CAP 定理（Brewer, 2000年。Gilbert と Lynch が 2002年に証明）はこう述べます。**ネットワーク分断（P）** の間、分散システムは **整合性（C）** と **可用性（A）** のうち **一方** しか保証できない。ほぼ常に見落とされる微妙な点は、CAP は分断時のことしか語っていない、ということです。恒久的な「3 つから 2 つを選べ」のメニューではありません。
+
+- **CP**（整合性 + 分断耐性）：障害中、システムは古いかもしれないデータを返すのではなく、応答を **拒否** する。例：ZooKeeper、etcd。
+- **AP**（可用性 + 分断耐性）：障害中、システムは手元のもの（古いかもしれない）で **応答** する。例：Cassandra、DynamoDB。
+
+## PACELC：CAP が忘れる部分
+
+CAP は分断 *中* の振る舞いしか記述しません ── それは稀です。**PACELC** モデル（Abadi, 2012年）が全体像を補います。
+
+> **P** 分断があれば **A** と **C** から選べ。**E**lse（通常運用）なら **L** レイテンシと **C** 整合性から選べ。
+
+つまり、まったく障害がなくても、強整合性の維持は **レイテンシ** を要します。レプリカ間の協調（クォーラム、合意、ロック）が必要だからです。これは、ネットワークが壊れたときだけでなく、*毎日* 支払うトレードオフです。
+
+## 本当のスペクトル（二項ではない）
+
+「強」と「結果」は、間に有用な段階を持つスペクトルの両端です。
+
+| モデル | 保証 | コスト | 典型的な用途 |
+| :--- | :--- | :--- | :--- |
+| **線形化可能（強）** | すべての読み取りが最新の書き込みを見る | 高レイテンシ、協調 | 銀行残高、在庫 |
+| **read-your-writes** | 自分の変更は見える | 中（スティッキーセッション） | ユーザープロフィール |
+| **単調** | 決して「時間が巻き戻らない」 | 中 | タイムライン、カウンタ |
+| **結果整合性** | 書き込みが止まれば収束する | 極小、高可用性 | フィード、キャッシュ、いいね数 |
+
+## なぜビジネス判断なのか
+
+正しい問いは「どちらがより正しいか」ではなく、「**数ミリ秒間まちがっていることのコストはいくらか**」です。
+
+- **口座引き落とし / 在庫予約**: 古い値を読むと、同じ商品を二度売ってしまう。レイテンシを払ってでも強整合性が必要。
+- **いいね・閲覧・フィード**: 2 秒間「1,205」の代わりに「1,204」と表示されても誰も傷つかない。結果整合性は許容できるだけでなく、スケールと可用性の点で望ましい。
+
+同じアプリが両方を混在させます。EC のチェックアウトは強整合性、おすすめ棚は結果整合性。その境界を引くのは、インフラではなくプロダクトとドメインの仕事です。
+
+## 結論
+
+整合性はグローバルなスイッチではなく、「少し古いものを読むとどれだけ痛むか」という問いに導かれる **ユースケースごと** の選択です。強整合性を普遍的な既定値として扱う技術者は、誰も必要としない場所でレイテンシを払います。結果整合性を普遍的として扱う技術者は、存在しない在庫を売る羽目になります。CAP は無料の昼食はないと教え、PACELC はすべてが正常でも請求書を払っていると教えます。
+'''

@@ -1,23 +1,147 @@
 id = "20260429-093000"
 slug = "backpressure"
-title = "Backpressure e controle de carga em sistemas distribuídos"
+title = "Backpressure: por que um sistema saudável precisa saber dizer 'não'"
+title_en_us = "Backpressure: why a healthy system needs to know how to say 'no'"
+title_ja_jp = "バックプレッシャー：健全なシステムが「ノー」と言えねばならない理由"
+summary = "Quando um produtor é mais rápido que um consumidor, alguém precisa segurar a onda — ou a fila cresce até o sistema cair. Backpressure é o mecanismo de propagar 'desacelere' rio acima, e a diferença entre derrubar tudo e degradar com elegância."
+summary_en_us = "When a producer is faster than a consumer, something has to hold the wave back — or the queue grows until the system falls over. Backpressure is the mechanism for propagating 'slow down' upstream, and the difference between collapsing and degrading gracefully."
+summary_ja_jp = "プロデューサがコンシューマより速いとき、誰かが波を抑えねばならない ── さもなくばキューはシステムが倒れるまで膨らむ。バックプレッシャーとは「減速せよ」を上流へ伝播させる仕組みであり、全崩壊と優雅な劣化を分けるものである。"
 published_at = "2026-04-29T09:30:00+09:00"
-updated_at = "2026-04-29T09:30:00+09:00"
+updated_at = "2026-06-07T09:30:00+09:00"
 status = "published"
-tags = ["distributed_systems", "performance"]
+tags = ["distributed_systems", "performance", "resilience"]
+badges = ["Resiliência", "Performance"]
+featured = false
+has_math = false
 body = '''
-## Problema
-Sistema recebe mais carga do que suporta.
+Imagine uma pia com a torneira aberta no máximo e o ralo entupido pela metade. Por um tempo, a pia absorve a diferença. Depois transborda. Quase todo incidente de produção sob alta carga é essa pia: um **produtor** que entrega mais rápido do que o **consumidor** processa, e uma fila no meio absorvendo a diferença — até não absorver mais.
 
-## Solução
-Backpressure.
+## A fila ilimitada é a armadilha
 
-## Estratégias
-- Queue limitada
-- Rate limit
-- Retry com delay
+A reação instintiva ("é só pôr uma fila") esconde o problema em vez de resolvê-lo. Uma fila **ilimitada** não tem mecanismo de defesa: ela cresce, consome memória, aumenta a latência (a Lei de Little garante isso) e eventualmente derruba o processo com um *OutOfMemory*. Pior: quando a fila tem horas de backlog, as respostas que ainda saem já estão velhas e inúteis. O sistema está "no ar" e completamente quebrado ao mesmo tempo.
 
-## Insight
-Sistema saudável sabe dizer "não".
+**Backpressure** é a alternativa: em vez de aceitar trabalho que não consegue fazer, o consumidor sinaliza ao produtor "**desacelere**" — e essa pressão se propaga rio acima até a fonte.
+
+## O espectro de respostas, da pior para a melhor
+
+Quando a demanda supera a capacidade, há quatro reações possíveis:
+
+| Estratégia | O que faz | Resultado |
+| :--- | :--- | :--- |
+| **Ignorar** | Fila ilimitada, "vai dar certo" | Colapso por OOM, latência infinita |
+| **Buffer** | Fila limitada que absorve picos curtos | Bom para rajadas, ruim para sobrecarga sustentada |
+| **Drop / Sample** | Descarta o excedente (load shedding) | Preserva o sistema; aceitável p/ métricas, logs |
+| **Backpressure real** | Bloqueia/recusa o produtor na origem | Ideal: a fonte para de gerar |
+
+## Como o "não" é dito na prática
+
+A forma de aplicar backpressure depende de quem é o produtor:
+
+- **Síncrono (HTTP):** você não consegue mandar o cliente desacelerar, então **rejeita rápido**. Retorne `429 Too Many Requests` com um header `Retry-After`. Um *rate limiter* (token bucket) e um *concurrency limit* protegem o downstream. Rejeitar em 1 ms é infinitamente melhor que enfileirar por 30 s e dar timeout.
+- **Assíncrono (filas/streams):** use **prefetch/credit**. O consumidor só busca N mensagens por vez (`prefetch_count` no RabbitMQ, `max.poll.records` no Kafka); enquanto está ocupado, não puxa mais. Isso é backpressure nativo: o broker segura naturalmente.
+- **In-process (reactive):** frameworks como Reactive Streams (`Flux`, `IAsyncEnumerable` com canais limitados) embutem backpressure no contrato — o consumidor requisita itens; o produtor não empurra.
+
+```csharp
+// Channel limitado: o produtor BLOQUEIA quando cheio = backpressure
+var channel = Channel.CreateBounded<Job>(new BoundedChannelOptions(1000)
+{
+    FullMode = BoundedChannelFullMode.Wait   // produtor espera, não acumula
+});
+```
+
+## Falhar rápido protege o sistema inteiro
+
+O contraintuitivo: **rejeitar trabalho é um ato de saúde, não de fraqueza**. Um sistema que aceita tudo sob sobrecarga entra em colapso retroativo — todas as requisições ficam lentas, inclusive as que poderiam ter sido atendidas. Um sistema que rejeita o excedente cedo mantém latência previsível para o que aceitou. Combine backpressure com *timeouts* agressivos e *circuit breakers* para não desperdiçar capacidade em trabalho que o cliente já desistiu de esperar.
+
+## Conclusão
+
+Backpressure é o reconhecimento honesto de que **capacidade é finita**. A pergunta de projeto não é "como evito sobrecarga?" (você não evita), mas "**o que faço quando ela chega?**". A resposta madura é degradar com elegância: limitar, rejeitar cedo, propagar o sinal de desaceleração até a fonte. Um sistema que não sabe dizer "não" acaba dizendo "não" para todos, de uma vez, no pior momento possível.
 '''
+body_en_us = '''
+Picture a sink with the faucet wide open and the drain half clogged. For a while, the sink absorbs the difference. Then it overflows. Almost every production incident under high load is that sink: a **producer** delivering faster than a **consumer** can process, and a queue in the middle absorbing the difference — until it can't.
 
+## The unbounded queue is the trap
+
+The instinctive reaction ("just add a queue") hides the problem instead of solving it. An **unbounded** queue has no defense mechanism: it grows, consumes memory, increases latency (Little's Law guarantees that), and eventually kills the process with an OutOfMemory. Worse: when the queue holds hours of backlog, the responses still coming out are already stale and useless. The system is "up" and completely broken at the same time.
+
+**Backpressure** is the alternative: instead of accepting work it can't do, the consumer signals "**slow down**" to the producer — and that pressure propagates upstream all the way to the source.
+
+## The spectrum of responses, worst to best
+
+When demand exceeds capacity, there are four possible reactions:
+
+| Strategy | What it does | Outcome |
+| :--- | :--- | :--- |
+| **Ignore** | Unbounded queue, "it'll be fine" | Collapse by OOM, infinite latency |
+| **Buffer** | Bounded queue that absorbs short spikes | Good for bursts, bad for sustained overload |
+| **Drop / Sample** | Discards the excess (load shedding) | Preserves the system; fine for metrics, logs |
+| **Real backpressure** | Blocks/refuses the producer at the source | Ideal: the source stops generating |
+
+## How the "no" is said in practice
+
+How you apply backpressure depends on who the producer is:
+
+- **Synchronous (HTTP):** you can't tell the client to slow down, so **reject fast**. Return `429 Too Many Requests` with a `Retry-After` header. A rate limiter (token bucket) and a concurrency limit protect the downstream. Rejecting in 1 ms is infinitely better than queueing for 30 s and timing out.
+- **Asynchronous (queues/streams):** use **prefetch/credit**. The consumer only fetches N messages at a time (`prefetch_count` in RabbitMQ, `max.poll.records` in Kafka); while busy, it pulls no more. That's native backpressure: the broker naturally holds back.
+- **In-process (reactive):** frameworks like Reactive Streams (`Flux`, `IAsyncEnumerable` over bounded channels) build backpressure into the contract — the consumer requests items; the producer doesn't push.
+
+```csharp
+// Bounded channel: the producer BLOCKS when full = backpressure
+var channel = Channel.CreateBounded<Job>(new BoundedChannelOptions(1000)
+{
+    FullMode = BoundedChannelFullMode.Wait   // producer waits, doesn't pile up
+});
+```
+
+## Failing fast protects the whole system
+
+The counterintuitive part: **rejecting work is an act of health, not weakness**. A system that accepts everything under overload collapses retroactively — every request slows down, including the ones it could have served. A system that rejects the excess early keeps predictable latency for what it accepted. Combine backpressure with aggressive timeouts and circuit breakers so you don't waste capacity on work the client already gave up waiting for.
+
+## Conclusion
+
+Backpressure is the honest acknowledgment that **capacity is finite**. The design question isn't "how do I avoid overload?" (you don't), but "**what do I do when it arrives?**". The mature answer is to degrade gracefully: throttle, reject early, propagate the slow-down signal to the source. A system that can't say "no" ends up saying "no" to everyone, all at once, at the worst possible moment.
+'''
+body_ja_jp = '''
+蛇口を全開にし、排水口が半分詰まった流し台を思い浮かべてください。しばらくは差を吸収します。やがてあふれます。高負荷下の本番障害のほぼすべてがこの流し台です。**コンシューマ** が処理できるより速く届ける **プロデューサ** と、その差を吸収する途中のキュー ── 吸収しきれなくなるまで。
+
+## 無制限キューという罠
+
+本能的な反応（「キューを足せばいい」）は、問題を解決するのではなく隠します。**無制限** キューには防御機構がありません。膨らみ、メモリを食い、レイテンシを増やし（リトルの法則がそれを保証する）、やがて OutOfMemory でプロセスを殺します。さらに悪いことに、キューが数時間分のバックログを抱えると、まだ出てくる応答はすでに古く無用です。システムは「稼働中」でありながら完全に壊れている、を同時に満たします。
+
+**バックプレッシャー** が代替案です。できない仕事を受け入れる代わりに、コンシューマはプロデューサへ「**減速せよ**」と信号を送り ── その圧力が上流へ、源まで伝播します。
+
+## 応答のスペクトル、最悪から最善へ
+
+需要が容量を超えるとき、4 つの反応がありえます。
+
+| 戦略 | すること | 結果 |
+| :--- | :--- | :--- |
+| **無視** | 無制限キュー、「なんとかなる」 | OOM による崩壊、無限レイテンシ |
+| **バッファ** | 短いスパイクを吸収する有限キュー | 突発には良いが、持続的過負荷には悪い |
+| **ドロップ / サンプリング** | 超過分を捨てる（ロードシェディング） | システムを守る。メトリクス・ログには許容 |
+| **真のバックプレッシャー** | 源でプロデューサをブロック/拒否 | 理想：源が生成を止める |
+
+## 実践で「ノー」をどう言うか
+
+バックプレッシャーの適用方法は、プロデューサが誰かによります。
+
+- **同期（HTTP）:** クライアントに減速を命じられないので、**速く拒否** する。`Retry-After` ヘッダ付きで `429 Too Many Requests` を返す。レートリミッタ（トークンバケット）と同時実行数制限が下流を守る。1 ミリ秒で拒否する方が、30 秒キューイングしてタイムアウトするより無限に良い。
+- **非同期（キュー/ストリーム）:** **prefetch/credit** を使う。コンシューマは一度に N メッセージだけ取得し（RabbitMQ の `prefetch_count`、Kafka の `max.poll.records`）、忙しい間はそれ以上引かない。これがネイティブなバックプレッシャー。ブローカーが自然に抑える。
+- **プロセス内（リアクティブ）:** Reactive Streams（`Flux`、有限チャネル上の `IAsyncEnumerable`）のようなフレームワークは、契約にバックプレッシャーを組み込む ── コンシューマが要求し、プロデューサは押し込まない。
+
+```csharp
+// 有限チャネル：満杯時にプロデューサが BLOCK する = バックプレッシャー
+var channel = Channel.CreateBounded<Job>(new BoundedChannelOptions(1000)
+{
+    FullMode = BoundedChannelFullMode.Wait   // プロデューサは待つ、溜め込まない
+});
+```
+
+## 速く失敗することが全体を守る
+
+直感に反する点。**仕事を拒否することは弱さではなく健全さの行為** です。過負荷下ですべてを受け入れるシステムは遡及的に崩壊します ── すべてのリクエストが遅くなり、本来さばけたはずのものまで巻き込まれます。超過分を早く拒否するシステムは、受け入れたものに予測可能なレイテンシを保ちます。バックプレッシャーを積極的なタイムアウトとサーキットブレーカーと組み合わせ、クライアントがすでに待つのをやめた仕事に容量を浪費しないようにしましょう。
+
+## 結論
+
+バックプレッシャーは、**容量は有限である** という誠実な認識です。設計上の問いは「どうやって過負荷を避けるか」（避けられない）ではなく、「**過負荷が来たとき何をするか**」です。成熟した答えは、優雅に劣化すること。スロットリングし、早く拒否し、減速信号を源まで伝播させる。「ノー」と言えないシステムは、最悪の瞬間に、全員へ一斉に「ノー」と言う羽目になります。
+'''

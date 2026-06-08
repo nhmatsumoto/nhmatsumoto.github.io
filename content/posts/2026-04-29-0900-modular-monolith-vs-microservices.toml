@@ -1,29 +1,174 @@
 id = "20260429-090000"
 slug = "modular-monolith-vs-microservices"
-title = "Monólito modular vs Microservices: decisão arquitetural real"
+title = "Monólito Modular vs Microservices: a decisão arquitetural que ninguém quer tomar cedo"
+title_en_us = "Modular Monolith vs Microservices: the architectural decision nobody should make too early"
+title_ja_jp = "モジュラーモノリス vs マイクロサービス：早すぎる判断は避けるべき設計判断"
+summary = "Microservices não são um upgrade do monólito — são um trade-off organizacional caro. Quando o monólito modular é a escolha correta, quais sinais justificam a extração de serviços e por que a Lei de Conway decide mais do que a tecnologia."
+summary_en_us = "Microservices are not an upgrade over a monolith — they are an expensive organizational trade-off. When a modular monolith is the right choice, which signals justify extracting services, and why Conway's Law decides more than technology."
+summary_ja_jp = "マイクロサービスはモノリスの上位互換ではなく、高価な組織的トレードオフである。モジュラーモノリスが正しい選択となる場面、サービス分割を正当化するシグナル、そして技術以上にコンウェイの法則が決定する理由を解説する。"
 published_at = "2026-04-29T09:00:00+09:00"
-updated_at = "2026-04-29T09:00:00+09:00"
+updated_at = "2026-06-07T09:00:00+09:00"
 status = "published"
 tags = ["arquitetura", "microservices", "ddd", "scalability"]
+badges = ["Arquitetura", "DDD"]
+featured = false
+has_math = false
 body = '''
-## Problema
-Microservices cedo demais geram custo operacional alto.
+A pergunta "monólito ou microservices?" quase sempre é feita cedo demais e respondida pelo motivo errado. A resposta honesta é: comece com um **monólito modular** e só pague o preço dos microservices quando uma força real — não estética — empurrar você para lá.
 
-## Regra
-Comece com monólito modular bem definido.
+## O custo invisível dos microservices
 
-## Estrutura
-- Boundaries claros (DDD)
-- Camadas isoladas
-- Comunicação interna explícita
+Microservices substituem uma chamada de método em memória (nanossegundos, transacional, tipada pelo compilador) por uma chamada de rede (milissegundos, falível, sem garantias de atomicidade). Tudo o que era trivial passa a exigir engenharia:
 
-## Evolução
-Extrair serviços apenas quando:
-- Escala exige
-- Times independentes
-- Deploy isolado necessário
+- **Consistência**: você perde a transação ACID que atravessava módulos. Agora precisa de sagas, idempotência e consistência eventual.
+- **Observabilidade**: um bug que antes aparecia num stack trace agora exige *distributed tracing* para ser reconstruído entre 5 serviços.
+- **Operação**: cada serviço tem deploy, versionamento de contrato, *service discovery*, política de retry e seu próprio modo de falhar.
 
-## Insight
-Microservices resolvem problemas organizacionais, não técnicos.
+Nenhum desses problemas existe no monólito. Microservices não resolvem complexidade — eles a movem do código para a infraestrutura.
+
+## O monólito modular: o melhor de dois mundos
+
+A maioria dos "monólitos legados" que dão má fama ao padrão são, na verdade, *big balls of mud*: sem fronteiras internas. Um monólito **modular** é diferente: um único deploy, mas com módulos isolados por **bounded contexts** (DDD), cada um expondo apenas uma interface pública.
+
+```
+src/
+  Billing/         # bounded context
+    Domain/        # entidades, invariantes — sem dependência externa
+    Application/   # casos de uso
+    Public/        # a ÚNICA superfície que outros módulos podem chamar
+  Orders/
+    ...
+  Shared/Kernel/   # value objects realmente compartilhados
+```
+
+A regra de ouro: **um módulo nunca acessa o banco de dados ou as entidades internas de outro**. A comunicação acontece por interfaces públicas ou eventos de domínio in-process. Se você respeitar isso, cada módulo já está "pré-cortado" para virar um serviço no dia em que precisar.
+
+## Quando extrair um serviço
+
+Extraia um módulo para serviço independente apenas quando houver um motivo mensurável:
+
+| Sinal | Por que justifica | Exemplo |
+| :--- | :--- | :--- |
+| **Escala assimétrica** | Um módulo precisa de 10x mais recursos que o resto | Processamento de mídia vs CRUD |
+| **Autonomia de time** | Dois times se bloqueiam no mesmo pipeline de deploy | Times de pagamentos e catálogo |
+| **Isolamento de falha** | Uma parte não pode derrubar o resto | Ingestão de eventos vs checkout |
+| **Ciclo de release distinto** | Cadências de entrega incompatíveis | Core estável vs feature experimental |
+
+Note o que **não** está na lista: "está na moda", "fica bonito no currículo" ou "o monólito está grande". Tamanho não é problema — acoplamento é.
+
+## A Lei de Conway decide por você
+
+> "Organizações projetam sistemas que copiam a estrutura de comunicação da própria organização." — Melvin Conway, 1967
+
+Microservices são, antes de tudo, uma **decisão organizacional**. Eles funcionam quando você tem times pequenos, autônomos e *cross-functional*, cada um dono de um serviço de ponta a ponta. Se você tem um único time de oito pessoas, microservices só vão lhe dar a latência da rede sem nenhum dos benefícios organizacionais.
+
+## Conclusão
+
+O caminho de baixo risco é quase sempre o mesmo: **monólito modular primeiro, com fronteiras de DDD levadas a sério**. Isso preserva a opção de extrair serviços depois, sem pagar o imposto distribuído antes da hora. Microservices são uma ferramenta para resolver problemas de *escala humana e organizacional* — e só fazem sentido quando esse problema realmente existe.
 '''
+body_en_us = '''
+The question "monolith or microservices?" is almost always asked too early and answered for the wrong reason. The honest answer: start with a **modular monolith** and only pay the microservices tax when a real force — not an aesthetic one — pushes you there.
 
+## The invisible cost of microservices
+
+Microservices replace an in-memory method call (nanoseconds, transactional, type-checked by the compiler) with a network call (milliseconds, fallible, no atomicity guarantees). Everything that was trivial now requires engineering:
+
+- **Consistency**: you lose the ACID transaction that spanned modules. Now you need sagas, idempotency, and eventual consistency.
+- **Observability**: a bug that used to appear in a stack trace now requires distributed tracing to reconstruct across five services.
+- **Operations**: each service has its own deployment, contract versioning, service discovery, retry policy, and failure mode.
+
+None of these problems exist in a monolith. Microservices don't solve complexity — they move it from the code into the infrastructure.
+
+## The modular monolith: the best of both worlds
+
+Most "legacy monoliths" that give the pattern a bad name are actually *big balls of mud*: no internal boundaries. A **modular** monolith is different: a single deployment, but with modules isolated by **bounded contexts** (DDD), each exposing only a public interface.
+
+```
+src/
+  Billing/         # bounded context
+    Domain/        # entities, invariants — no external dependency
+    Application/   # use cases
+    Public/        # the ONLY surface other modules may call
+  Orders/
+    ...
+  Shared/Kernel/   # value objects that are genuinely shared
+```
+
+The golden rule: **a module never touches another module's database or internal entities**. Communication happens through public interfaces or in-process domain events. Respect that, and each module is already "pre-cut" to become a service the day you need it.
+
+## When to extract a service
+
+Extract a module into an independent service only when there is a measurable reason:
+
+| Signal | Why it justifies extraction | Example |
+| :--- | :--- | :--- |
+| **Asymmetric scaling** | One module needs 10x more resources than the rest | Media processing vs CRUD |
+| **Team autonomy** | Two teams block each other in the same deploy pipeline | Payments and catalog teams |
+| **Failure isolation** | One part must not take down the rest | Event ingestion vs checkout |
+| **Distinct release cadence** | Incompatible delivery rhythms | Stable core vs experimental feature |
+
+Note what is **not** on the list: "it's trendy," "it looks good on a résumé," or "the monolith is big." Size is not the problem — coupling is.
+
+## Conway's Law decides for you
+
+> "Organizations design systems that mirror their own communication structure." — Melvin Conway, 1967
+
+Microservices are, above all, an **organizational decision**. They work when you have small, autonomous, cross-functional teams, each owning a service end to end. If you have a single eight-person team, microservices will only hand you network latency without any of the organizational benefits.
+
+## Conclusion
+
+The low-risk path is almost always the same: **modular monolith first, with DDD boundaries taken seriously**. That preserves the option to extract services later without paying the distributed tax ahead of time. Microservices are a tool for solving problems of *human and organizational scale* — and they only make sense when that problem actually exists.
+'''
+body_ja_jp = '''
+「モノリスか、マイクロサービスか」という問いは、たいてい早すぎる段階で、間違った理由で答えられます。誠実な答えはこうです。まず **モジュラーモノリス** で始め、美的理由ではなく現実的な力に押されたときだけ、マイクロサービスの代償を払う。
+
+## マイクロサービスの見えないコスト
+
+マイクロサービスは、メモリ内のメソッド呼び出し（ナノ秒、トランザクション内、コンパイラ型チェック済み）を、ネットワーク呼び出し（ミリ秒、失敗しうる、原子性の保証なし）に置き換えます。これまで自明だったすべてが、エンジニアリングを要するようになります。
+
+- **整合性**: モジュールをまたいでいた ACID トランザクションを失う。代わりにサーガ、冪等性、結果整合性が必要になる。
+- **可観測性**: かつてスタックトレースに現れたバグが、5 つのサービスをまたいで再構成するために分散トレーシングを要する。
+- **運用**: 各サービスがデプロイ、契約のバージョニング、サービスディスカバリ、リトライポリシー、そして固有の障害モードを持つ。
+
+これらの問題はモノリスには存在しません。マイクロサービスは複雑さを解決するのではなく、コードからインフラへ移動させるだけです。
+
+## モジュラーモノリス：両者のいいとこ取り
+
+このパターンに悪名を着せる「レガシーモノリス」の多くは、実際には内部境界のない *big ball of mud* です。**モジュラー** モノリスは異なります。単一のデプロイでありながら、**境界づけられたコンテキスト**（DDD）でモジュールを分離し、各モジュールは公開インターフェースだけを露出します。
+
+```
+src/
+  Billing/         # 境界づけられたコンテキスト
+    Domain/        # エンティティ、不変条件 — 外部依存なし
+    Application/   # ユースケース
+    Public/        # 他モジュールが呼べる唯一の面
+  Orders/
+    ...
+  Shared/Kernel/   # 本当に共有される値オブジェクト
+```
+
+黄金律は、**あるモジュールは他モジュールのデータベースや内部エンティティに決して触れない** こと。通信は公開インターフェース、またはプロセス内ドメインイベントを通じて行います。これを守れば、各モジュールは必要になった日にサービス化できるよう、すでに「切り分け済み」の状態になります。
+
+## サービスを分割すべきとき
+
+モジュールを独立サービスへ切り出すのは、測定可能な理由があるときだけです。
+
+| シグナル | 分割を正当化する理由 | 例 |
+| :--- | :--- | :--- |
+| **非対称なスケール** | あるモジュールだけが他の 10 倍のリソースを要する | メディア処理 vs CRUD |
+| **チームの自律性** | 2 つのチームが同じデプロイパイプラインで互いをブロックする | 決済チームとカタログチーム |
+| **障害の隔離** | ある部分が他を巻き込んで落としてはならない | イベント取り込み vs チェックアウト |
+| **異なるリリース周期** | 配信リズムが両立しない | 安定したコア vs 実験的機能 |
+
+リストに **ない** ものに注目してください。「流行っているから」「履歴書に映えるから」「モノリスが大きくなったから」。大きさは問題ではありません。結合こそが問題です。
+
+## コンウェイの法則があなたの代わりに決める
+
+> 「組織は、自らのコミュニケーション構造を模倣したシステムを設計する。」— メルヴィン・コンウェイ、1967年
+
+マイクロサービスは何よりも **組織的な判断** です。小さく、自律的で、機能横断的なチームが、それぞれサービスを端から端まで所有するときに機能します。8 人の単一チームしかないなら、マイクロサービスは組織的恩恵を一切伴わずにネットワークレイテンシだけを手渡してきます。
+
+## 結論
+
+低リスクな道はほぼ常に同じです。**まず DDD の境界を真剣に引いたモジュラーモノリス**。これにより、分散の税を前払いせずに、後でサービスを切り出すという選択肢を保てます。マイクロサービスは *人的・組織的スケール* の問題を解くための道具であり、その問題が実在するときにのみ意味を持ちます。
+'''

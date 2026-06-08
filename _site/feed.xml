@@ -13,65 +13,65 @@
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260527-090000-litografia-de-semicondutores-euv/</guid>
     </item>
     <item>
-      <title>Orquestração vs coreografia em microservices</title>
+      <title>Orquestração vs Coreografia: quem comanda o fluxo entre serviços?</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-094000-orchestration-vs-choreography/</link>
-      <description><![CDATA[Orquestração Fluxo centralizado. Coreografia Eventos distribuídos. Trade off Orquestração controle Coreografia flexibilidade Regra Comece simples, evolua para eventos. Insight Cor…]]></description>
+      <description><![CDATA[Quando um processo de negócio atravessa vários serviços, alguém precisa coordenar os passos. Na orquestração há um maestro central; na coreografia cada serviço reage a eventos. A escolha define onde mora a complexidade — e como você lida com falhas e compensações.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:40:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-094000-orchestration-vs-choreography/</guid>
     </item>
     <item>
-      <title>Observabilidade: logs, métricas e tracing</title>
+      <title>Observabilidade: os três pilares e a pergunta que o monitoramento não responde</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-093500-observability/</link>
-      <description><![CDATA[Problema Não saber o que está acontecendo. Pilares Logs Métricas Tracing Regra Sistema sem observabilidade é cego. Insight Debug em produção exige dados.]]></description>
+      <description><![CDATA[Monitoramento responde 'o sistema está quebrado?'. Observabilidade responde 'por quê?' — inclusive para falhas que você nunca previu. Logs, métricas e traces são os três pilares, mas o que os une é a capacidade de fazer perguntas novas sem subir código novo.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:35:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-093500-observability/</guid>
     </item>
     <item>
-      <title>Backpressure e controle de carga em sistemas distribuídos</title>
+      <title>Backpressure: por que um sistema saudável precisa saber dizer &#x27;não&#x27;</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-093000-backpressure/</link>
-      <description><![CDATA[Problema Sistema recebe mais carga do que suporta. Solução Backpressure. Estratégias Queue limitada Rate limit Retry com delay Insight Sistema saudável sabe dizer "não".]]></description>
+      <description><![CDATA[Quando um produtor é mais rápido que um consumidor, alguém precisa segurar a onda — ou a fila cresce até o sistema cair. Backpressure é o mecanismo de propagar 'desacelere' rio acima, e a diferença entre derrubar tudo e degradar com elegância.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:30:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-093000-backpressure/</guid>
     </item>
     <item>
-      <title>Outbox Pattern: garantindo consistência entre serviços</title>
+      <title>Outbox Pattern: o fim da dupla escrita entre banco e mensageria</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-092500-outbox-pattern/</link>
-      <description><![CDATA[Problema Salvar no banco e publicar evento não é atômico. Solução Outbox. Fluxo 1. Salva dados + evento na mesma transação 2. Worker publica evento Insight Outbox elimina inconsis…]]></description>
+      <description><![CDATA[Salvar no banco e publicar um evento são duas operações que não compartilham transação — e é exatamente aí que os dados divergem. O Outbox Pattern resolve isso gravando o evento na mesma transação do dado e publicando depois, com entrega at-least-once.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:25:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-092500-outbox-pattern/</guid>
     </item>
     <item>
-      <title>Idempotência em APIs: requisito obrigatório</title>
+      <title>Idempotência em APIs: o seguro contra o retry que vai acontecer</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-092000-idempotency-apis/</link>
-      <description><![CDATA[Problema Requisições duplicadas geram inconsistência. Solução Idempotência. Exemplo Regra Cliente precisa enviar chave estável por tentativa. Insight Sem idempotência, retry vira…]]></description>
+      <description><![CDATA[Em qualquer rede, uma requisição pode chegar duas vezes — timeout, retry, duplo clique. Sem idempotência, isso vira cobrança dupla. Um guia prático sobre Idempotency-Key, a janela de risco entre processar e responder, e como implementar de forma segura.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:20:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-092000-idempotency-apis/</guid>
     </item>
     <item>
-      <title>Consistência eventual vs forte: trade-off inevitável</title>
+      <title>Consistência forte vs eventual: o trade-off que o teorema CAP só começa a explicar</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-091500-consistency-tradeoffs/</link>
-      <description><![CDATA[Problema Sistemas distribuídos não têm consistência perfeita. Escolhas Forte bloqueio, menor escala Eventual mais rápido, menos garantia imediata Regra Negócio define consistência…]]></description>
+      <description><![CDATA[Não existe sistema distribuído perfeitamente consistente sem custo. Entre o CAP, o PACELC e a consistência eventual, o que realmente está em jogo é latência contra garantia — e essa é uma decisão de negócio antes de ser técnica.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:15:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-091500-consistency-tradeoffs/</guid>
     </item>
     <item>
-      <title>CQRS: quando usar e quando evitar</title>
+      <title>CQRS sem dogma: o que ele realmente separa e o preço que você paga</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-091000-cqrs-tradeoffs/</link>
-      <description><![CDATA[Problema CRUD não escala para leitura complexa. Solução Separar leitura e escrita. Benefícios Performance Modelos otimizados Custos Complexidade Consistência eventual Regra Use CQ…]]></description>
+      <description><![CDATA[CQRS é separar o modelo de escrita do modelo de leitura — não é Event Sourcing, não exige dois bancos e não é sinônimo de microservices. Um guia honesto sobre o que ganha, o que perde e os três níveis em que ele pode ser adotado.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:10:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-091000-cqrs-tradeoffs/</guid>
     </item>
     <item>
-      <title>DDD na prática: linguagem ubíqua como ativo estratégico</title>
+      <title>Linguagem Ubíqua na prática: o ativo de DDD que não aparece no diagrama</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/</link>
-      <description><![CDATA[Problema Código não reflete negócio. Solução Linguagem ubíqua. Exemplo Order, Invoice, Payment não são tabelas, são conceitos. Regra Nomear baseado no domínio Evitar termos genéri…]]></description>
+      <description><![CDATA[A maioria dos bugs caros nasce de um erro de tradução entre o que o negócio diz e o que o código faz. A linguagem ubíqua não é jargão de DDD — é a disciplina de eliminar essa tradução, palavra por palavra, dentro de um bounded context.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:05:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/</guid>
     </item>
     <item>
-      <title>Monólito modular vs Microservices: decisão arquitetural real</title>
+      <title>Monólito Modular vs Microservices: a decisão arquitetural que ninguém quer tomar cedo</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/</link>
-      <description><![CDATA[Problema Microservices cedo demais geram custo operacional alto. Regra Comece com monólito modular bem definido. Estrutura Boundaries claros (DDD) Camadas isoladas Comunicação int…]]></description>
+      <description><![CDATA[Microservices não são um upgrade do monólito — são um trade-off organizacional caro. Quando o monólito modular é a escolha correta, quais sinais justificam a extração de serviços e por que a Lei de Conway decide mais do que a tecnologia.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/</guid>
     </item>

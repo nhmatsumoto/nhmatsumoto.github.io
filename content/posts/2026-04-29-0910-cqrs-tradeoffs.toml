@@ -1,29 +1,180 @@
 id = "20260429-091000"
 slug = "cqrs-tradeoffs"
-title = "CQRS: quando usar e quando evitar"
+title = "CQRS sem dogma: o que ele realmente separa e o preço que você paga"
+title_en_us = "CQRS without dogma: what it actually separates and the price you pay"
+title_ja_jp = "教条なしの CQRS：それが実際に分離するものと、支払う代償"
+summary = "CQRS é separar o modelo de escrita do modelo de leitura — não é Event Sourcing, não exige dois bancos e não é sinônimo de microservices. Um guia honesto sobre o que ganha, o que perde e os três níveis em que ele pode ser adotado."
+summary_en_us = "CQRS means separating the write model from the read model — it is not Event Sourcing, it does not require two databases, and it is not a synonym for microservices. An honest guide to what you gain, what you lose, and the three levels at which it can be adopted."
+summary_ja_jp = "CQRS とは書き込みモデルと読み取りモデルを分けることであり、イベントソーシングではなく、2 つのデータベースを必要とせず、マイクロサービスの同義語でもない。得るもの、失うもの、そして採用できる 3 つのレベルについての誠実なガイド。"
 published_at = "2026-04-29T09:10:00+09:00"
-updated_at = "2026-04-29T09:10:00+09:00"
+updated_at = "2026-06-07T09:10:00+09:00"
 status = "published"
 tags = ["cqrs", "arquitetura", "scalability"]
+badges = ["CQRS", "Arquitetura"]
+featured = false
+has_math = false
 body = '''
-## Problema
-CRUD não escala para leitura complexa.
+CQRS (*Command Query Responsibility Segregation*) é uma das ideias mais simples e mais mal compreendidas da arquitetura moderna. A definição original de Greg Young é quase decepcionante de tão direta: **use um modelo para alterar dados e um modelo diferente para lê-los**. Só isso. Tudo o que vem depois — bancos separados, mensageria, projeções — é opcional.
 
-## Solução
-Separar leitura e escrita.
+## O que CQRS NÃO é
 
-## Benefícios
-- Performance
-- Modelos otimizados
+Antes do "quando usar", é preciso desfazer mitos que transformam CQRS em monstro:
 
-## Custos
-- Complexidade
-- Consistência eventual
+- **CQRS ≠ Event Sourcing.** São padrões ortogonais. Você pode ter CQRS com um único banco relacional.
+- **CQRS ≠ dois bancos de dados.** A separação pode ser apenas de *modelos em memória*.
+- **CQRS ≠ microservices.** Funciona perfeitamente dentro de um monólito modular.
+- **CQRS ≠ consistência eventual obrigatória.** Ela só aparece se você materializar a leitura em outro lugar.
 
-## Regra
-Use CQRS apenas com necessidade real de leitura escalável.
+## A raiz do problema: um modelo, duas pressões opostas
 
-## Insight
-CQRS sem necessidade vira overengineering.
+No CRUD tradicional, a mesma classe `Order` serve para gravar (precisa de invariantes, validação, comportamento rico) e para ler (precisa de joins, projeções, campos achatados para a tela). Essas duas pressões puxam o modelo para lados opostos. O resultado típico: entidades anêmicas cheias de `getters`, ou DTOs que vazam regra de negócio.
+
+CQRS resolve isso dando a cada responsabilidade seu próprio modelo:
+
+```csharp
+// Lado da escrita: rico, protege invariantes
+public sealed class Order : AggregateRoot
+{
+    public void AddItem(ProductId id, Quantity qty) { /* regras */ }
+    public void Confirm() { /* invariante de estado */ }
+}
+
+// Lado da leitura: plano, otimizado para a query, sem comportamento
+public sealed record OrderSummaryDto(
+    Guid Id, string Customer, decimal Total, string Status);
+```
+
+## Os três níveis de adoção
+
+CQRS é um *dial*, não um interruptor. Adote o nível mínimo que resolve seu problema:
+
+| Nível | O que separa | Custo | Quando |
+| :--- | :--- | :--- | :--- |
+| **1. Lógico** | Apenas os modelos/handlers (mesmo banco) | Quase nenhum | Quase sempre vale a pena |
+| **2. Leitura otimizada** | Queries leem views/SQL direto, bypass do ORM | Baixo | Telas com joins pesados |
+| **3. Read store separado** | Banco de leitura próprio, atualizado por eventos | Alto: sync, consistência eventual | Leitura e escrita escalam em ritmos diferentes |
+
+A maioria dos projetos só precisa do nível 1, e ainda assim já colhe o maior benefício: clareza. O erro de "overengineering" é pular direto para o nível 3 sem nunca ter sentido a dor que ele cura.
+
+## O preço real
+
+Quando você vai além do nível 1, paga em moedas concretas:
+
+- **Consistência eventual**: o read store fica milissegundos (ou segundos) atrás. A UI precisa lidar com "acabei de criar e não apareceu".
+- **Duplicação de modelos**: a mesma informação descrita duas vezes, que precisa evoluir junta.
+- **Infraestrutura de sincronização**: projeções, *handlers* de eventos, reprocessamento quando uma projeção tem bug.
+
+## Conclusão
+
+CQRS é excelente quando há uma assimetria real entre leitura e escrita — relatórios complexos, dashboards, leitura 100x mais frequente que escrita, ou invariantes de domínio que o CRUD está corrompendo. É *overengineering* quando adotado por status. A regra prática: **comece pela separação lógica (nível 1), que é barata e quase sempre clarifica o código; só suba de nível quando uma métrica — não uma opinião — exigir.**
 '''
+body_en_us = '''
+CQRS (*Command Query Responsibility Segregation*) is one of the simplest and most misunderstood ideas in modern architecture. Greg Young's original definition is almost disappointingly direct: **use one model to change data and a different model to read it**. That's it. Everything that comes after — separate databases, messaging, projections — is optional.
 
+## What CQRS is NOT
+
+Before "when to use it," we have to dismantle the myths that turn CQRS into a monster:
+
+- **CQRS ≠ Event Sourcing.** They are orthogonal patterns. You can have CQRS with a single relational database.
+- **CQRS ≠ two databases.** The separation can be just *in-memory models*.
+- **CQRS ≠ microservices.** It works perfectly inside a modular monolith.
+- **CQRS ≠ mandatory eventual consistency.** That only appears if you materialize the read side somewhere else.
+
+## The root problem: one model, two opposing pressures
+
+In traditional CRUD, the same `Order` class serves both to write (it needs invariants, validation, rich behavior) and to read (it needs joins, projections, flattened fields for the screen). Those two pressures pull the model in opposite directions. The typical result: anemic entities full of getters, or DTOs that leak business rules.
+
+CQRS solves this by giving each responsibility its own model:
+
+```csharp
+// Write side: rich, protects invariants
+public sealed class Order : AggregateRoot
+{
+    public void AddItem(ProductId id, Quantity qty) { /* rules */ }
+    public void Confirm() { /* state invariant */ }
+}
+
+// Read side: flat, optimized for the query, no behavior
+public sealed record OrderSummaryDto(
+    Guid Id, string Customer, decimal Total, string Status);
+```
+
+## The three levels of adoption
+
+CQRS is a *dial*, not a switch. Adopt the minimum level that solves your problem:
+
+| Level | What it separates | Cost | When |
+| :--- | :--- | :--- | :--- |
+| **1. Logical** | Just the models/handlers (same DB) | Almost none | Almost always worth it |
+| **2. Optimized reads** | Queries read views/raw SQL, bypassing the ORM | Low | Screens with heavy joins |
+| **3. Separate read store** | Its own read DB, updated by events | High: sync, eventual consistency | Reads and writes scale at different rates |
+
+Most projects only need level 1, and they still reap the biggest benefit: clarity. The "overengineering" mistake is jumping straight to level 3 without ever feeling the pain it cures.
+
+## The real price
+
+Once you go beyond level 1, you pay in concrete currency:
+
+- **Eventual consistency**: the read store lags milliseconds (or seconds) behind. The UI must handle "I just created it and it isn't there yet."
+- **Model duplication**: the same information described twice, which must evolve together.
+- **Sync infrastructure**: projections, event handlers, reprocessing when a projection has a bug.
+
+## Conclusion
+
+CQRS shines when there is a real asymmetry between reads and writes — complex reports, dashboards, reads 100x more frequent than writes, or domain invariants that CRUD is corrupting. It is *overengineering* when adopted for status. The practical rule: **start with logical separation (level 1), which is cheap and almost always clarifies the code; only move up a level when a metric — not an opinion — demands it.**
+'''
+body_ja_jp = '''
+CQRS（*Command Query Responsibility Segregation*）は、現代アーキテクチャで最も単純でありながら最も誤解されている概念のひとつです。グレッグ・ヤングによる本来の定義は、拍子抜けするほど直接的です。**データを変更するモデルと、それを読み取るモデルを別にせよ**。それだけです。その後に来るもの ── データベースの分離、メッセージング、プロジェクション ── はすべて任意です。
+
+## CQRS で「ない」もの
+
+「いつ使うか」の前に、CQRS を怪物に仕立てる神話を解体する必要があります。
+
+- **CQRS ≠ イベントソーシング。** 両者は直交するパターン。単一のリレーショナルデータベースで CQRS は成立する。
+- **CQRS ≠ 2 つのデータベース。** 分離は *メモリ内モデル* だけでもよい。
+- **CQRS ≠ マイクロサービス。** モジュラーモノリスの中でも完璧に機能する。
+- **CQRS ≠ 結果整合性が必須。** 読み取りを別の場所に実体化したときにのみ現れる。
+
+## 根本問題：1 つのモデル、相反する 2 つの圧力
+
+従来の CRUD では、同じ `Order` クラスが書き込み（不変条件・検証・リッチな振る舞いが必要）にも読み取り（結合・プロジェクション・画面用の平坦なフィールドが必要）にも使われます。この 2 つの圧力がモデルを逆方向へ引っ張ります。典型的な結末は、ゲッターだらけの貧血エンティティか、ビジネスルールを漏らす DTO です。
+
+CQRS は、各責務に独自のモデルを与えてこれを解決します。
+
+```csharp
+// 書き込み側：リッチ、不変条件を守る
+public sealed class Order : AggregateRoot
+{
+    public void AddItem(ProductId id, Quantity qty) { /* ルール */ }
+    public void Confirm() { /* 状態の不変条件 */ }
+}
+
+// 読み取り側：平坦、クエリに最適化、振る舞いなし
+public sealed record OrderSummaryDto(
+    Guid Id, string Customer, decimal Total, string Status);
+```
+
+## 採用の 3 段階
+
+CQRS はスイッチではなく *ダイヤル* です。問題を解く最小限のレベルを採用してください。
+
+| レベル | 分離するもの | コスト | いつ |
+| :--- | :--- | :--- | :--- |
+| **1. 論理的** | モデル/ハンドラだけ（同一 DB） | ほぼゼロ | ほぼ常に価値がある |
+| **2. 読み取り最適化** | クエリがビュー/生 SQL を読み、ORM を迂回 | 低 | 重い結合を持つ画面 |
+| **3. 読み取りストア分離** | 専用の読み取り DB をイベントで更新 | 高：同期、結果整合性 | 読み書きが異なる速度でスケールする |
+
+大半のプロジェクトはレベル 1 だけで十分であり、それでも最大の恩恵 ── 明快さ ── を得ます。「過剰設計」の誤りは、それが癒す痛みを一度も感じないままレベル 3 へ飛ぶことです。
+
+## 本当の代償
+
+レベル 1 を超えると、具体的な通貨で支払うことになります。
+
+- **結果整合性**: 読み取りストアがミリ秒（または秒）遅れる。UI は「作成したばかりなのにまだ無い」を扱わねばならない。
+- **モデルの重複**: 同じ情報を二度記述し、一緒に進化させねばならない。
+- **同期インフラ**: プロジェクション、イベントハンドラ、プロジェクションにバグがあるときの再処理。
+
+## 結論
+
+CQRS が輝くのは、読み取りと書き込みに本物の非対称性があるとき ── 複雑なレポート、ダッシュボード、書き込みの 100 倍頻繁な読み取り、あるいは CRUD が壊しつつあるドメイン不変条件です。見栄えのために採用するなら *過剰設計* です。実践的なルール。**まず安価でほぼ常にコードを明快にする論理的分離（レベル 1）から始め、意見ではなく指標が要求したときにのみレベルを上げよ。**
+'''

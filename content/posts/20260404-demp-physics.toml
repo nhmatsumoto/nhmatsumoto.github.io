@@ -1,68 +1,171 @@
 id = "20260404-demp-physics"
 slug = "fisica-demp-pulsos-dispersos"
-title = "A Física dos Pulsos Dispersos: Além do EMP Convencional"
-title_en_us = "The Physics of Dispersed Pulses: Beyond Conventional EMP"
-title_ja_jp = "分散パルスの物理学：従来の EMP を超えて"
-summary = "Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos."
-summary_en_us = "A deep exploration of DEMP phenomena, GRBs and the dissipation of electromagnetic pulses in dispersive media."
-summary_ja_jp = "DEMP 現象、ガンマ線バースト、分散性媒質中の電磁パルス減衰の深い考察。"
+title = "A Física da Dispersão de Pulsos: por que um pulso 'limpo' chega borrado"
+title_en_us = "The Physics of Pulse Dispersion: why a clean pulse arrives smeared"
+title_ja_jp = "パルス分散の物理学：きれいなパルスがなぜ滲んで届くのか"
+summary = "Um pulso eletromagnético curto carrega muitas frequências ao mesmo tempo. Em um meio dispersivo — como a ionosfera ou o plasma interestelar — cada frequência viaja em uma velocidade, e o pulso se espalha no tempo. Da dispersão de grupo aos whistlers e à dispersion measure de pulsares."
+summary_en_us = "A short electromagnetic pulse carries many frequencies at once. In a dispersive medium — like the ionosphere or interstellar plasma — each frequency travels at a different speed, and the pulse spreads in time. From group-velocity dispersion to whistlers and the dispersion measure of pulsars."
+summary_ja_jp = "短い電磁パルスは同時に多くの周波数を運ぶ。電離圏や星間プラズマのような分散性媒質では、周波数ごとに速度が異なり、パルスは時間方向に広がる。群速度分散から、ホイッスラー、パルサーの分散量（DM）まで。"
 published_at = "2026-04-04T22:30:00+09:00"
-updated_at = "2026-04-04T22:30:00+09:00"
+updated_at = "2026-06-07T22:30:00+09:00"
 status = "published"
 tags = ["physics", "astrophysics", "electromagnetism", "science"]
-badges = ["DEMP", "EMP"]
+badges = ["Dispersão", "Plasma"]
 featured = true
+has_math = true
 body = """
-O termo **Pulso Eletromagnético Disperso (DEMP)** não é apenas uma curiosidade técnica; é um conceito fundamental para entender como a energia viaja através de meios complexos, como a ionosfera Terrestre.
+Há um termo solto por aí — "DEMP", de *dispersed electromagnetic pulse* — que não é vocabulário padrão da física. Mas o fenômeno por trás dele é real, bem entendido e elegante: a **dispersão de pulsos**. Vamos chamar as coisas pelos nomes corretos e ver por que um pulso que sai "limpo" da fonte pode chegar "borrado" ao detector.
 
-### O que é dispersão?
-Um pulso convencional é uma perturbação transitória de curtíssima duração. No entanto, quando esse pulso viaja por um meio dispersivo, suas diferentes componentes de frequência se propagam em velocidades variadas. O resultado é o sinal se "espalhando" no tempo — o que tecnicamente chamamos de **Pulso Disperso**.
+### 1. O que é dispersão
 
-### Fontes de Irradiância
-Podemos separar os fenômenos em três grandes vertentes astrofísicas:
+Pela análise de Fourier, um pulso curto no tempo é, equivalentemente, uma **soma de muitas frequências**. Em um meio onde o índice de refração depende da frequência — um **meio dispersivo** — cada componente viaja a uma velocidade diferente. O pacote de onda se desfaz: as frequências chegam em instantes diferentes e o pulso se **espalha no tempo**.
 
-1.  **Supernovas de Colapso**: Quando o núcleo colapsa, ocorre o *shock breakout*, um clarão intenso em UV/X-ray que serve como modelo teórico para pulsos radiativos transitórios.
-2.  **Gamma-Ray Bursts (GRBs)**: O análogo mais próximo de um pulso eletromagnético extremo. Associados a jatos ultra-relativísticos, eles transportam energias colossais em gamas em janelas temporais minúsculas.
-3.  **Eventos Solares (CMEs & Flares)**: O "sopro" estelar que, ao interagir com a magnetosfera, induz correntes em infraestruturas industriais.
+A grandeza-chave é a **velocidade de grupo**, a velocidade com que a energia (a envoltória do pacote) se propaga:
 
-### A Anatomia do Pulso Nuclear (HEMP)
-Diferente das estrelas, a detonação em alta altitude utiliza o **Efeito Compton**, onde raios gama colidem com moléculas de ar, ejetando elétrons acelerados que, submetidos ao campo magnético terrestre, geram o pulso eletromagnético continental (HEMP).
+$$ v_g = \\frac{d\\omega}{dk} $$
 
-Enquanto a estrela deforma o campo magnético do planeta como um todo, a versão artificial foca em saturar componentes eletrônicos diretamente através do acoplamento rápido e violento.
+Quando $v_g$ varia com a frequência, temos **dispersão de velocidade de grupo (GVD)**. No vácuo não há dispersão; em plasmas, fibras ópticas e na ionosfera, há.
+
+### 2. A ionosfera é um plasma dispersivo
+
+Para uma onda de rádio atravessando um plasma frio, o índice de refração é:
+
+$$ n(f) = \\sqrt{1 - \\frac{f_p^2}{f^2}}, \\qquad f_p \\approx 8.98\\sqrt{N_e}\\ \\text{[Hz, com } N_e \\text{ em m}^{-3}] $$
+
+onde $f_p$ é a **frequência de plasma**, que depende da densidade de elétrons $N_e$. Consequências diretas:
+
+- Frequências **abaixo** de $f_p$ são refletidas (é assim que o rádio de ondas curtas "ricocheteia" na ionosfera e dá a volta no mundo).
+- Frequências **acima** de $f_p$ passam, mas as mais baixas são mais atrasadas — um pulso de banda larga chega com as altas na frente e as baixas atrás (*chirp*).
+
+### 3. Whistlers: ouvir um raio se espalhar
+
+O exemplo audível clássico: descargas atmosféricas (raios) emitem um pulso eletromagnético de banda larga em VLF. Parte dessa energia viaja pela magnetosfera ao longo das linhas de campo e sofre dispersão intensa. Ao ser captado, o que era um estalo instantâneo virou um **tom descendente** de alguns segundos — o *whistler*. As frequências altas chegam primeiro, as baixas depois: dispersão tornada som.
+
+### 4. Pulsares: dispersão como régua cósmica
+
+O mesmo princípio, em escala galáctica. Pulsares emitem pulsos de rádio nítidos que atravessam o **meio interestelar ionizado**. O atraso de chegada escala com $f^{-2}$, e a quantidade total é a **dispersion measure (DM)** — a densidade-coluna de elétrons no caminho:
+
+$$ \\Delta t \\propto \\text{DM}\\left(\\frac{1}{f_1^2} - \\frac{1}{f_2^2}\\right), \\qquad \\text{DM} = \\int_0^d N_e\\, dl $$
+
+Medindo o atraso entre duas frequências, astrônomos **estimam a distância** do pulsar e mapeiam os elétrons da Galáxia. O mesmo efeito que borra o sinal é o que o torna uma ferramenta de medida.
+
+### 5. E o pulso nuclear (HEMP)?
+
+O HEMP de fato existe e é dispersivo no sentido de ter **componentes em escalas de tempo muito diferentes** — convenção da IEC 61000-2-9:
+
+| Componente | Origem | Escala de tempo | Efeito |
+| :--- | :--- | :--- | :--- |
+| **E1** | Raios gama → efeito Compton → deflexão geomagnética | nanossegundos | Queima eletrônica rápida |
+| **E2** | Nêutrons e gamas espalhados | micro a milissegundos | Similar a raio (surto) |
+| **E3** | Distorção MHD do campo geomagnético | segundos a minutos | Correntes induzidas em redes (como uma CME) |
+
+Note que o E3 é, fisicamente, primo da tempestade geomagnética solar: ambos induzem correntes lentas em condutores longos. Já a dispersão da Seção 1–4 é outra coisa — não é "o pulso ter várias fases", é **as frequências do pulso viajarem em velocidades distintas**. Misturar os dois é justamente o erro que o termo "DEMP" costuma carregar.
+
+### Conclusão
+
+Não existe um fenômeno místico chamado "DEMP". Existe a **dispersão**, um efeito universal de propagação em meios cuja resposta depende da frequência. Ela borra sinais de rádio, transforma raios em assobios, mede a distância de pulsares e impõe limites a quão curto um pulso pode chegar ao outro lado de um plasma. Entender dispersão é entender que um pulso não é um objeto rígido — é um acordo temporário entre muitas frequências, sempre prestes a se desfazer.
 """
 body_en_us = """
-The term **Dispersed Electromagnetic Pulse (DEMP)** is not merely a technical curiosity. It is a fundamental concept for understanding how energy travels through complex media such as the Earth's ionosphere.
+There's a loose term floating around — "DEMP," for *dispersed electromagnetic pulse* — that is not standard physics vocabulary. But the phenomenon behind it is real, well understood, and elegant: **pulse dispersion**. Let's call things by their correct names and see why a pulse that leaves the source "clean" can reach the detector "smeared."
 
-### What is dispersion?
-A conventional pulse is a transient perturbation of extremely short duration. However, when that pulse travels through a dispersive medium, its different frequency components propagate at different velocities. The result is that the signal spreads out in time, which is precisely what we call a **dispersed pulse**.
+### 1. What dispersion is
 
-### Sources of irradiance
-We can split the phenomena into three major astrophysical branches:
+By Fourier analysis, a pulse that is short in time is, equivalently, a **sum of many frequencies**. In a medium where the refractive index depends on frequency — a **dispersive medium** — each component travels at a different speed. The wave packet comes apart: the frequencies arrive at different instants and the pulse **spreads in time**.
 
-1.  **Core-collapse supernovae**: when the core collapses, a *shock breakout* occurs, an intense UV/X-ray flash that serves as a theoretical model for transient radiative pulses.
-2.  **Gamma-ray bursts (GRBs)**: the closest analogue to an extreme electromagnetic pulse. Associated with ultra-relativistic jets, they carry colossal energies in gamma radiation across extremely narrow time windows.
-3.  **Solar events (CMEs & flares)**: the stellar "breath" that, when interacting with the magnetosphere, induces currents in industrial infrastructure.
+The key quantity is the **group velocity**, the speed at which the energy (the packet's envelope) propagates:
 
-### Anatomy of the nuclear pulse (HEMP)
-Unlike stars, a high-altitude detonation relies on the **Compton Effect**, in which gamma rays collide with air molecules and eject accelerated electrons that, under the Earth's magnetic field, generate a continental-scale electromagnetic pulse (HEMP).
+$$ v_g = \\frac{d\\omega}{dk} $$
 
-Where a star deforms the magnetic field of the planet as a whole, the artificial version focuses on directly saturating electronic components through fast, violent coupling.
+When $v_g$ varies with frequency, we have **group-velocity dispersion (GVD)**. The vacuum has no dispersion; plasmas, optical fibers, and the ionosphere do.
+
+### 2. The ionosphere is a dispersive plasma
+
+For a radio wave crossing a cold plasma, the refractive index is:
+
+$$ n(f) = \\sqrt{1 - \\frac{f_p^2}{f^2}}, \\qquad f_p \\approx 8.98\\sqrt{N_e}\\ \\text{[Hz, with } N_e \\text{ in m}^{-3}] $$
+
+where $f_p$ is the **plasma frequency**, which depends on the electron density $N_e$. Direct consequences:
+
+- Frequencies **below** $f_p$ are reflected (that's how shortwave radio "bounces" off the ionosphere and travels around the world).
+- Frequencies **above** $f_p$ pass through, but the lower ones are delayed more — a broadband pulse arrives with the highs in front and the lows behind (a *chirp*).
+
+### 3. Whistlers: hearing a lightning bolt disperse
+
+The classic audible example: lightning strikes emit a broadband VLF electromagnetic pulse. Part of that energy travels through the magnetosphere along field lines and undergoes intense dispersion. By the time it's picked up, what was an instantaneous crack has become a **descending tone** a few seconds long — the *whistler*. High frequencies arrive first, low frequencies later: dispersion turned into sound.
+
+### 4. Pulsars: dispersion as a cosmic ruler
+
+The same principle, on a galactic scale. Pulsars emit sharp radio pulses that cross the **ionized interstellar medium**. The arrival delay scales as $f^{-2}$, and the total amount is the **dispersion measure (DM)** — the column density of electrons along the path:
+
+$$ \\Delta t \\propto \\text{DM}\\left(\\frac{1}{f_1^2} - \\frac{1}{f_2^2}\\right), \\qquad \\text{DM} = \\int_0^d N_e\\, dl $$
+
+By measuring the delay between two frequencies, astronomers **estimate the pulsar's distance** and map the Galaxy's electrons. The very effect that smears the signal is what makes it a measuring tool.
+
+### 5. What about the nuclear pulse (HEMP)?
+
+HEMP is real, and it is "dispersed" in the sense of having **components on very different time scales** — the IEC 61000-2-9 convention:
+
+| Component | Origin | Time scale | Effect |
+| :--- | :--- | :--- | :--- |
+| **E1** | Gamma rays → Compton effect → geomagnetic deflection | nanoseconds | Fast electronics burnout |
+| **E2** | Scattered neutrons and gammas | micro to milliseconds | Lightning-like surge |
+| **E3** | MHD distortion of the geomagnetic field | seconds to minutes | Induced currents in grids (like a CME) |
+
+Note that E3 is physically a cousin of the solar geomagnetic storm: both induce slow currents in long conductors. The dispersion of Sections 1–4 is something else entirely — it's not "the pulse having several phases," it's **the pulse's frequencies traveling at different speeds**. Conflating the two is exactly the error the term "DEMP" tends to carry.
+
+### Conclusion
+
+There is no mystical phenomenon called "DEMP." There is **dispersion**, a universal propagation effect in media whose response depends on frequency. It smears radio signals, turns lightning into whistles, measures the distance of pulsars, and sets limits on how short a pulse can stay by the time it crosses a plasma. To understand dispersion is to understand that a pulse is not a rigid object — it's a temporary agreement among many frequencies, always about to fall apart.
 """
 body_ja_jp = """
-**分散電磁パルス (DEMP)** という用語は、単なる技術的珍奇ではありません。地球電離圏のような複雑な媒質を通してエネルギーがどう伝わるかを理解するための基本概念です。
+「DEMP」（*dispersed electromagnetic pulse*）という、物理学の標準用語ではない言葉が漂っています。しかしその背後にある現象は、実在し、よく理解され、そして美しいものです。**パルス分散** です。物事を正しい名で呼び、源を「きれいに」出たパルスがなぜ検出器に「滲んで」届くのかを見てみましょう。
 
-### 分散とは何か？
-通常のパルスは、極めて短い時間だけ続く過渡的な擾乱です。しかし、そのパルスが分散性媒質を通過すると、周波数成分ごとに伝播速度が変わります。その結果、信号は時間方向に広がります。これが技術的にいう **分散パルス** です。
+### 1. 分散とは何か
 
-### 放射源の分類
-現象は大きく 3 つの天体物理学的系統に分けられます。
+フーリエ解析によれば、時間的に短いパルスは、等価的に **多くの周波数の和** です。屈折率が周波数に依存する媒質 ── **分散性媒質** ── では、各成分が異なる速度で進みます。波束はばらけ、周波数は異なる時刻に到着し、パルスは **時間方向に広がります**。
 
-1.  **核崩壊型超新星**: 核が崩壊すると *shock breakout* が起こり、強烈な UV/X-ray フラッシュが過渡放射パルスの理論モデルとなる。
-2.  **ガンマ線バースト (GRB)**: 極端な電磁パルスに最も近いアナロジー。超相対論的ジェットに結びつき、ごく短い時間窓に莫大なガンマ線エネルギーを運ぶ。
-3.  **太陽イベント (CME と flare)**: 磁気圏と相互作用し、産業インフラに電流を誘導する恒星の「息吹」。
+鍵となる量は **群速度**、すなわちエネルギー（波束の包絡線）が伝播する速さです。
 
-### 核パルス (HEMP) の解剖
-恒星とは異なり、高高度爆発は **コンプトン効果** に依存します。ガンマ線が大気分子に衝突し、加速電子を放出し、それらが地球磁場のもとで大陸規模の電磁パルス (HEMP) を生み出します。
+$$ v_g = \\frac{d\\omega}{dk} $$
 
-恒星が惑星全体の磁場を変形させるのに対し、人工版は高速で激しい結合によって電子部品を直接飽和させることに焦点を当てています。
+$v_g$ が周波数とともに変わるとき、**群速度分散（GVD）** が生じます。真空に分散はなく、プラズマ・光ファイバ・電離圏にはあります。
+
+### 2. 電離圏は分散性プラズマである
+
+冷たいプラズマを横切る電波に対し、屈折率は次のようになります。
+
+$$ n(f) = \\sqrt{1 - \\frac{f_p^2}{f^2}}, \\qquad f_p \\approx 8.98\\sqrt{N_e}\\ \\text{[Hz、} N_e \\text{ は m}^{-3}] $$
+
+ここで $f_p$ は電子密度 $N_e$ に依存する **プラズマ周波数** です。直接の帰結。
+
+- $f_p$ **より低い** 周波数は反射される（短波放送が電離圏で「跳ね返り」地球を一周するのはこのため）。
+- $f_p$ **より高い** 周波数は通過するが、低い方ほど大きく遅れる ── 広帯域パルスは高域が先、低域が後で届く（*チャープ*）。
+
+### 3. ホイッスラー：雷が分散する音を聞く
+
+古典的な可聴例。落雷は VLF の広帯域電磁パルスを放ちます。そのエネルギーの一部は磁力線に沿って磁気圏を伝わり、強い分散を受けます。受信される頃には、瞬間的なパチッという音が、数秒続く **下降音** になっています ── *ホイッスラー* です。高周波が先、低周波が後。分散が音になったものです。
+
+### 4. パルサー：宇宙の物差しとしての分散
+
+同じ原理が、銀河規模で。パルサーは鋭い電波パルスを放ち、それが **電離した星間物質** を横切ります。到着の遅れは $f^{-2}$ に比例し、その総量が **分散量（DM）** ── 経路上の電子の柱密度 ── です。
+
+$$ \\Delta t \\propto \\text{DM}\\left(\\frac{1}{f_1^2} - \\frac{1}{f_2^2}\\right), \\qquad \\text{DM} = \\int_0^d N_e\\, dl $$
+
+2 つの周波数間の遅れを測ることで、天文学者はパルサーまでの **距離を推定** し、銀河の電子を地図化します。信号を滲ませるまさにその効果が、測定の道具になるのです。
+
+### 5. 核パルス（HEMP）は？
+
+HEMP は実在し、**まったく異なる時間スケールの成分** を持つという意味で「分散的」です ── IEC 61000-2-9 の区分。
+
+| 成分 | 起源 | 時間スケール | 効果 |
+| :--- | :--- | :--- | :--- |
+| **E1** | ガンマ線 → コンプトン効果 → 地磁気偏向 | ナノ秒 | 高速な電子機器の焼損 |
+| **E2** | 散乱した中性子とガンマ線 | マイクロ〜ミリ秒 | 落雷状のサージ |
+| **E3** | 地磁気の MHD 歪み | 秒〜分 | 送電網への誘導電流（CME に類似） |
+
+E3 は物理的に太陽地磁気嵐の親戚です。どちらも長い導体に遅い電流を誘導します。一方、第 1〜4 節の分散はまったく別物 ── 「パルスが複数の相を持つ」ことではなく、**パルスの各周波数が異なる速度で進む** ことです。両者を混同することこそ、「DEMP」という語が抱えがちな誤りです。
+
+### 結論
+
+「DEMP」という神秘的な現象はありません。あるのは **分散** ── 応答が周波数に依存する媒質における普遍的な伝播効果です。それは電波信号を滲ませ、雷を口笛に変え、パルサーの距離を測り、プラズマを越える頃にパルスがどれだけ短くいられるかに限界を課します。分散を理解するとは、パルスが剛体ではないと理解することです ── それは多くの周波数の間の一時的な合意であり、常に崩れる寸前なのです。
 """
