@@ -1,0 +1,380 @@
+id = "2026-06-08-0900"
+slug = "design-patterns-criacionais-csharp-dotnet"
+title = "Padrões Criacionais em C#: Factory, Builder e Singleton na era do DI"
+title_en_us = "Creational Patterns in C#: Factory, Builder and Singleton in the DI era"
+title_ja_jp = "C# の生成パターン：DI 時代の Factory・Builder・Singleton"
+summary = "Os padrões criacionais resolvem 'como instanciar sem acoplar ao concreto'. No .NET moderno, o container de DI já é o maior deles — mas Factory, Builder e companhia continuam vivos quando a criação tem regra de negócio. Implementação prática, da forma clássica à idiomática."
+summary_en_us = "Creational patterns answer 'how to instantiate without coupling to the concrete type'. In modern .NET, the DI container is already the biggest one — but Factory, Builder and friends stay alive when creation carries business rules. Practical implementation, from the classic to the idiomatic form."
+summary_ja_jp = "生成パターンは「具象型に結合せずにインスタンス化する方法」に答える。モダンな .NET では DI コンテナが最大の生成パターンだが、生成にビジネスルールが伴うとき Factory・Builder などは生き続ける。古典形からイディオム形まで、実践的に実装する。"
+published_at = "2026-06-08T09:00:00+09:00"
+updated_at = "2026-06-08T09:00:00+09:00"
+status = "published"
+tags = ["dotnet", "csharp", "design-patterns", "arquitetura", "engenharia"]
+badges = ["C#", ".NET", "Patterns"]
+repo_url = ""
+code_url = ""
+featured = true
+has_math = false
+impact = [
+  "Trocar um switch de criação por keyed services (.NET 8) elimina o factory manual e mantém a resolução no container",
+  "Builder com required members + validação centraliza invariantes de construção em um único ponto testável",
+]
+trade_offs = [
+  "DI resolve a maioria dos casos de Factory/Singleton, mas esconde o grafo de dependências de quem lê o código",
+  "Builder agrega legibilidade na construção complexa ao custo de mais um tipo para manter",
+]
+lessons = [
+  "Padrão criacional bom é o que move a decisão de 'qual tipo' para fora de quem usa o objeto",
+  "No .NET moderno, prefira o container; só escreva o padrão à mão quando a criação tem lógica de domínio",
+]
+body = '''
+Os **padrões criacionais** do GoF (Gang of Four) atacam um único problema: como criar objetos sem que o código cliente fique amarrado a tipos concretos. A grande virada no .NET é que boa parte desse trabalho migrou para o **container de injeção de dependência (DI)** — ele é, na prática, o maior factory/singleton do seu sistema. Ainda assim, os padrões clássicos continuam úteis exatamente onde o container não chega: quando a criação carrega **regra de negócio**.
+
+## Factory Method: escolher o tipo em tempo de execução
+
+O `Factory Method` desacopla *qual* implementação será criada de *quem* a usa. O caso clássico: você recebe um tipo de pagamento (string, enum) e precisa do processador correto.
+
+```csharp
+// Forma clássica: a fábrica decide o concreto
+public interface IPaymentProcessor { Task<Receipt> PayAsync(Order o); }
+
+public sealed class PaymentProcessorFactory
+{
+    public IPaymentProcessor Create(PaymentMethod method) => method switch
+    {
+        PaymentMethod.Pix    => new PixProcessor(),
+        PaymentMethod.Card   => new CardProcessor(),
+        PaymentMethod.Boleto => new BoletoProcessor(),
+        _ => throw new ArgumentOutOfRangeException(nameof(method))
+    };
+}
+```
+
+O problema dessa versão: o `new` interno mata a injeção de dependências dos processadores. No **.NET 8+**, a forma idiomática usa **keyed services**, deixando o container construir cada concreto com suas próprias dependências:
+
+```csharp
+// Registro
+services.AddKeyedScoped<IPaymentProcessor, PixProcessor>(PaymentMethod.Pix);
+services.AddKeyedScoped<IPaymentProcessor, CardProcessor>(PaymentMethod.Card);
+
+// Resolução: o "factory" é o próprio container
+public sealed class Checkout(IServiceProvider sp)
+{
+    public Task<Receipt> PayAsync(Order o) =>
+        sp.GetRequiredKeyedService<IPaymentProcessor>(o.Method).PayAsync(o);
+}
+```
+
+Quando ainda escrever o factory à mão? Quando a escolha do tipo envolve **lógica de domínio** (não só uma chave), ou quando você quer um ponto explícito e testável para essa decisão.
+
+## Abstract Factory: famílias de objetos que combinam
+
+Enquanto o Factory Method cria **um** produto, o `Abstract Factory` cria **famílias coerentes** de produtos que precisam ser usados juntos. O exemplo canônico é um relatório que muda de formato inteiro (PDF vs HTML), onde cabeçalho, corpo e rodapé precisam ser do mesmo "dialeto".
+
+```csharp
+public interface IReportFactory
+{
+    IHeaderRenderer Header();
+    IBodyRenderer   Body();
+    IFooterRenderer Footer();
+}
+
+public sealed class PdfReportFactory : IReportFactory { /* devolve a família PDF */ }
+public sealed class HtmlReportFactory : IReportFactory { /* devolve a família HTML */ }
+```
+
+O valor está na **garantia de consistência**: é impossível misturar um cabeçalho PDF com um rodapé HTML. No .NET, frequentemente isso vira apenas grupos de registros no DI, mas o conceito de "família que anda junto" continua sendo o critério de design.
+
+## Builder: construção complexa, passo a passo
+
+O `Builder` separa a construção de um objeto complexo de sua representação final. Ele brilha quando há **muitos parâmetros opcionais**, **ordem de montagem** ou **validação no final**.
+
+```csharp
+var email = EmailBuilder.Create()
+    .From("no-reply@app.dev")
+    .To("user@example.com")
+    .WithSubject("Bem-vindo")
+    .WithTemplate("welcome", new { Name = "Hiro" })
+    .Build();   // aqui as invariantes são validadas de uma vez
+```
+
+Mas atenção: o **C# moderno tornou o Builder obsoleto em muitos casos**. Para objetos imutáveis, `records` com `required` members e `with` expressions cobrem boa parte do terreno sem um tipo extra:
+
+```csharp
+public sealed record Email
+{
+    public required string From { get; init; }
+    public required string To { get; init; }
+    public string Subject { get; init; } = "";
+}
+
+var a = new Email { From = "x@y.z", To = "u@e.f", Subject = "Oi" };
+var b = a with { Subject = "Outro" };   // cópia imutável modificada
+```
+
+A heurística: use `record`/object initializer quando a construção é **declarativa**; use Builder quando há **lógica, etapas ou validação acumulada** que o initializer não expressa bem.
+
+## Singleton: o anti-padrão que o DI domesticou
+
+O `Singleton` clássico — `static instance` com lock duplo — é hoje, na maioria dos casos, um **cheiro de código**: estado global escondido, difícil de testar, acoplamento implícito. O .NET resolve isso com **tempo de vida gerenciado pelo container**:
+
+```csharp
+// O container garante uma única instância — e ela é injetável/testável
+services.AddSingleton<IClock, SystemClock>();
+```
+
+Se você *precisar* de um singleton manual (raro), use `Lazy<T>`, que dá inicialização preguiçosa e thread-safe sem o boilerplate do double-checked locking:
+
+```csharp
+private static readonly Lazy<Config> _cfg = new(() => Config.Load());
+public static Config Current => _cfg.Value;
+```
+
+## Comparativo
+
+| Padrão | Resolve | Forma idiomática .NET | Quando escrever à mão |
+| :--- | :--- | :--- | :--- |
+| **Factory Method** | Escolher 1 tipo concreto | Keyed services / `Func<T>` | Decisão tem regra de domínio |
+| **Abstract Factory** | Família coerente de tipos | Grupos de registro no DI | Garantir consistência entre produtos |
+| **Builder** | Construção complexa/validada | `record` + `required` + `with` | Etapas, ordem ou validação acumulada |
+| **Singleton** | Instância única | `AddSingleton` | Quase nunca; senão `Lazy<T>` |
+| **Prototype** | Clonar configuração | `record` `with` | Cópia profunda customizada |
+
+## Conclusão
+
+No .NET moderno, a pergunta criacional raramente é "qual padrão GoF aplico?", e sim "**isso é trabalho do container, ou há regra de negócio na criação?**". Se for só montar o grafo de dependências, deixe o DI fazer — ele já é Factory e Singleton. Escreva o padrão à mão quando a criação **decide algo do domínio**: aí Factory Method, Abstract Factory e Builder voltam a ganhar o seu lugar, agora como expressão de regra, não como cerimônia.
+'''
+body_en_us = '''
+The GoF (Gang of Four) **creational patterns** all attack a single problem: how to create objects without tying client code to concrete types. The big shift in .NET is that much of this work has migrated to the **dependency injection (DI) container** — it is, in practice, the largest factory/singleton in your system. Even so, the classic patterns stay useful exactly where the container falls short: when creation carries **business rules**.
+
+## Factory Method: choosing the type at runtime
+
+The `Factory Method` decouples *which* implementation gets created from *who* uses it. The classic case: you receive a payment type (string, enum) and need the right processor.
+
+```csharp
+// Classic form: the factory decides the concrete type
+public interface IPaymentProcessor { Task<Receipt> PayAsync(Order o); }
+
+public sealed class PaymentProcessorFactory
+{
+    public IPaymentProcessor Create(PaymentMethod method) => method switch
+    {
+        PaymentMethod.Pix    => new PixProcessor(),
+        PaymentMethod.Card   => new CardProcessor(),
+        PaymentMethod.Boleto => new BoletoProcessor(),
+        _ => throw new ArgumentOutOfRangeException(nameof(method))
+    };
+}
+```
+
+The problem with this version: the inner `new` kills dependency injection for the processors. In **.NET 8+**, the idiomatic form uses **keyed services**, letting the container build each concrete type with its own dependencies:
+
+```csharp
+// Registration
+services.AddKeyedScoped<IPaymentProcessor, PixProcessor>(PaymentMethod.Pix);
+services.AddKeyedScoped<IPaymentProcessor, CardProcessor>(PaymentMethod.Card);
+
+// Resolution: the "factory" is the container itself
+public sealed class Checkout(IServiceProvider sp)
+{
+    public Task<Receipt> PayAsync(Order o) =>
+        sp.GetRequiredKeyedService<IPaymentProcessor>(o.Method).PayAsync(o);
+}
+```
+
+When should you still write the factory by hand? When choosing the type involves **domain logic** (not just a key), or when you want an explicit, testable point for that decision.
+
+## Abstract Factory: families of objects that fit together
+
+While the Factory Method creates **one** product, the `Abstract Factory` creates **coherent families** of products that must be used together. The canonical example is a report whose entire format changes (PDF vs HTML), where header, body, and footer must all speak the same "dialect."
+
+```csharp
+public interface IReportFactory
+{
+    IHeaderRenderer Header();
+    IBodyRenderer   Body();
+    IFooterRenderer Footer();
+}
+
+public sealed class PdfReportFactory : IReportFactory { /* returns the PDF family */ }
+public sealed class HtmlReportFactory : IReportFactory { /* returns the HTML family */ }
+```
+
+The value is the **consistency guarantee**: it's impossible to mix a PDF header with an HTML footer. In .NET this often becomes just groups of DI registrations, but the idea of "a family that travels together" remains the design criterion.
+
+## Builder: complex construction, step by step
+
+The `Builder` separates the construction of a complex object from its final representation. It shines when there are **many optional parameters**, **assembly order**, or **validation at the end**.
+
+```csharp
+var email = EmailBuilder.Create()
+    .From("no-reply@app.dev")
+    .To("user@example.com")
+    .WithSubject("Welcome")
+    .WithTemplate("welcome", new { Name = "Hiro" })
+    .Build();   // invariants are validated all at once here
+```
+
+But beware: **modern C# made the Builder obsolete in many cases**. For immutable objects, `records` with `required` members and `with` expressions cover much of the ground without an extra type:
+
+```csharp
+public sealed record Email
+{
+    public required string From { get; init; }
+    public required string To { get; init; }
+    public string Subject { get; init; } = "";
+}
+
+var a = new Email { From = "x@y.z", To = "u@e.f", Subject = "Hi" };
+var b = a with { Subject = "Other" };   // modified immutable copy
+```
+
+The heuristic: use a `record`/object initializer when construction is **declarative**; use a Builder when there is **logic, steps, or accumulated validation** that the initializer doesn't express well.
+
+## Singleton: the anti-pattern that DI tamed
+
+The classic `Singleton` — a `static instance` with double-checked locking — is today, in most cases, a **code smell**: hidden global state, hard to test, implicit coupling. .NET solves this with a **container-managed lifetime**:
+
+```csharp
+// The container guarantees a single instance — and it's injectable/testable
+services.AddSingleton<IClock, SystemClock>();
+```
+
+If you *must* have a manual singleton (rare), use `Lazy<T>`, which gives lazy, thread-safe initialization without the double-checked locking boilerplate:
+
+```csharp
+private static readonly Lazy<Config> _cfg = new(() => Config.Load());
+public static Config Current => _cfg.Value;
+```
+
+## Comparison
+
+| Pattern | Solves | Idiomatic .NET form | When to hand-write |
+| :--- | :--- | :--- | :--- |
+| **Factory Method** | Choosing 1 concrete type | Keyed services / `Func<T>` | The decision has domain rules |
+| **Abstract Factory** | A coherent family of types | Groups of DI registrations | Enforcing consistency across products |
+| **Builder** | Complex/validated construction | `record` + `required` + `with` | Steps, order, or accumulated validation |
+| **Singleton** | A single instance | `AddSingleton` | Almost never; otherwise `Lazy<T>` |
+| **Prototype** | Cloning a configuration | `record` `with` | Custom deep copy |
+
+## Conclusion
+
+In modern .NET, the creational question is rarely "which GoF pattern do I apply?" but "**is this the container's job, or is there a business rule in the creation?**". If it's just wiring the dependency graph, let DI do it — it is already Factory and Singleton. Hand-write the pattern when creation **decides something about the domain**: that's when Factory Method, Abstract Factory, and Builder earn their place again — now as an expression of a rule, not as ceremony.
+'''
+body_ja_jp = '''
+GoF（Gang of Four）の **生成パターン** はすべて、ひとつの問題を攻めます。クライアントコードを具象型に縛らずにオブジェクトを生成する方法です。.NET における大きな転換は、この作業の多くが **依存性注入（DI）コンテナ** へ移ったことです。実際、それはシステム最大の factory/singleton です。それでも、古典的パターンは、コンテナが届かない場所 ── 生成が **ビジネスルール** を伴うとき ── でこそ有用であり続けます。
+
+## Factory Method：実行時に型を選ぶ
+
+`Factory Method` は、*どの* 実装が生成されるかを、*誰が* それを使うかから切り離します。古典的な例。支払い種別（文字列、enum）を受け取り、正しいプロセッサが必要になる場面です。
+
+```csharp
+// 古典形：ファクトリが具象を決める
+public interface IPaymentProcessor { Task<Receipt> PayAsync(Order o); }
+
+public sealed class PaymentProcessorFactory
+{
+    public IPaymentProcessor Create(PaymentMethod method) => method switch
+    {
+        PaymentMethod.Pix    => new PixProcessor(),
+        PaymentMethod.Card   => new CardProcessor(),
+        PaymentMethod.Boleto => new BoletoProcessor(),
+        _ => throw new ArgumentOutOfRangeException(nameof(method))
+    };
+}
+```
+
+この版の問題。内部の `new` がプロセッサへの依存性注入を殺します。**.NET 8 以降** のイディオム形は **keyed services** を使い、各具象を自身の依存とともにコンテナに構築させます。
+
+```csharp
+// 登録
+services.AddKeyedScoped<IPaymentProcessor, PixProcessor>(PaymentMethod.Pix);
+services.AddKeyedScoped<IPaymentProcessor, CardProcessor>(PaymentMethod.Card);
+
+// 解決：「ファクトリ」はコンテナそのもの
+public sealed class Checkout(IServiceProvider sp)
+{
+    public Task<Receipt> PayAsync(Order o) =>
+        sp.GetRequiredKeyedService<IPaymentProcessor>(o.Method).PayAsync(o);
+}
+```
+
+それでも手書きのファクトリを書くのはいつか。型の選択が（単なるキーではなく）**ドメインロジック** を伴うとき、あるいはその判断のために明示的でテスト可能な一点が欲しいときです。
+
+## Abstract Factory：組み合う型のファミリー
+
+Factory Method が **1 つ** の製品を作るのに対し、`Abstract Factory` は一緒に使われねばならない **整合した製品ファミリー** を作ります。正典的な例は、書式全体が変わるレポート（PDF vs HTML）で、ヘッダ・本文・フッタがすべて同じ「方言」でなければならない場合です。
+
+```csharp
+public interface IReportFactory
+{
+    IHeaderRenderer Header();
+    IBodyRenderer   Body();
+    IFooterRenderer Footer();
+}
+
+public sealed class PdfReportFactory : IReportFactory { /* PDF ファミリーを返す */ }
+public sealed class HtmlReportFactory : IReportFactory { /* HTML ファミリーを返す */ }
+```
+
+価値は **整合性の保証** です。PDF のヘッダと HTML のフッタを混ぜることが不可能になります。.NET ではこれがしばしば DI 登録のグループになりますが、「一緒に動くファミリー」という考えは設計基準として残ります。
+
+## Builder：複雑な構築を一歩ずつ
+
+`Builder` は、複雑なオブジェクトの構築をその最終表現から分離します。**多くの任意パラメータ**、**組み立ての順序**、**最後の検証** があるときに輝きます。
+
+```csharp
+var email = EmailBuilder.Create()
+    .From("no-reply@app.dev")
+    .To("user@example.com")
+    .WithSubject("ようこそ")
+    .WithTemplate("welcome", new { Name = "Hiro" })
+    .Build();   // ここで不変条件が一括検証される
+```
+
+ただし注意。**モダン C# は多くの場合 Builder を不要にしました**。不変オブジェクトには、`required` メンバを持つ `record` と `with` 式が、余計な型なしで多くをカバーします。
+
+```csharp
+public sealed record Email
+{
+    public required string From { get; init; }
+    public required string To { get; init; }
+    public string Subject { get; init; } = "";
+}
+
+var a = new Email { From = "x@y.z", To = "u@e.f", Subject = "やあ" };
+var b = a with { Subject = "別の件名" };   // 変更された不変コピー
+```
+
+ヒューリスティック。構築が **宣言的** なら `record`/オブジェクト初期化子を、初期化子ではうまく表せない **ロジック・手順・累積する検証** があるなら Builder を使う。
+
+## Singleton：DI が飼いならした反パターン
+
+古典的な `Singleton` ── ダブルチェックロック付きの `static instance` ── は今日、多くの場合 **コードの臭い** です。隠れたグローバル状態、テストしづらさ、暗黙の結合。.NET は **コンテナ管理のライフタイム** でこれを解決します。
+
+```csharp
+// コンテナが単一インスタンスを保証 ── しかも注入可能でテスト可能
+services.AddSingleton<IClock, SystemClock>();
+```
+
+どうしても手動シングルトンが *必要* なら（稀）、`Lazy<T>` を使いましょう。ダブルチェックロックの定型なしに、遅延かつスレッドセーフな初期化が得られます。
+
+```csharp
+private static readonly Lazy<Config> _cfg = new(() => Config.Load());
+public static Config Current => _cfg.Value;
+```
+
+## 比較
+
+| パターン | 解決すること | .NET のイディオム形 | 手書きするとき |
+| :--- | :--- | :--- | :--- |
+| **Factory Method** | 1 つの具象型を選ぶ | keyed services / `Func<T>` | 判断にドメインルールがある |
+| **Abstract Factory** | 整合した型のファミリー | DI 登録のグループ | 製品間の整合性を強制する |
+| **Builder** | 複雑/検証付きの構築 | `record` + `required` + `with` | 手順・順序・累積検証がある |
+| **Singleton** | 単一インスタンス | `AddSingleton` | ほぼ無し。さもなくば `Lazy<T>` |
+| **Prototype** | 設定の複製 | `record` `with` | カスタムなディープコピー |
+
+## 結論
+
+モダンな .NET では、生成に関する問いは「どの GoF パターンを当てるか」ではなく、「**これはコンテナの仕事か、それとも生成にビジネスルールがあるか**」です。依存グラフを配線するだけなら DI に任せましょう ── それはすでに Factory であり Singleton です。生成が **ドメインの何かを決める** ときに手書きしましょう。そのとき Factory Method・Abstract Factory・Builder は再び居場所を得ます ── 儀式としてではなく、ルールの表現として。
+'''

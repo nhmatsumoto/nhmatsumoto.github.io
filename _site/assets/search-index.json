@@ -18,6 +18,57 @@
     "summary": "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."
   },
   {
+    "title": "Padrões Comportamentais em C#: Strategy, Observer, Mediator e State",
+    "url": "https://nhmatsumoto.github.io/posts/20260608-110000-design-patterns-comportamentais-csharp-dotnet/",
+    "kind": "post",
+    "summary": "Padrões comportamentais respondem 'como objetos colaboram e distribuem responsabilidade'. No .NET, delegates, eventos e MediatR já carregam metade do trabalho. Strategy, Observer, Mediator, State e Chain of Responsibility — da forma clássica à idiomática.",
+    "keywords": [
+      "dotnet",
+      "csharp",
+      "design-patterns",
+      "arquitetura",
+      "engenharia"
+    ],
+    "title_en_us": "Behavioral Patterns in C#: Strategy, Observer, Mediator and State",
+    "title_ja_jp": "C# の振る舞いパターン：Strategy・Observer・Mediator・State",
+    "summary_en_us": "Behavioral patterns answer 'how objects collaborate and distribute responsibility'. In .NET, delegates, events and MediatR already carry half the work. Strategy, Observer, Mediator, State and Chain of Responsibility — from the classic to the idiomatic form.",
+    "summary_ja_jp": "振る舞いパターンは「オブジェクトがどう協調し責務を分配するか」に答える。.NET では delegate・event・MediatR がすでに仕事の半分を担う。Strategy・Observer・Mediator・State・Chain of Responsibility を、古典形からイディオム形まで。"
+  },
+  {
+    "title": "Padrões Estruturais em C#: Adapter, Decorator, Composite e Proxy na prática",
+    "url": "https://nhmatsumoto.github.io/posts/20260608-100000-design-patterns-estruturais-csharp-dotnet/",
+    "kind": "post",
+    "summary": "Padrões estruturais respondem 'como compor objetos sem soldar peças'. No .NET, eles aparecem o tempo todo — middlewares são Decorators, ORMs usam Proxy, ACLs são Adapters. Implementação prática com DI, Scrutor e os recursos do C# moderno.",
+    "keywords": [
+      "dotnet",
+      "csharp",
+      "design-patterns",
+      "arquitetura",
+      "engenharia"
+    ],
+    "title_en_us": "Structural Patterns in C#: Adapter, Decorator, Composite and Proxy in practice",
+    "title_ja_jp": "C# の構造パターン：Adapter・Decorator・Composite・Proxy を実践する",
+    "summary_en_us": "Structural patterns answer 'how to compose objects without welding parts together'. In .NET they show up everywhere — middleware are Decorators, ORMs use Proxy, ACLs are Adapters. Practical implementation with DI, Scrutor and modern C# features.",
+    "summary_ja_jp": "構造パターンは「部品を溶接せずにオブジェクトを組み立てる方法」に答える。.NET では至る所に現れる ── ミドルウェアは Decorator、ORM は Proxy、ACL は Adapter。DI・Scrutor・モダン C# の機能で実践的に実装する。"
+  },
+  {
+    "title": "Padrões Criacionais em C#: Factory, Builder e Singleton na era do DI",
+    "url": "https://nhmatsumoto.github.io/posts/20260608-090000-design-patterns-criacionais-csharp-dotnet/",
+    "kind": "post",
+    "summary": "Os padrões criacionais resolvem 'como instanciar sem acoplar ao concreto'. No .NET moderno, o container de DI já é o maior deles — mas Factory, Builder e companhia continuam vivos quando a criação tem regra de negócio. Implementação prática, da forma clássica à idiomática.",
+    "keywords": [
+      "dotnet",
+      "csharp",
+      "design-patterns",
+      "arquitetura",
+      "engenharia"
+    ],
+    "title_en_us": "Creational Patterns in C#: Factory, Builder and Singleton in the DI era",
+    "title_ja_jp": "C# の生成パターン：DI 時代の Factory・Builder・Singleton",
+    "summary_en_us": "Creational patterns answer 'how to instantiate without coupling to the concrete type'. In modern .NET, the DI container is already the biggest one — but Factory, Builder and friends stay alive when creation carries business rules. Practical implementation, from the classic to the idiomatic form.",
+    "summary_ja_jp": "生成パターンは「具象型に結合せずにインスタンス化する方法」に答える。モダンな .NET では DI コンテナが最大の生成パターンだが、生成にビジネスルールが伴うとき Factory・Builder などは生き続ける。古典形からイディオム形まで、実践的に実装する。"
+  },
+  {
     "title": "Litografia de Semicondutores: A Máquina Mais Complexa da Humanidade",
     "url": "https://nhmatsumoto.github.io/posts/20260527-090000-litografia-de-semicondutores-euv/",
     "kind": "post",

@@ -6,6 +6,27 @@
     <description>um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção</description>
     <atom:link href="https://nhmatsumoto.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Padrões Comportamentais em C#: Strategy, Observer, Mediator e State</title>
+      <link>https://nhmatsumoto.github.io/posts/20260608-110000-design-patterns-comportamentais-csharp-dotnet/</link>
+      <description><![CDATA[Padrões comportamentais respondem 'como objetos colaboram e distribuem responsabilidade'. No .NET, delegates, eventos e MediatR já carregam metade do trabalho. Strategy, Observer, Mediator, State e Chain of Responsibility — da forma clássica à idiomática.]]></description>
+      <pubDate>Mon, 08 Jun 2026 11:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260608-110000-design-patterns-comportamentais-csharp-dotnet/</guid>
+    </item>
+    <item>
+      <title>Padrões Estruturais em C#: Adapter, Decorator, Composite e Proxy na prática</title>
+      <link>https://nhmatsumoto.github.io/posts/20260608-100000-design-patterns-estruturais-csharp-dotnet/</link>
+      <description><![CDATA[Padrões estruturais respondem 'como compor objetos sem soldar peças'. No .NET, eles aparecem o tempo todo — middlewares são Decorators, ORMs usam Proxy, ACLs são Adapters. Implementação prática com DI, Scrutor e os recursos do C# moderno.]]></description>
+      <pubDate>Mon, 08 Jun 2026 10:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260608-100000-design-patterns-estruturais-csharp-dotnet/</guid>
+    </item>
+    <item>
+      <title>Padrões Criacionais em C#: Factory, Builder e Singleton na era do DI</title>
+      <link>https://nhmatsumoto.github.io/posts/20260608-090000-design-patterns-criacionais-csharp-dotnet/</link>
+      <description><![CDATA[Os padrões criacionais resolvem 'como instanciar sem acoplar ao concreto'. No .NET moderno, o container de DI já é o maior deles — mas Factory, Builder e companhia continuam vivos quando a criação tem regra de negócio. Implementação prática, da forma clássica à idiomática.]]></description>
+      <pubDate>Mon, 08 Jun 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260608-090000-design-patterns-criacionais-csharp-dotnet/</guid>
+    </item>
+    <item>
       <title>Litografia de Semicondutores: A Máquina Mais Complexa da Humanidade</title>
       <link>https://nhmatsumoto.github.io/posts/20260527-090000-litografia-de-semicondutores-euv/</link>
       <description><![CDATA[Do plasma de estanho aos espelhos polidos com precisão atômica: como a ASML e seus parceiros criaram a única máquina capaz de imprimir transistores menores que um vírus, e por que isso determina o futuro do poder computacional global.]]></description>
@@ -123,27 +144,6 @@
       <description><![CDATA[Como o SOS Location implementou versionamento de API via URL path (/api/v1/, /api/v2/) com Asp.Versioning, a política de deprecação de 90 dias e o header Sunset para notificação automática de clientes.]]></description>
       <pubDate>Wed, 08 Apr 2026 23:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-230000-daily-039-estrategia-de-versionamento-de-apis/</guid>
-    </item>
-    <item>
-      <title>Daily #038: Tratamento de JSON inválido em integrações</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-220000-daily-038-tratamento-de-json-invalido-em-integracoes/</link>
-      <description><![CDATA[Como o SOS Location usa System.Text.Json com JsonDocument para validar e parsear JSON de fontes externas (GDACS, Open-Meteo), e como o tratamento de campos opcionais e tipos inesperados evita crashes silenciosos.]]></description>
-      <pubDate>Wed, 08 Apr 2026 22:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-220000-daily-038-tratamento-de-json-invalido-em-integracoes/</guid>
-    </item>
-    <item>
-      <title>Daily #037: Retry e fallback para APIs externas (GDACS)</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-210000-daily-037-retry-e-fallback-para-apis-externas-gdacs/</link>
-      <description><![CDATA[Como o SOS Location implementou Polly com retry exponential backoff e circuit breaker para o GDACS (Global Disaster Alert and Coordination System), e como o fallback para dados em cache evita alertas perdidos em falhas de API.]]></description>
-      <pubDate>Wed, 08 Apr 2026 21:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-210000-daily-037-retry-e-fallback-para-apis-externas-gdacs/</guid>
-    </item>
-    <item>
-      <title>Daily #036: Modelagem de API para pessoas desaparecidas</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-200000-daily-036-modelagem-de-api-para-pessoas-desaparecidas/</link>
-      <description><![CDATA[Como o SOS Location modelou os endpoints de PessoaDesaparecida: POST /api/pessoas-desaparecidas com geolocalização do último avistamento, PATCH para atualizar status (encontrada/óbito), e GET com raio de busca via ST_DWithin.]]></description>
-      <pubDate>Wed, 08 Apr 2026 20:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-200000-daily-036-modelagem-de-api-para-pessoas-desaparecidas/</guid>
     </item>
   </channel>
 </rss>
