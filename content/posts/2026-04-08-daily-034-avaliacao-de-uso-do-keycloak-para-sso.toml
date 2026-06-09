@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-O SOS Location precisa de autenticação para múltiplos perfis: coordenadores municipais (acesso ao município), coordenadores estaduais (acesso a todos os municípios do estado), admins (acesso cross-tenant), e no futuro — APIs de integração para prefeituras. Keycloak foi avaliado como solução de SSO centralizada. A decisão era: implementar Keycloak agora ou JWT próprio e migrar depois?
+O SOS Location precisa de autenticação para múltiplos perfis: coordenadores municipais (acesso ao município), coordenadores estaduais (acesso a todos os municípios do estado), admins (acesso cross-tenant), e no futuro - APIs de integração para prefeituras. Keycloak foi avaliado como solução de SSO centralizada. A decisão era: implementar Keycloak agora ou JWT próprio e migrar depois?
 
 ## Problema específico
 
-Keycloak resolve problemas que o SOS Location v1 ainda não tem: federação de identidade (LDAP de prefeitura), múltiplos IdPs, fluxo SAML. O custo de Keycloak na v1 seria real: (1) infraestrutura adicional — 2 instâncias Keycloak + banco PostgreSQL separado + configuração de HA, ~R$ 800/mês em EC2; (2) complexidade operacional — equipe de 2 pessoas precisa entender realm configuration, client scopes, mappers; (3) latência de autenticação: Keycloak adiciona 40–80ms por token validation em setup default (token introspection endpoint).
+Keycloak resolve problemas que o SOS Location v1 ainda não tem: federação de identidade (LDAP de prefeitura), múltiplos IdPs, fluxo SAML. O custo de Keycloak na v1 seria real: (1) infraestrutura adicional - 2 instâncias Keycloak + banco PostgreSQL separado + configuração de HA, ~R$ 800/mês em EC2; (2) complexidade operacional - equipe de 2 pessoas precisa entender realm configuration, client scopes, mappers; (3) latência de autenticação: Keycloak adiciona 40–80ms por token validation em setup default (token introspection endpoint).
 
 ## Decisão técnica
 
-JWT próprio na v1, com interface `ITokenService` que isola a implementação. Critério de migração definido: quando (a) o número de tenants ≥ 50 **ou** (b) uma prefeitura exige integração com LDAP/Active Directory **ou** (c) houver necessidade de 2+ IdPs distintos. A interface `ITokenService` garante que a troca por `KeycloakTokenService` seja local — apenas na camada de infraestrutura.
+JWT próprio na v1, com interface `ITokenService` que isola a implementação. Critério de migração definido: quando (a) o número de tenants ≥ 50 **ou** (b) uma prefeitura exige integração com LDAP/Active Directory **ou** (c) houver necessidade de 2+ IdPs distintos. A interface `ITokenService` garante que a troca por `KeycloakTokenService` seja local - apenas na camada de infraestrutura.
 
 ## Implementação
 
@@ -55,7 +55,7 @@ public sealed class JwtTokenService : ITokenService
 ```
 
 ```csharp
-// Program.cs — troca trivial quando critério de migração for atingido
+// Program.cs - troca trivial quando critério de migração for atingido
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 // builder.Services.AddScoped<ITokenService, KeycloakTokenService>(); // migração
 ```
@@ -77,7 +77,7 @@ decision_criteria:
 
 ## Exemplo concreto
 
-Avaliação em números para SOS Location v1 (12 tenants, 1 IdP, sem LDAP): JWT próprio = R$ 0 de infraestrutura adicional, 0ms de latência extra por token, 2 dias de implementação. Keycloak = R$ 800/mês, 40ms de latência extra, 5 dias de setup inicial + 1 dia/mês de manutenção. Ponto de indiferença: quando o custo de implementar autenticação customizada > custo operacional do Keycloak — estimativa: ~80 tenants ou integração LDAP obrigatória.
+Avaliação em números para SOS Location v1 (12 tenants, 1 IdP, sem LDAP): JWT próprio = R$ 0 de infraestrutura adicional, 0ms de latência extra por token, 2 dias de implementação. Keycloak = R$ 800/mês, 40ms de latência extra, 5 dias de setup inicial + 1 dia/mês de manutenção. Ponto de indiferença: quando o custo de implementar autenticação customizada > custo operacional do Keycloak - estimativa: ~80 tenants ou integração LDAP obrigatória.
 
 ## Critério de sucesso
 
@@ -85,20 +85,20 @@ Zero código de autenticação fora de `ITokenService` e suas implementações. 
 
 ## Relação com SOS Location
 
-Keycloak seria over-engineering para o SOS Location atual. Mas ignorar o problema seria under-engineering — a interface `ITokenService` é o compromisso: simplicidade agora, migração possível quando necessário, sem reescrita.
+Keycloak seria over-engineering para o SOS Location atual. Mas ignorar o problema seria under-engineering - a interface `ITokenService` é o compromisso: simplicidade agora, migração possível quando necessário, sem reescrita.
 '''
 body_en_us = '''
 ## Real context
 
-SOS Location needs authentication for multiple profiles: municipal coordinators (access to the municipality), state coordinators (access to all municipalities in the state), admins (cross-tenant access), and in the future — integration APIs for city halls. Keycloak was evaluated as a centralised SSO solution. The decision was: implement Keycloak now or own JWT and migrate later?
+SOS Location needs authentication for multiple profiles: municipal coordinators (access to the municipality), state coordinators (access to all municipalities in the state), admins (cross-tenant access), and in the future - integration APIs for city halls. Keycloak was evaluated as a centralised SSO solution. The decision was: implement Keycloak now or own JWT and migrate later?
 
 ## Specific problem
 
-Keycloak solves problems that SOS Location v1 does not yet have: identity federation (city hall LDAP), multiple IdPs, SAML flow. The cost of Keycloak in v1 would be real: (1) additional infrastructure — 2 Keycloak instances + separate PostgreSQL database + HA configuration, ~R$800/month on EC2; (2) operational complexity — a 2-person team needs to understand realm configuration, client scopes, mappers; (3) authentication latency: Keycloak adds 40–80ms per token validation in default setup (token introspection endpoint).
+Keycloak solves problems that SOS Location v1 does not yet have: identity federation (city hall LDAP), multiple IdPs, SAML flow. The cost of Keycloak in v1 would be real: (1) additional infrastructure - 2 Keycloak instances + separate PostgreSQL database + HA configuration, ~R$800/month on EC2; (2) operational complexity - a 2-person team needs to understand realm configuration, client scopes, mappers; (3) authentication latency: Keycloak adds 40–80ms per token validation in default setup (token introspection endpoint).
 
 ## Technical decision
 
-Own JWT in v1, with an `ITokenService` interface that isolates the implementation. Migration criteria defined: when (a) number of tenants ≥ 50 **or** (b) a city hall requires LDAP/Active Directory integration **or** (c) there is a need for 2+ distinct IdPs. The `ITokenService` interface ensures swapping in `KeycloakTokenService` is local — only in the infrastructure layer.
+Own JWT in v1, with an `ITokenService` interface that isolates the implementation. Migration criteria defined: when (a) number of tenants ≥ 50 **or** (b) a city hall requires LDAP/Active Directory integration **or** (c) there is a need for 2+ distinct IdPs. The `ITokenService` interface ensures swapping in `KeycloakTokenService` is local - only in the infrastructure layer.
 
 ## Implementation
 
@@ -136,7 +136,7 @@ decision_criteria:
 
 ## Concrete example
 
-Evaluation in numbers for SOS Location v1 (12 tenants, 1 IdP, no LDAP): Own JWT = R$0 additional infrastructure, 0ms extra latency per token, 2 days of implementation. Keycloak = R$800/month, 40ms extra latency, 5 days of initial setup + 1 day/month of maintenance. Breakeven point: when the cost of implementing custom auth > Keycloak's operational cost — estimate: ~80 tenants or mandatory LDAP integration.
+Evaluation in numbers for SOS Location v1 (12 tenants, 1 IdP, no LDAP): Own JWT = R$0 additional infrastructure, 0ms extra latency per token, 2 days of implementation. Keycloak = R$800/month, 40ms extra latency, 5 days of initial setup + 1 day/month of maintenance. Breakeven point: when the cost of implementing custom auth > Keycloak's operational cost - estimate: ~80 tenants or mandatory LDAP integration.
 
 ## Success criteria
 
@@ -144,7 +144,7 @@ Zero authentication code outside `ITokenService` and its implementations. ADR do
 
 ## Relation to SOS Location
 
-Keycloak would be over-engineering for SOS Location today. But ignoring the problem would be under-engineering — the `ITokenService` interface is the compromise: simplicity now, migration possible when needed, without a rewrite.
+Keycloak would be over-engineering for SOS Location today. But ignoring the problem would be under-engineering - the `ITokenService` interface is the compromise: simplicity now, migration possible when needed, without a rewrite.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -153,11 +153,11 @@ SOS Locationは複数のプロファイルの認証が必要だ：市町村コ�
 
 ## 具体的な問題
 
-Keycloakは SOS Location v1がまだ持っていない問題を解決する：アイデンティティフェデレーション（市区町村LDAP）、複数IdP、SAMLフロー。v1でのKeycloakのコストは現実的だ：(1) 追加インフラ——2つのKeycloakインスタンス + 別のPostgreSQLデータベース + HA設定、EC2で月~R$800；(2) 運用上の複雑さ——2人チームがレルム設定・クライアントスコープ・マッパーを理解する必要がある；(3) 認証レイテンシ：Keycloakはデフォルト設定でトークン検証ごとに40〜80msを追加する（トークンイントロスペクションエンドポイント）。
+Keycloakは SOS Location v1がまだ持っていない問題を解決する：アイデンティティフェデレーション（市区町村LDAP）、複数IdP、SAMLフロー。v1でのKeycloakのコストは現実的だ：(1) 追加インフラ--2つのKeycloakインスタンス + 別のPostgreSQLデータベース + HA設定、EC2で月~R$800；(2) 運用上の複雑さ--2人チームがレルム設定・クライアントスコープ・マッパーを理解する必要がある；(3) 認証レイテンシ：Keycloakはデフォルト設定でトークン検証ごとに40〜80msを追加する（トークンイントロスペクションエンドポイント）。
 
 ## 技術的決定
 
-v1では実装を分離する`ITokenService`インターフェースを持つ独自JWT。移行基準を定義：(a) テナント数 ≥ 50 **または** (b) 市区町村がLDAP/Active Directory統合を要求 **または** (c) 2+の異なるIdPの必要性がある時。`ITokenService`インターフェースは`KeycloakTokenService`への切り替えをローカル——インフラレイヤーのみ——に保証する。
+v1では実装を分離する`ITokenService`インターフェースを持つ独自JWT。移行基準を定義：(a) テナント数 ≥ 50 **または** (b) 市区町村がLDAP/Active Directory統合を要求 **または** (c) 2+の異なるIdPの必要性がある時。`ITokenService`インターフェースは`KeycloakTokenService`への切り替えをローカル--インフラレイヤーのみ--に保証する。
 
 ## 実装
 
@@ -195,7 +195,7 @@ decision_criteria:
 
 ## 具体的な例
 
-SOS Location v1（12テナント、1 IdP、LDAPなし）の数値評価：独自JWT = R$0追加インフラ、トークンごとの追加レイテンシ0ms、2日間の実装。Keycloak = 月R$800、追加レイテンシ40ms、初期セットアップ5日 + 月1日のメンテナンス。損益分岐点：カスタム認証実装のコスト > Keycloakの運用コスト——推定：~80テナントまたはLDAP統合必須。
+SOS Location v1（12テナント、1 IdP、LDAPなし）の数値評価：独自JWT = R$0追加インフラ、トークンごとの追加レイテンシ0ms、2日間の実装。Keycloak = 月R$800、追加レイテンシ40ms、初期セットアップ5日 + 月1日のメンテナンス。損益分岐点：カスタム認証実装のコスト > Keycloakの運用コスト--推定：~80テナントまたはLDAP統合必須。
 
 ## 成功基準
 
@@ -203,5 +203,5 @@ SOS Location v1（12テナント、1 IdP、LDAPなし）の数値評価：独自
 
 ## SOS Locationとの関係
 
-KeycloakはSOS Locationにとって今日では過剰設計だ。しかし問題を無視することは不十分設計だ——`ITokenService`インターフェースは妥協点：今はシンプルに、必要な時に移行可能、書き直しなし。
+KeycloakはSOS Locationにとって今日では過剰設計だ。しかし問題を無視することは不十分設計だ--`ITokenService`インターフェースは妥協点：今はシンプルに、必要な時に移行可能、書き直しなし。
 '''

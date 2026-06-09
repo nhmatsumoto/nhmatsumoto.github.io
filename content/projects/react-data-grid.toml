@@ -3,8 +3,8 @@ slug = "react-data-grid"
 headline = "Componente React de data grid com funcionalidades avançadas e alta customização."
 headline_en_us = "React data grid component with advanced features and high customization."
 headline_ja_jp = "高度な機能と高いカスタマイズ性を備えた React データグリッドコンポーネント。"
-summary = "Fork do react-data-grid — componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados."
-summary_en_us = "Fork of react-data-grid — React data table component with sorting, filtering, inline editing and virtualization for large datasets."
+summary = "Fork do react-data-grid - componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados."
+summary_en_us = "Fork of react-data-grid - React data table component with sorting, filtering, inline editing and virtualization for large datasets."
 summary_ja_jp = "react-data-grid のフォーク。ソート、フィルタ、インライン編集、大規模データの仮想化に対応した React データテーブル・コンポーネント。"
 status = "published"
 featured = false
@@ -20,12 +20,12 @@ Fork do react-data-grid, um componente React de alta performance para exibição
 
 ## Funcionalidades
 
-- **Virtualização** — renderiza apenas as linhas visíveis, suportando milhões de registros
-- **Sorting** — ordenação por múltiplas colunas
-- **Filtering** — filtros por coluna com operadores customizáveis
-- **Editing inline** — edição direta nas células com validação
-- **Column resizing/reordering** — ajuste de largura e ordem das colunas
-- **Copy/Paste** — suporte a clipboard para operações em massa
+- **Virtualização** - renderiza apenas as linhas visíveis, suportando milhões de registros
+- **Sorting** - ordenação por múltiplas colunas
+- **Filtering** - filtros por coluna com operadores customizáveis
+- **Editing inline** - edição direta nas células com validação
+- **Column resizing/reordering** - ajuste de largura e ordem das colunas
+- **Copy/Paste** - suporte a clipboard para operações em massa
 
 ## Uso no ecossistema
 
@@ -40,12 +40,12 @@ Fork of `react-data-grid`, a high-performance React component for displaying and
 
 ## Features
 
-- **Virtualization** — render only visible rows, supporting millions of records
-- **Sorting** — ordering by multiple columns
-- **Filtering** — per-column filters with customizable operators
-- **Inline editing** — edit cells directly with validation
-- **Column resizing / reordering** — adjustable width and order
-- **Copy / Paste** — clipboard support for bulk operations
+- **Virtualization** - render only visible rows, supporting millions of records
+- **Sorting** - ordering by multiple columns
+- **Filtering** - per-column filters with customizable operators
+- **Inline editing** - edit cells directly with validation
+- **Column resizing / reordering** - adjustable width and order
+- **Copy / Paste** - clipboard support for bulk operations
 
 ## Use inside the ecosystem
 
@@ -60,12 +60,12 @@ overview_ja_jp = """
 
 ## 機能
 
-- **Virtualization** — 表示中の行だけを描画し、数百万レコードに対応
-- **Sorting** — 複数列での並び替え
-- **Filtering** — カスタマイズ可能な列単位フィルタ
-- **Inline editing** — 検証付きセル直接編集
-- **Column resizing / reordering** — 幅と順序の調整
-- **Copy / Paste** — 一括操作向け clipboard 対応
+- **Virtualization** - 表示中の行だけを描画し、数百万レコードに対応
+- **Sorting** - 複数列での並び替え
+- **Filtering** - カスタマイズ可能な列単位フィルタ
+- **Inline editing** - 検証付きセル直接編集
+- **Column resizing / reordering** - 幅と順序の調整
+- **Copy / Paste** - 一括操作向け clipboard 対応
 
 ## エコシステムでの利用
 

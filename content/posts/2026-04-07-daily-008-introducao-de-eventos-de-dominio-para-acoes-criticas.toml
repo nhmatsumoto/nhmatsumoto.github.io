@@ -19,7 +19,7 @@ has_math = false
 body = '''
 ## Contexto real
 
-Quando uma pessoa é registrada como desaparecida no SOS Location, três coisas devem acontecer imediatamente: (1) resgatadores próximos devem ser notificados, (2) o hotspot da área deve ter seu nível de risco recalculado, (3) a ação deve ser registrada no log de auditoria para rastreabilidade. Originalmente, tudo isso estava em `EmergencyService.RegisterMissingPersonAsync()` — 80 linhas que injetava `INotificationService`, `IHotspotService` e `IAuditService` diretamente.
+Quando uma pessoa é registrada como desaparecida no SOS Location, três coisas devem acontecer imediatamente: (1) resgatadores próximos devem ser notificados, (2) o hotspot da área deve ter seu nível de risco recalculado, (3) a ação deve ser registrada no log de auditoria para rastreabilidade. Originalmente, tudo isso estava em `EmergencyService.RegisterMissingPersonAsync()` - 80 linhas que injetava `INotificationService`, `IHotspotService` e `IAuditService` diretamente.
 
 ## Problema específico
 
@@ -27,7 +27,7 @@ O método `RegisterMissingPersonAsync` tinha acoplamento direto com três respon
 
 ## Decisão técnica
 
-Domínio dispara `PessoaDesaparecidaReportadaEvent` ao concluir o registro. Três handlers independentes subscrevem ao evento, cada um com uma única responsabilidade. Adicionar uma quinta consequência não requer tocar no método de registro — apenas criar um novo handler.
+Domínio dispara `PessoaDesaparecidaReportadaEvent` ao concluir o registro. Três handlers independentes subscrevem ao evento, cada um com uma única responsabilidade. Adicionar uma quinta consequência não requer tocar no método de registro - apenas criar um novo handler.
 
 ## Implementação
 
@@ -39,7 +39,7 @@ public sealed record PessoaDesaparecidaReportadaEvent(
     DateTimeOffset       ReportadaEm
 ) : IDomainEvent;
 
-// PessoaDesaparecida.cs — o aggregate root dispara o evento
+// PessoaDesaparecida.cs - o aggregate root dispara o evento
 public static PessoaDesaparecida Reportar(string nome, Coordenadas loc)
 {
     var pessoa = new PessoaDesaparecida { ... };
@@ -109,7 +109,7 @@ Em operações de emergência, as consequências de uma ação crítica são des
 body_en_us = '''
 ## Real context
 
-When a person is registered as missing in SOS Location, three things must happen immediately: (1) nearby rescuers must be notified, (2) the area hotspot must have its risk level recalculated, (3) the action must be recorded in the audit log for traceability. Originally, all of this was in `EmergencyService.RegisterMissingPersonAsync()` — 80 lines that directly injected `INotificationService`, `IHotspotService`, and `IAuditService`.
+When a person is registered as missing in SOS Location, three things must happen immediately: (1) nearby rescuers must be notified, (2) the area hotspot must have its risk level recalculated, (3) the action must be recorded in the audit log for traceability. Originally, all of this was in `EmergencyService.RegisterMissingPersonAsync()` - 80 lines that directly injected `INotificationService`, `IHotspotService`, and `IAuditService`.
 
 ## Specific problem
 
@@ -117,7 +117,7 @@ The `RegisterMissingPersonAsync` method had direct coupling to three distinct re
 
 ## Technical decision
 
-The domain raises `PessoaDesaparecidaReportadaEvent` upon completing registration. Three independent handlers subscribe to the event, each with a single responsibility. Adding a fifth consequence does not require touching the registration method — only creating a new handler.
+The domain raises `PessoaDesaparecidaReportadaEvent` upon completing registration. Three independent handlers subscribe to the event, each with a single responsibility. Adding a fifth consequence does not require touching the registration method - only creating a new handler.
 
 ## Implementation
 
@@ -186,7 +186,7 @@ In emergency operations, the consequences of a critical action are discovered pr
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-SOS Locationで行方不明者が登録されると、3つのことが即座に起こらなければならない：(1) 近くの救助者への通知、(2) エリアホットスポットのリスクレベル再計算、(3) トレーサビリティのための監査ログへの記録。当初、これらはすべて`EmergencyService.RegisterMissingPersonAsync()`——`INotificationService`・`IHotspotService`・`IAuditService`を直接注入する80行——に集中していた。
+SOS Locationで行方不明者が登録されると、3つのことが即座に起こらなければならない：(1) 近くの救助者への通知、(2) エリアホットスポットのリスクレベル再計算、(3) トレーサビリティのための監査ログへの記録。当初、これらはすべて`EmergencyService.RegisterMissingPersonAsync()`--`INotificationService`・`IHotspotService`・`IAuditService`を直接注入する80行--に集中していた。
 
 ## 具体的な問題
 

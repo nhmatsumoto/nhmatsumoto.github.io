@@ -19,11 +19,11 @@ has_math = false
 body = '''
 ## Contexto real
 
-Em aplicações de emergência, o mapa não é uma feature — é a interface. A versão 1.0 do SOS Location usava um layout padrão: navbar no topo (64px), sidebar de 280px à esquerda, mapa no espaço restante. Feedback de coordenadores de defesa civil durante os testes: "o mapa é pequeno demais para identificar ruas em zoom 14", "a sidebar esconde exatamente a área que preciso ver". Em telas de tablet 10 polegadas (comum em campo), o mapa ocupava menos de 40% da área visual.
+Em aplicações de emergência, o mapa não é uma feature - é a interface. A versão 1.0 do SOS Location usava um layout padrão: navbar no topo (64px), sidebar de 280px à esquerda, mapa no espaço restante. Feedback de coordenadores de defesa civil durante os testes: "o mapa é pequeno demais para identificar ruas em zoom 14", "a sidebar esconde exatamente a área que preciso ver". Em telas de tablet 10 polegadas (comum em campo), o mapa ocupava menos de 40% da área visual.
 
 ## Problema específico
 
-Mudar para layout map-first (mapa em 100% da viewport) criou dois problemas: (1) painéis de informação (lista de zonas de risco, detalhes de `PessoaDesaparecida`, controles de camada) precisam ser acessíveis sem sair do mapa — a solução de sobreposição cria conflito de z-index com os popups nativos do Leaflet que têm `z-index: 700`; (2) Leaflet adiciona controles nativos (zoom, attribution) com posicionamento absoluto dentro do container — painel flutuante no mesmo canto sobrepõe o controle de zoom.
+Mudar para layout map-first (mapa em 100% da viewport) criou dois problemas: (1) painéis de informação (lista de zonas de risco, detalhes de `PessoaDesaparecida`, controles de camada) precisam ser acessíveis sem sair do mapa - a solução de sobreposição cria conflito de z-index com os popups nativos do Leaflet que têm `z-index: 700`; (2) Leaflet adiciona controles nativos (zoom, attribution) com posicionamento absoluto dentro do container - painel flutuante no mesmo canto sobrepõe o controle de zoom.
 
 ## Decisão técnica
 
@@ -93,7 +93,7 @@ function ZoomControls() {
 ```
 
 ```tsx
-// src/components/RiskZonePanel.tsx — painel esquerdo para lista de zonas
+// src/components/RiskZonePanel.tsx - painel esquerdo para lista de zonas
 export function RiskZonePanel() {
   const [open, setOpen] = useState(false);
 
@@ -118,7 +118,7 @@ export function RiskZonePanel() {
 
 ## Exemplo concreto
 
-Feedback pós-refatoração de coordenadores durante treino em Joinville: "agora vejo a cidade inteira no mapa". Comparação de área útil do mapa: layout antigo (navbar + sidebar) → 52% da viewport em tablet 10". Layout map-first → 100% da viewport. Painel de controle ocupa 200×280px no canto superior direito — 4.3% da área da viewport, transparente para o fundo do mapa.
+Feedback pós-refatoração de coordenadores durante treino em Joinville: "agora vejo a cidade inteira no mapa". Comparação de área útil do mapa: layout antigo (navbar + sidebar) → 52% da viewport em tablet 10". Layout map-first → 100% da viewport. Painel de controle ocupa 200×280px no canto superior direito - 4.3% da área da viewport, transparente para o fundo do mapa.
 
 ## Critério de sucesso
 
@@ -126,16 +126,16 @@ Mapa ocupa ≥ 95% da área visual em qualquer resolução ≥ 320px de largura.
 
 ## Relação com SOS Location
 
-Layout map-first não é estética — é ergonomia operacional. Cada pixel de mapa adicional é contexto espacial que o coordenador usa para tomar decisões. O tradeoff de ocultar navegação convencional (navbar, sidebar fixas) em favor de painéis floating contextual foi validado com os usuários reais e é uma das mudanças de UX com maior impacto positivo medido nos testes de usabilidade.
+Layout map-first não é estética - é ergonomia operacional. Cada pixel de mapa adicional é contexto espacial que o coordenador usa para tomar decisões. O tradeoff de ocultar navegação convencional (navbar, sidebar fixas) em favor de painéis floating contextual foi validado com os usuários reais e é uma das mudanças de UX com maior impacto positivo medido nos testes de usabilidade.
 '''
 body_en_us = '''
 ## Real context
 
-In emergency applications, the map is not a feature — it is the interface. SOS Location v1.0 used a standard layout: navbar at the top (64px), 280px sidebar on the left, map in the remaining space. Feedback from civil defence coordinators during testing: "the map is too small to identify streets at zoom 14", "the sidebar hides exactly the area I need to see". On 10-inch tablets (common in the field), the map occupied less than 40% of the visual area.
+In emergency applications, the map is not a feature - it is the interface. SOS Location v1.0 used a standard layout: navbar at the top (64px), 280px sidebar on the left, map in the remaining space. Feedback from civil defence coordinators during testing: "the map is too small to identify streets at zoom 14", "the sidebar hides exactly the area I need to see". On 10-inch tablets (common in the field), the map occupied less than 40% of the visual area.
 
 ## Specific problem
 
-Switching to map-first layout (map at 100% viewport) created two problems: (1) information panels (risk zone list, `PessoaDesaparecida` details, layer controls) need to be accessible without leaving the map — the overlay solution creates z-index conflicts with Leaflet's native popups at `z-index: 700`; (2) Leaflet adds native controls (zoom, attribution) with absolute positioning inside the container — a floating panel in the same corner overlaps the zoom control.
+Switching to map-first layout (map at 100% viewport) created two problems: (1) information panels (risk zone list, `PessoaDesaparecida` details, layer controls) need to be accessible without leaving the map - the overlay solution creates z-index conflicts with Leaflet's native popups at `z-index: 700`; (2) Leaflet adds native controls (zoom, attribution) with absolute positioning inside the container - a floating panel in the same corner overlaps the zoom control.
 
 ## Technical decision
 
@@ -185,7 +185,7 @@ export function LayerControlPanel() {
 
 ## Concrete example
 
-Post-refactor feedback from coordinators during a Joinville drill: "now I can see the entire city on the map". Map useful area comparison: old layout (navbar + sidebar) → 52% of viewport on a 10-inch tablet. Map-first layout → 100% of viewport. Control panel occupies 200×280px in the top-right corner — 4.3% of the viewport area, transparent to the map background.
+Post-refactor feedback from coordinators during a Joinville drill: "now I can see the entire city on the map". Map useful area comparison: old layout (navbar + sidebar) → 52% of viewport on a 10-inch tablet. Map-first layout → 100% of viewport. Control panel occupies 200×280px in the top-right corner - 4.3% of the viewport area, transparent to the map background.
 
 ## Success criteria
 
@@ -193,7 +193,7 @@ Map occupies ≥ 95% of the visual area at any resolution ≥ 320px wide. No z-i
 
 ## Relation to SOS Location
 
-Map-first layout is not aesthetics — it is operational ergonomics. Every additional pixel of map is spatial context the coordinator uses to make decisions. The trade-off of hiding conventional navigation (navbar, fixed sidebar) in favour of contextual floating panels was validated with real users and is one of the UX changes with the greatest positive impact measured in usability tests.
+Map-first layout is not aesthetics - it is operational ergonomics. Every additional pixel of map is spatial context the coordinator uses to make decisions. The trade-off of hiding conventional navigation (navbar, fixed sidebar) in favour of contextual floating panels was validated with real users and is one of the UX changes with the greatest positive impact measured in usability tests.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -202,7 +202,7 @@ body_ja_jp = '''
 
 ## 具体的な問題
 
-map-firstレイアウト（マップが100%ビューポート）への切り替えで2つの問題が発生した：(1) 情報パネル（リスクゾーンリスト、`PessoaDesaparecida`詳細、レイヤーコントロール）はマップを離れずにアクセスできる必要がある——オーバーレイソリューションは`z-index: 700`のLeafletネイティブポップアップとのz-index競合を作る；(2) Leafletはコンテナ内に絶対配置でネイティブコントロール（ズーム、アトリビューション）を追加する——同じコーナーのフローティングパネルがズームコントロールに重なる。
+map-firstレイアウト（マップが100%ビューポート）への切り替えで2つの問題が発生した：(1) 情報パネル（リスクゾーンリスト、`PessoaDesaparecida`詳細、レイヤーコントロール）はマップを離れずにアクセスできる必要がある--オーバーレイソリューションは`z-index: 700`のLeafletネイティブポップアップとのz-index競合を作る；(2) Leafletはコンテナ内に絶対配置でネイティブコントロール（ズーム、アトリビューション）を追加する--同じコーナーのフローティングパネルがズームコントロールに重なる。
 
 ## 技術的決定
 
@@ -251,7 +251,7 @@ export function LayerControlPanel() {
 
 ## 具体的な例
 
-ジョインヴィルの訓練中のコーディネーターからのリファクタリング後のフィードバック：「今は地図で街全体が見える」。マップの有効エリア比較：旧レイアウト（ナビバー + サイドバー）→ 10インチタブレットでビューポートの52%。map-firstレイアウト → ビューポートの100%。コントロールパネルは右上コーナーに200×280pxを占有——ビューポートエリアの4.3%、マップ背景に透明。
+ジョインヴィルの訓練中のコーディネーターからのリファクタリング後のフィードバック：「今は地図で街全体が見える」。マップの有効エリア比較：旧レイアウト（ナビバー + サイドバー）→ 10インチタブレットでビューポートの52%。map-firstレイアウト → ビューポートの100%。コントロールパネルは右上コーナーに200×280pxを占有--ビューポートエリアの4.3%、マップ背景に透明。
 
 ## 成功基準
 
@@ -259,5 +259,5 @@ export function LayerControlPanel() {
 
 ## SOS Locationとの関係
 
-map-firstレイアウトは美学ではなく——運用上の人間工学だ。マップの追加ピクセルごとに、コーディネーターが意思決定に使う空間的コンテキストだ。コンテキストフローティングパネルを優先して従来のナビゲーション（ナビバー、固定サイドバー）を非表示にするトレードオフは実際のユーザーで検証済みで、ユーザビリティテストで測定された最大のプラスの影響を持つUX変更の1つだ。
+map-firstレイアウトは美学ではなく--運用上の人間工学だ。マップの追加ピクセルごとに、コーディネーターが意思決定に使う空間的コンテキストだ。コンテキストフローティングパネルを優先して従来のナビゲーション（ナビバー、固定サイドバー）を非表示にするトレードオフは実際のユーザーで検証済みで、ユーザビリティテストで測定された最大のプラスの影響を持つUX変更の1つだ。
 '''

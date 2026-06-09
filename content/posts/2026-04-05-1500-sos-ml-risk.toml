@@ -20,13 +20,13 @@ has_math = false
 body = '''
 # Modelos neurais de risco: o SOSLocation.ML
 
-Em Março de 2026, o commit `feat(ml+tests): SOSLocation.ML .NET project + 40 unit/integration tests` formalizou o que já estava sendo construído: uma unidade de ML dedicada ao SOS Location. O objetivo é simples mas ambicioso — **prever quais áreas serão afetadas** antes que a crise se torne incontrolável.
+Em Março de 2026, o commit `feat(ml+tests): SOSLocation.ML .NET project + 40 unit/integration tests` formalizou o que já estava sendo construído: uma unidade de ML dedicada ao SOS Location. O objetivo é simples mas ambicioso - **prever quais áreas serão afetadas** antes que a crise se torne incontrolável.
 
 ## Arquitetura do ML Unit
 
 ```
 risk-analysis-unit/
-  api/            FastAPI — serve o modelo via REST e streaming gRPC
+  api/            FastAPI - serve o modelo via REST e streaming gRPC
   models/         Definições PyTorch dos modelos
   training/       Scripts de treino + MLflow tracking
   data/           Pipelines de ingestão (GIS, clima, histórico)
@@ -37,7 +37,7 @@ O ML Unit é um microsserviço Python independente que o backend .NET consulta v
 
 ## Modelo de segmentação semântica
 
-O problema de identificar zonas de risco em imagens de satélite é um problema de **segmentação semântica** — classificar cada pixel como "risco alto", "risco médio", "seguro", "água", etc.
+O problema de identificar zonas de risco em imagens de satélite é um problema de **segmentação semântica** - classificar cada pixel como "risco alto", "risco médio", "seguro", "água", etc.
 
 A arquitetura escolhida é uma U-Net modificada, clássica em problemas de segmentação de imagens médicas e geoespaciais:
 
@@ -206,7 +206,7 @@ public async Task<RiskAnalysis> RequestAnalysisAsync(
 }
 ```
 
-O resultado da análise é armazenado no banco e transmitido ao dashboard via SignalR — adicionando uma camada de risco preditivo ao mapa tático em menos de 3 segundos após a criação do incidente.
+O resultado da análise é armazenado no banco e transmitido ao dashboard via SignalR - adicionando uma camada de risco preditivo ao mapa tático em menos de 3 segundos após a criação do incidente.
 '''
 body_en_us = """
 # Neural risk models: SOSLocation.ML
@@ -217,7 +217,7 @@ In March 2026, the commit `feat(ml+tests): SOSLocation.ML .NET project + 40 unit
 
 ```
 risk-analysis-unit/
-  api/            FastAPI — serves the model through REST and streaming gRPC
+  api/            FastAPI - serves the model through REST and streaming gRPC
   models/         PyTorch model definitions
   training/       Training scripts + MLflow tracking
   data/           Ingestion pipelines (GIS, weather, history)
@@ -408,7 +408,7 @@ body_ja_jp = """
 
 ```
 risk-analysis-unit/
-  api/            FastAPI — REST と streaming gRPC でモデルを提供
+  api/            FastAPI - REST と streaming gRPC でモデルを提供
   models/         PyTorch モデル定義
   training/       学習スクリプト + MLflow トラッキング
   data/           取り込みパイプライン（GIS、気象、履歴）

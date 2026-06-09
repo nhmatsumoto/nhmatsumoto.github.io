@@ -57,7 +57,7 @@ graph TD
     V3 --> B5[Ramo L2 = L1 * q]
 ```
 
-A combinação desses fatores — periodicidade vertical, simetria angular e decaimento de escala — cria a base para o nosso **Projeto Araucária**, transformando dados técnicos em uma floresta digital de conhecimento.
+A combinação desses fatores - periodicidade vertical, simetria angular e decaimento de escala - cria a base para o nosso **Projeto Araucária**, transformando dados técnicos em uma floresta digital de conhecimento.
 """
 body_en_us = """
 The *Araucaria angustifolia*, the "Parana pine", is not only a biological icon but also a fascinating example of geometric organization and structural efficiency. To recreate its shape in a 3D digital environment, we use mathematical models that capture its fractal and symmetric essence.

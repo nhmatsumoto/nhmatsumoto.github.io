@@ -27,7 +27,7 @@ Sem vocabulário canônico, cada módulo inventa seus próprios termos. O módul
 
 ## Decisão técnica
 
-Estabelecer um glossário de domínio em português como código — termos que aparecem tanto no C# quanto na documentação operacional, garantindo que qualquer leitura do código produza frases que um coordenador de emergência reconhece.
+Estabelecer um glossário de domínio em português como código - termos que aparecem tanto no C# quanto na documentação operacional, garantindo que qualquer leitura do código produza frases que um coordenador de emergência reconhece.
 
 | Termo no código | Significado operacional |
 |---|---|
@@ -97,7 +97,7 @@ Um coordenador de emergência sem background técnico consegue ler um stack trac
 
 ## Relação com SOS Location
 
-O domínio de desastres tem terminologia que não existe no vocabulário padrão de software. `PessoaDesaparecida` não é um `User` com status diferente — ela tem `UltimaLocalizacao`, não `Address`. `AreaDeRisco` não é uma `Category` — ela tem `NivelRisco` e `PoligonoGeografico`. A linguagem ubíqua é o que torna o SOS Location compreensível para equipes mistas de TI e defesa civil.
+O domínio de desastres tem terminologia que não existe no vocabulário padrão de software. `PessoaDesaparecida` não é um `User` com status diferente - ela tem `UltimaLocalizacao`, não `Address`. `AreaDeRisco` não é uma `Category` - ela tem `NivelRisco` e `PoligonoGeografico`. A linguagem ubíqua é o que torna o SOS Location compreensível para equipes mistas de TI e defesa civil.
 '''
 body_en_us = '''
 ## Real context
@@ -110,7 +110,7 @@ Without canonical vocabulary, each module invents its own terms. The alert modul
 
 ## Technical decision
 
-Establish a Portuguese-language domain glossary as code — terms that appear in both the C# codebase and operational documentation, ensuring that reading the code produces sentences an emergency coordinator recognises.
+Establish a Portuguese-language domain glossary as code - terms that appear in both the C# codebase and operational documentation, ensuring that reading the code produces sentences an emergency coordinator recognises.
 
 | Code term | Operational meaning |
 |---|---|
@@ -180,7 +180,7 @@ An emergency coordinator without a technical background can read a stack trace o
 
 ## Relation to SOS Location
 
-The disaster domain has terminology that does not exist in standard software vocabulary. `PessoaDesaparecida` is not a `User` with a different status — she has `UltimaLocalizacao`, not `Address`. `AreaDeRisco` is not a `Category` — it has `NivelRisco` and `PoligonoGeografico`. The ubiquitous language is what makes SOS Location comprehensible to mixed teams of IT and civil defence professionals.
+The disaster domain has terminology that does not exist in standard software vocabulary. `PessoaDesaparecida` is not a `User` with a different status - she has `UltimaLocalizacao`, not `Address`. `AreaDeRisco` is not a `Category` - it has `NivelRisco` and `PoligonoGeografico`. The ubiquitous language is what makes SOS Location comprehensible to mixed teams of IT and civil defence professionals.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト

@@ -1,8 +1,8 @@
 name = "claw-code"
 slug = "claw-code"
-headline = "Better Harness Tools — ferramentas para análise e experimentação com Claude Code, em reescrita para Rust."
-headline_en_us = "Better Harness Tools — tools for analyzing and experimenting with Claude Code, being rewritten in Rust."
-headline_ja_jp = "Better Harness Tools — Claude Code の分析と実験のためのツール群。Rust への書き直しが進行中。"
+headline = "Better Harness Tools - ferramentas para análise e experimentação com Claude Code, em reescrita para Rust."
+headline_en_us = "Better Harness Tools - tools for analyzing and experimenting with Claude Code, being rewritten in Rust."
+headline_ja_jp = "Better Harness Tools - Claude Code の分析と実験のためのツール群。Rust への書き直しが進行中。"
 summary = "Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade."
 summary_en_us = "Analysis and experimentation tooling for code-agent architectures, currently being rewritten in Rust for performance and portability."
 summary_ja_jp = "コード系エージェントのアーキテクチャを分析・実験するツール群。パフォーマンスと移植性を狙って Rust への書き直し中。"
@@ -20,15 +20,15 @@ Fork do projeto Claw Code, focado em criar ferramentas úteis para análise e ex
 
 ## Motivação
 
-Entender como agentes de código funcionam internamente — seus system prompts, tool loops, decisão de contexto — é fundamental para quem trabalha com automação de engenharia. Este projeto vai além do arquivo: transforma referência em ferramenta.
+Entender como agentes de código funcionam internamente - seus system prompts, tool loops, decisão de contexto - é fundamental para quem trabalha com automação de engenharia. Este projeto vai além do arquivo: transforma referência em ferramenta.
 
 ## Reescrita em Rust
 
 A versão atual está sendo reescrita em Rust para:
 
-- **Performance** — parsing e análise de prompts grandes sem overhead de runtime
-- **Portabilidade** — binário único sem dependências
-- **CLI ergonômico** — interface de terminal com output formatado
+- **Performance** - parsing e análise de prompts grandes sem overhead de runtime
+- **Portabilidade** - binário único sem dependências
+- **CLI ergonômico** - interface de terminal com output formatado
 
 ## Relação com o ecossistema
 
@@ -39,15 +39,15 @@ Fork of the Claw Code project, focused on building useful tooling for analyzing 
 
 ## Motivation
 
-Understanding how coding agents work internally — system prompts, tool loops, context decisions — is essential for anyone automating engineering workflows. This project turns a reference implementation into practical tooling.
+Understanding how coding agents work internally - system prompts, tool loops, context decisions - is essential for anyone automating engineering workflows. This project turns a reference implementation into practical tooling.
 
 ## Rust rewrite
 
 The current version is being rewritten in Rust to improve:
 
-- **Performance** — parsing and analyzing large prompts without runtime overhead
-- **Portability** — a single binary with no external dependencies
-- **CLI ergonomics** — a polished terminal interface with structured output
+- **Performance** - parsing and analyzing large prompts without runtime overhead
+- **Portability** - a single binary with no external dependencies
+- **CLI ergonomics** - a polished terminal interface with structured output
 
 ## Relationship with the ecosystem
 
@@ -64,9 +64,9 @@ Claude Code のようなコードエージェントのアーキテクチャを�
 
 現在のバージョンは、次を改善するため Rust へ書き直し中です。
 
-- **性能** — 大きな prompt をランタイム・オーバーヘッドなしに解析
-- **可搬性** — 依存の少ない単一バイナリ
-- **CLI 体験** — 整形済み出力を持つ使いやすい端末インターフェース
+- **性能** - 大きな prompt をランタイム・オーバーヘッドなしに解析
+- **可搬性** - 依存の少ない単一バイナリ
+- **CLI 体験** - 整形済み出力を持つ使いやすい端末インターフェース
 
 ## エコシステムとの関係
 

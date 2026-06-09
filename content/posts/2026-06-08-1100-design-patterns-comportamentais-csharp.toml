@@ -3,8 +3,8 @@ slug = "design-patterns-comportamentais-csharp-dotnet"
 title = "Padrões Comportamentais em C#: Strategy, Observer, Mediator e State"
 title_en_us = "Behavioral Patterns in C#: Strategy, Observer, Mediator and State"
 title_ja_jp = "C# の振る舞いパターン：Strategy・Observer・Mediator・State"
-summary = "Padrões comportamentais respondem 'como objetos colaboram e distribuem responsabilidade'. No .NET, delegates, eventos e MediatR já carregam metade do trabalho. Strategy, Observer, Mediator, State e Chain of Responsibility — da forma clássica à idiomática."
-summary_en_us = "Behavioral patterns answer 'how objects collaborate and distribute responsibility'. In .NET, delegates, events and MediatR already carry half the work. Strategy, Observer, Mediator, State and Chain of Responsibility — from the classic to the idiomatic form."
+summary = "Padrões comportamentais respondem 'como objetos colaboram e distribuem responsabilidade'. No .NET, delegates, eventos e MediatR já carregam metade do trabalho. Strategy, Observer, Mediator, State e Chain of Responsibility - da forma clássica à idiomática."
+summary_en_us = "Behavioral patterns answer 'how objects collaborate and distribute responsibility'. In .NET, delegates, events and MediatR already carry half the work. Strategy, Observer, Mediator, State and Chain of Responsibility - from the classic to the idiomatic form."
 summary_ja_jp = "振る舞いパターンは「オブジェクトがどう協調し責務を分配するか」に答える。.NET では delegate・event・MediatR がすでに仕事の半分を担う。Strategy・Observer・Mediator・State・Chain of Responsibility を、古典形からイディオム形まで。"
 published_at = "2026-06-08T11:00:00+09:00"
 updated_at = "2026-06-08T11:00:00+09:00"
@@ -32,7 +32,7 @@ Os **padrões comportamentais** do GoF tratam de **colaboração e responsabilid
 
 ## Strategy: algoritmos intercambiáveis
 
-O `Strategy` encapsula uma família de algoritmos e os torna trocáveis em tempo de execução. É o padrão comportamental mais usado — e o mais "enxugado" pelo C# moderno.
+O `Strategy` encapsula uma família de algoritmos e os torna trocáveis em tempo de execução. É o padrão comportamental mais usado - e o mais "enxugado" pelo C# moderno.
 
 ```csharp
 // Forma clássica: uma interface, várias implementações
@@ -77,7 +77,7 @@ Para fluxos assíncronos de múltiplos valores (streams), o moderno é `IObserva
 O `Mediator` faz objetos se comunicarem **através de um intermediário**, em vez de referências diretas entre si. No .NET, isso virou quase sinônimo de **MediatR** e do estilo CQRS: controllers despacham comandos/queries sem conhecer os handlers.
 
 ```csharp
-// Comando + handler — o controller não conhece o handler
+// Comando + handler - o controller não conhece o handler
 public sealed record CreateOrder(int CustomerId, Cart Cart) : IRequest<OrderId>;
 
 public sealed class CreateOrderHandler(IOrderRepository repo)
@@ -95,7 +95,7 @@ public sealed class CreateOrderHandler(IOrderRepository repo)
 app.MapPost("/orders", (CreateOrder cmd, ISender m) => m.Send(cmd));
 ```
 
-O grande ganho é o **pipeline behavior**: validação, logging, transação e cache entram como decorators do pipeline, sem poluir os handlers. O custo é a rastreabilidade: "ir na definição" no IDE não te leva mais ao handler — o acoplamento sumiu, e a navegabilidade junto.
+O grande ganho é o **pipeline behavior**: validação, logging, transação e cache entram como decorators do pipeline, sem poluir os handlers. O custo é a rastreabilidade: "ir na definição" no IDE não te leva mais ao handler - o acoplamento sumiu, e a navegabilidade junto.
 
 ## State: substituir o switch de status
 
@@ -115,7 +115,7 @@ public sealed class PendingState : OrderContext, IOrderState
 }
 ```
 
-Cada estado conhece apenas suas transições legais — as invariantes ficam distribuídas e explícitas, em vez de afogadas num `if`. O custo é uma classe por estado; vale quando as transições são complexas o suficiente para o switch virar bug recorrente.
+Cada estado conhece apenas suas transições legais - as invariantes ficam distribuídas e explícitas, em vez de afogadas num `if`. O custo é uma classe por estado; vale quando as transições são complexas o suficiente para o switch virar bug recorrente.
 
 ## Chain of Responsibility: passar adiante até alguém tratar
 
@@ -144,14 +144,14 @@ public abstract class Approver(Approver? next)
 
 ## Conclusão
 
-Os padrões comportamentais existem para domar o crescimento da lógica condicional: aquele `if`/`switch` que ganha um caso novo a cada sprint. Strategy e State o transformam em polimorfismo; Observer e Mediator o transformam em mensagens; Chain o transforma em pipeline. No .NET moderno, antes de criar a interface clássica, pergunte se um `delegate`, um `event` ou o MediatR já não resolvem — frequentemente resolvem. O objetivo nunca é "usar o padrão", e sim **mover a decisão para onde ela pode crescer sem reescrever quem a chama**.
+Os padrões comportamentais existem para domar o crescimento da lógica condicional: aquele `if`/`switch` que ganha um caso novo a cada sprint. Strategy e State o transformam em polimorfismo; Observer e Mediator o transformam em mensagens; Chain o transforma em pipeline. No .NET moderno, antes de criar a interface clássica, pergunte se um `delegate`, um `event` ou o MediatR já não resolvem - frequentemente resolvem. O objetivo nunca é "usar o padrão", e sim **mover a decisão para onde ela pode crescer sem reescrever quem a chama**.
 '''
 body_en_us = '''
 The GoF **behavioral patterns** are about **collaboration and responsibility**: how objects communicate and who decides what. It's the category most affected by C#'s evolution, because delegates, events, and `IEnumerable` absorbed several patterns as language features. Let's look at the most useful ones, always comparing the classic form with the idiomatic one.
 
 ## Strategy: interchangeable algorithms
 
-The `Strategy` encapsulates a family of algorithms and makes them swappable at runtime. It's the most used behavioral pattern — and the one most "trimmed" by modern C#.
+The `Strategy` encapsulates a family of algorithms and makes them swappable at runtime. It's the most used behavioral pattern - and the one most "trimmed" by modern C#.
 
 ```csharp
 // Classic form: one interface, several implementations
@@ -196,7 +196,7 @@ For asynchronous streams of multiple values, the modern way is `IObservable<T>` 
 The `Mediator` makes objects communicate **through an intermediary** instead of holding direct references to each other. In .NET this became almost synonymous with **MediatR** and the CQRS style: controllers dispatch commands/queries without knowing the handlers.
 
 ```csharp
-// Command + handler — the controller doesn't know the handler
+// Command + handler - the controller doesn't know the handler
 public sealed record CreateOrder(int CustomerId, Cart Cart) : IRequest<OrderId>;
 
 public sealed class CreateOrderHandler(IOrderRepository repo)
@@ -214,7 +214,7 @@ public sealed class CreateOrderHandler(IOrderRepository repo)
 app.MapPost("/orders", (CreateOrder cmd, ISender m) => m.Send(cmd));
 ```
 
-The big win is the **pipeline behavior**: validation, logging, transaction, and cache come in as pipeline decorators, without polluting the handlers. The cost is traceability: "go to definition" in the IDE no longer takes you to the handler — the coupling vanished, and navigability with it.
+The big win is the **pipeline behavior**: validation, logging, transaction, and cache come in as pipeline decorators, without polluting the handlers. The cost is traceability: "go to definition" in the IDE no longer takes you to the handler - the coupling vanished, and navigability with it.
 
 ## State: replacing the status switch
 
@@ -234,7 +234,7 @@ public sealed class PendingState : OrderContext, IOrderState
 }
 ```
 
-Each state knows only its legal transitions — the invariants are distributed and explicit, instead of drowned in an `if`. The cost is one class per state; it pays off when transitions are complex enough that the switch becomes a recurring bug.
+Each state knows only its legal transitions - the invariants are distributed and explicit, instead of drowned in an `if`. The cost is one class per state; it pays off when transitions are complex enough that the switch becomes a recurring bug.
 
 ## Chain of Responsibility: pass along until someone handles it
 
@@ -263,7 +263,7 @@ public abstract class Approver(Approver? next)
 
 ## Conclusion
 
-Behavioral patterns exist to tame the growth of conditional logic: that `if`/`switch` that gains a new case every sprint. Strategy and State turn it into polymorphism; Observer and Mediator turn it into messages; Chain turns it into a pipeline. In modern .NET, before creating the classic interface, ask whether a `delegate`, an `event`, or MediatR already solve it — they often do. The goal is never "to use the pattern," but to **move the decision to where it can grow without rewriting whoever calls it**.
+Behavioral patterns exist to tame the growth of conditional logic: that `if`/`switch` that gains a new case every sprint. Strategy and State turn it into polymorphism; Observer and Mediator turn it into messages; Chain turns it into a pipeline. In modern .NET, before creating the classic interface, ask whether a `delegate`, an `event`, or MediatR already solve it - they often do. The goal is never "to use the pattern," but to **move the decision to where it can grow without rewriting whoever calls it**.
 '''
 body_ja_jp = '''
 GoF の **振る舞いパターン** は **協調と責務** についてです。オブジェクトがどう通信し、誰が何を決めるか。C# の進化に最も影響されたカテゴリです。delegate・event・`IEnumerable` がいくつかのパターンを言語機能として吸収したからです。最も有用なものを、常に古典形とイディオム形を比べながら見ましょう。

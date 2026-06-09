@@ -3,8 +3,8 @@ slug = "mermaid-live-editor"
 headline = "Editor ao vivo para criação, preview e compartilhamento de diagramas Mermaid."
 headline_en_us = "Live editor for creating, previewing and sharing Mermaid diagrams."
 headline_ja_jp = "Mermaid ダイアグラムを作成・プレビュー・共有するためのライブエディタ。"
-summary = "Fork do Mermaid Live Editor — aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação."
-summary_en_us = "Fork of Mermaid Live Editor — a web app for real-time Mermaid diagram editing with instant preview and export."
+summary = "Fork do Mermaid Live Editor - aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação."
+summary_en_us = "Fork of Mermaid Live Editor - a web app for real-time Mermaid diagram editing with instant preview and export."
 summary_ja_jp = "Mermaid Live Editor のフォーク。Mermaid 図をリアルタイム編集し、即時プレビューとエクスポートを行う Web アプリ。"
 status = "published"
 featured = false
@@ -21,10 +21,10 @@ Fork do Mermaid Live Editor, a aplicação web oficial para criação e preview 
 ## Funcionalidades
 
 - **Editor com syntax highlighting** via Monaco Editor (mesmo do VS Code)
-- **Preview instantâneo** — renderização em tempo real conforme o texto é editado
-- **Exportação** — download em SVG, PNG e links compartilháveis
-- **Templates** — exemplos pré-configurados para cada tipo de diagrama
-- **Temas** — preview com diferentes temas (default, dark, forest, neutral)
+- **Preview instantâneo** - renderização em tempo real conforme o texto é editado
+- **Exportação** - download em SVG, PNG e links compartilháveis
+- **Templates** - exemplos pré-configurados para cada tipo de diagrama
+- **Temas** - preview com diferentes temas (default, dark, forest, neutral)
 
 ## Uso prático
 
@@ -40,10 +40,10 @@ Fork of Mermaid Live Editor, the official web application for creating and previ
 ## Features
 
 - **Editor with syntax highlighting** powered by Monaco Editor
-- **Instant preview** — diagrams render live while the text changes
-- **Export** — download as SVG, PNG or shareable links
-- **Templates** — starter examples for each diagram type
-- **Themes** — preview under different visual themes
+- **Instant preview** - diagrams render live while the text changes
+- **Export** - download as SVG, PNG or shareable links
+- **Templates** - starter examples for each diagram type
+- **Themes** - preview under different visual themes
 
 ## Practical use
 
@@ -58,11 +58,11 @@ Mermaid 図をリアルタイムに作成・プレビューできる公式 Web �
 
 ## 機能
 
-- **syntax highlighting 付きエディタ** — Monaco Editor ベース
-- **instant preview** — テキスト変更に合わせて即時描画
-- **export** — SVG、PNG、共有リンクとして出力
-- **template** — 図種ごとのスターター例
-- **theme** — 複数の見た目でプレビュー可能
+- **syntax highlighting 付きエディタ** - Monaco Editor ベース
+- **instant preview** - テキスト変更に合わせて即時描画
+- **export** - SVG、PNG、共有リンクとして出力
+- **template** - 図種ごとのスターター例
+- **theme** - 複数の見た目でプレビュー可能
 
 ## 実用面
 

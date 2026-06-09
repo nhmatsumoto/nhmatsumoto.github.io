@@ -1,8 +1,8 @@
 name = "QuickReaderv1"
 slug = "quickreaderv1"
-headline = "Aplicação de leitura rápida em TypeScript — speed reading com chunking de texto."
-headline_en_us = "Speed-reading application in TypeScript — text chunking for rapid reading."
-headline_ja_jp = "TypeScript で書かれた速読アプリ — テキストをチャンクに分割して高速読破。"
+headline = "Aplicação de leitura rápida em TypeScript - speed reading com chunking de texto."
+headline_en_us = "Speed-reading application in TypeScript - text chunking for rapid reading."
+headline_ja_jp = "TypeScript で書かれた速読アプリ - テキストをチャンクに分割して高速読破。"
 summary = "Aplicação de speed reading em TypeScript que apresenta texto em chunks otimizados para leitura rápida, com controle de velocidade e tracking de progresso."
 summary_en_us = "Speed-reading app in TypeScript that presents text in optimized chunks for rapid reading, with speed control and progress tracking."
 summary_ja_jp = "最適化されたチャンクで素早くテキストを表示する TypeScript 製の速読アプリ。速度制御と進捗追跡を備える。"
@@ -31,14 +31,14 @@ O texto é dividido em fragmentos (1-3 palavras) apresentados sequencialmente no
 
 ## Contexto
 
-Este projeto explora a interseção entre interface de usuário e cognição humana — como a apresentação do texto afeta a velocidade e compreensão de leitura.
+Este projeto explora a interseção entre interface de usuário e cognição humana - como a apresentação do texto afeta a velocidade e compreensão de leitura.
 """
 overview_en_us = """
 Speed-reading application that presents text in optimized chunks, inspired by the RSVP (Rapid Serial Visual Presentation) technique.
 
 ## How it works
 
-Text is divided into small fragments of one to three words and displayed sequentially at the center of the screen. The focal point (ORP — Optimal Recognition Point) of each word is highlighted to reduce eye movement.
+Text is divided into small fragments of one to three words and displayed sequentially at the center of the screen. The focal point (ORP - Optimal Recognition Point) of each word is highlighted to reduce eye movement.
 
 ## Features
 
@@ -49,14 +49,14 @@ Text is divided into small fragments of one to three words and displayed sequent
 
 ## Context
 
-The project explores the boundary between user interface design and human cognition — how text presentation influences reading speed and comprehension.
+The project explores the boundary between user interface design and human cognition - how text presentation influences reading speed and comprehension.
 """
 overview_ja_jp = """
 RSVP（Rapid Serial Visual Presentation）に着想を得て、最適化されたチャンク単位でテキストを提示する速読アプリです。
 
 ## 仕組み
 
-テキストを 1〜3 語の小さな断片に分割し、画面中央に順番に表示します。各語の焦点（ORP — Optimal Recognition Point）を強調し、眼球移動を減らします。
+テキストを 1〜3 語の小さな断片に分割し、画面中央に順番に表示します。各語の焦点（ORP - Optimal Recognition Point）を強調し、眼球移動を減らします。
 
 ## 機能
 

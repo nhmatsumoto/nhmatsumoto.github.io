@@ -1,8 +1,8 @@
 name = "nhmatsumoto.github.io"
 slug = "nhmatsumoto-github-io"
-headline = "Technical Knowledge OS — blog e portfolio com engine de geração estática e navegação estruturada."
-headline_en_us = "Technical Knowledge OS — blog and portfolio with a static site engine and structured navigation."
-headline_ja_jp = "Technical Knowledge OS — 静的サイト生成エンジンと構造化ナビゲーションを備えたブログ兼ポートフォリオ。"
+headline = "Technical Knowledge OS - blog e portfolio com engine de geração estática e navegação estruturada."
+headline_en_us = "Technical Knowledge OS - blog and portfolio with a static site engine and structured navigation."
+headline_ja_jp = "Technical Knowledge OS - 静的サイト生成エンジンと構造化ナビゲーションを備えたブログ兼ポートフォリオ。"
 summary = "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, conteúdo em TOML, busca client-side, i18n e deploy via GitHub Pages."
 summary_en_us = "Personal site and Technical Knowledge OS: static site engine in Python, TOML content, client-side search, i18n and deploy via GitHub Pages."
 summary_ja_jp = "個人サイト兼 Technical Knowledge OS。Python による静的サイト生成、TOML コンテンツ、クライアント側検索、i18n、GitHub Pages での配信。"
@@ -16,17 +16,17 @@ tags = ["HTML"]
 stack = ["Python", "HTML", "CSS", "JavaScript", "GitHub Pages"]
 
 overview = """
-Este é o repositório do Technical Knowledge OS — o site que você está usando agora. Uma plataforma de publicação técnica construída do zero com um engine de geração estática em Python, conteúdo estruturado e navegação leve.
+Este é o repositório do Technical Knowledge OS - o site que você está usando agora. Uma plataforma de publicação técnica construída do zero com um engine de geração estática em Python, conteúdo estruturado e navegação leve.
 
 ## Arquitetura do engine
 
 O engine de geração estática processa conteúdo em TOML, renderiza markdown para HTML e gera um site completo com:
 
-- **Posts** — artigos técnicos com suporte a math (AsciiMath), Mermaid, code blocks e tabelas
-- **Projetos** — portfolio com dados estruturados e páginas dedicadas
-- **Documentos** — especificações técnicas com versionamento
-- **i18n** — suporte a internacionalização multi-idioma
-- **Busca** — índice JSON para search client-side
+- **Posts** - artigos técnicos com suporte a math (AsciiMath), Mermaid, code blocks e tabelas
+- **Projetos** - portfolio com dados estruturados e páginas dedicadas
+- **Documentos** - especificações técnicas com versionamento
+- **i18n** - suporte a internacionalização multi-idioma
+- **Busca** - índice JSON para search client-side
 
 ## Páginas e navegação
 
@@ -43,17 +43,17 @@ A navegação prioriza páginas estáticas rápidas, cards claros e links perman
 GitHub Actions executa o build em cada push ao master e deploya o resultado no GitHub Pages automaticamente.
 """
 overview_en_us = """
-This is the Technical Knowledge OS repository — the site you are using right now. A technical-publishing platform built from scratch with a Python static-site engine, structured content and lightweight navigation.
+This is the Technical Knowledge OS repository - the site you are using right now. A technical-publishing platform built from scratch with a Python static-site engine, structured content and lightweight navigation.
 
 ## Engine architecture
 
 The static-site engine processes TOML content, renders markdown to HTML and outputs a complete site with:
 
-- **Posts** — technical articles with support for math, Mermaid, code blocks and tables
-- **Projects** — a portfolio backed by structured data and dedicated pages
-- **Documents** — technical specs with versioned publication
-- **i18n** — multi-language content support
-- **Search** — a client-side JSON index
+- **Posts** - technical articles with support for math, Mermaid, code blocks and tables
+- **Projects** - a portfolio backed by structured data and dedicated pages
+- **Documents** - technical specs with versioned publication
+- **i18n** - multi-language content support
+- **Search** - a client-side JSON index
 
 ## Pages and navigation
 
@@ -76,11 +76,11 @@ overview_ja_jp = """
 
 静的サイト・エンジンは TOML コンテンツを処理し、markdown を HTML に変換して、次を備えた完全なサイトを出力します。
 
-- **Posts** — 数式、Mermaid、code block、表を含む技術記事
-- **Projects** — 構造化データと専用ページを備えたポートフォリオ
-- **Documents** — バージョン付き公開が可能な技術仕様
-- **i18n** — 多言語対応
-- **Search** — クライアント側 JSON インデックス
+- **Posts** - 数式、Mermaid、code block、表を含む技術記事
+- **Projects** - 構造化データと専用ページを備えたポートフォリオ
+- **Documents** - バージョン付き公開が可能な技術仕様
+- **i18n** - 多言語対応
+- **Search** - クライアント側 JSON インデックス
 
 ## ページとナビゲーション
 

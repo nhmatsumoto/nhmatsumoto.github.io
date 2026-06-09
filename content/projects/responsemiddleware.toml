@@ -36,10 +36,10 @@ Intercepta as respostas de controllers e as envolve em um envelope padronizado:
 
 ## Benefícios
 
-- **Consistência** — todo endpoint retorna o mesmo formato, facilitando o consumo pelo frontend
-- **Metadata** — timestamps, request IDs e informações de paginação são adicionados automaticamente
-- **Error wrapping** — erros de validação são formatados no mesmo envelope
-- **Transparência** — controllers continuam retornando objetos simples, o middleware cuida do envelope
+- **Consistência** - todo endpoint retorna o mesmo formato, facilitando o consumo pelo frontend
+- **Metadata** - timestamps, request IDs e informações de paginação são adicionados automaticamente
+- **Error wrapping** - erros de validação são formatados no mesmo envelope
+- **Transparência** - controllers continuam retornando objetos simples, o middleware cuida do envelope
 
 ## Uso combinado
 
@@ -66,10 +66,10 @@ It intercepts controller responses and wraps them in a standardized envelope:
 
 ## Benefits
 
-- **Consistency** — every endpoint returns the same top-level format
-- **Metadata** — timestamps, request IDs and paging data are added automatically
-- **Error wrapping** — validation failures fit into the same contract
-- **Transparency** — controllers return plain objects while the middleware shapes the envelope
+- **Consistency** - every endpoint returns the same top-level format
+- **Metadata** - timestamps, request IDs and paging data are added automatically
+- **Error wrapping** - validation failures fit into the same contract
+- **Transparency** - controllers return plain objects while the middleware shapes the envelope
 
 ## Combined usage
 
@@ -96,10 +96,10 @@ controller のレスポンスを横取りし、標準エンベロープで包み
 
 ## 利点
 
-- **一貫性** — すべての endpoint が同じトップレベル形式を返す
-- **Metadata** — timestamp、request ID、paging 情報を自動付与
-- **Error wrapping** — validation failure も同一契約に収まる
-- **透明性** — controller は素のオブジェクトを返し、整形は middleware が担当
+- **一貫性** - すべての endpoint が同じトップレベル形式を返す
+- **Metadata** - timestamp、request ID、paging 情報を自動付与
+- **Error wrapping** - validation failure も同一契約に収まる
+- **透明性** - controller は素のオブジェクトを返し、整形は middleware が担当
 
 ## 組み合わせ利用
 

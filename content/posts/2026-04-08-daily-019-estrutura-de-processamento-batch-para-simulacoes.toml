@@ -5,7 +5,7 @@ title_en_us = "Daily #019: Batch processing structure for simulations"
 title_ja_jp = "Daily #019: シミュレーション向けバッチ処理構造"
 summary = "Como o SOS Location usa Hangfire com 8 workers para rodar 150 simulações noturnas de inundação em 50 zonas, com agendamento shortest-first, idempotência por chave e reprocessamento automático de falhas."
 summary_en_us = "How SOS Location uses Hangfire with 8 workers to run 150 nightly flood simulations across 50 zones, with shortest-first scheduling, idempotency keys and automatic failure reprocessing."
-summary_ja_jp = "SOS LocationがHangfireの8ワーカーを使って50ゾーンで150件の夜間洪水シミュレーションを実行する方法——最短優先スケジュール・冪等性キー・自動障害再処理付き。"
+summary_ja_jp = "SOS LocationがHangfireの8ワーカーを使って50ゾーンで150件の夜間洪水シミュレーションを実行する方法--最短優先スケジュール・冪等性キー・自動障害再処理付き。"
 published_at = "2026-04-08T03:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -23,7 +23,7 @@ O SOS Location roda simulações de enchente para 50 municípios prioritários t
 
 ## Problema específico
 
-A primeira versão usava `IHostedService` com loop simples. Problemas: (1) sem visibilidade — quando o processo morria às 2h da manhã, a equipe só descobria às 8h; (2) sem retry automático — uma falha de rede momentânea descartava a simulação inteira; (3) sem controle de concorrência — em cenários de restart, a mesma simulação rodava duas vezes e gravava resultados duplicados no banco; (4) sem priorização — simulações de 2 horas (municípios grandes) e de 5 minutos (municípios pequenos) disputavam workers em igualdade, atrasando as rápidas.
+A primeira versão usava `IHostedService` com loop simples. Problemas: (1) sem visibilidade - quando o processo morria às 2h da manhã, a equipe só descobria às 8h; (2) sem retry automático - uma falha de rede momentânea descartava a simulação inteira; (3) sem controle de concorrência - em cenários de restart, a mesma simulação rodava duas vezes e gravava resultados duplicados no banco; (4) sem priorização - simulações de 2 horas (municípios grandes) e de 5 minutos (municípios pequenos) disputavam workers em igualdade, atrasando as rápidas.
 
 ## Decisão técnica
 
@@ -91,7 +91,7 @@ public sealed class SimulacaoEnchenteBatchJob
 ```
 
 ```csharp
-// Program.cs — registro
+// Program.cs - registro
 builder.Services.AddHangfire(cfg => cfg
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
     .UseSimpleAssemblyNameTypeSerializer()
@@ -112,7 +112,7 @@ RecurringJob.AddOrUpdate<EnqueueNightlySimulacoesJob>(
 
 ## Exemplo concreto
 
-Ciclo noturno de 2026-04-15: 148 jobs enfileirados (2 zonas inativas excluídas). Fila `fast`: 89 jobs (estimativa < 30 min). Fila `default`: 59 jobs. Duração total do batch: 2h 14min com 8 workers. 3 jobs falharam na primeira tentativa por timeout de banco às 02h17 — reprocessados automaticamente com delay de 60s, todos concluídos na segunda tentativa. 0 duplicações detectadas (verificação por `idempotency_key`). Dados de risco do dia disponíveis às 03h22.
+Ciclo noturno de 2026-04-15: 148 jobs enfileirados (2 zonas inativas excluídas). Fila `fast`: 89 jobs (estimativa < 30 min). Fila `default`: 59 jobs. Duração total do batch: 2h 14min com 8 workers. 3 jobs falharam na primeira tentativa por timeout de banco às 02h17 - reprocessados automaticamente com delay de 60s, todos concluídos na segunda tentativa. 0 duplicações detectadas (verificação por `idempotency_key`). Dados de risco do dia disponíveis às 03h22.
 
 ## Critério de sucesso
 
@@ -120,7 +120,7 @@ Ciclo noturno de 2026-04-15: 148 jobs enfileirados (2 zonas inativas excluídas)
 
 ## Relação com SOS Location
 
-Os `NivelRisco` base de cada `AreaDeRisco` que os coordenadores veem na abertura do turno manhã são o produto desse batch. Um batch que falha silenciosamente em 20% das zonas é mais perigoso que um batch que falha completamente — porque dá falsa sensação de cobertura. A idempotência e o dashboard Hangfire existem para tornar falhas visíveis e recuperáveis.
+Os `NivelRisco` base de cada `AreaDeRisco` que os coordenadores veem na abertura do turno manhã são o produto desse batch. Um batch que falha silenciosamente em 20% das zonas é mais perigoso que um batch que falha completamente - porque dá falsa sensação de cobertura. A idempotência e o dashboard Hangfire existem para tornar falhas visíveis e recuperáveis.
 '''
 body_en_us = '''
 ## Real context
@@ -129,7 +129,7 @@ SOS Location runs flood simulations for 50 priority municipalities every night b
 
 ## Specific problem
 
-The first version used `IHostedService` with a simple loop. Problems: (1) no visibility — when the process died at 2 am, the team only found out at 8 am; (2) no automatic retry — a momentary network failure discarded the entire simulation; (3) no concurrency control — on restart scenarios, the same simulation ran twice and wrote duplicate results to the database; (4) no prioritisation — 2-hour simulations (large municipalities) and 5-minute simulations (small municipalities) competed for workers equally, delaying the fast ones.
+The first version used `IHostedService` with a simple loop. Problems: (1) no visibility - when the process died at 2 am, the team only found out at 8 am; (2) no automatic retry - a momentary network failure discarded the entire simulation; (3) no concurrency control - on restart scenarios, the same simulation ran twice and wrote duplicate results to the database; (4) no prioritisation - 2-hour simulations (large municipalities) and 5-minute simulations (small municipalities) competed for workers equally, delaying the fast ones.
 
 ## Technical decision
 
@@ -192,7 +192,7 @@ RecurringJob.AddOrUpdate<EnqueueNightlySimulacoesJob>(
 
 ## Concrete example
 
-Nightly cycle of 2026-04-15: 148 jobs enqueued (2 inactive zones excluded). `fast` queue: 89 jobs (estimate < 30 min). `default` queue: 59 jobs. Total batch duration: 2h 14min with 8 workers. 3 jobs failed on first attempt due to a database timeout at 02:17 — automatically reprocessed with 60s delay, all completed on the second attempt. 0 duplications detected (verified by `idempotency_key`). Day's risk data available at 03:22.
+Nightly cycle of 2026-04-15: 148 jobs enqueued (2 inactive zones excluded). `fast` queue: 89 jobs (estimate < 30 min). `default` queue: 59 jobs. Total batch duration: 2h 14min with 8 workers. 3 jobs failed on first attempt due to a database timeout at 02:17 - automatically reprocessed with 60s delay, all completed on the second attempt. 0 duplications detected (verified by `idempotency_key`). Day's risk data available at 03:22.
 
 ## Success criteria
 
@@ -200,7 +200,7 @@ Nightly cycle of 2026-04-15: 148 jobs enqueued (2 inactive zones excluded). `fas
 
 ## Relation to SOS Location
 
-The base `NivelRisco` of each `AreaDeRisco` that coordinators see at the start of the morning shift is the product of this batch. A batch that silently fails in 20% of zones is more dangerous than one that fails completely — because it gives a false sense of coverage. Idempotency and the Hangfire dashboard exist to make failures visible and recoverable.
+The base `NivelRisco` of each `AreaDeRisco` that coordinators see at the start of the morning shift is the product of this batch. A batch that silently fails in 20% of zones is more dangerous than one that fails completely - because it gives a false sense of coverage. Idempotency and the Hangfire dashboard exist to make failures visible and recoverable.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -209,7 +209,7 @@ SOS Locationは毎晩01時から05時の間に50の優先市町村の洪水シ�
 
 ## 具体的な問題
 
-最初のバージョンはシンプルなループを持つ`IHostedService`を使っていた。問題：(1) 可視性なし——プロセスが午前2時に死ぬと、チームは8時まで気づかない；(2) 自動リトライなし——瞬間的なネットワーク障害でシミュレーション全体が破棄される；(3) 同時実行制御なし——再起動シナリオで同じシミュレーションが2回実行され、重複結果がデータベースに書き込まれる；(4) 優先順位付けなし——2時間のシミュレーション（大きな市町村）と5分のシミュレーション（小さな市町村）が等しくワーカーを競い合い、速いものを遅らせる。
+最初のバージョンはシンプルなループを持つ`IHostedService`を使っていた。問題：(1) 可視性なし--プロセスが午前2時に死ぬと、チームは8時まで気づかない；(2) 自動リトライなし--瞬間的なネットワーク障害でシミュレーション全体が破棄される；(3) 同時実行制御なし--再起動シナリオで同じシミュレーションが2回実行され、重複結果がデータベースに書き込まれる；(4) 優先順位付けなし--2時間のシミュレーション（大きな市町村）と5分のシミュレーション（小さな市町村）が等しくワーカーを競い合い、速いものを遅らせる。
 
 ## 技術的決定
 
@@ -272,7 +272,7 @@ RecurringJob.AddOrUpdate<EnqueueNightlySimulacoesJob>(
 
 ## 具体的な例
 
-2026-04-15の夜間サイクル：148ジョブをエンキュー（2つの非アクティブゾーンを除外）。`fast`キュー：89ジョブ（推定 < 30分）。`default`キュー：59ジョブ。8ワーカーでのバッチ総時間：2時間14分。02:17のデータベースタイムアウトで3ジョブが初回試行で失敗——60秒の遅延で自動再処理、すべてが2回目の試行で完了。0件の重複検出（`idempotency_key`で確認）。当日のリスクデータは03:22に利用可能。
+2026-04-15の夜間サイクル：148ジョブをエンキュー（2つの非アクティブゾーンを除外）。`fast`キュー：89ジョブ（推定 < 30分）。`default`キュー：59ジョブ。8ワーカーでのバッチ総時間：2時間14分。02:17のデータベースタイムアウトで3ジョブが初回試行で失敗--60秒の遅延で自動再処理、すべてが2回目の試行で完了。0件の重複検出（`idempotency_key`で確認）。当日のリスクデータは03:22に利用可能。
 
 ## 成功基準
 
@@ -280,5 +280,5 @@ RecurringJob.AddOrUpdate<EnqueueNightlySimulacoesJob>(
 
 ## SOS Locationとの関係
 
-コーディネーターが朝番開始時に見る各`AreaDeRisco`の基準`NivelRisco`は、このバッチの産物だ。20%のゾーンでサイレントに失敗するバッチは、完全に失敗するバッチより危険だ——偽のカバレッジ感を与えるから。冪等性とHangfireダッシュボードは障害を可視化して回復可能にするために存在する。
+コーディネーターが朝番開始時に見る各`AreaDeRisco`の基準`NivelRisco`は、このバッチの産物だ。20%のゾーンでサイレントに失敗するバッチは、完全に失敗するバッチより危険だ--偽のカバレッジ感を与えるから。冪等性とHangfireダッシュボードは障害を可視化して回復可能にするために存在する。
 '''

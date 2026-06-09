@@ -3,8 +3,8 @@ slug = "gemini-cli"
 headline = "Agente de IA open-source que traz o poder do Gemini direto para o terminal."
 headline_en_us = "Open-source AI agent that brings Gemini's power directly to the terminal."
 headline_ja_jp = "Gemini の力を端末に直接もたらすオープンソース AI エージェント。"
-summary = "Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem."
-summary_en_us = "Fork of Gemini CLI — Google's AI agent that runs directly in the terminal with access to system tools, code editing and filesystem navigation."
+summary = "Fork do Gemini CLI - agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem."
+summary_en_us = "Fork of Gemini CLI - Google's AI agent that runs directly in the terminal with access to system tools, code editing and filesystem navigation."
 summary_ja_jp = "Gemini CLI のフォーク。Google の AI エージェントが、システムツール・コード編集・ファイルシステム走査を備えて端末内で直接動作する。"
 status = "published"
 featured = false
@@ -22,11 +22,11 @@ Fork do Gemini CLI, o agente de IA open-source do Google que integra o modelo Ge
 
 O Gemini CLI implementa um loop de agente clássico:
 
-1. **Input** — recebe instrução do usuário via terminal
-2. **Reasoning** — o modelo Gemini processa o contexto e decide a próxima ação
-3. **Tool execution** — executa ferramentas (shell, file read/write, search)
-4. **Observation** — resultado da ferramenta alimenta o próximo ciclo
-5. **Output** — resposta final ao usuário
+1. **Input** - recebe instrução do usuário via terminal
+2. **Reasoning** - o modelo Gemini processa o contexto e decide a próxima ação
+3. **Tool execution** - executa ferramentas (shell, file read/write, search)
+4. **Observation** - resultado da ferramenta alimenta o próximo ciclo
+5. **Output** - resposta final ao usuário
 
 ## Por que este fork
 
@@ -46,11 +46,11 @@ Fork of Gemini CLI, Google's open-source AI agent that plugs the Gemini model di
 
 Gemini CLI implements a classic agent loop:
 
-1. **Input** — receive a user instruction through the terminal
-2. **Reasoning** — the Gemini model evaluates context and chooses the next action
-3. **Tool execution** — run tools such as shell, file read/write or search
-4. **Observation** — feed tool results back into the next cycle
-5. **Output** — produce the final response
+1. **Input** - receive a user instruction through the terminal
+2. **Reasoning** - the Gemini model evaluates context and chooses the next action
+3. **Tool execution** - run tools such as shell, file read/write or search
+4. **Observation** - feed tool results back into the next cycle
+5. **Output** - produce the final response
 
 ## Why this fork
 
@@ -70,11 +70,11 @@ Gemini モデルを端末に直接接続し、システムツールを実行で�
 
 Gemini CLI は古典的なエージェント・ループを実装しています。
 
-1. **Input** — 端末経由でユーザー指示を受け取る
-2. **Reasoning** — Gemini モデルが文脈を評価し、次の行動を決める
-3. **Tool execution** — shell、ファイル読取/書込、検索などを実行する
-4. **Observation** — ツール結果を次のサイクルへ戻す
-5. **Output** — 最終応答を返す
+1. **Input** - 端末経由でユーザー指示を受け取る
+2. **Reasoning** - Gemini モデルが文脈を評価し、次の行動を決める
+3. **Tool execution** - shell、ファイル読取/書込、検索などを実行する
+4. **Observation** - ツール結果を次のサイクルへ戻す
+5. **Output** - 最終応答を返す
 
 ## このフォークの理由
 
@@ -125,11 +125,11 @@ trade_offs_ja_jp = [
 ]
 lessons = [
   "O modelo de permissões do Gemini CLI (allow-list de tools) é mais seguro que o modelo opt-out de outros agentes",
-  "Loops de agente em CLI exigem timeout agressivo por step — sem isso, o agente pode travar em I/O indefinidamente",
+  "Loops de agente em CLI exigem timeout agressivo por step - sem isso, o agente pode travar em I/O indefinidamente",
 ]
 lessons_en_us = [
   "Gemini CLI's permission model, built around an allow-list of tools, is safer than opt-out designs",
-  "CLI agent loops need aggressive per-step timeouts — otherwise they can stall indefinitely on I/O",
+  "CLI agent loops need aggressive per-step timeouts - otherwise they can stall indefinitely on I/O",
 ]
 lessons_ja_jp = [
   "Gemini CLI の権限モデルは allow-list 前提で、opt-out 型の設計より安全だった",

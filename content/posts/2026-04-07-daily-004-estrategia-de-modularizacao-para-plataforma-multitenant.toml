@@ -3,9 +3,9 @@ slug = "daily-004-estrategia-de-modularizacao-para-plataforma-multitenant"
 title = "Daily #004: Estratégia de modularização para plataforma multitenant"
 title_en_us = "Daily #004: Modularization strategy for a multitenant platform"
 title_ja_jp = "Daily #004: マルチテナント基盤のモジュール化戦略"
-summary = "Como o SOS Location isola municípios como tenants distintos — cada um com suas próprias zonas de risco e configurações de alerta — usando TenantId como primeiro cidadão em todas as queries."
-summary_en_us = "How SOS Location isolates municipalities as distinct tenants — each with their own risk zones and alert configurations — using TenantId as a first-class citizen in all queries."
-summary_ja_jp = "SOS Locationがどのように自治体を独立したテナントとして分離するか — それぞれが独自の危険区域とアラート設定を持ち、すべてのクエリでTenantIdをファーストクラスとして扱う方法。"
+summary = "Como o SOS Location isola municípios como tenants distintos - cada um com suas próprias zonas de risco e configurações de alerta - usando TenantId como primeiro cidadão em todas as queries."
+summary_en_us = "How SOS Location isolates municipalities as distinct tenants - each with their own risk zones and alert configurations - using TenantId as a first-class citizen in all queries."
+summary_ja_jp = "SOS Locationがどのように自治体を独立したテナントとして分離するか - それぞれが独自の危険区域とアラート設定を持ち、すべてのクエリでTenantIdをファーストクラスとして扱う方法。"
 published_at = "2026-04-07T12:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -27,7 +27,7 @@ Na primeira versão, `TenantId` era um filtro opcional aplicado manualmente em c
 
 ## Decisão técnica
 
-`TenantId` como query filter global no EF Core — não pode ser esquecido porque é aplicado automaticamente via `OnModelCreating`. Toda entidade raiz implementa `ITenanted`. O contexto de tenant é injetado via `ITenantContext` resolvido do JWT.
+`TenantId` como query filter global no EF Core - não pode ser esquecido porque é aplicado automaticamente via `OnModelCreating`. Toda entidade raiz implementa `ITenanted`. O contexto de tenant é injetado via `ITenantContext` resolvido do JWT.
 
 ## Implementação
 
@@ -100,7 +100,7 @@ public sealed class AlertaDeEmergencia : AggregateRoot, ITenanted
 
 ## Exemplo concreto
 
-Com o query filter global, a query `SELECT * FROM alertas` executada a partir do contexto do tenant de Recife retorna apenas registros com `tenant_id = 'recife-guid'`. Não há como esquecer o filtro — ele é parte do modelo, não do repositório. O bug que expôs dados de Florianópolis no painel de Recife não pode ocorrer com essa abordagem.
+Com o query filter global, a query `SELECT * FROM alertas` executada a partir do contexto do tenant de Recife retorna apenas registros com `tenant_id = 'recife-guid'`. Não há como esquecer o filtro - ele é parte do modelo, não do repositório. O bug que expôs dados de Florianópolis no painel de Recife não pode ocorrer com essa abordagem.
 
 ## Critério de sucesso
 
@@ -108,7 +108,7 @@ Nenhuma query de leitura retorna registros de um tenant diferente do contexto at
 
 ## Relação com SOS Location
 
-Cada prefeitura tem soberania sobre seus próprios dados de emergência. Um vazamento de dados entre tenants — expor zonas de risco de Florianópolis para operadores de Manaus — não é apenas um bug técnico: é uma falha de privacidade operacional que compromete a credibilidade do sistema perante as defesas civis municipais.
+Cada prefeitura tem soberania sobre seus próprios dados de emergência. Um vazamento de dados entre tenants - expor zonas de risco de Florianópolis para operadores de Manaus - não é apenas um bug técnico: é uma falha de privacidade operacional que compromete a credibilidade do sistema perante as defesas civis municipais.
 '''
 body_en_us = '''
 ## Real context
@@ -121,7 +121,7 @@ In the first version, `TenantId` was an optional filter applied manually in each
 
 ## Technical decision
 
-`TenantId` as a global query filter in EF Core — it cannot be forgotten because it is applied automatically via `OnModelCreating`. Every root entity implements `ITenanted`. The tenant context is injected via `ITenantContext` resolved from the JWT.
+`TenantId` as a global query filter in EF Core - it cannot be forgotten because it is applied automatically via `OnModelCreating`. Every root entity implements `ITenanted`. The tenant context is injected via `ITenantContext` resolved from the JWT.
 
 ## Implementation
 
@@ -191,7 +191,7 @@ public sealed class AlertaDeEmergencia : AggregateRoot, ITenanted
 
 ## Concrete example
 
-With the global query filter, the query `SELECT * FROM alertas` executed from the Recife tenant context returns only records with `tenant_id = 'recife-guid'`. It is impossible to forget the filter — it is part of the model, not the repository. The bug that exposed Florianópolis data on the Recife dashboard cannot occur with this approach.
+With the global query filter, the query `SELECT * FROM alertas` executed from the Recife tenant context returns only records with `tenant_id = 'recife-guid'`. It is impossible to forget the filter - it is part of the model, not the repository. The bug that exposed Florianópolis data on the Recife dashboard cannot occur with this approach.
 
 ## Success criteria
 
@@ -199,7 +199,7 @@ No read query returns records from a tenant other than the current context. A mi
 
 ## Relation to SOS Location
 
-Each municipality has sovereignty over its own emergency data. A data leak between tenants — exposing Florianópolis's risk zones to Manaus operators — is not just a technical bug: it is an operational privacy failure that undermines the system's credibility with municipal civil defence agencies.
+Each municipality has sovereignty over its own emergency data. A data leak between tenants - exposing Florianópolis's risk zones to Manaus operators - is not just a technical bug: it is an operational privacy failure that undermines the system's credibility with municipal civil defence agencies.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -212,7 +212,7 @@ SOS Locationは複数の自治体を同時にサービスする：フロリア�
 
 ## 技術的決定
 
-EF Coreのグローバルクエリフィルターとしての`TenantId`——`OnModelCreating`経由で自動的に適用されるため忘れることができない。すべてのルートエンティティが`ITenanted`を実装する。テナントコンテキストはJWTから解決された`ITenantContext`経由で注入される。
+EF Coreのグローバルクエリフィルターとしての`TenantId`--`OnModelCreating`経由で自動的に適用されるため忘れることができない。すべてのルートエンティティが`ITenanted`を実装する。テナントコンテキストはJWTから解決された`ITenantContext`経由で注入される。
 
 ## 実装
 
@@ -264,7 +264,7 @@ public sealed class AlertaDeEmergencia : AggregateRoot, ITenanted
 
 ## 具体的な例
 
-グローバルクエリフィルターにより、レシフェのテナントコンテキストから実行された`SELECT * FROM alertas`は`tenant_id = 'recife-guid'`のレコードのみを返す。フィルターを忘れることは不可能——それはリポジトリではなくモデルの一部だ。フロリアノーポリスのデータをレシフェのダッシュボードに表示させたバグは、このアプローチでは発生しない。
+グローバルクエリフィルターにより、レシフェのテナントコンテキストから実行された`SELECT * FROM alertas`は`tenant_id = 'recife-guid'`のレコードのみを返す。フィルターを忘れることは不可能--それはリポジトリではなくモデルの一部だ。フロリアノーポリスのデータをレシフェのダッシュボードに表示させたバグは、このアプローチでは発生しない。
 
 ## 成功基準
 
@@ -272,5 +272,5 @@ public sealed class AlertaDeEmergencia : AggregateRoot, ITenanted
 
 ## SOS Locationとの関係
 
-各自治体は自身の緊急データの主権を持つ。テナント間のデータ漏洩——フロリアノーポリスの危険区域をマナウスのオペレーターに公開すること——は単なる技術的バグではない：自治体の市民防衛機関に対するシステムの信頼性を損なう運用上のプライバシー侵害だ。
+各自治体は自身の緊急データの主権を持つ。テナント間のデータ漏洩--フロリアノーポリスの危険区域をマナウスのオペレーターに公開すること--は単なる技術的バグではない：自治体の市民防衛機関に対するシステムの信頼性を損なう運用上のプライバシー侵害だ。
 '''

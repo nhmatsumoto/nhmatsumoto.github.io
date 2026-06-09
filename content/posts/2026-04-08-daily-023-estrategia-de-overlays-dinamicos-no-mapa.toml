@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-Durante uma operação de emergência, coordenadores precisam alternar rapidamente entre diferentes visões do mesmo mapa: "mostre só as rotas de evacuação", "esconda as pessoas desaparecidas e foque nas zonas de risco alto", "ative o overlay de chuva para a próxima hora". Cada toggle não pode recarregar dados já carregados — o carregamento inicial de 8.500 polígonos leva 340ms (#022), repetir esse custo a cada toggle tornaria a interface inutilizável.
+Durante uma operação de emergência, coordenadores precisam alternar rapidamente entre diferentes visões do mesmo mapa: "mostre só as rotas de evacuação", "esconda as pessoas desaparecidas e foque nas zonas de risco alto", "ative o overlay de chuva para a próxima hora". Cada toggle não pode recarregar dados já carregados - o carregamento inicial de 8.500 polígonos leva 340ms (#022), repetir esse custo a cada toggle tornaria a interface inutilizável.
 
 ## Problema específico
 
-A versão inicial usava uma flag booleana por overlay dentro do estado React do componente `SosMap`. Quando o usuário ocultava uma camada, o componente re-renderizava, removendo os elementos Leaflet e destruindo o cache de tiles. Quando reativava, refazia todas as requisições. Um toggle de 100ms transformava-se em 400ms por causa do re-fetch. Além disso, as 4 camadas estavam acopladas em um único componente — qualquer mudança de estado numa camada disparava re-render de todas.
+A versão inicial usava uma flag booleana por overlay dentro do estado React do componente `SosMap`. Quando o usuário ocultava uma camada, o componente re-renderizava, removendo os elementos Leaflet e destruindo o cache de tiles. Quando reativava, refazia todas as requisições. Um toggle de 100ms transformava-se em 400ms por causa do re-fetch. Além disso, as 4 camadas estavam acopladas em um único componente - qualquer mudança de estado numa camada disparava re-render de todas.
 
 ## Decisão técnica
 
-`layerStore` Zustand com mapa de visibilidade por camada. Cada overlay é um componente React separado que subscreve *apenas* seu próprio booleano de visibilidade no Zustand. Quando a visibilidade muda, apenas aquele componente re-renderiza. A instância Leaflet de cada camada (`L.FeatureGroup`) persiste em memória; toggle apenas chama `.addTo(map)` ou `.remove()` — sem refetch, sem reconstrução de objetos.
+`layerStore` Zustand com mapa de visibilidade por camada. Cada overlay é um componente React separado que subscreve *apenas* seu próprio booleano de visibilidade no Zustand. Quando a visibilidade muda, apenas aquele componente re-renderiza. A instância Leaflet de cada camada (`L.FeatureGroup`) persiste em memória; toggle apenas chama `.addTo(map)` ou `.remove()` - sem refetch, sem reconstrução de objetos.
 
 ## Implementação
 
@@ -97,7 +97,7 @@ export function EvacuationRouteLayer({ routes }: Props) {
 ```
 
 ```tsx
-// src/components/LayerControls.tsx — painel de toggle
+// src/components/LayerControls.tsx - painel de toggle
 import { useLayerStore } from '@/stores/layerStore';
 
 export function LayerControls() {
@@ -129,7 +129,7 @@ export function LayerControls() {
 
 ## Exemplo concreto
 
-Coordenador durante operação em Blumenau: ativa "Rotas de Evacuação" (desativado por padrão) — toggle leva 12ms, sem nenhuma requisição de rede. Desativa "Pessoas Desaparecidas" para focar em zonas de risco — toggle leva 8ms. Reativa "Pessoas Desaparecidas" — 9ms, dados da sessão intactos em memória. Total: 3 toggles em 29ms sem nenhuma requisição HTTP adicional.
+Coordenador durante operação em Blumenau: ativa "Rotas de Evacuação" (desativado por padrão) - toggle leva 12ms, sem nenhuma requisição de rede. Desativa "Pessoas Desaparecidas" para focar em zonas de risco - toggle leva 8ms. Reativa "Pessoas Desaparecidas" - 9ms, dados da sessão intactos em memória. Total: 3 toggles em 29ms sem nenhuma requisição HTTP adicional.
 
 ## Critério de sucesso
 
@@ -137,20 +137,20 @@ Latência de toggle de camada (add/remove da instância Leaflet) < 20ms para qua
 
 ## Relação com SOS Location
 
-Overlays dinâmicos rápidos não são feature de conforto — são necessidade operacional. Um coordenador que precisa de 2 segundos para cada toggle de camada durante uma operação real perde contexto e comete erros de navegação. A arquitetura de `featureGroup` persistente em memória é o que torna esse toggle instantâneo.
+Overlays dinâmicos rápidos não são feature de conforto - são necessidade operacional. Um coordenador que precisa de 2 segundos para cada toggle de camada durante uma operação real perde contexto e comete erros de navegação. A arquitetura de `featureGroup` persistente em memória é o que torna esse toggle instantâneo.
 '''
 body_en_us = '''
 ## Real context
 
-During an emergency operation, coordinators need to quickly switch between different views of the same map: "show only evacuation routes", "hide missing persons and focus on high-risk zones", "activate the rain overlay for the next hour". Each toggle must not reload already-loaded data — the initial load of 8,500 polygons takes 340ms (#022), repeating that cost on every toggle would make the interface unusable.
+During an emergency operation, coordinators need to quickly switch between different views of the same map: "show only evacuation routes", "hide missing persons and focus on high-risk zones", "activate the rain overlay for the next hour". Each toggle must not reload already-loaded data - the initial load of 8,500 polygons takes 340ms (#022), repeating that cost on every toggle would make the interface unusable.
 
 ## Specific problem
 
-The initial version used one boolean flag per overlay inside the React state of the `SosMap` component. When the user hid a layer, the component re-rendered, removing Leaflet elements and destroying the tile cache. When reactivated, it refetched everything. A 100ms toggle became 400ms due to the refetch. Additionally, all 4 layers were coupled in a single component — any state change in one layer triggered a re-render of all.
+The initial version used one boolean flag per overlay inside the React state of the `SosMap` component. When the user hid a layer, the component re-rendered, removing Leaflet elements and destroying the tile cache. When reactivated, it refetched everything. A 100ms toggle became 400ms due to the refetch. Additionally, all 4 layers were coupled in a single component - any state change in one layer triggered a re-render of all.
 
 ## Technical decision
 
-Zustand `layerStore` with a visibility map per layer. Each overlay is a separate React component that subscribes *only* to its own visibility boolean in Zustand. When visibility changes, only that component re-renders. Each layer's Leaflet instance (`L.FeatureGroup`) persists in memory; toggle simply calls `.addTo(map)` or `.remove()` — no refetch, no object reconstruction.
+Zustand `layerStore` with a visibility map per layer. Each overlay is a separate React component that subscribes *only* to its own visibility boolean in Zustand. When visibility changes, only that component re-renders. Each layer's Leaflet instance (`L.FeatureGroup`) persists in memory; toggle simply calls `.addTo(map)` or `.remove()` - no refetch, no object reconstruction.
 
 ## Implementation
 
@@ -198,7 +198,7 @@ export function EvacuationRouteLayer({ routes }: Props) {
 
 ## Concrete example
 
-Coordinator during a Blumenau operation: activates "Evacuation Routes" (disabled by default) — toggle takes 12ms, no network request. Disables "Missing Persons" to focus on risk zones — 8ms. Reactivates "Missing Persons" — 9ms, session data intact in memory. Total: 3 toggles in 29ms with zero additional HTTP requests.
+Coordinator during a Blumenau operation: activates "Evacuation Routes" (disabled by default) - toggle takes 12ms, no network request. Disables "Missing Persons" to focus on risk zones - 8ms. Reactivates "Missing Persons" - 9ms, session data intact in memory. Total: 3 toggles in 29ms with zero additional HTTP requests.
 
 ## Success criteria
 
@@ -206,20 +206,20 @@ Layer toggle latency (add/remove from Leaflet instance) < 20ms for any layer wit
 
 ## Relation to SOS Location
 
-Fast dynamic overlays are not a comfort feature — they are an operational necessity. A coordinator who needs 2 seconds for each layer toggle during a real operation loses context and makes navigation errors. The persistent in-memory `featureGroup` architecture is what makes that toggle instantaneous.
+Fast dynamic overlays are not a comfort feature - they are an operational necessity. A coordinator who needs 2 seconds for each layer toggle during a real operation loses context and makes navigation errors. The persistent in-memory `featureGroup` architecture is what makes that toggle instantaneous.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-緊急作戦中、コーディネーターは同じマップの異なるビューを素早く切り替える必要がある：「避難経路だけ表示」、「行方不明者を非表示にしてリスクの高いゾーンに集中」、「次の1時間の雨オーバーレイをアクティブに」。各トグルはすでにロードされたデータを再ロードしてはならない——8,500ポリゴンの初期ロードは340ms（#022）かかり、トグルのたびにそのコストを繰り返すとインターフェースが使えなくなる。
+緊急作戦中、コーディネーターは同じマップの異なるビューを素早く切り替える必要がある：「避難経路だけ表示」、「行方不明者を非表示にしてリスクの高いゾーンに集中」、「次の1時間の雨オーバーレイをアクティブに」。各トグルはすでにロードされたデータを再ロードしてはならない--8,500ポリゴンの初期ロードは340ms（#022）かかり、トグルのたびにそのコストを繰り返すとインターフェースが使えなくなる。
 
 ## 具体的な問題
 
-最初のバージョンは`SosMap`コンポーネントのReact状態内でオーバーレイごとに1つのブールフラグを使っていた。ユーザーがレイヤーを非表示にすると、コンポーネントが再レンダリングされ、Leaflet要素を削除してタイルキャッシュを破棄した。再アクティブ化すると、すべてを再フェッチした。再フェッチにより100msのトグルが400msになった。さらに、4つのレイヤーすべてが単一コンポーネントに結合されていた——1つのレイヤーの状態変更がすべての再レンダリングをトリガーした。
+最初のバージョンは`SosMap`コンポーネントのReact状態内でオーバーレイごとに1つのブールフラグを使っていた。ユーザーがレイヤーを非表示にすると、コンポーネントが再レンダリングされ、Leaflet要素を削除してタイルキャッシュを破棄した。再アクティブ化すると、すべてを再フェッチした。再フェッチにより100msのトグルが400msになった。さらに、4つのレイヤーすべてが単一コンポーネントに結合されていた--1つのレイヤーの状態変更がすべての再レンダリングをトリガーした。
 
 ## 技術的決定
 
-レイヤーごとの可視性マップを持つZustand `layerStore`。各オーバーレイは、Zustandの自分自身の可視性ブールのみをサブスクライブする別のReactコンポーネント。可視性が変わると、そのコンポーネントだけが再レンダリングする。各レイヤーのLeafletインスタンス（`L.FeatureGroup`）はメモリに永続する；トグルは単に`.addTo(map)`または`.remove()`を呼ぶ——再フェッチなし、オブジェクト再構築なし。
+レイヤーごとの可視性マップを持つZustand `layerStore`。各オーバーレイは、Zustandの自分自身の可視性ブールのみをサブスクライブする別のReactコンポーネント。可視性が変わると、そのコンポーネントだけが再レンダリングする。各レイヤーのLeafletインスタンス（`L.FeatureGroup`）はメモリに永続する；トグルは単に`.addTo(map)`または`.remove()`を呼ぶ--再フェッチなし、オブジェクト再構築なし。
 
 ## 実装
 
@@ -267,7 +267,7 @@ export function EvacuationRouteLayer({ routes }: Props) {
 
 ## 具体的な例
 
-ブルメナウの作戦中のコーディネーター：「避難経路」をアクティブ化（デフォルトで無効）——トグルに12ms、ネットワークリクエストなし。リスクゾーンに集中するため「行方不明者」を無効化——8ms。「行方不明者」を再アクティブ化——9ms、セッションデータはメモリに無傷。合計：追加のHTTPリクエストゼロで3トグルを29msで完了。
+ブルメナウの作戦中のコーディネーター：「避難経路」をアクティブ化（デフォルトで無効）--トグルに12ms、ネットワークリクエストなし。リスクゾーンに集中するため「行方不明者」を無効化--8ms。「行方不明者」を再アクティブ化--9ms、セッションデータはメモリに無傷。合計：追加のHTTPリクエストゼロで3トグルを29msで完了。
 
 ## 成功基準
 
@@ -275,5 +275,5 @@ export function EvacuationRouteLayer({ routes }: Props) {
 
 ## SOS Locationとの関係
 
-高速な動的オーバーレイはコンフォート機能ではなく——運用上の必要性だ。実際の作戦中にレイヤートグルのたびに2秒必要なコーディネーターはコンテキストを失い、ナビゲーションエラーを犯す。メモリに永続する`featureGroup`アーキテクチャがそのトグルを即座にする。
+高速な動的オーバーレイはコンフォート機能ではなく--運用上の必要性だ。実際の作戦中にレイヤートグルのたびに2秒必要なコーディネーターはコンテキストを失い、ナビゲーションエラーを犯す。メモリに永続する`featureGroup`アーキテクチャがそのトグルを即座にする。
 '''

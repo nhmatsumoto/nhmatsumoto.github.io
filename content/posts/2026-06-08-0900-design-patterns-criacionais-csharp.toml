@@ -3,8 +3,8 @@ slug = "design-patterns-criacionais-csharp-dotnet"
 title = "Padrões Criacionais em C#: Factory, Builder e Singleton na era do DI"
 title_en_us = "Creational Patterns in C#: Factory, Builder and Singleton in the DI era"
 title_ja_jp = "C# の生成パターン：DI 時代の Factory・Builder・Singleton"
-summary = "Os padrões criacionais resolvem 'como instanciar sem acoplar ao concreto'. No .NET moderno, o container de DI já é o maior deles — mas Factory, Builder e companhia continuam vivos quando a criação tem regra de negócio. Implementação prática, da forma clássica à idiomática."
-summary_en_us = "Creational patterns answer 'how to instantiate without coupling to the concrete type'. In modern .NET, the DI container is already the biggest one — but Factory, Builder and friends stay alive when creation carries business rules. Practical implementation, from the classic to the idiomatic form."
+summary = "Os padrões criacionais resolvem 'como instanciar sem acoplar ao concreto'. No .NET moderno, o container de DI já é o maior deles - mas Factory, Builder e companhia continuam vivos quando a criação tem regra de negócio. Implementação prática, da forma clássica à idiomática."
+summary_en_us = "Creational patterns answer 'how to instantiate without coupling to the concrete type'. In modern .NET, the DI container is already the biggest one - but Factory, Builder and friends stay alive when creation carries business rules. Practical implementation, from the classic to the idiomatic form."
 summary_ja_jp = "生成パターンは「具象型に結合せずにインスタンス化する方法」に答える。モダンな .NET では DI コンテナが最大の生成パターンだが、生成にビジネスルールが伴うとき Factory・Builder などは生き続ける。古典形からイディオム形まで、実践的に実装する。"
 published_at = "2026-06-08T09:00:00+09:00"
 updated_at = "2026-06-08T09:00:00+09:00"
@@ -28,7 +28,7 @@ lessons = [
   "No .NET moderno, prefira o container; só escreva o padrão à mão quando a criação tem lógica de domínio",
 ]
 body = '''
-Os **padrões criacionais** do GoF (Gang of Four) atacam um único problema: como criar objetos sem que o código cliente fique amarrado a tipos concretos. A grande virada no .NET é que boa parte desse trabalho migrou para o **container de injeção de dependência (DI)** — ele é, na prática, o maior factory/singleton do seu sistema. Ainda assim, os padrões clássicos continuam úteis exatamente onde o container não chega: quando a criação carrega **regra de negócio**.
+Os **padrões criacionais** do GoF (Gang of Four) atacam um único problema: como criar objetos sem que o código cliente fique amarrado a tipos concretos. A grande virada no .NET é que boa parte desse trabalho migrou para o **container de injeção de dependência (DI)** - ele é, na prática, o maior factory/singleton do seu sistema. Ainda assim, os padrões clássicos continuam úteis exatamente onde o container não chega: quando a criação carrega **regra de negócio**.
 
 ## Factory Method: escolher o tipo em tempo de execução
 
@@ -116,10 +116,10 @@ A heurística: use `record`/object initializer quando a construção é **declar
 
 ## Singleton: o anti-padrão que o DI domesticou
 
-O `Singleton` clássico — `static instance` com lock duplo — é hoje, na maioria dos casos, um **cheiro de código**: estado global escondido, difícil de testar, acoplamento implícito. O .NET resolve isso com **tempo de vida gerenciado pelo container**:
+O `Singleton` clássico - `static instance` com lock duplo - é hoje, na maioria dos casos, um **cheiro de código**: estado global escondido, difícil de testar, acoplamento implícito. O .NET resolve isso com **tempo de vida gerenciado pelo container**:
 
 ```csharp
-// O container garante uma única instância — e ela é injetável/testável
+// O container garante uma única instância - e ela é injetável/testável
 services.AddSingleton<IClock, SystemClock>();
 ```
 
@@ -142,10 +142,10 @@ public static Config Current => _cfg.Value;
 
 ## Conclusão
 
-No .NET moderno, a pergunta criacional raramente é "qual padrão GoF aplico?", e sim "**isso é trabalho do container, ou há regra de negócio na criação?**". Se for só montar o grafo de dependências, deixe o DI fazer — ele já é Factory e Singleton. Escreva o padrão à mão quando a criação **decide algo do domínio**: aí Factory Method, Abstract Factory e Builder voltam a ganhar o seu lugar, agora como expressão de regra, não como cerimônia.
+No .NET moderno, a pergunta criacional raramente é "qual padrão GoF aplico?", e sim "**isso é trabalho do container, ou há regra de negócio na criação?**". Se for só montar o grafo de dependências, deixe o DI fazer - ele já é Factory e Singleton. Escreva o padrão à mão quando a criação **decide algo do domínio**: aí Factory Method, Abstract Factory e Builder voltam a ganhar o seu lugar, agora como expressão de regra, não como cerimônia.
 '''
 body_en_us = '''
-The GoF (Gang of Four) **creational patterns** all attack a single problem: how to create objects without tying client code to concrete types. The big shift in .NET is that much of this work has migrated to the **dependency injection (DI) container** — it is, in practice, the largest factory/singleton in your system. Even so, the classic patterns stay useful exactly where the container falls short: when creation carries **business rules**.
+The GoF (Gang of Four) **creational patterns** all attack a single problem: how to create objects without tying client code to concrete types. The big shift in .NET is that much of this work has migrated to the **dependency injection (DI) container** - it is, in practice, the largest factory/singleton in your system. Even so, the classic patterns stay useful exactly where the container falls short: when creation carries **business rules**.
 
 ## Factory Method: choosing the type at runtime
 
@@ -233,10 +233,10 @@ The heuristic: use a `record`/object initializer when construction is **declarat
 
 ## Singleton: the anti-pattern that DI tamed
 
-The classic `Singleton` — a `static instance` with double-checked locking — is today, in most cases, a **code smell**: hidden global state, hard to test, implicit coupling. .NET solves this with a **container-managed lifetime**:
+The classic `Singleton` - a `static instance` with double-checked locking - is today, in most cases, a **code smell**: hidden global state, hard to test, implicit coupling. .NET solves this with a **container-managed lifetime**:
 
 ```csharp
-// The container guarantees a single instance — and it's injectable/testable
+// The container guarantees a single instance - and it's injectable/testable
 services.AddSingleton<IClock, SystemClock>();
 ```
 
@@ -259,7 +259,7 @@ public static Config Current => _cfg.Value;
 
 ## Conclusion
 
-In modern .NET, the creational question is rarely "which GoF pattern do I apply?" but "**is this the container's job, or is there a business rule in the creation?**". If it's just wiring the dependency graph, let DI do it — it is already Factory and Singleton. Hand-write the pattern when creation **decides something about the domain**: that's when Factory Method, Abstract Factory, and Builder earn their place again — now as an expression of a rule, not as ceremony.
+In modern .NET, the creational question is rarely "which GoF pattern do I apply?" but "**is this the container's job, or is there a business rule in the creation?**". If it's just wiring the dependency graph, let DI do it - it is already Factory and Singleton. Hand-write the pattern when creation **decides something about the domain**: that's when Factory Method, Abstract Factory, and Builder earn their place again - now as an expression of a rule, not as ceremony.
 '''
 body_ja_jp = '''
 GoF（Gang of Four）の **生成パターン** はすべて、ひとつの問題を攻めます。クライアントコードを具象型に縛らずにオブジェクトを生成する方法です。.NET における大きな転換は、この作業の多くが **依存性注入（DI）コンテナ** へ移ったことです。実際、それはシステム最大の factory/singleton です。それでも、古典的パターンは、コンテナが届かない場所 ── 生成が **ビジネスルール** を伴うとき ── でこそ有用であり続けます。

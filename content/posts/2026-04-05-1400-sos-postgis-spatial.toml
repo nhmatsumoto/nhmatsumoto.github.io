@@ -20,7 +20,7 @@ has_math = false
 body = """
 # PostGIS: o motor geoespacial do SOS Location
 
-PostgreSQL é excelente. Com PostGIS, ele se torna um sistema de informação geográfica completo dentro do seu banco de dados. No SOS Location, todas as decisões táticas passam por consultas espaciais — e a diferença entre 200ms e 2s numa query pode definir se uma equipe chega a tempo.
+PostgreSQL é excelente. Com PostGIS, ele se torna um sistema de informação geográfica completo dentro do seu banco de dados. No SOS Location, todas as decisões táticas passam por consultas espaciais - e a diferença entre 200ms e 2s numa query pode definir se uma equipe chega a tempo.
 
 ## Schema espacial
 
@@ -107,7 +107,7 @@ A visibilidade de linha direta entre um watchpoint (câmera, sensor) e um incide
 
 ```sql
 -- Verifica se existe obstáculo entre watchpoint e incidente usando DEM
--- (simplificado — a implementação real usa uma função PL/pgSQL customizada)
+-- (simplificado - a implementação real usa uma função PL/pgSQL customizada)
 CREATE OR REPLACE FUNCTION line_of_sight(
   observer_geom  GEOMETRY(Point, 4326),
   observer_elev  FLOAT,
@@ -293,7 +293,7 @@ Direct visibility between a watchpoint (camera, sensor) and an incident is criti
 
 ```sql
 -- Checks whether an obstacle exists between watchpoint and incident using DEM
--- (simplified — the real implementation uses a custom PL/pgSQL function)
+-- (simplified - the real implementation uses a custom PL/pgSQL function)
 CREATE OR REPLACE FUNCTION line_of_sight(
   observer_geom  GEOMETRY(Point, 4326),
   observer_elev  FLOAT,

@@ -1,8 +1,8 @@
 name = "DeepSeek-V3"
 slug = "deepseek-v3"
-headline = "Referência de implementação do modelo DeepSeek-V3 — arquitetura Mixture-of-Experts para LLMs de larga escala."
-headline_en_us = "Reference implementation of the DeepSeek-V3 model — a Mixture-of-Experts architecture for large-scale LLMs."
-headline_ja_jp = "DeepSeek-V3 モデルのリファレンス実装 — 大規模 LLM のための Mixture-of-Experts アーキテクチャ。"
+headline = "Referência de implementação do modelo DeepSeek-V3 - arquitetura Mixture-of-Experts para LLMs de larga escala."
+headline_en_us = "Reference implementation of the DeepSeek-V3 model - a Mixture-of-Experts architecture for large-scale LLMs."
+headline_ja_jp = "DeepSeek-V3 モデルのリファレンス実装 - 大規模 LLM のための Mixture-of-Experts アーキテクチャ。"
 summary = "Fork do DeepSeek-V3, modelo de linguagem com arquitetura Mixture-of-Experts (MoE) e Multi-head Latent Attention para inferência eficiente em larga escala."
 summary_en_us = "Fork of DeepSeek-V3, a language model with Mixture-of-Experts (MoE) and Multi-head Latent Attention for efficient large-scale inference."
 summary_ja_jp = "DeepSeek-V3 のフォーク。Mixture-of-Experts（MoE）と Multi-head Latent Attention を備え、大規模推論を効率化する言語モデル。"
@@ -22,9 +22,9 @@ Fork do repositório oficial do DeepSeek-V3, um Large Language Model com 671B de
 
 Mixture-of-Experts é uma abordagem que permite escalar modelos sem aumentar proporcionalmente o custo computacional:
 
-- **Router** — decide quais especialistas ativar para cada token
-- **Expert layers** — módulos Feed-Forward especializados (apenas uma fração é ativada por vez)
-- **Multi-head Latent Attention (MLA)** — comprime as key-value caches para reduzir uso de memória durante inferência
+- **Router** - decide quais especialistas ativar para cada token
+- **Expert layers** - módulos Feed-Forward especializados (apenas uma fração é ativada por vez)
+- **Multi-head Latent Attention (MLA)** - comprime as key-value caches para reduzir uso de memória durante inferência
 
 ## Relevância para estudo
 
@@ -42,9 +42,9 @@ Fork of the official DeepSeek-V3 repository, a large language model with 671B to
 
 Mixture-of-Experts makes it possible to scale models without increasing compute cost proportionally:
 
-- **Router** — decides which experts to activate for each token
-- **Expert layers** — specialized feed-forward modules, of which only a fraction is active at once
-- **Multi-head Latent Attention (MLA)** — compresses key-value caches to reduce memory usage during inference
+- **Router** - decides which experts to activate for each token
+- **Expert layers** - specialized feed-forward modules, of which only a fraction is active at once
+- **Multi-head Latent Attention (MLA)** - compresses key-value caches to reduce memory usage during inference
 
 ## Why it matters for study
 
@@ -62,9 +62,9 @@ overview_ja_jp = """
 
 Mixture-of-Experts は、計算コストを比例的に増やさずにモデルをスケールさせる仕組みです。
 
-- **Router** — 各トークンでどの expert を有効化するか決める
-- **Expert layers** — 特化した feed-forward モジュール群で、一度に使うのは一部だけ
-- **Multi-head Latent Attention (MLA)** — key-value cache を圧縮し、推論時のメモリ使用量を減らす
+- **Router** - 各トークンでどの expert を有効化するか決める
+- **Expert layers** - 特化した feed-forward モジュール群で、一度に使うのは一部だけ
+- **Multi-head Latent Attention (MLA)** - key-value cache を圧縮し、推論時のメモリ使用量を減らす
 
 ## 学習対象としての価値
 

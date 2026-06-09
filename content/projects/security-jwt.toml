@@ -1,8 +1,8 @@
 name = "Security.Jwt"
 slug = "security-jwt"
-headline = "JWT Manager para .NET — rotação automática de chaves, suporte a JWKS e armazenamento seguro de chaves criptográficas."
-headline_en_us = "JWT Manager for .NET — automatic key rotation, JWKS support and secure cryptographic key storage."
-headline_ja_jp = ".NET 向け JWT マネージャー — 鍵の自動ローテーション、JWKS 対応、暗号鍵の安全保管。"
+headline = "JWT Manager para .NET - rotação automática de chaves, suporte a JWKS e armazenamento seguro de chaves criptográficas."
+headline_en_us = "JWT Manager for .NET - automatic key rotation, JWKS support and secure cryptographic key storage."
+headline_ja_jp = ".NET 向け JWT マネージャー - 鍵の自動ローテーション、JWKS 対応、暗号鍵の安全保管。"
 summary = "Biblioteca .NET para gerenciamento completo de JWT: rotação automática de chaves, endpoint JWKS, suporte a múltiplos algoritmos e armazenamento seguro de material criptográfico."
 summary_en_us = ".NET library for end-to-end JWT management: automatic key rotation, JWKS endpoint, multi-algorithm support and secure cryptographic material storage."
 summary_ja_jp = "エンドツーエンドの JWT 管理を提供する .NET ライブラリ。鍵の自動ローテーション、JWKS エンドポイント、複数アルゴリズム対応、暗号材料の安全保管。"
@@ -16,15 +16,15 @@ tags = ["fork"]
 stack = ["C#", ".NET", "JWT", "Cryptography", "OAuth2"]
 
 overview = """
-Fork do NetDevPack Security.Jwt — conjunto de componentes para gerenciamento completo de JWTs em aplicações .NET.
+Fork do NetDevPack Security.Jwt - conjunto de componentes para gerenciamento completo de JWTs em aplicações .NET.
 
 ## Funcionalidades principais
 
-- **Rotação automática de chaves** — gera novas chaves de assinatura periodicamente sem downtime
-- **JWKS endpoint** — expõe `/.well-known/jwks` para validação distribuída de tokens
-- **Múltiplos algoritmos** — suporte a RSA, ECDSA e HMAC
-- **Armazenamento seguro** — chaves podem ser persistidas em banco de dados, filesystem ou Azure Key Vault
-- **Key revocation** — revogação de chaves comprometidas com propagação automática
+- **Rotação automática de chaves** - gera novas chaves de assinatura periodicamente sem downtime
+- **JWKS endpoint** - expõe `/.well-known/jwks` para validação distribuída de tokens
+- **Múltiplos algoritmos** - suporte a RSA, ECDSA e HMAC
+- **Armazenamento seguro** - chaves podem ser persistidas em banco de dados, filesystem ou Azure Key Vault
+- **Key revocation** - revogação de chaves comprometidas com propagação automática
 
 ## Por que rotação de chaves importa
 
@@ -39,11 +39,11 @@ Fork of NetDevPack Security.Jwt, a set of components for end-to-end JWT manageme
 
 ## Main features
 
-- **Automatic key rotation** — generate new signing keys periodically without downtime
-- **JWKS endpoint** — expose `/.well-known/jwks` for distributed token validation
-- **Multiple algorithms** — RSA, ECDSA and HMAC support
-- **Secure storage** — keys can be persisted in a database, filesystem or Azure Key Vault
-- **Key revocation** — compromised keys can be invalidated and propagated automatically
+- **Automatic key rotation** - generate new signing keys periodically without downtime
+- **JWKS endpoint** - expose `/.well-known/jwks` for distributed token validation
+- **Multiple algorithms** - RSA, ECDSA and HMAC support
+- **Secure storage** - keys can be persisted in a database, filesystem or Azure Key Vault
+- **Key revocation** - compromised keys can be invalidated and propagated automatically
 
 ## Why key rotation matters
 
@@ -58,11 +58,11 @@ overview_ja_jp = """
 
 ## 主な機能
 
-- **Automatic key rotation** — 無停止で署名鍵を定期生成
-- **JWKS endpoint** — 分散 token 検証のため `/.well-known/jwks` を公開
-- **Multiple algorithms** — RSA、ECDSA、HMAC 対応
-- **Secure storage** — DB、filesystem、Azure Key Vault へ鍵を保存可能
-- **Key revocation** — 侵害鍵を無効化し、自動伝播できる
+- **Automatic key rotation** - 無停止で署名鍵を定期生成
+- **JWKS endpoint** - 分散 token 検証のため `/.well-known/jwks` を公開
+- **Multiple algorithms** - RSA、ECDSA、HMAC 対応
+- **Secure storage** - DB、filesystem、Azure Key Vault へ鍵を保存可能
+- **Key revocation** - 侵害鍵を無効化し、自動伝播できる
 
 ## なぜ鍵ローテーションが重要か
 

@@ -1,8 +1,8 @@
 name = "Playground-FE"
 slug = "playground-fe"
-headline = "Frontend React/TypeScript com integração Keycloak — base para aplicações com controle de acesso."
-headline_en_us = "React/TypeScript frontend with Keycloak integration — base for applications with access control."
-headline_ja_jp = "Keycloak と連携した React/TypeScript フロントエンド — アクセス制御を持つアプリの基盤。"
+headline = "Frontend React/TypeScript com integração Keycloak - base para aplicações com controle de acesso."
+headline_en_us = "React/TypeScript frontend with Keycloak integration - base for applications with access control."
+headline_ja_jp = "Keycloak と連携した React/TypeScript フロントエンド - アクセス制御を持つアプリの基盤。"
 summary = "Projeto frontend em React e TypeScript com integração ao Keycloak para autenticação, servindo como base para futuros desenvolvimentos com controle de acesso."
 summary_en_us = "Frontend project in React and TypeScript with Keycloak integration for authentication, serving as a base for future developments requiring access control."
 summary_ja_jp = "認証に Keycloak を統合した React・TypeScript フロントエンド。アクセス制御を必要とする将来の開発の基盤として利用。"
@@ -21,10 +21,10 @@ Projeto frontend criado com React e TypeScript, com integração completa ao Key
 ## Funcionalidades
 
 - **Login/Logout** via Keycloak com fluxo OAuth2/OIDC
-- **Token management** — refresh automático de access tokens
-- **Protected routes** — rotas que exigem autenticação
-- **Role-based UI** — componentes condicionais baseados em roles do Keycloak
-- **Silent refresh** — renovação de token sem interrupção da sessão
+- **Token management** - refresh automático de access tokens
+- **Protected routes** - rotas que exigem autenticação
+- **Role-based UI** - componentes condicionais baseados em roles do Keycloak
+- **Silent refresh** - renovação de token sem interrupção da sessão
 
 ## Stack técnico
 
@@ -43,10 +43,10 @@ Frontend project built with React and TypeScript, with full Keycloak integration
 ## Features
 
 - **Login / Logout** via Keycloak using OAuth2 / OIDC flows
-- **Token management** — automatic refresh of access tokens
-- **Protected routes** — routes that require authentication
-- **Role-based UI** — components conditional on Keycloak roles
-- **Silent refresh** — token renewal without interrupting the session
+- **Token management** - automatic refresh of access tokens
+- **Protected routes** - routes that require authentication
+- **Role-based UI** - components conditional on Keycloak roles
+- **Silent refresh** - token renewal without interrupting the session
 
 ## Technical stack
 
@@ -64,11 +64,11 @@ React と TypeScript で構築したフロントエンド・プロジェクト�
 
 ## 機能
 
-- **Login / Logout** — OAuth2 / OIDC フローによる Keycloak 認証
-- **Token management** — access token の自動 refresh
-- **Protected routes** — 認証が必要な route
-- **Role-based UI** — Keycloak role に応じた条件付きコンポーネント
-- **Silent refresh** — セッションを切らさず token を更新
+- **Login / Logout** - OAuth2 / OIDC フローによる Keycloak 認証
+- **Token management** - access token の自動 refresh
+- **Protected routes** - 認証が必要な route
+- **Role-based UI** - Keycloak role に応じた条件付きコンポーネント
+- **Silent refresh** - セッションを切らさず token を更新
 
 ## 技術スタック
 

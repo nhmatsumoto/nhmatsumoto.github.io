@@ -28,7 +28,7 @@ Antes da guerra, Turing provou que uma máquina simples (com fita infinita) pode
 ## O Teste de Turing e a IA
 Turing perguntou: *"As máquinas podem pensar?"*. Ao propor o Jogo da Imitação, ele mudou o foco da "consciência" para o **comportamento**. Se não pudermos distinguir uma máquina de um humano, para todos os efeitos práticos, a máquina demonstra inteligência.
 
-> "Aqueles que podem imaginar qualquer coisa, podem criar o impossível." — Alan Turing
+> "Aqueles que podem imaginar qualquer coisa, podem criar o impossível." - Alan Turing
 
 ## Um Herói Incompreendido
 O legado de Turing foi manchado pela perseguição pessoal e trágica no Reino Unido, mas sua redenção tecnológica é o ar que respiramos hoje. Sem Turing, a computação seria apenas uma calculadora mecânica, não a ferramenta cognitiva que é hoje.
@@ -45,7 +45,7 @@ Before the war, Turing proved that a simple machine with an infinite tape could 
 ## The Turing Test and AI
 Turing asked: *"Can machines think?"*. By proposing the Imitation Game, he shifted the focus from "consciousness" to **behavior**. If we cannot distinguish a machine from a human, then for all practical purposes the machine demonstrates intelligence.
 
-> "Those who can imagine anything can create the impossible." — Alan Turing
+> "Those who can imagine anything can create the impossible." - Alan Turing
 
 ## A Misunderstood Hero
 Turing's legacy was scarred by tragic personal persecution in the United Kingdom, but his technological redemption is the air we breathe today. Without Turing, computing would be little more than a mechanical calculator, not the cognitive tool it became.
@@ -62,7 +62,7 @@ body_ja_jp = """
 ## チューリング・テストと AI
 チューリングは *「機械は思考できるか？」* と問いかけました。模倣ゲームを提案することで、彼は議論の焦点を「意識」から **振る舞い** へと移しました。もし私たちが機械を人間と区別できないなら、実用上その機械は知性を示していると言えます。
 
-> 「あらゆるものを想像できる人は、不可能さえ創造できる。」 — アラン・チューリング
+> 「あらゆるものを想像できる人は、不可能さえ創造できる。」 - アラン・チューリング
 
 ## 誤解された英雄
 チューリングの遺産は、英国で受けた悲劇的な個人迫害によって深く傷つけられました。しかし、彼の技術的救済こそが、いま私たちが吸っている空気のような存在です。チューリングがいなければ、計算機は機械式計算機の延長にとどまり、今日のような認知的ツールにはならなかったでしょう。

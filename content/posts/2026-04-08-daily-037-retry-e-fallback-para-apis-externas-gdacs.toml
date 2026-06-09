@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-O SOS Location consome dados de alertas globais do GDACS (Global Disaster Alert and Coordination System) da ONU para detectar eventos sísmicos e de tsunamis que possam afetar o Brasil. O GDACS tem disponibilidade de ~98.5% — bom, mas insuficiente para uma plataforma de emergência. Em 1.5% do tempo, o GDACS fica indisponível exatamente quando eventos podem estar ocorrendo: picos de tráfego após grandes catástrofes globais sobrecarregam o sistema.
+O SOS Location consome dados de alertas globais do GDACS (Global Disaster Alert and Coordination System) da ONU para detectar eventos sísmicos e de tsunamis que possam afetar o Brasil. O GDACS tem disponibilidade de ~98.5% - bom, mas insuficiente para uma plataforma de emergência. Em 1.5% do tempo, o GDACS fica indisponível exatamente quando eventos podem estar ocorrendo: picos de tráfego após grandes catástrofes globais sobrecarregam o sistema.
 
 ## Problema específico
 
-A primeira integração com GDACS fazia uma chamada direta sem tratamento de falha. Quando o GDACS retornava erro (timeout, 503), o job de verificação de alertas simplesmente não processava dados naquele ciclo — sem log, sem retry, sem fallback. Em um incidente de 2025, o GDACS ficou indisponível por 45 minutos após um terremoto M7.9 no Japão. O SOS Location perdeu 3 ciclos de verificação (90 minutos) sem saber — e potencialmente perdeu alertas de ondas que chegaram ao Brasil no intervalo.
+A primeira integração com GDACS fazia uma chamada direta sem tratamento de falha. Quando o GDACS retornava erro (timeout, 503), o job de verificação de alertas simplesmente não processava dados naquele ciclo - sem log, sem retry, sem fallback. Em um incidente de 2025, o GDACS ficou indisponível por 45 minutos após um terremoto M7.9 no Japão. O SOS Location perdeu 3 ciclos de verificação (90 minutos) sem saber - e potencialmente perdeu alertas de ondas que chegaram ao Brasil no intervalo.
 
 ## Decisão técnica
 
-Polly `ResiliencePipeline` com: (1) retry exponential backoff — 3 tentativas, delays de 2s, 8s, 32s (base 2, expoente = tentativa - 1), jitter de 10%; (2) circuit breaker — abre após 5 falhas em 30 segundos, meio aberto após 60s; (3) fallback para Redis cache — se pipeline falha completamente, usa último resultado bem-sucedido com age máxima de 4 horas, marcado com `IsFromCache: true`. Alertas de cache são processados mas com flag de auditoria.
+Polly `ResiliencePipeline` com: (1) retry exponential backoff - 3 tentativas, delays de 2s, 8s, 32s (base 2, expoente = tentativa - 1), jitter de 10%; (2) circuit breaker - abre após 5 falhas em 30 segundos, meio aberto após 60s; (3) fallback para Redis cache - se pipeline falha completamente, usa último resultado bem-sucedido com age máxima de 4 horas, marcado com `IsFromCache: true`. Alertas de cache são processados mas com flag de auditoria.
 
 ## Implementação
 
@@ -91,28 +91,28 @@ public sealed class GdacsClient
 
 ## Exemplo concreto
 
-Incidente M7.9 Japão (simulação): GDACS retorna 503 às 14h00. Polly retenta: 2s → 503, 8s → 503, 32s → 503. Circuit breaker abre. Fallback: Redis retorna cache de 14h ago com `IsFromCache: true`. Dados processados, alertas de tsunami baseados em dados de 14h ago (ainda válidos — ondas levam 12+ horas para chegar ao Brasil). Log registra: `"GDACS indisponível às 14:00:00Z, usando cache de 2025-04-10T00:00:00Z. Idade: 14h."`. Às 15h01 (60s de circuit break), Polly tenta novamente — GDACS volta ao ar, cache atualizado.
+Incidente M7.9 Japão (simulação): GDACS retorna 503 às 14h00. Polly retenta: 2s → 503, 8s → 503, 32s → 503. Circuit breaker abre. Fallback: Redis retorna cache de 14h ago com `IsFromCache: true`. Dados processados, alertas de tsunami baseados em dados de 14h ago (ainda válidos - ondas levam 12+ horas para chegar ao Brasil). Log registra: `"GDACS indisponível às 14:00:00Z, usando cache de 2025-04-10T00:00:00Z. Idade: 14h."`. Às 15h01 (60s de circuit break), Polly tenta novamente - GDACS volta ao ar, cache atualizado.
 
 ## Critério de sucesso
 
-Zero perda silenciosa de ciclos de verificação GDACS — toda falha gera log de nível Warning. Fallback de cache ativado automaticamente quando pipeline falha. Circuit breaker reduz tentativas durante outage prolongado (não martela o GDACS com 3 retries a cada ciclo de 30min durante indisponibilidade de 1h).
+Zero perda silenciosa de ciclos de verificação GDACS - toda falha gera log de nível Warning. Fallback de cache ativado automaticamente quando pipeline falha. Circuit breaker reduz tentativas durante outage prolongado (não martela o GDACS com 3 retries a cada ciclo de 30min durante indisponibilidade de 1h).
 
 ## Relação com SOS Location
 
-A integração com GDACS é a detecção de eventos externos ao Brasil — terremotos no exterior que podem gerar tsunamis na costa brasileira. A resiliência dessa integração não é feature de qualidade — é a diferença entre detectar um tsunami com 10 horas de antecedência e não detectar por conta de um timeout de API.
+A integração com GDACS é a detecção de eventos externos ao Brasil - terremotos no exterior que podem gerar tsunamis na costa brasileira. A resiliência dessa integração não é feature de qualidade - é a diferença entre detectar um tsunami com 10 horas de antecedência e não detectar por conta de um timeout de API.
 '''
 body_en_us = '''
 ## Real context
 
-SOS Location consumes global alert data from GDACS (Global Disaster Alert and Coordination System) of the UN to detect seismic and tsunami events that may affect Brazil. GDACS has ~98.5% availability — good, but insufficient for an emergency platform. During the 1.5% downtime, GDACS is unavailable exactly when events may be occurring: traffic spikes after major global disasters overload the system.
+SOS Location consumes global alert data from GDACS (Global Disaster Alert and Coordination System) of the UN to detect seismic and tsunami events that may affect Brazil. GDACS has ~98.5% availability - good, but insufficient for an emergency platform. During the 1.5% downtime, GDACS is unavailable exactly when events may be occurring: traffic spikes after major global disasters overload the system.
 
 ## Specific problem
 
-The first GDACS integration made a direct call with no failure handling. When GDACS returned an error (timeout, 503), the alert check job simply did not process data that cycle — no log, no retry, no fallback. In a 2025 incident, GDACS was unavailable for 45 minutes after an M7.9 earthquake in Japan. SOS Location missed 3 check cycles (90 minutes) without knowing — and potentially missed alerts about waves arriving in Brazil during that window.
+The first GDACS integration made a direct call with no failure handling. When GDACS returned an error (timeout, 503), the alert check job simply did not process data that cycle - no log, no retry, no fallback. In a 2025 incident, GDACS was unavailable for 45 minutes after an M7.9 earthquake in Japan. SOS Location missed 3 check cycles (90 minutes) without knowing - and potentially missed alerts about waves arriving in Brazil during that window.
 
 ## Technical decision
 
-Polly `ResiliencePipeline` with: (1) exponential backoff retry — 3 attempts, delays of 2s, 8s, 32s (base 2, exponent = attempt - 1), 10% jitter; (2) circuit breaker — opens after 5 failures in 30 seconds, half-open after 60s; (3) Redis cache fallback — if the pipeline fails completely, uses the last successful result with a maximum age of 4 hours, tagged with `IsFromCache: true`. Cached alerts are processed but with an audit flag.
+Polly `ResiliencePipeline` with: (1) exponential backoff retry - 3 attempts, delays of 2s, 8s, 32s (base 2, exponent = attempt - 1), 10% jitter; (2) circuit breaker - opens after 5 failures in 30 seconds, half-open after 60s; (3) Redis cache fallback - if the pipeline fails completely, uses the last successful result with a maximum age of 4 hours, tagged with `IsFromCache: true`. Cached alerts are processed but with an audit flag.
 
 ## Implementation
 
@@ -158,28 +158,28 @@ public async Task<GdacsAlertsResult> GetActiveAlertsAsync(CancellationToken ct)
 
 ## Concrete example
 
-M7.9 Japan incident (simulation): GDACS returns 503 at 14:00. Polly retries: 2s → 503, 8s → 503, 32s → 503. Circuit breaker opens. Fallback: Redis returns cache from 14h ago with `IsFromCache: true`. Data processed, tsunami alerts based on 14h-old data (still valid — waves take 12+ hours to reach Brazil). Log records: `"GDACS unavailable at 14:00:00Z, using cache from 2025-04-10T00:00:00Z. Age: 14h."`. At 15:01 (60s circuit break), Polly retries — GDACS comes back, cache updated.
+M7.9 Japan incident (simulation): GDACS returns 503 at 14:00. Polly retries: 2s → 503, 8s → 503, 32s → 503. Circuit breaker opens. Fallback: Redis returns cache from 14h ago with `IsFromCache: true`. Data processed, tsunami alerts based on 14h-old data (still valid - waves take 12+ hours to reach Brazil). Log records: `"GDACS unavailable at 14:00:00Z, using cache from 2025-04-10T00:00:00Z. Age: 14h."`. At 15:01 (60s circuit break), Polly retries - GDACS comes back, cache updated.
 
 ## Success criteria
 
-Zero silent GDACS check cycle losses — every failure generates a Warning-level log. Cache fallback activated automatically when the pipeline fails. Circuit breaker reduces attempts during a prolonged outage (does not hammer GDACS with 3 retries every 30min cycle during a 1h outage).
+Zero silent GDACS check cycle losses - every failure generates a Warning-level log. Cache fallback activated automatically when the pipeline fails. Circuit breaker reduces attempts during a prolonged outage (does not hammer GDACS with 3 retries every 30min cycle during a 1h outage).
 
 ## Relation to SOS Location
 
-GDACS integration is the detection of external events affecting Brazil — earthquakes abroad that may generate tsunamis on the Brazilian coast. The resilience of this integration is not a quality feature — it is the difference between detecting a tsunami with 10 hours' notice and not detecting it due to an API timeout.
+GDACS integration is the detection of external events affecting Brazil - earthquakes abroad that may generate tsunamis on the Brazilian coast. The resilience of this integration is not a quality feature - it is the difference between detecting a tsunami with 10 hours' notice and not detecting it due to an API timeout.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-SOS Locationはブラジルに影響を与える可能性のある地震や津波イベントを検出するために、国連のGDACS（Global Disaster Alert and Coordination System）からグローバルアラートデータを消費する。GDACSの可用性は~98.5%——良いが、緊急プラットフォームには不十分。1.5%のダウンタイム中、GDACSはイベントが起きている可能性があるまさにその時に利用不能になる：大規模な世界的災害後のトラフィックスパイクがシステムを過負荷にする。
+SOS Locationはブラジルに影響を与える可能性のある地震や津波イベントを検出するために、国連のGDACS（Global Disaster Alert and Coordination System）からグローバルアラートデータを消費する。GDACSの可用性は~98.5%--良いが、緊急プラットフォームには不十分。1.5%のダウンタイム中、GDACSはイベントが起きている可能性があるまさにその時に利用不能になる：大規模な世界的災害後のトラフィックスパイクがシステムを過負荷にする。
 
 ## 具体的な問題
 
-最初のGDACS統合は障害処理なしで直接呼び出しをしていた。GDACSがエラーを返す（タイムアウト、503）と、アラートチェックジョブはそのサイクルのデータを単に処理しなかった——ログなし、リトライなし、フォールバックなし。2025年のインシデントで、日本でのM7.9地震後にGDACSが45分間利用不能になった。SOS Locationは知らずに3回のチェックサイクル（90分）を見逃した——そしてその間にブラジルに到達した波のアラートを潜在的に見逃した。
+最初のGDACS統合は障害処理なしで直接呼び出しをしていた。GDACSがエラーを返す（タイムアウト、503）と、アラートチェックジョブはそのサイクルのデータを単に処理しなかった--ログなし、リトライなし、フォールバックなし。2025年のインシデントで、日本でのM7.9地震後にGDACSが45分間利用不能になった。SOS Locationは知らずに3回のチェックサイクル（90分）を見逃した--そしてその間にブラジルに到達した波のアラートを潜在的に見逃した。
 
 ## 技術的決定
 
-Polly `ResiliencePipeline`：(1) 指数バックオフリトライ——3回の試行、2秒・8秒・32秒の遅延（底2、指数=試行-1）、10%のジッター；(2) サーキットブレーカー——30秒間に5回の失敗後にオープン、60秒後にハーフオープン；(3) Redisキャッシュフォールバック——パイプラインが完全に失敗すると、最大4時間の最後の成功した結果を使用し、`IsFromCache: true`でタグ付け。キャッシュされたアラートは処理されるが監査フラグ付き。
+Polly `ResiliencePipeline`：(1) 指数バックオフリトライ--3回の試行、2秒・8秒・32秒の遅延（底2、指数=試行-1）、10%のジッター；(2) サーキットブレーカー--30秒間に5回の失敗後にオープン、60秒後にハーフオープン；(3) Redisキャッシュフォールバック--パイプラインが完全に失敗すると、最大4時間の最後の成功した結果を使用し、`IsFromCache: true`でタグ付け。キャッシュされたアラートは処理されるが監査フラグ付き。
 
 ## 実装
 
@@ -225,13 +225,13 @@ public async Task<GdacsAlertsResult> GetActiveAlertsAsync(CancellationToken ct)
 
 ## 具体的な例
 
-日本M7.9インシデント（シミュレーション）：GDACSが14:00に503を返す。Pollyがリトライ：2秒 → 503、8秒 → 503、32秒 → 503。サーキットブレーカーがオープン。フォールバック：Redisが`IsFromCache: true`で14時間前のキャッシュを返す。14時間前のデータ（まだ有効——波がブラジルに到達するまで12時間以上かかる）に基づいてデータが処理され、津波アラートが送信。ログに記録：`「GDACSは14:00:00Zに利用不能、2025-04-10T00:00:00Zのキャッシュを使用。年齢：14時間。」`。15:01（60秒のサーキットブレイク）にPollyが再試行——GDACSが復旧、キャッシュが更新。
+日本M7.9インシデント（シミュレーション）：GDACSが14:00に503を返す。Pollyがリトライ：2秒 → 503、8秒 → 503、32秒 → 503。サーキットブレーカーがオープン。フォールバック：Redisが`IsFromCache: true`で14時間前のキャッシュを返す。14時間前のデータ（まだ有効--波がブラジルに到達するまで12時間以上かかる）に基づいてデータが処理され、津波アラートが送信。ログに記録：`「GDACSは14:00:00Zに利用不能、2025-04-10T00:00:00Zのキャッシュを使用。年齢：14時間。」`。15:01（60秒のサーキットブレイク）にPollyが再試行--GDACSが復旧、キャッシュが更新。
 
 ## 成功基準
 
-GDACSチェックサイクルのサイレントな損失ゼロ——すべての失敗がWARNINGレベルのログを生成。パイプライン失敗時にキャッシュフォールバックが自動的にアクティブ化。サーキットブレーカーが長時間のアウタージ中に試行を削減する（1時間のアウタージ中に30分サイクルごとに3回リトライでGDACSを叩き続けない）。
+GDACSチェックサイクルのサイレントな損失ゼロ--すべての失敗がWARNINGレベルのログを生成。パイプライン失敗時にキャッシュフォールバックが自動的にアクティブ化。サーキットブレーカーが長時間のアウタージ中に試行を削減する（1時間のアウタージ中に30分サイクルごとに3回リトライでGDACSを叩き続けない）。
 
 ## SOS Locationとの関係
 
-GDACS統合はブラジルに影響する外部イベントの検出だ——海外での地震がブラジルの海岸に津波を引き起こす可能性がある。この統合のレジリエンスは品質機能ではなく——APIタイムアウトによって検出できないことと10時間前に津波を検出することの差だ。
+GDACS統合はブラジルに影響する外部イベントの検出だ--海外での地震がブラジルの海岸に津波を引き起こす可能性がある。この統合のレジリエンスは品質機能ではなく--APIタイムアウトによって検出できないことと10時間前に津波を検出することの差だ。
 '''

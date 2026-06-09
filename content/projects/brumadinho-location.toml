@@ -24,7 +24,7 @@ Em cenários de desastre, a fragmentação de dados geoespaciais atrasa o resgat
 
 ## Relação com o ecossistema
 
-Este projeto está diretamente conectado ao trabalho com GIS desenvolvido no **SOS Location** e no **GIS Incident Lab**. As lições aprendidas aqui — sobre ingestão de dados espaciais em cenários de crise — informaram o design dos pipelines de eventos adotados nos projetos posteriores.
+Este projeto está diretamente conectado ao trabalho com GIS desenvolvido no **SOS Location** e no **GIS Incident Lab**. As lições aprendidas aqui - sobre ingestão de dados espaciais em cenários de crise - informaram o design dos pipelines de eventos adotados nos projetos posteriores.
 
 ## Contexto técnico
 
@@ -41,7 +41,7 @@ In disaster scenarios, fragmented geospatial data delays rescue efforts. This re
 
 ## Relationship with the ecosystem
 
-This project is directly connected to the GIS work later developed in **SOS Location** and **GIS Incident Lab**. Lessons learned here — especially around spatial-data ingestion under crisis conditions — informed the event-driven pipeline design adopted in later systems.
+This project is directly connected to the GIS work later developed in **SOS Location** and **GIS Incident Lab**. Lessons learned here - especially around spatial-data ingestion under crisis conditions - informed the event-driven pipeline design adopted in later systems.
 
 ## Technical context
 
@@ -80,39 +80,39 @@ architecture_en_us = "Python scripts process CSV and GeoJSON datasets from publi
 architecture_ja_jp = "公開ソースの CSV / GeoJSON を Python スクリプトで処理し、座標を正規化して被災エリアの可視化を生成します。この単純さは意図的です。危機の現場では、設計の美しさより実行速度が重要だからです。"
 impact = [
   "Consolidação de dados de 4 fontes públicas distintas em formato unificado para equipes de resgate",
-  "Mapas de área afetada gerados em <5min — tempo crítico para operações de campo",
+  "Mapas de área afetada gerados em <5min - tempo crítico para operações de campo",
   "Projeto comunitário: contribuições de 12+ desenvolvedores em 72h após o desastre",
 ]
 impact_en_us = [
   "Consolidated data from 4 distinct public sources into a unified format for rescue teams",
-  "Affected-area maps generated in under 5 minutes — a critical window for field operations",
+  "Affected-area maps generated in under 5 minutes - a critical window for field operations",
   "Community project: contributions from 12+ developers within 72 hours of the disaster",
 ]
 impact_ja_jp = [
   "4 つの公開データソースを救助チーム向けの単一フォーマットに統合",
-  "被災エリア地図を 5 分未満で生成 — 現場運用では重要な時間差",
+  "被災エリア地図を 5 分未満で生成 - 現場運用では重要な時間差",
   "コミュニティ・プロジェクトとして、災害発生後 72 時間以内に 12 人超の開発者が参加",
 ]
 trade_offs = [
-  "Scripts procedurais vs framework GIS completo: velocidade de entrega superou manutenibilidade — decisão correta para emergência",
-  "Dados públicos têm qualidade inconsistente — normalização agressiva com perda aceitável de precisão para ganho de cobertura",
+  "Scripts procedurais vs framework GIS completo: velocidade de entrega superou manutenibilidade - decisão correta para emergência",
+  "Dados públicos têm qualidade inconsistente - normalização agressiva com perda aceitável de precisão para ganho de cobertura",
 ]
 trade_offs_en_us = [
   "Procedural scripts vs. a full GIS framework: delivery speed mattered more than long-term maintainability in an emergency",
-  "Public data quality was inconsistent — aggressive normalization traded some precision for broader coverage",
+  "Public data quality was inconsistent - aggressive normalization traded some precision for broader coverage",
 ]
 trade_offs_ja_jp = [
   "手続き型スクリプト vs 本格 GIS フレームワーク: 緊急時は長期保守性より納期が優先",
   "公開データの品質は不均一だったため、多少の精度を犠牲にしてもカバレッジを優先する正規化を選択",
 ]
 lessons = [
-  "Em crise, o 'bom o suficiente' funcional vale mais que o perfeito no backlog — entregamos em 48h",
-  "Dados de elevação GPS de fontes abertas tinham erro de até 15m — suficiente para orientação, não para resgate preciso",
-  "A fragmentação de dados geoespaciais entre órgãos públicos é o verdadeiro gargalo — não a tecnologia",
+  "Em crise, o 'bom o suficiente' funcional vale mais que o perfeito no backlog - entregamos em 48h",
+  "Dados de elevação GPS de fontes abertas tinham erro de até 15m - suficiente para orientação, não para resgate preciso",
+  "A fragmentação de dados geoespaciais entre órgãos públicos é o verdadeiro gargalo - não a tecnologia",
 ]
 lessons_en_us = [
   "During a crisis, a functional 'good enough' system is worth more than a perfect design still sitting in the backlog",
-  "Open GPS elevation data had errors of up to 15 meters — enough for orientation, not for precise rescue operations",
+  "Open GPS elevation data had errors of up to 15 meters - enough for orientation, not for precise rescue operations",
   "The real bottleneck was fragmentation of geospatial data across agencies, not technology itself",
 ]
 lessons_ja_jp = [

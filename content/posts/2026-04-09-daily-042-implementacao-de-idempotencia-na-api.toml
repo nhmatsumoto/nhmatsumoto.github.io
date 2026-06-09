@@ -3,9 +3,9 @@ slug = "daily-042-implementacao-de-idempotencia-na-api"
 title = "Daily #042: Implementação de idempotência na API"
 title_en_us = "Daily #042: Implementing idempotency in the API"
 title_ja_jp = "Daily #042: APIにおける冪等性実装"
-summary = "Como o SOS Location implementou idempotência via header Idempotency-Key no nível da API — armazenamento de respostas em Redis com TTL de 24 horas, replay automático e proteção contra double-submit em qualquer cliente HTTP."
-summary_en_us = "How SOS Location implemented idempotency via the Idempotency-Key header at the API level — response storage in Redis with a 24-hour TTL, automatic replay, and protection against double-submit from any HTTP client."
-summary_ja_jp = "SOS LocationがAPIレベルでIdempotency-Keyヘッダーによる冪等性を実装した方法——Redisへの24時間TTLでのレスポンス保存、自動リプレイ、あらゆるHTTPクライアントからのダブルサブミット保護。"
+summary = "Como o SOS Location implementou idempotência via header Idempotency-Key no nível da API - armazenamento de respostas em Redis com TTL de 24 horas, replay automático e proteção contra double-submit em qualquer cliente HTTP."
+summary_en_us = "How SOS Location implemented idempotency via the Idempotency-Key header at the API level - response storage in Redis with a 24-hour TTL, automatic replay, and protection against double-submit from any HTTP client."
+summary_ja_jp = "SOS LocationがAPIレベルでIdempotency-Keyヘッダーによる冪等性を実装した方法--Redisへの24時間TTLでのレスポンス保存、自動リプレイ、あらゆるHTTPクライアントからのダブルサブミット保護。"
 published_at = "2026-04-09T02:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-A proteção por estado do botão (#041) funciona para o frontend web. Mas o SOS Location expõe a mesma API de doações para integrações de prefeituras, apps móveis nativos e scripts de automação de ONGs. Esses clientes não têm o `DoacaoButton` React — fazem chamadas HTTP diretas. Um script de automação de uma ONG em São Paulo retransmitiu o POST de doação 3 vezes por timeout de rede, gerando 3 cobranças de R$ 2.000 antes que o idempotency por janela temporal (#041) cobrisse todas as tentativas.
+A proteção por estado do botão (#041) funciona para o frontend web. Mas o SOS Location expõe a mesma API de doações para integrações de prefeituras, apps móveis nativos e scripts de automação de ONGs. Esses clientes não têm o `DoacaoButton` React - fazem chamadas HTTP diretas. Um script de automação de uma ONG em São Paulo retransmitiu o POST de doação 3 vezes por timeout de rede, gerando 3 cobranças de R$ 2.000 antes que o idempotency por janela temporal (#041) cobrisse todas as tentativas.
 
 ## Problema específico
 
-A chave de idempotência por janela de 5 minutos no handler (#041) é específica do domínio: funciona para duplo-clique humano, mas falha para clientes que enviam o mesmo request com valores diferentes (ex.: doações distintas do mesmo doador no mesmo minuto) ou que retransmitem exatamente o mesmo payload. O padrão correto para APIs HTTP é o header `Idempotency-Key` enviado pelo cliente — uma UUID que identifica univocamente aquele request, independente do conteúdo do body.
+A chave de idempotência por janela de 5 minutos no handler (#041) é específica do domínio: funciona para duplo-clique humano, mas falha para clientes que enviam o mesmo request com valores diferentes (ex.: doações distintas do mesmo doador no mesmo minuto) ou que retransmitem exatamente o mesmo payload. O padrão correto para APIs HTTP é o header `Idempotency-Key` enviado pelo cliente - uma UUID que identifica univocamente aquele request, independente do conteúdo do body.
 
 ## Decisão técnica
 
-Middleware `IdempotencyMiddleware` que intercepta todos os POSTs nos endpoints de pagamento. Se o header `Idempotency-Key` estiver presente: (1) verifica Redis por `idempotency:{key}`; (2) se encontrado, retorna o response armazenado com status original sem executar o handler; (3) se não encontrado, executa o handler, armazena `{statusCode, body}` em Redis com TTL de 24 horas. Clientes que não enviam o header executam normalmente (backwards compatible). Respostas de erro 5xx não são armazenadas — apenas 2xx e 4xx.
+Middleware `IdempotencyMiddleware` que intercepta todos os POSTs nos endpoints de pagamento. Se o header `Idempotency-Key` estiver presente: (1) verifica Redis por `idempotency:{key}`; (2) se encontrado, retorna o response armazenado com status original sem executar o handler; (3) se não encontrado, executa o handler, armazena `{statusCode, body}` em Redis com TTL de 24 horas. Clientes que não enviam o header executam normalmente (backwards compatible). Respostas de erro 5xx não são armazenadas - apenas 2xx e 4xx.
 
 ## Implementação
 
@@ -99,7 +99,7 @@ public record IdempotencyRecord(int StatusCode, string Body);
 ```
 
 ```csharp
-// Program.cs — registra middleware apenas para endpoints de pagamento
+// Program.cs - registra middleware apenas para endpoints de pagamento
 app.UseWhen(
     ctx => ctx.Request.Path.StartsWithSegments("/api/v2/doacoes"),
     branch => branch.UseMiddleware<IdempotencyMiddleware>());
@@ -111,24 +111,24 @@ Script da ONG envia `POST /api/v2/doacoes` com `Idempotency-Key: a3f2b1c4-9e87-4
 
 ## Critério de sucesso
 
-Zero cobranças duplicadas por retransmissão de client HTTP (qualquer linguagem/plataforma). Header `X-Idempotency-Replayed: true` presente em 100% dos replays — auditável em logs. Respostas 5xx não armazenadas: se o handler falhar com erro de servidor, o próximo request com a mesma chave tenta novamente normalmente.
+Zero cobranças duplicadas por retransmissão de client HTTP (qualquer linguagem/plataforma). Header `X-Idempotency-Replayed: true` presente em 100% dos replays - auditável em logs. Respostas 5xx não armazenadas: se o handler falhar com erro de servidor, o próximo request com a mesma chave tenta novamente normalmente.
 
 ## Relação com SOS Location
 
-Doações de emergência vêm de múltiplas origens — app web, app mobile, scripts de ONGs, integrações de prefeituras. A idempotência no nível da API é o contrato que garante que qualquer cliente HTTP pode retentar com segurança sem duplicação, independente de como implementa sua camada de apresentação.
+Doações de emergência vêm de múltiplas origens - app web, app mobile, scripts de ONGs, integrações de prefeituras. A idempotência no nível da API é o contrato que garante que qualquer cliente HTTP pode retentar com segurança sem duplicação, independente de como implementa sua camada de apresentação.
 '''
 body_en_us = '''
 ## Real context
 
-The button state protection (#041) works for the web frontend. But SOS Location exposes the same donation API to city hall integrations, native mobile apps, and NGO automation scripts. Those clients don't have the React `DoacaoButton` — they make direct HTTP calls. An NGO automation script in São Paulo retransmitted the donation POST 3 times due to a network timeout, generating 3 charges of R$2,000 before the temporal window idempotency (#041) covered all attempts.
+The button state protection (#041) works for the web frontend. But SOS Location exposes the same donation API to city hall integrations, native mobile apps, and NGO automation scripts. Those clients don't have the React `DoacaoButton` - they make direct HTTP calls. An NGO automation script in São Paulo retransmitted the donation POST 3 times due to a network timeout, generating 3 charges of R$2,000 before the temporal window idempotency (#041) covered all attempts.
 
 ## Specific problem
 
-The 5-minute window idempotency key in the handler (#041) is domain-specific: it works for human double-clicks, but fails for clients that send the same request with different values (e.g., separate donations from the same donor in the same minute) or that retransmit the exact same payload. The correct pattern for HTTP APIs is the `Idempotency-Key` header sent by the client — a UUID that uniquely identifies that request, regardless of the body content.
+The 5-minute window idempotency key in the handler (#041) is domain-specific: it works for human double-clicks, but fails for clients that send the same request with different values (e.g., separate donations from the same donor in the same minute) or that retransmit the exact same payload. The correct pattern for HTTP APIs is the `Idempotency-Key` header sent by the client - a UUID that uniquely identifies that request, regardless of the body content.
 
 ## Technical decision
 
-`IdempotencyMiddleware` that intercepts all POSTs on payment endpoints. If the `Idempotency-Key` header is present: (1) checks Redis for `idempotency:{key}`; (2) if found, returns the stored response with the original status without executing the handler; (3) if not found, executes the handler, stores `{statusCode, body}` in Redis with a 24-hour TTL. Clients that don't send the header execute normally (backwards compatible). 5xx error responses are not stored — only 2xx and 4xx.
+`IdempotencyMiddleware` that intercepts all POSTs on payment endpoints. If the `Idempotency-Key` header is present: (1) checks Redis for `idempotency:{key}`; (2) if found, returns the stored response with the original status without executing the handler; (3) if not found, executes the handler, stores `{statusCode, body}` in Redis with a 24-hour TTL. Clients that don't send the header execute normally (backwards compatible). 5xx error responses are not stored - only 2xx and 4xx.
 
 ## Implementation
 
@@ -186,24 +186,24 @@ An NGO script sends `POST /api/v2/doacoes` with `Idempotency-Key: a3f2b1c4-9e87-
 
 ## Success criteria
 
-Zero duplicate charges from HTTP client retransmissions (any language/platform). `X-Idempotency-Replayed: true` header present on 100% of replays — auditable in logs. 5xx responses not stored: if the handler fails with a server error, the next request with the same key retries normally.
+Zero duplicate charges from HTTP client retransmissions (any language/platform). `X-Idempotency-Replayed: true` header present on 100% of replays - auditable in logs. 5xx responses not stored: if the handler fails with a server error, the next request with the same key retries normally.
 
 ## Relation to SOS Location
 
-Emergency donations come from multiple sources — web app, mobile app, NGO scripts, city hall integrations. API-level idempotency is the contract that guarantees any HTTP client can safely retry without duplication, regardless of how it implements its presentation layer.
+Emergency donations come from multiple sources - web app, mobile app, NGO scripts, city hall integrations. API-level idempotency is the contract that guarantees any HTTP client can safely retry without duplication, regardless of how it implements its presentation layer.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-ボタン状態保護（#041）はWebフロントエンドには機能する。しかしSOS Locationは同じ寄付APIを市区町村統合、ネイティブモバイルアプリ、NGOの自動化スクリプトにも公開している。これらのクライアントはReactの`DoacaoButton`を持たない——直接HTTPコールを行う。サンパウロのNGO自動化スクリプトがネットワークタイムアウトにより寄付POSTを3回再送信し、時間的ウィンドウ冪等性（#041）がすべての試行をカバーする前にR$2,000の課金が3件発生した。
+ボタン状態保護（#041）はWebフロントエンドには機能する。しかしSOS Locationは同じ寄付APIを市区町村統合、ネイティブモバイルアプリ、NGOの自動化スクリプトにも公開している。これらのクライアントはReactの`DoacaoButton`を持たない--直接HTTPコールを行う。サンパウロのNGO自動化スクリプトがネットワークタイムアウトにより寄付POSTを3回再送信し、時間的ウィンドウ冪等性（#041）がすべての試行をカバーする前にR$2,000の課金が3件発生した。
 
 ## 具体的な問題
 
-ハンドラー内の5分間ウィンドウ冪等性キー（#041）はドメイン固有だ：人間のダブルクリックには機能するが、同じドナーが同分内に異なる値のリクエストを送る（例：別々の寄付）か、まったく同じペイロードを再送信するクライアントには失敗する。HTTP APIの正しいパターンはクライアントが送信する`Idempotency-Key`ヘッダーだ——ボディ内容に関係なく、そのリクエストを一意に識別するUUID。
+ハンドラー内の5分間ウィンドウ冪等性キー（#041）はドメイン固有だ：人間のダブルクリックには機能するが、同じドナーが同分内に異なる値のリクエストを送る（例：別々の寄付）か、まったく同じペイロードを再送信するクライアントには失敗する。HTTP APIの正しいパターンはクライアントが送信する`Idempotency-Key`ヘッダーだ--ボディ内容に関係なく、そのリクエストを一意に識別するUUID。
 
 ## 技術的決定
 
-決済エンドポイントのすべてのPOSTをインターセプトする`IdempotencyMiddleware`。`Idempotency-Key`ヘッダーが存在する場合：(1) Redisで`idempotency:{key}`を確認；(2) 見つかった場合、ハンドラーを実行せずに元のステータスで保存されたレスポンスを返す；(3) 見つからない場合、ハンドラーを実行し、24時間TTLで`{statusCode, body}`をRedisに保存。ヘッダーを送らないクライアントは通常通り実行（後方互換）。5xxエラーレスポンスは保存しない——2xxと4xxのみ。
+決済エンドポイントのすべてのPOSTをインターセプトする`IdempotencyMiddleware`。`Idempotency-Key`ヘッダーが存在する場合：(1) Redisで`idempotency:{key}`を確認；(2) 見つかった場合、ハンドラーを実行せずに元のステータスで保存されたレスポンスを返す；(3) 見つからない場合、ハンドラーを実行し、24時間TTLで`{statusCode, body}`をRedisに保存。ヘッダーを送らないクライアントは通常通り実行（後方互換）。5xxエラーレスポンスは保存しない--2xxと4xxのみ。
 
 ## 実装
 
@@ -260,7 +260,7 @@ NGOスクリプトが`Idempotency-Key: a3f2b1c4-9e87-4d56-b3a1-2c8f7e0d1a92`と`
 
 ## 成功基準
 
-HTTPクライアント再送信による重複課金ゼロ（任意の言語/プラットフォーム）。すべてのリプレイに`X-Idempotency-Replayed: true`ヘッダーが存在——ログで監査可能。5xxレスポンスは保存しない：ハンドラーがサーバーエラーで失敗した場合、同じキーでの次のリクエストは通常通り再試行。
+HTTPクライアント再送信による重複課金ゼロ（任意の言語/プラットフォーム）。すべてのリプレイに`X-Idempotency-Replayed: true`ヘッダーが存在--ログで監査可能。5xxレスポンスは保存しない：ハンドラーがサーバーエラーで失敗した場合、同じキーでの次のリクエストは通常通り再試行。
 
 ## SOS Locationとの関係
 

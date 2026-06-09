@@ -1,8 +1,8 @@
 id = "2026-04-03-1500-daniel-kahneman"
 slug = "daniel-kahneman-raciocinio-economico"
 title = "Daniel Kahneman: Rápido e Devagar - A Economia Comportamental"
-title_en_us = "Daniel Kahneman: Thinking, Fast and Slow — Behavioral Economics"
-title_ja_jp = "ダニエル・カーネマン：ファスト & スロー — 行動経済学"
+title_en_us = "Daniel Kahneman: Thinking, Fast and Slow - Behavioral Economics"
+title_ja_jp = "ダニエル・カーネマン：ファスト & スロー - 行動経済学"
 summary = "Uma homenagem ao psicólogo que ganhou o Nobel de Economia ao provar que o ser humano não é tão racional quanto gosta de acreditar."
 summary_en_us = "A tribute to the psychologist who won the Nobel in Economics by proving humans are not as rational as they like to believe."
 summary_ja_jp = "人間は自分が信じるほど合理的ではないことを証明し、ノーベル経済学賞を受賞した心理学者へのオマージュ。"
@@ -33,7 +33,7 @@ Kahneman identificou dezenas de "bugs" no nosso software mental:
 ## A Teoria da Perspectiva (Prospect Theory)
 Essa foi a base do seu Nobel. Ela explica como as pessoas decidem entre alternativas que envolvem risco e incerteza, demonstrando que a utilidade de um ganho ou perda depende do ponto de referência, e não apenas do valor final.
 
-> "Nada na vida é tão importante quanto você acha que é enquanto está pensando nisso." — Daniel Kahneman
+> "Nada na vida é tão importante quanto você acha que é enquanto está pensando nisso." - Daniel Kahneman
 
 ## Invariantes no Design de Sistemas
 Este trabalho é fundamental para quem desenha **agentes de IA** e sistemas complexos. Entender os vieses humanos ajuda a projetar interfaces que mitigam erros e algoritmos que não herdam nossos próprios defeitos de processamento.
@@ -55,7 +55,7 @@ Kahneman mapped dozens of bugs in our mental software:
 ## Prospect Theory
 This was the foundation of his Nobel Prize. It explains how people choose under risk and uncertainty, showing that the utility of gain or loss depends on the reference point, not only on the final amount.
 
-> "Nothing in life is as important as you think it is while you are thinking about it." — Daniel Kahneman
+> "Nothing in life is as important as you think it is while you are thinking about it." - Daniel Kahneman
 
 ## Invariants in system design
 This work matters to anyone designing **AI agents** and complex systems. Understanding human bias helps us build interfaces that mitigate error and algorithms that do not simply inherit our own processing flaws.
@@ -77,7 +77,7 @@ body_ja_jp = """
 ## プロスペクト理論
 これがノーベル賞につながった中心理論です。人がリスクと不確実性の中でどう意思決定するかを説明し、利益や損失の価値は最終額そのものではなく、基準点に依存することを示しました。
 
-> 「人生において、考えている最中ほど重要なものは実際にはほとんどない。」 — ダニエル・カーネマン
+> 「人生において、考えている最中ほど重要なものは実際にはほとんどない。」 - ダニエル・カーネマン
 
 ## システム設計における不変条件
 この仕事は **AI エージェント** や複雑システムを設計する人にとって重要です。人間のバイアスを理解すれば、誤りを減らすインターフェースや、人間の欠陥をそのまま継承しないアルゴリズムを設計できます。

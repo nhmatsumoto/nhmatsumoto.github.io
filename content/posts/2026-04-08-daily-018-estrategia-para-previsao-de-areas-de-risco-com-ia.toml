@@ -5,7 +5,7 @@ title_en_us = "Daily #018: Strategy for AI-based risk area prediction"
 title_ja_jp = "Daily #018: AIによるリスク領域予測戦略"
 summary = "Como o SOS Location usa LightGBM para prever o NivelRisco de AreaDeRisco com 15 minutos de antecedência, combinando elevação, declividade, distância ao rio, precipitação Open-Meteo e histórico CEMADEN."
 summary_en_us = "How SOS Location uses LightGBM to predict the NivelRisco of AreaDeRisco 15 minutes ahead, combining elevation, slope, distance to river, Open-Meteo precipitation and CEMADEN historical data."
-summary_ja_jp = "SOS LocationがLightGBMを使ってAreaDeRiscoのNivelRiscoを15分前に予測する方法——標高・傾斜・河川距離・Open-Meteo降水量・CEMADENの過去データを組み合わせて。"
+summary_ja_jp = "SOS LocationがLightGBMを使ってAreaDeRiscoのNivelRiscoを15分前に予測する方法--標高・傾斜・河川距離・Open-Meteo降水量・CEMADENの過去データを組み合わせて。"
 published_at = "2026-04-08T02:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -23,7 +23,7 @@ O SOS Location precisa antecipar o aumento do `NivelRisco` de uma `AreaDeRisco` 
 
 ## Problema específico
 
-O `NivelRisco` é atualizado hoje por três gatilhos: sensores de nível d'água (quando disponíveis), dados Open-Meteo (#015) e relatórios de campo manuais. O problema: sensores de nível d'água cobrem apenas 12% das `AreaDeRisco` no banco. Open-Meteo tem resolução espacial de 11 km — imprecisa para canalizações urbanas de 500 m. Relatórios de campo chegam com 30–90 minutos de atraso. Resultado: em 68% dos eventos de inundação registrados no banco, o `NivelRisco` foi atualizado *depois* da chegada da água na zona.
+O `NivelRisco` é atualizado hoje por três gatilhos: sensores de nível d'água (quando disponíveis), dados Open-Meteo (#015) e relatórios de campo manuais. O problema: sensores de nível d'água cobrem apenas 12% das `AreaDeRisco` no banco. Open-Meteo tem resolução espacial de 11 km - imprecisa para canalizações urbanas de 500 m. Relatórios de campo chegam com 30–90 minutos de atraso. Resultado: em 68% dos eventos de inundação registrados no banco, o `NivelRisco` foi atualizado *depois* da chegada da água na zona.
 
 ## Decisão técnica
 
@@ -105,7 +105,7 @@ public sealed class PredictRiskCommandHandler
 
 ## Exemplo concreto
 
-`AreaDeRisco` id=441 — Bairro Garcia, Blumenau (SC). Às 14h30, precipitação acumulada 3h = 38 mm, distância ao Itajaí-Açu = 180 m, elevação = 12 m. `NivelRisco` atual = 4. Modelo prevê `NivelRisco` = 7 daqui a 15 minutos. Sistema emite alerta preventivo às 14h30, antes que sensores físicos detectem mudança de nível. Às 14h45, `NivelRisco` real atingido: 7. Antecipação efetiva: 15 minutos. Coordenadores já estavam posicionados.
+`AreaDeRisco` id=441 - Bairro Garcia, Blumenau (SC). Às 14h30, precipitação acumulada 3h = 38 mm, distância ao Itajaí-Açu = 180 m, elevação = 12 m. `NivelRisco` atual = 4. Modelo prevê `NivelRisco` = 7 daqui a 15 minutos. Sistema emite alerta preventivo às 14h30, antes que sensores físicos detectem mudança de nível. Às 14h45, `NivelRisco` real atingido: 7. Antecipação efetiva: 15 minutos. Coordenadores já estavam posicionados.
 
 ## Critério de sucesso
 
@@ -122,7 +122,7 @@ SOS Location needs to anticipate a rise in `NivelRisco` for an `AreaDeRisco` bef
 
 ## Specific problem
 
-`NivelRisco` is currently updated by three triggers: water-level sensors (when available), Open-Meteo data (#015), and manual field reports. The problem: water-level sensors cover only 12% of `AreaDeRisco` entries in the database. Open-Meteo has 11 km spatial resolution — imprecise for 500 m urban channels. Field reports arrive 30–90 minutes late. Result: in 68% of flood events recorded in the database, `NivelRisco` was updated *after* the water reached the zone.
+`NivelRisco` is currently updated by three triggers: water-level sensors (when available), Open-Meteo data (#015), and manual field reports. The problem: water-level sensors cover only 12% of `AreaDeRisco` entries in the database. Open-Meteo has 11 km spatial resolution - imprecise for 500 m urban channels. Field reports arrive 30–90 minutes late. Result: in 68% of flood events recorded in the database, `NivelRisco` was updated *after* the water reached the zone.
 
 ## Technical decision
 
@@ -186,7 +186,7 @@ public sealed class PredictRiskCommandHandler
 
 ## Concrete example
 
-`AreaDeRisco` id=441 — Bairro Garcia, Blumenau (SC). At 14:30, accumulated precipitation 3h = 38 mm, distance to Itajaí-Açu = 180 m, elevation = 12 m. Current `NivelRisco` = 4. Model predicts `NivelRisco` = 7 in 15 minutes. System issues a preventive alert at 14:30, before physical sensors detect any level change. At 14:45, actual `NivelRisco` reached: 7. Effective lead time: 15 minutes. Coordinators were already in position.
+`AreaDeRisco` id=441 - Bairro Garcia, Blumenau (SC). At 14:30, accumulated precipitation 3h = 38 mm, distance to Itajaí-Açu = 180 m, elevation = 12 m. Current `NivelRisco` = 4. Model predicts `NivelRisco` = 7 in 15 minutes. System issues a preventive alert at 14:30, before physical sensors detect any level change. At 14:45, actual `NivelRisco` reached: 7. Effective lead time: 15 minutes. Coordinators were already in position.
 
 ## Success criteria
 
@@ -203,7 +203,7 @@ SOS Locationは洪水が発生する前に`AreaDeRisco`の`NivelRisco`の上昇�
 
 ## 具体的な問題
 
-`NivelRisco`は現在3つのトリガーで更新される：水位センサー（利用可能な場合）、Open-Meteoデータ（#015）、手動フィールドレポート。問題：水位センサーはデータベースの`AreaDeRisco`の12%しかカバーしない。Open-Meteoは11km空間解像度——500mの都市水路には不正確。フィールドレポートは30〜90分遅れで届く。結果：データベースに記録された洪水イベントの68%で、`NivelRisco`は水がゾーンに到達した*後に*更新された。
+`NivelRisco`は現在3つのトリガーで更新される：水位センサー（利用可能な場合）、Open-Meteoデータ（#015）、手動フィールドレポート。問題：水位センサーはデータベースの`AreaDeRisco`の12%しかカバーしない。Open-Meteoは11km空間解像度--500mの都市水路には不正確。フィールドレポートは30〜90分遅れで届く。結果：データベースに記録された洪水イベントの68%で、`NivelRisco`は水がゾーンに到達した*後に*更新された。
 
 ## 技術的決定
 
@@ -267,7 +267,7 @@ public sealed class PredictRiskCommandHandler
 
 ## 具体的な例
 
-`AreaDeRisco` id=441 — ブルメナウ（SC）のBairro Garcia地区。14:30に3時間累積降水量 = 38mm、Itajaí-Açuまでの距離 = 180m、標高 = 12m。現在の`NivelRisco` = 4。モデルは15分後に`NivelRisco` = 7を予測。システムは14:30に予防アラートを発令——物理センサーが水位変化を検出する前に。14:45に実際の`NivelRisco`到達：7。有効先行時間：15分。コーディネーターはすでに配置されていた。
+`AreaDeRisco` id=441 - ブルメナウ（SC）のBairro Garcia地区。14:30に3時間累積降水量 = 38mm、Itajaí-Açuまでの距離 = 180m、標高 = 12m。現在の`NivelRisco` = 4。モデルは15分後に`NivelRisco` = 7を予測。システムは14:30に予防アラートを発令--物理センサーが水位変化を検出する前に。14:45に実際の`NivelRisco`到達：7。有効先行時間：15分。コーディネーターはすでに配置されていた。
 
 ## 成功基準
 
@@ -275,5 +275,5 @@ public sealed class PredictRiskCommandHandler
 
 ## SOS Locationとの関係
 
-洪水の15分前に`AreaDeRisco`の`NivelRisco`を変更することで、SOS Locationは災害文書化システムから予防システムに変わる。運用上の違いは具体的だ：コーディネーターは避難するかどうかを決める前にアラートを受け取る——道路が浸水して避難がすでに妨げられてからではなく。
+洪水の15分前に`AreaDeRisco`の`NivelRisco`を変更することで、SOS Locationは災害文書化システムから予防システムに変わる。運用上の違いは具体的だ：コーディネーターは避難するかどうかを決める前にアラートを受け取る--道路が浸水して避難がすでに妨げられてからではなく。
 '''

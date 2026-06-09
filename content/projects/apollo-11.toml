@@ -3,8 +3,8 @@ slug = "apollo-11"
 headline = "Código-fonte original do Apollo 11 Guidance Computer (AGC) para os módulos de comando e lunar."
 headline_en_us = "Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules."
 headline_ja_jp = "アポロ 11 号誘導コンピュータ（AGC）の指令船・月着陸船オリジナル・ソースコード。"
-summary = "Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar — referência histórica de engenharia de software embarcado."
-summary_en_us = "Original Apollo 11 Guidance Computer (AGC) source code, including the command and lunar modules — a historical reference for embedded software engineering."
+summary = "Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar - referência histórica de engenharia de software embarcado."
+summary_en_us = "Original Apollo 11 Guidance Computer (AGC) source code, including the command and lunar modules - a historical reference for embedded software engineering."
 summary_ja_jp = "アポロ 11 号誘導コンピュータ（AGC）の指令船・月着陸船オリジナル・ソースコード。組み込みソフトウェア工学の歴史的リファレンス。"
 status = "published"
 featured = false
@@ -26,7 +26,7 @@ Este repositório serve como referência histórica para estudo de:
 
 - **Arquitetura de software embarcado** sob restrições severas de hardware
 - **Sistemas de tempo real** com prioridade de tarefas e preempção
-- **Tolerância a falhas** — o famoso alarme 1202 durante o pouso é um exemplo clássico de design resiliente
+- **Tolerância a falhas** - o famoso alarme 1202 durante o pouso é um exemplo clássico de design resiliente
 - **Engenharia de missão crítica** onde bugs podem ter consequências irreversíveis
 
 ## Contexto
@@ -44,7 +44,7 @@ This repository is a historical reference for studying:
 
 - **Embedded software architecture** under severe hardware constraints
 - **Real-time systems** with task priorities and preemption
-- **Fault tolerance** — the famous 1202 alarm during landing is a classic example of resilient design
+- **Fault tolerance** - the famous 1202 alarm during landing is a classic example of resilient design
 - **Mission-critical engineering** where bugs can have irreversible consequences
 
 ## Context
@@ -62,8 +62,8 @@ AGC は、極端なメモリと処理能力の制約の下でリアルタイム�
 
 - **厳しいハードウェア制約下での組み込みソフトウェアアーキテクチャ**
 - **優先度付きタスクとプリエンプションを備えたリアルタイムシステム**
-- **フォールトトレランス** — 着陸時の有名な 1202 アラームはレジリエント設計の古典例です
-- **ミッションクリティカル工学** — バグが取り返しのつかない結果を招きうる領域
+- **フォールトトレランス** - 着陸時の有名な 1202 アラームはレジリエント設計の古典例です
+- **ミッションクリティカル工学** - バグが取り返しのつかない結果を招きうる領域
 
 ## 背景
 

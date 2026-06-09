@@ -23,7 +23,7 @@ O SOS Location tem dois grupos de consumidores de API: o frontend próprio (cont
 
 ## Problema específico
 
-Na v1 do SOS Location, o endpoint `GET /api/areas-de-risco` retornava um campo `risco` (inteiro 1–10). Em março de 2026, foi necessário renomear para `nivel_risco` para alinhar com a linguagem ubíqua (#001). Alterar o campo quebraria qualquer integração de prefeitura que dependia de `risco`. Sem versionamento, a escolha era: não fazer a mudança ou quebrar todos os clientes externos — nem uma, nem outra é aceitável.
+Na v1 do SOS Location, o endpoint `GET /api/areas-de-risco` retornava um campo `risco` (inteiro 1–10). Em março de 2026, foi necessário renomear para `nivel_risco` para alinhar com a linguagem ubíqua (#001). Alterar o campo quebraria qualquer integração de prefeitura que dependia de `risco`. Sem versionamento, a escolha era: não fazer a mudança ou quebrar todos os clientes externos - nem uma, nem outra é aceitável.
 
 ## Decisão técnica
 
@@ -90,15 +90,15 @@ public static class AreaDeRiscoV2Endpoints
 
 ## Exemplo concreto
 
-Prefeitura de Joinville usa `/api/v1/areas-de-risco` desde janeiro de 2026. Após lançamento da v2 em abril de 2026: cada response v1 passa a incluir `Sunset: Tue, 07 Jul 2026 00:00:00 GMT`. Time de TI da prefeitura recebe alerta automático do monitoring que detecta o header `Sunset`. 90 dias para atualizar o sistema municipal de `risco` para `nivel_risco` — um campo de texto, mudança de 15 minutos. Zero breaking change abrupta, zero necessidade de coordenação manual.
+Prefeitura de Joinville usa `/api/v1/areas-de-risco` desde janeiro de 2026. Após lançamento da v2 em abril de 2026: cada response v1 passa a incluir `Sunset: Tue, 07 Jul 2026 00:00:00 GMT`. Time de TI da prefeitura recebe alerta automático do monitoring que detecta o header `Sunset`. 90 dias para atualizar o sistema municipal de `risco` para `nivel_risco` - um campo de texto, mudança de 15 minutos. Zero breaking change abrupta, zero necessidade de coordenação manual.
 
 ## Critério de sucesso
 
-100% dos endpoints com breaking change entre versões cobertos por versionamento URL path. Header `Sunset` presente em 100% das responses de versões depreciadas. Versão v1 removida exatamente 90 dias após o `Sunset` — sem extensões ad-hoc.
+100% dos endpoints com breaking change entre versões cobertos por versionamento URL path. Header `Sunset` presente em 100% das responses de versões depreciadas. Versão v1 removida exatamente 90 dias após o `Sunset` - sem extensões ad-hoc.
 
 ## Relação com SOS Location
 
-Versionamento de API é o contrato de confiança com integrações externas. Prefeituras que integram com o SOS Location precisam saber que mudanças não vão quebrar seus sistemas de forma silenciosa. O header `Sunset` transforma a deprecação em comunicação automática — sem emails, sem reuniões de alinhamento.
+Versionamento de API é o contrato de confiança com integrações externas. Prefeituras que integram com o SOS Location precisam saber que mudanças não vão quebrar seus sistemas de forma silenciosa. O header `Sunset` transforma a deprecação em comunicação automática - sem emails, sem reuniões de alinhamento.
 '''
 body_en_us = '''
 ## Real context
@@ -107,7 +107,7 @@ SOS Location has two groups of API consumers: its own frontend (controlled, upda
 
 ## Specific problem
 
-In SOS Location v1, the `GET /api/areas-de-risco` endpoint returned a field called `risco` (integer 1–10). In March 2026, it needed to be renamed to `nivel_risco` to align with ubiquitous language (#001). Changing the field would break any city hall integration depending on `risco`. Without versioning, the choice was: don't make the change or break all external clients — neither is acceptable.
+In SOS Location v1, the `GET /api/areas-de-risco` endpoint returned a field called `risco` (integer 1–10). In March 2026, it needed to be renamed to `nivel_risco` to align with ubiquitous language (#001). Changing the field would break any city hall integration depending on `risco`. Without versioning, the choice was: don't make the change or break all external clients - neither is acceptable.
 
 ## Technical decision
 
@@ -125,7 +125,7 @@ builder.Services.AddApiVersioning(options =>
 ```
 
 ```csharp
-// v1 — deprecated, field "risco"
+// v1 - deprecated, field "risco"
 group.MapGet("/", async (ISender sender, ClaimsPrincipal user, HttpResponse response) =>
 {
     response.Headers.Append("Sunset",      "Tue, 07 Jul 2026 00:00:00 GMT");
@@ -134,7 +134,7 @@ group.MapGet("/", async (ISender sender, ClaimsPrincipal user, HttpResponse resp
     return Results.Ok(result.Select(a => new { a.Id, risco = a.NivelRisco, a.Geometry }));
 });
 
-// v2 — current, field "nivel_risco"
+// v2 - current, field "nivel_risco"
 group.MapGet("/", async (ISender sender, ClaimsPrincipal user) =>
 {
     var result = await sender.Send(new ListarAreasDeRiscoQuery(user.GetTenantId()));
@@ -144,15 +144,15 @@ group.MapGet("/", async (ISender sender, ClaimsPrincipal user) =>
 
 ## Concrete example
 
-Joinville city hall uses `/api/v1/areas-de-risco` since January 2026. After v2 launches in April 2026: every v1 response starts including `Sunset: Tue, 07 Jul 2026 00:00:00 GMT`. The city hall IT team receives an automatic alert from monitoring that detects the `Sunset` header. 90 days to update the municipal system from `risco` to `nivel_risco` — a text field, a 15-minute change. Zero abrupt breaking change, zero need for manual coordination.
+Joinville city hall uses `/api/v1/areas-de-risco` since January 2026. After v2 launches in April 2026: every v1 response starts including `Sunset: Tue, 07 Jul 2026 00:00:00 GMT`. The city hall IT team receives an automatic alert from monitoring that detects the `Sunset` header. 90 days to update the municipal system from `risco` to `nivel_risco` - a text field, a 15-minute change. Zero abrupt breaking change, zero need for manual coordination.
 
 ## Success criteria
 
-100% of endpoints with breaking changes between versions covered by URL path versioning. `Sunset` header present on 100% of responses from deprecated versions. v1 removed exactly 90 days after the `Sunset` — no ad-hoc extensions.
+100% of endpoints with breaking changes between versions covered by URL path versioning. `Sunset` header present on 100% of responses from deprecated versions. v1 removed exactly 90 days after the `Sunset` - no ad-hoc extensions.
 
 ## Relation to SOS Location
 
-API versioning is the trust contract with external integrations. City halls that integrate with SOS Location need to know that changes will not silently break their systems. The `Sunset` header turns deprecation into automatic communication — no emails, no alignment meetings.
+API versioning is the trust contract with external integrations. City halls that integrate with SOS Location need to know that changes will not silently break their systems. The `Sunset` header turns deprecation into automatic communication - no emails, no alignment meetings.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -161,7 +161,7 @@ SOS LocationにはAPIの消費者が2つのグループある：独自のフロ�
 
 ## 具体的な問題
 
-SOS Location v1では、`GET /api/areas-de-risco`エンドポイントが`risco`（整数1〜10）というフィールドを返していた。2026年3月、ユビキタス言語（#001）に合わせるために`nivel_risco`にリネームする必要があった。フィールドを変更すると`risco`に依存する市区町村の統合が壊れる。バージョニングなしでは、選択肢は：変更しないかすべての外部クライアントを壊すか——どちらも許容できない。
+SOS Location v1では、`GET /api/areas-de-risco`エンドポイントが`risco`（整数1〜10）というフィールドを返していた。2026年3月、ユビキタス言語（#001）に合わせるために`nivel_risco`にリネームする必要があった。フィールドを変更すると`risco`に依存する市区町村の統合が壊れる。バージョニングなしでは、選択肢は：変更しないかすべての外部クライアントを壊すか--どちらも許容できない。
 
 ## 技術的決定
 
@@ -179,7 +179,7 @@ builder.Services.AddApiVersioning(options =>
 ```
 
 ```csharp
-// v1 — 廃止、フィールド「risco」
+// v1 - 廃止、フィールド「risco」
 group.MapGet("/", async (ISender sender, ClaimsPrincipal user, HttpResponse response) =>
 {
     response.Headers.Append("Sunset",      "Tue, 07 Jul 2026 00:00:00 GMT");
@@ -188,7 +188,7 @@ group.MapGet("/", async (ISender sender, ClaimsPrincipal user, HttpResponse resp
     return Results.Ok(result.Select(a => new { a.Id, risco = a.NivelRisco, a.Geometry }));
 });
 
-// v2 — 現在、フィールド「nivel_risco」
+// v2 - 現在、フィールド「nivel_risco」
 group.MapGet("/", async (ISender sender, ClaimsPrincipal user) =>
 {
     var result = await sender.Send(new ListarAreasDeRiscoQuery(user.GetTenantId()));
@@ -198,13 +198,13 @@ group.MapGet("/", async (ISender sender, ClaimsPrincipal user) =>
 
 ## 具体的な例
 
-ジョインヴィル市区町村は2026年1月から`/api/v1/areas-de-risco`を使用。2026年4月にv2が起動後：すべてのv1レスポンスに`Sunset: Tue, 07 Jul 2026 00:00:00 GMT`が含まれ始める。市のITチームは`Sunset`ヘッダーを検出する監視から自動アラートを受け取る。市町村システムを`risco`から`nivel_risco`に更新する90日——テキストフィールド、15分の変更。突然の破壊的変更ゼロ、手動調整の必要ゼロ。
+ジョインヴィル市区町村は2026年1月から`/api/v1/areas-de-risco`を使用。2026年4月にv2が起動後：すべてのv1レスポンスに`Sunset: Tue, 07 Jul 2026 00:00:00 GMT`が含まれ始める。市のITチームは`Sunset`ヘッダーを検出する監視から自動アラートを受け取る。市町村システムを`risco`から`nivel_risco`に更新する90日--テキストフィールド、15分の変更。突然の破壊的変更ゼロ、手動調整の必要ゼロ。
 
 ## 成功基準
 
-バージョン間で破壊的変更があるすべてのエンドポイントがURLパスバージョニングでカバーされる。廃止バージョンのすべてのレスポンスに`Sunset`ヘッダーが存在する。`Sunset`から正確に90日後にv1が削除——アドホックな延長なし。
+バージョン間で破壊的変更があるすべてのエンドポイントがURLパスバージョニングでカバーされる。廃止バージョンのすべてのレスポンスに`Sunset`ヘッダーが存在する。`Sunset`から正確に90日後にv1が削除--アドホックな延長なし。
 
 ## SOS Locationとの関係
 
-APIバージョニングは外部統合との信頼契約だ。SOS Locationと統合する市区町村は、変更が自分たちのシステムをサイレントに壊さないことを知る必要がある。`Sunset`ヘッダーは廃止を自動的なコミュニケーションに変える——メールなし、調整会議なし。
+APIバージョニングは外部統合との信頼契約だ。SOS Locationと統合する市区町村は、変更が自分たちのシステムをサイレントに壊さないことを知る必要がある。`Sunset`ヘッダーは廃止を自動的なコミュニケーションに変える--メールなし、調整会議なし。
 '''

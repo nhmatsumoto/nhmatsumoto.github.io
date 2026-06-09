@@ -1,8 +1,8 @@
 name = "SplitCosts-FE"
 slug = "splitcosts-fe"
-headline = "Frontend do SplitCosts — SPA React/TypeScript com UX focada em clareza operacional."
-headline_en_us = "SplitCosts frontend — React/TypeScript SPA focused on operational clarity."
-headline_ja_jp = "SplitCosts フロントエンド — 運用の明瞭さに焦点を置いた React/TypeScript SPA。"
+headline = "Frontend do SplitCosts - SPA React/TypeScript com UX focada em clareza operacional."
+headline_en_us = "SplitCosts frontend - React/TypeScript SPA focused on operational clarity."
+headline_ja_jp = "SplitCosts フロントエンド - 運用の明瞭さに焦点を置いた React/TypeScript SPA。"
 summary = "Frontend do SplitCosts em React/TypeScript com Keycloak auth, visualização de despesas, saldos e reconciliação, consumindo o SplitCost-Backend via REST API."
 summary_en_us = "SplitCosts frontend in React/TypeScript with Keycloak auth, expense visualization, balances and reconciliation, consuming the SplitCost-Backend via REST API."
 summary_ja_jp = "React/TypeScript による SplitCosts フロントエンド。Keycloak 認証、支出可視化、残高、照合機能を備え、SplitCost-Backend を REST API 経由で利用。"
@@ -16,15 +16,15 @@ tags = ["TypeScript"]
 stack = ["React", "TypeScript", "Keycloak", "REST API"]
 
 overview = """
-Frontend do **SplitCosts** — SPA em React/TypeScript que consome o SplitCost-Backend para gerenciamento de despesas compartilhadas.
+Frontend do **SplitCosts** - SPA em React/TypeScript que consome o SplitCost-Backend para gerenciamento de despesas compartilhadas.
 
 ## Funcionalidades
 
-- **Dashboard** — visão geral de saldos e despesas recentes por grupo
-- **Registro de despesas** — formulário com divisão proporcional ou customizada
-- **Reconciliação** — visualização de dívidas e sugestão de pagamentos mínimos
-- **Histórico** — timeline de transações com filtros por período e categoria
-- **Multi-grupo** — navegação entre diferentes households/grupos
+- **Dashboard** - visão geral de saldos e despesas recentes por grupo
+- **Registro de despesas** - formulário com divisão proporcional ou customizada
+- **Reconciliação** - visualização de dívidas e sugestão de pagamentos mínimos
+- **Histórico** - timeline de transações com filtros por período e categoria
+- **Multi-grupo** - navegação entre diferentes households/grupos
 
 ## Stack
 
@@ -35,18 +35,18 @@ Frontend do **SplitCosts** — SPA em React/TypeScript que consome o SplitCost-B
 
 ## Design
 
-Interface dark-theme com foco em clareza operacional — números grandes, cores semânticas para saldos positivos/negativos e ações primárias sempre visíveis.
+Interface dark-theme com foco em clareza operacional - números grandes, cores semânticas para saldos positivos/negativos e ações primárias sempre visíveis.
 """
 overview_en_us = """
-Frontend of **SplitCosts** — a React / TypeScript SPA that consumes the backend to manage shared expenses.
+Frontend of **SplitCosts** - a React / TypeScript SPA that consumes the backend to manage shared expenses.
 
 ## Features
 
-- **Dashboard** — overview of balances and recent expenses by group
-- **Expense entry** — forms with proportional or custom split rules
-- **Reconciliation** — debt visualization and minimal-payment suggestions
-- **History** — transaction timeline with filters by period and category
-- **Multi-group** — navigation between households / groups
+- **Dashboard** - overview of balances and recent expenses by group
+- **Expense entry** - forms with proportional or custom split rules
+- **Reconciliation** - debt visualization and minimal-payment suggestions
+- **History** - transaction timeline with filters by period and category
+- **Multi-group** - navigation between households / groups
 
 ## Stack
 
@@ -57,18 +57,18 @@ Frontend of **SplitCosts** — a React / TypeScript SPA that consumes the backen
 
 ## Design
 
-Dark-theme interface optimized for operational clarity — large numbers, semantic colors for balances and primary actions always visible.
+Dark-theme interface optimized for operational clarity - large numbers, semantic colors for balances and primary actions always visible.
 """
 overview_ja_jp = """
 **SplitCosts** のフロントエンドであり、共有支出を管理するためにバックエンドを利用する React / TypeScript SPA です。
 
 ## 機能
 
-- **Dashboard** — グループごとの残高と最近の支出の概観
-- **Expense entry** — 比例分配やカスタム分配に対応した入力フォーム
-- **Reconciliation** — 債務の可視化と最小支払い提案
-- **History** — 期間・カテゴリで絞り込める取引タイムライン
-- **Multi-group** — household / group 間の切り替え
+- **Dashboard** - グループごとの残高と最近の支出の概観
+- **Expense entry** - 比例分配やカスタム分配に対応した入力フォーム
+- **Reconciliation** - 債務の可視化と最小支払い提案
+- **History** - 期間・カテゴリで絞り込める取引タイムライン
+- **Multi-group** - household / group 間の切り替え
 
 ## スタック
 

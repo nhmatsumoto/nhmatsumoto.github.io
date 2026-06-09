@@ -1,8 +1,8 @@
 name = "SplitCost-Backend"
 slug = "splitcost-backend"
-headline = "Backend do SplitCosts — API .NET com multi-tenant, domain events e projeções de leitura."
-headline_en_us = "SplitCosts backend — .NET API with multi-tenant, domain events and read projections."
-headline_ja_jp = "SplitCosts バックエンド — マルチテナント、ドメインイベント、読み取り投影を備えた .NET API。"
+headline = "Backend do SplitCosts - API .NET com multi-tenant, domain events e projeções de leitura."
+headline_en_us = "SplitCosts backend - .NET API with multi-tenant, domain events and read projections."
+headline_ja_jp = "SplitCosts バックエンド - マルチテナント、ドメインイベント、読み取り投影を備えた .NET API。"
 summary = "Backend do SplitCosts em .NET/C# com arquitetura multi-tenant, domain events, separação de contextos de leitura/escrita e projeções operacionais."
 summary_en_us = "SplitCosts backend in .NET/C# with multi-tenant architecture, domain events, read/write context separation and operational projections."
 summary_ja_jp = ".NET/C# による SplitCosts バックエンド。マルチテナント構造、ドメインイベント、読み書きコンテキストの分離、運用投影を備える。"
@@ -16,14 +16,14 @@ tags = ["C#"]
 stack = ["C#", ".NET", "PostgreSQL", "Multi-tenant", "DDD"]
 
 overview = """
-Backend do **SplitCosts** — API em .NET/C# que implementa a lógica de compartilhamento de despesas com foco em multi-tenancy e modelagem de domínio.
+Backend do **SplitCosts** - API em .NET/C# que implementa a lógica de compartilhamento de despesas com foco em multi-tenancy e modelagem de domínio.
 
 ## Arquitetura
 
-- **Multi-tenant** — isolamento de dados por grupo/household com tenant resolution no middleware
-- **Domain events** — mudanças de estado publicam eventos para manter projeções atualizadas
-- **CQRS simplificado** — separação entre comandos (escrita) e queries (projeções de leitura)
-- **Repository pattern** — abstração de persistência com PostgreSQL via Entity Framework
+- **Multi-tenant** - isolamento de dados por grupo/household com tenant resolution no middleware
+- **Domain events** - mudanças de estado publicam eventos para manter projeções atualizadas
+- **CQRS simplificado** - separação entre comandos (escrita) e queries (projeções de leitura)
+- **Repository pattern** - abstração de persistência com PostgreSQL via Entity Framework
 
 ## Domínio
 
@@ -39,14 +39,14 @@ O modelo de domínio trata despesas como agregados com regras de negócio:
 Evolução direta do **Financial** (monolito), agora com separação clara entre contextos, multi-tenancy e projeções de leitura. Consumido pelo **SplitCosts-FE** via REST API.
 """
 overview_en_us = """
-Backend of **SplitCosts** — a .NET / C# API that implements expense-sharing logic with a focus on multi-tenancy and domain modeling.
+Backend of **SplitCosts** - a .NET / C# API that implements expense-sharing logic with a focus on multi-tenancy and domain modeling.
 
 ## Architecture
 
-- **Multi-tenant** — data isolation per group / household, with tenant resolution in middleware
-- **Domain events** — state changes publish events to keep read models updated
-- **Lightweight CQRS** — separation between commands (writes) and queries (read projections)
-- **Repository pattern** — persistence abstraction backed by PostgreSQL and Entity Framework
+- **Multi-tenant** - data isolation per group / household, with tenant resolution in middleware
+- **Domain events** - state changes publish events to keep read models updated
+- **Lightweight CQRS** - separation between commands (writes) and queries (read projections)
+- **Repository pattern** - persistence abstraction backed by PostgreSQL and Entity Framework
 
 ## Domain
 
@@ -66,10 +66,10 @@ overview_ja_jp = """
 
 ## アーキテクチャ
 
-- **Multi-tenant** — middleware の tenant resolution による household / group 単位のデータ分離
-- **Domain events** — 状態変化をイベント公開し、read model を更新
-- **軽量 CQRS** — command（書き込み）と query（読み取り投影）の分離
-- **Repository pattern** — PostgreSQL と Entity Framework を背後に持つ永続化抽象
+- **Multi-tenant** - middleware の tenant resolution による household / group 単位のデータ分離
+- **Domain events** - 状態変化をイベント公開し、read model を更新
+- **軽量 CQRS** - command（書き込み）と query（読み取り投影）の分離
+- **Repository pattern** - PostgreSQL と Entity Framework を背後に持つ永続化抽象
 
 ## ドメイン
 

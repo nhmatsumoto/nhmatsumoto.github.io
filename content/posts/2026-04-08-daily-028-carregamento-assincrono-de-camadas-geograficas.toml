@@ -19,7 +19,7 @@ has_math = false
 body = '''
 ## Contexto real
 
-O mapa do SOS Location carrega 4 camadas na abertura de sessão: `AreaDeRisco` (polígonos do município), `HotspotAtivo` (pontos de operação ativos), rotas de evacuação e precipitação atual. A camada crítica para a decisão imediata é `AreaDeRisco` — o coordenador precisa ver as zonas de risco antes de qualquer outra coisa. As outras camadas podem aparecer com 1–2 segundos de atraso sem impacto operacional.
+O mapa do SOS Location carrega 4 camadas na abertura de sessão: `AreaDeRisco` (polígonos do município), `HotspotAtivo` (pontos de operação ativos), rotas de evacuação e precipitação atual. A camada crítica para a decisão imediata é `AreaDeRisco` - o coordenador precisa ver as zonas de risco antes de qualquer outra coisa. As outras camadas podem aparecer com 1–2 segundos de atraso sem impacto operacional.
 
 ## Problema específico
 
@@ -27,7 +27,7 @@ O carregamento sequencial original esperava que todas as 4 camadas terminassem a
 
 ## Decisão técnica
 
-Carregamento paralelo com `Promise.allSettled` — falha em uma camada não bloqueia as demais. Prioridade explícita: `AreaDeRisco` inicia primeiro e renderiza assim que retorna. As outras 3 camadas iniciam simultaneamente. Estado de loading por camada no `layerStore` Zustand: `idle | loading | loaded | error`. Cada componente de camada exibe skeleton/spinner próprio baseado no seu estado — o mapa nunca fica completamente em branco.
+Carregamento paralelo com `Promise.allSettled` - falha em uma camada não bloqueia as demais. Prioridade explícita: `AreaDeRisco` inicia primeiro e renderiza assim que retorna. As outras 3 camadas iniciam simultaneamente. Estado de loading por camada no `layerStore` Zustand: `idle | loading | loaded | error`. Cada componente de camada exibe skeleton/spinner próprio baseado no seu estado - o mapa nunca fica completamente em branco.
 
 ## Implementação
 
@@ -66,7 +66,7 @@ export function useMapLayersLoader(municipioId: string) {
 ```
 
 ```tsx
-// src/layers/HotspotLayer.tsx — exemplo de loading state por camada
+// src/layers/HotspotLayer.tsx - exemplo de loading state por camada
 import { useLayerStore } from '@/stores/layerStore';
 
 export function HotspotLayer() {
@@ -107,7 +107,7 @@ export function LayerLoadingIndicator({ label }: { label: string }) {
 
 ## Exemplo concreto
 
-Abertura de sessão em Blumenau — `AreaDeRisco`: 340ms → mapa visível com zonas de risco. Enquanto `AreaDeRisco` ainda carregava: `HotspotAtivo` retornou em 180ms (já visível antes de `AreaDeRisco`). `EvacuationRoutes`: 520ms. `Precipitation`: falhou com timeout de 2s → badge de erro "Precipitação" exibido no canto inferior, outras camadas intactas. Tempo percebido de mapa útil (AreaDeRisco visível): 340ms vs 920ms anterior.
+Abertura de sessão em Blumenau - `AreaDeRisco`: 340ms → mapa visível com zonas de risco. Enquanto `AreaDeRisco` ainda carregava: `HotspotAtivo` retornou em 180ms (já visível antes de `AreaDeRisco`). `EvacuationRoutes`: 520ms. `Precipitation`: falhou com timeout de 2s → badge de erro "Precipitação" exibido no canto inferior, outras camadas intactas. Tempo percebido de mapa útil (AreaDeRisco visível): 340ms vs 920ms anterior.
 
 ## Critério de sucesso
 
@@ -115,12 +115,12 @@ Abertura de sessão em Blumenau — `AreaDeRisco`: 340ms → mapa visível com z
 
 ## Relação com SOS Location
 
-Carregamento assíncrono com prioridade explícita é a implementação técnica da hierarquia operacional: "AreaDeRisco primeiro" é uma decisão de produto, não de performance. A arquitetura reflete essa decisão — camada crítica não espera por camadas opcionais.
+Carregamento assíncrono com prioridade explícita é a implementação técnica da hierarquia operacional: "AreaDeRisco primeiro" é uma decisão de produto, não de performance. A arquitetura reflete essa decisão - camada crítica não espera por camadas opcionais.
 '''
 body_en_us = '''
 ## Real context
 
-SOS Location's map loads 4 layers on session open: `AreaDeRisco` (municipality polygons), `HotspotAtivo` (active operation points), evacuation routes and current precipitation. The critical layer for immediate decisions is `AreaDeRisco` — the coordinator needs to see risk zones before anything else. The other layers can appear 1–2 seconds later with no operational impact.
+SOS Location's map loads 4 layers on session open: `AreaDeRisco` (municipality polygons), `HotspotAtivo` (active operation points), evacuation routes and current precipitation. The critical layer for immediate decisions is `AreaDeRisco` - the coordinator needs to see risk zones before anything else. The other layers can appear 1–2 seconds later with no operational impact.
 
 ## Specific problem
 
@@ -128,7 +128,7 @@ The original sequential loading waited for all 4 layers to finish before renderi
 
 ## Technical decision
 
-Parallel loading with `Promise.allSettled` — failure in one layer does not block the others. Explicit priority: `AreaDeRisco` starts first and renders as soon as it returns. The other 3 layers start simultaneously. Per-layer loading state in the Zustand `layerStore`: `idle | loading | loaded | error`. Each layer component displays its own skeleton/spinner based on its state — the map is never completely blank.
+Parallel loading with `Promise.allSettled` - failure in one layer does not block the others. Explicit priority: `AreaDeRisco` starts first and renders as soon as it returns. The other 3 layers start simultaneously. Per-layer loading state in the Zustand `layerStore`: `idle | loading | loaded | error`. Each layer component displays its own skeleton/spinner based on its state - the map is never completely blank.
 
 ## Implementation
 
@@ -173,7 +173,7 @@ export function HotspotLayer() {
 
 ## Concrete example
 
-Session opening in Blumenau — `AreaDeRisco`: 340ms → map visible with risk zones. While `AreaDeRisco` was still loading: `HotspotAtivo` returned in 180ms (already visible before `AreaDeRisco`). `EvacuationRoutes`: 520ms. `Precipitation`: failed with 2s timeout → "Precipitation" error badge shown in the corner, other layers intact. Perceived useful map time (AreaDeRisco visible): 340ms vs previous 920ms.
+Session opening in Blumenau - `AreaDeRisco`: 340ms → map visible with risk zones. While `AreaDeRisco` was still loading: `HotspotAtivo` returned in 180ms (already visible before `AreaDeRisco`). `EvacuationRoutes`: 520ms. `Precipitation`: failed with 2s timeout → "Precipitation" error badge shown in the corner, other layers intact. Perceived useful map time (AreaDeRisco visible): 340ms vs previous 920ms.
 
 ## Success criteria
 
@@ -181,12 +181,12 @@ Session opening in Blumenau — `AreaDeRisco`: 340ms → map visible with risk z
 
 ## Relation to SOS Location
 
-Asynchronous loading with explicit priority is the technical implementation of the operational hierarchy: "AreaDeRisco first" is a product decision, not a performance one. The architecture reflects that decision — the critical layer does not wait for optional layers.
+Asynchronous loading with explicit priority is the technical implementation of the operational hierarchy: "AreaDeRisco first" is a product decision, not a performance one. The architecture reflects that decision - the critical layer does not wait for optional layers.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-SOS Locationのマップはセッション開始時に4つのレイヤーをロードする：`AreaDeRisco`（市町村ポリゴン）、`HotspotAtivo`（アクティブな作戦ポイント）、避難経路、現在の降水量。即座の意思決定の重要なレイヤーは`AreaDeRisco`——コーディネーターは他の何よりも先にリスクゾーンを見る必要がある。他のレイヤーは運用上の影響なく1〜2秒後に表示できる。
+SOS Locationのマップはセッション開始時に4つのレイヤーをロードする：`AreaDeRisco`（市町村ポリゴン）、`HotspotAtivo`（アクティブな作戦ポイント）、避難経路、現在の降水量。即座の意思決定の重要なレイヤーは`AreaDeRisco`--コーディネーターは他の何よりも先にリスクゾーンを見る必要がある。他のレイヤーは運用上の影響なく1〜2秒後に表示できる。
 
 ## 具体的な問題
 
@@ -194,7 +194,7 @@ SOS Locationのマップはセッション開始時に4つのレイヤーをロ�
 
 ## 技術的決定
 
-`Promise.allSettled`による並列ロード——1つのレイヤーの失敗が他をブロックしない。明示的な優先順位：`AreaDeRisco`が最初に開始し、返ってきたらすぐにレンダリング。他の3つのレイヤーは同時に開始。Zustand `layerStore`のレイヤーごとのロード状態：`idle | loading | loaded | error`。各レイヤーコンポーネントは自分の状態に基づいて独自のスケルトン/スピナーを表示——マップが完全に白くなることはない。
+`Promise.allSettled`による並列ロード--1つのレイヤーの失敗が他をブロックしない。明示的な優先順位：`AreaDeRisco`が最初に開始し、返ってきたらすぐにレンダリング。他の3つのレイヤーは同時に開始。Zustand `layerStore`のレイヤーごとのロード状態：`idle | loading | loaded | error`。各レイヤーコンポーネントは自分の状態に基づいて独自のスケルトン/スピナーを表示--マップが完全に白くなることはない。
 
 ## 実装
 
@@ -239,7 +239,7 @@ export function HotspotLayer() {
 
 ## 具体的な例
 
-ブルメナウでのセッション開始——`AreaDeRisco`：340ms → リスクゾーンでマップが表示。`AreaDeRisco`がまだロード中に：`HotspotAtivo`が180msで返ってきた（`AreaDeRisco`より前にすでに表示）。`EvacuationRoutes`：520ms。`Precipitation`：2秒タイムアウトで失敗 → コーナーに「降水量」エラーバッジが表示、他のレイヤーは無傷。知覚された有用なマップ時間（AreaDeRisco表示）：340ms vs 以前の920ms。
+ブルメナウでのセッション開始--`AreaDeRisco`：340ms → リスクゾーンでマップが表示。`AreaDeRisco`がまだロード中に：`HotspotAtivo`が180msで返ってきた（`AreaDeRisco`より前にすでに表示）。`EvacuationRoutes`：520ms。`Precipitation`：2秒タイムアウトで失敗 → コーナーに「降水量」エラーバッジが表示、他のレイヤーは無傷。知覚された有用なマップ時間（AreaDeRisco表示）：340ms vs 以前の920ms。
 
 ## 成功基準
 
@@ -247,5 +247,5 @@ export function HotspotLayer() {
 
 ## SOS Locationとの関係
 
-明示的な優先順位付きの非同期ロードは、運用上の階層の技術的実装だ：「AreaDeRisco優先」はパフォーマンスではなくプロダクトの決定だ。アーキテクチャはその決定を反映している——重要なレイヤーはオプションのレイヤーを待たない。
+明示的な優先順位付きの非同期ロードは、運用上の階層の技術的実装だ：「AreaDeRisco優先」はパフォーマンスではなくプロダクトの決定だ。アーキテクチャはその決定を反映している--重要なレイヤーはオプションのレイヤーを待たない。
 '''

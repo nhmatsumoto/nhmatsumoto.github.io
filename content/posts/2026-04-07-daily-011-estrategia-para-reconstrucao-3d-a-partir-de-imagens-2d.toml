@@ -3,9 +3,9 @@ slug = "daily-011-estrategia-para-reconstrucao-3d-a-partir-de-imagens-2d"
 title = "Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D"
 title_en_us = "Daily #011: 3D reconstruction strategy from 2D images"
 title_ja_jp = "Daily #011: 2D画像からの3D再構成戦略"
-summary = "Como o SOS Location estima alturas de edificações sem LiDAR combinando sombras projetadas, dados SRTM e heurísticas por tipo de construção — com RMSE médio de 2,3 m."
-summary_en_us = "How SOS Location estimates building heights without LiDAR by combining projected shadows, SRTM data and type-based heuristics — achieving a mean RMSE of 2.3 m."
-summary_ja_jp = "SOS Locationが投影された影・SRTMデータ・タイプ別ヒューリスティックを組み合わせてLiDARなしで建物高さを推定する方法——平均RMSE 2.3m達成。"
+summary = "Como o SOS Location estima alturas de edificações sem LiDAR combinando sombras projetadas, dados SRTM e heurísticas por tipo de construção - com RMSE médio de 2,3 m."
+summary_en_us = "How SOS Location estimates building heights without LiDAR by combining projected shadows, SRTM data and type-based heuristics - achieving a mean RMSE of 2.3 m."
+summary_ja_jp = "SOS Locationが投影された影・SRTMデータ・タイプ別ヒューリスティックを組み合わせてLiDARなしで建物高さを推定する方法--平均RMSE 2.3m達成。"
 published_at = "2026-04-07T19:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -23,7 +23,7 @@ O SOS Location precisa renderizar modelos 3D de cidades para simular rotas de in
 
 ## Problema específico
 
-Imagens 2D não contêm informação de altura de edificação. Um algoritmo de reconstrução que ignora altura gera modelos completamente planos. Para simulação de inundação, a altura dos obstáculos — prédios, muros, morros urbanos — determina para onde a água flui. Tratar uma cidade como superfície plana produz rotas de inundação incorretas que podem direcionar evacuações para áreas mais perigosas.
+Imagens 2D não contêm informação de altura de edificação. Um algoritmo de reconstrução que ignora altura gera modelos completamente planos. Para simulação de inundação, a altura dos obstáculos - prédios, muros, morros urbanos - determina para onde a água flui. Tratar uma cidade como superfície plana produz rotas de inundação incorretas que podem direcionar evacuações para áreas mais perigosas.
 
 ## Decisão técnica
 
@@ -97,7 +97,7 @@ RMSE < 3 m para edificações em regiões com dados de validação. Cobertura de
 
 ## Relação com SOS Location
 
-O motor de simulação de inundação usa essas estimativas como camada de entrada no modelo de autômatos celulares: cada célula de 5×5 m recebe a maior altura entre cota do terreno e topo da edificação. Sem altura de edificação, a simulação trata paredes e prédios como terreno plano — o fluxo de água seria incorreto para qualquer tomada de decisão de evacuação.
+O motor de simulação de inundação usa essas estimativas como camada de entrada no modelo de autômatos celulares: cada célula de 5×5 m recebe a maior altura entre cota do terreno e topo da edificação. Sem altura de edificação, a simulação trata paredes e prédios como terreno plano - o fluxo de água seria incorreto para qualquer tomada de decisão de evacuação.
 '''
 body_en_us = '''
 ## Real context
@@ -106,7 +106,7 @@ SOS Location needs to render 3D city models to simulate flood routes and tsunami
 
 ## Specific problem
 
-2D images do not contain building height information. A reconstruction algorithm that ignores height produces completely flat models. For flood simulation, the height of obstacles — buildings, walls, urban hills — determines where water flows. Treating a city as a flat surface produces incorrect flood routes that can direct evacuations to more dangerous areas.
+2D images do not contain building height information. A reconstruction algorithm that ignores height produces completely flat models. For flood simulation, the height of obstacles - buildings, walls, urban hills - determines where water flows. Treating a city as a flat surface produces incorrect flood routes that can direct evacuations to more dangerous areas.
 
 ## Technical decision
 
@@ -180,7 +180,7 @@ RMSE < 3 m for buildings in regions with validation data. Coverage ≥ 80% of bu
 
 ## Relation to SOS Location
 
-The flood simulation engine uses these estimates as input to the cellular automata model: each 5×5 m cell receives the greater height between terrain elevation and building top. Without building height, the simulation treats walls and buildings as flat terrain — water flow would be incorrect for any evacuation decision.
+The flood simulation engine uses these estimates as input to the cellular automata model: each 5×5 m cell receives the greater height between terrain elevation and building top. Without building height, the simulation treats walls and buildings as flat terrain - water flow would be incorrect for any evacuation decision.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト

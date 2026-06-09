@@ -8,21 +8,21 @@
     <item>
       <title>Padrões Comportamentais em C#: Strategy, Observer, Mediator e State</title>
       <link>https://nhmatsumoto.github.io/posts/20260608-110000-design-patterns-comportamentais-csharp-dotnet/</link>
-      <description><![CDATA[Padrões comportamentais respondem 'como objetos colaboram e distribuem responsabilidade'. No .NET, delegates, eventos e MediatR já carregam metade do trabalho. Strategy, Observer, Mediator, State e Chain of Responsibility — da forma clássica à idiomática.]]></description>
+      <description><![CDATA[Padrões comportamentais respondem 'como objetos colaboram e distribuem responsabilidade'. No .NET, delegates, eventos e MediatR já carregam metade do trabalho. Strategy, Observer, Mediator, State e Chain of Responsibility - da forma clássica à idiomática.]]></description>
       <pubDate>Mon, 08 Jun 2026 11:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260608-110000-design-patterns-comportamentais-csharp-dotnet/</guid>
     </item>
     <item>
       <title>Padrões Estruturais em C#: Adapter, Decorator, Composite e Proxy na prática</title>
       <link>https://nhmatsumoto.github.io/posts/20260608-100000-design-patterns-estruturais-csharp-dotnet/</link>
-      <description><![CDATA[Padrões estruturais respondem 'como compor objetos sem soldar peças'. No .NET, eles aparecem o tempo todo — middlewares são Decorators, ORMs usam Proxy, ACLs são Adapters. Implementação prática com DI, Scrutor e os recursos do C# moderno.]]></description>
+      <description><![CDATA[Padrões estruturais respondem 'como compor objetos sem soldar peças'. No .NET, eles aparecem o tempo todo - middlewares são Decorators, ORMs usam Proxy, ACLs são Adapters. Implementação prática com DI, Scrutor e os recursos do C# moderno.]]></description>
       <pubDate>Mon, 08 Jun 2026 10:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260608-100000-design-patterns-estruturais-csharp-dotnet/</guid>
     </item>
     <item>
       <title>Padrões Criacionais em C#: Factory, Builder e Singleton na era do DI</title>
       <link>https://nhmatsumoto.github.io/posts/20260608-090000-design-patterns-criacionais-csharp-dotnet/</link>
-      <description><![CDATA[Os padrões criacionais resolvem 'como instanciar sem acoplar ao concreto'. No .NET moderno, o container de DI já é o maior deles — mas Factory, Builder e companhia continuam vivos quando a criação tem regra de negócio. Implementação prática, da forma clássica à idiomática.]]></description>
+      <description><![CDATA[Os padrões criacionais resolvem 'como instanciar sem acoplar ao concreto'. No .NET moderno, o container de DI já é o maior deles - mas Factory, Builder e companhia continuam vivos quando a criação tem regra de negócio. Implementação prática, da forma clássica à idiomática.]]></description>
       <pubDate>Mon, 08 Jun 2026 09:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260608-090000-design-patterns-criacionais-csharp-dotnet/</guid>
     </item>
@@ -36,63 +36,63 @@
     <item>
       <title>Orquestração vs Coreografia: quem comanda o fluxo entre serviços?</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-094000-orchestration-vs-choreography/</link>
-      <description><![CDATA[Quando um processo de negócio atravessa vários serviços, alguém precisa coordenar os passos. Na orquestração há um maestro central; na coreografia cada serviço reage a eventos. A escolha define onde mora a complexidade — e como você lida com falhas e compensações.]]></description>
+      <description><![CDATA[Quando um processo de negócio atravessa vários serviços, alguém precisa coordenar os passos. Na orquestração há um maestro central; na coreografia cada serviço reage a eventos. A escolha define onde mora a complexidade - e como você lida com falhas e compensações.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:40:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-094000-orchestration-vs-choreography/</guid>
     </item>
     <item>
       <title>Observabilidade: os três pilares e a pergunta que o monitoramento não responde</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-093500-observability/</link>
-      <description><![CDATA[Monitoramento responde 'o sistema está quebrado?'. Observabilidade responde 'por quê?' — inclusive para falhas que você nunca previu. Logs, métricas e traces são os três pilares, mas o que os une é a capacidade de fazer perguntas novas sem subir código novo.]]></description>
+      <description><![CDATA[Monitoramento responde 'o sistema está quebrado?'. Observabilidade responde 'por quê?' - inclusive para falhas que você nunca previu. Logs, métricas e traces são os três pilares, mas o que os une é a capacidade de fazer perguntas novas sem subir código novo.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:35:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-093500-observability/</guid>
     </item>
     <item>
       <title>Backpressure: por que um sistema saudável precisa saber dizer &#x27;não&#x27;</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-093000-backpressure/</link>
-      <description><![CDATA[Quando um produtor é mais rápido que um consumidor, alguém precisa segurar a onda — ou a fila cresce até o sistema cair. Backpressure é o mecanismo de propagar 'desacelere' rio acima, e a diferença entre derrubar tudo e degradar com elegância.]]></description>
+      <description><![CDATA[Quando um produtor é mais rápido que um consumidor, alguém precisa segurar a onda - ou a fila cresce até o sistema cair. Backpressure é o mecanismo de propagar 'desacelere' rio acima, e a diferença entre derrubar tudo e degradar com elegância.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:30:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-093000-backpressure/</guid>
     </item>
     <item>
       <title>Outbox Pattern: o fim da dupla escrita entre banco e mensageria</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-092500-outbox-pattern/</link>
-      <description><![CDATA[Salvar no banco e publicar um evento são duas operações que não compartilham transação — e é exatamente aí que os dados divergem. O Outbox Pattern resolve isso gravando o evento na mesma transação do dado e publicando depois, com entrega at-least-once.]]></description>
+      <description><![CDATA[Salvar no banco e publicar um evento são duas operações que não compartilham transação - e é exatamente aí que os dados divergem. O Outbox Pattern resolve isso gravando o evento na mesma transação do dado e publicando depois, com entrega at-least-once.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:25:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-092500-outbox-pattern/</guid>
     </item>
     <item>
       <title>Idempotência em APIs: o seguro contra o retry que vai acontecer</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-092000-idempotency-apis/</link>
-      <description><![CDATA[Em qualquer rede, uma requisição pode chegar duas vezes — timeout, retry, duplo clique. Sem idempotência, isso vira cobrança dupla. Um guia prático sobre Idempotency-Key, a janela de risco entre processar e responder, e como implementar de forma segura.]]></description>
+      <description><![CDATA[Em qualquer rede, uma requisição pode chegar duas vezes - timeout, retry, duplo clique. Sem idempotência, isso vira cobrança dupla. Um guia prático sobre Idempotency-Key, a janela de risco entre processar e responder, e como implementar de forma segura.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:20:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-092000-idempotency-apis/</guid>
     </item>
     <item>
       <title>Consistência forte vs eventual: o trade-off que o teorema CAP só começa a explicar</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-091500-consistency-tradeoffs/</link>
-      <description><![CDATA[Não existe sistema distribuído perfeitamente consistente sem custo. Entre o CAP, o PACELC e a consistência eventual, o que realmente está em jogo é latência contra garantia — e essa é uma decisão de negócio antes de ser técnica.]]></description>
+      <description><![CDATA[Não existe sistema distribuído perfeitamente consistente sem custo. Entre o CAP, o PACELC e a consistência eventual, o que realmente está em jogo é latência contra garantia - e essa é uma decisão de negócio antes de ser técnica.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:15:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-091500-consistency-tradeoffs/</guid>
     </item>
     <item>
       <title>CQRS sem dogma: o que ele realmente separa e o preço que você paga</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-091000-cqrs-tradeoffs/</link>
-      <description><![CDATA[CQRS é separar o modelo de escrita do modelo de leitura — não é Event Sourcing, não exige dois bancos e não é sinônimo de microservices. Um guia honesto sobre o que ganha, o que perde e os três níveis em que ele pode ser adotado.]]></description>
+      <description><![CDATA[CQRS é separar o modelo de escrita do modelo de leitura - não é Event Sourcing, não exige dois bancos e não é sinônimo de microservices. Um guia honesto sobre o que ganha, o que perde e os três níveis em que ele pode ser adotado.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:10:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-091000-cqrs-tradeoffs/</guid>
     </item>
     <item>
       <title>Linguagem Ubíqua na prática: o ativo de DDD que não aparece no diagrama</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/</link>
-      <description><![CDATA[A maioria dos bugs caros nasce de um erro de tradução entre o que o negócio diz e o que o código faz. A linguagem ubíqua não é jargão de DDD — é a disciplina de eliminar essa tradução, palavra por palavra, dentro de um bounded context.]]></description>
+      <description><![CDATA[A maioria dos bugs caros nasce de um erro de tradução entre o que o negócio diz e o que o código faz. A linguagem ubíqua não é jargão de DDD - é a disciplina de eliminar essa tradução, palavra por palavra, dentro de um bounded context.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:05:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/</guid>
     </item>
     <item>
       <title>Monólito Modular vs Microservices: a decisão arquitetural que ninguém quer tomar cedo</title>
       <link>https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/</link>
-      <description><![CDATA[Microservices não são um upgrade do monólito — são um trade-off organizacional caro. Quando o monólito modular é a escolha correta, quais sinais justificam a extração de serviços e por que a Lei de Conway decide mais do que a tecnologia.]]></description>
+      <description><![CDATA[Microservices não são um upgrade do monólito - são um trade-off organizacional caro. Quando o monólito modular é a escolha correta, quais sinais justificam a extração de serviços e por que a Lei de Conway decide mais do que a tecnologia.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/</guid>
     </item>
@@ -106,28 +106,28 @@
     <item>
       <title>Daily #044: Controle de estado de pagamento (pending, completed)</title>
       <link>https://nhmatsumoto.github.io/posts/20260409-040000-daily-044-controle-de-estado-de-pagamento-pending-completed/</link>
-      <description><![CDATA[Como o SOS Location modela a máquina de estados de Doacao — transições válidas entre pending, processing, completed, failed e refunded, com enforcement no domínio e auditoria de cada transição em tabela separada.]]></description>
+      <description><![CDATA[Como o SOS Location modela a máquina de estados de Doacao - transições válidas entre pending, processing, completed, failed e refunded, com enforcement no domínio e auditoria de cada transição em tabela separada.]]></description>
       <pubDate>Thu, 09 Apr 2026 04:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-040000-daily-044-controle-de-estado-de-pagamento-pending-completed/</guid>
     </item>
     <item>
       <title>Daily #043: Uso de tokens únicos por transação</title>
       <link>https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/</link>
-      <description><![CDATA[Como o SOS Location emite tokens CSRF de uso único para formulários de doação — gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission.]]></description>
+      <description><![CDATA[Como o SOS Location emite tokens CSRF de uso único para formulários de doação - gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission.]]></description>
       <pubDate>Thu, 09 Apr 2026 03:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/</guid>
     </item>
     <item>
       <title>Daily #042: Implementação de idempotência na API</title>
       <link>https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/</link>
-      <description><![CDATA[Como o SOS Location implementou idempotência via header Idempotency-Key no nível da API — armazenamento de respostas em Redis com TTL de 24 horas, replay automático e proteção contra double-submit em qualquer cliente HTTP.]]></description>
+      <description><![CDATA[Como o SOS Location implementou idempotência via header Idempotency-Key no nível da API - armazenamento de respostas em Redis com TTL de 24 horas, replay automático e proteção contra double-submit em qualquer cliente HTTP.]]></description>
       <pubDate>Thu, 09 Apr 2026 02:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/</guid>
     </item>
     <item>
       <title>Daily #041: Problema de pagamento duplicado por múltiplos cliques</title>
       <link>https://nhmatsumoto.github.io/posts/20260409-010000-daily-041-problema-de-pagamento-duplicado-por-multiplos-cliques/</link>
-      <description><![CDATA[Como o SOS Location resolveu o problema de doações duplicadas causado por duplo-clique no botão de doação — botão desabilitado após primeiro clique no frontend e chave de idempotência no backend.]]></description>
+      <description><![CDATA[Como o SOS Location resolveu o problema de doações duplicadas causado por duplo-clique no botão de doação - botão desabilitado após primeiro clique no frontend e chave de idempotência no backend.]]></description>
       <pubDate>Thu, 09 Apr 2026 01:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-010000-daily-041-problema-de-pagamento-duplicado-por-multiplos-cliques/</guid>
     </item>

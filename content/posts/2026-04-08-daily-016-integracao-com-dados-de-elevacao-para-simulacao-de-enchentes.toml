@@ -23,11 +23,11 @@ O motor de simulação de enchentes do SOS Location usa um modelo de autômatos 
 
 ## Problema específico
 
-O SRTM (Shuttle Radar Topography Mission) com 30 m de resolução é gratuito e cobre o Brasil todo, mas tem limitações críticas para simulação de enchentes urbanas: (1) resolução de 30 m é grossa demais para corredores de rua de 8–12 m de largura; (2) o SRTM mede a superfície de vegetação, não o terreno — em regiões com dossel arbóreo, o "terreno" registrado pode ser 10–20 m acima do chão real; (3) erro vertical de ±16 m nas regiões tropicais brasileiras.
+O SRTM (Shuttle Radar Topography Mission) com 30 m de resolução é gratuito e cobre o Brasil todo, mas tem limitações críticas para simulação de enchentes urbanas: (1) resolução de 30 m é grossa demais para corredores de rua de 8–12 m de largura; (2) o SRTM mede a superfície de vegetação, não o terreno - em regiões com dossel arbóreo, o "terreno" registrado pode ser 10–20 m acima do chão real; (3) erro vertical de ±16 m nas regiões tropicais brasileiras.
 
 ## Decisão técnica
 
-Estratégia de dois níveis: SRTM 30 m como base nacional, ALOS-PALSAR 12,5 m para os 50 municípios prioritários do SOS Location. Ambos ingeridos como rasters no PostGIS via `raster2pgsql`. Consulta de elevação em runtime usa `ST_Value(raster, geom)` — sub-milissegundo com índice espacial.
+Estratégia de dois níveis: SRTM 30 m como base nacional, ALOS-PALSAR 12,5 m para os 50 municípios prioritários do SOS Location. Ambos ingeridos como rasters no PostGIS via `raster2pgsql`. Consulta de elevação em runtime usa `ST_Value(raster, geom)` - sub-milissegundo com índice espacial.
 
 ## Implementação
 
@@ -123,11 +123,11 @@ SOS Location's flood simulation engine uses a cellular automata model: each 5×5
 
 ## Specific problem
 
-SRTM (Shuttle Radar Topography Mission) at 30 m resolution is free and covers all of Brazil, but has critical limitations for urban flood simulation: (1) 30 m resolution is too coarse for 8–12 m wide street corridors; (2) SRTM measures the vegetation surface, not the terrain — in regions with tree canopy, the recorded "terrain" can be 10–20 m above the real ground; (3) vertical error of ±16 m in Brazilian tropical regions.
+SRTM (Shuttle Radar Topography Mission) at 30 m resolution is free and covers all of Brazil, but has critical limitations for urban flood simulation: (1) 30 m resolution is too coarse for 8–12 m wide street corridors; (2) SRTM measures the vegetation surface, not the terrain - in regions with tree canopy, the recorded "terrain" can be 10–20 m above the real ground; (3) vertical error of ±16 m in Brazilian tropical regions.
 
 ## Technical decision
 
-Two-tier strategy: SRTM 30 m as the national base, ALOS-PALSAR 12.5 m for SOS Location's 50 priority municipalities. Both ingested as rasters in PostGIS via `raster2pgsql`. Runtime elevation query uses `ST_Value(raster, geom)` — sub-millisecond with spatial index.
+Two-tier strategy: SRTM 30 m as the national base, ALOS-PALSAR 12.5 m for SOS Location's 50 priority municipalities. Both ingested as rasters in PostGIS via `raster2pgsql`. Runtime elevation query uses `ST_Value(raster, geom)` - sub-millisecond with spatial index.
 
 ## Implementation
 
@@ -190,11 +190,11 @@ SOS Locationの洪水シミュレーションエンジンはセル状オート�
 
 ## 具体的な問題
 
-30m解像度のSRTM（シャトルレーダー地形ミッション）は無料でブラジル全土をカバーするが、都市洪水シミュレーションには重大な制限がある：(1) 8〜12m幅の街路には30m解像度は粗すぎる；(2) SRTMは地形ではなく植生の表面を測定する——樹冠のある地域では記録された「地形」が実際の地面より10〜20m高い場合がある；(3) ブラジルの熱帯地域での垂直誤差±16m。
+30m解像度のSRTM（シャトルレーダー地形ミッション）は無料でブラジル全土をカバーするが、都市洪水シミュレーションには重大な制限がある：(1) 8〜12m幅の街路には30m解像度は粗すぎる；(2) SRTMは地形ではなく植生の表面を測定する--樹冠のある地域では記録された「地形」が実際の地面より10〜20m高い場合がある；(3) ブラジルの熱帯地域での垂直誤差±16m。
 
 ## 技術的決定
 
-2層戦略：国家ベースとしてSRTM 30m、SOS Locationの50の優先自治体にALOS-PALSAR 12.5m。両方を`raster2pgsql`でPostGISにラスターとして取り込む。ランタイムの標高クエリは`ST_Value(raster, geom)`を使用——空間インデックスでサブミリ秒。
+2層戦略：国家ベースとしてSRTM 30m、SOS Locationの50の優先自治体にALOS-PALSAR 12.5m。両方を`raster2pgsql`でPostGISにラスターとして取り込む。ランタイムの標高クエリは`ST_Value(raster, geom)`を使用--空間インデックスでサブミリ秒。
 
 ## 実装
 

@@ -17,7 +17,7 @@ featured = true
 has_math = false
 
 body = """
-O Projeto Manhattan não foi apenas a criação de uma arma; foi o nascimento do **Big Science** — projetos de pesquisa massivos, ultra-financiados e multidisciplinares.
+O Projeto Manhattan não foi apenas a criação de uma arma; foi o nascimento do **Big Science** - projetos de pesquisa massivos, ultra-financiados e multidisciplinares.
 
 ## A Carta de Einstein-Szilárd
 Tudo começou com um aviso. Leo Szilárd convenceu Albert Einstein a alertar o presidente Roosevelt de que a Alemanha nazista poderia estar desenvolvendo bombas de fissão de urânio.
@@ -31,10 +31,10 @@ O desafio era separar o Isótopo **U-235** do mais comum **U-238**, ou criar o n
 ## Trinity e o Legado Ético
 O teste de Trinity provou que a teoria estava correta. Mas, como Oppenheimer citaria mais tarde, o mundo nunca mais seria o mesmo. O Projeto Manhattan deu início à Era Atômica e à Guerra Fria, mudando para sempre o equilíbrio de poder global.
 
-> "Agora eu me tornei a Morte, a destruidora de mundos." — Robert Oppenheimer (citando o Bhagavad Gita)
+> "Agora eu me tornei a Morte, a destruidora de mundos." - Robert Oppenheimer (citando o Bhagavad Gita)
 
 ## Do Caos à Energia
-Hoje, a tecnologia que criou a bomba sustenta a energia nuclear — uma das fontes de energia mais densas e limpas que temos, provando que a ciência é uma ferramenta cujo valor é definido por como decidimos usá-la.
+Hoje, a tecnologia que criou a bomba sustenta a energia nuclear - uma das fontes de energia mais densas e limpas que temos, provando que a ciência é uma ferramenta cujo valor é definido por como decidimos usá-la.
 """
 body_en_us = """
 The Manhattan Project was not merely the creation of a weapon. It was the birth of **Big Science**: massive, multidisciplinary, heavily funded research at industrial scale.
@@ -51,7 +51,7 @@ The challenge was to separate **U-235** from the more common **U-238**, or to cr
 ## Trinity and the ethical legacy
 The Trinity test proved the theory correct. But, as Oppenheimer would later quote, the world would never be the same again. The Manhattan Project began both the Atomic Age and the Cold War, permanently altering the global balance of power.
 
-> "Now I am become Death, the destroyer of worlds." — Robert Oppenheimer (quoting the Bhagavad Gita)
+> "Now I am become Death, the destroyer of worlds." - Robert Oppenheimer (quoting the Bhagavad Gita)
 
 ## From chaos to energy
 Today, the technology that created the bomb also sustains nuclear energy, one of the densest and cleanest energy sources available. Science remains a tool whose value depends on how we choose to use it.
@@ -71,7 +71,7 @@ body_ja_jp = """
 ## Trinity と倫理的遺産
 Trinity 実験は理論が正しかったことを証明しました。しかし、後にオッペンハイマーが引用したように、世界は二度と元には戻りませんでした。マンハッタン計画は、原子力時代と冷戦を同時に始め、世界の力の均衡を永久に変えました。
 
-> 「今や私は死となり、世界の破壊者となった。」 — ロバート・オッペンハイマー（『バガヴァッド・ギーター』より）
+> 「今や私は死となり、世界の破壊者となった。」 - ロバート・オッペンハイマー（『バガヴァッド・ギーター』より）
 
 ## 混沌からエネルギーへ
 今日では、爆弾を生んだ同じ技術が、最も高密度かつ比較的クリーンなエネルギー源の一つである原子力も支えています。科学とは、どう使うかによって価値が決まる道具なのです。

@@ -26,7 +26,7 @@ Aplicação monolítica de gestão financeira pessoal, desenvolvida como exercí
 
 ## Relação com o ecossistema
 
-Este projeto é o predecessor direto do **SplitCosts** — a evolução natural de um monolito financeiro pessoal para uma aplicação multi-tenant de compartilhamento de despesas. Muitas das decisões de domínio do SplitCosts foram refinadas a partir das limitações encontradas aqui.
+Este projeto é o predecessor direto do **SplitCosts** - a evolução natural de um monolito financeiro pessoal para uma aplicação multi-tenant de compartilhamento de despesas. Muitas das decisões de domínio do SplitCosts foram refinadas a partir das limitações encontradas aqui.
 
 ## Lições aprendidas
 
@@ -43,7 +43,7 @@ Monolithic personal-finance application, developed as an architecture exercise i
 
 ## Relationship with the ecosystem
 
-This project is the direct predecessor of **SplitCosts** — the natural evolution from a personal-finance monolith to a multi-tenant expense-sharing system. Several domain decisions later used in SplitCosts were refined from the limitations identified here.
+This project is the direct predecessor of **SplitCosts** - the natural evolution from a personal-finance monolith to a multi-tenant expense-sharing system. Several domain decisions later used in SplitCosts were refined from the limitations identified here.
 
 ## Lessons learned
 

@@ -3,9 +3,9 @@ slug = "system-prompts-and-models-of-ai-tools"
 headline = "Coleção completa de system prompts, tools e modelos de AI tools como v0, Cursor, Devin, Replit e outros."
 headline_en_us = "Complete collection of system prompts, tools and models of AI tooling such as v0, Cursor, Devin, Replit and others."
 headline_ja_jp = "v0、Cursor、Devin、Replit など、AI ツールのシステムプロンプト・ツール・モデルの完全コレクション。"
-summary = "Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros — referência para engenharia de prompts."
-summary_en_us = "Fork of the complete collection of AI tooling system prompts: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent and others — a reference for prompt engineering."
-summary_ja_jp = "AI ツールのシステムプロンプト完全コレクションのフォーク：v0、Cursor、Manus、Same.dev、Lovable、Devin、Replit Agent、Windsurf、VSCode Agent など — プロンプトエンジニアリングのリファレンス。"
+summary = "Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros - referência para engenharia de prompts."
+summary_en_us = "Fork of the complete collection of AI tooling system prompts: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent and others - a reference for prompt engineering."
+summary_ja_jp = "AI ツールのシステムプロンプト完全コレクションのフォーク：v0、Cursor、Manus、Same.dev、Lovable、Devin、Replit Agent、Windsurf、VSCode Agent など - プロンプトエンジニアリングのリファレンス。"
 status = "published"
 featured = false
 order = 999
@@ -22,18 +22,18 @@ Fork da coleção mais abrangente de system prompts e definições de tools de f
 
 System prompts completos e definições de ferramentas de:
 
-- **v0** (Vercel) — geração de UI
-- **Cursor** — IDE com IA integrada
-- **Manus** — agente autônomo
-- **Same.dev** — clone de sites
-- **Lovable** — geração de apps
-- **Devin** — engenheiro de software autônomo
-- **Replit Agent** — ambiente de desenvolvimento com IA
-- **Windsurf Agent** — editor com IA
-- **VSCode Agent** — Copilot Chat
-- **Dia Browser** — browser com IA
-- **Trae AI** — assistente de código
-- **Cluely** — AI overlay
+- **v0** (Vercel) - geração de UI
+- **Cursor** - IDE com IA integrada
+- **Manus** - agente autônomo
+- **Same.dev** - clone de sites
+- **Lovable** - geração de apps
+- **Devin** - engenheiro de software autônomo
+- **Replit Agent** - ambiente de desenvolvimento com IA
+- **Windsurf Agent** - editor com IA
+- **VSCode Agent** - Copilot Chat
+- **Dia Browser** - browser com IA
+- **Trae AI** - assistente de código
+- **Cluely** - AI overlay
 
 ## Relevância
 
@@ -55,18 +55,18 @@ Fork of the broadest collection of system prompts and tool definitions for AI so
 
 Complete system prompts and tool definitions from:
 
-- **v0** (Vercel) — UI generation
-- **Cursor** — AI-assisted IDE
-- **Manus** — autonomous agent
-- **Same.dev** — website cloning
-- **Lovable** — app generation
-- **Devin** — autonomous software engineer
-- **Replit Agent** — AI development environment
-- **Windsurf Agent** — AI editor
-- **VSCode Agent** — Copilot Chat
-- **Dia Browser** — AI browser
-- **Trae AI** — coding assistant
-- **Cluely** — AI overlay
+- **v0** (Vercel) - UI generation
+- **Cursor** - AI-assisted IDE
+- **Manus** - autonomous agent
+- **Same.dev** - website cloning
+- **Lovable** - app generation
+- **Devin** - autonomous software engineer
+- **Replit Agent** - AI development environment
+- **Windsurf Agent** - AI editor
+- **VSCode Agent** - Copilot Chat
+- **Dia Browser** - AI browser
+- **Trae AI** - coding assistant
+- **Cluely** - AI overlay
 
 ## Why it matters
 
@@ -88,18 +88,18 @@ AI ソフトウェア開発ツール向けの system prompt と tool 定義を�
 
 次の system prompt と tool 定義を完全収録しています。
 
-- **v0** (Vercel) — UI 生成
-- **Cursor** — AI 統合 IDE
-- **Manus** — 自律エージェント
-- **Same.dev** — Web サイト複製
-- **Lovable** — アプリ生成
-- **Devin** — 自律型ソフトウェアエンジニア
-- **Replit Agent** — AI 開発環境
-- **Windsurf Agent** — AI エディタ
-- **VSCode Agent** — Copilot Chat
-- **Dia Browser** — AI browser
-- **Trae AI** — コーディング支援
-- **Cluely** — AI overlay
+- **v0** (Vercel) - UI 生成
+- **Cursor** - AI 統合 IDE
+- **Manus** - 自律エージェント
+- **Same.dev** - Web サイト複製
+- **Lovable** - アプリ生成
+- **Devin** - 自律型ソフトウェアエンジニア
+- **Replit Agent** - AI 開発環境
+- **Windsurf Agent** - AI エディタ
+- **VSCode Agent** - Copilot Chat
+- **Dia Browser** - AI browser
+- **Trae AI** - コーディング支援
+- **Cluely** - AI overlay
 
 ## なぜ重要か
 

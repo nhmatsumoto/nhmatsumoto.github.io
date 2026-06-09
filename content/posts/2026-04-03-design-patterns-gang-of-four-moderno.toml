@@ -24,8 +24,8 @@ trade_offs = [
   "Eliminar patterns clássicos melhora legibilidade, mas pode confundir devs vindos de Java/C# legado",
 ]
 lessons = [
-  "GoF continua relevante como vocabulário compartilhado — mesmo quando a implementação muda, o conceito comunica",
-  "O melhor pattern é o que o time inteiro entende — sofisticação sem consenso é dívida técnica disfarçada",
+  "GoF continua relevante como vocabulário compartilhado - mesmo quando a implementação muda, o conceito comunica",
+  "O melhor pattern é o que o time inteiro entende - sofisticação sem consenso é dívida técnica disfarçada",
 ]
 
 body = """

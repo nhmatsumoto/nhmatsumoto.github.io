@@ -3,9 +3,9 @@ slug = "daily-014-pipeline-de-segmentacao-de-imagens-geograficas"
 title = "Daily #014: Pipeline de segmentação de imagens geográficas"
 title_en_us = "Daily #014: Geographic image segmentation pipeline"
 title_ja_jp = "Daily #014: 地理画像セグメンテーションのパイプライン"
-summary = "O pipeline U-Net do SOS Location para segmentar imagens de satélite em água/estrada/edificação/vegetação — com tiling de 256×256, class weights e inserção de polígonos no PostGIS."
-summary_en_us = "SOS Location's U-Net pipeline to segment satellite images into water/road/building/vegetation — with 256×256 tiling, class weights and polygon insertion into PostGIS."
-summary_ja_jp = "SOS LocationのU-Netパイプラインで衛星画像を水域/道路/建物/植生にセグメンテーション——256×256タイリング・クラスウェイト・PostGISへのポリゴン挿入。"
+summary = "O pipeline U-Net do SOS Location para segmentar imagens de satélite em água/estrada/edificação/vegetação - com tiling de 256×256, class weights e inserção de polígonos no PostGIS."
+summary_en_us = "SOS Location's U-Net pipeline to segment satellite images into water/road/building/vegetation - with 256×256 tiling, class weights and polygon insertion into PostGIS."
+summary_ja_jp = "SOS LocationのU-Netパイプラインで衛星画像を水域/道路/建物/植生にセグメンテーション--256×256タイリング・クラスウェイト・PostGISへのポリゴン挿入。"
 published_at = "2026-04-07T22:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -23,7 +23,7 @@ O SOS Location precisa identificar automaticamente em imagens de satélite quais
 
 ## Problema específico
 
-Imagens de satélite Sentinel-2 chegam como GeoTIFF de 100 km² com resolução de 10 m. Processar uma imagem inteira numa única inferência de modelo excede a VRAM disponível (8 GB). Além disso, a distribuição de classes é fortemente desbalanceada: em qualquer imagem de zona urbana, água inundada ocupa < 1% dos pixels, mesmo durante eventos de enchente severos. Um modelo treinado sem class weights aprenderia a classificar tudo como "terra/edificação" e teria > 99% de acurácia — mas F1 0,12 para "água".
+Imagens de satélite Sentinel-2 chegam como GeoTIFF de 100 km² com resolução de 10 m. Processar uma imagem inteira numa única inferência de modelo excede a VRAM disponível (8 GB). Além disso, a distribuição de classes é fortemente desbalanceada: em qualquer imagem de zona urbana, água inundada ocupa < 1% dos pixels, mesmo durante eventos de enchente severos. Um modelo treinado sem class weights aprenderia a classificar tudo como "terra/edificação" e teria > 99% de acurácia - mas F1 0,12 para "água".
 
 ## Decisão técnica
 
@@ -97,7 +97,7 @@ F1-score para classe "água" ≥ 0.78 no conjunto de validação com imagens rea
 
 ## Relação com SOS Location
 
-A camada de "área inundada atual" exibida no mapa do SOS Location é o produto desse pipeline. Coordenadores de emergência usam essa camada para decidir quais rotas de evacuação estão bloqueadas e onde priorizar operações de resgate — decisões que dependem da atualização automática e precisa do mapa.
+A camada de "área inundada atual" exibida no mapa do SOS Location é o produto desse pipeline. Coordenadores de emergência usam essa camada para decidir quais rotas de evacuação estão bloqueadas e onde priorizar operações de resgate - decisões que dependem da atualização automática e precisa do mapa.
 '''
 body_en_us = '''
 ## Real context
@@ -106,7 +106,7 @@ SOS Location needs to automatically identify in satellite images which areas are
 
 ## Specific problem
 
-Sentinel-2 satellite images arrive as 100 km² GeoTIFFs with 10 m resolution. Processing an entire image in a single model inference exceeds available VRAM (8 GB). Additionally, class distribution is strongly imbalanced: in any urban zone image, flooded water occupies < 1% of pixels, even during severe flood events. A model trained without class weights would learn to classify everything as "land/building" and achieve > 99% accuracy — but F1 0.12 for "water".
+Sentinel-2 satellite images arrive as 100 km² GeoTIFFs with 10 m resolution. Processing an entire image in a single model inference exceeds available VRAM (8 GB). Additionally, class distribution is strongly imbalanced: in any urban zone image, flooded water occupies < 1% of pixels, even during severe flood events. A model trained without class weights would learn to classify everything as "land/building" and achieve > 99% accuracy - but F1 0.12 for "water".
 
 ## Technical decision
 
@@ -164,16 +164,16 @@ F1-score for "water" class ≥ 0.78 on the validation set with real flood images
 
 ## Relation to SOS Location
 
-The "current flooded area" layer displayed on the SOS Location map is the product of this pipeline. Emergency coordinators use this layer to decide which evacuation routes are blocked and where to prioritise rescue operations — decisions that depend on the automatic and accurate map update.
+The "current flooded area" layer displayed on the SOS Location map is the product of this pipeline. Emergency coordinators use this layer to decide which evacuation routes are blocked and where to prioritise rescue operations - decisions that depend on the automatic and accurate map update.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-SOS Locationは衛星画像からどのエリアが洪水しているか、どの道路が封鎖されているか、建物が無傷か損傷しているかを自動的に特定する必要がある。この情報は手動フィールドレポートに依存せずに、ほぼリアルタイムでマップのリスクレイヤーを更新する——手動レポートは数時間遅れて届く。
+SOS Locationは衛星画像からどのエリアが洪水しているか、どの道路が封鎖されているか、建物が無傷か損傷しているかを自動的に特定する必要がある。この情報は手動フィールドレポートに依存せずに、ほぼリアルタイムでマップのリスクレイヤーを更新する--手動レポートは数時間遅れて届く。
 
 ## 具体的な問題
 
-Sentinel-2衛星画像は10m解像度の100 km² GeoTIFFとして届く。画像全体を1回のモデル推論で処理すると利用可能なVRAM（8GB）を超える。さらに、クラス分布は強くアンバランス：どの都市ゾーン画像でも、深刻な洪水イベント中でさえ洪水した水はピクセルの1%未満しか占めない。クラスウェイトなしで訓練されたモデルはすべてを「陸/建物」に分類することを学習し、99%以上の精度を達成する——しかし「水」のF1は0.12だ。
+Sentinel-2衛星画像は10m解像度の100 km² GeoTIFFとして届く。画像全体を1回のモデル推論で処理すると利用可能なVRAM（8GB）を超える。さらに、クラス分布は強くアンバランス：どの都市ゾーン画像でも、深刻な洪水イベント中でさえ洪水した水はピクセルの1%未満しか占めない。クラスウェイトなしで訓練されたモデルはすべてを「陸/建物」に分類することを学習し、99%以上の精度を達成する--しかし「水」のF1は0.12だ。
 
 ## 技術的決定
 
@@ -230,5 +230,5 @@ def reconstruct_mask(tiles_preds, image_shape):
 
 ## SOS Locationとの関係
 
-SOS Locationのマップに表示される「現在の洪水エリア」レイヤーは、このパイプラインの産物だ。緊急対応コーディネーターはこのレイヤーを使って、どの避難経路が封鎖されているか、どこで救助活動を優先するかを決定する——自動的で正確なマップ更新に依存した決定だ。
+SOS Locationのマップに表示される「現在の洪水エリア」レイヤーは、このパイプラインの産物だ。緊急対応コーディネーターはこのレイヤーを使って、どの避難経路が封鎖されているか、どこで救助活動を優先するかを決定する--自動的で正確なマップ更新に依存した決定だ。
 '''

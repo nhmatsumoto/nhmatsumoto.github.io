@@ -3,8 +3,8 @@ slug = "mermaid"
 headline = "Geração de diagramas como fluxogramas e diagramas de sequência a partir de texto, similar a markdown."
 headline_en_us = "Generation of diagrams (flowcharts, sequence diagrams, etc.) from text, similar to markdown."
 headline_ja_jp = "Markdown のようにテキストからフローチャートやシーケンス図などのダイアグラムを生成。"
-summary = "Fork do Mermaid.js — ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual."
-summary_en_us = "Fork of Mermaid.js — a text-based diagram generator used extensively across the Technical Knowledge OS for visual documentation."
+summary = "Fork do Mermaid.js - ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual."
+summary_en_us = "Fork of Mermaid.js - a text-based diagram generator used extensively across the Technical Knowledge OS for visual documentation."
 summary_ja_jp = "Mermaid.js のフォーク。Technical Knowledge OS の可視的ドキュメンテーション全体で広く使われる、テキストベースのダイアグラム生成ツール。"
 status = "published"
 featured = false
@@ -22,11 +22,11 @@ Fork do Mermaid.js, a biblioteca de geração de diagramas a partir de texto que
 
 O Mermaid é utilizado em posts, documentos e projetos para renderizar diagramas técnicos diretamente no conteúdo markdown:
 
-- **Flowcharts** — fluxos de processamento e pipelines
-- **Sequence diagrams** — interações entre serviços
-- **Class diagrams** — modelagem de domínio
-- **ER diagrams** — esquemas de banco de dados
-- **Gantt charts** — cronogramas de projeto
+- **Flowcharts** - fluxos de processamento e pipelines
+- **Sequence diagrams** - interações entre serviços
+- **Class diagrams** - modelagem de domínio
+- **ER diagrams** - esquemas de banco de dados
+- **Gantt charts** - cronogramas de projeto
 
 ## Integração
 
@@ -51,11 +51,11 @@ Fork of Mermaid.js, the text-to-diagram library integrated natively into Technic
 
 Mermaid is used across posts, documents and project pages to render technical diagrams directly from markdown content:
 
-- **Flowcharts** — processing flows and pipelines
-- **Sequence diagrams** — interactions between services
-- **Class diagrams** — domain modeling
-- **ER diagrams** — database schemas
-- **Gantt charts** — project schedules
+- **Flowcharts** - processing flows and pipelines
+- **Sequence diagrams** - interactions between services
+- **Class diagrams** - domain modeling
+- **ER diagrams** - database schemas
+- **Gantt charts** - project schedules
 
 ## Integration
 
@@ -80,11 +80,11 @@ Technical Knowledge OS にネイティブ統合されているテキストベー
 
 Mermaid は記事、文書、プロジェクト・ページ全体で使われ、markdown から技術図を直接描画します。
 
-- **Flowcharts** — 処理フローとパイプライン
-- **Sequence diagrams** — サービス間相互作用
-- **Class diagrams** — ドメインモデリング
-- **ER diagrams** — DB スキーマ
-- **Gantt charts** — プロジェクト日程
+- **Flowcharts** - 処理フローとパイプライン
+- **Sequence diagrams** - サービス間相互作用
+- **Class diagrams** - ドメインモデリング
+- **ER diagrams** - DB スキーマ
+- **Gantt charts** - プロジェクト日程
 
 ## 統合方法
 

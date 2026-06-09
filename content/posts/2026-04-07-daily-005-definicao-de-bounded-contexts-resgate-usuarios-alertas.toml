@@ -3,8 +3,8 @@ slug = "daily-005-definicao-de-bounded-contexts-resgate-usuarios-alertas"
 title = "Daily #005: Definição de bounded contexts: Resgate, Usuários, Alertas"
 title_en_us = "Daily #005: Bounded context definition: Rescue, Users and Alerts"
 title_ja_jp = "Daily #005: 境界づけられたコンテキストの定義：救助、ユーザー、アラート"
-summary = "Como os três bounded contexts do SOS Location — Busca, Resgate e Alertas — integram via eventos sem acoplamento direto, e o que acontece quando essa fronteira é violada."
-summary_en_us = "How SOS Location's three bounded contexts — Busca, Resgate and Alertas — integrate via events without direct coupling, and what happens when that boundary is violated."
+summary = "Como os três bounded contexts do SOS Location - Busca, Resgate e Alertas - integram via eventos sem acoplamento direto, e o que acontece quando essa fronteira é violada."
+summary_en_us = "How SOS Location's three bounded contexts - Busca, Resgate and Alertas - integrate via events without direct coupling, and what happens when that boundary is violated."
 summary_ja_jp = "SOS Locationの3つの境界づけられたコンテキスト（Busca・Resgate・Alertas）が直接結合なしにイベント経由で統合する方法、およびその境界が違反された場合に何が起こるか。"
 published_at = "2026-04-07T13:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
@@ -23,11 +23,11 @@ No SOS Location, equipes de busca precisam saber sobre pessoas desaparecidas, ma
 
 ## Problema específico
 
-Na versão inicial, `AlertaController` injetava `IOperacaoDeResgateRepository` diretamente para consultar se havia operações ativas antes de emitir um alerta. Isso criou acoplamento direto entre os contextos de Alertas e Resgate. Quando a estrutura interna de `OperacaoDeResgate` mudou (adição de campo `ResponsavelTecnico`), o build do módulo de Alertas quebrou — um módulo que não tem nada a ver com a estrutura de uma operação de resgate.
+Na versão inicial, `AlertaController` injetava `IOperacaoDeResgateRepository` diretamente para consultar se havia operações ativas antes de emitir um alerta. Isso criou acoplamento direto entre os contextos de Alertas e Resgate. Quando a estrutura interna de `OperacaoDeResgate` mudou (adição de campo `ResponsavelTecnico`), o build do módulo de Alertas quebrou - um módulo que não tem nada a ver com a estrutura de uma operação de resgate.
 
 ## Decisão técnica
 
-Três bounded contexts com fronteiras explícitas: `Busca` (gestão de pessoas desaparecidas), `Resgate` (coordenação de operações de campo), `Alertas` (notificação da população). Integração exclusivamente via integration events publicados no barramento — nunca via chamadas diretas entre contextos.
+Três bounded contexts com fronteiras explícitas: `Busca` (gestão de pessoas desaparecidas), `Resgate` (coordenação de operações de campo), `Alertas` (notificação da população). Integração exclusivamente via integration events publicados no barramento - nunca via chamadas diretas entre contextos.
 
 ```
 Busca BC ──[PessoaDesaparecidaReportadaIntegrationEvent]──► Resgate BC
@@ -58,7 +58,7 @@ public sealed class IniciarOperacaoDeBuscaHandler
         PessoaDesaparecidaReportadaIntegrationEvent evt,
         CancellationToken ct)
     {
-        // Resgate recebe apenas os dados do evento — não acessa Busca diretamente
+        // Resgate recebe apenas os dados do evento - não acessa Busca diretamente
         var operacao = OperacaoDeResgate.Iniciar(
             pessoaDesaparecidaId: evt.PessoaId,
             coordenadas: new Coordenadas(evt.Latitude, evt.Longitude),
@@ -89,7 +89,7 @@ public sealed class EmitirAlertaDeDesaparecimentoHandler
 
 ## Exemplo concreto
 
-Quando o modelo interno de `OperacaoDeResgate` recebeu o campo `ResponsavelTecnico` (engenheiro civil que assina a operação), apenas o módulo `Resgate` precisou ser modificado. O módulo `Alertas` continuou funcionando sem nenhuma alteração, porque nunca dependeu da estrutura de `OperacaoDeResgate` — apenas do evento `OperacaoEncerradaIntegrationEvent`.
+Quando o modelo interno de `OperacaoDeResgate` recebeu o campo `ResponsavelTecnico` (engenheiro civil que assina a operação), apenas o módulo `Resgate` precisou ser modificado. O módulo `Alertas` continuou funcionando sem nenhuma alteração, porque nunca dependeu da estrutura de `OperacaoDeResgate` - apenas do evento `OperacaoEncerradaIntegrationEvent`.
 
 ## Critério de sucesso
 
@@ -97,7 +97,7 @@ Modificar a estrutura interna de um bounded context não quebra o build de outro
 
 ## Relação com SOS Location
 
-Em campo, as equipes de busca, resgate e comunicação têm responsabilidades operacionais distintas com canais de comunicação independentes. Misturar esses contextos no código — assim como misturá-los operacionalmente — resulta em caos durante o pico de uma crise, quando a velocidade de resposta a mudanças é crítica.
+Em campo, as equipes de busca, resgate e comunicação têm responsabilidades operacionais distintas com canais de comunicação independentes. Misturar esses contextos no código - assim como misturá-los operacionalmente - resulta em caos durante o pico de uma crise, quando a velocidade de resposta a mudanças é crítica.
 '''
 body_en_us = '''
 ## Real context
@@ -106,11 +106,11 @@ In SOS Location, search teams need to know about missing persons but must not ha
 
 ## Specific problem
 
-In the initial version, `AlertaController` directly injected `IOperacaoDeResgateRepository` to check for active operations before issuing an alert. This created direct coupling between the Alerts and Rescue contexts. When the internal structure of `OperacaoDeResgate` changed (adding a `ResponsavelTecnico` field), the Alerts module build broke — a module that has nothing to do with the structure of a rescue operation.
+In the initial version, `AlertaController` directly injected `IOperacaoDeResgateRepository` to check for active operations before issuing an alert. This created direct coupling between the Alerts and Rescue contexts. When the internal structure of `OperacaoDeResgate` changed (adding a `ResponsavelTecnico` field), the Alerts module build broke - a module that has nothing to do with the structure of a rescue operation.
 
 ## Technical decision
 
-Three bounded contexts with explicit boundaries: `Busca` (missing person management), `Resgate` (field operation coordination), `Alertas` (population notification). Integration exclusively via integration events published on the message bus — never via direct calls between contexts.
+Three bounded contexts with explicit boundaries: `Busca` (missing person management), `Resgate` (field operation coordination), `Alertas` (population notification). Integration exclusively via integration events published on the message bus - never via direct calls between contexts.
 
 ```
 Busca BC ──[PessoaDesaparecidaReportadaIntegrationEvent]──► Resgate BC
@@ -129,7 +129,7 @@ public sealed record PessoaDesaparecidaReportadaIntegrationEvent(
     DateTimeOffset ReportadaEm
 ) : IIntegrationEvent;
 
-// Resgate BC consumes the event — never calls Busca directly
+// Resgate BC consumes the event - never calls Busca directly
 public sealed class IniciarOperacaoDeBuscaHandler
     : IIntegrationEventHandler<PessoaDesaparecidaReportadaIntegrationEvent>
 {
@@ -165,7 +165,7 @@ public sealed class EmitirAlertaDeDesaparecimentoHandler
 
 ## Concrete example
 
-When the internal model of `OperacaoDeResgate` received the `ResponsavelTecnico` field (civil engineer who signs off on the operation), only the `Resgate` module needed to be modified. The `Alertas` module continued working without any changes, because it never depended on the structure of `OperacaoDeResgate` — only on the `OperacaoEncerradaIntegrationEvent`.
+When the internal model of `OperacaoDeResgate` received the `ResponsavelTecnico` field (civil engineer who signs off on the operation), only the `Resgate` module needed to be modified. The `Alertas` module continued working without any changes, because it never depended on the structure of `OperacaoDeResgate` - only on the `OperacaoEncerradaIntegrationEvent`.
 
 ## Success criteria
 
@@ -173,7 +173,7 @@ Modifying the internal structure of one bounded context does not break the build
 
 ## Relation to SOS Location
 
-In the field, search, rescue, and communications teams have distinct operational responsibilities with independent communication channels. Mixing these contexts in code — just as mixing them operationally — results in chaos during the peak of a crisis, when the speed of response to change is critical.
+In the field, search, rescue, and communications teams have distinct operational responsibilities with independent communication channels. Mixing these contexts in code - just as mixing them operationally - results in chaos during the peak of a crisis, when the speed of response to change is critical.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -182,11 +182,11 @@ SOS Locationでは、捜索チームは行方不明者について知る必要�
 
 ## 具体的な問題
 
-最初のバージョンでは、`AlertaController`がアラート発令前に活動中の作戦を確認するために`IOperacaoDeResgateRepository`を直接注入していた。これによりAlertas（アラート）とResgate（救助）のコンテキスト間に直接的な結合が生まれた。`OperacaoDeResgate`の内部構造が変更された際（`ResponsavelTecnico`フィールドの追加）、Alertasモジュールのビルドが壊れた——救助作戦の構造とは無関係なモジュールだ。
+最初のバージョンでは、`AlertaController`がアラート発令前に活動中の作戦を確認するために`IOperacaoDeResgateRepository`を直接注入していた。これによりAlertas（アラート）とResgate（救助）のコンテキスト間に直接的な結合が生まれた。`OperacaoDeResgate`の内部構造が変更された際（`ResponsavelTecnico`フィールドの追加）、Alertasモジュールのビルドが壊れた--救助作戦の構造とは無関係なモジュールだ。
 
 ## 技術的決定
 
-明確な境界を持つ3つの境界づけられたコンテキスト：`Busca`（行方不明者管理）、`Resgate`（現場作戦調整）、`Alertas`（住民通知）。統合はメッセージバスで公開されるインテグレーションイベント経由のみ——コンテキスト間の直接呼び出しは一切禁止。
+明確な境界を持つ3つの境界づけられたコンテキスト：`Busca`（行方不明者管理）、`Resgate`（現場作戦調整）、`Alertas`（住民通知）。統合はメッセージバスで公開されるインテグレーションイベント経由のみ--コンテキスト間の直接呼び出しは一切禁止。
 
 ```
 Busca BC ──[PessoaDesaparecidaReportadaIntegrationEvent]──► Resgate BC
@@ -205,7 +205,7 @@ public sealed record PessoaDesaparecidaReportadaIntegrationEvent(
     DateTimeOffset ReportadaEm
 ) : IIntegrationEvent;
 
-// ResgateBCはイベントを消費する——Buscaを直接呼び出さない
+// ResgateBCはイベントを消費する--Buscaを直接呼び出さない
 public sealed class IniciarOperacaoDeBuscaHandler
     : IIntegrationEventHandler<PessoaDesaparecidaReportadaIntegrationEvent>
 {
@@ -247,5 +247,5 @@ public sealed class EmitirAlertaDeDesaparecimentoHandler
 
 ## SOS Locationとの関係
 
-現場では、捜索・救助・通信チームが独立した通信チャネルで異なる運用上の責任を持つ。コードでこれらのコンテキストを混在させること——運用上で混在させるのと同様——は、変更への対応速度が重要な危機のピーク時に混乱を引き起こす。
+現場では、捜索・救助・通信チームが独立した通信チャネルで異なる運用上の責任を持つ。コードでこれらのコンテキストを混在させること--運用上で混在させるのと同様--は、変更への対応速度が重要な危機のピーク時に混乱を引き起こす。
 '''

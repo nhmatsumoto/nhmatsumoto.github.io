@@ -23,7 +23,7 @@ O modelo de segmentação de imagens do SOS Location (#014) precisa de imagens a
 
 ## Problema específico
 
-Imagens reais de inundação são raras nos dados de treinamento — água cobre apenas uma fração pequena do território na maioria dos eventos. Num dataset de 50.000 imagens de satélite urbanas, menos de 100 mostrariam inundação significativa. Desbalanceamento de classe de 1:500 (água:terra) faz o modelo aprender a classificar tudo como "terra" e ainda ter 99,8% de acurácia — completamente inútil para detecção de inundação.
+Imagens reais de inundação são raras nos dados de treinamento - água cobre apenas uma fração pequena do território na maioria dos eventos. Num dataset de 50.000 imagens de satélite urbanas, menos de 100 mostrariam inundação significativa. Desbalanceamento de classe de 1:500 (água:terra) faz o modelo aprender a classificar tudo como "terra" e ainda ter 99,8% de acurácia - completamente inútil para detecção de inundação.
 
 ## Decisão técnica
 
@@ -103,7 +103,7 @@ for (const level of FLOOD_LEVELS) {
 
 ## Exemplo concreto
 
-Dataset gerado: 25.000 imagens (5.000 × 5 níveis de inundação), distribuição balanceada 20%/nível. Tempo de geração num MacBook M2: 4h para 25.000 pares de 256×256 px. O modelo treinado nesse dataset alcançou F1-score de 0,84 para a classe "água" num conjunto de validação com imagens reais — comparado a F1 0,12 para o modelo treinado apenas com dados reais desbalanceados.
+Dataset gerado: 25.000 imagens (5.000 × 5 níveis de inundação), distribuição balanceada 20%/nível. Tempo de geração num MacBook M2: 4h para 25.000 pares de 256×256 px. O modelo treinado nesse dataset alcançou F1-score de 0,84 para a classe "água" num conjunto de validação com imagens reais - comparado a F1 0,12 para o modelo treinado apenas com dados reais desbalanceados.
 
 ## Critério de sucesso
 
@@ -111,7 +111,7 @@ Dataset gerado com distribuição balanceada de classes (máximo 30% de diferen�
 
 ## Relação com SOS Location
 
-O modelo de segmentação que detecta áreas inundadas em tempo real no mapa do SOS Location é o produto desse pipeline de dados sintéticos. Sem o balanceamento de classes via dados sintéticos, o modelo classificaria qualquer pixel como "terra" com alta confiança — tornando a camada de visualização de inundação do SOS Location completamente não funcional.
+O modelo de segmentação que detecta áreas inundadas em tempo real no mapa do SOS Location é o produto desse pipeline de dados sintéticos. Sem o balanceamento de classes via dados sintéticos, o modelo classificaria qualquer pixel como "terra" com alta confiança - tornando a camada de visualização de inundação do SOS Location completamente não funcional.
 '''
 body_en_us = '''
 ## Real context
@@ -120,7 +120,7 @@ SOS Location's image segmentation model (#014) needs labelled aerial images show
 
 ## Specific problem
 
-Real flood images are rare in training data — water covers only a small fraction of territory in most events. In a dataset of 50,000 urban satellite images, fewer than 100 would show significant flooding. A class imbalance of 1:500 (water:land) causes the model to learn to classify everything as "land" and still achieve 99.8% accuracy — completely useless for flood detection.
+Real flood images are rare in training data - water covers only a small fraction of territory in most events. In a dataset of 50,000 urban satellite images, fewer than 100 would show significant flooding. A class imbalance of 1:500 (water:land) causes the model to learn to classify everything as "land" and still achieve 99.8% accuracy - completely useless for flood detection.
 
 ## Technical decision
 
@@ -185,7 +185,7 @@ for (const level of FLOOD_LEVELS) {
 
 ## Concrete example
 
-Generated dataset: 25,000 images (5,000 × 5 flood levels), balanced distribution 20%/level. Generation time on MacBook M2: 4h for 25,000 pairs at 256×256 px. The model trained on this dataset achieved an F1-score of 0.84 for the "water" class on a validation set with real images — compared to F1 0.12 for the model trained only on unbalanced real data.
+Generated dataset: 25,000 images (5,000 × 5 flood levels), balanced distribution 20%/level. Generation time on MacBook M2: 4h for 25,000 pairs at 256×256 px. The model trained on this dataset achieved an F1-score of 0.84 for the "water" class on a validation set with real images - compared to F1 0.12 for the model trained only on unbalanced real data.
 
 ## Success criteria
 
@@ -193,7 +193,7 @@ Dataset generated with balanced class distribution (maximum 30% difference betwe
 
 ## Relation to SOS Location
 
-The segmentation model that detects flooded areas in real time on the SOS Location map is the product of this synthetic data pipeline. Without class balancing via synthetic data, the model would classify any pixel as "land" with high confidence — making SOS Location's flood visualisation layer completely non-functional.
+The segmentation model that detects flooded areas in real time on the SOS Location map is the product of this synthetic data pipeline. Without class balancing via synthetic data, the model would classify any pixel as "land" with high confidence - making SOS Location's flood visualisation layer completely non-functional.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -202,7 +202,7 @@ SOS Locationの画像セグメンテーションモデル（#014）は、異な�
 
 ## 具体的な問題
 
-実際の洪水画像はトレーニングデータで稀だ——ほとんどのイベントで水は領土のごく一部しかカバーしない。50,000枚の都市衛星画像のデータセットでは、100枚未満しか有意な洪水を示さない。1:500（水:陸）のクラス不均衡により、モデルはすべてを「陸」に分類することを学習し、99.8%の精度を達成する——洪水検出には全く役立たない。
+実際の洪水画像はトレーニングデータで稀だ--ほとんどのイベントで水は領土のごく一部しかカバーしない。50,000枚の都市衛星画像のデータセットでは、100枚未満しか有意な洪水を示さない。1:500（水:陸）のクラス不均衡により、モデルはすべてを「陸」に分類することを学習し、99.8%の精度を達成する--洪水検出には全く役立たない。
 
 ## 技術的決定
 
@@ -265,7 +265,7 @@ for (const level of FLOOD_LEVELS) {
 
 ## 具体的な例
 
-生成されたデータセット：25,000枚（5,000枚×5洪水レベル）、バランスの取れた分布20%/レベル。MacBook M2での生成時間：256×256pxの25,000ペアに4時間。このデータセットで訓練されたモデルは、実際の画像の検証セットで「水」クラスのF1スコア0.84を達成——アンバランスな実データのみで訓練されたモデルのF1 0.12と比較して。
+生成されたデータセット：25,000枚（5,000枚×5洪水レベル）、バランスの取れた分布20%/レベル。MacBook M2での生成時間：256×256pxの25,000ペアに4時間。このデータセットで訓練されたモデルは、実際の画像の検証セットで「水」クラスのF1スコア0.84を達成--アンバランスな実データのみで訓練されたモデルのF1 0.12と比較して。
 
 ## 成功基準
 
@@ -273,5 +273,5 @@ for (const level of FLOOD_LEVELS) {
 
 ## SOS Locationとの関係
 
-SOS Locationのマップでリアルタイムに洪水エリアを検出するセグメンテーションモデルは、この合成データパイプラインの産物だ。合成データによるクラスバランシングなしでは、モデルは高い信頼度であらゆるピクセルを「陸」に分類する——SOS Locationの洪水可視化レイヤーを完全に機能不全にする。
+SOS Locationのマップでリアルタイムに洪水エリアを検出するセグメンテーションモデルは、この合成データパイプラインの産物だ。合成データによるクラスバランシングなしでは、モデルは高い信頼度であらゆるピクセルを「陸」に分類する--SOS Locationの洪水可視化レイヤーを完全に機能不全にする。
 '''

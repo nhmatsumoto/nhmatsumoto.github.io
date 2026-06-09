@@ -22,12 +22,12 @@ Biblioteca de referência com implementações de algoritmos e estruturas de dad
 
 Coleção organizada por categoria:
 
-- **Ordenação** — quicksort, mergesort, heapsort, radix sort
-- **Busca** — binary search, BFS, DFS, A*
-- **Estruturas** — listas, pilhas, filas, árvores, grafos, hash tables
-- **Grafos** — Dijkstra, Bellman-Ford, topological sort, MST
-- **Programação dinâmica** — knapsack, LCS, edit distance
-- **Strings** — KMP, Rabin-Karp, suffix arrays
+- **Ordenação** - quicksort, mergesort, heapsort, radix sort
+- **Busca** - binary search, BFS, DFS, A*
+- **Estruturas** - listas, pilhas, filas, árvores, grafos, hash tables
+- **Grafos** - Dijkstra, Bellman-Ford, topological sort, MST
+- **Programação dinâmica** - knapsack, LCS, edit distance
+- **Strings** - KMP, Rabin-Karp, suffix arrays
 
 ## Propósito
 
@@ -40,12 +40,12 @@ Reference library with implementations of fundamental algorithms and data struct
 
 Collection organized by category:
 
-- **Sorting** — quicksort, mergesort, heapsort and radix sort
-- **Search** — binary search, BFS, DFS and A*
-- **Structures** — lists, stacks, queues, trees, graphs and hash tables
-- **Graphs** — Dijkstra, Bellman-Ford, topological sort and MST
-- **Dynamic programming** — knapsack, LCS and edit distance
-- **Strings** — KMP, Rabin-Karp and suffix arrays
+- **Sorting** - quicksort, mergesort, heapsort and radix sort
+- **Search** - binary search, BFS, DFS and A*
+- **Structures** - lists, stacks, queues, trees, graphs and hash tables
+- **Graphs** - Dijkstra, Bellman-Ford, topological sort and MST
+- **Dynamic programming** - knapsack, LCS and edit distance
+- **Strings** - KMP, Rabin-Karp and suffix arrays
 
 ## Purpose
 
@@ -58,12 +58,12 @@ overview_ja_jp = """
 
 カテゴリごとに整理されたコレクション:
 
-- **Sorting** — quicksort、mergesort、heapsort、radix sort
-- **Search** — binary search、BFS、DFS、A*
-- **Structures** — list、stack、queue、tree、graph、hash table
-- **Graphs** — Dijkstra、Bellman-Ford、topological sort、MST
-- **Dynamic programming** — knapsack、LCS、edit distance
-- **Strings** — KMP、Rabin-Karp、suffix array
+- **Sorting** - quicksort、mergesort、heapsort、radix sort
+- **Search** - binary search、BFS、DFS、A*
+- **Structures** - list、stack、queue、tree、graph、hash table
+- **Graphs** - Dijkstra、Bellman-Ford、topological sort、MST
+- **Dynamic programming** - knapsack、LCS、edit distance
+- **Strings** - KMP、Rabin-Karp、suffix array
 
 ## 目的
 

@@ -1,8 +1,8 @@
 name = "Leaflet"
 slug = "leaflet"
-headline = "Biblioteca JavaScript para mapas interativos mobile-friendly — referência para projetos GIS."
-headline_en_us = "JavaScript library for mobile-friendly interactive maps — reference for GIS projects."
-headline_ja_jp = "モバイル対応のインタラクティブマップ用 JavaScript ライブラリ — GIS プロジェクトのリファレンス。"
+headline = "Biblioteca JavaScript para mapas interativos mobile-friendly - referência para projetos GIS."
+headline_en_us = "JavaScript library for mobile-friendly interactive maps - reference for GIS projects."
+headline_ja_jp = "モバイル対応のインタラクティブマップ用 JavaScript ライブラリ - GIS プロジェクトのリファレンス。"
 summary = "Fork do Leaflet, a biblioteca JavaScript mais popular para mapas interativos, utilizada como base nos projetos de GIS do ecossistema."
 summary_en_us = "Fork of Leaflet, the most popular JavaScript library for interactive maps, used as a base in the ecosystem's GIS projects."
 summary_ja_jp = "Leaflet のフォーク。インタラクティブマップで最も人気のある JavaScript ライブラリで、エコシステム内の GIS プロジェクトの基盤として利用。"
@@ -28,11 +28,11 @@ Leaflet é a camada de visualização de mapas utilizada nos projetos **SOS Loca
 
 ## Capacidades técnicas
 
-- **Tile layers** — suporte a múltiplos provedores (OpenStreetMap, Mapbox, etc.)
-- **GeoJSON** — renderização nativa de dados geoespaciais
-- **Markers e popups** — interação com pontos de interesse
-- **Layer control** — composição de camadas para visualização operacional
-- **Mobile-first** — touch events e gestos nativos
+- **Tile layers** - suporte a múltiplos provedores (OpenStreetMap, Mapbox, etc.)
+- **GeoJSON** - renderização nativa de dados geoespaciais
+- **Markers e popups** - interação com pontos de interesse
+- **Layer control** - composição de camadas para visualização operacional
+- **Mobile-first** - touch events e gestos nativos
 
 ## Relevância para projetos de crise
 
@@ -51,11 +51,11 @@ Leaflet is the map-visualization layer used in **SOS Location**, **brumadinho_lo
 
 ## Technical capabilities
 
-- **Tile layers** — support for multiple providers such as OpenStreetMap and Mapbox
-- **GeoJSON** — native rendering of geospatial data
-- **Markers and popups** — interaction with points of interest
-- **Layer control** — composition of overlays for operational views
-- **Mobile-first** — touch events and native gestures
+- **Tile layers** - support for multiple providers such as OpenStreetMap and Mapbox
+- **GeoJSON** - native rendering of geospatial data
+- **Markers and popups** - interaction with points of interest
+- **Layer control** - composition of overlays for operational views
+- **Mobile-first** - touch events and native gestures
 
 ## Relevance in crisis projects
 
@@ -74,11 +74,11 @@ Leaflet は **SOS Location**、**brumadinho_location**、**GIS Incident Lab** �
 
 ## 技術的な能力
 
-- **Tile layers** — OpenStreetMap や Mapbox など複数プロバイダ対応
-- **GeoJSON** — 地理空間データのネイティブ描画
-- **Markers / popups** — 関心地点との対話
-- **Layer control** — 運用ビュー向け overlay 合成
-- **Mobile-first** — touch event とネイティブ gesture
+- **Tile layers** - OpenStreetMap や Mapbox など複数プロバイダ対応
+- **GeoJSON** - 地理空間データのネイティブ描画
+- **Markers / popups** - 関心地点との対話
+- **Layer control** - 運用ビュー向け overlay 合成
+- **Mobile-first** - touch event とネイティブ gesture
 
 ## 危機対応プロジェクトでの重要性
 

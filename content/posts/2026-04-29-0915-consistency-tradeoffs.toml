@@ -3,8 +3,8 @@ slug = "consistency-tradeoffs"
 title = "Consistência forte vs eventual: o trade-off que o teorema CAP só começa a explicar"
 title_en_us = "Strong vs eventual consistency: the trade-off the CAP theorem only begins to explain"
 title_ja_jp = "強整合性 vs 結果整合性：CAP 定理が説明を始めるにすぎないトレードオフ"
-summary = "Não existe sistema distribuído perfeitamente consistente sem custo. Entre o CAP, o PACELC e a consistência eventual, o que realmente está em jogo é latência contra garantia — e essa é uma decisão de negócio antes de ser técnica."
-summary_en_us = "There is no perfectly consistent distributed system without a cost. Between CAP, PACELC, and eventual consistency, what is really at stake is latency versus guarantee — and that is a business decision before it is a technical one."
+summary = "Não existe sistema distribuído perfeitamente consistente sem custo. Entre o CAP, o PACELC e a consistência eventual, o que realmente está em jogo é latência contra garantia - e essa é uma decisão de negócio antes de ser técnica."
+summary_en_us = "There is no perfectly consistent distributed system without a cost. Between CAP, PACELC, and eventual consistency, what is really at stake is latency versus guarantee - and that is a business decision before it is a technical one."
 summary_ja_jp = "コストなしに完全な整合性を持つ分散システムは存在しない。CAP、PACELC、結果整合性の間で本当に問われているのはレイテンシ対保証であり、それは技術判断である前にビジネス判断である。"
 published_at = "2026-04-29T09:15:00+09:00"
 updated_at = "2026-06-07T09:15:00+09:00"
@@ -25,7 +25,7 @@ O teorema CAP (Brewer, 2000; provado por Gilbert e Lynch, 2002) afirma: durante 
 
 ## PACELC: a parte que o CAP esquece
 
-CAP só descreve o comportamento *durante* uma partição — que é rara. O modelo **PACELC** (Abadi, 2012) completa o quadro:
+CAP só descreve o comportamento *durante* uma partição - que é rara. O modelo **PACELC** (Abadi, 2012) completa o quadro:
 
 > Se há **P**artição, escolha entre **A** e **C**; **E**lse (operação normal), escolha entre **L**atência e **C**onsistência.
 
@@ -47,13 +47,13 @@ Ou seja: mesmo sem nenhuma falha, manter consistência forte custa **latência**
 A pergunta certa não é "qual é mais correto?", e sim "**qual é o custo de estar errado por alguns milissegundos?**":
 
 - **Débito em conta / reserva de estoque**: ler um valor desatualizado pode vender o mesmo item duas vezes. Exige consistência forte, mesmo que custe latência.
-- **Curtidas, visualizações, feed**: ver "1.204" em vez de "1.205" por dois segundos não machuca ninguém. Consistência eventual é não só aceitável — é desejável, pela escala e disponibilidade.
+- **Curtidas, visualizações, feed**: ver "1.204" em vez de "1.205" por dois segundos não machuca ninguém. Consistência eventual é não só aceitável - é desejável, pela escala e disponibilidade.
 
 A mesma aplicação mistura os dois: o checkout do e-commerce é forte; a vitrine de recomendações é eventual. Definir essa fronteira é trabalho de produto e domínio, não de infraestrutura.
 
 ## Conclusão
 
-Consistência não é um interruptor global; é uma escolha por **caso de uso**, guiada pela pergunta "qual o dano de ler algo levemente velho?". Engenheiros que tratam consistência forte como *default* universal pagam latência onde ninguém precisava; engenheiros que tratam eventual como universal acabam vendendo estoque inexistente. O CAP te diz que não há almoço grátis — o PACELC te diz que você está pagando a conta mesmo quando tudo está funcionando.
+Consistência não é um interruptor global; é uma escolha por **caso de uso**, guiada pela pergunta "qual o dano de ler algo levemente velho?". Engenheiros que tratam consistência forte como *default* universal pagam latência onde ninguém precisava; engenheiros que tratam eventual como universal acabam vendendo estoque inexistente. O CAP te diz que não há almoço grátis - o PACELC te diz que você está pagando a conta mesmo quando tudo está funcionando.
 '''
 body_en_us = '''
 The moment a piece of data exists on more than one machine, you inherit a problem with no free solution: keeping the copies in agreement. The whole debate of strong versus eventual consistency is, at heart, about **how long you are willing to wait to be sure**.
@@ -67,7 +67,7 @@ The CAP theorem (Brewer, 2000; proven by Gilbert and Lynch, 2002) states: during
 
 ## PACELC: the part CAP forgets
 
-CAP only describes behavior *during* a partition — which is rare. The **PACELC** model (Abadi, 2012) completes the picture:
+CAP only describes behavior *during* a partition - which is rare. The **PACELC** model (Abadi, 2012) completes the picture:
 
 > If there is a **P**artition, choose between **A** and **C**; **E**lse (normal operation), choose between **L**atency and **C**onsistency.
 
@@ -89,13 +89,13 @@ In other words: even with no fault at all, maintaining strong consistency costs 
 The right question isn't "which is more correct?" but "**what is the cost of being wrong for a few milliseconds?**":
 
 - **Account debit / inventory reservation**: reading a stale value can sell the same item twice. It demands strong consistency, even at the cost of latency.
-- **Likes, views, feed**: seeing "1,204" instead of "1,205" for two seconds harms no one. Eventual consistency is not only acceptable — it is desirable, for scale and availability.
+- **Likes, views, feed**: seeing "1,204" instead of "1,205" for two seconds harms no one. Eventual consistency is not only acceptable - it is desirable, for scale and availability.
 
 The same application mixes both: the e-commerce checkout is strong; the recommendations shelf is eventual. Drawing that boundary is product and domain work, not infrastructure.
 
 ## Conclusion
 
-Consistency is not a global switch; it's a choice per **use case**, guided by the question "how much does it hurt to read something slightly stale?". Engineers who treat strong consistency as a universal default pay latency where nobody needed it; engineers who treat eventual as universal end up selling inventory that doesn't exist. CAP tells you there's no free lunch — PACELC tells you you're paying the bill even when everything works.
+Consistency is not a global switch; it's a choice per **use case**, guided by the question "how much does it hurt to read something slightly stale?". Engineers who treat strong consistency as a universal default pay latency where nobody needed it; engineers who treat eventual as universal end up selling inventory that doesn't exist. CAP tells you there's no free lunch - PACELC tells you you're paying the bill even when everything works.
 '''
 body_ja_jp = '''
 あるデータが複数のマシンに存在した瞬間、無料の解決策がない問題を引き継ぐことになります。コピーを一致させ続けることです。強整合性 対 結果整合性の議論はすべて、根本的には **確信を得るためにどれだけ待てるか** をめぐるものです。

@@ -23,11 +23,11 @@ O SOS Location é multitenant: a Defesa Civil de Florianópolis e a Defesa Civil
 
 ## Problema específico
 
-A versão inicial emitia tokens com apenas `sub` (userId) e `role`. Quando o handler precisava do `tenantId`, fazia uma query ao banco: `SELECT tenant_id FROM users WHERE id = @userId`. Com 500 requests simultâneos durante um evento, eram 500 queries extras por request — latência adicional de 8–12ms por request, 4–6 GB de queries desnecessárias por mês. Além disso, não havia padronização: alguns endpoints liam `User.FindFirst("tenantId")`, outros liam `User.FindFirst(ClaimTypes.System)`, gerando erros silenciosos quando um dos lados mudava o nome do claim.
+A versão inicial emitia tokens com apenas `sub` (userId) e `role`. Quando o handler precisava do `tenantId`, fazia uma query ao banco: `SELECT tenant_id FROM users WHERE id = @userId`. Com 500 requests simultâneos durante um evento, eram 500 queries extras por request - latência adicional de 8–12ms por request, 4–6 GB de queries desnecessárias por mês. Além disso, não havia padronização: alguns endpoints liam `User.FindFirst("tenantId")`, outros liam `User.FindFirst(ClaimTypes.System)`, gerando erros silenciosos quando um dos lados mudava o nome do claim.
 
 ## Decisão técnica
 
-Claims padronizados definidos em constante `SosClaims`. Token inclui: `sub` (userId), `role` (CoordenaçãoMunicipal|CoordenaçãoEstadual|Admin), `tenantId`, `municipioId` (para roles municipais). Validação de token centralizada em `JwtTokenValidator` — reutilizado em API REST e SignalR Hub. Expiração: access token 15min, refresh token 7 dias.
+Claims padronizados definidos em constante `SosClaims`. Token inclui: `sub` (userId), `role` (CoordenaçãoMunicipal|CoordenaçãoEstadual|Admin), `tenantId`, `municipioId` (para roles municipais). Validação de token centralizada em `JwtTokenValidator` - reutilizado em API REST e SignalR Hub. Expiração: access token 15min, refresh token 7 dias.
 
 ## Implementação
 
@@ -87,7 +87,7 @@ public static class ClaimsPrincipalExtensions
 ```
 
 ```csharp
-// Uso em handler — sem query ao banco para obter tenantId
+// Uso em handler - sem query ao banco para obter tenantId
 public sealed class ListarAreasDeRiscoQueryHandler
     : IRequestHandler<ListarAreasDeRiscoQuery, IReadOnlyList<AreaDeRiscoDto>>
 {
@@ -102,11 +102,11 @@ public sealed class ListarAreasDeRiscoQueryHandler
 
 ## Exemplo concreto
 
-Request de coordenador de Florianópolis: token contém `tenant_id: "f1a2b3-..."`. Middleware `TenantScopedDbContext` (#004) lê `HttpContext.User.GetTenantId()` — extraído do JWT sem query. Filtro global aplica `WHERE tenant_id = 'f1a2b3-...'` em todas as queries. Nenhuma query extra ao banco por request. Benchmark: handler `ListarAreasDeRisco` passou de 22ms (com query de tenant) para 14ms (tenant do claim).
+Request de coordenador de Florianópolis: token contém `tenant_id: "f1a2b3-..."`. Middleware `TenantScopedDbContext` (#004) lê `HttpContext.User.GetTenantId()` - extraído do JWT sem query. Filtro global aplica `WHERE tenant_id = 'f1a2b3-...'` em todas as queries. Nenhuma query extra ao banco por request. Benchmark: handler `ListarAreasDeRisco` passou de 22ms (com query de tenant) para 14ms (tenant do claim).
 
 ## Critério de sucesso
 
-Zero queries ao banco para obter `tenantId` em requests autenticados. Todos os endpoints que necessitam de `tenantId` usam `User.GetTenantId()` — sem alternativas (`FindFirstValue`, `Claims.First`). Token inválido (assinatura errada, expirado) retorna 401 antes de chegar ao handler.
+Zero queries ao banco para obter `tenantId` em requests autenticados. Todos os endpoints que necessitam de `tenantId` usam `User.GetTenantId()` - sem alternativas (`FindFirstValue`, `Claims.First`). Token inválido (assinatura errada, expirado) retorna 401 antes de chegar ao handler.
 
 ## Relação com SOS Location
 
@@ -119,11 +119,11 @@ SOS Location is multitenant: the Florianópolis Civil Defence and the Recife Civ
 
 ## Specific problem
 
-The initial version issued tokens with only `sub` (userId) and `role`. When a handler needed `tenantId`, it queried the database: `SELECT tenant_id FROM users WHERE id = @userId`. With 500 simultaneous requests during an event, that was 500 extra queries per request — 8–12ms additional latency per request, 4–6 GB of unnecessary queries per month. Additionally, there was no standardisation: some endpoints read `User.FindFirst("tenantId")`, others read `User.FindFirst(ClaimTypes.System)`, causing silent errors when one side changed the claim name.
+The initial version issued tokens with only `sub` (userId) and `role`. When a handler needed `tenantId`, it queried the database: `SELECT tenant_id FROM users WHERE id = @userId`. With 500 simultaneous requests during an event, that was 500 extra queries per request - 8–12ms additional latency per request, 4–6 GB of unnecessary queries per month. Additionally, there was no standardisation: some endpoints read `User.FindFirst("tenantId")`, others read `User.FindFirst(ClaimTypes.System)`, causing silent errors when one side changed the claim name.
 
 ## Technical decision
 
-Standardised claims defined in the `SosClaims` constant. Token includes: `sub` (userId), `role` (CoordenaçãoMunicipal|CoordenaçãoEstadual|Admin), `tenantId`, `municipioId` (for municipal roles). Centralised token validation in `JwtTokenValidator` — reused in the REST API and SignalR Hub. Expiry: access token 15 min, refresh token 7 days.
+Standardised claims defined in the `SosClaims` constant. Token includes: `sub` (userId), `role` (CoordenaçãoMunicipal|CoordenaçãoEstadual|Admin), `tenantId`, `municipioId` (for municipal roles). Centralised token validation in `JwtTokenValidator` - reused in the REST API and SignalR Hub. Expiry: access token 15 min, refresh token 7 days.
 
 ## Implementation
 
@@ -171,11 +171,11 @@ public static Guid GetTenantId(this ClaimsPrincipal user) =>
 
 ## Concrete example
 
-Request from a Florianópolis coordinator: token contains `tenant_id: "f1a2b3-..."`. The `TenantScopedDbContext` middleware (#004) reads `HttpContext.User.GetTenantId()` — extracted from the JWT without a DB query. The global filter applies `WHERE tenant_id = 'f1a2b3-...'` to all queries. No extra DB query per request. Benchmark: `ListarAreasDeRisco` handler went from 22ms (with tenant query) to 14ms (tenant from claim).
+Request from a Florianópolis coordinator: token contains `tenant_id: "f1a2b3-..."`. The `TenantScopedDbContext` middleware (#004) reads `HttpContext.User.GetTenantId()` - extracted from the JWT without a DB query. The global filter applies `WHERE tenant_id = 'f1a2b3-...'` to all queries. No extra DB query per request. Benchmark: `ListarAreasDeRisco` handler went from 22ms (with tenant query) to 14ms (tenant from claim).
 
 ## Success criteria
 
-Zero DB queries to obtain `tenantId` on authenticated requests. All endpoints requiring `tenantId` use `User.GetTenantId()` — no alternatives (`FindFirstValue`, `Claims.First`). Invalid token (wrong signature, expired) returns 401 before reaching the handler.
+Zero DB queries to obtain `tenantId` on authenticated requests. All endpoints requiring `tenantId` use `User.GetTenantId()` - no alternatives (`FindFirstValue`, `Claims.First`). Invalid token (wrong signature, expired) returns 401 before reaching the handler.
 
 ## Relation to SOS Location
 
@@ -188,11 +188,11 @@ SOS Locationはマルチテナント：フロリアノーポリス民間防衛�
 
 ## 具体的な問題
 
-最初のバージョンは`sub`（userId）と`role`のみでトークンを発行していた。ハンドラーが`tenantId`を必要とすると、データベースにクエリした：`SELECT tenant_id FROM users WHERE id = @userId`。イベント中の500の同時リクエストでは、リクエストごとに500の追加クエリ——リクエストごとに8〜12msの追加レイテンシ、月に4〜6 GBの不要なクエリ。さらに、標準化がなかった：一部のエンドポイントは`User.FindFirst("tenantId")`を読み、他は`User.FindFirst(ClaimTypes.System)`を読み、一方がクレーム名を変更するとサイレントエラーが発生した。
+最初のバージョンは`sub`（userId）と`role`のみでトークンを発行していた。ハンドラーが`tenantId`を必要とすると、データベースにクエリした：`SELECT tenant_id FROM users WHERE id = @userId`。イベント中の500の同時リクエストでは、リクエストごとに500の追加クエリ--リクエストごとに8〜12msの追加レイテンシ、月に4〜6 GBの不要なクエリ。さらに、標準化がなかった：一部のエンドポイントは`User.FindFirst("tenantId")`を読み、他は`User.FindFirst(ClaimTypes.System)`を読み、一方がクレーム名を変更するとサイレントエラーが発生した。
 
 ## 技術的決定
 
-`SosClaims`定数で定義された標準化されたクレーム。トークンに含まれる：`sub`（userId）、`role`（CoordenaçãoMunicipal|CoordenaçãoEstadual|Admin）、`tenantId`、`municipioId`（市町村ロール用）。`JwtTokenValidator`での集中型トークン検証——REST APIとSignalR Hubで再利用。期限：アクセストークン15分、リフレッシュトークン7日。
+`SosClaims`定数で定義された標準化されたクレーム。トークンに含まれる：`sub`（userId）、`role`（CoordenaçãoMunicipal|CoordenaçãoEstadual|Admin）、`tenantId`、`municipioId`（市町村ロール用）。`JwtTokenValidator`での集中型トークン検証--REST APIとSignalR Hubで再利用。期限：アクセストークン15分、リフレッシュトークン7日。
 
 ## 実装
 
@@ -244,7 +244,7 @@ public static Guid GetTenantId(this ClaimsPrincipal user) =>
 
 ## 成功基準
 
-認証済みリクエストで`tenantId`を取得するためのDBクエリゼロ。`tenantId`が必要なすべてのエンドポイントが`User.GetTenantId()`を使用——代替なし（`FindFirstValue`、`Claims.First`）。無効なトークン（署名が間違い、期限切れ）がハンドラーに到達する前に401を返す。
+認証済みリクエストで`tenantId`を取得するためのDBクエリゼロ。`tenantId`が必要なすべてのエンドポイントが`User.GetTenantId()`を使用--代替なし（`FindFirstValue`、`Claims.First`）。無効なトークン（署名が間違い、期限切れ）がハンドラーに到達する前に401を返す。
 
 ## SOS Locationとの関係
 

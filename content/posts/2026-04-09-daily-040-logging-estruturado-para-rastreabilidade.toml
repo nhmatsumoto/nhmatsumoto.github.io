@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-Durante um incidente real de enchente em Blumenau, o backend do SOS Location começou a retornar erros 500 para alguns tenants às 2h da manhã. A investigação durou 40 minutos porque os logs eram texto puro — `"Erro ao processar request: NullReferenceException"` — sem informação sobre qual tenant, qual endpoint, qual usuário, qual query. O mesmo incidente com logging estruturado levaria 3 minutos.
+Durante um incidente real de enchente em Blumenau, o backend do SOS Location começou a retornar erros 500 para alguns tenants às 2h da manhã. A investigação durou 40 minutos porque os logs eram texto puro - `"Erro ao processar request: NullReferenceException"` - sem informação sobre qual tenant, qual endpoint, qual usuário, qual query. O mesmo incidente com logging estruturado levaria 3 minutos.
 
 ## Problema específico
 
-Logs em texto puro têm dois problemas: (1) não são filtráveis por campo — para encontrar todos os erros do tenant de Blumenau, era necessário fazer `grep "Blumenau"` no log — que só funcionava se alguém por acidente tinha escrito o nome da cidade no log; (2) correlação entre requests é impossível sem trace ID — múltiplos requests simultâneos entrelaçam linhas de log sem possibilidade de identificar quais linhas pertencem ao mesmo request.
+Logs em texto puro têm dois problemas: (1) não são filtráveis por campo - para encontrar todos os erros do tenant de Blumenau, era necessário fazer `grep "Blumenau"` no log - que só funcionava se alguém por acidente tinha escrito o nome da cidade no log; (2) correlação entre requests é impossível sem trace ID - múltiplos requests simultâneos entrelaçam linhas de log sem possibilidade de identificar quais linhas pertencem ao mesmo request.
 
 ## Decisão técnica
 
-Serilog com sink para Seq (desenvolvimento local) e Application Insights (produção). Middleware `LogEnrichmentMiddleware` que adiciona `tenantId`, `userId` e `traceId` ao `LogContext` a cada request — todas as linhas de log do mesmo request automaticamente incluem esses campos. Structured properties em vez de interpolação de string: `_logger.LogWarning("Falha ao processar {OperacaoId} para tenant {TenantId}", id, tenantId)` em vez de `_logger.LogWarning($"Falha ao processar {id} para tenant {tenantId}")`.
+Serilog com sink para Seq (desenvolvimento local) e Application Insights (produção). Middleware `LogEnrichmentMiddleware` que adiciona `tenantId`, `userId` e `traceId` ao `LogContext` a cada request - todas as linhas de log do mesmo request automaticamente incluem esses campos. Structured properties em vez de interpolação de string: `_logger.LogWarning("Falha ao processar {OperacaoId} para tenant {TenantId}", id, tenantId)` em vez de `_logger.LogWarning($"Falha ao processar {id} para tenant {tenantId}")`.
 
 ## Implementação
 
@@ -72,7 +72,7 @@ public sealed class LogEnrichmentMiddleware
 ```
 
 ```csharp
-// Uso em handler — structured properties
+// Uso em handler - structured properties
 public async Task<Unit> Handle(EmitirAlertaCommand cmd, CancellationToken ct)
 {
     _logger.LogInformation(
@@ -89,28 +89,28 @@ public async Task<Unit> Handle(EmitirAlertaCommand cmd, CancellationToken ct)
 
 ## Exemplo concreto
 
-Investigação do incidente de 2h da manhã com Serilog+Seq: query Seq `TenantId = "blumenau-tenant-id" AND @Level = "Error" AND @Timestamp > 2026-04-10T01:50:00Z`. Resultado: 7 erros encontrados em 2 segundos, todos do endpoint `POST /api/operacoes/{id}/hotspots`, todos com `NullReferenceException` em `HotspotAtivo.Ativar()` por `nivelRisco = null`. TraceId permitiu reconstruir o request completo em 3 cliques. Causa raiz identificada em 3 minutos — vs 40 minutos com logs de texto.
+Investigação do incidente de 2h da manhã com Serilog+Seq: query Seq `TenantId = "blumenau-tenant-id" AND @Level = "Error" AND @Timestamp > 2026-04-10T01:50:00Z`. Resultado: 7 erros encontrados em 2 segundos, todos do endpoint `POST /api/operacoes/{id}/hotspots`, todos com `NullReferenceException` em `HotspotAtivo.Ativar()` por `nivelRisco = null`. TraceId permitiu reconstruir o request completo em 3 cliques. Causa raiz identificada em 3 minutos - vs 40 minutos com logs de texto.
 
 ## Critério de sucesso
 
-100% dos logs de nível Warning+ incluem `TenantId`, `UserId` e `TraceId`. Investigação de incidente por tenant específico executável em query Seq em < 30 segundos. Zero interpolação de string em logs — 100% structured properties (verificável por análise estática com Roslyn analyzer `Serilog.Analyzers`).
+100% dos logs de nível Warning+ incluem `TenantId`, `UserId` e `TraceId`. Investigação de incidente por tenant específico executável em query Seq em < 30 segundos. Zero interpolação de string em logs - 100% structured properties (verificável por análise estática com Roslyn analyzer `Serilog.Analyzers`).
 
 ## Relação com SOS Location
 
-Em emergências reais, o tempo de investigação de um incidente não é só uma métrica de DevOps — é o tempo em que o sistema de alertas pode estar degradado enquanto pessoas estão em risco. Logging estruturado é a infraestrutura que torna a investigação rápida possível.
+Em emergências reais, o tempo de investigação de um incidente não é só uma métrica de DevOps - é o tempo em que o sistema de alertas pode estar degradado enquanto pessoas estão em risco. Logging estruturado é a infraestrutura que torna a investigação rápida possível.
 '''
 body_en_us = '''
 ## Real context
 
-During a real flood incident in Blumenau, the SOS Location backend started returning 500 errors for some tenants at 2 am. The investigation took 40 minutes because the logs were plain text — `"Error processing request: NullReferenceException"` — with no information about which tenant, which endpoint, which user, which query. The same incident with structured logging would have taken 3 minutes.
+During a real flood incident in Blumenau, the SOS Location backend started returning 500 errors for some tenants at 2 am. The investigation took 40 minutes because the logs were plain text - `"Error processing request: NullReferenceException"` - with no information about which tenant, which endpoint, which user, which query. The same incident with structured logging would have taken 3 minutes.
 
 ## Specific problem
 
-Plain text logs have two problems: (1) not filterable by field — to find all errors from the Blumenau tenant, it was necessary to `grep "Blumenau"` the log — which only worked if someone had accidentally written the city name in the log; (2) correlation between requests is impossible without a trace ID — multiple simultaneous requests interleave log lines with no way to identify which lines belong to the same request.
+Plain text logs have two problems: (1) not filterable by field - to find all errors from the Blumenau tenant, it was necessary to `grep "Blumenau"` the log - which only worked if someone had accidentally written the city name in the log; (2) correlation between requests is impossible without a trace ID - multiple simultaneous requests interleave log lines with no way to identify which lines belong to the same request.
 
 ## Technical decision
 
-Serilog with sink to Seq (local development) and Application Insights (production). `LogEnrichmentMiddleware` that adds `tenantId`, `userId` and `traceId` to `LogContext` on each request — all log lines from the same request automatically include those fields. Structured properties instead of string interpolation: `_logger.LogWarning("Failure processing {OperacaoId} for tenant {TenantId}", id, tenantId)` instead of `_logger.LogWarning($"Failure processing {id} for tenant {tenantId}")`.
+Serilog with sink to Seq (local development) and Application Insights (production). `LogEnrichmentMiddleware` that adds `tenantId`, `userId` and `traceId` to `LogContext` on each request - all log lines from the same request automatically include those fields. Structured properties instead of string interpolation: `_logger.LogWarning("Failure processing {OperacaoId} for tenant {TenantId}", id, tenantId)` instead of `_logger.LogWarning($"Failure processing {id} for tenant {tenantId}")`.
 
 ## Implementation
 
@@ -152,28 +152,28 @@ _logger.LogInformation(
 
 ## Concrete example
 
-2 am incident investigation with Serilog+Seq: Seq query `TenantId = "blumenau-tenant-id" AND @Level = "Error" AND @Timestamp > 2026-04-10T01:50:00Z`. Result: 7 errors found in 2 seconds, all from the `POST /api/operacoes/{id}/hotspots` endpoint, all `NullReferenceException` in `HotspotAtivo.Ativar()` due to `nivelRisco = null`. TraceId allowed reconstructing the complete request in 3 clicks. Root cause identified in 3 minutes — vs 40 minutes with text logs.
+2 am incident investigation with Serilog+Seq: Seq query `TenantId = "blumenau-tenant-id" AND @Level = "Error" AND @Timestamp > 2026-04-10T01:50:00Z`. Result: 7 errors found in 2 seconds, all from the `POST /api/operacoes/{id}/hotspots` endpoint, all `NullReferenceException` in `HotspotAtivo.Ativar()` due to `nivelRisco = null`. TraceId allowed reconstructing the complete request in 3 clicks. Root cause identified in 3 minutes - vs 40 minutes with text logs.
 
 ## Success criteria
 
-100% of Warning+ level logs include `TenantId`, `UserId` and `TraceId`. Incident investigation for a specific tenant executable in a Seq query in < 30 seconds. Zero string interpolation in logs — 100% structured properties (verifiable by static analysis with `Serilog.Analyzers` Roslyn analyser).
+100% of Warning+ level logs include `TenantId`, `UserId` and `TraceId`. Incident investigation for a specific tenant executable in a Seq query in < 30 seconds. Zero string interpolation in logs - 100% structured properties (verifiable by static analysis with `Serilog.Analyzers` Roslyn analyser).
 
 ## Relation to SOS Location
 
-In real emergencies, the time to investigate an incident is not just a DevOps metric — it is the time the alert system may be degraded while people are at risk. Structured logging is the infrastructure that makes fast investigation possible.
+In real emergencies, the time to investigate an incident is not just a DevOps metric - it is the time the alert system may be degraded while people are at risk. Structured logging is the infrastructure that makes fast investigation possible.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-ブルメナウでの実際の洪水インシデント中、SOS Locationバックエンドが午前2時に一部のテナントに対して500エラーを返し始めた。ログがプレーンテキストだったため調査に40分かかった——`「リクエスト処理エラー：NullReferenceException」`——どのテナント、どのエンドポイント、どのユーザー、どのクエリかの情報なし。構造化ログによる同じインシデントは3分で済んだはずだ。
+ブルメナウでの実際の洪水インシデント中、SOS Locationバックエンドが午前2時に一部のテナントに対して500エラーを返し始めた。ログがプレーンテキストだったため調査に40分かかった--`「リクエスト処理エラー：NullReferenceException」`--どのテナント、どのエンドポイント、どのユーザー、どのクエリかの情報なし。構造化ログによる同じインシデントは3分で済んだはずだ。
 
 ## 具体的な問題
 
-プレーンテキストログには2つの問題がある：(1) フィールドでフィルタリングできない——ブルメナウテナントのすべてのエラーを見つけるには、ログに`grep "Blumenau"`する必要があった——誰かが誤ってログに市名を書いていた場合にのみ機能した；(2) トレースIDなしでリクエスト間のコリレーションが不可能——複数の同時リクエストがログ行を交互に並べ、どの行が同じリクエストに属するかを識別する方法がなかった。
+プレーンテキストログには2つの問題がある：(1) フィールドでフィルタリングできない--ブルメナウテナントのすべてのエラーを見つけるには、ログに`grep "Blumenau"`する必要があった--誰かが誤ってログに市名を書いていた場合にのみ機能した；(2) トレースIDなしでリクエスト間のコリレーションが不可能--複数の同時リクエストがログ行を交互に並べ、どの行が同じリクエストに属するかを識別する方法がなかった。
 
 ## 技術的決定
 
-SeqへのシンクとApplication Insights（本番）を持つSerilog。各リクエストで`tenantId`、`userId`、`traceId`を`LogContext`に追加する`LogEnrichmentMiddleware`——同じリクエストのすべてのログ行に自動的にそれらのフィールドが含まれる。文字列補間の代わりに構造化プロパティ：`_logger.LogWarning($"...")`の代わりに`_logger.LogWarning("テナント {TenantId} の {OperacaoId} 処理失敗", id, tenantId)`。
+SeqへのシンクとApplication Insights（本番）を持つSerilog。各リクエストで`tenantId`、`userId`、`traceId`を`LogContext`に追加する`LogEnrichmentMiddleware`--同じリクエストのすべてのログ行に自動的にそれらのフィールドが含まれる。文字列補間の代わりに構造化プロパティ：`_logger.LogWarning($"...")`の代わりに`_logger.LogWarning("テナント {TenantId} の {OperacaoId} 処理失敗", id, tenantId)`。
 
 ## 実装
 
@@ -215,13 +215,13 @@ _logger.LogInformation(
 
 ## 具体的な例
 
-Serilog+Seqを使った午前2時のインシデント調査：Seqクエリ`TenantId = "blumenau-tenant-id" AND @Level = "Error" AND @Timestamp > 2026-04-10T01:50:00Z`。結果：2秒で7件のエラーを発見、すべて`POST /api/operacoes/{id}/hotspots`エンドポイントから、すべて`nivelRisco = null`による`HotspotAtivo.Ativar()`の`NullReferenceException`。TraceIdにより3クリックで完全なリクエストを再構築。根本原因を3分で特定——テキストログでの40分と比べて。
+Serilog+Seqを使った午前2時のインシデント調査：Seqクエリ`TenantId = "blumenau-tenant-id" AND @Level = "Error" AND @Timestamp > 2026-04-10T01:50:00Z`。結果：2秒で7件のエラーを発見、すべて`POST /api/operacoes/{id}/hotspots`エンドポイントから、すべて`nivelRisco = null`による`HotspotAtivo.Ativar()`の`NullReferenceException`。TraceIdにより3クリックで完全なリクエストを再構築。根本原因を3分で特定--テキストログでの40分と比べて。
 
 ## 成功基準
 
-Warning+レベルのログの100%が`TenantId`、`UserId`、`TraceId`を含む。特定のテナントのインシデント調査がSeqクエリで30秒未満で実行可能。ログでの文字列補間ゼロ——100%構造化プロパティ（`Serilog.Analyzers` Roslynalyzerで静的解析によって確認可能）。
+Warning+レベルのログの100%が`TenantId`、`UserId`、`TraceId`を含む。特定のテナントのインシデント調査がSeqクエリで30秒未満で実行可能。ログでの文字列補間ゼロ--100%構造化プロパティ（`Serilog.Analyzers` Roslynalyzerで静的解析によって確認可能）。
 
 ## SOS Locationとの関係
 
-実際の緊急時、インシデントの調査時間は単なるDevOpsメトリクスではない——アラートシステムが劣化している間、人々がリスクにさらされている時間だ。構造化ログは高速な調査を可能にするインフラだ。
+実際の緊急時、インシデントの調査時間は単なるDevOpsメトリクスではない--アラートシステムが劣化している間、人々がリスクにさらされている時間だ。構造化ログは高速な調査を可能にするインフラだ。
 '''

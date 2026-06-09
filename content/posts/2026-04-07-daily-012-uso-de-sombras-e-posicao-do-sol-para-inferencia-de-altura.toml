@@ -3,9 +3,9 @@ slug = "daily-012-uso-de-sombras-e-posicao-do-sol-para-inferencia-de-altura"
 title = "Daily #012: Uso de sombras e posição do sol para inferência de altura"
 title_en_us = "Daily #012: Using shadows and sun position to infer height"
 title_ja_jp = "Daily #012: 影と太陽位置を使った高さ推定"
-summary = "A matemática exata para calcular azimute e elevação solar a partir de coordenadas e UTC — e por que ângulos abaixo de 20° tornam a inferência de altura por sombra não confiável."
-summary_en_us = "The exact math to calculate solar azimuth and elevation from coordinates and UTC — and why angles below 20° make shadow-based height inference unreliable."
-summary_ja_jp = "座標とUTCから太陽の方位角と高度角を計算するための正確な数学——そして20°未満の角度が影による高さ推定を信頼できなくする理由。"
+summary = "A matemática exata para calcular azimute e elevação solar a partir de coordenadas e UTC - e por que ângulos abaixo de 20° tornam a inferência de altura por sombra não confiável."
+summary_en_us = "The exact math to calculate solar azimuth and elevation from coordinates and UTC - and why angles below 20° make shadow-based height inference unreliable."
+summary_ja_jp = "座標とUTCから太陽の方位角と高度角を計算するための正確な数学--そして20°未満の角度が影による高さ推定を信頼できなくする理由。"
 published_at = "2026-04-07T20:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -19,7 +19,7 @@ has_math = true
 body = '''
 ## Contexto real
 
-O pipeline de reconstrução 3D do SOS Location (#011) precisa saber o ângulo solar no momento exato em que cada imagem de satélite foi captada para calcular a altura das edificações via trigonometria das sombras. Uma imagem do mesmo bairro às 7h e às 13h produz sombras com comprimentos completamente diferentes — e alturas inferidas completamente diferentes se o ângulo solar não for considerado.
+O pipeline de reconstrução 3D do SOS Location (#011) precisa saber o ângulo solar no momento exato em que cada imagem de satélite foi captada para calcular a altura das edificações via trigonometria das sombras. Uma imagem do mesmo bairro às 7h e às 13h produz sombras com comprimentos completamente diferentes - e alturas inferidas completamente diferentes se o ângulo solar não for considerado.
 
 ## Problema específico
 
@@ -27,7 +27,7 @@ O primeiro protótipo usava um ângulo solar fixo de 45° para simplificar o cá
 
 ## Decisão técnica
 
-Calcular a posição solar real a partir de (latitude, longitude, UTC datetime) usando a equação de Spencer simplificada — precisão suficiente para inferência de altura (erro < 0,5° na elevação solar para latitudes entre -55° e +55°, que cobre todo o Brasil).
+Calcular a posição solar real a partir de (latitude, longitude, UTC datetime) usando a equação de Spencer simplificada - precisão suficiente para inferência de altura (erro < 0,5° na elevação solar para latitudes entre -55° e +55°, que cobre todo o Brasil).
 
 ## Implementação
 
@@ -80,7 +80,7 @@ def solar_elevation_deg(
 
 # Uso no pipeline de reconstrução
 def is_reliable_for_shadow(elevation_deg: float) -> bool:
-    """Abaixo de 20°: sombra > 2.75x a altura — erro de paralaxe torna inferência não confiável."""
+    """Abaixo de 20°: sombra > 2.75x a altura - erro de paralaxe torna inferência não confiável."""
     return elevation_deg >= 20.0
 ```
 
@@ -105,12 +105,12 @@ O erro de estimativa de altura por sombra é < 1 m para edificações em terreno
 
 ## Relação com SOS Location
 
-O SOS Location processa imagens de satélite coletadas em horários variados por diferentes provedores (Sentinel-2, Planet Labs). Sem calcular a posição solar real por imagem, o pipeline de reconstrução 3D produziria alturas inconsistentes para o mesmo bairro processado em datas ou horários diferentes — comprometendo a consistência do modelo 3D usado nas simulações de desastre.
+O SOS Location processa imagens de satélite coletadas em horários variados por diferentes provedores (Sentinel-2, Planet Labs). Sem calcular a posição solar real por imagem, o pipeline de reconstrução 3D produziria alturas inconsistentes para o mesmo bairro processado em datas ou horários diferentes - comprometendo a consistência do modelo 3D usado nas simulações de desastre.
 '''
 body_en_us = '''
 ## Real context
 
-SOS Location's 3D reconstruction pipeline (#011) needs to know the solar angle at the exact moment each satellite image was captured in order to calculate building heights via shadow trigonometry. An image of the same neighbourhood at 7am and at 1pm produces shadows with completely different lengths — and completely different inferred heights if the solar angle is not considered.
+SOS Location's 3D reconstruction pipeline (#011) needs to know the solar angle at the exact moment each satellite image was captured in order to calculate building heights via shadow trigonometry. An image of the same neighbourhood at 7am and at 1pm produces shadows with completely different lengths - and completely different inferred heights if the solar angle is not considered.
 
 ## Specific problem
 
@@ -118,7 +118,7 @@ The first prototype used a fixed solar angle of 45° to simplify the calculation
 
 ## Technical decision
 
-Calculate the actual solar position from (latitude, longitude, UTC datetime) using the simplified Spencer equation — precision sufficient for height inference (error < 0.5° in solar elevation for latitudes between -55° and +55°, covering all of Brazil).
+Calculate the actual solar position from (latitude, longitude, UTC datetime) using the simplified Spencer equation - precision sufficient for height inference (error < 0.5° in solar elevation for latitudes between -55° and +55°, covering all of Brazil).
 
 ## Implementation
 
@@ -163,7 +163,7 @@ def solar_elevation_deg(
     return math.degrees(math.asin(max(-1.0, min(1.0, sin_elev))))
 
 def is_reliable_for_shadow(elevation_deg: float) -> bool:
-    """Below 20°: shadow > 2.75× height — parallax error makes inference unreliable."""
+    """Below 20°: shadow > 2.75× height - parallax error makes inference unreliable."""
     return elevation_deg >= 20.0
 ```
 
@@ -187,12 +187,12 @@ Shadow-based height estimation error < 1 m for buildings on flat terrain with so
 
 ## Relation to SOS Location
 
-SOS Location processes satellite images collected at varying times from different providers (Sentinel-2, Planet Labs). Without calculating the actual solar position per image, the 3D reconstruction pipeline would produce inconsistent heights for the same neighbourhood processed on different dates or times — undermining the consistency of the 3D model used in disaster simulations.
+SOS Location processes satellite images collected at varying times from different providers (Sentinel-2, Planet Labs). Without calculating the actual solar position per image, the 3D reconstruction pipeline would produce inconsistent heights for the same neighbourhood processed on different dates or times - undermining the consistency of the 3D model used in disaster simulations.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-SOS Locationの3D再構成パイプライン（#011）は、影の三角法で建物高さを計算するために各衛星画像が撮影された正確な時刻の太陽角度を知る必要がある。同じ地区を午前7時と午後1時に撮影した画像は完全に異なる長さの影を生成する——太陽角度が考慮されなければ完全に異なる高さが推定される。
+SOS Locationの3D再構成パイプライン（#011）は、影の三角法で建物高さを計算するために各衛星画像が撮影された正確な時刻の太陽角度を知る必要がある。同じ地区を午前7時と午後1時に撮影した画像は完全に異なる長さの影を生成する--太陽角度が考慮されなければ完全に異なる高さが推定される。
 
 ## 具体的な問題
 
@@ -200,7 +200,7 @@ SOS Locationの3D再構成パイプライン（#011）は、影の三角法で�
 
 ## 技術的決定
 
-Spencer方程式の簡略版を使用して（緯度、経度、UTC日時）から実際の太陽位置を計算する——高さ推定に十分な精度（ブラジル全土をカバーする緯度-55°〜+55°での太陽高度角の誤差 < 0.5°）。
+Spencer方程式の簡略版を使用して（緯度、経度、UTC日時）から実際の太陽位置を計算する--高さ推定に十分な精度（ブラジル全土をカバーする緯度-55°〜+55°での太陽高度角の誤差 < 0.5°）。
 
 ## 実装
 
@@ -239,7 +239,7 @@ def solar_elevation_deg(lat_deg: float, lon_deg: float, utc_dt: datetime) -> flo
     return math.degrees(math.asin(max(-1.0, min(1.0, sin_elev))))
 
 def is_reliable_for_shadow(elevation_deg: float) -> bool:
-    """20°未満：影 > 2.75×高さ——視差誤差が推定を信頼できなくする。"""
+    """20°未満：影 > 2.75×高さ--視差誤差が推定を信頼できなくする。"""
     return elevation_deg >= 20.0
 ```
 
@@ -263,5 +263,5 @@ elev = solar_elevation_deg(-8.05, -34.88,
 
 ## SOS Locationとの関係
 
-SOS Locationは異なるプロバイダー（Sentinel-2、Planet Labs）から様々な時間に収集された衛星画像を処理する。画像ごとに実際の太陽位置を計算せずに、3D再構成パイプラインは異なる日時に処理された同じ地区に対して一貫性のない高さを生成する——災害シミュレーションで使用される3Dモデルの一貫性を損なう。
+SOS Locationは異なるプロバイダー（Sentinel-2、Planet Labs）から様々な時間に収集された衛星画像を処理する。画像ごとに実際の太陽位置を計算せずに、3D再構成パイプラインは異なる日時に処理された同じ地区に対して一貫性のない高さを生成する--災害シミュレーションで使用される3Dモデルの一貫性を損なう。
 '''

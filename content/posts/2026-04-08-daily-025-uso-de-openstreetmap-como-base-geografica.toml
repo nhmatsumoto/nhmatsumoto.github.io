@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-O SOS Location é usado em situações onde conectividade de rede é imprevisível: enchentes que derrubam infraestrutura de telecomunicações, áreas remotas, operações em campo com 3G instável. A dependência de um tile server único (Google Maps, Mapbox) seria um ponto único de falha operacional. Além disso, Google Maps cobra por tiles carregados — em eventos de desastre com picos de 10.000 usuários simultâneos acessando múltiplas zonas, o custo seria proibitivo.
+O SOS Location é usado em situações onde conectividade de rede é imprevisível: enchentes que derrubam infraestrutura de telecomunicações, áreas remotas, operações em campo com 3G instável. A dependência de um tile server único (Google Maps, Mapbox) seria um ponto único de falha operacional. Além disso, Google Maps cobra por tiles carregados - em eventos de desastre com picos de 10.000 usuários simultâneos acessando múltiplas zonas, o custo seria proibitivo.
 
 ## Problema específico
 
-OSM tiles via `tile.openstreetmap.org` são gratuitos, mas os termos de uso proíbem uso de alta frequência em produção (policy de "heavy use"). Em um evento de emergência com 500 coordenadores atualizando o mapa a cada 30 segundos, o volume de requests violaria o limite. Além disso, sem cache local, a perda de conexão durante uma operação tornaria o mapa completamente em branco — os tiles já carregados desaparecem ao navegar para uma área não visitada.
+OSM tiles via `tile.openstreetmap.org` são gratuitos, mas os termos de uso proíbem uso de alta frequência em produção (policy de "heavy use"). Em um evento de emergência com 500 coordenadores atualizando o mapa a cada 30 segundos, o volume de requests violaria o limite. Além disso, sem cache local, a perda de conexão durante uma operação tornaria o mapa completamente em branco - os tiles já carregados desaparecem ao navegar para uma área não visitada.
 
 ## Decisão técnica
 
-Tile URL configurável com fallback em cascata: (1) Carto CDN (plano gratuito, 250k requests/mês, suficiente para o SOS Location atual); (2) Stadia Maps como fallback se Carto cair; (3) `tile.openstreetmap.org` como último recurso para desenvolvimento. Service Worker pré-carrega e cacheia tiles de zoom 10–15 para os 50 municípios prioritários durante instalação da PWA — disponível offline.
+Tile URL configurável com fallback em cascata: (1) Carto CDN (plano gratuito, 250k requests/mês, suficiente para o SOS Location atual); (2) Stadia Maps como fallback se Carto cair; (3) `tile.openstreetmap.org` como último recurso para desenvolvimento. Service Worker pré-carrega e cacheia tiles de zoom 10–15 para os 50 municípios prioritários durante instalação da PWA - disponível offline.
 
 ## Implementação
 
@@ -60,7 +60,7 @@ export function buildTileLayer(primaryUrl: string, fallbackUrl: string): L.TileL
 ```
 
 ```ts
-// public/sw.js — Service Worker para cache offline de tiles
+// public/sw.js - Service Worker para cache offline de tiles
 const TILE_CACHE = 'sos-tiles-v1';
 const PRIORITY_MUNICIPALITIES = [
   // Bounding boxes [south, west, north, east] dos 50 municípios
@@ -98,7 +98,7 @@ function lat2tile(lat, z) {
 
 ## Exemplo concreto
 
-Enchente em Blumenau (SC): rede celular degradada durante evento. Coordenador com PWA instalada (cache pré-carregado): tiles zoom 10–15 de Blumenau disponíveis offline. Sem internet, o mapa base de Blumenau continua funcionando — apenas os overlays dinâmicos (risco, marcadores) aguardam reconexão. Tiles pré-carregados: ~2.800 imagens para Blumenau nos 6 níveis de zoom, ocupando ~18 MB no cache do dispositivo.
+Enchente em Blumenau (SC): rede celular degradada durante evento. Coordenador com PWA instalada (cache pré-carregado): tiles zoom 10–15 de Blumenau disponíveis offline. Sem internet, o mapa base de Blumenau continua funcionando - apenas os overlays dinâmicos (risco, marcadores) aguardam reconexão. Tiles pré-carregados: ~2.800 imagens para Blumenau nos 6 níveis de zoom, ocupando ~18 MB no cache do dispositivo.
 
 ## Critério de sucesso
 
@@ -106,20 +106,20 @@ Mapa base funcional offline para os 50 municípios prioritários após instalaç
 
 ## Relação com SOS Location
 
-O mapa base é a camada de orientação espacial do coordenador. Em desastres que afetam telecomunicações — que são exatamente os eventos que o SOS Location foi construído para apoiar — a disponibilidade offline do mapa base não é feature, é requisito operacional. OSM + PWA cache é a única combinação que atende isso sem custo e sem dependência de terceiros.
+O mapa base é a camada de orientação espacial do coordenador. Em desastres que afetam telecomunicações - que são exatamente os eventos que o SOS Location foi construído para apoiar - a disponibilidade offline do mapa base não é feature, é requisito operacional. OSM + PWA cache é a única combinação que atende isso sem custo e sem dependência de terceiros.
 '''
 body_en_us = '''
 ## Real context
 
-SOS Location is used in situations where network connectivity is unpredictable: floods that knock out telecoms infrastructure, remote areas, field operations with unstable 3G. Dependence on a single tile server (Google Maps, Mapbox) would be a single point of operational failure. Additionally, Google Maps charges per tile loaded — in disaster events with peaks of 10,000 simultaneous users accessing multiple zones, the cost would be prohibitive.
+SOS Location is used in situations where network connectivity is unpredictable: floods that knock out telecoms infrastructure, remote areas, field operations with unstable 3G. Dependence on a single tile server (Google Maps, Mapbox) would be a single point of operational failure. Additionally, Google Maps charges per tile loaded - in disaster events with peaks of 10,000 simultaneous users accessing multiple zones, the cost would be prohibitive.
 
 ## Specific problem
 
-OSM tiles via `tile.openstreetmap.org` are free, but the terms of use prohibit high-frequency production use ("heavy use" policy). In an emergency event with 500 coordinators refreshing the map every 30 seconds, the request volume would violate the limit. Additionally, without a local cache, losing connection during an operation would leave the map completely blank — tiles already loaded disappear when navigating to an unvisited area.
+OSM tiles via `tile.openstreetmap.org` are free, but the terms of use prohibit high-frequency production use ("heavy use" policy). In an emergency event with 500 coordinators refreshing the map every 30 seconds, the request volume would violate the limit. Additionally, without a local cache, losing connection during an operation would leave the map completely blank - tiles already loaded disappear when navigating to an unvisited area.
 
 ## Technical decision
 
-Configurable tile URL with cascading fallback: (1) Carto CDN (free tier, 250k requests/month, sufficient for current SOS Location); (2) Stadia Maps as fallback if Carto goes down; (3) `tile.openstreetmap.org` as last resort for development. Service Worker pre-fetches and caches tiles at zoom 10–15 for the 50 priority municipalities during PWA installation — available offline.
+Configurable tile URL with cascading fallback: (1) Carto CDN (free tier, 250k requests/month, sufficient for current SOS Location); (2) Stadia Maps as fallback if Carto goes down; (3) `tile.openstreetmap.org` as last resort for development. Service Worker pre-fetches and caches tiles at zoom 10–15 for the 50 priority municipalities during PWA installation - available offline.
 
 ## Implementation
 
@@ -164,7 +164,7 @@ async function precacheMunicipalityTiles(bbox, minZoom = 10, maxZoom = 15) {
 
 ## Concrete example
 
-Flood in Blumenau (SC): mobile network degraded during event. Coordinator with installed PWA (pre-loaded cache): Blumenau zoom 10–15 tiles available offline. Without internet, the Blumenau base map keeps working — only dynamic overlays (risk, markers) wait for reconnection. Pre-cached tiles: ~2,800 images for Blumenau across 6 zoom levels, occupying ~18 MB in the device cache.
+Flood in Blumenau (SC): mobile network degraded during event. Coordinator with installed PWA (pre-loaded cache): Blumenau zoom 10–15 tiles available offline. Without internet, the Blumenau base map keeps working - only dynamic overlays (risk, markers) wait for reconnection. Pre-cached tiles: ~2,800 images for Blumenau across 6 zoom levels, occupying ~18 MB in the device cache.
 
 ## Success criteria
 
@@ -172,20 +172,20 @@ Offline base map functional for the 50 priority municipalities after PWA install
 
 ## Relation to SOS Location
 
-The base map is the coordinator's spatial orientation layer. In disasters that affect telecoms — which are exactly the events SOS Location was built to support — offline availability of the base map is not a feature, it is an operational requirement. OSM + PWA cache is the only combination that meets this at zero cost and without third-party dependency.
+The base map is the coordinator's spatial orientation layer. In disasters that affect telecoms - which are exactly the events SOS Location was built to support - offline availability of the base map is not a feature, it is an operational requirement. OSM + PWA cache is the only combination that meets this at zero cost and without third-party dependency.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-SOS Locationはネットワーク接続が予測不能な状況で使用される：通信インフラを破壊する洪水、遠隔地、不安定な3Gでのフィールド作戦。単一のタイルサーバー（Google Maps、Mapbox）への依存は、単一の運用障害点になる。さらに、Google Mapsはロードされたタイルごとに課金する——複数のゾーンにアクセスする10,000人の同時ユーザーのピークがある災害イベントでは、コストが法外になる。
+SOS Locationはネットワーク接続が予測不能な状況で使用される：通信インフラを破壊する洪水、遠隔地、不安定な3Gでのフィールド作戦。単一のタイルサーバー（Google Maps、Mapbox）への依存は、単一の運用障害点になる。さらに、Google Mapsはロードされたタイルごとに課金する--複数のゾーンにアクセスする10,000人の同時ユーザーのピークがある災害イベントでは、コストが法外になる。
 
 ## 具体的な問題
 
-`tile.openstreetmap.org`経由のOSMタイルは無料だが、利用規約で本番での高頻度使用が禁止されている（「heavy use」ポリシー）。30秒ごとにマップを更新する500人のコーディネーターがいる緊急イベントでは、リクエスト量が制限を違反する。さらに、ローカルキャッシュなしでは、作戦中の接続損失でマップが完全に白くなる——すでにロードされたタイルは未訪問エリアに移動すると消える。
+`tile.openstreetmap.org`経由のOSMタイルは無料だが、利用規約で本番での高頻度使用が禁止されている（「heavy use」ポリシー）。30秒ごとにマップを更新する500人のコーディネーターがいる緊急イベントでは、リクエスト量が制限を違反する。さらに、ローカルキャッシュなしでは、作戦中の接続損失でマップが完全に白くなる--すでにロードされたタイルは未訪問エリアに移動すると消える。
 
 ## 技術的決定
 
-カスケードフォールバック付きの設定可能なタイルURL：(1) Carto CDN（無料プラン、月25万リクエスト、現在のSOS Locationには十分）；(2) CartoCDNがダウンした場合のフォールバックとしてStadia Maps；(3) 開発用の最終手段として`tile.openstreetmap.org`。Service WorkerはPWAインストール中に50の優先市町村のズーム10〜15のタイルをプリフェッチしてキャッシュする——オフラインで利用可能。
+カスケードフォールバック付きの設定可能なタイルURL：(1) Carto CDN（無料プラン、月25万リクエスト、現在のSOS Locationには十分）；(2) CartoCDNがダウンした場合のフォールバックとしてStadia Maps；(3) 開発用の最終手段として`tile.openstreetmap.org`。Service WorkerはPWAインストール中に50の優先市町村のズーム10〜15のタイルをプリフェッチしてキャッシュする--オフラインで利用可能。
 
 ## 実装
 
@@ -230,7 +230,7 @@ async function precacheMunicipalityTiles(bbox, minZoom = 10, maxZoom = 15) {
 
 ## 具体的な例
 
-ブルメナウ（SC）の洪水：イベント中に携帯ネットワークが劣化。インストール済みPWA（プリロードキャッシュ）を持つコーディネーター：ブルメナウのズーム10〜15タイルがオフラインで利用可能。インターネットなしで、ブルメナウのベースマップは機能し続ける——動的オーバーレイ（リスク、マーカー）だけが再接続を待つ。プリキャッシュされたタイル：6ズームレベルのブルメナウで約2,800枚の画像、デバイスキャッシュで約18MBを占有。
+ブルメナウ（SC）の洪水：イベント中に携帯ネットワークが劣化。インストール済みPWA（プリロードキャッシュ）を持つコーディネーター：ブルメナウのズーム10〜15タイルがオフラインで利用可能。インターネットなしで、ブルメナウのベースマップは機能し続ける--動的オーバーレイ（リスク、マーカー）だけが再接続を待つ。プリキャッシュされたタイル：6ズームレベルのブルメナウで約2,800枚の画像、デバイスキャッシュで約18MBを占有。
 
 ## 成功基準
 
@@ -238,5 +238,5 @@ PWAインストール後に50の優先市町村のオフラインベースマッ
 
 ## SOS Locationとの関係
 
-ベースマップはコーディネーターの空間的オリエンテーションレイヤーだ。通信に影響する災害中——これはまさにSOS Locationが支援するために構築されたイベントだ——ベースマップのオフライン利用可能性は機能ではなく、運用要件だ。OSM + PWAキャッシュはコストゼロでサードパーティ依存なしにこれを満たす唯一の組み合わせだ。
+ベースマップはコーディネーターの空間的オリエンテーションレイヤーだ。通信に影響する災害中--これはまさにSOS Locationが支援するために構築されたイベントだ--ベースマップのオフライン利用可能性は機能ではなく、運用要件だ。OSM + PWAキャッシュはコストゼロでサードパーティ依存なしにこれを満たす唯一の組み合わせだ。
 '''

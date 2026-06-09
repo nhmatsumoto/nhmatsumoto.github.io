@@ -19,7 +19,7 @@ has_math = false
 body = '''
 ## Contexto real
 
-O aplicativo mobile do SOS Location enviava coordenadas como strings JSON: `"latitude": "-27.595"`. O backend .NET recebia como `double` sem problema. Mas quando um dispositivo Android antigo com bug de localização enviou `"latitude": "-927.595"`, o valor passou pela deserialização sem erro, chegou até o domínio e foi rejeitado com uma `DomainException` interna que resultou em HTTP 500 — sem mensagem significativa para o frontend. O app mobile exibia "Erro desconhecido".
+O aplicativo mobile do SOS Location enviava coordenadas como strings JSON: `"latitude": "-27.595"`. O backend .NET recebia como `double` sem problema. Mas quando um dispositivo Android antigo com bug de localização enviou `"latitude": "-927.595"`, o valor passou pela deserialização sem erro, chegou até o domínio e foi rejeitado com uma `DomainException` interna que resultou em HTTP 500 - sem mensagem significativa para o frontend. O app mobile exibia "Erro desconhecido".
 
 ## Problema específico
 
@@ -88,7 +88,7 @@ public sealed class ValidationBehavior<TRequest, TResponse>
     }
 }
 
-// Api/Middleware/ExceptionMiddleware.cs — formata 422 padronizado
+// Api/Middleware/ExceptionMiddleware.cs - formata 422 padronizado
 private static IResult HandleValidationException(ValidationException ex)
 {
     var errors = ex.Errors
@@ -130,12 +130,12 @@ O bug do dispositivo Android com latitude `-927.595` passou a retornar HTTP 422 
 
 ## Relação com SOS Location
 
-Em campo, operadores usam dispositivos variados — celulares antigos, tablets com GPS com defeito — em condições de estresse. A validação de contrato na borda da API é o que garante que dados de baixa qualidade enviados sob pressão resultam em feedback claro ao operador, não em erros opacos que interrompem o fluxo de registro de emergências.
+Em campo, operadores usam dispositivos variados - celulares antigos, tablets com GPS com defeito - em condições de estresse. A validação de contrato na borda da API é o que garante que dados de baixa qualidade enviados sob pressão resultam em feedback claro ao operador, não em erros opacos que interrompem o fluxo de registro de emergências.
 '''
 body_en_us = '''
 ## Real context
 
-The SOS Location mobile app sent coordinates as JSON strings: `"latitude": "-27.595"`. The .NET backend received them as `double` without issue. But when an old Android device with a GPS bug sent `"latitude": "-927.595"`, the value passed deserialisation without error, reached the domain, and was rejected with an internal `DomainException` that resulted in HTTP 500 — with no meaningful message for the frontend. The mobile app displayed "Unknown error".
+The SOS Location mobile app sent coordinates as JSON strings: `"latitude": "-27.595"`. The .NET backend received them as `double` without issue. But when an old Android device with a GPS bug sent `"latitude": "-927.595"`, the value passed deserialisation without error, reached the domain, and was rejected with an internal `DomainException` that resulted in HTTP 500 - with no meaningful message for the frontend. The mobile app displayed "Unknown error".
 
 ## Specific problem
 
@@ -221,7 +221,7 @@ The Android device bug with latitude `-927.595` now returns HTTP 422 with `"Lati
 
 ## Relation to SOS Location
 
-In the field, operators use varied devices — old phones, tablets with faulty GPS — under stress conditions. Contract validation at the API boundary ensures that low-quality data submitted under pressure results in clear feedback to the operator, not opaque errors that interrupt the emergency registration flow.
+In the field, operators use varied devices - old phones, tablets with faulty GPS - under stress conditions. Contract validation at the API boundary ensures that low-quality data submitted under pressure results in clear feedback to the operator, not opaque errors that interrupt the emergency registration flow.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -304,5 +304,5 @@ public sealed class ValidationBehavior<TRequest, TResponse>
 
 ## SOS Locationとの関係
 
-現場では、オペレーターは様々なデバイス——古い携帯電話・GPSが故障したタブレット——をストレス下で使用する。APIの境界でのコントラクト検証は、プレッシャー下で送信された低品質なデータが、緊急登録フローを中断する不透明なエラーではなく、オペレーターへの明確なフィードバックをもたらすことを保証する。
+現場では、オペレーターは様々なデバイス--古い携帯電話・GPSが故障したタブレット--をストレス下で使用する。APIの境界でのコントラクト検証は、プレッシャー下で送信された低品質なデータが、緊急登録フローを中断する不透明なエラーではなく、オペレーターへの明確なフィードバックをもたらすことを保証する。
 '''

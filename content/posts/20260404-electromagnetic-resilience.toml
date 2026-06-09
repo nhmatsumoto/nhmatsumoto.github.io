@@ -17,7 +17,7 @@ body = '''
 O "dano" eletromagnético (EMP) não é apenas o calor de uma explosão; é a fração da energia emitida que consegue se **acoplar** ao seu sistema. A vulnerabilidade de um circuito depende diretamente de sua geometria, blindagem e filtragem.
 
 ### A Equação de Dano
-Para entender a resiliência, não pensamos em "raio de efeito" — o dano é uma função de transferência de energia:
+Para entender a resiliência, não pensamos em "raio de efeito" - o dano é uma função de transferência de energia:
 
 $$ Dano = Fonte \times Propaga\c{c}ão \times Acoplamento \times Vulnerabilidade $$
 

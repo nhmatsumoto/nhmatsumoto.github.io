@@ -3,8 +3,8 @@ slug = "cqrs-tradeoffs"
 title = "CQRS sem dogma: o que ele realmente separa e o preço que você paga"
 title_en_us = "CQRS without dogma: what it actually separates and the price you pay"
 title_ja_jp = "教条なしの CQRS：それが実際に分離するものと、支払う代償"
-summary = "CQRS é separar o modelo de escrita do modelo de leitura — não é Event Sourcing, não exige dois bancos e não é sinônimo de microservices. Um guia honesto sobre o que ganha, o que perde e os três níveis em que ele pode ser adotado."
-summary_en_us = "CQRS means separating the write model from the read model — it is not Event Sourcing, it does not require two databases, and it is not a synonym for microservices. An honest guide to what you gain, what you lose, and the three levels at which it can be adopted."
+summary = "CQRS é separar o modelo de escrita do modelo de leitura - não é Event Sourcing, não exige dois bancos e não é sinônimo de microservices. Um guia honesto sobre o que ganha, o que perde e os três níveis em que ele pode ser adotado."
+summary_en_us = "CQRS means separating the write model from the read model - it is not Event Sourcing, it does not require two databases, and it is not a synonym for microservices. An honest guide to what you gain, what you lose, and the three levels at which it can be adopted."
 summary_ja_jp = "CQRS とは書き込みモデルと読み取りモデルを分けることであり、イベントソーシングではなく、2 つのデータベースを必要とせず、マイクロサービスの同義語でもない。得るもの、失うもの、そして採用できる 3 つのレベルについての誠実なガイド。"
 published_at = "2026-04-29T09:10:00+09:00"
 updated_at = "2026-06-07T09:10:00+09:00"
@@ -14,7 +14,7 @@ badges = ["CQRS", "Arquitetura"]
 featured = false
 has_math = false
 body = '''
-CQRS (*Command Query Responsibility Segregation*) é uma das ideias mais simples e mais mal compreendidas da arquitetura moderna. A definição original de Greg Young é quase decepcionante de tão direta: **use um modelo para alterar dados e um modelo diferente para lê-los**. Só isso. Tudo o que vem depois — bancos separados, mensageria, projeções — é opcional.
+CQRS (*Command Query Responsibility Segregation*) é uma das ideias mais simples e mais mal compreendidas da arquitetura moderna. A definição original de Greg Young é quase decepcionante de tão direta: **use um modelo para alterar dados e um modelo diferente para lê-los**. Só isso. Tudo o que vem depois - bancos separados, mensageria, projeções - é opcional.
 
 ## O que CQRS NÃO é
 
@@ -66,10 +66,10 @@ Quando você vai além do nível 1, paga em moedas concretas:
 
 ## Conclusão
 
-CQRS é excelente quando há uma assimetria real entre leitura e escrita — relatórios complexos, dashboards, leitura 100x mais frequente que escrita, ou invariantes de domínio que o CRUD está corrompendo. É *overengineering* quando adotado por status. A regra prática: **comece pela separação lógica (nível 1), que é barata e quase sempre clarifica o código; só suba de nível quando uma métrica — não uma opinião — exigir.**
+CQRS é excelente quando há uma assimetria real entre leitura e escrita - relatórios complexos, dashboards, leitura 100x mais frequente que escrita, ou invariantes de domínio que o CRUD está corrompendo. É *overengineering* quando adotado por status. A regra prática: **comece pela separação lógica (nível 1), que é barata e quase sempre clarifica o código; só suba de nível quando uma métrica - não uma opinião - exigir.**
 '''
 body_en_us = '''
-CQRS (*Command Query Responsibility Segregation*) is one of the simplest and most misunderstood ideas in modern architecture. Greg Young's original definition is almost disappointingly direct: **use one model to change data and a different model to read it**. That's it. Everything that comes after — separate databases, messaging, projections — is optional.
+CQRS (*Command Query Responsibility Segregation*) is one of the simplest and most misunderstood ideas in modern architecture. Greg Young's original definition is almost disappointingly direct: **use one model to change data and a different model to read it**. That's it. Everything that comes after - separate databases, messaging, projections - is optional.
 
 ## What CQRS is NOT
 
@@ -121,7 +121,7 @@ Once you go beyond level 1, you pay in concrete currency:
 
 ## Conclusion
 
-CQRS shines when there is a real asymmetry between reads and writes — complex reports, dashboards, reads 100x more frequent than writes, or domain invariants that CRUD is corrupting. It is *overengineering* when adopted for status. The practical rule: **start with logical separation (level 1), which is cheap and almost always clarifies the code; only move up a level when a metric — not an opinion — demands it.**
+CQRS shines when there is a real asymmetry between reads and writes - complex reports, dashboards, reads 100x more frequent than writes, or domain invariants that CRUD is corrupting. It is *overengineering* when adopted for status. The practical rule: **start with logical separation (level 1), which is cheap and almost always clarifies the code; only move up a level when a metric - not an opinion - demands it.**
 '''
 body_ja_jp = '''
 CQRS（*Command Query Responsibility Segregation*）は、現代アーキテクチャで最も単純でありながら最も誤解されている概念のひとつです。グレッグ・ヤングによる本来の定義は、拍子抜けするほど直接的です。**データを変更するモデルと、それを読み取るモデルを別にせよ**。それだけです。その後に来るもの ── データベースの分離、メッセージング、プロジェクション ── はすべて任意です。

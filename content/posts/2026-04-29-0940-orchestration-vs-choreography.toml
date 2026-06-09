@@ -3,8 +3,8 @@ slug = "orchestration-vs-choreography"
 title = "Orquestração vs Coreografia: quem comanda o fluxo entre serviços?"
 title_en_us = "Orchestration vs Choreography: who commands the flow between services?"
 title_ja_jp = "オーケストレーション vs コレオグラフィ：サービス間のフローを誰が指揮するか"
-summary = "Quando um processo de negócio atravessa vários serviços, alguém precisa coordenar os passos. Na orquestração há um maestro central; na coreografia cada serviço reage a eventos. A escolha define onde mora a complexidade — e como você lida com falhas e compensações."
-summary_en_us = "When a business process spans several services, someone has to coordinate the steps. In orchestration there's a central conductor; in choreography each service reacts to events. The choice decides where complexity lives — and how you handle failures and compensations."
+summary = "Quando um processo de negócio atravessa vários serviços, alguém precisa coordenar os passos. Na orquestração há um maestro central; na coreografia cada serviço reage a eventos. A escolha define onde mora a complexidade - e como você lida com falhas e compensações."
+summary_en_us = "When a business process spans several services, someone has to coordinate the steps. In orchestration there's a central conductor; in choreography each service reacts to events. The choice decides where complexity lives - and how you handle failures and compensations."
 summary_ja_jp = "ビジネスプロセスが複数のサービスにまたがるとき、誰かが手順を調整せねばならない。オーケストレーションには中央の指揮者がいて、コレオグラフィでは各サービスがイベントに反応する。この選択が、複雑さの住処と、障害・補償の扱い方を決める。"
 published_at = "2026-04-29T09:40:00+09:00"
 updated_at = "2026-06-07T09:40:00+09:00"
@@ -18,7 +18,7 @@ Um pedido de e-commerce precisa: reservar estoque, cobrar o pagamento, agendar a
 
 ## Orquestração: o maestro central
 
-Um componente — o **orquestrador** — conhece o fluxo inteiro e comanda cada serviço explicitamente: "reserve o estoque", aguarda a resposta, "cobre o pagamento", aguarda, e assim por diante. Os serviços são "burros" quanto ao processo; eles só obedecem comandos.
+Um componente - o **orquestrador** - conhece o fluxo inteiro e comanda cada serviço explicitamente: "reserve o estoque", aguarda a resposta, "cobre o pagamento", aguarda, e assim por diante. Os serviços são "burros" quanto ao processo; eles só obedecem comandos.
 
 ```
         ┌──────────────┐
@@ -28,7 +28,7 @@ Um componente — o **orquestrador** — conhece o fluxo inteiro e comanda cada 
     [Estoque][Pagamento][Entrega]
 ```
 
-- **A favor:** o fluxo está em **um lugar só** — fácil de ler, monitorar, versionar. Tratamento de erro e *timeout* centralizados. Estado do processo explícito.
+- **A favor:** o fluxo está em **um lugar só** - fácil de ler, monitorar, versionar. Tratamento de erro e *timeout* centralizados. Estado do processo explícito.
 - **Contra:** acoplamento ao orquestrador; ele pode virar um *God Service*; é um ponto que precisa ser resiliente.
 
 Ferramentas como **Camunda**, **Temporal** e o padrão **Saga orquestrada** vivem aqui.
@@ -60,7 +60,7 @@ Não há comandante. Cada serviço **emite eventos** sobre o que fez e **reage a
 
 ## O ponto comum esquecido: a Saga e a compensação
 
-Os dois modelos são formas de implementar uma **Saga** — uma transação distribuída de longa duração que substitui o ACID (impossível entre serviços) por uma sequência de transações locais. E ambos enfrentam a mesma pergunta difícil: **e quando o passo 3 falha depois que 1 e 2 já tiveram sucesso?** Não há *rollback* — é preciso **compensar**: estornar o pagamento, liberar o estoque. A diferença é que na orquestração a lógica de compensação está no maestro; na coreografia, espalhada em eventos de reversão. A complexidade não some — ela muda de endereço.
+Os dois modelos são formas de implementar uma **Saga** - uma transação distribuída de longa duração que substitui o ACID (impossível entre serviços) por uma sequência de transações locais. E ambos enfrentam a mesma pergunta difícil: **e quando o passo 3 falha depois que 1 e 2 já tiveram sucesso?** Não há *rollback* - é preciso **compensar**: estornar o pagamento, liberar o estoque. A diferença é que na orquestração a lógica de compensação está no maestro; na coreografia, espalhada em eventos de reversão. A complexidade não some - ela muda de endereço.
 
 ## Como escolher
 
@@ -68,14 +68,14 @@ Uma heurística pragmática: **orquestre o que precisa ser entendido como um tod
 
 ## Conclusão
 
-Não existe vencedor universal — existe a pergunta "**onde quero que a complexidade do fluxo viva: visível no centro, ou diluída nas bordas?**". Comece simples: na dúvida, a orquestração explícita é mais fácil de operar e raciocinar. Evolua para coreografia quando o desacoplamento entre serviços valer o custo de perder a visão central. O pior dos mundos é a coreografia acidental — eventos jogados sem contrato, sem rastreabilidade — que ninguém decidiu adotar, mas todos acabam mantendo.
+Não existe vencedor universal - existe a pergunta "**onde quero que a complexidade do fluxo viva: visível no centro, ou diluída nas bordas?**". Comece simples: na dúvida, a orquestração explícita é mais fácil de operar e raciocinar. Evolua para coreografia quando o desacoplamento entre serviços valer o custo de perder a visão central. O pior dos mundos é a coreografia acidental - eventos jogados sem contrato, sem rastreabilidade - que ninguém decidiu adotar, mas todos acabam mantendo.
 '''
 body_en_us = '''
 An e-commerce order needs to: reserve inventory, charge the payment, schedule delivery, and notify the customer. Four services, four steps that must happen in the right order and unwind gracefully if one fails. **Who coordinates that?** There are exactly two answers, and choosing between them is one of the most consequential decisions in a distributed architecture.
 
 ## Orchestration: the central conductor
 
-One component — the **orchestrator** — knows the whole flow and commands each service explicitly: "reserve inventory," waits for the reply, "charge the payment," waits, and so on. The services are "dumb" about the process; they just obey commands.
+One component - the **orchestrator** - knows the whole flow and commands each service explicitly: "reserve inventory," waits for the reply, "charge the payment," waits, and so on. The services are "dumb" about the process; they just obey commands.
 
 ```
         ┌──────────────┐
@@ -85,7 +85,7 @@ One component — the **orchestrator** — knows the whole flow and commands eac
     [Inventory][Payment][Delivery]
 ```
 
-- **For:** the flow is in **one place** — easy to read, monitor, version. Centralized error and timeout handling. Explicit process state.
+- **For:** the flow is in **one place** - easy to read, monitor, version. Centralized error and timeout handling. Explicit process state.
 - **Against:** coupling to the orchestrator; it can become a God Service; it's a point that must be resilient.
 
 Tools like **Camunda**, **Temporal**, and the **orchestrated Saga** pattern live here.
@@ -117,7 +117,7 @@ There is no commander. Each service **emits events** about what it did and **rea
 
 ## The forgotten common ground: the Saga and compensation
 
-Both models are ways to implement a **Saga** — a long-running distributed transaction that replaces ACID (impossible across services) with a sequence of local transactions. And both face the same hard question: **what about when step 3 fails after 1 and 2 already succeeded?** There is no rollback — you must **compensate**: refund the payment, release the inventory. The difference is that in orchestration the compensation logic lives in the conductor; in choreography it's scattered across reversal events. Complexity doesn't vanish — it just changes address.
+Both models are ways to implement a **Saga** - a long-running distributed transaction that replaces ACID (impossible across services) with a sequence of local transactions. And both face the same hard question: **what about when step 3 fails after 1 and 2 already succeeded?** There is no rollback - you must **compensate**: refund the payment, release the inventory. The difference is that in orchestration the compensation logic lives in the conductor; in choreography it's scattered across reversal events. Complexity doesn't vanish - it just changes address.
 
 ## How to choose
 
@@ -125,7 +125,7 @@ A pragmatic heuristic: **orchestrate what must be understood as a whole; choreog
 
 ## Conclusion
 
-There is no universal winner — there is the question "**where do I want the flow's complexity to live: visible at the center, or diluted at the edges?**". Start simple: when in doubt, explicit orchestration is easier to operate and reason about. Evolve toward choreography when the decoupling between services is worth the cost of losing the central view. The worst of both worlds is accidental choreography — events thrown around with no contract, no traceability — that nobody decided to adopt, but everybody ends up maintaining.
+There is no universal winner - there is the question "**where do I want the flow's complexity to live: visible at the center, or diluted at the edges?**". Start simple: when in doubt, explicit orchestration is easier to operate and reason about. Evolve toward choreography when the decoupling between services is worth the cost of losing the central view. The worst of both worlds is accidental choreography - events thrown around with no contract, no traceability - that nobody decided to adopt, but everybody ends up maintaining.
 '''
 body_ja_jp = '''
 EC の注文には、在庫の確保、決済の課金、配送の手配、顧客への通知が必要です。4 つのサービス、正しい順序で起き、ひとつ失敗したら優雅に巻き戻さねばならない 4 つの手順。**誰がこれを調整するのか。** 答えはちょうど 2 つあり、その選択は分散アーキテクチャで最も影響の大きい判断のひとつです。

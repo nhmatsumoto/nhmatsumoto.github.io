@@ -5,7 +5,7 @@ title_en_us = "Daily #032: Handling 401 errors in Axios calls"
 title_ja_jp = "Daily #032: Axios呼び出しにおける401エラー処理"
 summary = "Como o SOS Location implementou um Axios interceptor para renovar o JWT silenciosamente no 401, usando refresh token com fila de requests pendentes para evitar múltiplas chamadas de renovação simultâneas."
 summary_en_us = "How SOS Location implemented an Axios interceptor to silently renew the JWT on 401, using a refresh token with a queue of pending requests to avoid multiple simultaneous renewal calls."
-summary_ja_jp = "SOS LocationがAxiosインターセプターを実装して401でJWTをサイレントに更新する方法——同時更新呼び出しを避けるためのペンディングリクエストキュー付きのリフレッシュトークン使用。"
+summary_ja_jp = "SOS LocationがAxiosインターセプターを実装して401でJWTをサイレントに更新する方法--同時更新呼び出しを避けるためのペンディングリクエストキュー付きのリフレッシュトークン使用。"
 published_at = "2026-04-08T16:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-Os tokens JWT do SOS Location expiram em 15 minutos (curto para minimizar janela de comprometimento). Coordenadores podem ter sessões abertas por 4–8 horas durante operações de emergência. Se o token expirar no meio de uma operação e o sistema redirecionar para login, o coordenador perde contexto e pode perder dados não salvos — inaceitável em situação de emergência.
+Os tokens JWT do SOS Location expiram em 15 minutos (curto para minimizar janela de comprometimento). Coordenadores podem ter sessões abertas por 4–8 horas durante operações de emergência. Se o token expirar no meio de uma operação e o sistema redirecionar para login, o coordenador perde contexto e pode perder dados não salvos - inaceitável em situação de emergência.
 
 ## Problema específico
 
-A primeira implementação apenas redirecionava para `/login` em qualquer 401. Dois problemas: (1) durante carregamento paralelo de 4 camadas (#028), se o token expirava, as 4 requisições simultâneas geravam 4 chamadas ao endpoint `/auth/refresh` — race condition onde o primeiro refresh invalidava o refresh token dos outros 3; (2) ao receber o 401, a requisição original era descartada, forçando o usuário a repetir a ação manualmente.
+A primeira implementação apenas redirecionava para `/login` em qualquer 401. Dois problemas: (1) durante carregamento paralelo de 4 camadas (#028), se o token expirava, as 4 requisições simultâneas geravam 4 chamadas ao endpoint `/auth/refresh` - race condition onde o primeiro refresh invalidava o refresh token dos outros 3; (2) ao receber o 401, a requisição original era descartada, forçando o usuário a repetir a ação manualmente.
 
 ## Decisão técnica
 
-Axios interceptor de response com fila de requisições pendentes. Quando o primeiro 401 chega, inicia o refresh e coloca as outras requisições em fila. Quando o refresh completa (sucesso ou falha), desfaz a fila: requisições bem-sucedidas são reenviadas com o novo token, requisições com refresh falhado redirecionam para `/login`. Token armazenado em `httpOnly cookie` — não acessível por JavaScript, proteção contra XSS.
+Axios interceptor de response com fila de requisições pendentes. Quando o primeiro 401 chega, inicia o refresh e coloca as outras requisições em fila. Quando o refresh completa (sucesso ou falha), desfaz a fila: requisições bem-sucedidas são reenviadas com o novo token, requisições com refresh falhado redirecionam para `/login`. Token armazenado em `httpOnly cookie` - não acessível por JavaScript, proteção contra XSS.
 
 ## Implementação
 
@@ -50,7 +50,7 @@ api.interceptors.response.use(
     }
 
     if (isRefreshing) {
-      // Enfileira a requisição — espera o refresh em andamento terminar
+      // Enfileira a requisição - espera o refresh em andamento terminar
       return new Promise((resolve, reject) => {
         refreshQueue.push((newToken: string) => {
           originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
@@ -87,7 +87,7 @@ export default api;
 
 ## Exemplo concreto
 
-Coordenador com sessão aberta por 16 minutos (token expirou há 1 minuto). Abre nova aba, 4 requisições simultâneas disparam: `GET /api/areas-de-risco`, `GET /api/hotspots`, `GET /api/routes`, `GET /api/precipitation`. Todas retornam 401. A primeira requisição inicia o refresh; as outras 3 entram na fila. Refresh bem-sucedido em 180ms. As 4 requisições originais são reenviadas com o novo token em sequência. Coordenador não viu nenhum redirect, nenhum spinner adicional — apenas 180ms de atraso imperceptível.
+Coordenador com sessão aberta por 16 minutos (token expirou há 1 minuto). Abre nova aba, 4 requisições simultâneas disparam: `GET /api/areas-de-risco`, `GET /api/hotspots`, `GET /api/routes`, `GET /api/precipitation`. Todas retornam 401. A primeira requisição inicia o refresh; as outras 3 entram na fila. Refresh bem-sucedido em 180ms. As 4 requisições originais são reenviadas com o novo token em sequência. Coordenador não viu nenhum redirect, nenhum spinner adicional - apenas 180ms de atraso imperceptível.
 
 ## Critério de sucesso
 
@@ -95,20 +95,20 @@ Zero redirects para `/login` durante token refresh normal (token válido, refres
 
 ## Relação com SOS Location
 
-O token refresh silencioso é a diferença entre uma sessão de emergência de 8 horas e uma sessão de 15 minutos. Para coordenadores que trabalham durante toda a noite em situações de desastre, perder o estado da interface por expiração de token não é inconveniência — é risco operacional.
+O token refresh silencioso é a diferença entre uma sessão de emergência de 8 horas e uma sessão de 15 minutos. Para coordenadores que trabalham durante toda a noite em situações de desastre, perder o estado da interface por expiração de token não é inconveniência - é risco operacional.
 '''
 body_en_us = '''
 ## Real context
 
-SOS Location JWT tokens expire in 15 minutes (short to minimise the compromise window). Coordinators can have sessions open for 4–8 hours during emergency operations. If the token expires mid-operation and the system redirects to login, the coordinator loses context and may lose unsaved data — unacceptable in an emergency.
+SOS Location JWT tokens expire in 15 minutes (short to minimise the compromise window). Coordinators can have sessions open for 4–8 hours during emergency operations. If the token expires mid-operation and the system redirects to login, the coordinator loses context and may lose unsaved data - unacceptable in an emergency.
 
 ## Specific problem
 
-The first implementation simply redirected to `/login` on any 401. Two problems: (1) during parallel loading of 4 layers (#028), if the token expired, the 4 simultaneous requests generated 4 calls to the `/auth/refresh` endpoint — a race condition where the first refresh invalidated the refresh token of the other 3; (2) when receiving the 401, the original request was discarded, forcing the user to repeat the action manually.
+The first implementation simply redirected to `/login` on any 401. Two problems: (1) during parallel loading of 4 layers (#028), if the token expired, the 4 simultaneous requests generated 4 calls to the `/auth/refresh` endpoint - a race condition where the first refresh invalidated the refresh token of the other 3; (2) when receiving the 401, the original request was discarded, forcing the user to repeat the action manually.
 
 ## Technical decision
 
-Axios response interceptor with a queue of pending requests. When the first 401 arrives, it starts the refresh and queues the other requests. When the refresh completes (success or failure), it drains the queue: successful requests are resent with the new token, requests with a failed refresh redirect to `/login`. Token stored in `httpOnly cookie` — not accessible by JavaScript, XSS protection.
+Axios response interceptor with a queue of pending requests. When the first 401 arrives, it starts the refresh and queues the other requests. When the refresh completes (success or failure), it drains the queue: successful requests are resent with the new token, requests with a failed refresh redirect to `/login`. Token stored in `httpOnly cookie` - not accessible by JavaScript, XSS protection.
 
 ## Implementation
 
@@ -156,7 +156,7 @@ api.interceptors.response.use(
 
 ## Concrete example
 
-Coordinator with a session open for 16 minutes (token expired 1 minute ago). Opens a new tab, 4 simultaneous requests fire: `GET /api/areas-de-risco`, `GET /api/hotspots`, `GET /api/routes`, `GET /api/precipitation`. All return 401. The first request starts the refresh; the other 3 join the queue. Refresh succeeds in 180ms. All 4 original requests are resent with the new token in sequence. The coordinator saw no redirect, no extra spinner — just an imperceptible 180ms delay.
+Coordinator with a session open for 16 minutes (token expired 1 minute ago). Opens a new tab, 4 simultaneous requests fire: `GET /api/areas-de-risco`, `GET /api/hotspots`, `GET /api/routes`, `GET /api/precipitation`. All return 401. The first request starts the refresh; the other 3 join the queue. Refresh succeeds in 180ms. All 4 original requests are resent with the new token in sequence. The coordinator saw no redirect, no extra spinner - just an imperceptible 180ms delay.
 
 ## Success criteria
 
@@ -164,20 +164,20 @@ Zero redirects to `/login` during normal token refresh (valid credentials, refre
 
 ## Relation to SOS Location
 
-Silent token refresh is the difference between an 8-hour emergency session and a 15-minute one. For coordinators working through the night in disaster situations, losing interface state due to token expiry is not inconvenience — it is operational risk.
+Silent token refresh is the difference between an 8-hour emergency session and a 15-minute one. For coordinators working through the night in disaster situations, losing interface state due to token expiry is not inconvenience - it is operational risk.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-SOS LocationのJWTトークンは15分で期限切れになる（侵害ウィンドウを最小化するために短い）。コーディネーターは緊急作戦中に4〜8時間セッションを開いたままにすることがある。作戦の途中でトークンが期限切れになりシステムがログインにリダイレクトすると、コーディネーターはコンテキストを失い、未保存データを失う可能性がある——緊急時には許容できない。
+SOS LocationのJWTトークンは15分で期限切れになる（侵害ウィンドウを最小化するために短い）。コーディネーターは緊急作戦中に4〜8時間セッションを開いたままにすることがある。作戦の途中でトークンが期限切れになりシステムがログインにリダイレクトすると、コーディネーターはコンテキストを失い、未保存データを失う可能性がある--緊急時には許容できない。
 
 ## 具体的な問題
 
-最初の実装はどんな401でも単純に`/login`にリダイレクトしていた。2つの問題：(1) 4レイヤーの並列ロード中（#028）、トークンが期限切れになると4つの同時リクエストが`/auth/refresh`エンドポイントへの4回の呼び出しを生成した——最初のリフレッシュが他の3つのリフレッシュトークンを無効化するレース条件；(2) 401を受け取ると元のリクエストが破棄され、ユーザーが手動でアクションを繰り返す必要があった。
+最初の実装はどんな401でも単純に`/login`にリダイレクトしていた。2つの問題：(1) 4レイヤーの並列ロード中（#028）、トークンが期限切れになると4つの同時リクエストが`/auth/refresh`エンドポイントへの4回の呼び出しを生成した--最初のリフレッシュが他の3つのリフレッシュトークンを無効化するレース条件；(2) 401を受け取ると元のリクエストが破棄され、ユーザーが手動でアクションを繰り返す必要があった。
 
 ## 技術的決定
 
-ペンディングリクエストのキューを持つAxiosレスポンスインターセプター。最初の401が届くと、リフレッシュを開始して他のリクエストをキューに入れる。リフレッシュが完了する（成功または失敗）と、キューを排出する：成功したリクエストは新しいトークンで再送され、リフレッシュが失敗したリクエストは`/login`にリダイレクト。トークンは`httpOnly cookie`に格納——JavaScriptからアクセス不可、XSS保護。
+ペンディングリクエストのキューを持つAxiosレスポンスインターセプター。最初の401が届くと、リフレッシュを開始して他のリクエストをキューに入れる。リフレッシュが完了する（成功または失敗）と、キューを排出する：成功したリクエストは新しいトークンで再送され、リフレッシュが失敗したリクエストは`/login`にリダイレクト。トークンは`httpOnly cookie`に格納--JavaScriptからアクセス不可、XSS保護。
 
 ## 実装
 
@@ -225,7 +225,7 @@ api.interceptors.response.use(
 
 ## 具体的な例
 
-16分間セッションを開いたコーディネーター（トークンは1分前に期限切れ）。新しいタブを開き、4つの同時リクエストが発火：`GET /api/areas-de-risco`、`GET /api/hotspots`、`GET /api/routes`、`GET /api/precipitation`。すべてが401を返す。最初のリクエストがリフレッシュを開始；他の3つがキューに入る。180msでリフレッシュ成功。4つの元のリクエストがすべて新しいトークンで順番に再送される。コーディネーターはリダイレクトも追加スピナーも見なかった——知覚できない180msの遅延だけ。
+16分間セッションを開いたコーディネーター（トークンは1分前に期限切れ）。新しいタブを開き、4つの同時リクエストが発火：`GET /api/areas-de-risco`、`GET /api/hotspots`、`GET /api/routes`、`GET /api/precipitation`。すべてが401を返す。最初のリクエストがリフレッシュを開始；他の3つがキューに入る。180msでリフレッシュ成功。4つの元のリクエストがすべて新しいトークンで順番に再送される。コーディネーターはリダイレクトも追加スピナーも見なかった--知覚できない180msの遅延だけ。
 
 ## 成功基準
 
@@ -233,5 +233,5 @@ api.interceptors.response.use(
 
 ## SOS Locationとの関係
 
-サイレントトークンリフレッシュは8時間の緊急セッションと15分のセッションの差だ。災害状況で一晩中作業するコーディネーターにとって、トークン期限切れによるインターフェース状態の損失は不便ではない——運用上のリスクだ。
+サイレントトークンリフレッシュは8時間の緊急セッションと15分のセッションの差だ。災害状況で一晩中作業するコーディネーターにとって、トークン期限切れによるインターフェース状態の損失は不便ではない--運用上のリスクだ。
 '''

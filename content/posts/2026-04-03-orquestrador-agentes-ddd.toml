@@ -23,7 +23,7 @@ Traduzir requisitos em “texto livre” para uma **Linguagem Ubíqua** consiste
 
 Documentação, código e conversas frequentemente usam termos diferentes para o mesmo conceito (“cliente”, “comprador”, “titular”, “account”), criando ambiguidade e bugs semânticos. Em DDD, a Linguagem Ubíqua é justamente a prática de construir um idioma comum e rigoroso entre pessoas de negócio e desenvolvedores, baseado no modelo de domínio. 
 
-Além disso, DDD trata problemas por domínios e delimita áreas independentes como *Bounded Contexts* — muitas vezes alinháveis a serviços/microserviços na prática de arquitetura moderna.
+Além disso, DDD trata problemas por domínios e delimita áreas independentes como *Bounded Contexts* - muitas vezes alinháveis a serviços/microserviços na prática de arquitetura moderna.
 
 ## A Arquitetura do Orquestrador
 

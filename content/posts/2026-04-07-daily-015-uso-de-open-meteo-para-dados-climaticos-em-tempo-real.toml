@@ -19,18 +19,18 @@ has_math = false
 body = '''
 ## Contexto real
 
-O SOS Location precisa de dados de precipitação em tempo real para alimentar o modelo de risco de enchente (#018). Quanto está chovendo agora e nos próximos 6h numa área monitorada? Com essa informação, o sistema pode elevar automaticamente o `NivelRisco` de zonas próximas a rios antes de elas inundarem — não depois.
+O SOS Location precisa de dados de precipitação em tempo real para alimentar o modelo de risco de enchente (#018). Quanto está chovendo agora e nos próximos 6h numa área monitorada? Com essa informação, o sistema pode elevar automaticamente o `NivelRisco` de zonas próximas a rios antes de elas inundarem - não depois.
 
 ## Problema específico
 
 A equipe avaliou três fontes de dados climáticos para o Brasil:
-- **INMET (Instituto Nacional de Meteorologia)**: dados oficiais brasileiros, mas API com autenticação inconsistente, documentação desatualizada e histórico de indisponibilidade durante grandes eventos climáticos — exatamente quando o SOS Location mais precisa da API.
+- **INMET (Instituto Nacional de Meteorologia)**: dados oficiais brasileiros, mas API com autenticação inconsistente, documentação desatualizada e histórico de indisponibilidade durante grandes eventos climáticos - exatamente quando o SOS Location mais precisa da API.
 - **OpenWeatherMap**: limite de 60 req/min no plano gratuito, pago fica caro para 50 zonas monitoradas atualizando a cada 30 min.
 - **Open-Meteo**: API gratuita, sem autenticação, uptime > 99.5% em 2024, dados do modelo meteorológico ECMWF com resolução de 0.1° (~11 km), forecast de 48h horário.
 
 ## Decisão técnica
 
-Open-Meteo como fonte primária. A API retorna dados horários — o SOS Location agrega em janelas de 6h para o modelo de risco (precipitação acumulada em 6h é a métrica de referência para risco de enchente urbana no Brasil, conforme CEMADEN). Polling a cada 30 minutos por zona monitorada, com cache Redis de 25 minutos para evitar burst de requests.
+Open-Meteo como fonte primária. A API retorna dados horários - o SOS Location agrega em janelas de 6h para o modelo de risco (precipitação acumulada em 6h é a métrica de referência para risco de enchente urbana no Brasil, conforme CEMADEN). Polling a cada 30 minutos por zona monitorada, com cache Redis de 25 minutos para evitar burst de requests.
 
 ## Implementação
 
@@ -91,7 +91,7 @@ public static class LimitesPrecipitacao
 
 ## Exemplo concreto
 
-Zona monitorada: Rio Itajaí-Açu, próximo a Blumenau (SC). Open-Meteo prevê 65 mm em 6h para as próximas 12h. O sistema eleva o `NivelRisco` de todas as `AreaDeRisco` numa faixa de 2 km do rio de 4 para 6 (`AlertaMm6h` = 40 mm → +2). Coordenadores recebem notificação push 6h antes da janela de precipitação crítica — tempo suficiente para iniciar protocolos de evacuação preventiva.
+Zona monitorada: Rio Itajaí-Açu, próximo a Blumenau (SC). Open-Meteo prevê 65 mm em 6h para as próximas 12h. O sistema eleva o `NivelRisco` de todas as `AreaDeRisco` numa faixa de 2 km do rio de 4 para 6 (`AlertaMm6h` = 40 mm → +2). Coordenadores recebem notificação push 6h antes da janela de precipitação crítica - tempo suficiente para iniciar protocolos de evacuação preventiva.
 
 ## Critério de sucesso
 
@@ -99,23 +99,23 @@ Latência de atualização de dados climáticos < 35 minutos (30 min polling + 5
 
 ## Relação com SOS Location
 
-O sistema de risco do SOS Location é preditivo, não reativo. Elevar o nível de risco de uma zona 6h antes de uma chuva intensa permite que coordenadores pré-posicionem equipes de resgate e emitam alertas preventivos — o oposto de descobrir o problema quando a área já está inundada e o acesso está comprometido.
+O sistema de risco do SOS Location é preditivo, não reativo. Elevar o nível de risco de uma zona 6h antes de uma chuva intensa permite que coordenadores pré-posicionem equipes de resgate e emitam alertas preventivos - o oposto de descobrir o problema quando a área já está inundada e o acesso está comprometido.
 '''
 body_en_us = '''
 ## Real context
 
-SOS Location needs real-time precipitation data to feed the flood risk model (#018). How much is it raining now and in the next 6h in a monitored area? With this information, the system can automatically raise the `NivelRisco` of zones near rivers before they flood — not after.
+SOS Location needs real-time precipitation data to feed the flood risk model (#018). How much is it raining now and in the next 6h in a monitored area? With this information, the system can automatically raise the `NivelRisco` of zones near rivers before they flood - not after.
 
 ## Specific problem
 
 The team evaluated three weather data sources for Brazil:
-- **INMET (Brazilian National Meteorology Institute)**: official Brazilian data, but API with inconsistent authentication, outdated documentation and a history of unavailability during major weather events — exactly when SOS Location needs the API most.
+- **INMET (Brazilian National Meteorology Institute)**: official Brazilian data, but API with inconsistent authentication, outdated documentation and a history of unavailability during major weather events - exactly when SOS Location needs the API most.
 - **OpenWeatherMap**: 60 req/min limit on the free plan; paid plans get expensive for 50 monitored zones updating every 30 minutes.
 - **Open-Meteo**: free API, no authentication, > 99.5% uptime in 2024, ECMWF weather model data with 0.1° resolution (~11 km), 48h hourly forecast.
 
 ## Technical decision
 
-Open-Meteo as the primary source. The API returns hourly data — SOS Location aggregates it into 6h windows for the risk model (accumulated precipitation over 6h is the reference metric for urban flood risk in Brazil, per CEMADEN). Polling every 30 minutes per monitored zone, with 25-minute Redis cache to avoid request bursts.
+Open-Meteo as the primary source. The API returns hourly data - SOS Location aggregates it into 6h windows for the risk model (accumulated precipitation over 6h is the reference metric for urban flood risk in Brazil, per CEMADEN). Polling every 30 minutes per monitored zone, with 25-minute Redis cache to avoid request bursts.
 
 ## Implementation
 
@@ -171,7 +171,7 @@ public static class LimitesPrecipitacao
 
 ## Concrete example
 
-Monitored zone: Rio Itajaí-Açu near Blumenau (SC). Open-Meteo forecasts 65 mm in 6h for the next 12h. The system raises the `NivelRisco` of all `AreaDeRisco` within a 2 km strip of the river from 4 to 6 (`AlertaMm6h` = 40 mm → +2). Coordinators receive a push notification 6h before the critical precipitation window — enough time to initiate preventive evacuation protocols.
+Monitored zone: Rio Itajaí-Açu near Blumenau (SC). Open-Meteo forecasts 65 mm in 6h for the next 12h. The system raises the `NivelRisco` of all `AreaDeRisco` within a 2 km strip of the river from 4 to 6 (`AlertaMm6h` = 40 mm → +2). Coordinators receive a push notification 6h before the critical precipitation window - enough time to initiate preventive evacuation protocols.
 
 ## Success criteria
 
@@ -179,23 +179,23 @@ Weather data update latency < 35 minutes (30 min polling + 5 min processing). Ze
 
 ## Relation to SOS Location
 
-SOS Location's risk system is predictive, not reactive. Raising a zone's risk level 6h before heavy rain allows coordinators to pre-position rescue teams and issue preventive alerts — the opposite of discovering the problem when the area is already flooded and access is compromised.
+SOS Location's risk system is predictive, not reactive. Raising a zone's risk level 6h before heavy rain allows coordinators to pre-position rescue teams and issue preventive alerts - the opposite of discovering the problem when the area is already flooded and access is compromised.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-SOS Locationは洪水リスクモデル（#018）に供給するためのリアルタイム降水データが必要だ。監視対象エリアで今何mm降っているか、今後6時間でどのくらい降るか？この情報により、システムは川近くのゾーンの`NivelRisco`を洪水が起きる前に自動的に上げることができる——後ではなく。
+SOS Locationは洪水リスクモデル（#018）に供給するためのリアルタイム降水データが必要だ。監視対象エリアで今何mm降っているか、今後6時間でどのくらい降るか？この情報により、システムは川近くのゾーンの`NivelRisco`を洪水が起きる前に自動的に上げることができる--後ではなく。
 
 ## 具体的な問題
 
 チームはブラジルの3つの気象データソースを評価した：
-- **INMET（ブラジル国立気象研究所）**: ブラジルの公式データだが、認証が一貫しないAPI・古いドキュメント・大規模な気象イベント中の利用不能の歴史——まさにSOS Locationが最もAPIを必要とするとき。
+- **INMET（ブラジル国立気象研究所）**: ブラジルの公式データだが、認証が一貫しないAPI・古いドキュメント・大規模な気象イベント中の利用不能の歴史--まさにSOS Locationが最もAPIを必要とするとき。
 - **OpenWeatherMap**: 無料プランで60 req/分の制限；有料プランは50の監視ゾーンが30分ごとに更新すると高価になる。
 - **Open-Meteo**: 無料API・認証不要・2024年のアップタイム > 99.5%・0.1°（~11km）解像度のECMWF気象モデルデータ・48時間の時間別予報。
 
 ## 技術的決定
 
-Open-Meteoをプライマリソースとして使用。APIは時間別データを返す——SOS Locationはリスクモデルのために6時間ウィンドウに集計する（6時間の累積降水量はCEMADENに従うブラジルの都市洪水リスクの参照指標）。監視ゾーンごとに30分ごとのポーリング、リクエストのバーストを避けるための25分Redisキャッシュ付き。
+Open-Meteoをプライマリソースとして使用。APIは時間別データを返す--SOS Locationはリスクモデルのために6時間ウィンドウに集計する（6時間の累積降水量はCEMADENに従うブラジルの都市洪水リスクの参照指標）。監視ゾーンごとに30分ごとのポーリング、リクエストのバーストを避けるための25分Redisキャッシュ付き。
 
 ## 実装
 
@@ -250,7 +250,7 @@ public static class LimitesPrecipitacao
 
 ## 具体的な例
 
-監視ゾーン：ブルメナウ（SC）近くのRio Itajaí-Açu。Open-Meteoが今後12時間の6時間で65mmを予報。システムが川から2km以内のすべての`AreaDeRisco`の`NivelRisco`を4から6に引き上げる（`AlertaMm6h` = 40mm → +2）。コーディネーターは重大な降水ウィンドウの6時間前にプッシュ通知を受信する——予防的避難プロトコルを開始するのに十分な時間。
+監視ゾーン：ブルメナウ（SC）近くのRio Itajaí-Açu。Open-Meteoが今後12時間の6時間で65mmを予報。システムが川から2km以内のすべての`AreaDeRisco`の`NivelRisco`を4から6に引き上げる（`AlertaMm6h` = 40mm → +2）。コーディネーターは重大な降水ウィンドウの6時間前にプッシュ通知を受信する--予防的避難プロトコルを開始するのに十分な時間。
 
 ## 成功基準
 
@@ -258,5 +258,5 @@ public static class LimitesPrecipitacao
 
 ## SOS Locationとの関係
 
-SOS Locationのリスクシステムは反応的ではなく予測的だ。大雨の6時間前にゾーンのリスクレベルを上げることで、コーディネーターが救助チームを事前配置し、予防的アラートを発令できる——エリアがすでに洪水してアクセスが危うくなってから問題を発見するのとは対照的だ。
+SOS Locationのリスクシステムは反応的ではなく予測的だ。大雨の6時間前にゾーンのリスクレベルを上げることで、コーディネーターが救助チームを事前配置し、予防的アラートを発令できる--エリアがすでに洪水してアクセスが危うくなってから問題を発見するのとは対照的だ。
 '''

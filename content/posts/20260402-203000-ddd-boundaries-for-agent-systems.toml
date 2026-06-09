@@ -20,11 +20,11 @@ impact = [
   "Tempo de debug de falhas em agentes caiu de ~2h para ~20min após isolamento de domínios",
 ]
 trade_offs = [
-  "DDD em sistemas de agentes exige mapeamento explícito de 'quem decide o quê' — mais design upfront",
-  "Contextos muito granulares aumentam o número de integrações — equilíbrio é pragmático, não purista",
+  "DDD em sistemas de agentes exige mapeamento explícito de 'quem decide o quê' - mais design upfront",
+  "Contextos muito granulares aumentam o número de integrações - equilíbrio é pragmático, não purista",
 ]
 lessons = [
-  "Agentes autônomos precisam de boundaries ainda mais rígidos que microserviços — a autonomia amplifica o acoplamento",
+  "Agentes autônomos precisam de boundaries ainda mais rígidos que microserviços - a autonomia amplifica o acoplamento",
   "Anti-corruption layers entre agente e domínio de negócio evitam que o modelo de IA 'vaze' para o core",
 ]
 

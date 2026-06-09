@@ -1,8 +1,8 @@
 name = "User-Auth"
 slug = "user-auth"
-headline = "Serviço de autenticação em TypeScript — gestão de usuários, sessões e integração com identity providers."
-headline_en_us = "Authentication service in TypeScript — user management, sessions and identity-provider integration."
-headline_ja_jp = "TypeScript 製認証サービス — ユーザー管理、セッション、ID プロバイダー連携。"
+headline = "Serviço de autenticação em TypeScript - gestão de usuários, sessões e integração com identity providers."
+headline_en_us = "Authentication service in TypeScript - user management, sessions and identity-provider integration."
+headline_ja_jp = "TypeScript 製認証サービス - ユーザー管理、セッション、ID プロバイダー連携。"
 summary = "Serviço de autenticação e autorização em TypeScript/Node.js com gestão de usuários, sessões e integração com provedores de identidade como Keycloak."
 summary_en_us = "Authentication and authorization service in TypeScript/Node.js with user management, sessions and integration with identity providers such as Keycloak."
 summary_ja_jp = "TypeScript/Node.js による認証・認可サービス。ユーザー管理、セッション、Keycloak など ID プロバイダーとの連携を提供。"
@@ -20,19 +20,19 @@ Serviço de autenticação e autorização em TypeScript/Node.js, projetado para
 
 ## Funcionalidades
 
-- **Registro e login** — criação de contas com validação de email
-- **JWT management** — emissão e validação de access/refresh tokens
-- **Session management** — controle de sessões ativas com revogação
-- **OAuth2 integration** — login via provedores externos (Keycloak, Google)
-- **Role-based access** — controle de permissões por papel do usuário
+- **Registro e login** - criação de contas com validação de email
+- **JWT management** - emissão e validação de access/refresh tokens
+- **Session management** - controle de sessões ativas com revogação
+- **OAuth2 integration** - login via provedores externos (Keycloak, Google)
+- **Role-based access** - controle de permissões por papel do usuário
 
 ## Relação com o ecossistema
 
 Componente de autenticação que complementa:
 
-- **Playground-FE** — frontend de teste para fluxos de auth
-- **Security.Jwt** — biblioteca de referência para gerenciamento de chaves JWT
-- **SplitCosts** — autenticação de produção via Keycloak
+- **Playground-FE** - frontend de teste para fluxos de auth
+- **Security.Jwt** - biblioteca de referência para gerenciamento de chaves JWT
+- **SplitCosts** - autenticação de produção via Keycloak
 
 ## Decisões de design
 
@@ -46,19 +46,19 @@ Authentication and authorization service in TypeScript / Node.js, designed to ma
 
 ## Features
 
-- **Sign up and sign in** — account creation with email validation
-- **JWT management** — issuing and validating access / refresh tokens
-- **Session management** — active-session control with revocation
-- **OAuth2 integration** — login through external providers such as Keycloak and Google
-- **Role-based access** — authorization by user role
+- **Sign up and sign in** - account creation with email validation
+- **JWT management** - issuing and validating access / refresh tokens
+- **Session management** - active-session control with revocation
+- **OAuth2 integration** - login through external providers such as Keycloak and Google
+- **Role-based access** - authorization by user role
 
 ## Relationship with the ecosystem
 
 This authentication component complements:
 
-- **Playground-FE** — frontend used to validate auth flows
-- **Security.Jwt** — reference library for JWT key management
-- **SplitCosts** — production authentication via Keycloak
+- **Playground-FE** - frontend used to validate auth flows
+- **Security.Jwt** - reference library for JWT key management
+- **SplitCosts** - production authentication via Keycloak
 
 ## Design decisions
 
@@ -72,19 +72,19 @@ overview_ja_jp = """
 
 ## 機能
 
-- **Sign up / sign in** — メール検証付きのアカウント作成
-- **JWT management** — access / refresh token の発行と検証
-- **Session management** — revoke 可能なアクティブ・セッション管理
-- **OAuth2 integration** — Keycloak や Google などの外部プロバイダ経由ログイン
-- **Role-based access** — ユーザーロール単位の認可
+- **Sign up / sign in** - メール検証付きのアカウント作成
+- **JWT management** - access / refresh token の発行と検証
+- **Session management** - revoke 可能なアクティブ・セッション管理
+- **OAuth2 integration** - Keycloak や Google などの外部プロバイダ経由ログイン
+- **Role-based access** - ユーザーロール単位の認可
 
 ## エコシステムとの関係
 
 この認証コンポーネントは次を補完します。
 
-- **Playground-FE** — 認証フローを検証するフロントエンド
-- **Security.Jwt** — JWT 鍵管理の参照ライブラリ
-- **SplitCosts** — Keycloak による本番認証
+- **Playground-FE** - 認証フローを検証するフロントエンド
+- **Security.Jwt** - JWT 鍵管理の参照ライブラリ
+- **SplitCosts** - Keycloak による本番認証
 
 ## 設計判断
 

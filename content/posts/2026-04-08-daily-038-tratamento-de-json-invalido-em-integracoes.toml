@@ -23,11 +23,11 @@ O SOS Location integra APIs de terceiros que não controlamos: GDACS, Open-Meteo
 
 ## Problema específico
 
-A versão inicial usava `JsonSerializer.Deserialize<T>` diretamente sem tratamento de exceção. Quando a Open-Meteo retornou um campo `precipitation` como `null` em vez de `0.0` durante uma falta de dados, o deserializer lançou `JsonException` não tratada que propagou pelo handler e fez o worker do Hangfire falhar — e como o retry não discriminava o tipo de erro, a mesma falha ocorreu nas 3 tentativas, desperdiçando 45 segundos de retry e não processando dados válidos das outras APIs.
+A versão inicial usava `JsonSerializer.Deserialize<T>` diretamente sem tratamento de exceção. Quando a Open-Meteo retornou um campo `precipitation` como `null` em vez de `0.0` durante uma falta de dados, o deserializer lançou `JsonException` não tratada que propagou pelo handler e fez o worker do Hangfire falhar - e como o retry não discriminava o tipo de erro, a mesma falha ocorreu nas 3 tentativas, desperdiçando 45 segundos de retry e não processando dados válidos das outras APIs.
 
 ## Decisão técnica
 
-`JsonDocument` para validação estrutural antes do deserialize. Campos obrigatórios verificados com `TryGetProperty`. Campos opcionais com valor default explícito. Wrapper `ExternalApiParser<T>` que captura `JsonException` e retorna `Result<T, ParseError>` — sem exceções propagadas. Log de campos inválidos com o JSON original truncado (500 chars).
+`JsonDocument` para validação estrutural antes do deserialize. Campos obrigatórios verificados com `TryGetProperty`. Campos opcionais com valor default explícito. Wrapper `ExternalApiParser<T>` que captura `JsonException` e retorna `Result<T, ParseError>` - sem exceções propagadas. Log de campos inválidos com o JSON original truncado (500 chars).
 
 ## Implementação
 
@@ -71,9 +71,9 @@ public sealed class OpenMeteoParser
         _parser.Parse(json, doc =>
         {
             var root    = doc.RootElement;
-            var hourly  = root.GetProperty("hourly");  // obrigatório — lança se ausente
+            var hourly  = root.GetProperty("hourly");  // obrigatório - lança se ausente
 
-            // precipitation pode ser null durante gaps de dados — default 0.0
+            // precipitation pode ser null durante gaps de dados - default 0.0
             var precipitation = hourly.TryGetProperty("precipitation", out var precipEl)
                 ? precipEl.EnumerateArray()
                           .Select(e => e.ValueKind == JsonValueKind.Number ? e.GetDouble() : 0.0)
@@ -102,7 +102,7 @@ Zero exceções não tratadas de `JsonException` propagando para fora da camada 
 
 ## Relação com SOS Location
 
-Integrações com APIs externas são o perímetro do sistema — onde o código do SOS Location encontra dados que não controlamos. Defensividade no parsing não é paranoia — é a única forma de garantir que um bug da API do GDACS não derrube o serviço de alertas do SOS Location.
+Integrações com APIs externas são o perímetro do sistema - onde o código do SOS Location encontra dados que não controlamos. Defensividade no parsing não é paranoia - é a única forma de garantir que um bug da API do GDACS não derrube o serviço de alertas do SOS Location.
 '''
 body_en_us = '''
 ## Real context
@@ -111,11 +111,11 @@ SOS Location integrates third-party APIs it does not control: GDACS, Open-Meteo,
 
 ## Specific problem
 
-The initial version used `JsonSerializer.Deserialize<T>` directly without exception handling. When Open-Meteo returned a `precipitation` field as `null` instead of `0.0` during a data gap, the deserializer threw an unhandled `JsonException` that propagated through the handler and caused the Hangfire worker to fail — and since the retry did not discriminate error types, the same failure occurred on all 3 attempts, wasting 45 seconds of retries and not processing valid data from other APIs.
+The initial version used `JsonSerializer.Deserialize<T>` directly without exception handling. When Open-Meteo returned a `precipitation` field as `null` instead of `0.0` during a data gap, the deserializer threw an unhandled `JsonException` that propagated through the handler and caused the Hangfire worker to fail - and since the retry did not discriminate error types, the same failure occurred on all 3 attempts, wasting 45 seconds of retries and not processing valid data from other APIs.
 
 ## Technical decision
 
-`JsonDocument` for structural validation before deserialisation. Required fields checked with `TryGetProperty`. Optional fields with explicit default values. `ExternalApiParser<T>` wrapper that catches `JsonException` and returns `Result<T, ParseError>` — no propagated exceptions. Log of invalid fields with the original JSON truncated to 500 chars.
+`JsonDocument` for structural validation before deserialisation. Required fields checked with `TryGetProperty`. Optional fields with explicit default values. `ExternalApiParser<T>` wrapper that catches `JsonException` and returns `Result<T, ParseError>` - no propagated exceptions. Log of invalid fields with the original JSON truncated to 500 chars.
 
 ## Implementation
 
@@ -171,7 +171,7 @@ Zero unhandled `JsonException` exceptions propagating outside the infrastructure
 
 ## Relation to SOS Location
 
-External API integrations are the system's perimeter — where SOS Location's code meets data it does not control. Defensive parsing is not paranoia — it is the only way to ensure that a GDACS API bug does not bring down SOS Location's alert service.
+External API integrations are the system's perimeter - where SOS Location's code meets data it does not control. Defensive parsing is not paranoia - it is the only way to ensure that a GDACS API bug does not bring down SOS Location's alert service.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -180,11 +180,11 @@ SOS Locationは制御できないサードパーティAPIと統合する：GDACS
 
 ## 具体的な問題
 
-最初のバージョンは例外処理なしで`JsonSerializer.Deserialize<T>`を直接使っていた。Open-Meteoがデータギャップ中に`precipitation`フィールドを`0.0`ではなく`null`として返すと、デシリアライザーはハンドラーを通じて伝播した未処理の`JsonException`をスローし、Hangfireワーカーが失敗した——リトライがエラータイプを区別しなかったため、同じ失敗が3回すべての試行で発生し、45秒のリトライを無駄にして他のAPIからの有効なデータを処理しなかった。
+最初のバージョンは例外処理なしで`JsonSerializer.Deserialize<T>`を直接使っていた。Open-Meteoがデータギャップ中に`precipitation`フィールドを`0.0`ではなく`null`として返すと、デシリアライザーはハンドラーを通じて伝播した未処理の`JsonException`をスローし、Hangfireワーカーが失敗した--リトライがエラータイプを区別しなかったため、同じ失敗が3回すべての試行で発生し、45秒のリトライを無駄にして他のAPIからの有効なデータを処理しなかった。
 
 ## 技術的決定
 
-デシリアライズ前の構造的バリデーションのための`JsonDocument`。`TryGetProperty`でチェックされる必須フィールド。明示的なデフォルト値を持つオプションフィールド。`JsonException`をキャッチして`Result<T, ParseError>`を返す`ExternalApiParser<T>`ラッパー——例外の伝播なし。元のJSONを500文字に切り詰めた無効フィールドのログ。
+デシリアライズ前の構造的バリデーションのための`JsonDocument`。`TryGetProperty`でチェックされる必須フィールド。明示的なデフォルト値を持つオプションフィールド。`JsonException`をキャッチして`Result<T, ParseError>`を返す`ExternalApiParser<T>`ラッパー--例外の伝播なし。元のJSONを500文字に切り詰めた無効フィールドのログ。
 
 ## 実装
 
@@ -240,5 +240,5 @@ Open-Meteoがデータメンテナンス中に`precipitation`をnullの配列と
 
 ## SOS Locationとの関係
 
-外部API統合はシステムの境界——SOS Locationのコードが制御できないデータと出会う場所だ。防御的なパーシングは偏執狂ではなく——GDACSのAPIバグがSOS Locationのアラートサービスをダウンさせないことを保証する唯一の方法だ。
+外部API統合はシステムの境界--SOS Locationのコードが制御できないデータと出会う場所だ。防御的なパーシングは偏執狂ではなく--GDACSのAPIバグがSOS Locationのアラートサービスをダウンさせないことを保証する唯一の方法だ。
 '''

@@ -66,12 +66,12 @@ roadmap_ja_jp = [
 ]
 impact = [
   "Pipeline de ingestão processa 200k pontos geoespaciais em <8min (antes: 45min em monólito)",
-  "Ops view atualizado em <30s — equipe de campo opera com dados near real-time",
+  "Ops view atualizado em <30s - equipe de campo opera com dados near real-time",
   "3 incidentes de regressão evitados em 6 meses pela separação cálculo espacial / regra de negócio",
 ]
 impact_en_us = [
   "Ingestion pipeline processes 200k geospatial points in under 8 minutes (previously 45 minutes in a monolith)",
-  "Ops view refreshes in under 30 seconds — field teams operate on near-real-time data",
+  "Ops view refreshes in under 30 seconds - field teams operate on near-real-time data",
   "Three regressions avoided in 6 months by separating spatial computation from business rules",
 ]
 impact_ja_jp = [
@@ -95,19 +95,19 @@ trade_offs_ja_jp = [
   "event-driven 設計には専用メッセージング基盤が必要で運用コストは +15% だが、取り込みと読み取りを完全に疎結合化できた",
 ]
 lessons = [
-  "Geocoding externo era 80% do tempo de pipeline — cache agressivo + fallback local resolveu o gargalo",
-  "Monitorar cada estágio individualmente foi o investimento com maior ROI — identificou bottlenecks invisíveis no monólito",
-  "Em cenários de crise, simplicidade de deploy supera elegância de design — scripts Python diretos salvaram vidas em Brumadinho",
+  "Geocoding externo era 80% do tempo de pipeline - cache agressivo + fallback local resolveu o gargalo",
+  "Monitorar cada estágio individualmente foi o investimento com maior ROI - identificou bottlenecks invisíveis no monólito",
+  "Em cenários de crise, simplicidade de deploy supera elegância de design - scripts Python diretos salvaram vidas em Brumadinho",
 ]
 lessons_en_us = [
-  "External geocoding consumed 80% of pipeline time — aggressive caching and local fallback removed the bottleneck",
+  "External geocoding consumed 80% of pipeline time - aggressive caching and local fallback removed the bottleneck",
   "Monitoring each stage individually delivered the highest ROI by exposing bottlenecks that were invisible in the monolith",
-  "In crisis contexts, deployment simplicity beats design elegance — direct Python scripts saved lives in Brumadinho",
+  "In crisis contexts, deployment simplicity beats design elegance - direct Python scripts saved lives in Brumadinho",
 ]
 lessons_ja_jp = [
   "外部 geocoding がパイプライン時間の 80% を占めており、積極的なキャッシュとローカル fallback がボトルネックを解消した",
   "各段階を個別監視する投資が最も高い ROI を出し、モノリスでは見えなかった詰まりを可視化した",
-  "危機時には設計の美しさよりデプロイの単純さが勝つ — 直接的な Python スクリプトが Brumadinho で実際に役立った",
+  "危機時には設計の美しさよりデプロイの単純さが勝つ - 直接的な Python スクリプトが Brumadinho で実際に役立った",
 ]
 production_notes = """
 Pipeline em operação contínua desde 2024. Stack real: .NET para serviços de ingestão e normalização, Python para geoprocessamento pesado. A separação cálculo/regra permitiu que o time de dados iterasse sem impactar a API operacional. Tempo médio de resolução de incidentes GIS caiu de 4h para 45min após adoção da ops view.

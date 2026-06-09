@@ -20,16 +20,16 @@ has_math = false
 body = """
 # Clean Architecture + CQRS no backend do SOS Location
 
-Em Abril de 2026, o commit `refactor: migrate all page components to the domains/operations directory` marcou a conclusão de uma refatoração profunda do backend do SOS Location. Não foi só reorganizar pastas — foi repensar como o código deveria *crescer* quando vidas dependem da sua corretude.
+Em Abril de 2026, o commit `refactor: migrate all page components to the domains/operations directory` marcou a conclusão de uma refatoração profunda do backend do SOS Location. Não foi só reorganizar pastas - foi repensar como o código deveria *crescer* quando vidas dependem da sua corretude.
 
 ## Por que Clean Architecture num sistema de desastres?
 
 Sistemas de resposta a catástrofes têm um perfil incomum:
 
-1. **Picos imprevisíveis** — Um terremoto de magnitude 7 pode gerar 10x o tráfego normal em segundos
-2. **Múltiplos agentes de entrada** — APIs externas, agentes CLI (Codex), SignalR, CRON jobs
-3. **Auditoria obrigatória** — Cada mutação de estado precisa de `trace_id`, `actor` e `reason`
-4. **Evolução constante** — Fase 8, 9, 10... o sistema cresce com o projeto
+1. **Picos imprevisíveis** - Um terremoto de magnitude 7 pode gerar 10x o tráfego normal em segundos
+2. **Múltiplos agentes de entrada** - APIs externas, agentes CLI (Codex), SignalR, CRON jobs
+3. **Auditoria obrigatória** - Cada mutação de estado precisa de `trace_id`, `actor` e `reason`
+4. **Evolução constante** - Fase 8, 9, 10... o sistema cresce com o projeto
 
 Clean Architecture separa essas preocupações em camadas com dependências unidirecionais:
 
@@ -76,7 +76,7 @@ public class CreateIncidentHandler : IRequestHandler<CreateIncidentCommand, Resu
 
         await _incidents.AddAsync(incident, ct);
 
-        // Audit trail — sempre
+        // Audit trail - sempre
         await _audit.RecordAsync(new AuditEntry(
             Actor:   cmd.ActorId,
             Action:  "incident.created",
@@ -151,7 +151,7 @@ public class NotifyOpsOnCriticalIncident
 
 ## Pipeline de comportamentos transversais
 
-MediatR permite adicionar behaviors que se aplicam a todos os Commands/Queries — como logging, validação e retry:
+MediatR permite adicionar behaviors que se aplicam a todos os Commands/Queries - como logging, validação e retry:
 
 ```csharp
 // Registrado no DI antes de todos os handlers
@@ -200,7 +200,7 @@ backend-dotnet/
     Hubs/           OpsHub registration
 ```
 
-Essa estrutura suporta o crescimento até a Fase 10 sem acúmulo de débito técnico — cada nova integração tem um lugar definido, e o domínio nunca sabe da infraestrutura.
+Essa estrutura suporta o crescimento até a Fase 10 sem acúmulo de débito técnico - cada nova integração tem um lugar definido, e o domínio nunca sabe da infraestrutura.
 """
 body_en_us = """
 # Clean Architecture + CQRS in the SOS Location backend
@@ -211,10 +211,10 @@ In April 2026, the commit `refactor: migrate all page components to the domains/
 
 Catastrophe-response systems have an unusual profile:
 
-1. **Unpredictable spikes** — a magnitude-7 earthquake can multiply traffic by 10 in seconds.
-2. **Multiple entry agents** — external APIs, CLI agents, SignalR and scheduled jobs.
-3. **Mandatory auditability** — every state mutation needs `trace_id`, `actor` and `reason`.
-4. **Continuous evolution** — phase 8, 9, 10... the system grows with the project.
+1. **Unpredictable spikes** - a magnitude-7 earthquake can multiply traffic by 10 in seconds.
+2. **Multiple entry agents** - external APIs, CLI agents, SignalR and scheduled jobs.
+3. **Mandatory auditability** - every state mutation needs `trace_id`, `actor` and `reason`.
+4. **Continuous evolution** - phase 8, 9, 10... the system grows with the project.
 
 Clean Architecture separates these concerns into layers with one-way dependencies:
 
@@ -261,7 +261,7 @@ public class CreateIncidentHandler : IRequestHandler<CreateIncidentCommand, Resu
 
         await _incidents.AddAsync(incident, ct);
 
-        // Audit trail — always
+        // Audit trail - always
         await _audit.RecordAsync(new AuditEntry(
             Actor:   cmd.ActorId,
             Action:  "incident.created",
@@ -396,10 +396,10 @@ body_ja_jp = """
 
 災害対応システムは、かなり特殊な性質を持っています。
 
-1. **予測不能なスパイク** — マグニチュード 7 の地震は数秒でトラフィックを 10 倍にしうる。
-2. **複数の入口** — 外部 API、CLI エージェント、SignalR、定期実行ジョブ。
-3. **監査必須** — すべての状態変更に `trace_id`, `actor`, `reason` が必要。
-4. **継続的進化** — phase 8、9、10 と、システムはプロジェクトと共に成長する。
+1. **予測不能なスパイク** - マグニチュード 7 の地震は数秒でトラフィックを 10 倍にしうる。
+2. **複数の入口** - 外部 API、CLI エージェント、SignalR、定期実行ジョブ。
+3. **監査必須** - すべての状態変更に `trace_id`, `actor`, `reason` が必要。
+4. **継続的進化** - phase 8、9、10 と、システムはプロジェクトと共に成長する。
 
 Clean Architecture は、これらを単方向依存のレイヤへ分離します。
 
@@ -446,7 +446,7 @@ public class CreateIncidentHandler : IRequestHandler<CreateIncidentCommand, Resu
 
         await _incidents.AddAsync(incident, ct);
 
-        // Audit trail — 常に記録
+        // Audit trail - 常に記録
         await _audit.RecordAsync(new AuditEntry(
             Actor:   cmd.ActorId,
             Action:  "incident.created",

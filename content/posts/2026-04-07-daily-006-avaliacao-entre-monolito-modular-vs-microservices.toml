@@ -3,9 +3,9 @@ slug = "daily-006-avaliacao-entre-monolito-modular-vs-microservices"
 title = "Daily #006: Avaliação entre monolito modular vs microservices"
 title_en_us = "Daily #006: Evaluation between modular monolith and microservices"
 title_ja_jp = "Daily #006: モジュラーモノリスとマイクロサービスの比較評価"
-summary = "Por que o SOS Location escolheu monolito modular para v1 — a latência de rede durante desastres torna chamadas HTTP entre serviços potencialmente fatais, e como os módulos foram projetados para extração futura."
-summary_en_us = "Why SOS Location chose a modular monolith for v1 — network latency during disasters makes inter-service HTTP calls potentially fatal, and how modules were designed for future extraction."
-summary_ja_jp = "SOS Locationがv1にモジュラーモノリスを選んだ理由——災害時のネットワーク遅延がサービス間HTTP呼び出しを潜在的に致命的にする——そしてモジュールが将来の分割のためにどう設計されたか。"
+summary = "Por que o SOS Location escolheu monolito modular para v1 - a latência de rede durante desastres torna chamadas HTTP entre serviços potencialmente fatais, e como os módulos foram projetados para extração futura."
+summary_en_us = "Why SOS Location chose a modular monolith for v1 - network latency during disasters makes inter-service HTTP calls potentially fatal, and how modules were designed for future extraction."
+summary_ja_jp = "SOS Locationがv1にモジュラーモノリスを選んだ理由--災害時のネットワーク遅延がサービス間HTTP呼び出しを潜在的に致命的にする--そしてモジュールが将来の分割のためにどう設計されたか。"
 published_at = "2026-04-07T14:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -27,7 +27,7 @@ A equipe avaliou microservices para o SOS Location v1 baseada em um argumento de
 
 ## Decisão técnica
 
-Monolito modular para v1, com interfaces de módulo projetadas para extração futura. Cada módulo expõe uma interface C# — `IBuscaModule`, `IResgateModule`, `IAlertas Module` — que define o contrato público. Quando um módulo precisar ser extraído como serviço, apenas a implementação da interface muda (chamada HTTP em vez de chamada in-process). O restante do sistema não percebe a diferença.
+Monolito modular para v1, com interfaces de módulo projetadas para extração futura. Cada módulo expõe uma interface C# - `IBuscaModule`, `IResgateModule`, `IAlertas Module` - que define o contrato público. Quando um módulo precisar ser extraído como serviço, apenas a implementação da interface muda (chamada HTTP em vez de chamada in-process). O restante do sistema não percebe a diferença.
 
 ## Implementação
 
@@ -44,7 +44,7 @@ public interface IBuscaModule
         CancellationToken ct);
 }
 
-// SosLocation.Busca/BuscaModule.cs — implementação in-process
+// SosLocation.Busca/BuscaModule.cs - implementação in-process
 internal sealed class BuscaModule : IBuscaModule
 {
     private readonly IMediator _mediator;
@@ -59,7 +59,7 @@ internal sealed class BuscaModule : IBuscaModule
         => _mediator.Send(new ListarPessoasEmAreaQuery(latC, lonC, raioKm), ct);
 }
 
-// Program.cs — registro via interface; implementação oculta
+// Program.cs - registro via interface; implementação oculta
 builder.Services.AddScoped<IBuscaModule, BuscaModule>();
 
 // Quando extrair para microservice: apenas trocar a implementação
@@ -68,7 +68,7 @@ builder.Services.AddScoped<IBuscaModule, BuscaModule>();
 
 ## Exemplo concreto
 
-Benchmark realizado com o simulador de rede degradada (tc netem com 200 ms de latência adicional): monolito modular, registro de pessoa desaparecida — 18 ms. Arquitetura de microservices equivalente com 3 chamadas HTTP síncronas — 618 ms. Durante um desastre real com rede instável, a diferença entre 18 ms e 618 ms é a diferença entre um sistema usável e um sistema que coordenadores abandonam em favor de rádio analógico.
+Benchmark realizado com o simulador de rede degradada (tc netem com 200 ms de latência adicional): monolito modular, registro de pessoa desaparecida - 18 ms. Arquitetura de microservices equivalente com 3 chamadas HTTP síncronas - 618 ms. Durante um desastre real com rede instável, a diferença entre 18 ms e 618 ms é a diferença entre um sistema usável e um sistema que coordenadores abandonam em favor de rádio analógico.
 
 ## Critério de sucesso
 
@@ -76,7 +76,7 @@ O tempo de resposta do endpoint crítico `POST /missing-persons` permanece abaix
 
 ## Relação com SOS Location
 
-O SOS Location é um sistema de resposta a emergências — não um sistema de e-commerce com escalabilidade previsível. A escolha de arquitetura deve priorizar confiabilidade sob condições adversas antes de escalabilidade horizontal. Microservices adicionam resiliência operacional apenas quando a equipe tem maturidade para operá-los; antes disso, adicionam pontos de falha.
+O SOS Location é um sistema de resposta a emergências - não um sistema de e-commerce com escalabilidade previsível. A escolha de arquitetura deve priorizar confiabilidade sob condições adversas antes de escalabilidade horizontal. Microservices adicionam resiliência operacional apenas quando a equipe tem maturidade para operá-los; antes disso, adicionam pontos de falha.
 '''
 body_en_us = '''
 ## Real context
@@ -89,7 +89,7 @@ The team evaluated microservices for SOS Location v1 based on a scalability argu
 
 ## Technical decision
 
-Modular monolith for v1, with module interfaces designed for future extraction. Each module exposes a C# interface — `IBuscaModule`, `IResgateModule`, `IAlertas Module` — defining the public contract. When a module needs to be extracted as a service, only the interface implementation changes (HTTP call instead of in-process call). The rest of the system does not notice the difference.
+Modular monolith for v1, with module interfaces designed for future extraction. Each module exposes a C# interface - `IBuscaModule`, `IResgateModule`, `IAlertas Module` - defining the public contract. When a module needs to be extracted as a service, only the interface implementation changes (HTTP call instead of in-process call). The rest of the system does not notice the difference.
 
 ## Implementation
 
@@ -119,7 +119,7 @@ internal sealed class BuscaModule : IBuscaModule
         => _mediator.Send(new ListarPessoasEmAreaQuery(latC, lonC, raioKm), ct);
 }
 
-// Program.cs — registered via interface; implementation is hidden
+// Program.cs - registered via interface; implementation is hidden
 builder.Services.AddScoped<IBuscaModule, BuscaModule>();
 
 // Future microservice extraction: only change the DI registration
@@ -128,7 +128,7 @@ builder.Services.AddScoped<IBuscaModule, BuscaModule>();
 
 ## Concrete example
 
-Benchmark with a degraded network simulator (tc netem with 200 ms additional latency): modular monolith, missing person registration — 18 ms. Equivalent microservices architecture with 3 synchronous HTTP calls — 618 ms. During a real disaster with unstable network, the difference between 18 ms and 618 ms is the difference between a usable system and a system that coordinators abandon in favour of analogue radio.
+Benchmark with a degraded network simulator (tc netem with 200 ms additional latency): modular monolith, missing person registration - 18 ms. Equivalent microservices architecture with 3 synchronous HTTP calls - 618 ms. During a real disaster with unstable network, the difference between 18 ms and 618 ms is the difference between a usable system and a system that coordinators abandon in favour of analogue radio.
 
 ## Success criteria
 
@@ -136,7 +136,7 @@ The critical `POST /missing-persons` endpoint response time stays below 100 ms e
 
 ## Relation to SOS Location
 
-SOS Location is an emergency response system — not an e-commerce system with predictable scalability. The architectural choice must prioritise reliability under adverse conditions before horizontal scalability. Microservices add operational resilience only when the team has the maturity to operate them; before that, they add failure points.
+SOS Location is an emergency response system - not an e-commerce system with predictable scalability. The architectural choice must prioritise reliability under adverse conditions before horizontal scalability. Microservices add operational resilience only when the team has the maturity to operate them; before that, they add failure points.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -149,7 +149,7 @@ body_ja_jp = '''
 
 ## 技術的決定
 
-v1にはモジュラーモノリスを採用し、将来の分割のためにモジュールインターフェースを設計する。各モジュールはC#インターフェース——`IBuscaModule`・`IResgateModule`・`IAlertas Module`——でパブリックコントラクトを公開する。モジュールをサービスとして抽出する際は、インターフェースの実装のみが変わる（インプロセス呼び出しではなくHTTP呼び出し）。システムの残りは違いに気づかない。
+v1にはモジュラーモノリスを採用し、将来の分割のためにモジュールインターフェースを設計する。各モジュールはC#インターフェース--`IBuscaModule`・`IResgateModule`・`IAlertas Module`--でパブリックコントラクトを公開する。モジュールをサービスとして抽出する際は、インターフェースの実装のみが変わる（インプロセス呼び出しではなくHTTP呼び出し）。システムの残りは違いに気づかない。
 
 ## 実装
 
@@ -178,7 +178,7 @@ internal sealed class BuscaModule : IBuscaModule
         => _mediator.Send(new ListarPessoasEmAreaQuery(latC, lonC, raioKm), ct);
 }
 
-// Program.cs — インターフェース経由で登録；実装は非公開
+// Program.cs - インターフェース経由で登録；実装は非公開
 builder.Services.AddScoped<IBuscaModule, BuscaModule>();
 
 // 将来のマイクロサービス分割：DIの登録のみを変更
@@ -187,7 +187,7 @@ builder.Services.AddScoped<IBuscaModule, BuscaModule>();
 
 ## 具体的な例
 
-劣化ネットワークシミュレーター（tc nememで200ms追加遅延）でのベンチマーク：モジュラーモノリス、行方不明者登録——18ms。3回の同期HTTP呼び出しを持つ同等のマイクロサービスアーキテクチャ——618ms。不安定なネットワークの実際の災害時、18msと618msの差は使えるシステムとコーディネーターがアナログ無線に切り替えるシステムの差だ。
+劣化ネットワークシミュレーター（tc nememで200ms追加遅延）でのベンチマーク：モジュラーモノリス、行方不明者登録--18ms。3回の同期HTTP呼び出しを持つ同等のマイクロサービスアーキテクチャ--618ms。不安定なネットワークの実際の災害時、18msと618msの差は使えるシステムとコーディネーターがアナログ無線に切り替えるシステムの差だ。
 
 ## 成功基準
 

@@ -3,8 +3,8 @@ slug = "ddd-ubiquitous-language"
 title = "Linguagem Ubíqua na prática: o ativo de DDD que não aparece no diagrama"
 title_en_us = "Ubiquitous Language in practice: the DDD asset that never shows up in the diagram"
 title_ja_jp = "実践におけるユビキタス言語：図には現れない DDD の資産"
-summary = "A maioria dos bugs caros nasce de um erro de tradução entre o que o negócio diz e o que o código faz. A linguagem ubíqua não é jargão de DDD — é a disciplina de eliminar essa tradução, palavra por palavra, dentro de um bounded context."
-summary_en_us = "Most expensive bugs are born from a translation error between what the business says and what the code does. Ubiquitous language is not DDD jargon — it is the discipline of eliminating that translation, word by word, inside a bounded context."
+summary = "A maioria dos bugs caros nasce de um erro de tradução entre o que o negócio diz e o que o código faz. A linguagem ubíqua não é jargão de DDD - é a disciplina de eliminar essa tradução, palavra por palavra, dentro de um bounded context."
+summary_en_us = "Most expensive bugs are born from a translation error between what the business says and what the code does. Ubiquitous language is not DDD jargon - it is the discipline of eliminating that translation, word by word, inside a bounded context."
 summary_ja_jp = "高くつくバグの大半は、ビジネスが語ることとコードが行うことの間の翻訳ミスから生まれる。ユビキタス言語は DDD の専門用語ではなく、境界づけられたコンテキストの内側でその翻訳を一語ずつ消し去る規律である。"
 published_at = "2026-04-29T09:05:00+09:00"
 updated_at = "2026-06-07T09:05:00+09:00"
@@ -14,11 +14,11 @@ badges = ["DDD", "Domínio"]
 featured = false
 has_math = false
 body = '''
-Pergunte a um especialista de negócio o que é um "cliente" e depois abra o código. Você vai encontrar `Customer`, `User`, `Account`, `Client` e `Party` — cinco palavras para, supostamente, a mesma coisa. Cada uma dessas divergências é um ponto onde alguém terá que **traduzir** mentalmente entre o que foi dito e o que foi escrito. A linguagem ubíqua existe para matar essa tradução.
+Pergunte a um especialista de negócio o que é um "cliente" e depois abra o código. Você vai encontrar `Customer`, `User`, `Account`, `Client` e `Party` - cinco palavras para, supostamente, a mesma coisa. Cada uma dessas divergências é um ponto onde alguém terá que **traduzir** mentalmente entre o que foi dito e o que foi escrito. A linguagem ubíqua existe para matar essa tradução.
 
 ## O que ela realmente é
 
-Linguagem ubíqua é um vocabulário **rigoroso, compartilhado e único** entre desenvolvedores e especialistas de domínio, usado em conversas, documentos e — crucialmente — no código-fonte. Eric Evans, que cunhou o termo em *Domain-Driven Design* (2003), foi enfático: não basta que o time concorde com a palavra; a palavra precisa **aparecer no código**, nos nomes de classes, métodos e eventos.
+Linguagem ubíqua é um vocabulário **rigoroso, compartilhado e único** entre desenvolvedores e especialistas de domínio, usado em conversas, documentos e - crucialmente - no código-fonte. Eric Evans, que cunhou o termo em *Domain-Driven Design* (2003), foi enfático: não basta que o time concorde com a palavra; a palavra precisa **aparecer no código**, nos nomes de classes, métodos e eventos.
 
 ```csharp
 // Tradução exigida do leitor: "status 2 = ?"
@@ -29,7 +29,7 @@ order.Confirm();          // dispara OrderConfirmed
 order.Cancel(reason);     // invariante: só antes do envio
 ```
 
-Quando o especialista de logística diz "o pedido foi *despachado*", deve existir um `order.Dispatch()` e um evento `OrderDispatched` — não um `UPDATE status SET 4`.
+Quando o especialista de logística diz "o pedido foi *despachado*", deve existir um `order.Dispatch()` e um evento `OrderDispatched` - não um `UPDATE status SET 4`.
 
 ## Por que é um ativo estratégico, não cosmético
 
@@ -41,29 +41,29 @@ A linguagem ubíqua reduz o custo mais silencioso de um sistema: o **custo de tr
 | Bugs nascem na fronteira negócio↔código | A regra é expressa onde o negócio a descreve |
 | Onboarding leva semanas decifrando nomes | O código é legível por quem conhece o domínio |
 
-## A palavra muda de significado na fronteira — e tudo bem
+## A palavra muda de significado na fronteira - e tudo bem
 
 O erro clássico é buscar um glossário **global** para a empresa inteira. "Produto" para o time de vendas (algo com preço e desconto) é diferente de "Produto" para o time de estoque (algo com peso e localização). Forçar um único modelo cria um *God Object* anêmico.
 
-A solução de DDD é o **bounded context**: cada contexto tem sua própria linguagem ubíqua, coerente internamente. O mesmo termo pode existir em dois contextos com modelos diferentes, e a tradução explícita entre eles acontece num *Context Map* (via *Anti-Corruption Layer*, por exemplo). A ambiguidade não é eliminada — ela é **isolada**.
+A solução de DDD é o **bounded context**: cada contexto tem sua própria linguagem ubíqua, coerente internamente. O mesmo termo pode existir em dois contextos com modelos diferentes, e a tradução explícita entre eles acontece num *Context Map* (via *Anti-Corruption Layer*, por exemplo). A ambiguidade não é eliminada - ela é **isolada**.
 
 ## Como cultivar na prática
 
 1. **Ouça os verbos.** Especialistas descrevem processos com verbos ("aprovar", "estornar", "reservar"). Verbos viram métodos e eventos de domínio; substantivos viram entidades e value objects.
 2. **Proíba termos genéricos.** `Manager`, `Processor`, `Data`, `Info`, `Helper` são sinais de que o domínio não foi nomeado.
-3. **Refatore quando a linguagem mudar.** Se o negócio passou a chamar de "assinatura" o que o código chama de "contrato", o código está desatualizado — renomeie.
+3. **Refatore quando a linguagem mudar.** Se o negócio passou a chamar de "assinatura" o que o código chama de "contrato", o código está desatualizado - renomeie.
 4. **Trate o glossário como código.** Versione, revise em PR, mantenha por contexto.
 
 ## Conclusão
 
-Linguagem ubíqua não é a parte "soft" de DDD que se pula para ir aos padrões táticos. É a fundação: agregados, eventos e invariantes só fazem sentido se nomeiam conceitos reais do domínio. Um modelo de domínio rico escrito em palavras erradas continua sendo um modelo anêmico — apenas mais difícil de perceber.
+Linguagem ubíqua não é a parte "soft" de DDD que se pula para ir aos padrões táticos. É a fundação: agregados, eventos e invariantes só fazem sentido se nomeiam conceitos reais do domínio. Um modelo de domínio rico escrito em palavras erradas continua sendo um modelo anêmico - apenas mais difícil de perceber.
 '''
 body_en_us = '''
-Ask a business expert what a "customer" is, then open the code. You'll find `Customer`, `User`, `Account`, `Client`, and `Party` — five words for supposedly the same thing. Each of those divergences is a point where someone will have to **translate** in their head between what was said and what was written. Ubiquitous language exists to kill that translation.
+Ask a business expert what a "customer" is, then open the code. You'll find `Customer`, `User`, `Account`, `Client`, and `Party` - five words for supposedly the same thing. Each of those divergences is a point where someone will have to **translate** in their head between what was said and what was written. Ubiquitous language exists to kill that translation.
 
 ## What it actually is
 
-Ubiquitous language is a **rigorous, shared, single** vocabulary between developers and domain experts, used in conversations, documents, and — crucially — in the source code. Eric Evans, who coined the term in *Domain-Driven Design* (2003), was emphatic: it isn't enough for the team to agree on the word; the word must **appear in the code**, in the names of classes, methods, and events.
+Ubiquitous language is a **rigorous, shared, single** vocabulary between developers and domain experts, used in conversations, documents, and - crucially - in the source code. Eric Evans, who coined the term in *Domain-Driven Design* (2003), was emphatic: it isn't enough for the team to agree on the word; the word must **appear in the code**, in the names of classes, methods, and events.
 
 ```csharp
 // Reader must translate: "status 2 = ?"
@@ -74,7 +74,7 @@ order.Confirm();          // raises OrderConfirmed
 order.Cancel(reason);     // invariant: only before shipping
 ```
 
-When the logistics expert says "the order was *dispatched*", there should be an `order.Dispatch()` and an `OrderDispatched` event — not an `UPDATE status SET 4`.
+When the logistics expert says "the order was *dispatched*", there should be an `order.Dispatch()` and an `OrderDispatched` event - not an `UPDATE status SET 4`.
 
 ## Why it's a strategic asset, not cosmetics
 
@@ -86,22 +86,22 @@ Ubiquitous language reduces a system's quietest cost: the **translation cost** e
 | Bugs are born at the business↔code boundary | The rule is expressed where the business describes it |
 | Onboarding spends weeks deciphering names | The code is readable by anyone who knows the domain |
 
-## The word changes meaning at the boundary — and that's fine
+## The word changes meaning at the boundary - and that's fine
 
 The classic mistake is to chase a **global** glossary for the whole company. "Product" for the sales team (something with a price and discount) is different from "Product" for the inventory team (something with weight and a location). Forcing one model creates an anemic *God Object*.
 
-DDD's answer is the **bounded context**: each context has its own ubiquitous language, internally consistent. The same term can exist in two contexts with different models, and explicit translation between them happens in a *Context Map* (through an Anti-Corruption Layer, for instance). Ambiguity isn't eliminated — it's **isolated**.
+DDD's answer is the **bounded context**: each context has its own ubiquitous language, internally consistent. The same term can exist in two contexts with different models, and explicit translation between them happens in a *Context Map* (through an Anti-Corruption Layer, for instance). Ambiguity isn't eliminated - it's **isolated**.
 
 ## How to cultivate it in practice
 
 1. **Listen for verbs.** Experts describe processes with verbs ("approve", "refund", "reserve"). Verbs become domain methods and events; nouns become entities and value objects.
 2. **Ban generic terms.** `Manager`, `Processor`, `Data`, `Info`, `Helper` are signs the domain was never named.
-3. **Refactor when the language changes.** If the business now calls "subscription" what the code calls "contract", the code is stale — rename it.
+3. **Refactor when the language changes.** If the business now calls "subscription" what the code calls "contract", the code is stale - rename it.
 4. **Treat the glossary as code.** Version it, review it in PRs, keep it per context.
 
 ## Conclusion
 
-Ubiquitous language isn't the "soft" part of DDD you skip on the way to the tactical patterns. It is the foundation: aggregates, events, and invariants only make sense if they name real domain concepts. A rich domain model written in the wrong words is still an anemic model — just harder to notice.
+Ubiquitous language isn't the "soft" part of DDD you skip on the way to the tactical patterns. It is the foundation: aggregates, events, and invariants only make sense if they name real domain concepts. A rich domain model written in the wrong words is still an anemic model - just harder to notice.
 '''
 body_ja_jp = '''
 ドメインエキスパートに「顧客とは何か」と尋ねてから、コードを開いてみてください。`Customer`、`User`、`Account`、`Client`、`Party` ── 同じはずのものに 5 つの語が見つかります。これらの食い違いひとつひとつが、語られたことと書かれたことの間で誰かが頭の中で **翻訳** しなければならない地点です。ユビキタス言語は、その翻訳を消すために存在します。

@@ -1,8 +1,8 @@
 name = "MapleBR"
 slug = "maplebr"
-headline = "Projeto MapleBR — servidor e ferramentas para o ecossistema MapleStory."
-headline_en_us = "MapleBR project — server and tooling for the MapleStory ecosystem."
-headline_ja_jp = "MapleBR プロジェクト — MapleStory エコシステムのサーバーとツール群。"
+headline = "Projeto MapleBR - servidor e ferramentas para o ecossistema MapleStory."
+headline_en_us = "MapleBR project - server and tooling for the MapleStory ecosystem."
+headline_ja_jp = "MapleBR プロジェクト - MapleStory エコシステムのサーバーとツール群。"
 summary = "Projeto com ferramentas e configurações para servidores MapleStory, incluindo scripts de build e automação via Makefile."
 summary_en_us = "Project with tooling and configuration for MapleStory servers, including build scripts and Makefile-based automation."
 summary_ja_jp = "MapleStory サーバー向けのツールと構成を含むプロジェクト。ビルドスクリプトと Makefile による自動化を備える。"
@@ -25,9 +25,9 @@ MapleStory é um MMORPG que possui uma comunidade ativa de desenvolvimento de se
 ## Aspectos técnicos
 
 - **Build system** com Makefile para compilação de componentes C++
-- **Networking** — protocolo de comunicação cliente-servidor customizado
-- **Gestão de dados** — handling de arquivos de dados do jogo (WZ files)
-- **Automação** — scripts para deploy e manutenção do servidor
+- **Networking** - protocolo de comunicação cliente-servidor customizado
+- **Gestão de dados** - handling de arquivos de dados do jogo (WZ files)
+- **Automação** - scripts para deploy e manutenção do servidor
 """
 overview_en_us = """
 Server-and-tooling project for the MapleStory universe, with build automation orchestrated through Makefiles.
@@ -39,9 +39,9 @@ MapleStory has a long-standing private-server development community. This projec
 ## Technical aspects
 
 - **Build system** with Makefiles for compiling C++ components
-- **Networking** — a custom client-server communication protocol
-- **Data management** — handling of game data files (WZ files)
-- **Automation** — scripts for deployment and server maintenance
+- **Networking** - a custom client-server communication protocol
+- **Data management** - handling of game data files (WZ files)
+- **Automation** - scripts for deployment and server maintenance
 """
 overview_ja_jp = """
 MapleStory のサーバーと周辺ツールを扱うプロジェクトで、Makefile によるビルド自動化を中心に構成されています。
@@ -52,10 +52,10 @@ MapleStory には長く続くプライベートサーバー開発コミュニテ
 
 ## 技術的な要素
 
-- **Build system** — C++ コンポーネントをコンパイルする Makefile
-- **Networking** — クライアント・サーバ間の独自通信プロトコル
-- **Data management** — ゲームデータ（WZ files）の取り扱い
-- **Automation** — デプロイと保守のためのスクリプト
+- **Build system** - C++ コンポーネントをコンパイルする Makefile
+- **Networking** - クライアント・サーバ間の独自通信プロトコル
+- **Data management** - ゲームデータ（WZ files）の取り扱い
+- **Automation** - デプロイと保守のためのスクリプト
 """
 
 problem_solution = """

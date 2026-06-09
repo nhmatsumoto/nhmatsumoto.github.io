@@ -3,8 +3,8 @@ slug = "observability"
 title = "Observabilidade: os três pilares e a pergunta que o monitoramento não responde"
 title_en_us = "Observability: the three pillars and the question monitoring can't answer"
 title_ja_jp = "可観測性：3 本の柱と、監視では答えられない問い"
-summary = "Monitoramento responde 'o sistema está quebrado?'. Observabilidade responde 'por quê?' — inclusive para falhas que você nunca previu. Logs, métricas e traces são os três pilares, mas o que os une é a capacidade de fazer perguntas novas sem subir código novo."
-summary_en_us = "Monitoring answers 'is the system broken?'. Observability answers 'why?' — even for failures you never anticipated. Logs, metrics, and traces are the three pillars, but what unites them is the ability to ask new questions without shipping new code."
+summary = "Monitoramento responde 'o sistema está quebrado?'. Observabilidade responde 'por quê?' - inclusive para falhas que você nunca previu. Logs, métricas e traces são os três pilares, mas o que os une é a capacidade de fazer perguntas novas sem subir código novo."
+summary_en_us = "Monitoring answers 'is the system broken?'. Observability answers 'why?' - even for failures you never anticipated. Logs, metrics, and traces are the three pillars, but what unites them is the ability to ask new questions without shipping new code."
 summary_ja_jp = "監視は「システムは壊れているか」に答える。可観測性は「なぜか」に答える ── 予期しなかった障害についてさえ。ログ・メトリクス・トレースは 3 本の柱だが、それらを束ねるのは、新しいコードを出さずに新しい問いを立てられる能力である。"
 published_at = "2026-04-29T09:35:00+09:00"
 updated_at = "2026-06-07T09:35:00+09:00"
@@ -14,11 +14,11 @@ badges = ["Observability", "SRE"]
 featured = false
 has_math = false
 body = '''
-Há uma distinção que muda tudo e que quase ninguém faz: **monitoramento** mede coisas que você já sabia que poderiam dar errado (CPU, memória, taxa de erro). **Observabilidade** é a propriedade de um sistema que permite entender qualquer estado interno *a partir de seus outputs* — inclusive estados que você nunca imaginou que existiriam. Monitoramento responde perguntas conhecidas; observabilidade permite fazer perguntas novas, depois que o problema apareceu, sem precisar fazer deploy.
+Há uma distinção que muda tudo e que quase ninguém faz: **monitoramento** mede coisas que você já sabia que poderiam dar errado (CPU, memória, taxa de erro). **Observabilidade** é a propriedade de um sistema que permite entender qualquer estado interno *a partir de seus outputs* - inclusive estados que você nunca imaginou que existiriam. Monitoramento responde perguntas conhecidas; observabilidade permite fazer perguntas novas, depois que o problema apareceu, sem precisar fazer deploy.
 
-Em sistemas distribuídos, isso deixou de ser opcional. Quando uma requisição atravessa oito serviços, o stack trace que bastava no monólito não reconstrói mais a história. Você precisa dos três pilares — e da forma certa de usá-los.
+Em sistemas distribuídos, isso deixou de ser opcional. Quando uma requisição atravessa oito serviços, o stack trace que bastava no monólito não reconstrói mais a história. Você precisa dos três pilares - e da forma certa de usá-los.
 
-## Pilar 1: Logs — o evento discreto
+## Pilar 1: Logs - o evento discreto
 
 Logs são registros de eventos individuais. O erro mais comum é tratá-los como texto livre. A virada de chave é o **structured logging**: emitir JSON com campos consultáveis, não frases.
 
@@ -26,20 +26,20 @@ Logs são registros de eventos individuais. O erro mais comum é tratá-los como
 // Ruim: impossível de filtrar/agregar
 _logger.LogInformation($"Pedido {id} do cliente {cust} falhou");
 
-// Bom: structured — viram colunas no backend de logs
+// Bom: structured - viram colunas no backend de logs
 _logger.LogInformation("Pedido falhou {OrderId} {CustomerId} {Reason}",
     id, cust, reason);
 ```
 
 Logs respondem "**o que exatamente aconteceu neste evento?**". São caros em volume; é onde mais se gasta dinheiro à toa.
 
-## Pilar 2: Métricas — o agregado barato
+## Pilar 2: Métricas - o agregado barato
 
 Métricas são números agregados no tempo (contadores, *gauges*, histogramas). São baratíssimas de armazenar porque já vêm somadas. Respondem "**qual a tendência?**": latência p99, requisições por segundo, taxa de erro.
 
-A armadilha é a **alta cardinalidade**: nunca use `user_id` ou `order_id` como *label* de métrica — cada valor único cria uma nova série temporal e explode o custo. Identificadores de alta cardinalidade pertencem a logs e traces, não a métricas.
+A armadilha é a **alta cardinalidade**: nunca use `user_id` ou `order_id` como *label* de métrica - cada valor único cria uma nova série temporal e explode o custo. Identificadores de alta cardinalidade pertencem a logs e traces, não a métricas.
 
-## Pilar 3: Traces — a jornada ponta a ponta
+## Pilar 3: Traces - a jornada ponta a ponta
 
 Um *trace* segue **uma única requisição** por todos os serviços, montando uma árvore de *spans* (cada span = uma operação, com duração). É o pilar que só faz sentido no mundo distribuído. Um *trace ID* propagado em todos os hops responde a pergunta que mais dói: "**onde, dos oito serviços, esses 2 segundos foram gastos?**".
 
@@ -55,18 +55,18 @@ O fluxo de investigação maduro vai do barato ao caro: um **alerta de métrica*
 
 ## OpenTelemetry: o padrão que unifica
 
-Antes, cada pilar tinha seu agente e formato. O **OpenTelemetry (OTel)** — projeto da CNCF — padronizou a instrumentação: uma única API/SDK gera logs, métricas e traces, e você exporta para qualquer backend (Prometheus, Jaeger, Grafana, vendors). Instrumentar uma vez, trocar de ferramenta sem reescrever, é o ganho prático.
+Antes, cada pilar tinha seu agente e formato. O **OpenTelemetry (OTel)** - projeto da CNCF - padronizou a instrumentação: uma única API/SDK gera logs, métricas e traces, e você exporta para qualquer backend (Prometheus, Jaeger, Grafana, vendors). Instrumentar uma vez, trocar de ferramenta sem reescrever, é o ganho prático.
 
 ## Conclusão
 
-Os três pilares não competem — colaboram, e cada um cobre o ponto cego do outro. Métrica sem trace te diz que dói, mas não onde; trace sem log te diz onde, mas não por quê; log sem métrica te afoga em ruído sem direção. Um sistema observável não é o que tem dashboards bonitos; é aquele em que, diante de uma falha inédita às 3 da manhã, você consegue fazer a pergunta certa — e os dados já estão lá para respondê-la.
+Os três pilares não competem - colaboram, e cada um cobre o ponto cego do outro. Métrica sem trace te diz que dói, mas não onde; trace sem log te diz onde, mas não por quê; log sem métrica te afoga em ruído sem direção. Um sistema observável não é o que tem dashboards bonitos; é aquele em que, diante de uma falha inédita às 3 da manhã, você consegue fazer a pergunta certa - e os dados já estão lá para respondê-la.
 '''
 body_en_us = '''
-There's a distinction that changes everything and that almost nobody draws: **monitoring** measures things you already knew could go wrong (CPU, memory, error rate). **Observability** is a property of a system that lets you understand any internal state *from its outputs* — including states you never imagined could exist. Monitoring answers known questions; observability lets you ask new ones, after the problem shows up, without shipping a deploy.
+There's a distinction that changes everything and that almost nobody draws: **monitoring** measures things you already knew could go wrong (CPU, memory, error rate). **Observability** is a property of a system that lets you understand any internal state *from its outputs* - including states you never imagined could exist. Monitoring answers known questions; observability lets you ask new ones, after the problem shows up, without shipping a deploy.
 
-In distributed systems this stopped being optional. When a request crosses eight services, the stack trace that sufficed in the monolith no longer reconstructs the story. You need all three pillars — and the right way to use them.
+In distributed systems this stopped being optional. When a request crosses eight services, the stack trace that sufficed in the monolith no longer reconstructs the story. You need all three pillars - and the right way to use them.
 
-## Pillar 1: Logs — the discrete event
+## Pillar 1: Logs - the discrete event
 
 Logs are records of individual events. The most common mistake is treating them as free text. The turning point is **structured logging**: emitting JSON with queryable fields, not sentences.
 
@@ -74,20 +74,20 @@ Logs are records of individual events. The most common mistake is treating them 
 // Bad: impossible to filter/aggregate
 _logger.LogInformation($"Order {id} for customer {cust} failed");
 
-// Good: structured — these become columns in the log backend
+// Good: structured - these become columns in the log backend
 _logger.LogInformation("Order failed {OrderId} {CustomerId} {Reason}",
     id, cust, reason);
 ```
 
 Logs answer "**what exactly happened in this event?**". They're expensive in volume; this is where most money is wasted.
 
-## Pillar 2: Metrics — the cheap aggregate
+## Pillar 2: Metrics - the cheap aggregate
 
 Metrics are numbers aggregated over time (counters, gauges, histograms). They're extremely cheap to store because they arrive pre-summed. They answer "**what's the trend?**": p99 latency, requests per second, error rate.
 
-The trap is **high cardinality**: never use `user_id` or `order_id` as a metric label — each unique value creates a new time series and explodes the cost. High-cardinality identifiers belong in logs and traces, not metrics.
+The trap is **high cardinality**: never use `user_id` or `order_id` as a metric label - each unique value creates a new time series and explodes the cost. High-cardinality identifiers belong in logs and traces, not metrics.
 
-## Pillar 3: Traces — the end-to-end journey
+## Pillar 3: Traces - the end-to-end journey
 
 A trace follows **a single request** across all services, assembling a tree of spans (each span = one operation, with a duration). It's the pillar that only makes sense in the distributed world. A trace ID propagated across every hop answers the question that hurts most: "**of the eight services, where were those 2 seconds spent?**".
 
@@ -103,11 +103,11 @@ The mature investigation flow goes from cheap to expensive: a **metric alert** f
 
 ## OpenTelemetry: the standard that unifies
 
-Each pillar used to have its own agent and format. **OpenTelemetry (OTel)** — a CNCF project — standardized instrumentation: one API/SDK produces logs, metrics, and traces, and you export to any backend (Prometheus, Jaeger, Grafana, vendors). Instrument once, swap tools without rewriting — that's the practical win.
+Each pillar used to have its own agent and format. **OpenTelemetry (OTel)** - a CNCF project - standardized instrumentation: one API/SDK produces logs, metrics, and traces, and you export to any backend (Prometheus, Jaeger, Grafana, vendors). Instrument once, swap tools without rewriting - that's the practical win.
 
 ## Conclusion
 
-The three pillars don't compete — they collaborate, each covering the other's blind spot. A metric without a trace tells you it hurts, but not where; a trace without logs tells you where, but not why; a log without metrics drowns you in noise with no direction. An observable system isn't the one with pretty dashboards; it's the one where, facing a never-seen failure at 3 a.m., you can ask the right question — and the data is already there to answer it.
+The three pillars don't compete - they collaborate, each covering the other's blind spot. A metric without a trace tells you it hurts, but not where; a trace without logs tells you where, but not why; a log without metrics drowns you in noise with no direction. An observable system isn't the one with pretty dashboards; it's the one where, facing a never-seen failure at 3 a.m., you can ask the right question - and the data is already there to answer it.
 '''
 body_ja_jp = '''
 すべてを変えるのに、ほとんど誰も引かない区別があります。**監視** は、すでに壊れうると分かっていたもの（CPU、メモリ、エラー率）を測ります。**可観測性** は、システムの任意の内部状態を *その出力から* 理解できるという性質です ── 存在するとは想像もしなかった状態についてさえ。監視は既知の問いに答え、可観測性は、問題が現れた後に、デプロイなしで新しい問いを立てさせます。

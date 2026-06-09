@@ -19,11 +19,11 @@ has_math = false
 body = '''
 ## Contexto real
 
-O SOS Location é usado em três escalas diferentes dependendo da fase da operação: visão regional (coordenador estadual avaliando múltiplos municípios, zoom 8–9), visão municipal (coordenador focando num município, zoom 11–13), e visão de rua (coordenador guiando equipe de resgate, zoom 15+). Cada escala tem necessidades de informação diferentes — exibir 8.500 polígonos detalhados em zoom 8 seria impossível visualmente e computacionalmente.
+O SOS Location é usado em três escalas diferentes dependendo da fase da operação: visão regional (coordenador estadual avaliando múltiplos municípios, zoom 8–9), visão municipal (coordenador focando num município, zoom 11–13), e visão de rua (coordenador guiando equipe de resgate, zoom 15+). Cada escala tem necessidades de informação diferentes - exibir 8.500 polígonos detalhados em zoom 8 seria impossível visualmente e computacionalmente.
 
 ## Problema específico
 
-Sem LOD, o sistema enviava os 8.500 polígonos completos independentemente do zoom. Em zoom 8, polígonos de 50m² de bairros de São Paulo apareciam como pontos de 1px sobrepostos — useless visually — enquanto consumiam 3,4 MB de GeoJSON e 340ms de renderização. Coordenadores estaduais que precisavam de visão geral ficavam com interface lenta por dados que não conseguiam nem ver.
+Sem LOD, o sistema enviava os 8.500 polígonos completos independentemente do zoom. Em zoom 8, polígonos de 50m² de bairros de São Paulo apareciam como pontos de 1px sobrepostos - useless visually - enquanto consumiam 3,4 MB de GeoJSON e 340ms de renderização. Coordenadores estaduais que precisavam de visão geral ficavam com interface lenta por dados que não conseguiam nem ver.
 
 ## Decisão técnica
 
@@ -115,16 +115,16 @@ Transição entre LOD < 300ms (troca de camada + requisição ao backend). Sem f
 
 ## Relação com SOS Location
 
-LOD é a mesma estratégia que o Minecraft usa para renderizar mundos de milhões de blocos: diferentes níveis de detalhe para diferentes distâncias. No SOS Location, "distância" é zoom — e cada nível de zoom corresponde a uma escala de operação real com necessidades de informação distintas.
+LOD é a mesma estratégia que o Minecraft usa para renderizar mundos de milhões de blocos: diferentes níveis de detalhe para diferentes distâncias. No SOS Location, "distância" é zoom - e cada nível de zoom corresponde a uma escala de operação real com necessidades de informação distintas.
 '''
 body_en_us = '''
 ## Real context
 
-SOS Location is used at three different scales depending on the operation phase: regional view (state coordinator assessing multiple municipalities, zoom 8–9), municipal view (coordinator focusing on one municipality, zoom 11–13), and street view (coordinator guiding a rescue team, zoom 15+). Each scale has different information needs — displaying 8,500 detailed polygons at zoom 8 would be both visually and computationally impossible.
+SOS Location is used at three different scales depending on the operation phase: regional view (state coordinator assessing multiple municipalities, zoom 8–9), municipal view (coordinator focusing on one municipality, zoom 11–13), and street view (coordinator guiding a rescue team, zoom 15+). Each scale has different information needs - displaying 8,500 detailed polygons at zoom 8 would be both visually and computationally impossible.
 
 ## Specific problem
 
-Without LOD, the system sent all 8,500 complete polygons regardless of zoom. At zoom 8, 50 m² polygons of São Paulo neighbourhoods appeared as overlapping 1px dots — visually useless — while consuming 3.4 MB of GeoJSON and 340ms of rendering. State coordinators who needed an overview were stuck with a slow interface due to data they could not even see.
+Without LOD, the system sent all 8,500 complete polygons regardless of zoom. At zoom 8, 50 m² polygons of São Paulo neighbourhoods appeared as overlapping 1px dots - visually useless - while consuming 3.4 MB of GeoJSON and 340ms of rendering. State coordinators who needed an overview were stuck with a slow interface due to data they could not even see.
 
 ## Technical decision
 
@@ -191,16 +191,16 @@ LOD transition < 300ms (layer swap + backend request). No perceptible visual fla
 
 ## Relation to SOS Location
 
-LOD is the same strategy Minecraft uses to render worlds of millions of blocks: different levels of detail for different distances. In SOS Location, "distance" is zoom — and each zoom level corresponds to a real operational scale with distinct information needs.
+LOD is the same strategy Minecraft uses to render worlds of millions of blocks: different levels of detail for different distances. In SOS Location, "distance" is zoom - and each zoom level corresponds to a real operational scale with distinct information needs.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-SOS Locationは作戦フェーズによって3つの異なるスケールで使用される：広域ビュー（複数市町村を評価する都道府県コーディネーター、ズーム8〜9）、市町村ビュー（1つの市町村に集中するコーディネーター、ズーム11〜13）、ストリートビュー（救助チームをガイドするコーディネーター、ズーム15+）。各スケールには異なる情報ニーズがある——ズーム8で8,500の詳細ポリゴンを表示するのは視覚的にも計算的にも不可能だ。
+SOS Locationは作戦フェーズによって3つの異なるスケールで使用される：広域ビュー（複数市町村を評価する都道府県コーディネーター、ズーム8〜9）、市町村ビュー（1つの市町村に集中するコーディネーター、ズーム11〜13）、ストリートビュー（救助チームをガイドするコーディネーター、ズーム15+）。各スケールには異なる情報ニーズがある--ズーム8で8,500の詳細ポリゴンを表示するのは視覚的にも計算的にも不可能だ。
 
 ## 具体的な問題
 
-LODなしでは、システムはズームに関わらず8,500の完全なポリゴンをすべて送っていた。ズーム8では、サンパウロの地区の50 m²ポリゴンが重なり合う1pxのドットとして表示——視覚的に役に立たない——一方で3.4MBのGeoJSONと340msのレンダリングを消費した。概要が必要な都道府県コーディネーターは、見ることさえできないデータによる遅いインターフェースに行き詰まった。
+LODなしでは、システムはズームに関わらず8,500の完全なポリゴンをすべて送っていた。ズーム8では、サンパウロの地区の50 m²ポリゴンが重なり合う1pxのドットとして表示--視覚的に役に立たない--一方で3.4MBのGeoJSONと340msのレンダリングを消費した。概要が必要な都道府県コーディネーターは、見ることさえできないデータによる遅いインターフェースに行き詰まった。
 
 ## 技術的決定
 
@@ -265,5 +265,5 @@ LOD遷移 < 300ms（レイヤー切り替え + バックエンドリクエスト
 
 ## SOS Locationとの関係
 
-LODはMinecraftが何百万ブロックの世界をレンダリングするために使う戦略と同じだ：異なる距離に対して異なるレベルの詳細。SOS Locationでは、「距離」はズームであり——各ズームレベルは異なる情報ニーズを持つ実際の作戦スケールに対応する。
+LODはMinecraftが何百万ブロックの世界をレンダリングするために使う戦略と同じだ：異なる距離に対して異なるレベルの詳細。SOS Locationでは、「距離」はズームであり--各ズームレベルは異なる情報ニーズを持つ実際の作戦スケールに対応する。
 '''

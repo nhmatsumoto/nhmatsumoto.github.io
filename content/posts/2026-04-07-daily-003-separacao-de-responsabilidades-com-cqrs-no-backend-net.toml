@@ -23,7 +23,7 @@ O SOS Location tem dois tipos de operação radicalmente diferentes sobre os mes
 
 ## Problema específico
 
-O endpoint `GET /hotspots/nearby` precisava de uma query espacial otimizada no PostGIS — `ST_DWithin` com índice GIST. Mas o modelo `Hotspot` carregava toda a estrutura de domínio rica: eventos de domínio não materializados, navegação para `AreaDeRisco` e validações de invariante. Cada consulta de leitura hidratava um grafo de 7 tabelas quando bastaria uma projeção plana de 4 colunas. Tempo de resposta: 340 ms. Após a separação: 4 ms.
+O endpoint `GET /hotspots/nearby` precisava de uma query espacial otimizada no PostGIS - `ST_DWithin` com índice GIST. Mas o modelo `Hotspot` carregava toda a estrutura de domínio rica: eventos de domínio não materializados, navegação para `AreaDeRisco` e validações de invariante. Cada consulta de leitura hidratava um grafo de 7 tabelas quando bastaria uma projeção plana de 4 colunas. Tempo de resposta: 340 ms. Após a separação: 4 ms.
 
 ## Decisão técnica
 
@@ -106,7 +106,7 @@ Queries de leitura não hidratam aggregate roots. Comandos de escrita não const
 
 ## Relação com SOS Location
 
-Durante um desastre, o SOS Location recebe leituras de mapa em alta frequência (cada dispositivo de campo atualiza a cada 10 segundos) e gravações menos frequentes (registros de ocorrência). A separação CQRS permite escalar o lado de leitura — réplicas e cache — sem afetar a lógica de domínio das gravações.
+Durante um desastre, o SOS Location recebe leituras de mapa em alta frequência (cada dispositivo de campo atualiza a cada 10 segundos) e gravações menos frequentes (registros de ocorrência). A separação CQRS permite escalar o lado de leitura - réplicas e cache - sem afetar a lógica de domínio das gravações.
 '''
 body_en_us = '''
 ## Real context
@@ -115,7 +115,7 @@ SOS Location has two radically different operation types on the same data: write
 
 ## Specific problem
 
-The `GET /hotspots/nearby` endpoint needed an optimised spatial query in PostGIS — `ST_DWithin` with a GIST index. But the `Hotspot` domain model carried the full rich domain structure: unmaterialised domain events, navigation to `AreaDeRisco`, and invariant validations. Each read query hydrated a 7-table object graph when a flat 4-column projection was all that was needed. Response time before: 340 ms. After separation: 4 ms.
+The `GET /hotspots/nearby` endpoint needed an optimised spatial query in PostGIS - `ST_DWithin` with a GIST index. But the `Hotspot` domain model carried the full rich domain structure: unmaterialised domain events, navigation to `AreaDeRisco`, and invariant validations. Each read query hydrated a 7-table object graph when a flat 4-column projection was all that was needed. Response time before: 340 ms. After separation: 4 ms.
 
 ## Technical decision
 
@@ -181,7 +181,7 @@ Read queries do not hydrate aggregate roots. Write commands do not build flat re
 
 ## Relation to SOS Location
 
-During a disaster, SOS Location receives map reads at high frequency (each field device updates every 10 seconds) and less frequent writes (incident registrations). The CQRS separation allows scaling the read side — read replicas, query caching — without affecting domain logic on the write side.
+During a disaster, SOS Location receives map reads at high frequency (each field device updates every 10 seconds) and less frequent writes (incident registrations). The CQRS separation allows scaling the read side - read replicas, query caching - without affecting domain logic on the write side.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト

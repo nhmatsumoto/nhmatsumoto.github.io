@@ -1,8 +1,8 @@
 name = "Java-Servlet-Pages"
 slug = "java-servlet-pages"
-headline = "Aplicação web com Java Servlets e JSP — fundamentos de desenvolvimento web no ecossistema Java."
-headline_en_us = "Web application with Java Servlets and JSP — fundamentals of web development in the Java ecosystem."
-headline_ja_jp = "Java Servlet と JSP を用いた Web アプリケーション — Java エコシステムにおける Web 開発の基礎。"
+headline = "Aplicação web com Java Servlets e JSP - fundamentos de desenvolvimento web no ecossistema Java."
+headline_en_us = "Web application with Java Servlets and JSP - fundamentals of web development in the Java ecosystem."
+headline_ja_jp = "Java Servlet と JSP を用いた Web アプリケーション - Java エコシステムにおける Web 開発の基礎。"
 summary = "Projeto de estudo com Java Servlets e JSP, cobrindo ciclo de vida de requisições HTTP, sessões, filtros e padrão MVC no servidor."
 summary_en_us = "Study project using Java Servlets and JSP, covering HTTP request lifecycle, sessions, filters and the server-side MVC pattern."
 summary_ja_jp = "Java Servlet と JSP を用いた学習プロジェクト。HTTP リクエストのライフサイクル、セッション、フィルター、サーバ側 MVC を扱う。"
@@ -20,11 +20,11 @@ Projeto de estudo de desenvolvimento web com Java Servlets e JavaServer Pages (J
 
 ## Conceitos cobertos
 
-- **Ciclo de vida de Servlets** — init, service, destroy
-- **Requisições HTTP** — tratamento de GET, POST, redirecionamento e forwarding
-- **Sessões e cookies** — gerenciamento de estado entre requisições
-- **Filtros** — interceptação e processamento de requisições antes de chegar ao servlet
-- **Padrão MVC** — separação entre model (JavaBeans), view (JSP) e controller (Servlets)
+- **Ciclo de vida de Servlets** - init, service, destroy
+- **Requisições HTTP** - tratamento de GET, POST, redirecionamento e forwarding
+- **Sessões e cookies** - gerenciamento de estado entre requisições
+- **Filtros** - interceptação e processamento de requisições antes de chegar ao servlet
+- **Padrão MVC** - separação entre model (JavaBeans), view (JSP) e controller (Servlets)
 
 ## Contexto
 
@@ -35,11 +35,11 @@ Study project on web development with Java Servlets and JavaServer Pages (JSP), 
 
 ## Covered concepts
 
-- **Servlet lifecycle** — init, service and destroy
-- **HTTP requests** — handling GET, POST, redirects and forwarding
-- **Sessions and cookies** — state management across requests
-- **Filters** — intercepting and processing requests before they hit servlets
-- **MVC pattern** — separation between model (JavaBeans), view (JSP) and controller (Servlets)
+- **Servlet lifecycle** - init, service and destroy
+- **HTTP requests** - handling GET, POST, redirects and forwarding
+- **Sessions and cookies** - state management across requests
+- **Filters** - intercepting and processing requests before they hit servlets
+- **MVC pattern** - separation between model (JavaBeans), view (JSP) and controller (Servlets)
 
 ## Context
 
@@ -50,11 +50,11 @@ Apache Tomcat をコンテナとして使い、Java Servlets と JavaServer Page
 
 ## 扱う概念
 
-- **Servlet lifecycle** — init、service、destroy
-- **HTTP request** — GET、POST、redirect、forward の処理
-- **session と cookie** — リクエストをまたぐ状態管理
-- **filter** — servlet に届く前のリクエスト横取りと前処理
-- **MVC pattern** — model（JavaBeans）、view（JSP）、controller（Servlets）の分離
+- **Servlet lifecycle** - init、service、destroy
+- **HTTP request** - GET、POST、redirect、forward の処理
+- **session と cookie** - リクエストをまたぐ状態管理
+- **filter** - servlet に届く前のリクエスト横取りと前処理
+- **MVC pattern** - model（JavaBeans）、view（JSP）、controller（Servlets）の分離
 
 ## 背景
 

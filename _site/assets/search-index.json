@@ -21,7 +21,7 @@
     "title": "Padrões Comportamentais em C#: Strategy, Observer, Mediator e State",
     "url": "https://nhmatsumoto.github.io/posts/20260608-110000-design-patterns-comportamentais-csharp-dotnet/",
     "kind": "post",
-    "summary": "Padrões comportamentais respondem 'como objetos colaboram e distribuem responsabilidade'. No .NET, delegates, eventos e MediatR já carregam metade do trabalho. Strategy, Observer, Mediator, State e Chain of Responsibility — da forma clássica à idiomática.",
+    "summary": "Padrões comportamentais respondem 'como objetos colaboram e distribuem responsabilidade'. No .NET, delegates, eventos e MediatR já carregam metade do trabalho. Strategy, Observer, Mediator, State e Chain of Responsibility - da forma clássica à idiomática.",
     "keywords": [
       "dotnet",
       "csharp",
@@ -31,14 +31,14 @@
     ],
     "title_en_us": "Behavioral Patterns in C#: Strategy, Observer, Mediator and State",
     "title_ja_jp": "C# の振る舞いパターン：Strategy・Observer・Mediator・State",
-    "summary_en_us": "Behavioral patterns answer 'how objects collaborate and distribute responsibility'. In .NET, delegates, events and MediatR already carry half the work. Strategy, Observer, Mediator, State and Chain of Responsibility — from the classic to the idiomatic form.",
+    "summary_en_us": "Behavioral patterns answer 'how objects collaborate and distribute responsibility'. In .NET, delegates, events and MediatR already carry half the work. Strategy, Observer, Mediator, State and Chain of Responsibility - from the classic to the idiomatic form.",
     "summary_ja_jp": "振る舞いパターンは「オブジェクトがどう協調し責務を分配するか」に答える。.NET では delegate・event・MediatR がすでに仕事の半分を担う。Strategy・Observer・Mediator・State・Chain of Responsibility を、古典形からイディオム形まで。"
   },
   {
     "title": "Padrões Estruturais em C#: Adapter, Decorator, Composite e Proxy na prática",
     "url": "https://nhmatsumoto.github.io/posts/20260608-100000-design-patterns-estruturais-csharp-dotnet/",
     "kind": "post",
-    "summary": "Padrões estruturais respondem 'como compor objetos sem soldar peças'. No .NET, eles aparecem o tempo todo — middlewares são Decorators, ORMs usam Proxy, ACLs são Adapters. Implementação prática com DI, Scrutor e os recursos do C# moderno.",
+    "summary": "Padrões estruturais respondem 'como compor objetos sem soldar peças'. No .NET, eles aparecem o tempo todo - middlewares são Decorators, ORMs usam Proxy, ACLs são Adapters. Implementação prática com DI, Scrutor e os recursos do C# moderno.",
     "keywords": [
       "dotnet",
       "csharp",
@@ -48,14 +48,14 @@
     ],
     "title_en_us": "Structural Patterns in C#: Adapter, Decorator, Composite and Proxy in practice",
     "title_ja_jp": "C# の構造パターン：Adapter・Decorator・Composite・Proxy を実践する",
-    "summary_en_us": "Structural patterns answer 'how to compose objects without welding parts together'. In .NET they show up everywhere — middleware are Decorators, ORMs use Proxy, ACLs are Adapters. Practical implementation with DI, Scrutor and modern C# features.",
+    "summary_en_us": "Structural patterns answer 'how to compose objects without welding parts together'. In .NET they show up everywhere - middleware are Decorators, ORMs use Proxy, ACLs are Adapters. Practical implementation with DI, Scrutor and modern C# features.",
     "summary_ja_jp": "構造パターンは「部品を溶接せずにオブジェクトを組み立てる方法」に答える。.NET では至る所に現れる ── ミドルウェアは Decorator、ORM は Proxy、ACL は Adapter。DI・Scrutor・モダン C# の機能で実践的に実装する。"
   },
   {
     "title": "Padrões Criacionais em C#: Factory, Builder e Singleton na era do DI",
     "url": "https://nhmatsumoto.github.io/posts/20260608-090000-design-patterns-criacionais-csharp-dotnet/",
     "kind": "post",
-    "summary": "Os padrões criacionais resolvem 'como instanciar sem acoplar ao concreto'. No .NET moderno, o container de DI já é o maior deles — mas Factory, Builder e companhia continuam vivos quando a criação tem regra de negócio. Implementação prática, da forma clássica à idiomática.",
+    "summary": "Os padrões criacionais resolvem 'como instanciar sem acoplar ao concreto'. No .NET moderno, o container de DI já é o maior deles - mas Factory, Builder e companhia continuam vivos quando a criação tem regra de negócio. Implementação prática, da forma clássica à idiomática.",
     "keywords": [
       "dotnet",
       "csharp",
@@ -65,7 +65,7 @@
     ],
     "title_en_us": "Creational Patterns in C#: Factory, Builder and Singleton in the DI era",
     "title_ja_jp": "C# の生成パターン：DI 時代の Factory・Builder・Singleton",
-    "summary_en_us": "Creational patterns answer 'how to instantiate without coupling to the concrete type'. In modern .NET, the DI container is already the biggest one — but Factory, Builder and friends stay alive when creation carries business rules. Practical implementation, from the classic to the idiomatic form.",
+    "summary_en_us": "Creational patterns answer 'how to instantiate without coupling to the concrete type'. In modern .NET, the DI container is already the biggest one - but Factory, Builder and friends stay alive when creation carries business rules. Practical implementation, from the classic to the idiomatic form.",
     "summary_ja_jp": "生成パターンは「具象型に結合せずにインスタンス化する方法」に答える。モダンな .NET では DI コンテナが最大の生成パターンだが、生成にビジネスルールが伴うとき Factory・Builder などは生き続ける。古典形からイディオム形まで、実践的に実装する。"
   },
   {
@@ -91,7 +91,7 @@
     "title": "Orquestração vs Coreografia: quem comanda o fluxo entre serviços?",
     "url": "https://nhmatsumoto.github.io/posts/20260429-094000-orchestration-vs-choreography/",
     "kind": "post",
-    "summary": "Quando um processo de negócio atravessa vários serviços, alguém precisa coordenar os passos. Na orquestração há um maestro central; na coreografia cada serviço reage a eventos. A escolha define onde mora a complexidade — e como você lida com falhas e compensações.",
+    "summary": "Quando um processo de negócio atravessa vários serviços, alguém precisa coordenar os passos. Na orquestração há um maestro central; na coreografia cada serviço reage a eventos. A escolha define onde mora a complexidade - e como você lida com falhas e compensações.",
     "keywords": [
       "microservices",
       "event_driven",
@@ -99,14 +99,14 @@
     ],
     "title_en_us": "Orchestration vs Choreography: who commands the flow between services?",
     "title_ja_jp": "オーケストレーション vs コレオグラフィ：サービス間のフローを誰が指揮するか",
-    "summary_en_us": "When a business process spans several services, someone has to coordinate the steps. In orchestration there's a central conductor; in choreography each service reacts to events. The choice decides where complexity lives — and how you handle failures and compensations.",
+    "summary_en_us": "When a business process spans several services, someone has to coordinate the steps. In orchestration there's a central conductor; in choreography each service reacts to events. The choice decides where complexity lives - and how you handle failures and compensations.",
     "summary_ja_jp": "ビジネスプロセスが複数のサービスにまたがるとき、誰かが手順を調整せねばならない。オーケストレーションには中央の指揮者がいて、コレオグラフィでは各サービスがイベントに反応する。この選択が、複雑さの住処と、障害・補償の扱い方を決める。"
   },
   {
     "title": "Observabilidade: os três pilares e a pergunta que o monitoramento não responde",
     "url": "https://nhmatsumoto.github.io/posts/20260429-093500-observability/",
     "kind": "post",
-    "summary": "Monitoramento responde 'o sistema está quebrado?'. Observabilidade responde 'por quê?' — inclusive para falhas que você nunca previu. Logs, métricas e traces são os três pilares, mas o que os une é a capacidade de fazer perguntas novas sem subir código novo.",
+    "summary": "Monitoramento responde 'o sistema está quebrado?'. Observabilidade responde 'por quê?' - inclusive para falhas que você nunca previu. Logs, métricas e traces são os três pilares, mas o que os une é a capacidade de fazer perguntas novas sem subir código novo.",
     "keywords": [
       "observability",
       "devops",
@@ -114,14 +114,14 @@
     ],
     "title_en_us": "Observability: the three pillars and the question monitoring can't answer",
     "title_ja_jp": "可観測性：3 本の柱と、監視では答えられない問い",
-    "summary_en_us": "Monitoring answers 'is the system broken?'. Observability answers 'why?' — even for failures you never anticipated. Logs, metrics, and traces are the three pillars, but what unites them is the ability to ask new questions without shipping new code.",
+    "summary_en_us": "Monitoring answers 'is the system broken?'. Observability answers 'why?' - even for failures you never anticipated. Logs, metrics, and traces are the three pillars, but what unites them is the ability to ask new questions without shipping new code.",
     "summary_ja_jp": "監視は「システムは壊れているか」に答える。可観測性は「なぜか」に答える ── 予期しなかった障害についてさえ。ログ・メトリクス・トレースは 3 本の柱だが、それらを束ねるのは、新しいコードを出さずに新しい問いを立てられる能力である。"
   },
   {
     "title": "Backpressure: por que um sistema saudável precisa saber dizer 'não'",
     "url": "https://nhmatsumoto.github.io/posts/20260429-093000-backpressure/",
     "kind": "post",
-    "summary": "Quando um produtor é mais rápido que um consumidor, alguém precisa segurar a onda — ou a fila cresce até o sistema cair. Backpressure é o mecanismo de propagar 'desacelere' rio acima, e a diferença entre derrubar tudo e degradar com elegância.",
+    "summary": "Quando um produtor é mais rápido que um consumidor, alguém precisa segurar a onda - ou a fila cresce até o sistema cair. Backpressure é o mecanismo de propagar 'desacelere' rio acima, e a diferença entre derrubar tudo e degradar com elegância.",
     "keywords": [
       "distributed_systems",
       "performance",
@@ -129,14 +129,14 @@
     ],
     "title_en_us": "Backpressure: why a healthy system needs to know how to say 'no'",
     "title_ja_jp": "バックプレッシャー：健全なシステムが「ノー」と言えねばならない理由",
-    "summary_en_us": "When a producer is faster than a consumer, something has to hold the wave back — or the queue grows until the system falls over. Backpressure is the mechanism for propagating 'slow down' upstream, and the difference between collapsing and degrading gracefully.",
+    "summary_en_us": "When a producer is faster than a consumer, something has to hold the wave back - or the queue grows until the system falls over. Backpressure is the mechanism for propagating 'slow down' upstream, and the difference between collapsing and degrading gracefully.",
     "summary_ja_jp": "プロデューサがコンシューマより速いとき、誰かが波を抑えねばならない ── さもなくばキューはシステムが倒れるまで膨らむ。バックプレッシャーとは「減速せよ」を上流へ伝播させる仕組みであり、全崩壊と優雅な劣化を分けるものである。"
   },
   {
     "title": "Outbox Pattern: o fim da dupla escrita entre banco e mensageria",
     "url": "https://nhmatsumoto.github.io/posts/20260429-092500-outbox-pattern/",
     "kind": "post",
-    "summary": "Salvar no banco e publicar um evento são duas operações que não compartilham transação — e é exatamente aí que os dados divergem. O Outbox Pattern resolve isso gravando o evento na mesma transação do dado e publicando depois, com entrega at-least-once.",
+    "summary": "Salvar no banco e publicar um evento são duas operações que não compartilham transação - e é exatamente aí que os dados divergem. O Outbox Pattern resolve isso gravando o evento na mesma transação do dado e publicando depois, com entrega at-least-once.",
     "keywords": [
       "microservices",
       "event_driven",
@@ -144,14 +144,14 @@
     ],
     "title_en_us": "The Outbox Pattern: ending the dual-write problem between database and broker",
     "title_ja_jp": "Outbox パターン：データベースとブローカー間の二重書き込み問題を終わらせる",
-    "summary_en_us": "Writing to the database and publishing an event are two operations that share no transaction — and that's exactly where data diverges. The Outbox Pattern fixes it by storing the event in the same transaction as the data and publishing it afterward, with at-least-once delivery.",
+    "summary_en_us": "Writing to the database and publishing an event are two operations that share no transaction - and that's exactly where data diverges. The Outbox Pattern fixes it by storing the event in the same transaction as the data and publishing it afterward, with at-least-once delivery.",
     "summary_ja_jp": "データベースへの書き込みとイベントの発行は、トランザクションを共有しない 2 つの操作であり、まさにそこでデータが食い違う。Outbox パターンは、イベントをデータと同一トランザクションで保存し、後から at-least-once で発行することでこれを解決する。"
   },
   {
     "title": "Idempotência em APIs: o seguro contra o retry que vai acontecer",
     "url": "https://nhmatsumoto.github.io/posts/20260429-092000-idempotency-apis/",
     "kind": "post",
-    "summary": "Em qualquer rede, uma requisição pode chegar duas vezes — timeout, retry, duplo clique. Sem idempotência, isso vira cobrança dupla. Um guia prático sobre Idempotency-Key, a janela de risco entre processar e responder, e como implementar de forma segura.",
+    "summary": "Em qualquer rede, uma requisição pode chegar duas vezes - timeout, retry, duplo clique. Sem idempotência, isso vira cobrança dupla. Um guia prático sobre Idempotency-Key, a janela de risco entre processar e responder, e como implementar de forma segura.",
     "keywords": [
       "api",
       "distributed_systems",
@@ -159,14 +159,14 @@
     ],
     "title_en_us": "Idempotency in APIs: insurance against the retry that will happen",
     "title_ja_jp": "API における冪等性：いつか必ず起きるリトライへの保険",
-    "summary_en_us": "On any network, a request can arrive twice — timeout, retry, double click. Without idempotency, that becomes a double charge. A practical guide to the Idempotency-Key, the risk window between processing and responding, and how to implement it safely.",
+    "summary_en_us": "On any network, a request can arrive twice - timeout, retry, double click. Without idempotency, that becomes a double charge. A practical guide to the Idempotency-Key, the risk window between processing and responding, and how to implement it safely.",
     "summary_ja_jp": "あらゆるネットワークで、リクエストは二度届きうる ── タイムアウト、リトライ、ダブルクリック。冪等性がなければ、それは二重課金になる。Idempotency-Key、処理と応答の間のリスク窓、そして安全な実装方法の実践ガイド。"
   },
   {
     "title": "Consistência forte vs eventual: o trade-off que o teorema CAP só começa a explicar",
     "url": "https://nhmatsumoto.github.io/posts/20260429-091500-consistency-tradeoffs/",
     "kind": "post",
-    "summary": "Não existe sistema distribuído perfeitamente consistente sem custo. Entre o CAP, o PACELC e a consistência eventual, o que realmente está em jogo é latência contra garantia — e essa é uma decisão de negócio antes de ser técnica.",
+    "summary": "Não existe sistema distribuído perfeitamente consistente sem custo. Entre o CAP, o PACELC e a consistência eventual, o que realmente está em jogo é latência contra garantia - e essa é uma decisão de negócio antes de ser técnica.",
     "keywords": [
       "distributed_systems",
       "consistency",
@@ -174,14 +174,14 @@
     ],
     "title_en_us": "Strong vs eventual consistency: the trade-off the CAP theorem only begins to explain",
     "title_ja_jp": "強整合性 vs 結果整合性：CAP 定理が説明を始めるにすぎないトレードオフ",
-    "summary_en_us": "There is no perfectly consistent distributed system without a cost. Between CAP, PACELC, and eventual consistency, what is really at stake is latency versus guarantee — and that is a business decision before it is a technical one.",
+    "summary_en_us": "There is no perfectly consistent distributed system without a cost. Between CAP, PACELC, and eventual consistency, what is really at stake is latency versus guarantee - and that is a business decision before it is a technical one.",
     "summary_ja_jp": "コストなしに完全な整合性を持つ分散システムは存在しない。CAP、PACELC、結果整合性の間で本当に問われているのはレイテンシ対保証であり、それは技術判断である前にビジネス判断である。"
   },
   {
     "title": "CQRS sem dogma: o que ele realmente separa e o preço que você paga",
     "url": "https://nhmatsumoto.github.io/posts/20260429-091000-cqrs-tradeoffs/",
     "kind": "post",
-    "summary": "CQRS é separar o modelo de escrita do modelo de leitura — não é Event Sourcing, não exige dois bancos e não é sinônimo de microservices. Um guia honesto sobre o que ganha, o que perde e os três níveis em que ele pode ser adotado.",
+    "summary": "CQRS é separar o modelo de escrita do modelo de leitura - não é Event Sourcing, não exige dois bancos e não é sinônimo de microservices. Um guia honesto sobre o que ganha, o que perde e os três níveis em que ele pode ser adotado.",
     "keywords": [
       "cqrs",
       "arquitetura",
@@ -189,14 +189,14 @@
     ],
     "title_en_us": "CQRS without dogma: what it actually separates and the price you pay",
     "title_ja_jp": "教条なしの CQRS：それが実際に分離するものと、支払う代償",
-    "summary_en_us": "CQRS means separating the write model from the read model — it is not Event Sourcing, it does not require two databases, and it is not a synonym for microservices. An honest guide to what you gain, what you lose, and the three levels at which it can be adopted.",
+    "summary_en_us": "CQRS means separating the write model from the read model - it is not Event Sourcing, it does not require two databases, and it is not a synonym for microservices. An honest guide to what you gain, what you lose, and the three levels at which it can be adopted.",
     "summary_ja_jp": "CQRS とは書き込みモデルと読み取りモデルを分けることであり、イベントソーシングではなく、2 つのデータベースを必要とせず、マイクロサービスの同義語でもない。得るもの、失うもの、そして採用できる 3 つのレベルについての誠実なガイド。"
   },
   {
     "title": "Linguagem Ubíqua na prática: o ativo de DDD que não aparece no diagrama",
     "url": "https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/",
     "kind": "post",
-    "summary": "A maioria dos bugs caros nasce de um erro de tradução entre o que o negócio diz e o que o código faz. A linguagem ubíqua não é jargão de DDD — é a disciplina de eliminar essa tradução, palavra por palavra, dentro de um bounded context.",
+    "summary": "A maioria dos bugs caros nasce de um erro de tradução entre o que o negócio diz e o que o código faz. A linguagem ubíqua não é jargão de DDD - é a disciplina de eliminar essa tradução, palavra por palavra, dentro de um bounded context.",
     "keywords": [
       "ddd",
       "arquitetura",
@@ -204,14 +204,14 @@
     ],
     "title_en_us": "Ubiquitous Language in practice: the DDD asset that never shows up in the diagram",
     "title_ja_jp": "実践におけるユビキタス言語：図には現れない DDD の資産",
-    "summary_en_us": "Most expensive bugs are born from a translation error between what the business says and what the code does. Ubiquitous language is not DDD jargon — it is the discipline of eliminating that translation, word by word, inside a bounded context.",
+    "summary_en_us": "Most expensive bugs are born from a translation error between what the business says and what the code does. Ubiquitous language is not DDD jargon - it is the discipline of eliminating that translation, word by word, inside a bounded context.",
     "summary_ja_jp": "高くつくバグの大半は、ビジネスが語ることとコードが行うことの間の翻訳ミスから生まれる。ユビキタス言語は DDD の専門用語ではなく、境界づけられたコンテキストの内側でその翻訳を一語ずつ消し去る規律である。"
   },
   {
     "title": "Monólito Modular vs Microservices: a decisão arquitetural que ninguém quer tomar cedo",
     "url": "https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/",
     "kind": "post",
-    "summary": "Microservices não são um upgrade do monólito — são um trade-off organizacional caro. Quando o monólito modular é a escolha correta, quais sinais justificam a extração de serviços e por que a Lei de Conway decide mais do que a tecnologia.",
+    "summary": "Microservices não são um upgrade do monólito - são um trade-off organizacional caro. Quando o monólito modular é a escolha correta, quais sinais justificam a extração de serviços e por que a Lei de Conway decide mais do que a tecnologia.",
     "keywords": [
       "arquitetura",
       "microservices",
@@ -220,7 +220,7 @@
     ],
     "title_en_us": "Modular Monolith vs Microservices: the architectural decision nobody should make too early",
     "title_ja_jp": "モジュラーモノリス vs マイクロサービス：早すぎる判断は避けるべき設計判断",
-    "summary_en_us": "Microservices are not an upgrade over a monolith — they are an expensive organizational trade-off. When a modular monolith is the right choice, which signals justify extracting services, and why Conway's Law decides more than technology.",
+    "summary_en_us": "Microservices are not an upgrade over a monolith - they are an expensive organizational trade-off. When a modular monolith is the right choice, which signals justify extracting services, and why Conway's Law decides more than technology.",
     "summary_ja_jp": "マイクロサービスはモノリスの上位互換ではなく、高価な組織的トレードオフである。モジュラーモノリスが正しい選択となる場面、サービス分割を正当化するシグナル、そして技術以上にコンウェイの法則が決定する理由を解説する。"
   },
   {
@@ -243,7 +243,7 @@
     "title": "Daily #044: Controle de estado de pagamento (pending, completed)",
     "url": "https://nhmatsumoto.github.io/posts/20260409-040000-daily-044-controle-de-estado-de-pagamento-pending-completed/",
     "kind": "post",
-    "summary": "Como o SOS Location modela a máquina de estados de Doacao — transições válidas entre pending, processing, completed, failed e refunded, com enforcement no domínio e auditoria de cada transição em tabela separada.",
+    "summary": "Como o SOS Location modela a máquina de estados de Doacao - transições válidas entre pending, processing, completed, failed e refunded, com enforcement no domínio e auditoria de cada transição em tabela separada.",
     "keywords": [
       "sos-location",
       "daily",
@@ -252,14 +252,14 @@
     ],
     "title_en_us": "Daily #044: Payment state control with pending and completed states",
     "title_ja_jp": "Daily #044: 決済状態管理（pending、completed）",
-    "summary_en_us": "How SOS Location models the Doacao state machine — valid transitions between pending, processing, completed, failed and refunded, with domain enforcement and audit of each transition in a separate table.",
-    "summary_ja_jp": "SOS Locationが`Doacao`のステートマシンをモデル化する方法——pending、processing、completed、failed、refunded間の有効な遷移、ドメインでの強制、別テーブルへの各遷移の監査。"
+    "summary_en_us": "How SOS Location models the Doacao state machine - valid transitions between pending, processing, completed, failed and refunded, with domain enforcement and audit of each transition in a separate table.",
+    "summary_ja_jp": "SOS Locationが`Doacao`のステートマシンをモデル化する方法--pending、processing、completed、failed、refunded間の有効な遷移、ドメインでの強制、別テーブルへの各遷移の監査。"
   },
   {
     "title": "Daily #043: Uso de tokens únicos por transação",
     "url": "https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/",
     "kind": "post",
-    "summary": "Como o SOS Location emite tokens CSRF de uso único para formulários de doação — gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission.",
+    "summary": "Como o SOS Location emite tokens CSRF de uso único para formulários de doação - gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission.",
     "keywords": [
       "sos-location",
       "daily",
@@ -268,14 +268,14 @@
     ],
     "title_en_us": "Daily #043: Using unique tokens per transaction",
     "title_ja_jp": "Daily #043: トランザクションごとの一意トークン",
-    "summary_en_us": "How SOS Location issues single-use CSRF tokens for donation forms — generated on the page GET, consumed on the POST, invalidated after use or 15-minute expiry, preventing replay attacks and form resubmission.",
-    "summary_ja_jp": "SOS Locationが寄付フォームに使い捨てCSRFトークンを発行する方法——ページGETで生成、POST時に消費、使用後または15分の有効期限後に無効化、リプレイ攻撃とフォーム再送信を防止。"
+    "summary_en_us": "How SOS Location issues single-use CSRF tokens for donation forms - generated on the page GET, consumed on the POST, invalidated after use or 15-minute expiry, preventing replay attacks and form resubmission.",
+    "summary_ja_jp": "SOS Locationが寄付フォームに使い捨てCSRFトークンを発行する方法--ページGETで生成、POST時に消費、使用後または15分の有効期限後に無効化、リプレイ攻撃とフォーム再送信を防止。"
   },
   {
     "title": "Daily #042: Implementação de idempotência na API",
     "url": "https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/",
     "kind": "post",
-    "summary": "Como o SOS Location implementou idempotência via header Idempotency-Key no nível da API — armazenamento de respostas em Redis com TTL de 24 horas, replay automático e proteção contra double-submit em qualquer cliente HTTP.",
+    "summary": "Como o SOS Location implementou idempotência via header Idempotency-Key no nível da API - armazenamento de respostas em Redis com TTL de 24 horas, replay automático e proteção contra double-submit em qualquer cliente HTTP.",
     "keywords": [
       "sos-location",
       "daily",
@@ -284,14 +284,14 @@
     ],
     "title_en_us": "Daily #042: Implementing idempotency in the API",
     "title_ja_jp": "Daily #042: APIにおける冪等性実装",
-    "summary_en_us": "How SOS Location implemented idempotency via the Idempotency-Key header at the API level — response storage in Redis with a 24-hour TTL, automatic replay, and protection against double-submit from any HTTP client.",
-    "summary_ja_jp": "SOS LocationがAPIレベルでIdempotency-Keyヘッダーによる冪等性を実装した方法——Redisへの24時間TTLでのレスポンス保存、自動リプレイ、あらゆるHTTPクライアントからのダブルサブミット保護。"
+    "summary_en_us": "How SOS Location implemented idempotency via the Idempotency-Key header at the API level - response storage in Redis with a 24-hour TTL, automatic replay, and protection against double-submit from any HTTP client.",
+    "summary_ja_jp": "SOS LocationがAPIレベルでIdempotency-Keyヘッダーによる冪等性を実装した方法--Redisへの24時間TTLでのレスポンス保存、自動リプレイ、あらゆるHTTPクライアントからのダブルサブミット保護。"
   },
   {
     "title": "Daily #041: Problema de pagamento duplicado por múltiplos cliques",
     "url": "https://nhmatsumoto.github.io/posts/20260409-010000-daily-041-problema-de-pagamento-duplicado-por-multiplos-cliques/",
     "kind": "post",
-    "summary": "Como o SOS Location resolveu o problema de doações duplicadas causado por duplo-clique no botão de doação — botão desabilitado após primeiro clique no frontend e chave de idempotência no backend.",
+    "summary": "Como o SOS Location resolveu o problema de doações duplicadas causado por duplo-clique no botão de doação - botão desabilitado após primeiro clique no frontend e chave de idempotência no backend.",
     "keywords": [
       "sos-location",
       "daily",
@@ -300,8 +300,8 @@
     ],
     "title_en_us": "Daily #041: Duplicate payment problem caused by multiple clicks",
     "title_ja_jp": "Daily #041: 複数クリックによる重複決済問題",
-    "summary_en_us": "How SOS Location resolved the duplicate donation problem caused by double-clicking the donation button — button disabled after first click on the frontend and idempotency key on the backend.",
-    "summary_ja_jp": "SOS Locationが寄付ボタンのダブルクリックによる重複寄付問題を解決した方法——フロントエンドで最初のクリック後にボタンを無効化し、バックエンドで冪等性キーを使用。"
+    "summary_en_us": "How SOS Location resolved the duplicate donation problem caused by double-clicking the donation button - button disabled after first click on the frontend and idempotency key on the backend.",
+    "summary_ja_jp": "SOS Locationが寄付ボタンのダブルクリックによる重複寄付問題を解決した方法--フロントエンドで最初のクリック後にボタンを無効化し、バックエンドで冪等性キーを使用。"
   },
   {
     "title": "Daily #040: Logging estruturado para rastreabilidade",
@@ -387,7 +387,7 @@
     "title": "Daily #035: Criação de endpoint para snapshot de operações",
     "url": "https://nhmatsumoto.github.io/posts/20260408-190000-daily-035-criacao-de-endpoint-para-snapshot-de-operacoes/",
     "kind": "post",
-    "summary": "Como o SOS Location implementou GET /api/operacoes/{id}/snapshot que retorna o estado completo de uma OperacaoDeResgate em um único response — areas, hotspots, pessoas desaparecidas, rotas — eliminando 4 requests paralelos.",
+    "summary": "Como o SOS Location implementou GET /api/operacoes/{id}/snapshot que retorna o estado completo de uma OperacaoDeResgate em um único response - areas, hotspots, pessoas desaparecidas, rotas - eliminando 4 requests paralelos.",
     "keywords": [
       "sos-location",
       "daily",
@@ -396,8 +396,8 @@
     ],
     "title_en_us": "Daily #035: Creating an endpoint for operation snapshots",
     "title_ja_jp": "Daily #035: オペレーションスナップショット用エンドポイント作成",
-    "summary_en_us": "How SOS Location implemented GET /api/operacoes/{id}/snapshot that returns the complete state of an OperacaoDeResgate in a single response — areas, hotspots, missing persons, routes — eliminating 4 parallel requests.",
-    "summary_ja_jp": "SOS LocationがGET /api/operacoes/{id}/snapshotを実装してOperacaoDeResgate の完全状態——エリア・ホットスポット・行方不明者・ルート——を1つのレスポンスで返し、4つの並列リクエストを排除した方法。"
+    "summary_en_us": "How SOS Location implemented GET /api/operacoes/{id}/snapshot that returns the complete state of an OperacaoDeResgate in a single response - areas, hotspots, missing persons, routes - eliminating 4 parallel requests.",
+    "summary_ja_jp": "SOS LocationがGET /api/operacoes/{id}/snapshotを実装してOperacaoDeResgate の完全状態--エリア・ホットスポット・行方不明者・ルート--を1つのレスポンスで返し、4つの並列リクエストを排除した方法。"
   },
   {
     "title": "Daily #034: Avaliação de uso do Keycloak para SSO",
@@ -445,7 +445,7 @@
     "title_en_us": "Daily #032: Handling 401 errors in Axios calls",
     "title_ja_jp": "Daily #032: Axios呼び出しにおける401エラー処理",
     "summary_en_us": "How SOS Location implemented an Axios interceptor to silently renew the JWT on 401, using a refresh token with a queue of pending requests to avoid multiple simultaneous renewal calls.",
-    "summary_ja_jp": "SOS LocationがAxiosインターセプターを実装して401でJWTをサイレントに更新する方法——同時更新呼び出しを避けるためのペンディングリクエストキュー付きのリフレッシュトークン使用。"
+    "summary_ja_jp": "SOS LocationがAxiosインターセプターを実装して401でJWTをサイレントに更新する方法--同時更新呼び出しを避けるためのペンディングリクエストキュー付きのリフレッシュトークン使用。"
   },
   {
     "title": "Daily #031: Problema de CORS entre frontend e backend",
@@ -627,7 +627,7 @@
     "title": "Daily #020: Separação entre ambiente operacional e ambiente de simulação",
     "url": "https://nhmatsumoto.github.io/posts/20260408-040000-daily-020-separacao-entre-ambiente-operacional-e-ambiente-de-simulacao/",
     "kind": "post",
-    "summary": "Como o SOS Location usa a interface IAlertaDispatcher com duas implementações — RealAlertaDispatcher e SimulacaoAlertaDispatcher — controladas pela variável SOS_CONTEXT, garantindo que treinos de defesa civil nunca emitam alertas reais.",
+    "summary": "Como o SOS Location usa a interface IAlertaDispatcher com duas implementações - RealAlertaDispatcher e SimulacaoAlertaDispatcher - controladas pela variável SOS_CONTEXT, garantindo que treinos de defesa civil nunca emitam alertas reais.",
     "keywords": [
       "sos-location",
       "daily",
@@ -637,8 +637,8 @@
     ],
     "title_en_us": "Daily #020: Separating the operational environment from the simulation environment",
     "title_ja_jp": "Daily #020: 運用環境とシミュレーション環境の分離",
-    "summary_en_us": "How SOS Location uses the IAlertaDispatcher interface with two implementations — RealAlertaDispatcher and SimulacaoAlertaDispatcher — controlled by the SOS_CONTEXT variable, ensuring civil defence drills never send real alerts.",
-    "summary_ja_jp": "SOS LocationがIAlertaDispatcherインターフェースを2つの実装——RealAlertaDispatcherとSimulacaoAlertaDispatcher——でSOS_CONTEXT変数により制御し、民間防衛訓練が決して実際のアラートを送信しないことを保証する方法。"
+    "summary_en_us": "How SOS Location uses the IAlertaDispatcher interface with two implementations - RealAlertaDispatcher and SimulacaoAlertaDispatcher - controlled by the SOS_CONTEXT variable, ensuring civil defence drills never send real alerts.",
+    "summary_ja_jp": "SOS LocationがIAlertaDispatcherインターフェースを2つの実装--RealAlertaDispatcherとSimulacaoAlertaDispatcher--でSOS_CONTEXT変数により制御し、民間防衛訓練が決して実際のアラートを送信しないことを保証する方法。"
   },
   {
     "title": "Daily #019: Estrutura de processamento batch para simulações",
@@ -655,7 +655,7 @@
     "title_en_us": "Daily #019: Batch processing structure for simulations",
     "title_ja_jp": "Daily #019: シミュレーション向けバッチ処理構造",
     "summary_en_us": "How SOS Location uses Hangfire with 8 workers to run 150 nightly flood simulations across 50 zones, with shortest-first scheduling, idempotency keys and automatic failure reprocessing.",
-    "summary_ja_jp": "SOS LocationがHangfireの8ワーカーを使って50ゾーンで150件の夜間洪水シミュレーションを実行する方法——最短優先スケジュール・冪等性キー・自動障害再処理付き。"
+    "summary_ja_jp": "SOS LocationがHangfireの8ワーカーを使って50ゾーンで150件の夜間洪水シミュレーションを実行する方法--最短優先スケジュール・冪等性キー・自動障害再処理付き。"
   },
   {
     "title": "Daily #018: Estratégia para previsão de áreas de risco com IA",
@@ -672,13 +672,13 @@
     "title_en_us": "Daily #018: Strategy for AI-based risk area prediction",
     "title_ja_jp": "Daily #018: AIによるリスク領域予測戦略",
     "summary_en_us": "How SOS Location uses LightGBM to predict the NivelRisco of AreaDeRisco 15 minutes ahead, combining elevation, slope, distance to river, Open-Meteo precipitation and CEMADEN historical data.",
-    "summary_ja_jp": "SOS LocationがLightGBMを使ってAreaDeRiscoのNivelRiscoを15分前に予測する方法——標高・傾斜・河川距離・Open-Meteo降水量・CEMADENの過去データを組み合わせて。"
+    "summary_ja_jp": "SOS LocationがLightGBMを使ってAreaDeRiscoのNivelRiscoを15分前に予測する方法--標高・傾斜・河川距離・Open-Meteo降水量・CEMADENの過去データを組み合わせて。"
   },
   {
     "title": "Daily #017: Modelagem inicial de simulação de tsunami",
     "url": "https://nhmatsumoto.github.io/posts/20260408-010000-daily-017-modelagem-inicial-de-simulacao-de-tsunami/",
     "kind": "post",
-    "summary": "Por que o SOS Location usa cenários pré-computados de inundação por tsunami em vez do modelo MOST completo — e como a busca por similaridade de epicentro e magnitude seleciona o cenário mais próximo em milissegundos.",
+    "summary": "Por que o SOS Location usa cenários pré-computados de inundação por tsunami em vez do modelo MOST completo - e como a busca por similaridade de epicentro e magnitude seleciona o cenário mais próximo em milissegundos.",
     "keywords": [
       "sos-location",
       "daily",
@@ -688,8 +688,8 @@
     ],
     "title_en_us": "Daily #017: Initial tsunami simulation modeling",
     "title_ja_jp": "Daily #017: 津波シミュレーションの初期モデリング",
-    "summary_en_us": "Why SOS Location uses pre-computed tsunami inundation scenarios instead of the full MOST model — and how epicentre similarity search selects the closest scenario in milliseconds.",
-    "summary_ja_jp": "SOS Locationが完全なMOSTモデルではなく事前計算された津波浸水シナリオを使う理由——そして震央の類似検索が最も近いシナリオをミリ秒で選択する方法。"
+    "summary_en_us": "Why SOS Location uses pre-computed tsunami inundation scenarios instead of the full MOST model - and how epicentre similarity search selects the closest scenario in milliseconds.",
+    "summary_ja_jp": "SOS Locationが完全なMOSTモデルではなく事前計算された津波浸水シナリオを使う理由--そして震央の類似検索が最も近いシナリオをミリ秒で選択する方法。"
   },
   {
     "title": "Daily #016: Integração com dados de elevação para simulação de enchentes",
@@ -729,7 +729,7 @@
     "title": "Daily #014: Pipeline de segmentação de imagens geográficas",
     "url": "https://nhmatsumoto.github.io/posts/20260407-220000-daily-014-pipeline-de-segmentacao-de-imagens-geograficas/",
     "kind": "post",
-    "summary": "O pipeline U-Net do SOS Location para segmentar imagens de satélite em água/estrada/edificação/vegetação — com tiling de 256×256, class weights e inserção de polígonos no PostGIS.",
+    "summary": "O pipeline U-Net do SOS Location para segmentar imagens de satélite em água/estrada/edificação/vegetação - com tiling de 256×256, class weights e inserção de polígonos no PostGIS.",
     "keywords": [
       "sos-location",
       "daily",
@@ -739,8 +739,8 @@
     ],
     "title_en_us": "Daily #014: Geographic image segmentation pipeline",
     "title_ja_jp": "Daily #014: 地理画像セグメンテーションのパイプライン",
-    "summary_en_us": "SOS Location's U-Net pipeline to segment satellite images into water/road/building/vegetation — with 256×256 tiling, class weights and polygon insertion into PostGIS.",
-    "summary_ja_jp": "SOS LocationのU-Netパイプラインで衛星画像を水域/道路/建物/植生にセグメンテーション——256×256タイリング・クラスウェイト・PostGISへのポリゴン挿入。"
+    "summary_en_us": "SOS Location's U-Net pipeline to segment satellite images into water/road/building/vegetation - with 256×256 tiling, class weights and polygon insertion into PostGIS.",
+    "summary_ja_jp": "SOS LocationのU-Netパイプラインで衛星画像を水域/道路/建物/植生にセグメンテーション--256×256タイリング・クラスウェイト・PostGISへのポリゴン挿入。"
   },
   {
     "title": "Daily #013: Geração de datasets sintéticos com Three.js",
@@ -763,7 +763,7 @@
     "title": "Daily #012: Uso de sombras e posição do sol para inferência de altura",
     "url": "https://nhmatsumoto.github.io/posts/20260407-200000-daily-012-uso-de-sombras-e-posicao-do-sol-para-inferencia-de-altura/",
     "kind": "post",
-    "summary": "A matemática exata para calcular azimute e elevação solar a partir de coordenadas e UTC — e por que ângulos abaixo de 20° tornam a inferência de altura por sombra não confiável.",
+    "summary": "A matemática exata para calcular azimute e elevação solar a partir de coordenadas e UTC - e por que ângulos abaixo de 20° tornam a inferência de altura por sombra não confiável.",
     "keywords": [
       "sos-location",
       "daily",
@@ -773,14 +773,14 @@
     ],
     "title_en_us": "Daily #012: Using shadows and sun position to infer height",
     "title_ja_jp": "Daily #012: 影と太陽位置を使った高さ推定",
-    "summary_en_us": "The exact math to calculate solar azimuth and elevation from coordinates and UTC — and why angles below 20° make shadow-based height inference unreliable.",
-    "summary_ja_jp": "座標とUTCから太陽の方位角と高度角を計算するための正確な数学——そして20°未満の角度が影による高さ推定を信頼できなくする理由。"
+    "summary_en_us": "The exact math to calculate solar azimuth and elevation from coordinates and UTC - and why angles below 20° make shadow-based height inference unreliable.",
+    "summary_ja_jp": "座標とUTCから太陽の方位角と高度角を計算するための正確な数学--そして20°未満の角度が影による高さ推定を信頼できなくする理由。"
   },
   {
     "title": "Daily #011: Estratégia para reconstrução 3D a partir de imagens 2D",
     "url": "https://nhmatsumoto.github.io/posts/20260407-190000-daily-011-estrategia-para-reconstrucao-3d-a-partir-de-imagens-2d/",
     "kind": "post",
-    "summary": "Como o SOS Location estima alturas de edificações sem LiDAR combinando sombras projetadas, dados SRTM e heurísticas por tipo de construção — com RMSE médio de 2,3 m.",
+    "summary": "Como o SOS Location estima alturas de edificações sem LiDAR combinando sombras projetadas, dados SRTM e heurísticas por tipo de construção - com RMSE médio de 2,3 m.",
     "keywords": [
       "sos-location",
       "daily",
@@ -790,8 +790,8 @@
     ],
     "title_en_us": "Daily #011: 3D reconstruction strategy from 2D images",
     "title_ja_jp": "Daily #011: 2D画像からの3D再構成戦略",
-    "summary_en_us": "How SOS Location estimates building heights without LiDAR by combining projected shadows, SRTM data and type-based heuristics — achieving a mean RMSE of 2.3 m.",
-    "summary_ja_jp": "SOS Locationが投影された影・SRTMデータ・タイプ別ヒューリスティックを組み合わせてLiDARなしで建物高さを推定する方法——平均RMSE 2.3m達成。"
+    "summary_en_us": "How SOS Location estimates building heights without LiDAR by combining projected shadows, SRTM data and type-based heuristics - achieving a mean RMSE of 2.3 m.",
+    "summary_ja_jp": "SOS Locationが投影された影・SRTMデータ・タイプ別ヒューリスティックを組み合わせてLiDARなしで建物高さを推定する方法--平均RMSE 2.3m達成。"
   },
   {
     "title": "Daily #010: Padronização de contratos de API (DTOs e validações)",
@@ -813,7 +813,7 @@
     "title": "Daily #009: Modelagem de entidades: MissingPerson, Hotspot, Alert",
     "url": "https://nhmatsumoto.github.io/posts/20260407-170000-daily-009-modelagem-de-entidades-missingperson-hotspot-alert/",
     "kind": "post",
-    "summary": "Invariantes concretas das três entidades centrais do SOS Location — coordenadas válidas, nível de risco entre 1 e 10, canais de alerta obrigatórios — implementadas em factory methods com DomainException.",
+    "summary": "Invariantes concretas das três entidades centrais do SOS Location - coordenadas válidas, nível de risco entre 1 e 10, canais de alerta obrigatórios - implementadas em factory methods com DomainException.",
     "keywords": [
       "sos-location",
       "daily",
@@ -822,8 +822,8 @@
     ],
     "title_en_us": "Daily #009: Entity modeling: MissingPerson, Hotspot and Alert",
     "title_ja_jp": "Daily #009: エンティティ設計：MissingPerson、Hotspot、Alert",
-    "summary_en_us": "Concrete invariants of SOS Location's three core entities — valid coordinates, risk level between 1 and 10, mandatory alert channels — implemented in factory methods with DomainException.",
-    "summary_ja_jp": "SOS Locationの3つの中核エンティティの具体的な不変条件——有効な座標、1〜10のリスクレベル、必須アラートチャネル——をファクトリーメソッドとDomainExceptionで実装する方法。"
+    "summary_en_us": "Concrete invariants of SOS Location's three core entities - valid coordinates, risk level between 1 and 10, mandatory alert channels - implemented in factory methods with DomainException.",
+    "summary_ja_jp": "SOS Locationの3つの中核エンティティの具体的な不変条件--有効な座標、1〜10のリスクレベル、必須アラートチャネル--をファクトリーメソッドとDomainExceptionで実装する方法。"
   },
   {
     "title": "Daily #008: Introdução de eventos de domínio para ações críticas",
@@ -845,7 +845,7 @@
     "title": "Daily #007: Organização de pastas para backend escalável (.NET Core)",
     "url": "https://nhmatsumoto.github.io/posts/20260407-150000-daily-007-organizacao-de-pastas-para-backend-escalavel-net-core/",
     "kind": "post",
-    "summary": "A estrutura de pastas real do SOS Location em vertical slices — cada feature contém seu próprio command, handler, validator e endpoint — e por que isso é superior à separação por camada técnica.",
+    "summary": "A estrutura de pastas real do SOS Location em vertical slices - cada feature contém seu próprio command, handler, validator e endpoint - e por que isso é superior à separação por camada técnica.",
     "keywords": [
       "sos-location",
       "daily",
@@ -854,14 +854,14 @@
     ],
     "title_en_us": "Daily #007: Folder organization for a scalable .NET Core backend",
     "title_ja_jp": "Daily #007: スケーラブルな.NET Coreバックエンドのフォルダ構成",
-    "summary_en_us": "The real SOS Location folder structure in vertical slices — each feature contains its own command, handler, validator and endpoint — and why this is superior to separation by technical layer.",
-    "summary_ja_jp": "SOS Locationの実際のフォルダ構造（垂直スライス）——各フィーチャーが独自のコマンド・ハンドラー・バリデーター・エンドポイントを含む——そしてなぜこれが技術レイヤー別分離より優れているか。"
+    "summary_en_us": "The real SOS Location folder structure in vertical slices - each feature contains its own command, handler, validator and endpoint - and why this is superior to separation by technical layer.",
+    "summary_ja_jp": "SOS Locationの実際のフォルダ構造（垂直スライス）--各フィーチャーが独自のコマンド・ハンドラー・バリデーター・エンドポイントを含む--そしてなぜこれが技術レイヤー別分離より優れているか。"
   },
   {
     "title": "Daily #006: Avaliação entre monolito modular vs microservices",
     "url": "https://nhmatsumoto.github.io/posts/20260407-140000-daily-006-avaliacao-entre-monolito-modular-vs-microservices/",
     "kind": "post",
-    "summary": "Por que o SOS Location escolheu monolito modular para v1 — a latência de rede durante desastres torna chamadas HTTP entre serviços potencialmente fatais, e como os módulos foram projetados para extração futura.",
+    "summary": "Por que o SOS Location escolheu monolito modular para v1 - a latência de rede durante desastres torna chamadas HTTP entre serviços potencialmente fatais, e como os módulos foram projetados para extração futura.",
     "keywords": [
       "sos-location",
       "daily",
@@ -870,14 +870,14 @@
     ],
     "title_en_us": "Daily #006: Evaluation between modular monolith and microservices",
     "title_ja_jp": "Daily #006: モジュラーモノリスとマイクロサービスの比較評価",
-    "summary_en_us": "Why SOS Location chose a modular monolith for v1 — network latency during disasters makes inter-service HTTP calls potentially fatal, and how modules were designed for future extraction.",
-    "summary_ja_jp": "SOS Locationがv1にモジュラーモノリスを選んだ理由——災害時のネットワーク遅延がサービス間HTTP呼び出しを潜在的に致命的にする——そしてモジュールが将来の分割のためにどう設計されたか。"
+    "summary_en_us": "Why SOS Location chose a modular monolith for v1 - network latency during disasters makes inter-service HTTP calls potentially fatal, and how modules were designed for future extraction.",
+    "summary_ja_jp": "SOS Locationがv1にモジュラーモノリスを選んだ理由--災害時のネットワーク遅延がサービス間HTTP呼び出しを潜在的に致命的にする--そしてモジュールが将来の分割のためにどう設計されたか。"
   },
   {
     "title": "Daily #005: Definição de bounded contexts: Resgate, Usuários, Alertas",
     "url": "https://nhmatsumoto.github.io/posts/20260407-130000-daily-005-definicao-de-bounded-contexts-resgate-usuarios-alertas/",
     "kind": "post",
-    "summary": "Como os três bounded contexts do SOS Location — Busca, Resgate e Alertas — integram via eventos sem acoplamento direto, e o que acontece quando essa fronteira é violada.",
+    "summary": "Como os três bounded contexts do SOS Location - Busca, Resgate e Alertas - integram via eventos sem acoplamento direto, e o que acontece quando essa fronteira é violada.",
     "keywords": [
       "sos-location",
       "daily",
@@ -886,14 +886,14 @@
     ],
     "title_en_us": "Daily #005: Bounded context definition: Rescue, Users and Alerts",
     "title_ja_jp": "Daily #005: 境界づけられたコンテキストの定義：救助、ユーザー、アラート",
-    "summary_en_us": "How SOS Location's three bounded contexts — Busca, Resgate and Alertas — integrate via events without direct coupling, and what happens when that boundary is violated.",
+    "summary_en_us": "How SOS Location's three bounded contexts - Busca, Resgate and Alertas - integrate via events without direct coupling, and what happens when that boundary is violated.",
     "summary_ja_jp": "SOS Locationの3つの境界づけられたコンテキスト（Busca・Resgate・Alertas）が直接結合なしにイベント経由で統合する方法、およびその境界が違反された場合に何が起こるか。"
   },
   {
     "title": "Daily #004: Estratégia de modularização para plataforma multitenant",
     "url": "https://nhmatsumoto.github.io/posts/20260407-120000-daily-004-estrategia-de-modularizacao-para-plataforma-multitenant/",
     "kind": "post",
-    "summary": "Como o SOS Location isola municípios como tenants distintos — cada um com suas próprias zonas de risco e configurações de alerta — usando TenantId como primeiro cidadão em todas as queries.",
+    "summary": "Como o SOS Location isola municípios como tenants distintos - cada um com suas próprias zonas de risco e configurações de alerta - usando TenantId como primeiro cidadão em todas as queries.",
     "keywords": [
       "sos-location",
       "daily",
@@ -902,8 +902,8 @@
     ],
     "title_en_us": "Daily #004: Modularization strategy for a multitenant platform",
     "title_ja_jp": "Daily #004: マルチテナント基盤のモジュール化戦略",
-    "summary_en_us": "How SOS Location isolates municipalities as distinct tenants — each with their own risk zones and alert configurations — using TenantId as a first-class citizen in all queries.",
-    "summary_ja_jp": "SOS Locationがどのように自治体を独立したテナントとして分離するか — それぞれが独自の危険区域とアラート設定を持ち、すべてのクエリでTenantIdをファーストクラスとして扱う方法。"
+    "summary_en_us": "How SOS Location isolates municipalities as distinct tenants - each with their own risk zones and alert configurations - using TenantId as a first-class citizen in all queries.",
+    "summary_ja_jp": "SOS Locationがどのように自治体を独立したテナントとして分離するか - それぞれが独自の危険区域とアラート設定を持ち、すべてのクエリでTenantIdをファーストクラスとして扱う方法。"
   },
   {
     "title": "Daily #003: Separação de responsabilidades com CQRS no backend .NET",
@@ -1150,7 +1150,7 @@
     "title": "A Física da Dispersão de Pulsos: por que um pulso 'limpo' chega borrado",
     "url": "https://nhmatsumoto.github.io/posts/20260404-223000-fisica-demp-pulsos-dispersos/",
     "kind": "post",
-    "summary": "Um pulso eletromagnético curto carrega muitas frequências ao mesmo tempo. Em um meio dispersivo — como a ionosfera ou o plasma interestelar — cada frequência viaja em uma velocidade, e o pulso se espalha no tempo. Da dispersão de grupo aos whistlers e à dispersion measure de pulsares.",
+    "summary": "Um pulso eletromagnético curto carrega muitas frequências ao mesmo tempo. Em um meio dispersivo - como a ionosfera ou o plasma interestelar - cada frequência viaja em uma velocidade, e o pulso se espalha no tempo. Da dispersão de grupo aos whistlers e à dispersion measure de pulsares.",
     "keywords": [
       "physics",
       "astrophysics",
@@ -1159,7 +1159,7 @@
     ],
     "title_en_us": "The Physics of Pulse Dispersion: why a clean pulse arrives smeared",
     "title_ja_jp": "パルス分散の物理学：きれいなパルスがなぜ滲んで届くのか",
-    "summary_en_us": "A short electromagnetic pulse carries many frequencies at once. In a dispersive medium — like the ionosphere or interstellar plasma — each frequency travels at a different speed, and the pulse spreads in time. From group-velocity dispersion to whistlers and the dispersion measure of pulsars.",
+    "summary_en_us": "A short electromagnetic pulse carries many frequencies at once. In a dispersive medium - like the ionosphere or interstellar plasma - each frequency travels at a different speed, and the pulse spreads in time. From group-velocity dispersion to whistlers and the dispersion measure of pulsars.",
     "summary_ja_jp": "短い電磁パルスは同時に多くの周波数を運ぶ。電離圏や星間プラズマのような分散性媒質では、周波数ごとに速度が異なり、パルスは時間方向に広がる。群速度分散から、ホイッスラー、パルサーの分散量（DM）まで。"
   },
   {
@@ -1288,8 +1288,8 @@
       "tomada-de-decisão",
       "Nobel"
     ],
-    "title_en_us": "Daniel Kahneman: Thinking, Fast and Slow — Behavioral Economics",
-    "title_ja_jp": "ダニエル・カーネマン：ファスト & スロー — 行動経済学",
+    "title_en_us": "Daniel Kahneman: Thinking, Fast and Slow - Behavioral Economics",
+    "title_ja_jp": "ダニエル・カーネマン：ファスト & スロー - 行動経済学",
     "summary_en_us": "A tribute to the psychologist who won the Nobel in Economics by proving humans are not as rational as they like to believe.",
     "summary_ja_jp": "人間は自分が信じるほど合理的ではないことを証明し、ノーベル経済学賞を受賞した心理学者へのオマージュ。"
   },
@@ -1435,8 +1435,8 @@
       "tipagem",
       "engenharia"
     ],
-    "title_en_us": "Type Systems: Static vs Dynamic — Semantic Tradeoffs",
-    "title_ja_jp": "型システム：静的 vs 動的 — 意味論的トレードオフ",
+    "title_en_us": "Type Systems: Static vs Dynamic - Semantic Tradeoffs",
+    "title_ja_jp": "型システム：静的 vs 動的 - 意味論的トレードオフ",
     "summary_en_us": "An analysis of compile-time safety vs runtime agility, exploring strong, weak and duck typing.",
     "summary_ja_jp": "コンパイル時の安全性と実行時の機敏さの対立。強い型付け・弱い型付け・ダックタイピングを探る。"
   },
@@ -1738,26 +1738,26 @@
     "title": "Apollo-11",
     "url": "https://nhmatsumoto.github.io/projects/apollo-11/",
     "kind": "project",
-    "summary": "Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar — referência histórica de engenharia de software embarcado.",
+    "summary": "Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar - referência histórica de engenharia de software embarcado.",
     "keywords": [
       "Assembly",
       "AGC",
       "Embedded Systems"
     ],
-    "summary_en_us": "Original Apollo 11 Guidance Computer (AGC) source code, including the command and lunar modules — a historical reference for embedded software engineering.",
+    "summary_en_us": "Original Apollo 11 Guidance Computer (AGC) source code, including the command and lunar modules - a historical reference for embedded software engineering.",
     "summary_ja_jp": "アポロ 11 号誘導コンピュータ（AGC）の指令船・月着陸船オリジナル・ソースコード。組み込みソフトウェア工学の歴史的リファレンス。"
   },
   {
     "title": "AutoMapper",
     "url": "https://nhmatsumoto.github.io/projects/automapper/",
     "kind": "project",
-    "summary": "Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET — elimina boilerplate de transformação entre camadas.",
+    "summary": "Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET - elimina boilerplate de transformação entre camadas.",
     "keywords": [
       "C#",
       ".NET",
       "Reflection"
     ],
-    "summary_en_us": "Convention-based object-to-object mapping library for .NET — removes boilerplate when transforming data across layers.",
+    "summary_en_us": "Convention-based object-to-object mapping library for .NET - removes boilerplate when transforming data across layers.",
     "summary_ja_jp": "規約ベースの .NET 用オブジェクトマッピング・ライブラリ。レイヤー間のデータ変換における定型コードを排除する。"
   },
   {
@@ -1819,28 +1819,28 @@
     "title": "gaussian-splatting",
     "url": "https://nhmatsumoto.github.io/projects/gaussian-splatting/",
     "kind": "project",
-    "summary": "Fork da implementação original de 3D Gaussian Splatting — técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real.",
+    "summary": "Fork da implementação original de 3D Gaussian Splatting - técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real.",
     "keywords": [
       "Python",
       "CUDA",
       "PyTorch",
       "Computer Vision"
     ],
-    "summary_en_us": "Fork of the original 3D Gaussian Splatting implementation — a neural rendering technique that represents 3D scenes as sets of Gaussians for real-time rendering.",
+    "summary_en_us": "Fork of the original 3D Gaussian Splatting implementation - a neural rendering technique that represents 3D scenes as sets of Gaussians for real-time rendering.",
     "summary_ja_jp": "3D Gaussian Splatting オリジナル実装のフォーク。3D シーンをガウス分布の集合で表現し、リアルタイムレンダリングを行うニューラル描画技法。"
   },
   {
     "title": "gemini-cli",
     "url": "https://nhmatsumoto.github.io/projects/gemini-cli/",
     "kind": "project",
-    "summary": "Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem.",
+    "summary": "Fork do Gemini CLI - agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem.",
     "keywords": [
       "TypeScript",
       "Node.js",
       "Gemini API",
       "CLI"
     ],
-    "summary_en_us": "Fork of Gemini CLI — Google's AI agent that runs directly in the terminal with access to system tools, code editing and filesystem navigation.",
+    "summary_en_us": "Fork of Gemini CLI - Google's AI agent that runs directly in the terminal with access to system tools, code editing and filesystem navigation.",
     "summary_ja_jp": "Gemini CLI のフォーク。Google の AI エージェントが、システムツール・コード編集・ファイルシステム走査を備えて端末内で直接動作する。"
   },
   {
@@ -1902,28 +1902,28 @@
     "title": "mermaid-live-editor",
     "url": "https://nhmatsumoto.github.io/projects/mermaid-live-editor/",
     "kind": "project",
-    "summary": "Fork do Mermaid Live Editor — aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação.",
+    "summary": "Fork do Mermaid Live Editor - aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação.",
     "keywords": [
       "Svelte",
       "TypeScript",
       "Mermaid",
       "Monaco Editor"
     ],
-    "summary_en_us": "Fork of Mermaid Live Editor — a web app for real-time Mermaid diagram editing with instant preview and export.",
+    "summary_en_us": "Fork of Mermaid Live Editor - a web app for real-time Mermaid diagram editing with instant preview and export.",
     "summary_ja_jp": "Mermaid Live Editor のフォーク。Mermaid 図をリアルタイム編集し、即時プレビューとエクスポートを行う Web アプリ。"
   },
   {
     "title": "mermaid",
     "url": "https://nhmatsumoto.github.io/projects/mermaid/",
     "kind": "project",
-    "summary": "Fork do Mermaid.js — ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual.",
+    "summary": "Fork do Mermaid.js - ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual.",
     "keywords": [
       "JavaScript",
       "SVG",
       "Parsing",
       "Diagrams"
     ],
-    "summary_en_us": "Fork of Mermaid.js — a text-based diagram generator used extensively across the Technical Knowledge OS for visual documentation.",
+    "summary_en_us": "Fork of Mermaid.js - a text-based diagram generator used extensively across the Technical Knowledge OS for visual documentation.",
     "summary_ja_jp": "Mermaid.js のフォーク。Technical Knowledge OS の可視的ドキュメンテーション全体で広く使われる、テキストベースのダイアグラム生成ツール。"
   },
   {
@@ -1983,13 +1983,13 @@
     "title": "react-data-grid",
     "url": "https://nhmatsumoto.github.io/projects/react-data-grid/",
     "kind": "project",
-    "summary": "Fork do react-data-grid — componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados.",
+    "summary": "Fork do react-data-grid - componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados.",
     "keywords": [
       "React",
       "TypeScript",
       "Virtualization"
     ],
-    "summary_en_us": "Fork of react-data-grid — React data table component with sorting, filtering, inline editing and virtualization for large datasets.",
+    "summary_en_us": "Fork of react-data-grid - React data table component with sorting, filtering, inline editing and virtualization for large datasets.",
     "summary_ja_jp": "react-data-grid のフォーク。ソート、フィルタ、インライン編集、大規模データの仮想化に対応した React データテーブル・コンポーネント。"
   },
   {
@@ -2067,14 +2067,14 @@
     "title": "system-prompts-and-models-of-ai-tools",
     "url": "https://nhmatsumoto.github.io/projects/system-prompts-and-models-of-ai-tools/",
     "kind": "project",
-    "summary": "Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros — referência para engenharia de prompts.",
+    "summary": "Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros - referência para engenharia de prompts.",
     "keywords": [
       "Prompt Engineering",
       "AI Agents",
       "LLM"
     ],
-    "summary_en_us": "Fork of the complete collection of AI tooling system prompts: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent and others — a reference for prompt engineering.",
-    "summary_ja_jp": "AI ツールのシステムプロンプト完全コレクションのフォーク：v0、Cursor、Manus、Same.dev、Lovable、Devin、Replit Agent、Windsurf、VSCode Agent など — プロンプトエンジニアリングのリファレンス。"
+    "summary_en_us": "Fork of the complete collection of AI tooling system prompts: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent and others - a reference for prompt engineering.",
+    "summary_ja_jp": "AI ツールのシステムプロンプト完全コレクションのフォーク：v0、Cursor、Manus、Same.dev、Lovable、Devin、Replit Agent、Windsurf、VSCode Agent など - プロンプトエンジニアリングのリファレンス。"
   },
   {
     "title": "User-Auth",
@@ -2128,8 +2128,8 @@
       "adr",
       "memory"
     ],
-    "title_en_us": "ADR 003 — Versioned Memory",
-    "title_ja_jp": "ADR 003 — バージョン管理された記憶",
+    "title_en_us": "ADR 003 - Versioned Memory",
+    "title_ja_jp": "ADR 003 - バージョン管理された記憶",
     "summary_en_us": "Architectural decision on memory snapshots and context persistence in agent-oriented workflows.",
     "summary_ja_jp": "エージェント指向ワークフローにおける記憶スナップショットとコンテキスト永続化に関するアーキテクチャ決定。"
   },

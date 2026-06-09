@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-Coordenadores de emergência precisam demarcar `HotspotAtivo` no mapa durante operações: "esta área de 3 quadras está com água", "bloqueio de estrada aqui". Fazer isso via formulário de texto com campos lat/lon é inaceitável em situação de stress — o coordenador precisa desenhar diretamente no mapa. O `HotspotAtivo` é um agregado do domínio (`NivelRisco` 1–10, status `Ativo|Encerrado`, `Tipo: enchente|incendio|deslizamento`) e precisa ser persistido no backend após o desenho.
+Coordenadores de emergência precisam demarcar `HotspotAtivo` no mapa durante operações: "esta área de 3 quadras está com água", "bloqueio de estrada aqui". Fazer isso via formulário de texto com campos lat/lon é inaceitável em situação de stress - o coordenador precisa desenhar diretamente no mapa. O `HotspotAtivo` é um agregado do domínio (`NivelRisco` 1–10, status `Ativo|Encerrado`, `Tipo: enchente|incendio|deslizamento`) e precisa ser persistido no backend após o desenho.
 
 ## Problema específico
 
-`Leaflet.Draw` produz geometrias em GeoJSON, mas com dois problemas de integração: (1) o evento `draw:created` retorna um objeto Leaflet, não um GeoJSON pronto — precisa de conversão via `layer.toGeoJSON()` antes de enviar ao backend; (2) usuários frequentemente desenham polígonos muito pequenos por erro de dedo (área < 1.000 m²), que são inúteis para operações mas geram ruído no banco. Validação apenas no backend significa feedback tardio — o coordenador já saiu da tela de desenho.
+`Leaflet.Draw` produz geometrias em GeoJSON, mas com dois problemas de integração: (1) o evento `draw:created` retorna um objeto Leaflet, não um GeoJSON pronto - precisa de conversão via `layer.toGeoJSON()` antes de enviar ao backend; (2) usuários frequentemente desenham polígonos muito pequenos por erro de dedo (área < 1.000 m²), que são inúteis para operações mas geram ruído no banco. Validação apenas no backend significa feedback tardio - o coordenador já saiu da tela de desenho.
 
 ## Decisão técnica
 
-Integração `Leaflet.Draw` com validação de área mínima no frontend antes do submit. Área calculada via `L.GeometryUtil.geodesicArea(layer.getLatLngs()[0])` em m² — nativo do Leaflet. Mínimo: 0.1 km² (100.000 m²) para `HotspotAtivo` de enchente. Após draw:created, exibe modal de confirmação com área calculada e campos `NivelRisco` e `Tipo`. Submit envia GeoJSON ao backend via POST, resposta inclui `hotspotId` gerado — adicionado imediatamente à camada Leaflet sem reload.
+Integração `Leaflet.Draw` com validação de área mínima no frontend antes do submit. Área calculada via `L.GeometryUtil.geodesicArea(layer.getLatLngs()[0])` em m² - nativo do Leaflet. Mínimo: 0.1 km² (100.000 m²) para `HotspotAtivo` de enchente. Após draw:created, exibe modal de confirmação com área calculada e campos `NivelRisco` e `Tipo`. Submit envia GeoJSON ao backend via POST, resposta inclui `hotspotId` gerado - adicionado imediatamente à camada Leaflet sem reload.
 
 ## Implementação
 
@@ -113,28 +113,28 @@ export async function createHotspot(payload: CreateHotspotRequest): Promise<Hots
 
 ## Exemplo concreto
 
-Operação em Petrópolis (RJ) — coordenador demarca área de deslizamento no bairro Alto da Serra. 8 cliques no mapa para desenhar polígono. Área calculada: 0.34 km². Modal aparece com área e campos de configuração. Coordenador seleciona `tipo=deslizamento, nivelRisco=9`. POST em 180ms. Hotspot exibido imediatamente no mapa com cor bordô (#a81717). Outros coordenadores conectados via SignalR recebem o hotspot em < 500ms.
+Operação em Petrópolis (RJ) - coordenador demarca área de deslizamento no bairro Alto da Serra. 8 cliques no mapa para desenhar polígono. Área calculada: 0.34 km². Modal aparece com área e campos de configuração. Coordenador seleciona `tipo=deslizamento, nivelRisco=9`. POST em 180ms. Hotspot exibido imediatamente no mapa com cor bordô (#a81717). Outros coordenadores conectados via SignalR recebem o hotspot em < 500ms.
 
 ## Critério de sucesso
 
-Validação de área mínima com feedback visual < 100ms após finalização do polígono. Submit e exibição do hotspot no mapa < 300ms após confirmação no modal. 100% dos `HotspotAtivo` desenhados via UI são geometrias válidas (sem self-intersections) — garantido pela validação nativa do Leaflet.Draw.
+Validação de área mínima com feedback visual < 100ms após finalização do polígono. Submit e exibição do hotspot no mapa < 300ms após confirmação no modal. 100% dos `HotspotAtivo` desenhados via UI são geometrias válidas (sem self-intersections) - garantido pela validação nativa do Leaflet.Draw.
 
 ## Relação com SOS Location
 
-A capacidade de demarcar um `HotspotAtivo` em segundos diretamente no mapa — sem formulários, sem coordenadas manuais — é uma das diferenças entre um sistema de emergência que é usado em campo e um que fica em desktop. A integração Leaflet.Draw + validação frontend + POST imediato foi projetada para completar o fluxo inteiro em menos de 30 segundos desde a decisão do coordenador até o hotspot visível para toda a equipe.
+A capacidade de demarcar um `HotspotAtivo` em segundos diretamente no mapa - sem formulários, sem coordenadas manuais - é uma das diferenças entre um sistema de emergência que é usado em campo e um que fica em desktop. A integração Leaflet.Draw + validação frontend + POST imediato foi projetada para completar o fluxo inteiro em menos de 30 segundos desde a decisão do coordenador até o hotspot visível para toda a equipe.
 '''
 body_en_us = '''
 ## Real context
 
-Emergency coordinators need to mark `HotspotAtivo` on the map during operations: "this 3-block area has water", "road block here". Doing this via a text form with lat/lon fields is unacceptable under stress — the coordinator needs to draw directly on the map. `HotspotAtivo` is a domain aggregate (`NivelRisco` 1–10, status `Ativo|Encerrado`, `Tipo: enchente|incendio|deslizamento`) and must be persisted to the backend after drawing.
+Emergency coordinators need to mark `HotspotAtivo` on the map during operations: "this 3-block area has water", "road block here". Doing this via a text form with lat/lon fields is unacceptable under stress - the coordinator needs to draw directly on the map. `HotspotAtivo` is a domain aggregate (`NivelRisco` 1–10, status `Ativo|Encerrado`, `Tipo: enchente|incendio|deslizamento`) and must be persisted to the backend after drawing.
 
 ## Specific problem
 
-`Leaflet.Draw` produces geometries in GeoJSON, but with two integration problems: (1) the `draw:created` event returns a Leaflet object, not ready-to-send GeoJSON — requires conversion via `layer.toGeoJSON()` before sending to the backend; (2) users frequently draw very small polygons by accident (area < 1,000 m²), which are useless for operations but generate database noise. Backend-only validation means late feedback — the coordinator has already left the drawing screen.
+`Leaflet.Draw` produces geometries in GeoJSON, but with two integration problems: (1) the `draw:created` event returns a Leaflet object, not ready-to-send GeoJSON - requires conversion via `layer.toGeoJSON()` before sending to the backend; (2) users frequently draw very small polygons by accident (area < 1,000 m²), which are useless for operations but generate database noise. Backend-only validation means late feedback - the coordinator has already left the drawing screen.
 
 ## Technical decision
 
-`Leaflet.Draw` integration with minimum area validation on the frontend before submit. Area calculated via `L.GeometryUtil.geodesicArea(layer.getLatLngs()[0])` in m² — native to Leaflet. Minimum: 0.1 km² (100,000 m²) for a flood `HotspotAtivo`. After `draw:created`, shows a confirmation modal with the calculated area and `NivelRisco` and `Tipo` fields. Submit sends GeoJSON to the backend via POST, response includes the generated `hotspotId` — added immediately to the Leaflet layer without reload.
+`Leaflet.Draw` integration with minimum area validation on the frontend before submit. Area calculated via `L.GeometryUtil.geodesicArea(layer.getLatLngs()[0])` in m² - native to Leaflet. Minimum: 0.1 km² (100,000 m²) for a flood `HotspotAtivo`. After `draw:created`, shows a confirmation modal with the calculated area and `NivelRisco` and `Tipo` fields. Submit sends GeoJSON to the backend via POST, response includes the generated `hotspotId` - added immediately to the Leaflet layer without reload.
 
 ## Implementation
 
@@ -176,28 +176,28 @@ export function HotspotDrawLayer() {
 
 ## Concrete example
 
-Operation in Petrópolis (RJ) — coordinator marks a landslide area in Alto da Serra neighbourhood. 8 clicks on the map to draw a polygon. Calculated area: 0.34 km². Modal appears with area and configuration fields. Coordinator selects `tipo=deslizamento, nivelRisco=9`. POST in 180ms. Hotspot displayed immediately on the map in burgundy (#a81717). Other coordinators connected via SignalR receive the hotspot in < 500ms.
+Operation in Petrópolis (RJ) - coordinator marks a landslide area in Alto da Serra neighbourhood. 8 clicks on the map to draw a polygon. Calculated area: 0.34 km². Modal appears with area and configuration fields. Coordinator selects `tipo=deslizamento, nivelRisco=9`. POST in 180ms. Hotspot displayed immediately on the map in burgundy (#a81717). Other coordinators connected via SignalR receive the hotspot in < 500ms.
 
 ## Success criteria
 
-Minimum area validation with visual feedback < 100ms after polygon completion. Submit and hotspot display on map < 300ms after modal confirmation. 100% of `HotspotAtivo` drawn via UI are valid geometries (no self-intersections) — guaranteed by Leaflet.Draw's native validation.
+Minimum area validation with visual feedback < 100ms after polygon completion. Submit and hotspot display on map < 300ms after modal confirmation. 100% of `HotspotAtivo` drawn via UI are valid geometries (no self-intersections) - guaranteed by Leaflet.Draw's native validation.
 
 ## Relation to SOS Location
 
-The ability to mark a `HotspotAtivo` in seconds directly on the map — no forms, no manual coordinates — is one of the differences between an emergency system that is used in the field and one that stays on the desktop. The Leaflet.Draw + frontend validation + immediate POST integration was designed to complete the entire flow in under 30 seconds from the coordinator's decision to the hotspot being visible to the whole team.
+The ability to mark a `HotspotAtivo` in seconds directly on the map - no forms, no manual coordinates - is one of the differences between an emergency system that is used in the field and one that stays on the desktop. The Leaflet.Draw + frontend validation + immediate POST integration was designed to complete the entire flow in under 30 seconds from the coordinator's decision to the hotspot being visible to the whole team.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-緊急コーディネーターは作戦中にマップに`HotspotAtivo`をマークする必要がある：「この3ブロックのエリアに水がある」、「ここで道路封鎖」。lat/lonフィールドのテキストフォームでこれを行うのはストレス下では許容できない——コーディネーターはマップに直接描く必要がある。`HotspotAtivo`はドメインアグリゲート（`NivelRisco` 1〜10、ステータス`Ativo|Encerrado`、`Tipo: enchente|incendio|deslizamento`）で、描画後にバックエンドに永続化される必要がある。
+緊急コーディネーターは作戦中にマップに`HotspotAtivo`をマークする必要がある：「この3ブロックのエリアに水がある」、「ここで道路封鎖」。lat/lonフィールドのテキストフォームでこれを行うのはストレス下では許容できない--コーディネーターはマップに直接描く必要がある。`HotspotAtivo`はドメインアグリゲート（`NivelRisco` 1〜10、ステータス`Ativo|Encerrado`、`Tipo: enchente|incendio|deslizamento`）で、描画後にバックエンドに永続化される必要がある。
 
 ## 具体的な問題
 
-`Leaflet.Draw`はGeoJSONでジオメトリを生成するが、2つの統合問題がある：(1) `draw:created`イベントはLeafletオブジェクトを返し、送信可能なGeoJSONではない——バックエンドに送る前に`layer.toGeoJSON()`による変換が必要；(2) ユーザーは頻繁に誤って非常に小さなポリゴンを描く（面積 < 1,000 m²）、これは作戦には役立たないがデータベースノイズを生成する。バックエンドのみのバリデーションは遅いフィードバックを意味する——コーディネーターはすでに描画画面を離れている。
+`Leaflet.Draw`はGeoJSONでジオメトリを生成するが、2つの統合問題がある：(1) `draw:created`イベントはLeafletオブジェクトを返し、送信可能なGeoJSONではない--バックエンドに送る前に`layer.toGeoJSON()`による変換が必要；(2) ユーザーは頻繁に誤って非常に小さなポリゴンを描く（面積 < 1,000 m²）、これは作戦には役立たないがデータベースノイズを生成する。バックエンドのみのバリデーションは遅いフィードバックを意味する--コーディネーターはすでに描画画面を離れている。
 
 ## 技術的決定
 
-送信前のフロントエンドでの最小面積バリデーション付き`Leaflet.Draw`統合。面積はLeafletネイティブの`L.GeometryUtil.geodesicArea(layer.getLatLngs()[0])`でm²で計算。最小値：洪水`HotspotAtivo`に対して0.1 km²（100,000 m²）。`draw:created`後、計算された面積と`NivelRisco`・`Tipo`フィールドを持つ確認モーダルを表示。送信はGeoJSONをPOSTでバックエンドに送り、レスポンスには生成された`hotspotId`が含まれる——リロードなしで即座にLeafletレイヤーに追加。
+送信前のフロントエンドでの最小面積バリデーション付き`Leaflet.Draw`統合。面積はLeafletネイティブの`L.GeometryUtil.geodesicArea(layer.getLatLngs()[0])`でm²で計算。最小値：洪水`HotspotAtivo`に対して0.1 km²（100,000 m²）。`draw:created`後、計算された面積と`NivelRisco`・`Tipo`フィールドを持つ確認モーダルを表示。送信はGeoJSONをPOSTでバックエンドに送り、レスポンスには生成された`hotspotId`が含まれる--リロードなしで即座にLeafletレイヤーに追加。
 
 ## 実装
 
@@ -239,13 +239,13 @@ export function HotspotDrawLayer() {
 
 ## 具体的な例
 
-ペトロポリス（RJ）での作戦——コーディネーターがAlto da Serra地区に地滑りエリアをマーク。ポリゴンを描くために8回マップをクリック。計算された面積：0.34 km²。面積と設定フィールドを持つモーダルが表示。コーディネーターが`tipo=deslizamento, nivelRisco=9`を選択。180msでPOST。ホットスポットが即座にバーガンディ（#a81717）でマップに表示。SignalRで接続された他のコーディネーターが < 500msでホットスポットを受信。
+ペトロポリス（RJ）での作戦--コーディネーターがAlto da Serra地区に地滑りエリアをマーク。ポリゴンを描くために8回マップをクリック。計算された面積：0.34 km²。面積と設定フィールドを持つモーダルが表示。コーディネーターが`tipo=deslizamento, nivelRisco=9`を選択。180msでPOST。ホットスポットが即座にバーガンディ（#a81717）でマップに表示。SignalRで接続された他のコーディネーターが < 500msでホットスポットを受信。
 
 ## 成功基準
 
-ポリゴン完成後100ms未満での視覚フィードバック付き最小面積バリデーション。モーダル確認後300ms未満でのホットスポット送信とマップ表示。UI経由で描画された`HotspotAtivo`の100%が有効なジオメトリ（自己交差なし）——Leaflet.Drawのネイティブバリデーションで保証。
+ポリゴン完成後100ms未満での視覚フィードバック付き最小面積バリデーション。モーダル確認後300ms未満でのホットスポット送信とマップ表示。UI経由で描画された`HotspotAtivo`の100%が有効なジオメトリ（自己交差なし）--Leaflet.Drawのネイティブバリデーションで保証。
 
 ## SOS Locationとの関係
 
-マップに直接秒単位で`HotspotAtivo`をマークする能力——フォームなし、手動座標なし——は、フィールドで使用される緊急システムとデスクトップに留まるものの違いの1つだ。Leaflet.Draw + フロントエンドバリデーション + 即時POSTの統合は、コーディネーターの決定からチーム全員にホットスポットが見えるまで30秒未満でフロー全体を完了するように設計されている。
+マップに直接秒単位で`HotspotAtivo`をマークする能力--フォームなし、手動座標なし--は、フィールドで使用される緊急システムとデスクトップに留まるものの違いの1つだ。Leaflet.Draw + フロントエンドバリデーション + 即時POSTの統合は、コーディネーターの決定からチーム全員にホットスポットが見えるまで30秒未満でフロー全体を完了するように設計されている。
 '''

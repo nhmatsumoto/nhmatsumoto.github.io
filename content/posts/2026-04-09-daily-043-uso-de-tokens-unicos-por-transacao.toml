@@ -3,9 +3,9 @@ slug = "daily-043-uso-de-tokens-unicos-por-transacao"
 title = "Daily #043: Uso de tokens únicos por transação"
 title_en_us = "Daily #043: Using unique tokens per transaction"
 title_ja_jp = "Daily #043: トランザクションごとの一意トークン"
-summary = "Como o SOS Location emite tokens CSRF de uso único para formulários de doação — gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission."
-summary_en_us = "How SOS Location issues single-use CSRF tokens for donation forms — generated on the page GET, consumed on the POST, invalidated after use or 15-minute expiry, preventing replay attacks and form resubmission."
-summary_ja_jp = "SOS Locationが寄付フォームに使い捨てCSRFトークンを発行する方法——ページGETで生成、POST時に消費、使用後または15分の有効期限後に無効化、リプレイ攻撃とフォーム再送信を防止。"
+summary = "Como o SOS Location emite tokens CSRF de uso único para formulários de doação - gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission."
+summary_en_us = "How SOS Location issues single-use CSRF tokens for donation forms - generated on the page GET, consumed on the POST, invalidated after use or 15-minute expiry, preventing replay attacks and form resubmission."
+summary_ja_jp = "SOS Locationが寄付フォームに使い捨てCSRFトークンを発行する方法--ページGETで生成、POST時に消費、使用後または15分の有効期限後に無効化、リプレイ攻撃とフォーム再送信を防止。"
 published_at = "2026-04-09T03:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -23,7 +23,7 @@ A idempotência via `Idempotency-Key` (#042) depende do cliente enviar a chave c
 
 ## Problema específico
 
-O token Stripe (`stripeToken`) que o frontend envia para o backend é gerado uma vez pelo Stripe.js e válido por 24 horas. Sem controle adicional do SOS Location, o mesmo token poderia ser submetido múltiplas vezes ao backend — cada POST com um token novo gerado pelo atacante usando o cartão capturado. O `Idempotency-Key` (#042) protege contra retransmissão do mesmo request, mas não contra múltiplos requests com tokens Stripe diferentes gerados a partir do mesmo método de pagamento.
+O token Stripe (`stripeToken`) que o frontend envia para o backend é gerado uma vez pelo Stripe.js e válido por 24 horas. Sem controle adicional do SOS Location, o mesmo token poderia ser submetido múltiplas vezes ao backend - cada POST com um token novo gerado pelo atacante usando o cartão capturado. O `Idempotency-Key` (#042) protege contra retransmissão do mesmo request, mas não contra múltiplos requests com tokens Stripe diferentes gerados a partir do mesmo método de pagamento.
 
 ## Decisão técnica
 
@@ -44,7 +44,7 @@ public static class DoacaoTokenEndpoints
                 var cacheKey  = $"doacao_token:{token}";
                 var doaderId  = user.GetUserId();
 
-                // armazena token com TTL de 15min — apenas o doador correto pode usá-lo
+                // armazena token com TTL de 15min - apenas o doador correto pode usá-lo
                 await cache.SetAsync(cacheKey,
                     new DoacaoTokenRecord(doaderId, Status: "unused"),
                     TimeSpan.FromMinutes(15), ct);
@@ -62,7 +62,7 @@ public async Task<DoacaoResult> Handle(ProcessarDoacaoCommand cmd, CancellationT
 {
     var cacheKey = $"doacao_token:{cmd.TransactionToken}";
 
-    // Atomic SET NX — marca "used" apenas se atualmente "unused"
+    // Atomic SET NX - marca "used" apenas se atualmente "unused"
     var wasUnused = await _cache.SetIfValueAsync(
         cacheKey,
         expectedValue: new DoacaoTokenRecord(cmd.DoaderId, "unused"),
@@ -87,15 +87,15 @@ public async Task<DoacaoResult> Handle(ProcessarDoacaoCommand cmd, CancellationT
 
 ## Exemplo concreto
 
-Bot captura token Stripe de uma doação de R$ 100 durante tráfego de teste. Tenta 5 replays com `X-Transaction-Token` do request original. Primeira tentativa: token Redis `doacao_token:abc123...` tem `status: "unused"` → processado, marcado `"used"`, doação registrada. Tentativas 2-5: Redis retorna token com `status: "used"` → 409 Conflict imediato, nenhuma chamada ao Stripe. Logs: `"Transaction token abc123 já utilizado — possível replay attempt de IP 203.0.113.42"`.
+Bot captura token Stripe de uma doação de R$ 100 durante tráfego de teste. Tenta 5 replays com `X-Transaction-Token` do request original. Primeira tentativa: token Redis `doacao_token:abc123...` tem `status: "unused"` → processado, marcado `"used"`, doação registrada. Tentativas 2-5: Redis retorna token com `status: "used"` → 409 Conflict imediato, nenhuma chamada ao Stripe. Logs: `"Transaction token abc123 já utilizado - possível replay attempt de IP 203.0.113.42"`.
 
 ## Critério de sucesso
 
-Zero cobranças duplicadas por replay de transaction token. Tokens expirados (> 15min sem uso) retornam 409 — nenhum "token órfão" aceito. Tentativas de replay logadas com IP de origem para análise de segurança.
+Zero cobranças duplicadas por replay de transaction token. Tokens expirados (> 15min sem uso) retornam 409 - nenhum "token órfão" aceito. Tentativas de replay logadas com IP de origem para análise de segurança.
 
 ## Relação com SOS Location
 
-Doações de emergência têm valor emocional alto — doadores doam em momentos de crise. A combinação de token de transação único + idempotência da API (#042) + estado do botão (#041) forma um sistema de defesa em profundidade onde três camadas independentes precisam falhar simultaneamente para uma duplicação ocorrer.
+Doações de emergência têm valor emocional alto - doadores doam em momentos de crise. A combinação de token de transação único + idempotência da API (#042) + estado do botão (#041) forma um sistema de defesa em profundidade onde três camadas independentes precisam falhar simultaneamente para uma duplicação ocorrer.
 '''
 body_en_us = '''
 ## Real context
@@ -104,7 +104,7 @@ API idempotency via `Idempotency-Key` (#042) depends on the client sending the k
 
 ## Specific problem
 
-The Stripe token (`stripeToken`) that the frontend sends to the backend is generated once by Stripe.js and valid for 24 hours. Without additional SOS Location controls, the same token could be submitted multiple times to the backend — each POST with a new token generated by the attacker using the captured payment method. The `Idempotency-Key` (#042) protects against retransmission of the same request, but not against multiple requests with different Stripe tokens generated from the same payment method.
+The Stripe token (`stripeToken`) that the frontend sends to the backend is generated once by Stripe.js and valid for 24 hours. Without additional SOS Location controls, the same token could be submitted multiple times to the backend - each POST with a new token generated by the attacker using the captured payment method. The `Idempotency-Key` (#042) protects against retransmission of the same request, but not against multiple requests with different Stripe tokens generated from the same payment method.
 
 ## Technical decision
 
@@ -143,15 +143,15 @@ var charge = await _stripe.ChargeAsync(cmd.ValorCentavos, cmd.StripeToken, ct);
 
 ## Concrete example
 
-Bot captures a Stripe token from a R$100 test donation. Attempts 5 replays with the original request's `X-Transaction-Token`. First attempt: Redis token `doacao_token:abc123...` has `status: "unused"` → processed, marked `"used"`, donation recorded. Attempts 2-5: Redis returns token with `status: "used"` → immediate 409 Conflict, no Stripe call. Logs: `"Transaction token abc123 already used — possible replay attempt from IP 203.0.113.42"`.
+Bot captures a Stripe token from a R$100 test donation. Attempts 5 replays with the original request's `X-Transaction-Token`. First attempt: Redis token `doacao_token:abc123...` has `status: "unused"` → processed, marked `"used"`, donation recorded. Attempts 2-5: Redis returns token with `status: "used"` → immediate 409 Conflict, no Stripe call. Logs: `"Transaction token abc123 already used - possible replay attempt from IP 203.0.113.42"`.
 
 ## Success criteria
 
-Zero duplicate charges via transaction token replay. Expired tokens (> 15min unused) return 409 — no "orphan token" accepted. Replay attempts logged with source IP for security analysis.
+Zero duplicate charges via transaction token replay. Expired tokens (> 15min unused) return 409 - no "orphan token" accepted. Replay attempts logged with source IP for security analysis.
 
 ## Relation to SOS Location
 
-Emergency donations carry high emotional value — donors give in moments of crisis. The combination of unique transaction token + API idempotency (#042) + button state (#041) forms a defence-in-depth system where three independent layers must fail simultaneously for a duplication to occur.
+Emergency donations carry high emotional value - donors give in moments of crisis. The combination of unique transaction token + API idempotency (#042) + button state (#041) forms a defence-in-depth system where three independent layers must fail simultaneously for a duplication to occur.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
@@ -160,7 +160,7 @@ body_ja_jp = '''
 
 ## 具体的な問題
 
-フロントエンドがバックエンドに送信するStripeトークン（`stripeToken`）はStripe.jsによって一度生成され、24時間有効だ。SOS Locationの追加制御なしに、同じトークンをバックエンドに複数回送信できる——攻撃者がキャプチャした決済方法を使って生成した新しいトークンで各POSTを行う。`Idempotency-Key`（#042）は同じリクエストの再送信を保護するが、同じ決済方法から生成された異なるStripeトークンを持つ複数のリクエストには対応しない。
+フロントエンドがバックエンドに送信するStripeトークン（`stripeToken`）はStripe.jsによって一度生成され、24時間有効だ。SOS Locationの追加制御なしに、同じトークンをバックエンドに複数回送信できる--攻撃者がキャプチャした決済方法を使って生成した新しいトークンで各POSTを行う。`Idempotency-Key`（#042）は同じリクエストの再送信を保護するが、同じ決済方法から生成された異なるStripeトークンを持つ複数のリクエストには対応しない。
 
 ## 技術的決定
 
@@ -199,13 +199,13 @@ var charge = await _stripe.ChargeAsync(cmd.ValorCentavos, cmd.StripeToken, ct);
 
 ## 具体的な例
 
-ボットがR$100テスト寄付からStripeトークンをキャプチャ。元のリクエストの`X-Transaction-Token`で5回のリプレイを試みる。最初の試行：Redisトークン`doacao_token:abc123...`が`status: "unused"` → 処理済み、`"used"`にマーク、寄付記録。試行2〜5：Redisが`status: "used"`のトークンを返す → 即座に409 Conflict、Stripeへの呼び出しなし。ログ：`「トランザクショントークンabc123は既に使用済み——IP 203.0.113.42からのリプレイ試行の可能性」`。
+ボットがR$100テスト寄付からStripeトークンをキャプチャ。元のリクエストの`X-Transaction-Token`で5回のリプレイを試みる。最初の試行：Redisトークン`doacao_token:abc123...`が`status: "unused"` → 処理済み、`"used"`にマーク、寄付記録。試行2〜5：Redisが`status: "used"`のトークンを返す → 即座に409 Conflict、Stripeへの呼び出しなし。ログ：`「トランザクショントークンabc123は既に使用済み--IP 203.0.113.42からのリプレイ試行の可能性」`。
 
 ## 成功基準
 
-トランザクショントークンのリプレイによる重複課金ゼロ。期限切れトークン（15分以上未使用）は409を返す——「孤児トークン」は受け入れない。リプレイ試行はセキュリティ分析のためソースIPと共にログに記録。
+トランザクショントークンのリプレイによる重複課金ゼロ。期限切れトークン（15分以上未使用）は409を返す--「孤児トークン」は受け入れない。リプレイ試行はセキュリティ分析のためソースIPと共にログに記録。
 
 ## SOS Locationとの関係
 
-緊急寄付は感情的価値が高い——寄付者は危機の瞬間に寄付する。一意トランザクショントークン + API冪等性（#042）+ ボタン状態（#041）の組み合わせは、重複が発生するために3つの独立したレイヤーが同時に失敗する必要がある多層防御システムを形成する。
+緊急寄付は感情的価値が高い--寄付者は危機の瞬間に寄付する。一意トランザクショントークン + API冪等性（#042）+ ボタン状態（#041）の組み合わせは、重複が発生するために3つの独立したレイヤーが同時に失敗する必要がある多層防御システムを形成する。
 '''

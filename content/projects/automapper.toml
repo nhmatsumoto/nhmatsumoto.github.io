@@ -3,8 +3,8 @@ slug = "automapper"
 headline = "Mapeador objeto-para-objeto baseado em convenções para .NET."
 headline_en_us = "A convention-based object-to-object mapper in .NET."
 headline_ja_jp = ".NET 向けの規約ベース・オブジェクト間マッパー。"
-summary = "Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET — elimina boilerplate de transformação entre camadas."
-summary_en_us = "Convention-based object-to-object mapping library for .NET — removes boilerplate when transforming data across layers."
+summary = "Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET - elimina boilerplate de transformação entre camadas."
+summary_en_us = "Convention-based object-to-object mapping library for .NET - removes boilerplate when transforming data across layers."
 summary_ja_jp = "規約ベースの .NET 用オブジェクトマッピング・ライブラリ。レイヤー間のデータ変換における定型コードを排除する。"
 status = "published"
 featured = false
@@ -24,10 +24,10 @@ AutoMapper é referência direta para projetos como SplitCosts e Financial, onde
 
 ## Conceitos centrais
 
-- **Convention over configuration** — propriedades com mesmo nome são mapeadas automaticamente
-- **Profiles** — agrupamento de configurações de mapeamento por contexto de domínio
-- **Projections** — integração com LINQ/EF para projeções diretas no banco de dados
-- **Validação de configuração** — detecção antecipada de mapeamentos incompletos em tempo de inicialização
+- **Convention over configuration** - propriedades com mesmo nome são mapeadas automaticamente
+- **Profiles** - agrupamento de configurações de mapeamento por contexto de domínio
+- **Projections** - integração com LINQ/EF para projeções diretas no banco de dados
+- **Validação de configuração** - detecção antecipada de mapeamentos incompletos em tempo de inicialização
 """
 overview_en_us = """
 Fork of AutoMapper, the most widely used library in the .NET ecosystem for automatic mapping between objects from different layers (DTOs, ViewModels and Entities).
@@ -38,10 +38,10 @@ AutoMapper is a direct reference for projects such as SplitCosts and Financial, 
 
 ## Core concepts
 
-- **Convention over configuration** — properties with the same name are mapped automatically
-- **Profiles** — grouping mapping configuration by domain context
-- **Projections** — integration with LINQ/EF for database-side projections
-- **Configuration validation** — early detection of incomplete mappings during startup
+- **Convention over configuration** - properties with the same name are mapped automatically
+- **Profiles** - grouping mapping configuration by domain context
+- **Projections** - integration with LINQ/EF for database-side projections
+- **Configuration validation** - early detection of incomplete mappings during startup
 """
 overview_ja_jp = """
 AutoMapper のフォークです。.NET エコシステムで最も広く使われている、異なるレイヤー間（DTO、ViewModel、Entity）のオブジェクトを自動マッピングするライブラリです。
@@ -52,10 +52,10 @@ AutoMapper は SplitCosts や Financial のようなプロジェクトにおけ�
 
 ## 中核となる考え方
 
-- **Convention over configuration** — 同名プロパティを自動マッピング
-- **Profiles** — ドメイン文脈ごとにマッピング設定を整理
-- **Projections** — LINQ / EF と統合し、DB 側で投影を実行
-- **Configuration validation** — 起動時に不完全なマッピングを早期検出
+- **Convention over configuration** - 同名プロパティを自動マッピング
+- **Profiles** - ドメイン文脈ごとにマッピング設定を整理
+- **Projections** - LINQ / EF と統合し、DB 側で投影を実行
+- **Configuration validation** - 起動時に不完全なマッピングを早期検出
 """
 
 problem_solution = """

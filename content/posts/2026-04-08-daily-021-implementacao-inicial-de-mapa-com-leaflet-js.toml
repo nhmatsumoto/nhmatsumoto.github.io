@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-O mapa é a interface primária do SOS Location para coordenadores de emergência: é a primeira tela que abrem quando recebem um alerta às 3h da manhã. A escolha de Leaflet.js sobre Google Maps ou Mapbox foi deliberada: sem custo de API por tile, sem limite de requisições em eventos de pico, e código open-source auditável. O problema surgiu na integração com React — Leaflet manipula o DOM diretamente, o que conflita com o ciclo de vida do React se não tratado explicitamente.
+O mapa é a interface primária do SOS Location para coordenadores de emergência: é a primeira tela que abrem quando recebem um alerta às 3h da manhã. A escolha de Leaflet.js sobre Google Maps ou Mapbox foi deliberada: sem custo de API por tile, sem limite de requisições em eventos de pico, e código open-source auditável. O problema surgiu na integração com React - Leaflet manipula o DOM diretamente, o que conflita com o ciclo de vida do React se não tratado explicitamente.
 
 ## Problema específico
 
-A primeira integração Leaflet+React criava o mapa dentro de um `useEffect` sem referência estável. Resultado: a cada re-render do componente pai (qualquer mudança de estado), o `useEffect` destruía e recriava o mapa — incluindo todas as camadas carregadas. Em uma sessão de emergência com 200 zonas carregadas, isso causava um flash de 800ms e perda de posição do viewport. O problema se manifestou em produção durante o primeiro treino de defesa civil.
+A primeira integração Leaflet+React criava o mapa dentro de um `useEffect` sem referência estável. Resultado: a cada re-render do componente pai (qualquer mudança de estado), o `useEffect` destruía e recriava o mapa - incluindo todas as camadas carregadas. Em uma sessão de emergência com 200 zonas carregadas, isso causava um flash de 800ms e perda de posição do viewport. O problema se manifestou em produção durante o primeiro treino de defesa civil.
 
 ## Decisão técnica
 
-`useRef` para manter a instância do mapa entre renders. Estado derivado (centro, zoom, camadas ativas) armazenado no Zustand, não no estado local do componente. Inicialização do Leaflet dentro de `useEffect` com checagem `if (mapRef.current) return` — idempotente. Zoom inicial diferenciado por device: mobile recebe `zoom=11`, desktop recebe `zoom=13`.
+`useRef` para manter a instância do mapa entre renders. Estado derivado (centro, zoom, camadas ativas) armazenado no Zustand, não no estado local do componente. Inicialização do Leaflet dentro de `useEffect` com checagem `if (mapRef.current) return` - idempotente. Zoom inicial diferenciado por device: mobile recebe `zoom=11`, desktop recebe `zoom=13`.
 
 ## Implementação
 
@@ -69,7 +69,7 @@ export function SosMap() {
 
     mapRef.current = map;
     return () => { map.remove(); mapRef.current = null; };
-  }, []);   // sem dependências — roda uma vez
+  }, []);   // sem dependências - roda uma vez
 
   return <div ref={containerRef} style={{ height: '100%', width: '100%' }} />;
 }
@@ -96,7 +96,7 @@ export const useMapStore = create<MapState>((set) => ({
 
 ## Exemplo concreto
 
-Após a refatoração com `useRef`, o mapa permanece estável durante re-renders causados por atualizações de risco em tempo real (SignalR). Em teste com 50 atualizações de `NivelRisco` em 10 segundos, nenhum re-render do `SosMap` foi disparado — o Zustand notifica apenas os componentes que assinam `useMapStore`, não o `SosMap` em si.
+Após a refatoração com `useRef`, o mapa permanece estável durante re-renders causados por atualizações de risco em tempo real (SignalR). Em teste com 50 atualizações de `NivelRisco` em 10 segundos, nenhum re-render do `SosMap` foi disparado - o Zustand notifica apenas os componentes que assinam `useMapStore`, não o `SosMap` em si.
 
 ## Critério de sucesso
 
@@ -104,20 +104,20 @@ Zero re-inicializações do mapa Leaflet durante sessão ativa (medido por instr
 
 ## Relação com SOS Location
 
-O mapa é o produto mais crítico da interface. Um mapa que pisca ou perde posição durante uma emergência real não é só um problema de UX — é um risco operacional. A estabilidade da instância Leaflet via `useRef` é o fundamento sobre o qual todas as camadas de risco, hotspots e rotas de evacuação são construídas.
+O mapa é o produto mais crítico da interface. Um mapa que pisca ou perde posição durante uma emergência real não é só um problema de UX - é um risco operacional. A estabilidade da instância Leaflet via `useRef` é o fundamento sobre o qual todas as camadas de risco, hotspots e rotas de evacuação são construídas.
 '''
 body_en_us = '''
 ## Real context
 
-The map is SOS Location's primary interface for emergency coordinators: it's the first screen they open when they receive an alert at 3 am. The choice of Leaflet.js over Google Maps or Mapbox was deliberate: no per-tile API cost, no request limits during peak events, and auditable open-source code. The problem arose during React integration — Leaflet manipulates the DOM directly, which conflicts with React's lifecycle if not explicitly handled.
+The map is SOS Location's primary interface for emergency coordinators: it's the first screen they open when they receive an alert at 3 am. The choice of Leaflet.js over Google Maps or Mapbox was deliberate: no per-tile API cost, no request limits during peak events, and auditable open-source code. The problem arose during React integration - Leaflet manipulates the DOM directly, which conflicts with React's lifecycle if not explicitly handled.
 
 ## Specific problem
 
-The first Leaflet+React integration created the map inside a `useEffect` without a stable reference. Result: on every re-render of the parent component (any state change), the `useEffect` destroyed and recreated the map — including all loaded layers. In an emergency session with 200 zones loaded, this caused an 800ms flash and loss of viewport position. The problem surfaced in production during the first civil defence drill.
+The first Leaflet+React integration created the map inside a `useEffect` without a stable reference. Result: on every re-render of the parent component (any state change), the `useEffect` destroyed and recreated the map - including all loaded layers. In an emergency session with 200 zones loaded, this caused an 800ms flash and loss of viewport position. The problem surfaced in production during the first civil defence drill.
 
 ## Technical decision
 
-`useRef` to keep the map instance stable between renders. Derived state (centre, zoom, active layers) stored in Zustand, not in the component's local state. Leaflet initialisation inside `useEffect` with `if (mapRef.current) return` check — idempotent. Initial zoom differentiated by device: mobile gets `zoom=11`, desktop gets `zoom=13`.
+`useRef` to keep the map instance stable between renders. Derived state (centre, zoom, active layers) stored in Zustand, not in the component's local state. Leaflet initialisation inside `useEffect` with `if (mapRef.current) return` check - idempotent. Initial zoom differentiated by device: mobile gets `zoom=11`, desktop gets `zoom=13`.
 
 ## Implementation
 
@@ -169,7 +169,7 @@ export const useMapStore = create<MapState>((set) => ({
 
 ## Concrete example
 
-After the `useRef` refactor, the map remains stable during re-renders triggered by real-time risk updates (SignalR). In a test with 50 `NivelRisco` updates in 10 seconds, no `SosMap` re-render was triggered — Zustand notifies only the components subscribing to `useMapStore`, not `SosMap` itself.
+After the `useRef` refactor, the map remains stable during re-renders triggered by real-time risk updates (SignalR). In a test with 50 `NivelRisco` updates in 10 seconds, no `SosMap` re-render was triggered - Zustand notifies only the components subscribing to `useMapStore`, not `SosMap` itself.
 
 ## Success criteria
 
@@ -177,20 +177,20 @@ Zero Leaflet map re-initialisations during an active session (measured via `useE
 
 ## Relation to SOS Location
 
-The map is the interface's most critical product. A map that flashes or loses position during a real emergency is not just a UX problem — it is an operational risk. The Leaflet instance stability via `useRef` is the foundation on which all risk layers, hotspots and evacuation routes are built.
+The map is the interface's most critical product. A map that flashes or loses position during a real emergency is not just a UX problem - it is an operational risk. The Leaflet instance stability via `useRef` is the foundation on which all risk layers, hotspots and evacuation routes are built.
 '''
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-マップはSOS Locationの緊急コーディネーター向けのプライマリインターフェースだ：午前3時にアラートを受け取った時に最初に開く画面だ。Google MapsやMapboxではなくLeaflet.jsを選んだのは意図的だった：タイルごとのAPIコストなし、ピーク時のイベント中のリクエスト制限なし、監査可能なオープンソースコード。問題はReactとの統合で発生した——Leafletは直接DOMを操作するため、明示的に処理しないとReactのライフサイクルと競合する。
+マップはSOS Locationの緊急コーディネーター向けのプライマリインターフェースだ：午前3時にアラートを受け取った時に最初に開く画面だ。Google MapsやMapboxではなくLeaflet.jsを選んだのは意図的だった：タイルごとのAPIコストなし、ピーク時のイベント中のリクエスト制限なし、監査可能なオープンソースコード。問題はReactとの統合で発生した--Leafletは直接DOMを操作するため、明示的に処理しないとReactのライフサイクルと競合する。
 
 ## 具体的な問題
 
-最初のLeaflet+React統合は、安定した参照なしで`useEffect`内でマップを作成していた。結果：親コンポーネントの再レンダリング（状態変更）のたびに、`useEffect`がマップを破棄して再作成した——ロードされたすべてのレイヤーを含めて。200ゾーンがロードされた緊急セッションでは、これが800msのフラッシュとビューポート位置の損失を引き起こした。この問題は最初の民間防衛訓練中に本番で表面化した。
+最初のLeaflet+React統合は、安定した参照なしで`useEffect`内でマップを作成していた。結果：親コンポーネントの再レンダリング（状態変更）のたびに、`useEffect`がマップを破棄して再作成した--ロードされたすべてのレイヤーを含めて。200ゾーンがロードされた緊急セッションでは、これが800msのフラッシュとビューポート位置の損失を引き起こした。この問題は最初の民間防衛訓練中に本番で表面化した。
 
 ## 技術的決定
 
-レンダリング間でマップインスタンスを安定させる`useRef`。派生状態（中心、ズーム、アクティブレイヤー）はコンポーネントのローカル状態ではなくZustandに格納する。`if (mapRef.current) return`チェック付きの`useEffect`内でLeafletを初期化——冪等。デバイス別の初期ズーム：モバイルは`zoom=11`、デスクトップは`zoom=13`。
+レンダリング間でマップインスタンスを安定させる`useRef`。派生状態（中心、ズーム、アクティブレイヤー）はコンポーネントのローカル状態ではなくZustandに格納する。`if (mapRef.current) return`チェック付きの`useEffect`内でLeafletを初期化--冪等。デバイス別の初期ズーム：モバイルは`zoom=11`、デスクトップは`zoom=13`。
 
 ## 実装
 
@@ -242,7 +242,7 @@ export const useMapStore = create<MapState>((set) => ({
 
 ## 具体的な例
 
-`useRef`リファクタリング後、マップはリアルタイムリスク更新（SignalR）によって引き起こされる再レンダリング中も安定している。10秒間に50件の`NivelRisco`更新のテストで、`SosMap`の再レンダリングはトリガーされなかった——ZustandはSosMapではなく`useMapStore`をサブスクライブするコンポーネントにのみ通知する。
+`useRef`リファクタリング後、マップはリアルタイムリスク更新（SignalR）によって引き起こされる再レンダリング中も安定している。10秒間に50件の`NivelRisco`更新のテストで、`SosMap`の再レンダリングはトリガーされなかった--ZustandはSosMapではなく`useMapStore`をサブスクライブするコンポーネントにのみ通知する。
 
 ## 成功基準
 

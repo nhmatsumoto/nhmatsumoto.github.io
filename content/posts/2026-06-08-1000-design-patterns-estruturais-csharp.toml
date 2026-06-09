@@ -3,8 +3,8 @@ slug = "design-patterns-estruturais-csharp-dotnet"
 title = "Padrões Estruturais em C#: Adapter, Decorator, Composite e Proxy na prática"
 title_en_us = "Structural Patterns in C#: Adapter, Decorator, Composite and Proxy in practice"
 title_ja_jp = "C# の構造パターン：Adapter・Decorator・Composite・Proxy を実践する"
-summary = "Padrões estruturais respondem 'como compor objetos sem soldar peças'. No .NET, eles aparecem o tempo todo — middlewares são Decorators, ORMs usam Proxy, ACLs são Adapters. Implementação prática com DI, Scrutor e os recursos do C# moderno."
-summary_en_us = "Structural patterns answer 'how to compose objects without welding parts together'. In .NET they show up everywhere — middleware are Decorators, ORMs use Proxy, ACLs are Adapters. Practical implementation with DI, Scrutor and modern C# features."
+summary = "Padrões estruturais respondem 'como compor objetos sem soldar peças'. No .NET, eles aparecem o tempo todo - middlewares são Decorators, ORMs usam Proxy, ACLs são Adapters. Implementação prática com DI, Scrutor e os recursos do C# moderno."
+summary_en_us = "Structural patterns answer 'how to compose objects without welding parts together'. In .NET they show up everywhere - middleware are Decorators, ORMs use Proxy, ACLs are Adapters. Practical implementation with DI, Scrutor and modern C# features."
 summary_ja_jp = "構造パターンは「部品を溶接せずにオブジェクトを組み立てる方法」に答える。.NET では至る所に現れる ── ミドルウェアは Decorator、ORM は Proxy、ACL は Adapter。DI・Scrutor・モダン C# の機能で実践的に実装する。"
 published_at = "2026-06-08T10:00:00+09:00"
 updated_at = "2026-06-08T10:00:00+09:00"
@@ -21,14 +21,14 @@ impact = [
 ]
 trade_offs = [
   "Decorators empilhados dão composição limpa, mas tornam o stack trace mais profundo e a ordem importa",
-  "Proxy de lazy-loading esconde I/O atrás de um getter — conveniência que vira N+1 se ignorada",
+  "Proxy de lazy-loading esconde I/O atrás de um getter - conveniência que vira N+1 se ignorada",
 ]
 lessons = [
   "Estrutural bom é o que deixa adicionar comportamento por composição, não por edição",
-  "Se você já usa middleware no ASP.NET, você já programa com Decorator — só não chamava pelo nome",
+  "Se você já usa middleware no ASP.NET, você já programa com Decorator - só não chamava pelo nome",
 ]
 body = '''
-Os **padrões estruturais** do GoF tratam de **composição**: como montar objetos e classes em estruturas maiores mantendo tudo flexível. No .NET, você já os usa sem perceber — o pipeline de middleware é um Decorator, o lazy-loading do EF Core é um Proxy, qualquer wrapper de SDK de terceiros é um Adapter. Vamos implementar os quatro mais importantes de forma idiomática.
+Os **padrões estruturais** do GoF tratam de **composição**: como montar objetos e classes em estruturas maiores mantendo tudo flexível. No .NET, você já os usa sem perceber - o pipeline de middleware é um Decorator, o lazy-loading do EF Core é um Proxy, qualquer wrapper de SDK de terceiros é um Adapter. Vamos implementar os quatro mais importantes de forma idiomática.
 
 ## Adapter: traduzir interfaces incompatíveis
 
@@ -82,7 +82,7 @@ E você já usa Decorator todo dia: **cada `app.Use(...)` no ASP.NET Core** envo
 
 ## Composite: tratar árvore e folha igual
 
-O `Composite` permite que objetos individuais e composições de objetos sejam tratados **uniformemente**. Sempre que há uma estrutura em árvore — pastas e arquivos, menus e submenus, grupos e usuários — onde a operação deve recursar de forma transparente.
+O `Composite` permite que objetos individuais e composições de objetos sejam tratados **uniformemente**. Sempre que há uma estrutura em árvore - pastas e arquivos, menus e submenus, grupos e usuários - onde a operação deve recursar de forma transparente.
 
 ```csharp
 public interface IFileSystemNode { long SizeBytes(); }
@@ -104,7 +104,7 @@ O cliente chama `SizeBytes()` sem saber se está falando com um arquivo ou uma p
 
 O `Proxy` é um objeto que fica **no lugar de** outro, controlando o acesso a ele. Os três sabores clássicos:
 
-- **Virtual proxy** (lazy-loading): adia a criação cara até o primeiro uso — é o que o EF Core faz com navegações `virtual`.
+- **Virtual proxy** (lazy-loading): adia a criação cara até o primeiro uso - é o que o EF Core faz com navegações `virtual`.
 - **Protection proxy**: checa autorização antes de delegar.
 - **Remote proxy**: representa um objeto que vive em outro processo (a base do gRPC/HttpClient gerado).
 
@@ -121,7 +121,7 @@ public sealed class AuthorizationProxy(IReportService inner, IUserContext user)
 }
 ```
 
-Note a semelhança com o Decorator: ambos envolvem e implementam a mesma interface. A diferença é de **intenção** — o Decorator *adiciona comportamento*; o Proxy *controla o acesso* ao objeto real.
+Note a semelhança com o Decorator: ambos envolvem e implementam a mesma interface. A diferença é de **intenção** - o Decorator *adiciona comportamento*; o Proxy *controla o acesso* ao objeto real.
 
 ## Comparativo
 
@@ -135,10 +135,10 @@ Note a semelhança com o Decorator: ambos envolvem e implementam a mesma interfa
 
 ## Conclusão
 
-Os padrões estruturais são, no fundo, variações sobre o mesmo verbo: **envolver**. Adapter envolve para traduzir, Decorator para enriquecer, Proxy para controlar, Composite para uniformizar. A força disso no .NET vem da combinação com o DI — você compõe o comportamento *na configuração*, não no código de negócio. Quando uma feature nova puder ser uma nova camada em vez de uma edição na classe existente, você está aplicando bem o estrutural: comportamento que cresce por composição, sem cicatrizes no núcleo.
+Os padrões estruturais são, no fundo, variações sobre o mesmo verbo: **envolver**. Adapter envolve para traduzir, Decorator para enriquecer, Proxy para controlar, Composite para uniformizar. A força disso no .NET vem da combinação com o DI - você compõe o comportamento *na configuração*, não no código de negócio. Quando uma feature nova puder ser uma nova camada em vez de uma edição na classe existente, você está aplicando bem o estrutural: comportamento que cresce por composição, sem cicatrizes no núcleo.
 '''
 body_en_us = '''
-The GoF **structural patterns** are about **composition**: how to assemble objects and classes into larger structures while keeping everything flexible. In .NET you already use them without noticing — the middleware pipeline is a Decorator, EF Core's lazy-loading is a Proxy, any third-party SDK wrapper is an Adapter. Let's implement the four most important ones idiomatically.
+The GoF **structural patterns** are about **composition**: how to assemble objects and classes into larger structures while keeping everything flexible. In .NET you already use them without noticing - the middleware pipeline is a Decorator, EF Core's lazy-loading is a Proxy, any third-party SDK wrapper is an Adapter. Let's implement the four most important ones idiomatically.
 
 ## Adapter: translating incompatible interfaces
 
@@ -192,7 +192,7 @@ And you already use Decorator every day: **each `app.Use(...)` in ASP.NET Core**
 
 ## Composite: treating tree and leaf alike
 
-The `Composite` lets individual objects and compositions of objects be treated **uniformly**. Whenever there's a tree structure — folders and files, menus and submenus, groups and users — where the operation should recurse transparently.
+The `Composite` lets individual objects and compositions of objects be treated **uniformly**. Whenever there's a tree structure - folders and files, menus and submenus, groups and users - where the operation should recurse transparently.
 
 ```csharp
 public interface IFileSystemNode { long SizeBytes(); }
@@ -214,7 +214,7 @@ The client calls `SizeBytes()` without knowing whether it's talking to a file or
 
 The `Proxy` is an object that stands **in place of** another, controlling access to it. The three classic flavors:
 
-- **Virtual proxy** (lazy-loading): defers expensive creation until first use — that's what EF Core does with `virtual` navigations.
+- **Virtual proxy** (lazy-loading): defers expensive creation until first use - that's what EF Core does with `virtual` navigations.
 - **Protection proxy**: checks authorization before delegating.
 - **Remote proxy**: represents an object living in another process (the basis of generated gRPC/HttpClient).
 
@@ -231,7 +231,7 @@ public sealed class AuthorizationProxy(IReportService inner, IUserContext user)
 }
 ```
 
-Note the resemblance to the Decorator: both wrap and implement the same interface. The difference is **intent** — the Decorator *adds behavior*; the Proxy *controls access* to the real object.
+Note the resemblance to the Decorator: both wrap and implement the same interface. The difference is **intent** - the Decorator *adds behavior*; the Proxy *controls access* to the real object.
 
 ## Comparison
 
@@ -245,7 +245,7 @@ Note the resemblance to the Decorator: both wrap and implement the same interfac
 
 ## Conclusion
 
-The structural patterns are, at heart, variations on the same verb: **to wrap**. Adapter wraps to translate, Decorator to enrich, Proxy to control, Composite to unify. Their power in .NET comes from combining with DI — you compose behavior *in configuration*, not in business code. When a new feature can be a new layer instead of an edit to the existing class, you're applying structure well: behavior that grows by composition, without scars on the core.
+The structural patterns are, at heart, variations on the same verb: **to wrap**. Adapter wraps to translate, Decorator to enrich, Proxy to control, Composite to unify. Their power in .NET comes from combining with DI - you compose behavior *in configuration*, not in business code. When a new feature can be a new layer instead of an edit to the existing class, you're applying structure well: behavior that grows by composition, without scars on the core.
 '''
 body_ja_jp = '''
 GoF の **構造パターン** は **合成** についてです。すべてを柔軟に保ちつつ、オブジェクトとクラスをより大きな構造へ組み立てる方法です。.NET では気づかぬうちに使っています ── ミドルウェアのパイプラインは Decorator、EF Core の遅延読み込みは Proxy、サードパーティ SDK のラッパーはすべて Adapter。最も重要な 4 つをイディオム的に実装しましょう。

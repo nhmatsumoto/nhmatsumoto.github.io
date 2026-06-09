@@ -3,8 +3,8 @@ slug = "gaussian-splatting"
 headline = "Implementação de referência de 3D Gaussian Splatting para renderização de campos de radiância em tempo real."
 headline_en_us = "Reference implementation of 3D Gaussian Splatting for real-time radiance field rendering."
 headline_ja_jp = "リアルタイム放射輝度場レンダリングのための 3D Gaussian Splatting リファレンス実装。"
-summary = "Fork da implementação original de 3D Gaussian Splatting — técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real."
-summary_en_us = "Fork of the original 3D Gaussian Splatting implementation — a neural rendering technique that represents 3D scenes as sets of Gaussians for real-time rendering."
+summary = "Fork da implementação original de 3D Gaussian Splatting - técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real."
+summary_en_us = "Fork of the original 3D Gaussian Splatting implementation - a neural rendering technique that represents 3D scenes as sets of Gaussians for real-time rendering."
 summary_ja_jp = "3D Gaussian Splatting オリジナル実装のフォーク。3D シーンをガウス分布の集合で表現し、リアルタイムレンダリングを行うニューラル描画技法。"
 status = "published"
 featured = false
@@ -31,7 +31,7 @@ Diferente de NeRFs (Neural Radiance Fields) que usam redes neurais para represen
 
 - **Renderização em tempo real** (>100 FPS) vs. segundos por frame em NeRFs
 - **Rasterização diferenciável** permite otimização por gradiente
-- **Sem rede neural** na etapa de inferência — apenas projeção e alpha compositing
+- **Sem rede neural** na etapa de inferência - apenas projeção e alpha compositing
 - **Qualidade visual** comparável ou superior a NeRFs estado-da-arte
 
 ## Relevância
@@ -54,7 +54,7 @@ Unlike NeRFs (Neural Radiance Fields), which rely on neural networks to represen
 
 - **Real-time rendering** (>100 FPS) instead of seconds per frame
 - **Differentiable rasterization** for gradient-based optimization
-- **No neural network in the inference stage** — only projection and alpha compositing
+- **No neural network in the inference stage** - only projection and alpha compositing
 - **Visual quality** comparable to or better than state-of-the-art NeRFs
 
 ## Relevance
@@ -77,7 +77,7 @@ NeRF（Neural Radiance Fields）のようにニューラルネットでシーン
 
 - **リアルタイム描画**（>100 FPS）で、NeRF のように 1 フレーム数秒かからない
 - **微分可能ラスタライズ** により勾配最適化が可能
-- **推論段階でニューラルネット不要** — 射影と alpha compositing のみ
+- **推論段階でニューラルネット不要** - 射影と alpha compositing のみ
 - **視覚品質** は最先端 NeRF と同等以上
 
 ## 関連性

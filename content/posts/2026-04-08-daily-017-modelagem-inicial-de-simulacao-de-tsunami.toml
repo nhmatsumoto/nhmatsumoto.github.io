@@ -3,9 +3,9 @@ slug = "daily-017-modelagem-inicial-de-simulacao-de-tsunami"
 title = "Daily #017: Modelagem inicial de simulação de tsunami"
 title_en_us = "Daily #017: Initial tsunami simulation modeling"
 title_ja_jp = "Daily #017: 津波シミュレーションの初期モデリング"
-summary = "Por que o SOS Location usa cenários pré-computados de inundação por tsunami em vez do modelo MOST completo — e como a busca por similaridade de epicentro e magnitude seleciona o cenário mais próximo em milissegundos."
-summary_en_us = "Why SOS Location uses pre-computed tsunami inundation scenarios instead of the full MOST model — and how epicentre similarity search selects the closest scenario in milliseconds."
-summary_ja_jp = "SOS Locationが完全なMOSTモデルではなく事前計算された津波浸水シナリオを使う理由——そして震央の類似検索が最も近いシナリオをミリ秒で選択する方法。"
+summary = "Por que o SOS Location usa cenários pré-computados de inundação por tsunami em vez do modelo MOST completo - e como a busca por similaridade de epicentro e magnitude seleciona o cenário mais próximo em milissegundos."
+summary_en_us = "Why SOS Location uses pre-computed tsunami inundation scenarios instead of the full MOST model - and how epicentre similarity search selects the closest scenario in milliseconds."
+summary_ja_jp = "SOS Locationが完全なMOSTモデルではなく事前計算された津波浸水シナリオを使う理由--そして震央の類似検索が最も近いシナリオをミリ秒で選択する方法。"
 published_at = "2026-04-08T01:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -19,11 +19,11 @@ has_math = true
 body = '''
 ## Contexto real
 
-O Brasil tem ~7.500 km de costa atlântica. O principal risco de tsunami vem da Zona de Subducção de Cascádia (Costa Rica / Colômbia) e da Dorsal Mesoatlântica. Para um terremoto M7.5+ nessas regiões, o tempo de chegada da onda ao litoral nordestino é de 8–12 horas, ao litoral sudeste 10–14 horas. O SOS Location precisa gerar uma simulação de inundação de tsunami em menos de 5 minutos após detecção do evento sísmico — não 3 horas depois.
+O Brasil tem ~7.500 km de costa atlântica. O principal risco de tsunami vem da Zona de Subducção de Cascádia (Costa Rica / Colômbia) e da Dorsal Mesoatlântica. Para um terremoto M7.5+ nessas regiões, o tempo de chegada da onda ao litoral nordestino é de 8–12 horas, ao litoral sudeste 10–14 horas. O SOS Location precisa gerar uma simulação de inundação de tsunami em menos de 5 minutos após detecção do evento sísmico - não 3 horas depois.
 
 ## Problema específico
 
-O modelo de física completo MOST (Method of Splitting Tsunami) é preciso mas lento: cada simulação de propagação de onda oceânica para o litoral brasileiro leva 2–4 horas em cluster HPC. É impossível executar em tempo real após um evento sísmico. A alternativa naive — manter um servidor HPC dedicado — tem custo de R$15.000/mês para o SOS Location ter capacity de 2–3 simulações simultâneas.
+O modelo de física completo MOST (Method of Splitting Tsunami) é preciso mas lento: cada simulação de propagação de onda oceânica para o litoral brasileiro leva 2–4 horas em cluster HPC. É impossível executar em tempo real após um evento sísmico. A alternativa naive - manter um servidor HPC dedicado - tem custo de R$15.000/mês para o SOS Location ter capacity de 2–3 simulações simultâneas.
 
 ## Decisão técnica
 
@@ -119,11 +119,11 @@ Para tsunamis, o tempo de aviso é o recurso mais escasso. A diferença entre 5 
 body_en_us = '''
 ## Real context
 
-Brazil has ~7,500 km of Atlantic coastline. The main tsunami risk comes from the Cascadia Subduction Zone (Costa Rica / Colombia) and the Mid-Atlantic Ridge. For an M7.5+ earthquake in those regions, wave arrival time at the Brazilian northeast coast is 8–12 hours, at the southeast coast 10–14 hours. SOS Location needs to generate a tsunami inundation simulation in under 5 minutes after a seismic event is detected — not 3 hours later.
+Brazil has ~7,500 km of Atlantic coastline. The main tsunami risk comes from the Cascadia Subduction Zone (Costa Rica / Colombia) and the Mid-Atlantic Ridge. For an M7.5+ earthquake in those regions, wave arrival time at the Brazilian northeast coast is 8–12 hours, at the southeast coast 10–14 hours. SOS Location needs to generate a tsunami inundation simulation in under 5 minutes after a seismic event is detected - not 3 hours later.
 
 ## Specific problem
 
-The full MOST (Method of Splitting Tsunami) physics model is accurate but slow: each ocean wave propagation simulation to the Brazilian coast takes 2–4 hours on an HPC cluster. Running it in real time after a seismic event is impossible. The naive alternative — maintaining a dedicated HPC server — costs R$15,000/month for SOS Location to have capacity for 2–3 simultaneous simulations.
+The full MOST (Method of Splitting Tsunami) physics model is accurate but slow: each ocean wave propagation simulation to the Brazilian coast takes 2–4 hours on an HPC cluster. Running it in real time after a seismic event is impossible. The naive alternative - maintaining a dedicated HPC server - costs R$15,000/month for SOS Location to have capacity for 2–3 simultaneous simulations.
 
 ## Technical decision
 
@@ -176,11 +176,11 @@ For tsunamis, warning time is the scarcest resource. The difference between 5 mi
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-ブラジルは約7,500kmの大西洋海岸線を持つ。主な津波リスクはカスカディア沈み込み帯（コスタリカ/コロンビア）と中央大西洋海嶺から来る。これらの地域でのM7.5+地震に対して、ブラジル北東部海岸への波の到達時間は8〜12時間、南東部海岸は10〜14時間。SOS Locationは地震イベント検出後5分以内に津波浸水シミュレーションを生成する必要がある——3時間後ではなく。
+ブラジルは約7,500kmの大西洋海岸線を持つ。主な津波リスクはカスカディア沈み込み帯（コスタリカ/コロンビア）と中央大西洋海嶺から来る。これらの地域でのM7.5+地震に対して、ブラジル北東部海岸への波の到達時間は8〜12時間、南東部海岸は10〜14時間。SOS Locationは地震イベント検出後5分以内に津波浸水シミュレーションを生成する必要がある--3時間後ではなく。
 
 ## 具体的な問題
 
-完全なMOST（Method of Splitting Tsunami）物理モデルは正確だが遅い：ブラジル海岸への各海洋波伝播シミュレーションはHPCクラスターで2〜4時間かかる。地震イベント後にリアルタイムで実行することは不可能だ。ナイーブな代替案——専用HPCサーバーの維持——はSOS Locationが同時に2〜3のシミュレーションの容量を持つために月R$15,000のコストがかかる。
+完全なMOST（Method of Splitting Tsunami）物理モデルは正確だが遅い：ブラジル海岸への各海洋波伝播シミュレーションはHPCクラスターで2〜4時間かかる。地震イベント後にリアルタイムで実行することは不可能だ。ナイーブな代替案--専用HPCサーバーの維持--はSOS Locationが同時に2〜3のシミュレーションの容量を持つために月R$15,000のコストがかかる。
 
 ## 技術的決定
 

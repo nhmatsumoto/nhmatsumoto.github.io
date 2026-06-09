@@ -3,9 +3,9 @@ slug = "daily-035-criacao-de-endpoint-para-snapshot-de-operacoes"
 title = "Daily #035: Criação de endpoint para snapshot de operações"
 title_en_us = "Daily #035: Creating an endpoint for operation snapshots"
 title_ja_jp = "Daily #035: オペレーションスナップショット用エンドポイント作成"
-summary = "Como o SOS Location implementou GET /api/operacoes/{id}/snapshot que retorna o estado completo de uma OperacaoDeResgate em um único response — areas, hotspots, pessoas desaparecidas, rotas — eliminando 4 requests paralelos."
-summary_en_us = "How SOS Location implemented GET /api/operacoes/{id}/snapshot that returns the complete state of an OperacaoDeResgate in a single response — areas, hotspots, missing persons, routes — eliminating 4 parallel requests."
-summary_ja_jp = "SOS LocationがGET /api/operacoes/{id}/snapshotを実装してOperacaoDeResgate の完全状態——エリア・ホットスポット・行方不明者・ルート——を1つのレスポンスで返し、4つの並列リクエストを排除した方法。"
+summary = "Como o SOS Location implementou GET /api/operacoes/{id}/snapshot que retorna o estado completo de uma OperacaoDeResgate em um único response - areas, hotspots, pessoas desaparecidas, rotas - eliminando 4 requests paralelos."
+summary_en_us = "How SOS Location implemented GET /api/operacoes/{id}/snapshot that returns the complete state of an OperacaoDeResgate in a single response - areas, hotspots, missing persons, routes - eliminating 4 parallel requests."
+summary_ja_jp = "SOS LocationがGET /api/operacoes/{id}/snapshotを実装してOperacaoDeResgate の完全状態--エリア・ホットスポット・行方不明者・ルート--を1つのレスポンスで返し、4つの並列リクエストを排除した方法。"
 published_at = "2026-04-08T19:00:00+09:00"
 updated_at = "2026-04-26T21:09:26+09:00"
 status = "published"
@@ -19,15 +19,15 @@ has_math = false
 body = '''
 ## Contexto real
 
-Quando um coordenador abre uma `OperacaoDeResgate` no SOS Location, o cliente precisa de 4 tipos de dados: áreas de risco da operação, hotspots ativos, pessoas desaparecidas vinculadas, e rotas de evacuação calculadas. A abertura de uma operação acontece com frequência em situações de emergência — múltiplos coordenadores abrindo simultaneamente durante um evento.
+Quando um coordenador abre uma `OperacaoDeResgate` no SOS Location, o cliente precisa de 4 tipos de dados: áreas de risco da operação, hotspots ativos, pessoas desaparecidas vinculadas, e rotas de evacuação calculadas. A abertura de uma operação acontece com frequência em situações de emergência - múltiplos coordenadores abrindo simultaneamente durante um evento.
 
 ## Problema específico
 
-A primeira versão fazia 4 requests paralelos: `GET /api/areas-de-risco?operacaoId=x`, `GET /api/hotspots?operacaoId=x`, `GET /api/pessoas-desaparecidas?operacaoId=x`, `GET /api/rotas?operacaoId=x`. Problemas: (1) 4× overhead de HTTP (headers, TLS handshake amortizado, roundtrip network) — em mobile 4G, cada request tinha ~80ms de latência base, totalizando 320ms de overhead além do tempo de query; (2) se qualquer um dos 4 requests falhasse, o cliente ficava em estado parcial sem indicação clara de qual dado estava faltando; (3) logs distribuídos para 4 correlation IDs diferentes tornavam o rastreamento de um carregamento lento impossível.
+A primeira versão fazia 4 requests paralelos: `GET /api/areas-de-risco?operacaoId=x`, `GET /api/hotspots?operacaoId=x`, `GET /api/pessoas-desaparecidas?operacaoId=x`, `GET /api/rotas?operacaoId=x`. Problemas: (1) 4× overhead de HTTP (headers, TLS handshake amortizado, roundtrip network) - em mobile 4G, cada request tinha ~80ms de latência base, totalizando 320ms de overhead além do tempo de query; (2) se qualquer um dos 4 requests falhasse, o cliente ficava em estado parcial sem indicação clara de qual dado estava faltando; (3) logs distribuídos para 4 correlation IDs diferentes tornavam o rastreamento de um carregamento lento impossível.
 
 ## Decisão técnica
 
-Endpoint `GET /api/operacoes/{id}/snapshot` que executa as 4 queries em paralelo (`Task.WhenAll`) e retorna um único objeto composto. Tempo total = max(tempo das 4 queries) em vez de soma. Correlação em um único `traceId`. Se uma sub-query falhar, o snapshot retorna os dados disponíveis com um campo `errors[]` indicando quais partes falharam — degradação graciosa.
+Endpoint `GET /api/operacoes/{id}/snapshot` que executa as 4 queries em paralelo (`Task.WhenAll`) e retorna um único objeto composto. Tempo total = max(tempo das 4 queries) em vez de soma. Correlação em um único `traceId`. Se uma sub-query falhar, o snapshot retorna os dados disponíveis com um campo `errors[]` indicando quais partes falharam - degradação graciosa.
 
 ## Implementação
 
@@ -47,7 +47,7 @@ public sealed class GetOperacaoSnapshotQueryHandler
         var id       = query.OperacaoId;
         var tenantId = query.TenantId;
 
-        // 4 queries em paralelo — tempo total = max, não soma
+        // 4 queries em paralelo - tempo total = max, não soma
         var areasTask       = GetAreasAsync(id, tenantId, ct);
         var hotspotsTask    = GetHotspotsAsync(id, tenantId, ct);
         var pessoasTask     = GetPessoasAsync(id, tenantId, ct);
@@ -75,7 +75,7 @@ public sealed class GetOperacaoSnapshotQueryHandler
             """,
             new { operacaoId, tenantId })).AsList();
 
-    // GetHotspotsAsync, GetPessoasAsync, GetRotasAsync — padrão similar
+    // GetHotspotsAsync, GetPessoasAsync, GetRotasAsync - padrão similar
 }
 ```
 
@@ -97,7 +97,7 @@ Abertura de operação durante enchente em Itajaí: 4 requests paralelos (versã
 
 ## Critério de sucesso
 
-Snapshot retorna em < 500ms para operações com até 500 áreas, 200 hotspots, 300 pessoas desaparecidas e 50 rotas. Zero estados parciais no cliente — se snapshot falha, falha completamente com 500; se uma sub-query falha, campo `errors[]` indica qual. Logs com único `traceId` para todo o carregamento de operação.
+Snapshot retorna em < 500ms para operações com até 500 áreas, 200 hotspots, 300 pessoas desaparecidas e 50 rotas. Zero estados parciais no cliente - se snapshot falha, falha completamente com 500; se uma sub-query falha, campo `errors[]` indica qual. Logs com único `traceId` para todo o carregamento de operação.
 
 ## Relação com SOS Location
 
@@ -106,15 +106,15 @@ O endpoint de snapshot é a resposta arquitetural ao padrão de uso real: "abrir
 body_en_us = '''
 ## Real context
 
-When a coordinator opens an `OperacaoDeResgate` in SOS Location, the client needs 4 types of data: operation risk areas, active hotspots, linked missing persons, and calculated evacuation routes. Opening an operation happens frequently in emergencies — multiple coordinators opening it simultaneously during an event.
+When a coordinator opens an `OperacaoDeResgate` in SOS Location, the client needs 4 types of data: operation risk areas, active hotspots, linked missing persons, and calculated evacuation routes. Opening an operation happens frequently in emergencies - multiple coordinators opening it simultaneously during an event.
 
 ## Specific problem
 
-The first version made 4 parallel requests: `GET /api/areas-de-risco?operacaoId=x`, `GET /api/hotspots?operacaoId=x`, `GET /api/pessoas-desaparecidas?operacaoId=x`, `GET /api/rotas?operacaoId=x`. Problems: (1) 4× HTTP overhead (headers, amortised TLS handshake, network roundtrip) — on 4G mobile, each request had ~80ms base latency, totalling 320ms of overhead beyond query time; (2) if any of the 4 requests failed, the client was in a partial state with no clear indication of which data was missing; (3) distributed logs across 4 different correlation IDs made tracing a slow load impossible.
+The first version made 4 parallel requests: `GET /api/areas-de-risco?operacaoId=x`, `GET /api/hotspots?operacaoId=x`, `GET /api/pessoas-desaparecidas?operacaoId=x`, `GET /api/rotas?operacaoId=x`. Problems: (1) 4× HTTP overhead (headers, amortised TLS handshake, network roundtrip) - on 4G mobile, each request had ~80ms base latency, totalling 320ms of overhead beyond query time; (2) if any of the 4 requests failed, the client was in a partial state with no clear indication of which data was missing; (3) distributed logs across 4 different correlation IDs made tracing a slow load impossible.
 
 ## Technical decision
 
-Endpoint `GET /api/operacoes/{id}/snapshot` that executes the 4 queries in parallel (`Task.WhenAll`) and returns a single composite object. Total time = max(time of 4 queries) instead of the sum. Correlated by a single `traceId`. If a sub-query fails, the snapshot returns available data with an `errors[]` field indicating which parts failed — graceful degradation.
+Endpoint `GET /api/operacoes/{id}/snapshot` that executes the 4 queries in parallel (`Task.WhenAll`) and returns a single composite object. Total time = max(time of 4 queries) instead of the sum. Correlated by a single `traceId`. If a sub-query fails, the snapshot returns available data with an `errors[]` field indicating which parts failed - graceful degradation.
 
 ## Implementation
 
@@ -157,7 +157,7 @@ Opening an operation during a flood in Itajaí: 4 parallel requests (old version
 
 ## Success criteria
 
-Snapshot returns in < 500ms for operations with up to 500 areas, 200 hotspots, 300 missing persons and 50 routes. Zero partial states in the client — if the snapshot fails, it fails completely with 500; if a sub-query fails, the `errors[]` field indicates which one. Logs with a single `traceId` for the entire operation load.
+Snapshot returns in < 500ms for operations with up to 500 areas, 200 hotspots, 300 missing persons and 50 routes. Zero partial states in the client - if the snapshot fails, it fails completely with 500; if a sub-query fails, the `errors[]` field indicates which one. Logs with a single `traceId` for the entire operation load.
 
 ## Relation to SOS Location
 
@@ -166,15 +166,15 @@ The snapshot endpoint is the architectural answer to the real usage pattern: "op
 body_ja_jp = '''
 ## 実際のコンテキスト
 
-コーディネーターがSOS LocationでOperacaoDeResgate`を開くとき、クライアントは4種類のデータが必要だ：作戦のリスクエリア、アクティブなホットスポット、リンクされた行方不明者、計算された避難経路。作戦を開くことは緊急時に頻繁に起こる——イベント中に複数のコーディネーターが同時に開く。
+コーディネーターがSOS LocationでOperacaoDeResgate`を開くとき、クライアントは4種類のデータが必要だ：作戦のリスクエリア、アクティブなホットスポット、リンクされた行方不明者、計算された避難経路。作戦を開くことは緊急時に頻繁に起こる--イベント中に複数のコーディネーターが同時に開く。
 
 ## 具体的な問題
 
-最初のバージョンは4つの並列リクエストを行っていた：`GET /api/areas-de-risco?operacaoId=x`、`GET /api/hotspots?operacaoId=x`、`GET /api/pessoas-desaparecidas?operacaoId=x`、`GET /api/rotas?operacaoId=x`。問題：(1) 4×のHTTPオーバーヘッド（ヘッダー、償却されたTLSハンドシェイク、ネットワークラウンドトリップ）——4Gモバイルで、各リクエストには~80msの基本レイテンシがあり、クエリ時間以外に320msのオーバーヘッド；(2) 4つのリクエストのどれかが失敗すると、クライアントはどのデータが欠けているかの明確な指示なしに部分的な状態になる；(3) 4つの異なるコリレーションIDに分散したログは遅いロードのトレースを不可能にした。
+最初のバージョンは4つの並列リクエストを行っていた：`GET /api/areas-de-risco?operacaoId=x`、`GET /api/hotspots?operacaoId=x`、`GET /api/pessoas-desaparecidas?operacaoId=x`、`GET /api/rotas?operacaoId=x`。問題：(1) 4×のHTTPオーバーヘッド（ヘッダー、償却されたTLSハンドシェイク、ネットワークラウンドトリップ）--4Gモバイルで、各リクエストには~80msの基本レイテンシがあり、クエリ時間以外に320msのオーバーヘッド；(2) 4つのリクエストのどれかが失敗すると、クライアントはどのデータが欠けているかの明確な指示なしに部分的な状態になる；(3) 4つの異なるコリレーションIDに分散したログは遅いロードのトレースを不可能にした。
 
 ## 技術的決定
 
-4つのクエリを並列で実行（`Task.WhenAll`）して単一の複合オブジェクトを返す`GET /api/operacoes/{id}/snapshot`エンドポイント。総時間 = 合計ではなくmax（4クエリの時間）。単一の`traceId`でコリレーション。サブクエリが失敗した場合、スナップショットは利用可能なデータを返し、どの部分が失敗したかを示す`errors[]`フィールドを持つ——グレースフルデグラデーション。
+4つのクエリを並列で実行（`Task.WhenAll`）して単一の複合オブジェクトを返す`GET /api/operacoes/{id}/snapshot`エンドポイント。総時間 = 合計ではなくmax（4クエリの時間）。単一の`traceId`でコリレーション。サブクエリが失敗した場合、スナップショットは利用可能なデータを返し、どの部分が失敗したかを示す`errors[]`フィールドを持つ--グレースフルデグラデーション。
 
 ## 実装
 
@@ -217,7 +217,7 @@ app.MapGet("/api/operacoes/{id}/snapshot",
 
 ## 成功基準
 
-最大500エリア・200ホットスポット・300行方不明者・50ルートを持つ作戦に対して500ms未満でスナップショットを返す。クライアントでの部分的状態ゼロ——スナップショットが失敗すると500で完全に失敗；サブクエリが失敗すると`errors[]`フィールドがどれかを示す。作戦ロード全体の単一`traceId`を持つログ。
+最大500エリア・200ホットスポット・300行方不明者・50ルートを持つ作戦に対して500ms未満でスナップショットを返す。クライアントでの部分的状態ゼロ--スナップショットが失敗すると500で完全に失敗；サブクエリが失敗すると`errors[]`フィールドがどれかを示す。作戦ロード全体の単一`traceId`を持つログ。
 
 ## SOS Locationとの関係
 
