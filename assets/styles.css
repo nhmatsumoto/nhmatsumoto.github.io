@@ -101,7 +101,7 @@
   --navbar-safe-height: 5.5rem;
   --sidebar-top: var(--navbar-safe-height);
 
-  /* Shadows — dark mode: strong depth */
+  /* Shadows - dark mode: strong depth */
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.5), 0 12px 28px rgba(0,0,0,0.35);
   --shadow-lg: 0 8px 24px rgba(0,0,0,0.55), 0 24px 56px rgba(0,0,0,0.4);
@@ -133,7 +133,7 @@ body {
   --glass-bg: hsla(0, 0%, 100%, 0.85);
   --accent-strong: hsl(var(--accent-h), var(--accent-s), 45%);
 
-  /* Shadows — light mode: soft, natural depth */
+  /* Shadows - light mode: soft, natural depth */
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.06);
   --shadow-md: 0 2px 6px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.08);
   --shadow-lg: 0 4px 12px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.1);
@@ -998,7 +998,7 @@ body[data-search-open="true"] {
 /* Sections & Content */
 /* ── Section Layout ──────────────────────────────────────────────────────── */
 
-/* Legacy section-panel rules removed — the blueprint layer
+/* Legacy section-panel rules removed - the blueprint layer
    governs section padding via --home-section-pad-* tokens so
    homepage blocks keep proper horizontal breathing room around
    the dashed surface border. Section-header sizing is also
@@ -1496,7 +1496,7 @@ body[data-search-open="true"] {
 }
 
 /* section-panel, section-header, section-kicker, section-copy,
-   resource-card, highlight-card — defined above; no overrides needed */
+   resource-card, highlight-card - defined above; no overrides needed */
 
 /* ── Page Grid (article + sidebar) ──────────────────────────────────────── */
 
@@ -2306,7 +2306,7 @@ body[data-sidebar-open="true"] .sidebar-backdrop {
   pointer-events: none;
 }
 
-/* ── Hub Group (central node — full content index) ───────────────────────── */
+/* ── Hub Group (central node - full content index) ───────────────────────── */
 .hub-group {
   padding-bottom: var(--space-3);
 }
@@ -2614,7 +2614,7 @@ tbody tr:hover td {
   outline: none !important;
 }
 
-/* ── Reader Article — full scrollable article overlay ───────────────────── */
+/* ── Reader Article - full scrollable article overlay ───────────────────── */
 
 .reader-article {
   position: absolute;
@@ -3329,7 +3329,7 @@ body::after {
   color: var(--text);
 }
 
-/* Locale button — identity color by active language */
+/* Locale button - identity color by active language */
 body[data-locale="pt-BR"] .nav-btn-locale {
   color: hsl(134, 48%, 50%);
 }
@@ -4846,7 +4846,7 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   border-top: 1px solid color-mix(in srgb, var(--border-strong) 72%, transparent);
 }
 
-/* Global code-shell refinement (blueprint layer — applies to all prose contexts) */
+/* Global code-shell refinement (blueprint layer - applies to all prose contexts) */
 .prose .code-shell,
 .notebook-intro .code-shell,
 .about-narrative .code-shell,
@@ -5125,7 +5125,7 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   background: rgba(232, 243, 250, 0.86);
 }
 
-/* Code shells always stay dark — Shiki tokens are github-dark and rely on dark bg */
+/* Code shells always stay dark - Shiki tokens are github-dark and rely on dark bg */
 [data-theme="light"] .code-shell,
 [data-theme="light"] .post-body .code-shell,
 [data-theme="light"] .prose .code-shell {
@@ -7248,4 +7248,276 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   .page-single .single-page-detail-body {
     max-width: 100%;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Windows 98 code windows
+   Reskin de todos os blocos de codigo (.code-shell) como janelas do Win98,
+   inspirado no 98.css. Skin fixo, identico em tema claro/escuro, por isso usa
+   !important para vencer as regras legadas de .code-shell espalhadas acima.
+   Hooks de JS preservados: .code-shell, .code-shell-copy, .code-shell-ln-toggle,
+   .copy-feedback, .copy-icon, .no-line-numbers.
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  --w98-face: #c0c0c0;
+  --w98-hilite: #ffffff;
+  --w98-light: #dfdfdf;
+  --w98-shadow: #808080;
+  --w98-dark: #0a0a0a;
+  --w98-title-a: #000080;
+  --w98-title-b: #1084d0;
+  --w98-font: "Pixelated MS Sans Serif", Tahoma, "MS Sans Serif", Geneva, Verdana, sans-serif;
+}
+
+/* Bevels classicos do Win98 */
+/* raised: borda externa clara em cima/esquerda, escura embaixo/direita */
+/* sunken: invertido (campo afundado) */
+
+.code-shell {
+  margin: var(--space-8) 0 !important;
+  background: var(--w98-face) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 3px !important;
+  overflow: visible !important;
+  box-shadow:
+    inset -1px -1px var(--w98-dark),
+    inset 1px 1px var(--w98-hilite),
+    inset -2px -2px var(--w98-shadow),
+    inset 2px 2px var(--w98-light) !important;
+  display: flex;
+  flex-direction: column;
+  transition: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  color: var(--w98-dark);
+}
+
+.code-shell:hover {
+  border-color: transparent !important;
+}
+
+/* Barra de titulo azul */
+.code-shell .code-shell-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 2px 2px 2px 3px !important;
+  margin: 0 !important;
+  background: linear-gradient(90deg, var(--w98-title-a), var(--w98-title-b)) !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  user-select: none;
+  min-height: 18px;
+}
+
+.code-shell .code-shell-title {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--w98-font) !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  color: var(--w98-hilite) !important;
+  text-transform: none !important;
+  pointer-events: none;
+}
+
+.code-shell .code-shell-label {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: var(--w98-hilite) !important;
+  font-weight: 700 !important;
+}
+
+.code-shell .code-shell-subtitle {
+  margin-left: 0 !important;
+  opacity: 0.85 !important;
+  font-weight: 400 !important;
+  color: var(--w98-hilite) !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.code-shell .code-shell-subtitle::before {
+  content: "- ";
+  opacity: 0.7;
+}
+
+/* Acoes funcionais (copiar / numeros de linha) como botoes raised do Win98 */
+.code-shell .code-shell-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+.code-shell .code-shell-copy,
+.code-shell .code-shell-ln-toggle {
+  background: var(--w98-face) !important;
+  color: var(--w98-dark) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow:
+    inset -1px -1px var(--w98-dark),
+    inset 1px 1px var(--w98-hilite),
+    inset -2px -2px var(--w98-shadow),
+    inset 2px 2px var(--w98-light) !important;
+  padding: 2px 6px !important;
+  min-height: 16px;
+  cursor: pointer;
+  font-family: var(--w98-font) !important;
+  font-size: 0.66rem !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: none !important;
+}
+
+.code-shell .code-shell-copy:hover,
+.code-shell .code-shell-ln-toggle:hover {
+  background: var(--w98-face) !important;
+  color: var(--w98-dark) !important;
+  box-shadow:
+    inset -1px -1px var(--w98-dark),
+    inset 1px 1px var(--w98-hilite),
+    inset -2px -2px var(--w98-shadow),
+    inset 2px 2px var(--w98-light) !important;
+}
+
+/* Botao pressionado: bevel invertido (sunken) */
+.code-shell .code-shell-copy:active,
+.code-shell .code-shell-ln-toggle:active {
+  transform: none !important;
+  box-shadow:
+    inset 1px 1px var(--w98-dark),
+    inset -1px -1px var(--w98-hilite),
+    inset 2px 2px var(--w98-shadow),
+    inset -2px -2px var(--w98-light) !important;
+}
+
+.code-shell .code-shell-copy .copy-icon,
+.code-shell .code-shell-ln-toggle i {
+  width: 12px;
+  height: 12px;
+}
+
+.code-shell.is-copied .code-shell-copy {
+  background: var(--w98-face) !important;
+  color: var(--w98-title-a) !important;
+}
+
+.code-shell .copy-feedback {
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+/* Controles de janela: minimizar, maximizar, fechar */
+.code-shell .code-shell-controls {
+  display: flex !important;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+  margin-left: 2px;
+}
+
+.code-shell .control-dot {
+  width: 16px;
+  height: 14px;
+  border-radius: 0 !important;
+  background: var(--w98-face) !important;
+  opacity: 1 !important;
+  box-shadow:
+    inset -1px -1px var(--w98-dark),
+    inset 1px 1px var(--w98-hilite),
+    inset -2px -2px var(--w98-shadow),
+    inset 2px 2px var(--w98-light);
+  position: relative;
+}
+
+/* Glifos desenhados em CSS, em preto, estilo Win98 */
+.code-shell .control-dot::before,
+.code-shell .control-dot::after {
+  content: "";
+  position: absolute;
+  background: var(--w98-dark);
+}
+
+/* minimizar: tracinho embaixo */
+.code-shell .control-dot.minimize::before {
+  width: 6px;
+  height: 2px;
+  left: 4px;
+  bottom: 3px;
+}
+
+/* maximizar: quadrado com topo grosso */
+.code-shell .control-dot.maximize::before {
+  width: 8px;
+  height: 7px;
+  left: 3px;
+  top: 3px;
+  background: transparent;
+  border: 1px solid var(--w98-dark);
+  border-top-width: 2px;
+}
+.code-shell .control-dot.maximize::after { display: none; }
+
+/* fechar: X */
+.code-shell .control-dot.close::before,
+.code-shell .control-dot.close::after {
+  width: 8px;
+  height: 2px;
+  left: 3px;
+  top: 5px;
+}
+.code-shell .control-dot.close::before { transform: rotate(45deg); }
+.code-shell .control-dot.close::after { transform: rotate(-45deg); }
+
+/* Corpo da janela: area de codigo afundada (sunken) */
+.code-shell .code-shell-content {
+  position: relative;
+  margin: 3px 0 0 0 !important;
+  background: #0d0d0d !important;
+  box-shadow:
+    inset -1px -1px var(--w98-hilite),
+    inset 1px 1px var(--w98-dark),
+    inset -2px -2px var(--w98-light),
+    inset 2px 2px var(--w98-shadow) !important;
+  padding: 2px !important;
+  overflow: hidden !important;
+}
+
+.code-shell .code-shell-content pre,
+.code-shell .code-shell-content pre.shiki {
+  border-radius: 0 !important;
+}
+
+/* Tema claro: o skin Win98 e o mesmo (chrome cinza fixo) */
+[data-theme="light"] .code-shell,
+[data-theme="light"] .post-body .code-shell,
+[data-theme="light"] .prose .code-shell {
+  background: var(--w98-face) !important;
+  border: 0 !important;
+  box-shadow:
+    inset -1px -1px var(--w98-dark),
+    inset 1px 1px var(--w98-hilite),
+    inset -2px -2px var(--w98-shadow),
+    inset 2px 2px var(--w98-light) !important;
+}
+
+@media (max-width: 600px) {
+  .code-shell .code-shell-subtitle { display: none; }
 }
