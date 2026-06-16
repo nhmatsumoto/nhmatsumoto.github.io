@@ -1,0 +1,536 @@
+id = "2026-06-17-1100"
+slug = "algoritmos-de-ordenacao-em-c"
+title = "Algoritmos de ordenação em C: do bubble sort ao quicksort"
+title_en_us = "Sorting algorithms in C: from bubble sort to quicksort"
+title_ja_jp = "C で学ぶ整列アルゴリズム：バブルソートからクイックソートまで"
+summary = "Implementar ordenação em C, sem coletor de lixo e mexendo direto na memória, deixa visível o que linguagens de alto nível escondem. Bubble, selection, insertion, merge e quick sort com código completo, a complexidade de cada um e quando cada estabilidade importa."
+summary_en_us = "Implementing sorting in C, with no garbage collector and touching memory directly, exposes what high-level languages hide. Bubble, selection, insertion, merge and quick sort with full code, each one's complexity and when stability matters."
+summary_ja_jp = "ガベージコレクタなしでメモリを直接触る C で整列を実装すると、高水準言語が隠すものが見える。バブル、選択、挿入、マージ、クイックソートの完全なコード、それぞれの計算量、そして安定性が問題になる場面を扱う。"
+published_at = "2026-06-17T11:00:00+09:00"
+updated_at = "2026-06-17T11:00:00+09:00"
+status = "published"
+tags = ["c", "algoritmos", "ordenacao", "computacao", "fundamentos", "performance"]
+badges = ["C", "algorithms", "foundations"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = true
+impact = [
+  "Implementar os sorts em C mostra na pele a diferença entre O(n^2) e O(n log n): em 1 milhão de elementos é a diferença entre segundos e horas",
+  "Ver as trocas in-place e a alocação extra do merge sort torna concreto o trade-off entre tempo e memória que o Big O sozinho não conta",
+]
+trade_offs = [
+  "Quicksort é o mais rápido na média mas degrada para O(n^2) com pivô ruim em dados já ordenados; merge sort garante O(n log n) sempre, ao custo de O(n) de memória extra",
+  "Os algoritmos quadráticos (bubble, selection, insertion) só fazem sentido em listas pequenas ou quase ordenadas; em produção use qsort da biblioteca padrão",
+]
+lessons = [
+  "Estabilidade não é detalhe: insertion e merge preservam a ordem de elementos iguais, quick e selection clássicos não",
+  "Em C o ponteiro e o tamanho do elemento são explícitos, o que torna qsort genérico via void* e função de comparação",
+]
+body = '''
+Ordenar é o "olá mundo" dos algoritmos, e implementar em **C** é a melhor forma de entender de verdade. Sem coletor de lixo, sem array que cresce sozinho, mexendo direto na memória, cada troca e cada alocação ficam visíveis. O que linguagens de alto nível escondem atrás de `list.sort()`, em C você escreve com as próprias mãos. Vamos do mais ingênuo ao que a biblioteca padrão usa, sempre observando a complexidade e a estabilidade.
+
+## A função de troca
+
+Quase todo sort in-place troca elementos. Em C, isso é explícito:
+
+```c
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+```
+
+## Bubble sort: o didático
+
+O bubble sort percorre o array repetidamente, trocando vizinhos fora de ordem. A cada passada, o maior elemento "borbulha" para o fim. É **O(n^2)** e raramente útil na prática, mas é o mais fácil de visualizar.
+
+```c
+void bubble_sort(int v[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int trocou = 0;
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (v[j] > v[j + 1]) {
+                swap(&v[j], &v[j + 1]);
+                trocou = 1;
+            }
+        }
+        if (!trocou) break; // ja esta ordenado
+    }
+}
+```
+
+```mermaid
+graph LR
+    A["5 1 4 2"] --> B["1 4 2 5"] --> C["1 2 4 5"]
+```
+
+## Selection sort: poucas trocas
+
+O selection sort encontra o menor elemento do trecho não ordenado e o coloca no início. Faz no máximo `n` trocas, útil quando escrever na memória é caro, mas continua **O(n^2)** em comparações. Note que ele não é estável.
+
+```c
+void selection_sort(int v[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int menor = i;
+        for (int j = i + 1; j < n; j++)
+            if (v[j] < v[menor]) menor = j;
+        swap(&v[i], &v[menor]);
+    }
+}
+```
+
+## Insertion sort: ótimo para quase ordenado
+
+O insertion sort constrói a parte ordenada um elemento por vez, inserindo cada novo valor na posição certa. É **O(n^2)** no pior caso, mas **O(n)** quando o array já está quase ordenado, e é estável. Por isso ele aparece dentro de sorts híbridos para tratar trechos pequenos.
+
+```c
+void insertion_sort(int v[], int n) {
+    for (int i = 1; i < n; i++) {
+        int chave = v[i];
+        int j = i - 1;
+        while (j >= 0 && v[j] > chave) {
+            v[j + 1] = v[j];
+            j--;
+        }
+        v[j + 1] = chave;
+    }
+}
+```
+
+## Merge sort: garantia de O(n log n)
+
+O merge sort divide o array ao meio recursivamente até chegar a pedaços de um elemento, depois funde as metades já ordenadas. Ele garante **O(n log n)** em qualquer entrada e é estável, ao custo de **O(n)** de memória extra para o buffer de fusão.
+
+```c
+void merge(int v[], int ini, int meio, int fim) {
+    int n = fim - ini + 1;
+    int *aux = malloc(n * sizeof(int));
+    int i = ini, j = meio + 1, k = 0;
+    while (i <= meio && j <= fim)
+        aux[k++] = (v[i] <= v[j]) ? v[i++] : v[j++]; // <= mantem estabilidade
+    while (i <= meio) aux[k++] = v[i++];
+    while (j <= fim)  aux[k++] = v[j++];
+    for (k = 0; k < n; k++) v[ini + k] = aux[k];
+    free(aux);
+}
+
+void merge_sort(int v[], int ini, int fim) {
+    if (ini >= fim) return;
+    int meio = ini + (fim - ini) / 2;
+    merge_sort(v, ini, meio);
+    merge_sort(v, meio + 1, fim);
+    merge(v, ini, meio, fim);
+}
+```
+
+```mermaid
+graph TD
+    A["38 27 43 3"] --> B["38 27"]
+    A --> C["43 3"]
+    B --> D["27 38"]
+    C --> E["3 43"]
+    D --> F["3 27 38 43"]
+    E --> F
+```
+
+## Quick sort: o mais rápido na média
+
+O quicksort escolhe um **pivô**, particiona o array em menores e maiores que ele, e ordena cada lado recursivamente. Na média é **O(n log n)** e costuma ser o mais rápido na prática por ser in-place e amigável ao cache. O risco é o pior caso **O(n^2)**, que aparece com pivô ruim em dados já ordenados.
+
+```c
+int particiona(int v[], int ini, int fim) {
+    int pivo = v[fim];      // pivo = ultimo elemento
+    int i = ini - 1;
+    for (int j = ini; j < fim; j++) {
+        if (v[j] <= pivo) {
+            i++;
+            swap(&v[i], &v[j]);
+        }
+    }
+    swap(&v[i + 1], &v[fim]);
+    return i + 1;
+}
+
+void quick_sort(int v[], int ini, int fim) {
+    if (ini >= fim) return;
+    int p = particiona(v, ini, fim);
+    quick_sort(v, ini, p - 1);
+    quick_sort(v, p + 1, fim);
+}
+```
+
+```mermaid
+graph TD
+    A["pivo = 7<br/>[3 8 7 1 9 2]"] --> B["menores: 3 1 2"]
+    A --> C["maiores: 8 9"]
+    B --> D["ordena recursivamente"]
+    C --> D
+```
+
+## A tabela de complexidade
+
+| Algoritmo | Melhor | Médio | Pior | Memória | Estável |
+| --- | --- | --- | --- | --- | --- |
+| Bubble | O(n) | O(n^2) | O(n^2) | O(1) | sim |
+| Selection | O(n^2) | O(n^2) | O(n^2) | O(1) | não |
+| Insertion | O(n) | O(n^2) | O(n^2) | O(1) | sim |
+| Merge | O(n log n) | O(n log n) | O(n log n) | O(n) | sim |
+| Quick | O(n log n) | O(n log n) | O(n^2) | O(log n) | não |
+
+## Na prática: qsort
+
+Você raramente escreve um sort em produção. A biblioteca padrão de C oferece `qsort`, genérico via `void*` e uma função de comparação. É a forma idiomática:
+
+```c
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b); // crescente
+}
+
+int v[] = {5, 2, 8, 1};
+qsort(v, 4, sizeof(int), cmp);
+```
+
+## Conclusão
+
+Implementar ordenação em C ensina mais do que ordenar: ensina a sentir o custo de cada operação. Os algoritmos quadráticos servem para listas pequenas ou quase ordenadas; o merge sort entrega garantia de O(n log n) e estabilidade pagando memória; o quicksort entrega a maior velocidade média aceitando um pior caso raro. Em C esses trade-offs não ficam escondidos atrás de uma chamada de método, eles aparecem no ponteiro, no `malloc` e na recursão. Entender isso é o que permite, depois, confiar no `qsort` sabendo exatamente o que ele faz por baixo.
+'''
+body_en_us = '''
+Sorting is the "hello world" of algorithms, and implementing it in **C** is the best way to truly understand it. No garbage collector, no array that grows on its own, touching memory directly, every swap and every allocation is visible. What high-level languages hide behind `list.sort()`, in C you write with your own hands. We will go from the most naive to what the standard library uses, always watching complexity and stability.
+
+## The swap function
+
+Almost every in-place sort swaps elements. In C, that is explicit:
+
+```c
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+```
+
+## Bubble sort: the teaching one
+
+Bubble sort sweeps the array repeatedly, swapping out-of-order neighbors. On each pass, the largest element "bubbles" to the end. It is **O(n^2)** and rarely useful in practice, but it is the easiest to visualize.
+
+```c
+void bubble_sort(int v[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int swapped = 0;
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (v[j] > v[j + 1]) {
+                swap(&v[j], &v[j + 1]);
+                swapped = 1;
+            }
+        }
+        if (!swapped) break; // already sorted
+    }
+}
+```
+
+```mermaid
+graph LR
+    A["5 1 4 2"] --> B["1 4 2 5"] --> C["1 2 4 5"]
+```
+
+## Selection sort: few swaps
+
+Selection sort finds the smallest element of the unsorted part and places it at the front. It makes at most `n` swaps, useful when writing memory is expensive, but it stays **O(n^2)** in comparisons. Note that it is not stable.
+
+```c
+void selection_sort(int v[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int min = i;
+        for (int j = i + 1; j < n; j++)
+            if (v[j] < v[min]) min = j;
+        swap(&v[i], &v[min]);
+    }
+}
+```
+
+## Insertion sort: great for nearly sorted
+
+Insertion sort builds the sorted part one element at a time, inserting each new value into its right place. It is **O(n^2)** in the worst case, but **O(n)** when the array is already nearly sorted, and it is stable. That is why it appears inside hybrid sorts to handle small chunks.
+
+```c
+void insertion_sort(int v[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = v[i];
+        int j = i - 1;
+        while (j >= 0 && v[j] > key) {
+            v[j + 1] = v[j];
+            j--;
+        }
+        v[j + 1] = key;
+    }
+}
+```
+
+## Merge sort: guaranteed O(n log n)
+
+Merge sort splits the array in half recursively until it reaches single-element pieces, then merges the already sorted halves. It guarantees **O(n log n)** on any input and is stable, at the cost of **O(n)** extra memory for the merge buffer.
+
+```c
+void merge(int v[], int lo, int mid, int hi) {
+    int n = hi - lo + 1;
+    int *aux = malloc(n * sizeof(int));
+    int i = lo, j = mid + 1, k = 0;
+    while (i <= mid && j <= hi)
+        aux[k++] = (v[i] <= v[j]) ? v[i++] : v[j++]; // <= keeps stability
+    while (i <= mid) aux[k++] = v[i++];
+    while (j <= hi)  aux[k++] = v[j++];
+    for (k = 0; k < n; k++) v[lo + k] = aux[k];
+    free(aux);
+}
+
+void merge_sort(int v[], int lo, int hi) {
+    if (lo >= hi) return;
+    int mid = lo + (hi - lo) / 2;
+    merge_sort(v, lo, mid);
+    merge_sort(v, mid + 1, hi);
+    merge(v, lo, mid, hi);
+}
+```
+
+```mermaid
+graph TD
+    A["38 27 43 3"] --> B["38 27"]
+    A --> C["43 3"]
+    B --> D["27 38"]
+    C --> E["3 43"]
+    D --> F["3 27 38 43"]
+    E --> F
+```
+
+## Quick sort: fastest on average
+
+Quicksort picks a **pivot**, partitions the array into smaller and larger than it, and sorts each side recursively. On average it is **O(n log n)** and is usually the fastest in practice, being in-place and cache friendly. The risk is the **O(n^2)** worst case, which appears with a bad pivot on already sorted data.
+
+```c
+int partition(int v[], int lo, int hi) {
+    int pivot = v[hi];      // pivot = last element
+    int i = lo - 1;
+    for (int j = lo; j < hi; j++) {
+        if (v[j] <= pivot) {
+            i++;
+            swap(&v[i], &v[j]);
+        }
+    }
+    swap(&v[i + 1], &v[hi]);
+    return i + 1;
+}
+
+void quick_sort(int v[], int lo, int hi) {
+    if (lo >= hi) return;
+    int p = partition(v, lo, hi);
+    quick_sort(v, lo, p - 1);
+    quick_sort(v, p + 1, hi);
+}
+```
+
+```mermaid
+graph TD
+    A["pivot = 7<br/>[3 8 7 1 9 2]"] --> B["smaller: 3 1 2"]
+    A --> C["larger: 8 9"]
+    B --> D["sort recursively"]
+    C --> D
+```
+
+## The complexity table
+
+| Algorithm | Best | Average | Worst | Memory | Stable |
+| --- | --- | --- | --- | --- | --- |
+| Bubble | O(n) | O(n^2) | O(n^2) | O(1) | yes |
+| Selection | O(n^2) | O(n^2) | O(n^2) | O(1) | no |
+| Insertion | O(n) | O(n^2) | O(n^2) | O(1) | yes |
+| Merge | O(n log n) | O(n log n) | O(n log n) | O(n) | yes |
+| Quick | O(n log n) | O(n log n) | O(n^2) | O(log n) | no |
+
+## In practice: qsort
+
+You rarely write a sort in production. C's standard library offers `qsort`, generic via `void*` and a comparison function. It is the idiomatic way:
+
+```c
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b); // ascending
+}
+
+int v[] = {5, 2, 8, 1};
+qsort(v, 4, sizeof(int), cmp);
+```
+
+## Conclusion
+
+Implementing sorting in C teaches more than sorting: it teaches you to feel the cost of each operation. The quadratic algorithms serve small or nearly sorted lists; merge sort delivers guaranteed O(n log n) and stability by paying memory; quicksort delivers the highest average speed by accepting a rare worst case. In C those trade-offs are not hidden behind a method call, they appear in the pointer, in `malloc` and in the recursion. Understanding that is what lets you later trust `qsort` knowing exactly what it does underneath.
+'''
+body_ja_jp = '''
+整列はアルゴリズムの「ハローワールド」であり、**C** で実装することが本当に理解する最良の方法だ。ガベージコレクタもなく、勝手に伸びる配列もなく、メモリを直接触ることで、すべての交換とすべての確保が見える。高水準言語が `list.sort()` の裏に隠すものを、C では自分の手で書く。最も素朴なものから標準ライブラリが使うものまで、計算量と安定性を常に見ながら進もう。
+
+## swap 関数
+
+ほとんどのインプレース整列は要素を交換する。C ではそれが明示的だ。
+
+```c
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+```
+
+## バブルソート：教育用
+
+バブルソートは配列を繰り返し走査し、順序が逆の隣同士を交換する。各パスで最大の要素が末尾へ「浮かび上がる」。**O(n^2)** で実用ではめったに役立たないが、最も可視化しやすい。
+
+```c
+void bubble_sort(int v[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int swapped = 0;
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (v[j] > v[j + 1]) {
+                swap(&v[j], &v[j + 1]);
+                swapped = 1;
+            }
+        }
+        if (!swapped) break; // すでに整列済み
+    }
+}
+```
+
+```mermaid
+graph LR
+    A["5 1 4 2"] --> B["1 4 2 5"] --> C["1 2 4 5"]
+```
+
+## 選択ソート：交換が少ない
+
+選択ソートは未整列部分の最小要素を見つけ、先頭に置く。交換は最大 `n` 回で、メモリへの書き込みが高価なときに有用だが、比較は **O(n^2)** のままだ。安定でないことに注意。
+
+```c
+void selection_sort(int v[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int min = i;
+        for (int j = i + 1; j < n; j++)
+            if (v[j] < v[min]) min = j;
+        swap(&v[i], &v[min]);
+    }
+}
+```
+
+## 挿入ソート：ほぼ整列済みに最適
+
+挿入ソートは整列済み部分を一要素ずつ作り、各新しい値を正しい位置に挿入する。最悪では **O(n^2)** だが、配列がすでにほぼ整列していれば **O(n)** で、安定だ。だから小さな塊を扱うためにハイブリッド整列の内部に現れる。
+
+```c
+void insertion_sort(int v[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = v[i];
+        int j = i - 1;
+        while (j >= 0 && v[j] > key) {
+            v[j + 1] = v[j];
+            j--;
+        }
+        v[j + 1] = key;
+    }
+}
+```
+
+## マージソート：O(n log n) を保証
+
+マージソートは配列を再帰的に半分に分け、一要素の塊に達したら、整列済みの半分同士を融合する。どんな入力でも **O(n log n)** を保証し安定だが、融合バッファのために **O(n)** の追加メモリを要する。
+
+```c
+void merge(int v[], int lo, int mid, int hi) {
+    int n = hi - lo + 1;
+    int *aux = malloc(n * sizeof(int));
+    int i = lo, j = mid + 1, k = 0;
+    while (i <= mid && j <= hi)
+        aux[k++] = (v[i] <= v[j]) ? v[i++] : v[j++]; // <= で安定性を保つ
+    while (i <= mid) aux[k++] = v[i++];
+    while (j <= hi)  aux[k++] = v[j++];
+    for (k = 0; k < n; k++) v[lo + k] = aux[k];
+    free(aux);
+}
+
+void merge_sort(int v[], int lo, int hi) {
+    if (lo >= hi) return;
+    int mid = lo + (hi - lo) / 2;
+    merge_sort(v, lo, mid);
+    merge_sort(v, mid + 1, hi);
+    merge(v, lo, mid, hi);
+}
+```
+
+```mermaid
+graph TD
+    A["38 27 43 3"] --> B["38 27"]
+    A --> C["43 3"]
+    B --> D["27 38"]
+    C --> E["3 43"]
+    D --> F["3 27 38 43"]
+    E --> F
+```
+
+## クイックソート：平均で最速
+
+クイックソートは **ピボット** を選び、配列をそれより小さいものと大きいものに分割し、各側を再帰的に整列する。平均で **O(n log n)** で、インプレースかつキャッシュに優しいため実用では通常最速だ。リスクは **O(n^2)** の最悪ケースで、整列済みデータに悪いピボットを選ぶと現れる。
+
+```c
+int partition(int v[], int lo, int hi) {
+    int pivot = v[hi];      // ピボット = 末尾要素
+    int i = lo - 1;
+    for (int j = lo; j < hi; j++) {
+        if (v[j] <= pivot) {
+            i++;
+            swap(&v[i], &v[j]);
+        }
+    }
+    swap(&v[i + 1], &v[hi]);
+    return i + 1;
+}
+
+void quick_sort(int v[], int lo, int hi) {
+    if (lo >= hi) return;
+    int p = partition(v, lo, hi);
+    quick_sort(v, lo, p - 1);
+    quick_sort(v, p + 1, hi);
+}
+```
+
+```mermaid
+graph TD
+    A["ピボット = 7<br/>[3 8 7 1 9 2]"] --> B["小さい: 3 1 2"]
+    A --> C["大きい: 8 9"]
+    B --> D["再帰的に整列"]
+    C --> D
+```
+
+## 計算量の表
+
+| アルゴリズム | 最良 | 平均 | 最悪 | メモリ | 安定 |
+| --- | --- | --- | --- | --- | --- |
+| バブル | O(n) | O(n^2) | O(n^2) | O(1) | はい |
+| 選択 | O(n^2) | O(n^2) | O(n^2) | O(1) | いいえ |
+| 挿入 | O(n) | O(n^2) | O(n^2) | O(1) | はい |
+| マージ | O(n log n) | O(n log n) | O(n log n) | O(n) | はい |
+| クイック | O(n log n) | O(n log n) | O(n^2) | O(log n) | いいえ |
+
+## 実践：qsort
+
+実務で整列を自分で書くことはまれだ。C の標準ライブラリは `qsort` を提供する。`void*` と比較関数で汎用だ。これが慣用的なやり方だ。
+
+```c
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b); // 昇順
+}
+
+int v[] = {5, 2, 8, 1};
+qsort(v, 4, sizeof(int), cmp);
+```
+
+## 結論
+
+C で整列を実装すると、整列以上のことを学ぶ。各操作のコストを肌で感じることを学ぶのだ。二次のアルゴリズムは小さい、またはほぼ整列したリストに役立つ。マージソートはメモリを払って保証された O(n log n) と安定性を提供する。クイックソートはまれな最悪ケースを受け入れて最高の平均速度を提供する。C ではこれらのトレードオフはメソッド呼び出しの裏に隠れず、ポインタに、`malloc` に、再帰に現れる。それを理解することが、後で `qsort` が裏で何をしているかを正確に知った上で信頼することを可能にする。
+'''

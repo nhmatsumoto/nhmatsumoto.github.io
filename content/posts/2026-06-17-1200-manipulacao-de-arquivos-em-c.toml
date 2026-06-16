@@ -1,0 +1,389 @@
+id = "2026-06-17-1200"
+slug = "manipulacao-de-arquivos-em-c"
+title = "Manipulação de arquivos em C: do FILE* ao fechar sem vazar"
+title_en_us = "File handling in C: from FILE* to closing without leaking"
+title_ja_jp = "C のファイル操作：FILE* からリークなく閉じるまで"
+summary = "Ler e escrever arquivos em C é uma sequência simples: abrir, checar, operar, fechar. O que separa código robusto de código que corrompe dados está nos detalhes: o modo de abertura, o buffer, a checagem de erro e o fclose que nunca pode faltar."
+summary_en_us = "Reading and writing files in C is a simple sequence: open, check, operate, close. What separates robust code from code that corrupts data lives in the details: the open mode, the buffer, the error check and the fclose that must never be missing."
+summary_ja_jp = "C でのファイルの読み書きは単純な流れだ。開く、確認する、操作する、閉じる。堅牢なコードとデータを壊すコードを分けるのは細部にある。開くモード、バッファ、エラー確認、そして決して欠かせない fclose だ。"
+published_at = "2026-06-17T12:00:00+09:00"
+updated_at = "2026-06-17T12:00:00+09:00"
+status = "published"
+tags = ["c", "arquivos", "io", "sistemas", "fundamentos", "programacao"]
+badges = ["C", "file-io", "systems"]
+repo_url = ""
+code_url = ""
+featured = false
+has_math = false
+impact = [
+  "Checar o retorno de fopen antes de usar o ponteiro evita o crash mais comum em C: dereferenciar NULL quando o arquivo não existe ou não há permissão",
+  "Entender o buffer da stdio explica por que dados podem 'sumir' até o fclose ou fflush, e por que o fechamento é parte da escrita, não um detalhe",
+]
+trade_offs = [
+  "A stdio (fopen/fread) é portável e bufferizada, ideal para a maioria; chamadas de sistema cruas (open/read) dão controle fino mas amarram o código ao sistema operacional",
+  "Modo texto e modo binário divergem em Windows por causa da conversão de fim de linha; ignorar isso corrompe arquivos binários silenciosamente",
+]
+lessons = [
+  "Todo fopen tem que ter um fclose no caminho de saída, inclusive nos caminhos de erro, senão o programa vaza descritores",
+  "Sempre cheque o retorno de fopen, fread e fwrite: em C o erro não lança exceção, ele volta em um valor que você precisa ler",
+]
+body = '''
+Manipular arquivos em C é, na superfície, uma rotina de quatro passos: abrir, checar, operar, fechar. A linguagem não tem coletor de lixo nem `using` automático, então cada recurso que você abre é seu para fechar. O que separa um código que lê e grava com segurança de um que corrompe dados ou vaza descritores está inteiramente nos detalhes desses quatro passos. Vamos por eles, com a stdio (`FILE*`), que é o jeito portável e bufferizado de fazer I/O em C.
+
+## O fluxo essencial
+
+```mermaid
+graph LR
+    A["fopen"] --> B{"retornou NULL?"}
+    B -->|sim| C["trata erro e sai"]
+    B -->|nao| D["fread / fwrite / fprintf"]
+    D --> E["fclose"]
+```
+
+Esse diagrama é o contrato inteiro. O ponto que iniciantes pulam é o losango: `fopen` pode falhar, e usar o ponteiro sem checar é a causa número um de crash em C.
+
+## Abrir: fopen e os modos
+
+`fopen` recebe o caminho e um **modo**, e devolve um `FILE*` ou `NULL` em caso de falha. O modo decide tudo: se cria, se apaga, se acrescenta, se é texto ou binário.
+
+| Modo | Significado |
+| --- | --- |
+| `"r"` | leitura; falha se o arquivo não existe |
+| `"w"` | escrita; cria ou **trunca** (apaga o conteúdo) |
+| `"a"` | acréscimo; escreve sempre no fim |
+| `"r+"` | leitura e escrita; arquivo deve existir |
+| `"rb"`, `"wb"` | versões binárias (importante no Windows) |
+
+```c
+FILE *f = fopen("dados.txt", "r");
+if (f == NULL) {
+    perror("nao foi possivel abrir dados.txt"); // imprime o motivo do SO
+    return 1;
+}
+```
+
+`perror` é o detalhe profissional: ele lê o `errno` definido pela falha e imprime a causa real ("No such file or directory", "Permission denied"), em vez de uma mensagem genérica.
+
+## Ler texto linha a linha
+
+Para texto, `fgets` lê uma linha por vez com limite de tamanho, o que evita estouro de buffer. Nunca use `gets`, que não tem limite e é uma vulnerabilidade clássica.
+
+```c
+char linha[256];
+while (fgets(linha, sizeof(linha), f) != NULL) {
+    printf("%s", linha);
+}
+```
+
+O laço para quando `fgets` devolve `NULL`, que sinaliza fim de arquivo ou erro. `sizeof(linha)` garante que nunca escrevemos além do buffer.
+
+## Escrever texto
+
+Para escrita formatada, `fprintf` é o `printf` que mira em um arquivo. Para escrita simples, `fputs`.
+
+```c
+FILE *out = fopen("saida.txt", "w"); // cuidado: trunca o que existia
+if (out == NULL) { perror("saida.txt"); return 1; }
+
+fprintf(out, "usuario: %s, pontos: %d\\n", nome, pontos);
+fputs("linha fixa\\n", out);
+
+fclose(out);
+```
+
+## Ler e escrever binário
+
+Para dados que não são texto, `fread` e `fwrite` movem blocos crus de bytes. Eles trabalham em termos de "quantos elementos de qual tamanho", e devolvem quantos elementos realmente processaram, número que você deve checar.
+
+```c
+typedef struct { int id; double saldo; } Conta;
+
+Conta c = { 42, 1500.75 };
+FILE *bin = fopen("contas.dat", "wb");
+fwrite(&c, sizeof(Conta), 1, bin); // grava 1 struct
+fclose(bin);
+
+Conta lida;
+FILE *r = fopen("contas.dat", "rb");
+if (fread(&lida, sizeof(Conta), 1, r) != 1) { // checa o retorno
+    fprintf(stderr, "leitura incompleta\\n");
+}
+fclose(r);
+```
+
+No Windows, abrir esse arquivo em modo texto (`"w"` em vez de `"wb"`) corromperia os bytes por causa da conversão automática de fim de linha. Em dados binários, o `b` não é opcional.
+
+## O buffer e o fclose que não pode faltar
+
+Aqui está o detalhe que mais surpreende. A stdio **bufferiza**: quando você chama `fwrite`, os dados muitas vezes vão para um buffer em memória, não direto para o disco. Eles são gravados de fato quando o buffer enche, quando você chama `fflush`, ou quando você chama `fclose`.
+
+```mermaid
+sequenceDiagram
+    participant P as Programa
+    participant B as Buffer (stdio)
+    participant D as Disco
+    P->>B: fwrite (dados)
+    Note over B: acumula, ainda nao no disco
+    P->>B: fflush ou fclose
+    B->>D: grava de verdade
+```
+
+A consequência prática é dura: se o programa termina sem `fclose`, o conteúdo do buffer **se perde**. Por isso o fechamento não é cortesia, é parte da escrita. E todo `fopen` precisa de um `fclose` em todos os caminhos de saída, inclusive nos de erro, ou o programa vaza descritores de arquivo até o sistema operacional recusar abrir mais.
+
+```c
+FILE *f = fopen("a.txt", "r");
+if (!f) return 1;
+
+if (algo_deu_errado()) {
+    fclose(f);   // nao esqueca no caminho de erro
+    return 1;
+}
+
+fclose(f);       // e no caminho normal
+return 0;
+```
+
+## Conclusão
+
+Manipular arquivos em C é simples de descrever e exige disciplina para fazer certo. O fluxo abrir, checar, operar, fechar nunca muda; o que muda é o rigor com que você trata cada passo. Cheque sempre o retorno de `fopen`, porque o erro em C não grita, ele volta num valor. Escolha o modo certo, lembrando que `"w"` trunca e que binário precisa do `b`. E nunca, em nenhum caminho, esqueça o `fclose`, porque em C o buffer só vira disco quando você manda, e o recurso só volta para o sistema quando você o devolve.
+'''
+body_en_us = '''
+Handling files in C is, on the surface, a four-step routine: open, check, operate, close. The language has no garbage collector and no automatic `using`, so every resource you open is yours to close. What separates code that reads and writes safely from code that corrupts data or leaks descriptors lives entirely in the details of those four steps. Let us walk through them, using the stdio (`FILE*`), the portable and buffered way to do I/O in C.
+
+## The essential flow
+
+```mermaid
+graph LR
+    A["fopen"] --> B{"returned NULL?"}
+    B -->|yes| C["handle error and exit"]
+    B -->|no| D["fread / fwrite / fprintf"]
+    D --> E["fclose"]
+```
+
+That diagram is the whole contract. The point beginners skip is the diamond: `fopen` can fail, and using the pointer without checking is the number one cause of crashes in C.
+
+## Open: fopen and the modes
+
+`fopen` takes the path and a **mode**, and returns a `FILE*` or `NULL` on failure. The mode decides everything: whether it creates, erases, appends, and whether it is text or binary.
+
+| Mode | Meaning |
+| --- | --- |
+| `"r"` | read; fails if the file does not exist |
+| `"w"` | write; creates or **truncates** (erases the content) |
+| `"a"` | append; always writes at the end |
+| `"r+"` | read and write; file must exist |
+| `"rb"`, `"wb"` | binary versions (important on Windows) |
+
+```c
+FILE *f = fopen("data.txt", "r");
+if (f == NULL) {
+    perror("could not open data.txt"); // prints the OS reason
+    return 1;
+}
+```
+
+`perror` is the professional detail: it reads the `errno` set by the failure and prints the real cause ("No such file or directory", "Permission denied"), instead of a generic message.
+
+## Read text line by line
+
+For text, `fgets` reads one line at a time with a size limit, which avoids buffer overflow. Never use `gets`, which has no limit and is a classic vulnerability.
+
+```c
+char line[256];
+while (fgets(line, sizeof(line), f) != NULL) {
+    printf("%s", line);
+}
+```
+
+The loop stops when `fgets` returns `NULL`, signaling end of file or error. `sizeof(line)` guarantees we never write past the buffer.
+
+## Write text
+
+For formatted writing, `fprintf` is `printf` aimed at a file. For plain writing, `fputs`.
+
+```c
+FILE *out = fopen("output.txt", "w"); // careful: truncates what existed
+if (out == NULL) { perror("output.txt"); return 1; }
+
+fprintf(out, "user: %s, points: %d\\n", name, points);
+fputs("fixed line\\n", out);
+
+fclose(out);
+```
+
+## Read and write binary
+
+For data that is not text, `fread` and `fwrite` move raw blocks of bytes. They work in terms of "how many elements of which size", and return how many elements they actually processed, a number you must check.
+
+```c
+typedef struct { int id; double balance; } Account;
+
+Account c = { 42, 1500.75 };
+FILE *bin = fopen("accounts.dat", "wb");
+fwrite(&c, sizeof(Account), 1, bin); // writes 1 struct
+fclose(bin);
+
+Account read;
+FILE *r = fopen("accounts.dat", "rb");
+if (fread(&read, sizeof(Account), 1, r) != 1) { // check the return
+    fprintf(stderr, "incomplete read\\n");
+}
+fclose(r);
+```
+
+On Windows, opening this file in text mode (`"w"` instead of `"wb"`) would corrupt the bytes because of the automatic line-ending conversion. For binary data, the `b` is not optional.
+
+## The buffer and the fclose that cannot be missing
+
+Here is the detail that surprises most. The stdio **buffers**: when you call `fwrite`, the data often goes to an in-memory buffer, not straight to disk. It is actually written when the buffer fills, when you call `fflush`, or when you call `fclose`.
+
+```mermaid
+sequenceDiagram
+    participant P as Program
+    participant B as Buffer (stdio)
+    participant D as Disk
+    P->>B: fwrite (data)
+    Note over B: accumulates, not on disk yet
+    P->>B: fflush or fclose
+    B->>D: actually written
+```
+
+The practical consequence is harsh: if the program ends without `fclose`, the buffer content **is lost**. That is why closing is not a courtesy, it is part of writing. And every `fopen` needs an `fclose` on all exit paths, including error paths, or the program leaks file descriptors until the operating system refuses to open more.
+
+```c
+FILE *f = fopen("a.txt", "r");
+if (!f) return 1;
+
+if (something_failed()) {
+    fclose(f);   // do not forget it on the error path
+    return 1;
+}
+
+fclose(f);       // and on the normal path
+return 0;
+```
+
+## Conclusion
+
+Handling files in C is simple to describe and demands discipline to do right. The flow open, check, operate, close never changes; what changes is the rigor with which you treat each step. Always check the return of `fopen`, because errors in C do not shout, they come back in a value. Choose the right mode, remembering that `"w"` truncates and that binary needs the `b`. And never, on any path, forget the `fclose`, because in C the buffer becomes disk only when you say so, and the resource returns to the system only when you give it back.
+'''
+body_ja_jp = '''
+C でのファイル操作は、表面上は四段階の手順だ。開く、確認する、操作する、閉じる。この言語にはガベージコレクタも自動の `using` もないので、開いたすべてのリソースは自分で閉じる責任がある。安全に読み書きするコードと、データを壊したりディスクリプタをリークするコードを分けるのは、この四段階の細部に完全に宿る。C で I/O を行う移植可能でバッファ付きの方法、stdio（`FILE*`）を使って見ていこう。
+
+## 本質的な流れ
+
+```mermaid
+graph LR
+    A["fopen"] --> B{"NULL を返したか？"}
+    B -->|はい| C["エラー処理して終了"]
+    B -->|いいえ| D["fread / fwrite / fprintf"]
+    D --> E["fclose"]
+```
+
+この図が契約のすべてだ。初心者が飛ばす点はひし形だ。`fopen` は失敗しうるので、確認せずにポインタを使うのは C のクラッシュ第一の原因である。
+
+## 開く：fopen とモード
+
+`fopen` はパスと **モード** を受け取り、`FILE*` か、失敗時には `NULL` を返す。モードがすべてを決める。作るのか、消すのか、追記するのか、テキストかバイナリか。
+
+| モード | 意味 |
+| --- | --- |
+| `"r"` | 読み込み。ファイルがなければ失敗 |
+| `"w"` | 書き込み。作成または **切り詰め**（内容を消す） |
+| `"a"` | 追記。常に末尾に書く |
+| `"r+"` | 読み書き。ファイルが存在する必要がある |
+| `"rb"`, `"wb"` | バイナリ版（Windows で重要） |
+
+```c
+FILE *f = fopen("data.txt", "r");
+if (f == NULL) {
+    perror("data.txt を開けませんでした"); // OS の理由を表示
+    return 1;
+}
+```
+
+`perror` はプロらしい細部だ。失敗が設定した `errno` を読み、汎用メッセージの代わりに本当の原因（"No such file or directory"、"Permission denied"）を表示する。
+
+## テキストを一行ずつ読む
+
+テキストには `fgets` がサイズ制限付きで一行ずつ読む。これがバッファオーバーフローを防ぐ。制限がなく古典的な脆弱性である `gets` は決して使わないこと。
+
+```c
+char line[256];
+while (fgets(line, sizeof(line), f) != NULL) {
+    printf("%s", line);
+}
+```
+
+ループは `fgets` が `NULL` を返したときに止まり、それはファイル終端かエラーを示す。`sizeof(line)` がバッファを越えて書かないことを保証する。
+
+## テキストを書く
+
+整形した書き込みには `fprintf` が、ファイルを狙う `printf` だ。単純な書き込みには `fputs`。
+
+```c
+FILE *out = fopen("output.txt", "w"); // 注意：既存を切り詰める
+if (out == NULL) { perror("output.txt"); return 1; }
+
+fprintf(out, "user: %s, points: %d\\n", name, points);
+fputs("固定行\\n", out);
+
+fclose(out);
+```
+
+## バイナリの読み書き
+
+テキストでないデータには `fread` と `fwrite` が生のバイト塊を動かす。「どのサイズの要素を何個」という単位で働き、実際に処理した要素数を返す。この数は必ず確認すべきだ。
+
+```c
+typedef struct { int id; double balance; } Account;
+
+Account c = { 42, 1500.75 };
+FILE *bin = fopen("accounts.dat", "wb");
+fwrite(&c, sizeof(Account), 1, bin); // 1 つの struct を書く
+fclose(bin);
+
+Account read;
+FILE *r = fopen("accounts.dat", "rb");
+if (fread(&read, sizeof(Account), 1, r) != 1) { // 戻り値を確認
+    fprintf(stderr, "読み込みが不完全\\n");
+}
+fclose(r);
+```
+
+Windows ではこのファイルをテキストモード（`"wb"` ではなく `"w"`）で開くと、自動の改行変換のためにバイトが壊れる。バイナリデータでは `b` は任意ではない。
+
+## バッファと、欠かせない fclose
+
+最も驚かせる細部がここだ。stdio は **バッファリングする**。`fwrite` を呼ぶと、データはしばしばディスクへ直接ではなくメモリ上のバッファへ行く。実際に書かれるのは、バッファが満たされたとき、`fflush` を呼んだとき、または `fclose` を呼んだときだ。
+
+```mermaid
+sequenceDiagram
+    participant P as プログラム
+    participant B as バッファ（stdio）
+    participant D as ディスク
+    P->>B: fwrite（データ）
+    Note over B: 蓄積、まだディスクにない
+    P->>B: fflush または fclose
+    B->>D: 実際に書き込む
+```
+
+実際的な帰結は厳しい。`fclose` なしでプログラムが終わると、バッファの内容は **失われる**。だから閉じることは礼儀ではなく、書き込みの一部だ。そしてすべての `fopen` は、エラー経路を含むすべての出口経路で `fclose` を必要とする。さもなければプログラムはファイルディスクリプタをリークし、OS がそれ以上の open を拒否するまで続く。
+
+```c
+FILE *f = fopen("a.txt", "r");
+if (!f) return 1;
+
+if (something_failed()) {
+    fclose(f);   // エラー経路で忘れない
+    return 1;
+}
+
+fclose(f);       // 通常経路でも
+return 0;
+```
+
+## 結論
+
+C でのファイル操作は説明は単純で、正しく行うには規律を要する。開く、確認する、操作する、閉じるという流れは決して変わらない。変わるのは各段階を扱う厳密さだ。常に `fopen` の戻り値を確認すること。C のエラーは叫ばず、値で返ってくるからだ。正しいモードを選ぶこと。`"w"` は切り詰め、バイナリには `b` が要ることを忘れずに。そしてどの経路でも決して `fclose` を忘れないこと。C ではバッファはあなたが命じたときにのみディスクになり、リソースはあなたが返したときにのみシステムに戻るのだから。
+'''

@@ -1,0 +1,167 @@
+id = "2026-06-16-1100"
+slug = "dotnet-10-novidades"
+title = ".NET 10: o que muda no runtime, nas libraries e no SDK desta LTS"
+title_en_us = ".NET 10: what changes in the runtime, libraries and SDK of this LTS"
+title_ja_jp = ".NET 10：この LTS でランタイム・ライブラリ・SDK は何が変わるか"
+summary = ".NET 10 é a sucessora LTS da 9, com tres anos de suporte. JIT mais agressivo, JSON serialization mais estrita, criptografia pos-quantica, apps de console que viram imagem de container e dotnet test sobre o Microsoft.Testing.Platform. Um passeio pelas mudancas que de fato afetam o dia a dia."
+summary_en_us = ".NET 10 is the LTS successor to 9, with three years of support. A more aggressive JIT, stricter JSON serialization, post-quantum cryptography, console apps that turn into container images, and dotnet test on top of Microsoft.Testing.Platform. A tour of the changes that actually affect day-to-day work."
+summary_ja_jp = ".NET 10 は 9 の後継となる LTS で、3 年間のサポートを持つ。より積極的な JIT、より厳格な JSON シリアライズ、ポスト量子暗号、コンテナイメージになるコンソールアプリ、Microsoft.Testing.Platform 上の dotnet test。日々の作業に実際に影響する変更を巡る。"
+published_at = "2026-06-16T11:00:00+09:00"
+updated_at = "2026-06-16T11:00:00+09:00"
+status = "published"
+tags = ["dotnet", "dotnet-10", "csharp", "runtime", "sdk", "engenharia"]
+badges = [".NET 10", "LTS", "Runtime"]
+repo_url = ""
+code_url = ""
+featured = true
+has_math = false
+impact = [
+  "Por ser LTS com tres anos de suporte, .NET 10 e o alvo certo para migrar serviços de producao que estavam parados na 8 ou na 9",
+  "JSON serialization com deteccao de propriedades duplicadas e modo estrito fecha uma classe de bugs e brechas que passavam silenciosas antes",
+]
+trade_offs = [
+  "As melhorias de JIT e NativeAOT vem de graca, mas validar uma migracao LTS ainda custa testar regressoes de comportamento em serializacao e globalizacao",
+  "O modo estrito de JSON e mais seguro porem mais rigido: payloads tolerados antes passam a falhar, o que pode quebrar integracoes legadas",
+]
+lessons = [
+  "Trate a virada de LTS como janela de manutencao: migrar da 9 para a 10 e mais barato agora do que acumular dois saltos depois",
+  "Leia o que mudou em serializacao e cripto antes de subir: sao as areas onde uma mudanca de default vira incidente em producao",
+]
+body = '''
+.NET 10 chegou como a sucessora da 9 e, mais importante, como **release LTS (Long-Term Support) com tres anos de suporte**. Isso muda a conversa: enquanto a 9 era STS (suporte curto), a 10 e o alvo natural para serviços de producao que precisam de estabilidade. Vale, portanto, olhar o que de fato muda no dia a dia, sem a lista de marketing.
+
+## Runtime: ganhos que voce colhe sem mudar codigo
+
+O time do runtime continuou apertando o **JIT**: melhor *inlining*, mais *devirtualizacao* de metodos (transformar chamada virtual em direta quando o tipo concreto e conhecido), *stack allocation* mais agressiva e inversao de loops aprimorada. Ha tambem suporte a **AVX10.2** e melhorias no **NativeAOT**, alem de melhor geracao de codigo para argumentos do tipo struct. A natureza dessas mudancas e a mais agradavel possivel: voce recompila e o codigo fica mais rapido sem tocar em nada.
+
+## Libraries: JSON mais estrito e cripto pos-quantica
+
+Nas bibliotecas, o destaque pratico esta no **System.Text.Json**. Surgem opcoes para **proibir propriedades duplicadas** num payload e um **modo de serializacao estrito**, alem de suporte a `PipeReader` para leitura mais eficiente.
+
+```csharp
+var options = new JsonSerializerOptions
+{
+    AllowDuplicateProperties = false, // rejeita { "id": 1, "id": 2 }
+    // modo estrito: nao tolera tipos/formatos fora do esperado
+};
+var order = JsonSerializer.Deserialize<Order>(payload, options);
+```
+
+Isso parece detalhe, mas fecha uma classe real de bugs e brechas: payloads com chave repetida costumavam ser aceitos silenciosamente, deixando o ultimo valor vencer. Em fluxos de seguranca, essa tolerancia ja virou vetor de ataque.
+
+Na criptografia, a aposta e em **pos-quantico**: suporte expandido a **ML-DSA** com APIs simplificadas, **HashML-DSA**, **Composite ML-DSA** e integracao com o CNG do Windows. Ha ainda **AES KeyWrap com padding**. Em rede, chega o **`WebSocketStream`**, que simplifica o uso de WebSocket tratando-o como um `Stream`, e suporte a **TLS 1.3** em clientes macOS.
+
+## SDK: console vira container e o novo motor de testes
+
+No SDK, duas mudancas se destacam. Primeiro, o **`dotnet test` agora roda sobre o Microsoft.Testing.Platform (MTP)**, o motor de testes mais novo e leve, em vez do caminho VSTest tradicional. Segundo, **apps de console podem gerar imagem de container nativamente**, sem Dockerfile.
+
+```bash
+# publica direto como imagem de container, sem Dockerfile
+dotnet publish -t:PublishContainer
+
+# executa uma ferramenta sem instalar globalmente (one-shot)
+dotnet tool exec dotnetsay
+```
+
+Ainda no SDK: a ordem dos comandos da CLI foi padronizada, ha geracao de scripts de **autocompletar** para shells populares, introspeccao via `--cli-schema`, o novo script de execucao `dnx` e apps **baseados em arquivo** (single-file) agora suportam publish e NativeAOT.
+
+## ASP.NET Core e EF Core: o que olhar
+
+No **ASP.NET Core 10**, os destaques sao **preloading de Blazor WebAssembly**, *eviction* automatica de memory pool, validacao de formularios aprimorada e **suporte a passkey no Identity**. No **EF Core 10**, melhorias de LINQ, otimizacoes de performance e **named query filters** (varios filtros por tipo de entidade, com desativacao seletiva) resolvem uma limitacao antiga de quem usava soft-delete junto com multi-tenancy.
+
+## Conclusao
+
+.NET 10 nao e uma reviravolta de paradigma; e uma LTS solida que recompensa quem atualiza. A maior parte do valor vem **de graca** no runtime recompilado. O que exige atencao real e onde um **default mudou** - sobretudo o JSON mais estrito e os ajustes de criptografia - porque e ali que uma migracao tranquila pode virar incidente se voce nao testar a serializacao e as integracoes antes de subir. Sendo LTS, e a janela certa para tirar serviços parados na 8 ou na 9 do limbo: migrar um salto agora custa menos do que acumular dois depois.
+'''
+body_en_us = '''
+.NET 10 arrived as the successor to 9 and, more importantly, as an **LTS (Long-Term Support) release with three years of support**. That changes the conversation: while 9 was STS (short-term support), 10 is the natural target for production services that need stability. So it is worth looking at what actually changes day to day, without the marketing list.
+
+## Runtime: gains you reap without changing code
+
+The runtime team kept tightening the **JIT**: better inlining, more method *devirtualization* (turning a virtual call into a direct one when the concrete type is known), more aggressive *stack allocation*, and improved loop inversion. There is also **AVX10.2** support and **NativeAOT** improvements, plus better code generation for struct arguments. The nature of these changes is the most pleasant kind: you recompile and the code gets faster without touching anything.
+
+## Libraries: stricter JSON and post-quantum crypto
+
+In the libraries, the practical highlight is **System.Text.Json**. New options arrive to **disallow duplicate properties** in a payload and a **strict serialization mode**, plus `PipeReader` support for more efficient reading.
+
+```csharp
+var options = new JsonSerializerOptions
+{
+    AllowDuplicateProperties = false, // rejects { "id": 1, "id": 2 }
+    // strict mode: does not tolerate unexpected types/formats
+};
+var order = JsonSerializer.Deserialize<Order>(payload, options);
+```
+
+This looks like a detail, but it closes a real class of bugs and gaps: payloads with a repeated key used to be silently accepted, letting the last value win. In security flows, that tolerance has already been an attack vector.
+
+In cryptography, the bet is **post-quantum**: expanded **ML-DSA** support with simplified APIs, **HashML-DSA**, **Composite ML-DSA**, and Windows CNG integration. There is also **AES KeyWrap with padding**. In networking, **`WebSocketStream`** arrives, simplifying WebSocket use by treating it as a `Stream`, plus **TLS 1.3** support for macOS clients.
+
+## SDK: console becomes a container and a new test engine
+
+In the SDK, two changes stand out. First, **`dotnet test` now runs on Microsoft.Testing.Platform (MTP)**, the newer, lighter test engine, instead of the traditional VSTest path. Second, **console apps can natively produce a container image**, with no Dockerfile.
+
+```bash
+# publishes straight as a container image, no Dockerfile
+dotnet publish -t:PublishContainer
+
+# runs a tool without installing it globally (one-shot)
+dotnet tool exec dotnetsay
+```
+
+Also in the SDK: CLI command order was standardized, there is **tab-completion** script generation for popular shells, introspection via `--cli-schema`, the new `dnx` execution script, and **file-based apps** (single-file) now support publish and NativeAOT.
+
+## ASP.NET Core and EF Core: what to watch
+
+In **ASP.NET Core 10**, the highlights are **Blazor WebAssembly preloading**, automatic memory pool eviction, enhanced form validation, and **passkey support in Identity**. In **EF Core 10**, LINQ improvements, performance optimizations, and **named query filters** (multiple filters per entity type, with selective disabling) solve an old limitation for those using soft-delete together with multi-tenancy.
+
+## Conclusion
+
+.NET 10 is not a paradigm shift; it is a solid LTS that rewards those who upgrade. Most of the value comes **for free** in the recompiled runtime. What demands real attention is where a **default changed** - above all the stricter JSON and the cryptography tweaks - because that is where a smooth migration can turn into an incident if you do not test serialization and integrations before shipping. Being LTS, it is the right window to pull services stuck on 8 or 9 out of limbo: migrating one hop now costs less than stacking two later.
+'''
+body_ja_jp = '''
+.NET 10 は 9 の後継として、そしてより重要なことに、**3 年間のサポートを持つ LTS（長期サポート）リリース** として到着しました。これは話を変えます。9 が STS（短期サポート）だったのに対し、10 は安定性を必要とする本番サービスの自然な標的です。だからこそ、マーケティングのリストではなく、日々実際に変わることを見る価値があります。
+
+## ランタイム：コードを変えずに得られる利得
+
+ランタイムチームは **JIT** を締め続けました。より良いインライン化、より多くのメソッド *デバーチャライズ*（具象型が分かるとき仮想呼び出しを直接呼び出しに変える）、より積極的な *スタック割り当て*、改善されたループ反転。**AVX10.2** 対応と **NativeAOT** の改善、構造体引数のコード生成改善もあります。これらの変更の性質は最も心地よい類です ── 再コンパイルすれば、何も触らずにコードが速くなります。
+
+## ライブラリ：より厳格な JSON とポスト量子暗号
+
+ライブラリでの実用的な目玉は **System.Text.Json** です。ペイロード内の **重複プロパティを禁止** する新オプションと **厳格シリアライズモード**、そして効率的な読み取りのための `PipeReader` 対応が登場します。
+
+```csharp
+var options = new JsonSerializerOptions
+{
+    AllowDuplicateProperties = false, // { "id": 1, "id": 2 } を拒否
+    // 厳格モード：予期しない型/形式を許容しない
+};
+var order = JsonSerializer.Deserialize<Order>(payload, options);
+```
+
+これは細部に見えますが、現実のバグと穴の一群を閉じます。キーが重複したペイロードは黙って受理され、最後の値が勝つことが常でした。セキュリティの流れでは、その許容はすでに攻撃ベクトルになっています。
+
+暗号では賭けは **ポスト量子** です。簡易化された API を持つ **ML-DSA** の対応拡大、**HashML-DSA**、**Composite ML-DSA**、Windows CNG 統合。**AES KeyWrap（パディング付き）** もあります。ネットワークでは、WebSocket を `Stream` として扱い利用を簡素化する **`WebSocketStream`** が登場し、macOS クライアントの **TLS 1.3** 対応も加わります。
+
+## SDK：コンソールがコンテナになり、新しいテストエンジン
+
+SDK では 2 つの変更が際立ちます。第一に、**`dotnet test` が Microsoft.Testing.Platform（MTP）上で動く** ようになり、従来の VSTest 経路ではなく、より新しく軽量なテストエンジンを使います。第二に、**コンソールアプリが Dockerfile なしでネイティブにコンテナイメージを生成** できます。
+
+```bash
+# Dockerfile なしでコンテナイメージとして直接 publish
+dotnet publish -t:PublishContainer
+
+# グローバルにインストールせずツールを実行（ワンショット）
+dotnet tool exec dotnetsay
+```
+
+SDK ではほかに、CLI コマンドの順序が標準化され、人気シェル向けの **タブ補完** スクリプト生成、`--cli-schema` によるイントロスペクション、新しい実行スクリプト `dnx`、そして **ファイルベースアプリ**（単一ファイル）が publish と NativeAOT に対応しました。
+
+## ASP.NET Core と EF Core：何を見るか
+
+**ASP.NET Core 10** の目玉は、**Blazor WebAssembly のプリロード**、メモリプールの自動エビクション、強化されたフォーム検証、そして **Identity のパスキー対応** です。**EF Core 10** では、LINQ の改善、性能最適化、そして **名前付きクエリフィルタ**（エンティティ型ごとに複数フィルタ、選択的に無効化可能）が、ソフト削除とマルチテナンシーを併用する人の古い制限を解決します。
+
+## 結論
+
+.NET 10 はパラダイムの転換ではありません。アップグレードする者に報いる堅実な LTS です。価値の大半は再コンパイルされたランタイムで **無料** で来ます。本当に注意が要るのは **既定値が変わった** 場所 ── とりわけより厳格な JSON と暗号の調整 ── です。そこでこそ、出荷前にシリアライズと連携をテストしなければ、滑らかな移行が障害に変わりえます。LTS であるため、8 や 9 に止まったサービスを宙ぶらりんから引き上げる正しい窓です。今 1 段移行するほうが、後で 2 段積むより安く済みます。
+'''

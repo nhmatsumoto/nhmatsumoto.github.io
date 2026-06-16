@@ -6,6 +6,34 @@
     <description>um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção</description>
     <atom:link href="https://nhmatsumoto.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>C# 14: extension members, a palavra-chave field e o que mais chegou</title>
+      <link>https://nhmatsumoto.github.io/posts/20260616-120000-csharp-14-novidades/</link>
+      <description><![CDATA[C# 14, que acompanha o .NET 10, traz extension members (propriedades e membros estaticos de extensao), a palavra contextual field para propriedades com backing field automatico, atribuicao null-condicional e modificadores em parametros de lambda simples. Cada recurso com o problema concreto que ele apaga.]]></description>
+      <pubDate>Tue, 16 Jun 2026 12:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260616-120000-csharp-14-novidades/</guid>
+    </item>
+    <item>
+      <title>.NET 10: o que muda no runtime, nas libraries e no SDK desta LTS</title>
+      <link>https://nhmatsumoto.github.io/posts/20260616-110000-dotnet-10-novidades/</link>
+      <description><![CDATA[.NET 10 é a sucessora LTS da 9, com tres anos de suporte. JIT mais agressivo, JSON serialization mais estrita, criptografia pos-quantica, apps de console que viram imagem de container e dotnet test sobre o Microsoft.Testing.Platform. Um passeio pelas mudancas que de fato afetam o dia a dia.]]></description>
+      <pubDate>Tue, 16 Jun 2026 11:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260616-110000-dotnet-10-novidades/</guid>
+    </item>
+    <item>
+      <title>CQRS na prática com MediatR: implementando Command e Query no .NET</title>
+      <link>https://nhmatsumoto.github.io/posts/20260616-100000-cqrs-mediatr-dotnet/</link>
+      <description><![CDATA[Da teoria ao código: como separar escrita e leitura em handlers explícitos no .NET Core, usar MediatR como barramento in-process, encaixar validação e transação em pipeline behaviors e decidir quando dois modelos valem o custo.]]></description>
+      <pubDate>Tue, 16 Jun 2026 10:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260616-100000-cqrs-mediatr-dotnet/</guid>
+    </item>
+    <item>
+      <title>Hangfire no .NET: processamento em background sem reinventar a fila</title>
+      <link>https://nhmatsumoto.github.io/posts/20260616-090000-hangfire-background-jobs-dotnet/</link>
+      <description><![CDATA[Hangfire transforma 'rodar isso depois' em uma chamada de método com persistência, retry e dashboard de graça. Fire-and-forget, delayed, recurring e continuations no .NET Core, com os cuidados que separam um job confiável de um que perde trabalho silenciosamente.]]></description>
+      <pubDate>Tue, 16 Jun 2026 09:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260616-090000-hangfire-background-jobs-dotnet/</guid>
+    </item>
+    <item>
       <title>Padrões Comportamentais em C#: Strategy, Observer, Mediator e State</title>
       <link>https://nhmatsumoto.github.io/posts/20260608-110000-design-patterns-comportamentais-csharp-dotnet/</link>
       <description><![CDATA[Padrões comportamentais respondem 'como objetos colaboram e distribuem responsabilidade'. No .NET, delegates, eventos e MediatR já carregam metade do trabalho. Strategy, Observer, Mediator, State e Chain of Responsibility - da forma clássica à idiomática.]]></description>
@@ -116,34 +144,6 @@
       <description><![CDATA[Como o SOS Location emite tokens CSRF de uso único para formulários de doação - gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission.]]></description>
       <pubDate>Thu, 09 Apr 2026 03:00:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/</guid>
-    </item>
-    <item>
-      <title>Daily #042: Implementação de idempotência na API</title>
-      <link>https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/</link>
-      <description><![CDATA[Como o SOS Location implementou idempotência via header Idempotency-Key no nível da API - armazenamento de respostas em Redis com TTL de 24 horas, replay automático e proteção contra double-submit em qualquer cliente HTTP.]]></description>
-      <pubDate>Thu, 09 Apr 2026 02:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/</guid>
-    </item>
-    <item>
-      <title>Daily #041: Problema de pagamento duplicado por múltiplos cliques</title>
-      <link>https://nhmatsumoto.github.io/posts/20260409-010000-daily-041-problema-de-pagamento-duplicado-por-multiplos-cliques/</link>
-      <description><![CDATA[Como o SOS Location resolveu o problema de doações duplicadas causado por duplo-clique no botão de doação - botão desabilitado após primeiro clique no frontend e chave de idempotência no backend.]]></description>
-      <pubDate>Thu, 09 Apr 2026 01:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-010000-daily-041-problema-de-pagamento-duplicado-por-multiplos-cliques/</guid>
-    </item>
-    <item>
-      <title>Daily #040: Logging estruturado para rastreabilidade</title>
-      <link>https://nhmatsumoto.github.io/posts/20260409-000000-daily-040-logging-estruturado-para-rastreabilidade/</link>
-      <description><![CDATA[Como o SOS Location configura Serilog com Seq para logging estruturado, enriquece logs com tenantId e traceId via middleware, e usa structured properties para investigar incidentes em segundos em vez de minutos.]]></description>
-      <pubDate>Thu, 09 Apr 2026 00:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-000000-daily-040-logging-estruturado-para-rastreabilidade/</guid>
-    </item>
-    <item>
-      <title>Daily #039: Estratégia de versionamento de APIs</title>
-      <link>https://nhmatsumoto.github.io/posts/20260408-230000-daily-039-estrategia-de-versionamento-de-apis/</link>
-      <description><![CDATA[Como o SOS Location implementou versionamento de API via URL path (/api/v1/, /api/v2/) com Asp.Versioning, a política de deprecação de 90 dias e o header Sunset para notificação automática de clientes.]]></description>
-      <pubDate>Wed, 08 Apr 2026 23:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260408-230000-daily-039-estrategia-de-versionamento-de-apis/</guid>
     </item>
   </channel>
 </rss>
