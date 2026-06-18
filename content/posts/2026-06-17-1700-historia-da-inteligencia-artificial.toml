@@ -1,0 +1,185 @@
+id = "2012-08-15-0900"
+slug = "historia-da-inteligencia-artificial"
+title = "A história da inteligência artificial: como surgiu e quem foram seus protagonistas"
+title_en_us = "The history of artificial intelligence: how it emerged and who its protagonists were"
+title_ja_jp = "人工知能の歴史：どう生まれ、誰が主役だったか"
+summary = "Da máquina de Turing ao workshop de Dartmouth, dos perceptrons aos invernos da IA, do backpropagation ao deep learning e aos modelos de linguagem. Uma linha do tempo das ideias e das pessoas que transformaram a inteligência artificial de uma aposta filosófica em uma disciplina de engenharia."
+summary_en_us = "From the Turing machine to the Dartmouth workshop, from perceptrons to the AI winters, from backpropagation to deep learning and language models. A timeline of the ideas and the people who turned artificial intelligence from a philosophical bet into an engineering discipline."
+summary_ja_jp = "チューリング機械からダートマス会議へ、パーセプトロンから AI の冬へ、バックプロパゲーションから深層学習と言語モデルへ。人工知能を哲学的な賭けから工学の規律へと変えた、アイデアと人々の年表。"
+published_at = "2012-08-15T09:00:00+09:00"
+updated_at = "2012-08-15T09:00:00+09:00"
+status = "published"
+tags = ["ia", "historia", "machine-learning", "deep-learning", "computacao"]
+badges = ["IA", "História", "ML"]
+repo_url = ""
+code_url = ""
+featured = true
+has_math = false
+impact = [
+  "Entender de onde a IA veio explica por que ela avança em ondas: cada salto atual repete, com mais dados e mais computação, uma ideia que já existia há décadas",
+  "Os dois invernos da IA mostram que excesso de promessa seguido de entrega frustrada corta financiamento, uma lição direta para quem hoje vende expectativas sobre LLMs",
+]
+trade_offs = [
+  "A narrativa de grandes nomes esconde que cada avanço foi coletivo e incremental: simplificar demais a história ajuda a memorizar, mas distorce como a ciência realmente progride",
+  "Olhar o passado dá perspectiva, mas não prevê o próximo salto: as transições mais importantes (perceptron, backprop, transformer) surpreenderam até os especialistas da época",
+]
+lessons = [
+  "Ideias certas na época errada esperam por hardware e dados: o perceptron e as redes profundas só floresceram quando a computação alcançou a teoria",
+  "Desconfie tanto do hype quanto do ceticismo absoluto: o relatório que matou o perceptron e o que cortou a IA britânica estavam tecnicamente certos e historicamente errados",
+]
+body = '''
+A inteligência artificial parece um fenômeno dos últimos anos, mas a maioria das suas ideias centrais tem décadas. Entender essa história não é nostalgia: ela explica por que a IA avança em ondas, por que certas promessas se repetem e por que o que hoje chamamos de revolução costuma ser uma ideia antiga que finalmente encontrou dados e computação suficientes.
+
+## Antes do nome: as raízes teóricas
+
+Antes de existir o termo, já havia a pergunta. Em 1943, **Warren McCulloch** e **Walter Pitts** propuseram um modelo matemático do neurônio: uma unidade que soma entradas e dispara se ultrapassa um limiar. Era a primeira ponte formal entre biologia e lógica.
+
+Em 1950, **Alan Turing** publicou "Computing Machinery and Intelligence", onde trocou a pergunta impossível "máquinas podem pensar?" por um teste operacional, o jogo da imitação, hoje conhecido como teste de Turing. Turing não construiu uma IA, mas definiu o terreno do debate por meio século.
+
+## Dartmouth, 1956: o batismo da disciplina
+
+O nome nasceu num workshop de verão no Dartmouth College, organizado por **John McCarthy**, **Marvin Minsky**, **Claude Shannon** e **Nathaniel Rochester**. A proposta usava, pela primeira vez, o termo "artificial intelligence". Lá, **Allen Newell** e **Herbert Simon** apresentaram o Logic Theorist, um programa capaz de provar teoremas, considerado o primeiro programa de IA de verdade.
+
+A aposta era ousada e otimista: acreditava-se que máquinas com inteligência humana estariam a uma geração de distância.
+
+## A era de ouro e o primeiro inverno
+
+Nos anos 1950 e 1960, **Frank Rosenblatt** criou o perceptron, uma rede capaz de aprender a classificar padrões a partir de exemplos. A imprensa da época já falava em máquinas que andariam e teriam consciência.
+
+O freio veio em 1969, quando **Minsky** e **Seymour Papert** publicaram "Perceptrons", provando que um perceptron de camada única não conseguia resolver problemas tão simples quanto o XOR. O livro, tecnicamente correto, esfriou o entusiasmo e o financiamento. Somado ao relatório Lighthill de 1973 no Reino Unido, abriu o primeiro inverno da IA: anos de verbas cortadas e ceticismo.
+
+## Sistemas especialistas e o segundo inverno
+
+Os anos 1980 trouxeram um renascimento comercial com os sistemas especialistas, programas que codificavam o conhecimento de especialistas em regras "se-então". O MYCIN, para diagnóstico médico, foi um marco. O Japão lançou o ambicioso projeto de Quinta Geração para dominar a área.
+
+Mas esses sistemas eram caros de manter, frágeis fora do seu domínio estreito e incapazes de aprender. Quando as promessas não se cumpriram, veio o segundo inverno da IA no fim dos anos 1980.
+
+## O renascimento estatístico e o deep learning
+
+A virada silenciosa começou em 1986, quando **David Rumelhart**, **Geoffrey Hinton** e **Ronald Williams** popularizaram o backpropagation, o algoritmo que permite treinar redes com múltiplas camadas. **Yann LeCun** aplicou a ideia a redes convolucionais para ler dígitos manuscritos. **Yoshua Bengio** avançou nos fundamentos do aprendizado profundo.
+
+A teoria existia havia décadas, mas faltavam dados e poder de cálculo. Os dois chegaram juntos por volta de 2012, quando a rede AlexNet, treinada em GPUs, venceu por larga margem a competição de visão ImageNet. Foi o estopim do deep learning moderno. Em 1997 o Deep Blue já vencera Kasparov no xadrez; em 2016 o AlphaGo venceu no Go. Em 2017, o artigo "Attention Is All You Need" introduziu a arquitetura transformer, que abriu caminho para os grandes modelos de linguagem da década seguinte.
+
+```mermaid
+graph TD
+    A[1943 - Neuronio de McCulloch-Pitts] --> B[1950 - Teste de Turing]
+    B --> C[1956 - Workshop de Dartmouth]
+    C --> D[1958 - Perceptron de Rosenblatt]
+    D --> E[1969 - Critica de Minsky e Papert]
+    E --> F[Primeiro inverno da IA]
+    F --> G[1986 - Backpropagation]
+    G --> H[2012 - AlexNet e deep learning]
+    H --> I[2017 - Transformer]
+    I --> J[Modelos de linguagem em larga escala]
+    style F fill:#fdd,stroke:#333
+    style J fill:#dfd,stroke:#333
+```
+
+## Conclusão
+
+A história da IA é um ciclo de promessas, decepções e renascimentos. Os nomes mudam, mas o padrão se repete: uma ideia teórica nasce muito antes do hardware que a torna prática, é descartada como impossível e ressurge décadas depois quando os dados e a computação a alcançam. O perceptron foi enterrado em 1969 e é a base das redes de hoje. A lição para quem acompanha a onda atual dos modelos de linguagem é dupla: desconfie do hype, mas desconfie ainda mais de quem declara qualquer caminho impossível.
+'''
+body_en_us = '''
+Artificial intelligence looks like a phenomenon of the last few years, but most of its core ideas are decades old. Understanding this history is not nostalgia: it explains why AI advances in waves, why certain promises keep repeating, and why what we now call a revolution is usually an old idea that finally found enough data and computing power.
+
+## Before the name: the theoretical roots
+
+Before the term existed, the question already did. In 1943, **Warren McCulloch** and **Walter Pitts** proposed a mathematical model of the neuron: a unit that sums inputs and fires if it crosses a threshold. It was the first formal bridge between biology and logic.
+
+In 1950, **Alan Turing** published "Computing Machinery and Intelligence", where he swapped the impossible question "can machines think?" for an operational test, the imitation game, now known as the Turing test. Turing did not build an AI, but he defined the terms of the debate for half a century.
+
+## Dartmouth, 1956: the discipline is named
+
+The name was born at a summer workshop at Dartmouth College, organized by **John McCarthy**, **Marvin Minsky**, **Claude Shannon** and **Nathaniel Rochester**. The proposal used the term "artificial intelligence" for the first time. There, **Allen Newell** and **Herbert Simon** presented the Logic Theorist, a program able to prove theorems, considered the first real AI program.
+
+The bet was bold and optimistic: people believed machines with human-level intelligence were a single generation away.
+
+## The golden age and the first winter
+
+In the 1950s and 1960s, **Frank Rosenblatt** created the perceptron, a network that could learn to classify patterns from examples. The press of the day already talked about machines that would walk and become conscious.
+
+The brakes came in 1969, when **Minsky** and **Seymour Papert** published "Perceptrons", proving that a single-layer perceptron could not solve problems as simple as XOR. The book, technically correct, cooled enthusiasm and funding. Combined with the 1973 Lighthill report in the UK, it opened the first AI winter: years of cut budgets and skepticism.
+
+## Expert systems and the second winter
+
+The 1980s brought a commercial revival with expert systems, programs that encoded expert knowledge into "if-then" rules. MYCIN, for medical diagnosis, was a landmark. Japan launched the ambitious Fifth Generation project to dominate the field.
+
+But these systems were expensive to maintain, brittle outside their narrow domain, and unable to learn. When the promises went unmet, the second AI winter arrived in the late 1980s.
+
+## The statistical revival and deep learning
+
+The quiet turn began in 1986, when **David Rumelhart**, **Geoffrey Hinton** and **Ronald Williams** popularized backpropagation, the algorithm that makes it possible to train networks with multiple layers. **Yann LeCun** applied the idea to convolutional networks to read handwritten digits. **Yoshua Bengio** advanced the foundations of deep learning.
+
+The theory had existed for decades, but data and compute were missing. Both arrived together around 2012, when AlexNet, trained on GPUs, won the ImageNet vision competition by a wide margin. It was the spark of modern deep learning. Back in 1997 Deep Blue had already beaten Kasparov at chess; in 2016 AlphaGo won at Go. In 2017, the paper "Attention Is All You Need" introduced the transformer architecture, which paved the way for the large language models of the following decade.
+
+```mermaid
+graph TD
+    A[1943 - McCulloch-Pitts neuron] --> B[1950 - Turing test]
+    B --> C[1956 - Dartmouth workshop]
+    C --> D[1958 - Rosenblatt perceptron]
+    D --> E[1969 - Minsky and Papert critique]
+    E --> F[First AI winter]
+    F --> G[1986 - Backpropagation]
+    G --> H[2012 - AlexNet and deep learning]
+    H --> I[2017 - Transformer]
+    I --> J[Large-scale language models]
+    style F fill:#fdd,stroke:#333
+    style J fill:#dfd,stroke:#333
+```
+
+## Conclusion
+
+The history of AI is a cycle of promises, disappointments and revivals. The names change, but the pattern repeats: a theoretical idea is born long before the hardware that makes it practical, is dismissed as impossible, and resurfaces decades later when data and compute catch up to it. The perceptron was buried in 1969 and is the foundation of today's networks. The lesson for anyone following the current wave of language models is twofold: be skeptical of hype, but be even more skeptical of anyone who declares a path impossible.
+'''
+body_ja_jp = '''
+人工知能はここ数年の現象に見えますが、その中心的なアイデアの大半は数十年前のものです。この歴史を理解するのは郷愁ではありません。なぜ AI が波のように進むのか、なぜ特定の約束が繰り返されるのか、そしてなぜ今「革命」と呼ぶものが、十分なデータと計算力をついに得た古いアイデアであることが多いのかを説明します。
+
+## 名前の前：理論的な根
+
+用語が存在する前から、問いはありました。1943 年、**ウォーレン・マカロック** と **ウォルター・ピッツ** はニューロンの数学モデルを提案しました。入力を合計し、しきい値を超えると発火する単位です。生物学と論理をつなぐ最初の形式的な橋でした。
+
+1950 年、**アラン・チューリング** は「計算機械と知能」を発表し、「機械は考えられるか」という不可能な問いを、模倣ゲームという操作的なテスト、今日チューリングテストと呼ばれるものに置き換えました。チューリングは AI を作りませんでしたが、半世紀にわたる議論の土俵を定めました。
+
+## ダートマス、1956 年：規律の命名
+
+名前はダートマス大学の夏の会議で生まれました。**ジョン・マッカーシー**、**マーヴィン・ミンスキー**、**クロード・シャノン**、**ナサニエル・ロチェスター** が主催したものです。その提案は初めて「人工知能」という語を使いました。そこで **アレン・ニューウェル** と **ハーバート・サイモン** は、定理を証明できるプログラム、最初の本物の AI プログラムとされる Logic Theorist を発表しました。
+
+賭けは大胆で楽観的でした。人間並みの知能を持つ機械は一世代先だと信じられていたのです。
+
+## 黄金時代と最初の冬
+
+1950 年代と 1960 年代、**フランク・ローゼンブラット** はパーセプトロンを作りました。例からパターンの分類を学習できるネットワークです。当時の報道はすでに、歩き意識を持つ機械を語っていました。
+
+ブレーキは 1969 年、**ミンスキー** と **シーモア・パパート** が「パーセプトロン」を出版し、単層パーセプトロンが XOR ほど単純な問題すら解けないことを証明したときに来ました。技術的に正しいこの本は、熱意と資金を冷やしました。1973 年の英国ライトヒル報告と相まって、最初の AI の冬を開きました。予算削減と懐疑の年月です。
+
+## エキスパートシステムと二度目の冬
+
+1980 年代は、エキスパートシステムによる商業的な復活をもたらしました。専門家の知識を「もし～ならば」の規則に符号化したプログラムです。医療診断の MYCIN は画期的でした。日本は分野を支配するため野心的な第五世代プロジェクトを立ち上げました。
+
+しかしこれらのシステムは保守が高価で、狭い領域の外では脆く、学習できませんでした。約束が果たされないと、1980 年代末に二度目の AI の冬が訪れました。
+
+## 統計的復活と深層学習
+
+静かな転換は 1986 年に始まりました。**デビッド・ラメルハート**、**ジェフリー・ヒントン**、**ロナルド・ウィリアムズ** がバックプロパゲーションを広めたのです。複数の層を持つネットワークを訓練可能にするアルゴリズムです。**ヤン・ルカン** はそのアイデアを畳み込みネットワークに応用し、手書き数字を読みました。**ヨシュア・ベンジオ** は深層学習の基礎を進めました。
+
+理論は数十年前からありましたが、データと計算が欠けていました。両者は 2012 年ごろに同時に到来し、GPU で訓練された AlexNet が ImageNet 視覚コンペで大差で勝ちました。現代の深層学習の火種でした。1997 年にはすでに Deep Blue がチェスでカスパロフを破り、2016 年には AlphaGo が囲碁で勝ちました。2017 年、論文「Attention Is All You Need」がトランスフォーマー構造を導入し、次の十年の大規模言語モデルへの道を開きました。
+
+```mermaid
+graph TD
+    A[1943 - McCulloch-Pitts neuron] --> B[1950 - Turing test]
+    B --> C[1956 - Dartmouth workshop]
+    C --> D[1958 - Rosenblatt perceptron]
+    D --> E[1969 - Minsky and Papert critique]
+    E --> F[First AI winter]
+    F --> G[1986 - Backpropagation]
+    G --> H[2012 - AlexNet and deep learning]
+    H --> I[2017 - Transformer]
+    I --> J[Large-scale language models]
+    style F fill:#fdd,stroke:#333
+    style J fill:#dfd,stroke:#333
+```
+
+## 結論
+
+AI の歴史は、約束、失望、復活の循環です。名前は変わりますが、パターンは繰り返します。理論的なアイデアは、それを実用にする hardware よりずっと前に生まれ、不可能と切り捨てられ、データと計算が追いつく数十年後に再浮上します。パーセプトロンは 1969 年に葬られ、今日のネットワークの基礎です。現在の言語モデルの波を追う人への教訓は二つあります。誇大宣伝を疑え、しかしある道を不可能と宣言する者をもっと疑え。
+'''

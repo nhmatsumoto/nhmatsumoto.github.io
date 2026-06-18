@@ -612,8 +612,8 @@ def render_publications_grouped_section(system: dict[str, Any], publications: li
         cards = "\n".join(render_publication_card(it, i18n, locale) for it in group_items)
         blocks.append(f"""
         <section class="publication-group">
-          <header class="group-header"><h3>{html.escape(cat.upper())}</h3></header>
-          <ol class="entry-list">{cards}</ol>
+          <header class="document-group-head"><h3>{html.escape(cat.upper())}</h3></header>
+          <ol class="entry-list entry-grid">{cards}</ol>
         </section>
         """)
 

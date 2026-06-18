@@ -27,7 +27,7 @@
     <link rel="canonical" href="https://nhmatsumoto.github.io/posts/page/3/">
     <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
     
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.38bf7cdd.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.eb7a7533.css">
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
     <script>
@@ -122,8 +122,16 @@
       </header>
       <div class="page-content">
         <section class="section-panel">
-          <ol class="entry-list">
+          <ol class="entry-list entry-grid">
             <li class="entry" data-entry-card>
+      <article class="entry-card entry-card-post">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-09T03:00:00+09:00" data-localize-date="short">09 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="2" data-reading-time-values="{&quot;default&quot;: 2, &quot;en_us&quot;: 2, &quot;ja_jp&quot;: 1}">2 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/" data-entry-title>Daily #043: Uso de tokens únicos por transação</a></h3>
+        <p class="entry-lede" data-entry-lede>Como o SOS Location emite tokens CSRF de uso único para formulários de doação - gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission.</p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Daily #043: Uso de tokens únicos por transação", "title_en_us": "Daily #043: Using unique tokens per transaction", "title_ja_jp": "Daily #043: トランザクションごとの一意トークン", "summary": "Como o SOS Location emite tokens CSRF de uso único para formulários de doação - gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission.", "summary_en_us": "How SOS Location issues single-use CSRF tokens for donation forms - generated on the page GET, consumed on the POST, invalidated after use or 15-minute expiry, preventing replay attacks and form resubmission.", "summary_ja_jp": "SOS Locationが寄付フォームに使い捨てCSRFトークンを発行する方法--ページGETで生成、POST時に消費、使用後または15分の有効期限後に無効化、リプレイ攻撃とフォーム再送信を防止。"}</script>
+    </li><li class="entry" data-entry-card>
       <article class="entry-card entry-card-post">
         <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-09T02:00:00+09:00" data-localize-date="short">09 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="2" data-reading-time-values="{&quot;default&quot;: 2, &quot;en_us&quot;: 2, &quot;ja_jp&quot;: 1}">2 min de leitura</span></span></p>
         <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260409-020000-daily-042-implementacao-de-idempotencia-na-api/" data-entry-title>Daily #042: Implementação de idempotência na API</a></h3>
@@ -211,14 +219,6 @@
         <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260408-160000-daily-032-tratamento-de-erro-401-em-chamadas-axios/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
       </article>
       <script type="application/json" data-entry-card-data>{"title": "Daily #032: Tratamento de erro 401 em chamadas Axios", "title_en_us": "Daily #032: Handling 401 errors in Axios calls", "title_ja_jp": "Daily #032: Axios呼び出しにおける401エラー処理", "summary": "Como o SOS Location implementou um Axios interceptor para renovar o JWT silenciosamente no 401, usando refresh token com fila de requests pendentes para evitar múltiplas chamadas de renovação simultâneas.", "summary_en_us": "How SOS Location implemented an Axios interceptor to silently renew the JWT on 401, using a refresh token with a queue of pending requests to avoid multiple simultaneous renewal calls.", "summary_ja_jp": "SOS LocationがAxiosインターセプターを実装して401でJWTをサイレントに更新する方法--同時更新呼び出しを避けるためのペンディングリクエストキュー付きのリフレッシュトークン使用。"}</script>
-    </li><li class="entry" data-entry-card>
-      <article class="entry-card entry-card-post">
-        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-08T15:00:00+09:00" data-localize-date="short">08 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1" data-reading-time-values="{&quot;default&quot;: 1, &quot;en_us&quot;: 1, &quot;ja_jp&quot;: 1}">1 min de leitura</span></span></p>
-        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260408-150000-daily-031-problema-de-cors-entre-frontend-e-backend/" data-entry-title>Daily #031: Problema de CORS entre frontend e backend</a></h3>
-        <p class="entry-lede" data-entry-lede>Como o SOS Location resolveu o bloqueio CORS entre o frontend React (porta 5173) e o backend .NET (porta 7001), e como a política de CORS é diferente em desenvolvimento, staging e produção.</p>
-        <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260408-150000-daily-031-problema-de-cors-entre-frontend-e-backend/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
-      </article>
-      <script type="application/json" data-entry-card-data>{"title": "Daily #031: Problema de CORS entre frontend e backend", "title_en_us": "Daily #031: CORS problem between frontend and backend", "title_ja_jp": "Daily #031: フロントエンドとバックエンド間のCORS問題", "summary": "Como o SOS Location resolveu o bloqueio CORS entre o frontend React (porta 5173) e o backend .NET (porta 7001), e como a política de CORS é diferente em desenvolvimento, staging e produção.", "summary_en_us": "How SOS Location resolved the CORS block between the React frontend (port 5173) and the .NET backend (port 7001), and how the CORS policy differs between development, staging and production.", "summary_ja_jp": "SOS LocationがReactフロントエンド（ポート5173）と.NETバックエンド（ポート7001）間のCORSブロックを解決した方法と、開発・ステージング・本番間でCORSポリシーがどう異なるか。"}</script>
     </li>
           </ol>
         </section>

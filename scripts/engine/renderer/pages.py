@@ -534,7 +534,7 @@ def render_archive_page(site: dict[str, str], system: dict[str, Any], posts: lis
       </header>
       <div class="page-content">
         <section class="section-panel">
-          <ol class="entry-list">
+          <ol class="entry-list entry-grid">
             {"".join(render_post_card(post, i18n, locale) for post in posts)}
           </ol>
         </section>

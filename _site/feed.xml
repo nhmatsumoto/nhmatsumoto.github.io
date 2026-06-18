@@ -6,6 +6,41 @@
     <description>um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção</description>
     <atom:link href="https://nhmatsumoto.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>A história da inteligência artificial: como surgiu e quem foram seus protagonistas</title>
+      <link>https://nhmatsumoto.github.io/posts/20260617-170000-historia-da-inteligencia-artificial/</link>
+      <description><![CDATA[Da máquina de Turing ao workshop de Dartmouth, dos perceptrons aos invernos da IA, do backpropagation ao deep learning e aos modelos de linguagem. Uma linha do tempo das ideias e das pessoas que transformaram a inteligência artificial de uma aposta filosófica em uma disciplina de engenharia.]]></description>
+      <pubDate>Wed, 17 Jun 2026 17:00:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260617-170000-historia-da-inteligencia-artificial/</guid>
+    </item>
+    <item>
+      <title>Manipulação de arquivos em C: do FILE* ao fechar sem vazar</title>
+      <link>https://nhmatsumoto.github.io/posts/20260617-071100-manipulacao-de-arquivos-em-c/</link>
+      <description><![CDATA[Ler e escrever arquivos em C é uma sequência simples: abrir, checar, operar, fechar. O que separa código robusto de código que corrompe dados está nos detalhes: o modo de abertura, o buffer, a checagem de erro e o fclose que nunca pode faltar.]]></description>
+      <pubDate>Wed, 17 Jun 2026 07:11:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260617-071100-manipulacao-de-arquivos-em-c/</guid>
+    </item>
+    <item>
+      <title>Algoritmos de ordenação em C: do bubble sort ao quicksort</title>
+      <link>https://nhmatsumoto.github.io/posts/20260617-071000-algoritmos-de-ordenacao-em-c/</link>
+      <description><![CDATA[Implementar ordenação em C, sem coletor de lixo e mexendo direto na memória, deixa visível o que linguagens de alto nível escondem. Bubble, selection, insertion, merge e quick sort com código completo, a complexidade de cada um e quando cada estabilidade importa.]]></description>
+      <pubDate>Wed, 17 Jun 2026 07:10:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260617-071000-algoritmos-de-ordenacao-em-c/</guid>
+    </item>
+    <item>
+      <title>async/await: o que realmente acontece quando você espera</title>
+      <link>https://nhmatsumoto.github.io/posts/20260617-070900-async-await-programacao-assincrona/</link>
+      <description><![CDATA[async/await não cria threads nem deixa o código mais rápido. Ele libera a thread enquanto uma operação de I/O acontece em outro lugar. Entender essa diferença entre concorrência e paralelismo é o que evita deadlocks, async void e o erro de bloquear o que deveria ser esperado.]]></description>
+      <pubDate>Wed, 17 Jun 2026 07:09:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260617-070900-async-await-programacao-assincrona/</guid>
+    </item>
+    <item>
+      <title>Listas e arrays: como a memória molda a estrutura de dados</title>
+      <link>https://nhmatsumoto.github.io/posts/20260617-070800-listas-vs-arrays-estruturas-de-dados/</link>
+      <description><![CDATA[Array e lista encadeada guardam a mesma coleção, mas escolhem custos opostos: acesso por índice contra inserção barata. Entender o layout em memória explica todo o resto, e mostra por que ordenar e percorrer cada um pede algoritmos diferentes.]]></description>
+      <pubDate>Wed, 17 Jun 2026 07:08:00 +0900</pubDate>
+      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260617-070800-listas-vs-arrays-estruturas-de-dados/</guid>
+    </item>
+    <item>
       <title>C# 14: extension members, a palavra-chave field e o que mais chegou</title>
       <link>https://nhmatsumoto.github.io/posts/20260616-120000-csharp-14-novidades/</link>
       <description><![CDATA[C# 14, que acompanha o .NET 10, traz extension members (propriedades e membros estaticos de extensao), a palavra contextual field para propriedades com backing field automatico, atribuicao null-condicional e modificadores em parametros de lambda simples. Cada recurso com o problema concreto que ele apaga.]]></description>
@@ -109,41 +144,6 @@
       <description><![CDATA[CQRS é separar o modelo de escrita do modelo de leitura - não é Event Sourcing, não exige dois bancos e não é sinônimo de microservices. Um guia honesto sobre o que ganha, o que perde e os três níveis em que ele pode ser adotado.]]></description>
       <pubDate>Wed, 29 Apr 2026 09:10:00 +0900</pubDate>
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-091000-cqrs-tradeoffs/</guid>
-    </item>
-    <item>
-      <title>Linguagem Ubíqua na prática: o ativo de DDD que não aparece no diagrama</title>
-      <link>https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/</link>
-      <description><![CDATA[A maioria dos bugs caros nasce de um erro de tradução entre o que o negócio diz e o que o código faz. A linguagem ubíqua não é jargão de DDD - é a disciplina de eliminar essa tradução, palavra por palavra, dentro de um bounded context.]]></description>
-      <pubDate>Wed, 29 Apr 2026 09:05:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-090500-ddd-ubiquitous-language/</guid>
-    </item>
-    <item>
-      <title>Monólito Modular vs Microservices: a decisão arquitetural que ninguém quer tomar cedo</title>
-      <link>https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/</link>
-      <description><![CDATA[Microservices não são um upgrade do monólito - são um trade-off organizacional caro. Quando o monólito modular é a escolha correta, quais sinais justificam a extração de serviços e por que a Lei de Conway decide mais do que a tecnologia.]]></description>
-      <pubDate>Wed, 29 Apr 2026 09:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260429-090000-modular-monolith-vs-microservices/</guid>
-    </item>
-    <item>
-      <title>Daily #045: Lock otimista vs lock pessimista</title>
-      <link>https://nhmatsumoto.github.io/posts/20260409-050000-daily-045-lock-otimista-vs-lock-pessimista/</link>
-      <description><![CDATA[Como o SOS Location usa lock pessimista (SELECT FOR UPDATE) para atualizar saldo de campanhas de doação com alta concorrência, e lock otimista (xmin/rowversion) para edições de dados de operações com baixa concorrência de escrita.]]></description>
-      <pubDate>Thu, 09 Apr 2026 05:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-050000-daily-045-lock-otimista-vs-lock-pessimista/</guid>
-    </item>
-    <item>
-      <title>Daily #044: Controle de estado de pagamento (pending, completed)</title>
-      <link>https://nhmatsumoto.github.io/posts/20260409-040000-daily-044-controle-de-estado-de-pagamento-pending-completed/</link>
-      <description><![CDATA[Como o SOS Location modela a máquina de estados de Doacao - transições válidas entre pending, processing, completed, failed e refunded, com enforcement no domínio e auditoria de cada transição em tabela separada.]]></description>
-      <pubDate>Thu, 09 Apr 2026 04:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-040000-daily-044-controle-de-estado-de-pagamento-pending-completed/</guid>
-    </item>
-    <item>
-      <title>Daily #043: Uso de tokens únicos por transação</title>
-      <link>https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/</link>
-      <description><![CDATA[Como o SOS Location emite tokens CSRF de uso único para formulários de doação - gerados no GET da página, consumidos no POST, invalidados após uso ou expiração de 15 minutos, prevenindo ataques de replay e form resubmission.]]></description>
-      <pubDate>Thu, 09 Apr 2026 03:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260409-030000-daily-043-uso-de-tokens-unicos-por-transacao/</guid>
     </item>
   </channel>
 </rss>

@@ -27,7 +27,7 @@
     <link rel="canonical" href="https://nhmatsumoto.github.io/posts/page/5/">
     <link rel="alternate" type="application/rss+xml" title="nhmatsumoto.github.io RSS" href="https://nhmatsumoto.github.io/feed.xml">
     
-    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.38bf7cdd.css">
+    <link rel="stylesheet" href="https://nhmatsumoto.github.io/assets/styles.eb7a7533.css">
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" defer></script>
     <script>
@@ -122,8 +122,16 @@
       </header>
       <div class="page-content">
         <section class="section-panel">
-          <ol class="entry-list">
+          <ol class="entry-list entry-grid">
             <li class="entry" data-entry-card>
+      <article class="entry-card entry-card-post">
+        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-08T03:00:00+09:00" data-localize-date="short">08 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="2" data-reading-time-values="{&quot;default&quot;: 2, &quot;en_us&quot;: 2, &quot;ja_jp&quot;: 1}">2 min de leitura</span></span></p>
+        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260408-030000-daily-019-estrutura-de-processamento-batch-para-simulacoes/" data-entry-title>Daily #019: Estrutura de processamento batch para simulações</a></h3>
+        <p class="entry-lede" data-entry-lede>Como o SOS Location usa Hangfire com 8 workers para rodar 150 simulações noturnas de inundação em 50 zonas, com agendamento shortest-first, idempotência por chave e reprocessamento automático de falhas.</p>
+        <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260408-030000-daily-019-estrutura-de-processamento-batch-para-simulacoes/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+      </article>
+      <script type="application/json" data-entry-card-data>{"title": "Daily #019: Estrutura de processamento batch para simulações", "title_en_us": "Daily #019: Batch processing structure for simulations", "title_ja_jp": "Daily #019: シミュレーション向けバッチ処理構造", "summary": "Como o SOS Location usa Hangfire com 8 workers para rodar 150 simulações noturnas de inundação em 50 zonas, com agendamento shortest-first, idempotência por chave e reprocessamento automático de falhas.", "summary_en_us": "How SOS Location uses Hangfire with 8 workers to run 150 nightly flood simulations across 50 zones, with shortest-first scheduling, idempotency keys and automatic failure reprocessing.", "summary_ja_jp": "SOS LocationがHangfireの8ワーカーを使って50ゾーンで150件の夜間洪水シミュレーションを実行する方法--最短優先スケジュール・冪等性キー・自動障害再処理付き。"}</script>
+    </li><li class="entry" data-entry-card>
       <article class="entry-card entry-card-post">
         <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-08T02:00:00+09:00" data-localize-date="short">08 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="2" data-reading-time-values="{&quot;default&quot;: 2, &quot;en_us&quot;: 2, &quot;ja_jp&quot;: 1}">2 min de leitura</span></span></p>
         <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260408-020000-daily-018-estrategia-para-previsao-de-areas-de-risco-com-ia/" data-entry-title>Daily #018: Estratégia para previsão de áreas de risco com IA</a></h3>
@@ -211,14 +219,6 @@
         <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260407-160000-daily-008-introducao-de-eventos-de-dominio-para-acoes-criticas/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
       </article>
       <script type="application/json" data-entry-card-data>{"title": "Daily #008: Introdução de eventos de domínio para ações críticas", "title_en_us": "Daily #008: Introducing domain events for critical actions", "title_ja_jp": "Daily #008: 重要アクション向けドメインイベントの導入", "summary": "Como o SOS Location usa eventos de domínio para decompor a ação 'registrar pessoa desaparecida' em três handlers independentes, evitando a god class que concentra lógica de notificação, auditoria e hotspot.", "summary_en_us": "How SOS Location uses domain events to decompose 'register missing person' into three independent handlers, avoiding the god class that concentrates notification, audit and hotspot logic.", "summary_ja_jp": "SOS Locationがドメインイベントを使って「行方不明者登録」を3つの独立したハンドラーに分解し、通知・監査・ホットスポットロジックを集中させるゴッドクラスを回避する方法。"}</script>
-    </li><li class="entry" data-entry-card>
-      <article class="entry-card entry-card-post">
-        <p class="entry-eyebrow"><span class="entry-kind"><i class="site-icon entry-icon" data-lucide="newspaper" aria-hidden="true"></i><span class="icon-label" data-i18n="kinds.post">publicação</span></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="calendar-days" aria-hidden="true"></i><time datetime="2026-04-07T15:00:00+09:00" data-localize-date="short">07 abr 2026</time></span><span class="entry-eyebrow-dot" aria-hidden="true">·</span><span class="entry-meta"><i class="site-icon entry-icon" data-lucide="clock-3" aria-hidden="true"></i><span data-reading-time="1" data-reading-time-values="{&quot;default&quot;: 1, &quot;en_us&quot;: 1, &quot;ja_jp&quot;: 1}">1 min de leitura</span></span></p>
-        <h3 class="entry-title"><a href="https://nhmatsumoto.github.io/posts/20260407-150000-daily-007-organizacao-de-pastas-para-backend-escalavel-net-core/" data-entry-title>Daily #007: Organização de pastas para backend escalável (.NET Core)</a></h3>
-        <p class="entry-lede" data-entry-lede>A estrutura de pastas real do SOS Location em vertical slices - cada feature contém seu próprio command, handler, validator e endpoint - e por que isso é superior à separação por camada técnica.</p>
-        <a class="entry-cta" href="https://nhmatsumoto.github.io/posts/20260407-150000-daily-007-organizacao-de-pastas-para-backend-escalavel-net-core/"><span class="icon-label" data-i18n="actions.read_article">Abrir</span><i class="site-icon entry-cta-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
-      </article>
-      <script type="application/json" data-entry-card-data>{"title": "Daily #007: Organização de pastas para backend escalável (.NET Core)", "title_en_us": "Daily #007: Folder organization for a scalable .NET Core backend", "title_ja_jp": "Daily #007: スケーラブルな.NET Coreバックエンドのフォルダ構成", "summary": "A estrutura de pastas real do SOS Location em vertical slices - cada feature contém seu próprio command, handler, validator e endpoint - e por que isso é superior à separação por camada técnica.", "summary_en_us": "The real SOS Location folder structure in vertical slices - each feature contains its own command, handler, validator and endpoint - and why this is superior to separation by technical layer.", "summary_ja_jp": "SOS Locationの実際のフォルダ構造（垂直スライス）--各フィーチャーが独自のコマンド・ハンドラー・バリデーター・エンドポイントを含む--そしてなぜこれが技術レイヤー別分離より優れているか。"}</script>
     </li>
           </ol>
         </section>

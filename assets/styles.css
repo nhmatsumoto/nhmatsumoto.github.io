@@ -5547,6 +5547,26 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   padding-bottom: calc(var(--base_grid_unit) * 2);
 }
 
+/* Grid variant: cards flow into responsive columns instead of a single column */
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: calc(var(--base_grid_unit) * 3);
+  align-items: stretch;
+}
+
+.entry-grid > li.entry,
+.entry-grid > li.entry:first-child,
+.entry-grid > li.entry:last-child {
+  padding: 0;
+  height: 100%;
+}
+
+.entry-grid > li.entry .entry-card {
+  max-width: none;
+  height: 100%;
+}
+
 .entry-card {
   display: grid;
   gap: calc(var(--base_grid_unit) * 2);
