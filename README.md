@@ -1,116 +1,36 @@
-# nhmatsumoto-blog-engine
+# nhmatsumoto.github.io
 
-`nhmatsumoto-blog-engine` é um **Technical Knowledge OS** publicado no GitHub Pages.
-O projeto funciona como um **engineering notebook vivo**: publicações longas, notas curtas, projetos e documentos técnicos gerados estaticamente.
+Repositorio estatico publicado em `https://nhmatsumoto.github.io/`.
 
-## Stack e arquitetura atual
+Este branch contem o artefato final do site: HTML, CSS, JavaScript, sitemap, feed e arquivos auxiliares prontos para o GitHub Pages servir a partir da raiz do repositorio.
 
-- **Gerador estático próprio em Python** (`scripts/build.py`)
-- **Conteúdo versionado em TOML** (`content/`)
-- **Renderização HTML estática** para `index.html`, `posts/`, `projects/`, `documents/`, `daily/`, `about/` e `contact/` como rota secundária
-- **Design system editorial** orientado à leitura longa e responsividade mobile (`assets/styles.css`)
-- **Busca local com botão visível + atalho opcional** usando command palette e índice gerado (`assets/search-index.json`)
-- **i18n com locale default pt-BR** e suporte a `en-US` e `ja-JP`
+## Estrutura atual
 
-## Implementações recentes (estado atual)
+- `index.html`: pagina inicial.
+- `posts/`, `publications/`, `projects/`, `documents/`, `daily/`, `about/`, `contact/`: rotas estaticas publicadas.
+- `assets/styles.css`: estilos globais.
+- `assets/blog.js`: comportamento client-side, busca e internacionalizacao da interface.
+- `assets/search-index.json`: indice local consumido pela busca.
+- `feed.xml`, `sitemap.xml`, `robots.txt`, `.nojekyll`: arquivos de publicacao.
+- `.github/workflows/deploy-pages.yml`: workflow que envia a raiz do repositorio para o GitHub Pages.
 
-- Home organizada como entrada editorial guiada:
-  - `home_title` (headline)
-  - `description` (subheadline)
-  - `home_intro` (introdução em parágrafos)
-  - trilha curta de entrada com conteúdos-chave
-- Shell interno mais compacto nas páginas de listagem para o conteúdo começar mais cedo.
-- Busca acionável por clique/toque no topo, sem depender apenas de `Ctrl` / `⌘ K`.
-- Área de documentos técnicos com categorização por domínio/arquitetura/agentes/APIs e links por âncora para grupos.
-- Relações estáticas entre posts, projetos, documentos e daily notes derivadas de `tags`, `project_url`, `docs_url` e `architecture_url`.
-- Publicações e projetos com metadados estruturados (tags, badges, status e links de repo/código quando aplicável).
+## Publicacao
 
-## Estrutura do repositório
+O deploy roda automaticamente em push para `master`.
 
-- `blog.toml`: configuração geral de build
-- `content/site.toml`: metadados principais do site (inclui copy da home)
-- `content/system.toml`: especificação estrutural/visual do sistema
-- `content/i18n.toml`: idiomas suportados e strings de interface
-- `content/posts/*.toml`: publicações
-- `content/daily/*.toml`: notas diárias
-- `content/projects/*.toml`: projetos
-- `content/documents/*.toml`: índice de documentos
-- `docs/`: fontes Markdown de documentação
-- `scripts/`: engine de build/renderização
-- `assets/`: CSS, JS e artefatos de busca/i18n
-- `editor/`: editor local
-- `_site/`: saída de build auxiliar
+O workflow nao executa build neste branch. Ele faz checkout, configura GitHub Pages, empacota `.` e publica o conteudo estatico diretamente.
 
-## Fluxo de publicação
-
-1. Editar conteúdo em `content/*.toml` (e `docs/*.md` quando necessário).
-2. Rodar build local:
+## Validacao local
 
 ```bash
-python3 scripts/build.py
+node --check assets/blog.js
+python3 -m http.server 8123
 ```
 
-3. Revisar saídas geradas em:
-   - `index.html`
-   - `posts/`
-   - `projects/`
-   - `documents/`
-   - `daily/`
-   - `about/`
-   - `contact/`
-4. Commitar e publicar no branch principal.
-5. O workflow de GitHub Pages faz o deploy.
+Depois, abra `http://127.0.0.1:8123/`.
 
-## Comandos úteis
+## Observacoes
 
-```bash
-# dependência opcional do editor com PostgreSQL
-python3 -m pip install -r requirements.txt
-
-# build estático
-python3 scripts/build.py
-
-# editor local
-python3 scripts/editor_server.py
-```
-
-Editor local (padrão): `http://127.0.0.1:4173/`
-
-## PostgreSQL no editor
-
-O editor continua funcionando com TOML quando não há banco configurado. Para usar PostgreSQL como store das publicações, defina a URL de conexão antes de iniciar o editor:
-
-```bash
-export BLOG_DATABASE_URL="postgresql://usuario:senha@localhost:5432/blog"
-python3 scripts/editor_server.py
-```
-
-A primeira importação cria as tabelas `blog_posts` e `blog_post_translations`. O painel permite importar os TOMLs existentes para o banco e exportar de volta para TOML, mantendo o build estático compatível com GitHub Pages.
-
-## Analytics (GTM / GA4)
-
-A configuração de analytics fica em `blog.toml`.
-
-```toml
-[analytics]
-enabled = true
-container_id = "GTM-NJJFQ4JM"
-container_id_env = "GTM_CONTAINER_ID"
-measurement_id = ""
-measurement_id_env = "GA_MEASUREMENT_ID"
-allowed_hostnames = ["nhmatsumoto.github.io"]
-debug = false
-```
-
-Também é possível sobrescrever por variável de ambiente:
-
-```bash
-GTM_CONTAINER_ID=GTM-XXXXXXXX python3 scripts/build.py
-```
-
-## Observações
-
-- Diretórios como `posts/`, `projects/`, `documents/`, `daily/`, `about/` e `contact/` são saídas estáticas do build.
-- A rota `contact/` continua gerada, mas funciona como superfície secundária; a navegação principal prioriza home, posts, daily, projects, documents e about.
-- A home é orientada por dados de `content/site.toml`, permitindo atualização de copy sem alterar template.
-- O projeto prioriza legibilidade, rastreabilidade em git, simplicidade operacional e boa leitura em mobile sem depender de JavaScript excessivo.
+- As referencias a `scripts/`, `content/` e outros caminhos antigos que aparecem dentro de daily notes fazem parte do historico editorial exibido pelo site.
+- Para evitar processamento do Jekyll no GitHub Pages, `.nojekyll` deve permanecer versionado.
+- Novas alteracoes de conteudo neste branch devem atualizar diretamente os arquivos estaticos correspondentes.

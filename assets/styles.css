@@ -7541,3 +7541,51 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 @media (max-width: 600px) {
   .code-shell .code-shell-subtitle { display: none; }
 }
+
+/* ── Search palette additions (injected UI) ────────────────────────────── */
+.search-result-link {
+  display: contents;
+  color: inherit;
+  text-decoration: none;
+}
+
+.search-input-icon {
+  display: inline-flex;
+}
+
+.search-input-icon svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.search-palette-close svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.nav-btn-search {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.search-key-hint {
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font-code);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.nav-btn-search:hover .search-key-hint {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 54%, var(--border));
+}
+
+@media (max-width: 1024px) {
+  .search-key-hint {
+    display: none;
+  }
+}
