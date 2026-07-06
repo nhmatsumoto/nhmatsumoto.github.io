@@ -3494,6 +3494,126 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   margin: 0 0 calc(var(--base_grid_unit) * 2);
 }
 
+/* Home tech stack chips (brand icons) */
+.tech-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-code);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.tech-chip-icon {
+  flex: 0 0 auto;
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* Home professional profile panel */
+.profile-summary-body {
+  max-width: 70ch;
+  color: color-mix(in srgb, var(--text) 84%, var(--muted));
+  line-height: 1.7;
+}
+
+.profile-summary-body p {
+  margin: 0;
+}
+
+.profile-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: calc(var(--base_grid_unit) * 5);
+}
+
+.profile-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.profile-metric-value {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.profile-metric-label {
+  font-family: var(--font-code);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.profile-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--base_grid_unit) * 5);
+  margin-top: calc(var(--base_grid_unit) * 6);
+}
+
+.profile-detail .section-kicker {
+  margin: 0 0 0.75rem;
+}
+
+.profile-cert-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-cert-list li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: color-mix(in srgb, var(--text) 82%, var(--muted));
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.profile-cert-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .profile-metric-grid,
+  .profile-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .notebook-link-row {
   display: flex;
   flex-wrap: wrap;
