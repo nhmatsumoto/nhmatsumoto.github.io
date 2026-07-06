@@ -3486,6 +3486,14 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   margin-top: calc(var(--base_grid_unit) * 3);
 }
 
+.notebook-stack {
+  margin-top: calc(var(--base_grid_unit) * 4);
+}
+
+.notebook-stack .section-kicker {
+  margin: 0 0 calc(var(--base_grid_unit) * 2);
+}
+
 .notebook-link-row {
   display: flex;
   flex-wrap: wrap;
