@@ -504,6 +504,14 @@ button, input, select {
   color: var(--accent-secondary);
 }
 
+.nav-locale-code {
+  font-family: var(--font-code);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
 .locale-label {
   font-family: var(--font-heading);
   white-space: nowrap;

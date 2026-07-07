@@ -61,7 +61,7 @@
         <div class="nav-actions navbar-right">
           <div class="nav-group nav-group-mobile mobile-only">
 
-            <button class="nav-btn-icon nav-btn-theme nav-btn-theme-mobile" type="button" data-theme-toggle aria-label="alternar tema" data-i18n-aria-label="nav.theme">
+            <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="mudar idioma" data-i18n-aria-label="nav.locale"><svg class="lucide lucide-languages" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 6 6" /><path d="m4 14 6-6 2-3" /><path d="M2 5h12" /><path d="M7 2h1" /><path d="m22 22-5-10-5 10" /><path d="M14 18h6" /></svg><span class="nav-locale-code" data-locale-code>PT</span></button><button class="nav-btn-icon nav-btn-theme nav-btn-theme-mobile" type="button" data-theme-toggle aria-label="alternar tema" data-i18n-aria-label="nav.theme">
               <svg class="lucide lucide-moon theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
               <svg class="lucide lucide-sun theme-icon-sun hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>
             </button>
@@ -69,7 +69,7 @@
 
           <div class="nav-group desktop-only">
             
-            <button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="alternar tema" data-i18n-aria-label="nav.theme">
+            <button class="nav-btn-icon nav-btn-locale" type="button" data-locale-toggle aria-label="mudar idioma" data-i18n-aria-label="nav.locale"><svg class="lucide lucide-languages" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 6 6" /><path d="m4 14 6-6 2-3" /><path d="M2 5h12" /><path d="M7 2h1" /><path d="m22 22-5-10-5 10" /><path d="M14 18h6" /></svg><span class="nav-locale-code" data-locale-code>PT</span></button><button class="nav-btn-icon nav-btn-theme" type="button" data-theme-toggle aria-label="alternar tema" data-i18n-aria-label="nav.theme">
               <svg class="lucide lucide-moon theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
               <svg class="lucide lucide-sun theme-icon-sun hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>
             </button>
@@ -95,7 +95,7 @@
       <div class="about-profile-main profile-main">
         <p class="about-profile-handle" data-i18n="profile.handle">@nhmatsumoto · Brasil / Japão</p>
         <h1 id="home-profile-name" class="home-profile-name profile-name" data-profile-field="profile_name">Hiro Matsumoto</h1>
-        <p class="about-profile-bio profile-bio" data-profile-field="profile_summary">Software engineer brasileiro no Japão. Trabalho com backend, arquitetura e APIs em .NET/C#, construindo sistemas claros, úteis e sustentáveis.</p>
+        <p class="about-profile-bio profile-bio" data-profile-field="profile_summary" data-i18n="home.profile_bio">Software engineer brasileiro no Japão. Trabalho com backend, arquitetura e APIs em .NET/C#, construindo sistemas claros, úteis e sustentáveis.</p>
         <section class="profile-contact-block profile-contact-compact" aria-labelledby="home-profile-contact-title">
           <p class="section-kicker profile-contact-kicker" data-i18n="nav.contact">contato</p>
           <h3 id="home-profile-contact-title" class="profile-contact-title" data-i18n="pages.contact.title">Contato</h3>
@@ -150,10 +150,10 @@
             <p class="section-kicker" data-i18n="home.kicker">engineering notebook</p>
             <h1 id="home-title" class="notebook-hero-title">engineering notebook</h1>
             
-            <div class="prose notebook-intro" data-page-body><p>Caderno técnico onde registro projetos, decisões de arquitetura e estudos sobre software e engenharia. Cada publicação documenta algo que construí, testei ou aprendi.</p>
-<p>Minha base é backend em .NET/C#, com trabalho contínuo em APIs, banco de dados e front-end. Aqui a técnica se conecta a produto, contexto e à prática de construir software de verdade.</p></div>
+            <div class="prose notebook-intro" data-page-body><p data-i18n="home.intro_p1">Caderno técnico onde registro projetos, decisões de arquitetura e estudos sobre software e engenharia. Cada publicação documenta algo que construí, testei ou aprendi.</p>
+<p data-i18n="home.intro_p2">Minha base é backend em .NET/C#, com trabalho contínuo em APIs, banco de dados e front-end. Aqui a técnica se conecta a produto, contexto e à prática de construir software de verdade.</p></div>
             <div class="notebook-stack">
-              <p class="section-kicker" aria-hidden="true">stack principal</p>
+              <p class="section-kicker" aria-hidden="true" data-i18n="home.stack_kicker">stack principal</p>
               <ul class="tech-chip-list notebook-stack-list" aria-label="Tecnologias que domino">
                 <li class="tech-chip"><svg class="tech-chip-icon" role="img" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="#512BD4"><path d="M24 8.77h-2.468v7.565h-1.425V8.77h-2.462V7.53H24zm-6.852 7.565h-4.821V7.53h4.63v1.24h-3.205v2.494h2.953v1.234h-2.953v2.604h3.396zm-6.708 0H8.882L4.78 9.863a2.896 2.896 0 0 1-.258-.51h-.036c.032.189.048.592.048 1.21v5.772H3.157V7.53h1.659l3.965 6.32c.167.261.275.442.323.54h.024c-.04-.233-.06-.629-.06-1.185V7.529h1.372zm-8.703-.693a.868.829 0 0 1-.869.829.868.829 0 0 1-.868-.83.868.829 0 0 1 .868-.828.868.829 0 0 1 .869.829Z"/></svg><span>.NET Core</span></li>
                 <li class="tech-chip"><svg class="tech-chip-icon" role="img" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="#512BD4"><path d="M1.194 7.543v8.913c0 1.103.588 2.122 1.544 2.674l7.718 4.456a3.086 3.086 0 0 0 3.088 0l7.718-4.456a3.087 3.087 0 0 0 1.544-2.674V7.543a3.084 3.084 0 0 0-1.544-2.673L13.544.414a3.086 3.086 0 0 0-3.088 0L2.738 4.87a3.085 3.085 0 0 0-1.544 2.673Zm5.403 2.914v3.087a.77.77 0 0 0 .772.772.773.773 0 0 0 .772-.772.773.773 0 0 1 1.317-.546.775.775 0 0 1 .226.546 2.314 2.314 0 1 1-4.631 0v-3.087c0-.615.244-1.203.679-1.637a2.312 2.312 0 0 1 3.274 0c.434.434.678 1.023.678 1.637a.769.769 0 0 1-.226.545.767.767 0 0 1-1.091 0 .77.77 0 0 1-.226-.545.77.77 0 0 0-.772-.772.771.771 0 0 0-.772.772Zm12.35 3.087a.77.77 0 0 1-.772.772h-.772v.772a.773.773 0 0 1-1.544 0v-.772h-1.544v.772a.773.773 0 0 1-1.317.546.775.775 0 0 1-.226-.546v-.772H12a.771.771 0 1 1 0-1.544h.772v-1.543H12a.77.77 0 1 1 0-1.544h.772v-.772a.773.773 0 0 1 1.317-.546.775.775 0 0 1 .226.546v.772h1.544v-.772a.773.773 0 0 1 1.544 0v.772h.772a.772.772 0 0 1 0 1.544h-.772v1.543h.772a.776.776 0 0 1 .772.772Zm-3.088-2.315h-1.544v1.543h1.544v-1.543Z"/></svg><span>C#</span></li>
@@ -179,46 +179,46 @@
     <section class="section-panel profile-summary-panel" aria-labelledby="profile-summary-title">
       <header class="section-header">
         <div>
-          <p class="section-kicker">perfil profissional</p>
-          <h2 id="profile-summary-title">Senior Software Engineer</h2>
+          <p class="section-kicker" data-i18n="home.profile_kicker">perfil profissional</p>
+          <h2 id="profile-summary-title" data-i18n="home.profile_title">Senior Software Engineer</h2>
         </div>
-        <p class="section-copy">.NET, C#, React e TypeScript aplicados a sistemas distribuídos e arquiteturas de alta performance. Mais recentemente, orquestração de agentes e avaliação de LLMs.</p>
+        <p class="section-copy" data-i18n="home.profile_copy">.NET, C#, React e TypeScript aplicados a sistemas distribuídos e arquiteturas de alta performance. Mais recentemente, orquestração de agentes e avaliação de LLMs.</p>
       </header>
 
       <div class="profile-summary-body">
-        <p>Desenvolvedor de software desde 2016, com atuação em tecnologia, manufatura, finanças, telecomunicações, educação e mobilidade urbana. Contribuí em sistemas de pagamento, plataformas de gestão escolar, soluções de telecom e aplicações de mobilidade urbana, sempre defendendo boas práticas de arquitetura como SOLID, DDD e Clean Architecture para escrever código limpo, sustentável e escalável.</p>
+        <p data-i18n="home.profile_body">Desenvolvedor de software desde 2016, com atuação em tecnologia, manufatura, finanças, telecomunicações, educação e mobilidade urbana. Contribuí em sistemas de pagamento, plataformas de gestão escolar, soluções de telecom e aplicações de mobilidade urbana, sempre defendendo boas práticas de arquitetura como SOLID, DDD e Clean Architecture para escrever código limpo, sustentável e escalável.</p>
       </div>
 
       <div class="profile-metric-grid">
         <article class="profile-metric">
           <span class="profile-metric-value">2016</span>
-          <span class="profile-metric-label">atuando com software desde</span>
+          <span class="profile-metric-label" data-i18n="home.metric_since">atuando com software desde</span>
         </article>
         <article class="profile-metric">
           <span class="profile-metric-value">6+</span>
-          <span class="profile-metric-label">setores de atuação</span>
+          <span class="profile-metric-label" data-i18n="home.metric_sectors">setores de atuação</span>
         </article>
         <article class="profile-metric">
           <span class="profile-metric-value">EN</span>
-          <span class="profile-metric-label">inglês profissional</span>
+          <span class="profile-metric-label" data-i18n="home.metric_english">inglês profissional</span>
         </article>
       </div>
 
       <div class="profile-detail-grid">
         <section class="profile-detail" aria-labelledby="profile-sectors-title">
-          <p class="section-kicker" id="profile-sectors-title">setores</p>
+          <p class="section-kicker" id="profile-sectors-title" data-i18n="home.detail_sectors">setores</p>
           <ul class="about-chip-list">
-            <li>Pagamentos</li>
-            <li>Telecom</li>
-            <li>Mobilidade urbana</li>
-            <li>Educação</li>
-            <li>Finanças</li>
-            <li>Manufatura</li>
-            <li>ERP</li>
+            <li data-i18n="home.sector_payments">Pagamentos</li>
+            <li data-i18n="home.sector_telecom">Telecom</li>
+            <li data-i18n="home.sector_mobility">Mobilidade urbana</li>
+            <li data-i18n="home.sector_education">Educação</li>
+            <li data-i18n="home.sector_finance">Finanças</li>
+            <li data-i18n="home.sector_manufacturing">Manufatura</li>
+            <li data-i18n="home.sector_erp">ERP</li>
           </ul>
         </section>
         <section class="profile-detail" aria-labelledby="profile-focus-title">
-          <p class="section-kicker" id="profile-focus-title">foco atual</p>
+          <p class="section-kicker" id="profile-focus-title" data-i18n="home.detail_focus">foco atual</p>
           <ul class="about-chip-list">
             <li>AI Evaluation</li>
             <li>LLMs</li>
@@ -228,7 +228,7 @@
           </ul>
         </section>
         <section class="profile-detail" aria-labelledby="profile-practices-title">
-          <p class="section-kicker" id="profile-practices-title">práticas e arquitetura</p>
+          <p class="section-kicker" id="profile-practices-title" data-i18n="home.detail_practices">práticas e arquitetura</p>
           <ul class="about-chip-list">
             <li>SOLID</li>
             <li>DDD</li>
@@ -239,7 +239,7 @@
           </ul>
         </section>
         <section class="profile-detail" aria-labelledby="profile-certs-title">
-          <p class="section-kicker" id="profile-certs-title">certificações e formação</p>
+          <p class="section-kicker" id="profile-certs-title" data-i18n="home.detail_certs">certificações e formação</p>
           <ul class="profile-cert-list">
             <li>Scrum Foundation Professional Certificate (SFPC)</li>
             <li>Redes Neurais Artificiais em Python</li>
@@ -502,6 +502,7 @@
     </div>
 
     <div class="sidebar-backdrop" data-sidebar-toggle></div>
+    <script src="/assets/i18n.js" defer></script>
     <script src="/assets/blog.js" defer></script>
     
   </body>
