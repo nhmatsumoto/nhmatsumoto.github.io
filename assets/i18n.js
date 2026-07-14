@@ -15,7 +15,8 @@
     "nav.home": ["início", "Home", "ホーム"],
     "nav.about": ["sobre", "About", "プロフィール"],
     "nav.posts": ["publicações", "Posts", "記事"],
-    "nav.daily": ["daily", "Daily", "デイリー"],
+    "nav.fundamentals": ["fundamentos", "Fundamentals", "基礎"],
+    "nav.ai": ["ia", "AI", "AI"],
     "nav.projects": ["projetos", "Projects", "プロジェクト"],
     "nav.documents": ["documentos", "Documents", "ドキュメント"],
     "nav.contact": ["contato", "Contact", "連絡先"],
@@ -44,7 +45,6 @@
     "footer.developed_by": ["desenvolvido por", "developed by", "開発"],
 
     // ---- kinds ----
-    "kinds.daily": ["daily", "Daily", "デイリー"],
     "kinds.document": ["documento", "Document", "ドキュメント"],
     "kinds.post": ["publicação", "Post", "記事"],
     "kinds.project": ["projeto", "Project", "プロジェクト"],
@@ -95,6 +95,18 @@
     ],
 
     // ---- page headers ----
+    "pages.fundamentals.title": ["Fundamentos e Padrões de Projeto", "Fundamentals and Design Patterns", "基礎とデザインパターン"],
+    "pages.fundamentals.description": [
+      "Base de engenharia de software: algoritmos, estruturas de dados, princípios de design, testes e padrões de projeto aplicados.",
+      "Software engineering foundations: algorithms, data structures, design principles, testing and applied design patterns.",
+      "ソフトウェア工学の基礎:アルゴリズム、データ構造、設計原則、テスト、応用デザインパターン。"
+    ],
+    "pages.ai.title": ["Inteligência Artificial", "Artificial Intelligence", "人工知能"],
+    "pages.ai.description": [
+      "Trilha de inteligência artificial do básico ao avançado: do perceptron e redes neurais até agentes e LLMs.",
+      "An artificial intelligence track from basics to advanced: from the perceptron and neural networks to agents and LLMs.",
+      "パーセプトロンやニューラルネットワークからエージェント、LLMまで、基礎から応用までのAIトラック。"
+    ],
     "pages.archive.title": ["Todas as publicações", "All posts", "すべての記事"],
     "pages.archive.description": [
       "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais.",
@@ -107,16 +119,6 @@
       "Main channels to follow the work, get in touch and follow the site's public trail.",
       "仕事の様子を追い、連絡を取り、サイトの公開記録をたどるための主要なチャネルです。"
     ],
-    "pages.daily.title": ["Daily notes", "Daily notes", "デイリーノート"],
-    "pages.daily.kicker": ["daily", "daily", "デイリー"],
-    "pages.daily.description": [
-      "Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git.",
-      "A timeline of engineering activity generated from the last 30 days of the Git repository.",
-      "Gitリポジトリの直近30日から生成した、エンジニアリング活動のタイムラインです。"
-    ],
-    "pages.daily.meta": ["Contexto", "Context", "コンテキスト"],
-    "pages.daily.related_paths": ["Caminhos relacionados", "Related paths", "関連パス"],
-    "pages.daily.source": ["Fonte", "Source", "ソース"],
     "pages.document.kicker": ["documento", "document", "ドキュメント"],
     "pages.document.meta": ["Metadados do documento", "Document metadata", "ドキュメントのメタデータ"],
     "pages.documents.title": ["Sistema de documentos", "Document system", "ドキュメントシステム"],
@@ -291,9 +293,9 @@
 
     // ---- contact cards ----
     "contact.card_site": [
-      "Entrada principal para posts, projetos, documentos e daily notes.",
-      "Main entry point for posts, projects, documents and daily notes.",
-      "記事・プロジェクト・ドキュメント・デイリーノートへのメイン入口です。"
+      "Entrada principal para publicações, projetos e documentos.",
+      "Main entry point for posts, projects and documents.",
+      "記事・プロジェクト・ドキュメントへのメイン入口です。"
     ],
     "contact.card_rss": [
       "Feed para acompanhar novas publicações sem depender de rede social.",

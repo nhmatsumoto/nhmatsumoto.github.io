@@ -1,1 +1,470 @@
-[{"title":"Dapper vs EF Core: Quando a Performance Supera a Abstração","url":"/posts/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/","kind":"post","description":"Uma análise comparativa sobre ORMs no ecossistema .NET, focando em ciclos de vida de objetos, rastreamento e overhead de consulta."},{"title":"Clean Code &amp; SOLID: O Custo da Dívida Técnica","url":"/posts/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/","kind":"post","description":"Uma análise sobre a manutenibilidade de longo prazo, de nomes de variáveis expressivos aos cinco princípios de arquitetura de classes."},{"title":"Design Patterns: O que ainda é Relevante no C# Moderno?","url":"/posts/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/","kind":"post","description":"Uma revisão crítica dos padrões GoF, analisando como o C# 12 e 13 tornaram alguns obsoletos através de registros e correspondência de padrões."},{"title":"Engenharia Cognitiva: Como Agentes de IA &#x27;Pensam&#x27;","url":"/posts/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/","kind":"post","description":"Uma análise sobre a orquestração de pensamento em LLMs, do ciclo Percepção-Ação à estrutura de memória de curto e longo prazo (RAG)."},{"title":"Flutter &amp; Dart: Arquitetura de Estados e Performance Mobile","url":"/posts/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/","kind":"post","description":"Uma análise técnica sobre a renderização do Skia/Impeller e como padrões como Riverpod e Bloc afetam o ciclo de vida do widget."},{"title":"Performance no .NET: JIT, AOT e o Custo da Alocação de Memória","url":"/posts/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/","kind":"post","description":"Uma análise profunda sobre o runtime do .NET, focando em Garbage Collector (GC), Just-In-Time compilation e Native AOT para microsserviços."},{"title":"Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua","url":"/posts/2026-04-03-0900-orquestrador-agentes-ddd/","kind":"post","description":"Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA."},{"title":"Redes Neurais do Zero: Implementação Matemática em Python","url":"/posts/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/","kind":"post","description":"Uma jornada do neurônio de McCulloch-Pitts ao Backpropagation, implementando uma rede neural densa usando apenas NumPy."},{"title":"Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos","url":"/posts/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/","kind":"post","description":"Uma análise sobre a segurança de tempo de compilação versus a agilidade de tempo de execução, explorando tipagem forte, fraca e duck typing."},{"title":"TDD: O Ciclo Red-Green-Refactor como Proteção de Domínio","url":"/posts/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/","kind":"post","description":"Uma análise técnica sobre o Test-Driven Development, de como testes falhos garantem que o código realmente funciona ao refactor seguro."},{"title":"TypeScript Avançado: Mapeamento de Tipos e Generics Complexos","url":"/posts/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/","kind":"post","description":"Uma análise profunda sobre o sistema de tipos Turing-complete do TypeScript, explorando tipos condicionais, inferência e utilitários de transformação."},{"title":"Bill Gates e a Microsoft: Do Desktop à Ubiquidade","url":"/posts/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/","kind":"post","description":"Uma análise sobre a visão de Gates de &#x27;um computador em cada mesa&#x27; e como a Microsoft moldou a indústria do software moderno."},{"title":"“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua","url":"/posts/2026-04-03-1000-neuroplasticidade-agentes/","kind":"post","description":"Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada."},{"title":"Alan Turing: O Código Enigma e o Nascimento da IA","url":"/posts/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/","kind":"post","description":"Uma homenagem ao pai da computação moderna, desde a quebra do Enigma à fundação teórica da Inteligência Artificial."},{"title":"PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)","url":"/posts/2026-04-03-1100-poc-minerando-logs/","kind":"post","description":"Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável."},{"title":"A anatomia do pensamento em agentes: transformando intenção em execução","url":"/posts/2026-04-03-1200-fluxo-pensamento-agentes/","kind":"post","description":"Uma análise sobre como o &#x27;Chain of Thought&#x27; e a estruturação de planos permitem que agentes de IA resolvam tarefas complexas com precisão."},{"title":"Richard Feynman: O Prazer de Descobrir e o Pensamento Quântico","url":"/posts/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/","kind":"post","description":"Uma homenagem ao gênio que ensinou o mundo a pensar a partir dos primeiros princípios, da física de partículas à nanotecnologia."},{"title":"Segunda Guerra Mundial: O Motor da Inovação Tecnológica","url":"/posts/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/","kind":"post","description":"Uma análise sobre como o maior conflito da história forçou o nascimento do radar, computadores digitais e motores a jato."},{"title":"Projeto Manhattan: A Ciência da Bomba","url":"/posts/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/","kind":"post","description":"Uma análise sobre o maior esforço científico-militar da história, de Einstein e Oppenheimer aos testes de Trinity."},{"title":"Daniel Kahneman: Rápido e Devagar - A Economia Comportamental","url":"/posts/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/","kind":"post","description":"Uma homenagem ao psicólogo que ganhou o Nobel de Economia ao provar que o ser humano não é tão racional quanto gosta de acreditar."},{"title":"Resiliência e Escala: Sistemas orientados a Filas de Mensageria","url":"/posts/2026-04-03-1600-sistemas-orientados-a-filas/","kind":"post","description":"Por que desacoplar sistemas com filas (RabbitMQ, Azure Service Bus) é o segredo para arquiteturas distribuídas inquebráveis."},{"title":"Algoritmos e Big O: Entendendo a Eficiência do Código","url":"/posts/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/","kind":"post","description":"Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade."},{"title":"Excelência em Dados: Pilhas, Filas e Árvores","url":"/posts/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/","kind":"post","description":"Por que a escolha da estrutura de dados correta é mais importante do que o próprio algoritmo para a performance de sistemas complexos."},{"title":"Simulação de Partículas: O poder dos Métodos de Monte Carlo","url":"/posts/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/","kind":"post","description":"Explorando a simulação do universo e sistemas complexos usando estatística, caminhos aleatórios e leis da física codificadas."},{"title":"O Universo Quântico: Além da Lógica Clássica","url":"/posts/2026-04-03-2400-introducao-intuitiva-fisica-quantica/","kind":"post","description":"Uma jornada intuitiva pela física quântica. Superposição, entrelaçamento e por que o observador muda a realidade."},{"title":"Computação Quântica: O Poder Além dos Bits","url":"/posts/2026-04-03-2500-computacao-quantica-qbits-vs-bits/","kind":"post","description":"Uma visão clara sobre os Qubits, superposição e como o poder quântico pode resolver problemas impossíveis para computadores clássicos."},{"title":"IA Inspirada pela Física: Entropia e Energia nas Redes Neurais","url":"/posts/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/","kind":"post","description":"Como conceitos térmicos e de mecânica estatística moldam o treinamento de IAs modernas, de Hopfield Networks a Diffusion Models."},{"title":"A Bio-matemática da Araucária: Modelagem e Simetria","url":"/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/","kind":"post","description":"Uma exploração sobre os padrões matemáticos que regem a estrutura da Araucaria angustifolia, de verticilos a séries exponenciais de crescimento."},{"title":"SOS Location: Regras de negócio, contratos e operação","url":"/posts/2026-04-05-0900-sos-location-business-rules/","kind":"post","description":"Catálogo completo das regras de negócio que sustentam o SOS Location."},{"title":"SOS Location: Fluxos, arquitetura e diagramas","url":"/posts/2026-04-05-1000-sos-location-flow-architecture/","kind":"post","description":"Descrição dos pipelines do SOS Location, diagramas e exemplos de código."},{"title":"SOS Location: Tecnologias, ferramentas e exemplos","url":"/posts/2026-04-05-1100-sos-location-stack/","kind":"post","description":"Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location."},{"title":"SOS Location: Motor WebGL 3D de visualização de cidades em tempo real","url":"/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/","kind":"post","description":"Como construímos um motor WebGL 2.0 com Three.js para renderizar cidades completas com terreno, edificações 3D e camadas de desastre ao vivo."},{"title":"SOS Location: Clean Architecture + CQRS em .NET 10","url":"/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/","kind":"post","description":"Arquitetura limpa, CQRS com MediatR e domain events no backend do SOS Location. Como estruturamos o código para resiliência em cenários de crise."},{"title":"SOS Location: PostGIS e inteligência espacial para resposta a desastres","url":"/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/","kind":"post","description":"PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real."},{"title":"SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica","url":"/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/","kind":"post","description":"O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e d"},{"title":"Bem-vindo ao meu novo blog","url":"/posts/20260312-090000-primeiro-post/","kind":"post","description":"O ponto de partida do Technical Knowledge OS: um notebook de engenharia versionado, focado em arquitetura, sistemas distribuídos e documentação viva."},{"title":"Pipelines GIS com serviços orientados a eventos","url":"/posts/20260401-184500-gis-pipelines-with-event-driven-services/","kind":"post","description":"Como tratar ingestão geoespacial, processamento assíncrono e leitura operacional sem transformar o backend em um monólito acidental."},{"title":"Limites de DDD para sistemas com agentes","url":"/posts/20260402-203000-ddd-boundaries-for-agent-systems/","kind":"post","description":"Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes."},{"title":"Tecnologia de Pulso: Do HEMP ao Micro-ondas de Alta Potência","url":"/posts/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/","kind":"post","description":"Uma análise técnica sobre a geração artificial de pulsos eletromagnéticos, do Efeito Compton ao Gerador de Compressão de Fluxo."},{"title":"Sopros Estelares: De Supernovas a Space Weather","url":"/posts/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/","kind":"post","description":"Anatomia dos fenômenos astrofísicos que geram emissões eletromagnéticas extremas e seu impacto nos sistemas tecnológicos."},{"title":"A Física dos Pulsos Dispersos: Além do EMP Convencional","url":"/posts/20260404-demp-physics-fisica-demp-pulsos-dispersos/","kind":"post","description":"Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos."},{"title":"Engenharia de Resiliência Eletromagnética e Acoplamento","url":"/posts/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/","kind":"post","description":"Do ponto zero à ruptura de junções: como circuitos reais falham sob transientes de alta intensidade."},{"title":"O Despertar do Technical Knowledge OS v2","url":"/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/","kind":"post","description":"Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico."},{"title":"Ronaldinho Agent: persona, memória curta e tool use sem virar produto separado","url":"/posts/20260406-093000-ronaldinho-agent-persona-tooling/","kind":"post","description":"Registro do ronaldinho-agent como experimento de engenharia de agentes: o que foi validado, quais trade-offs apareceram e por que ele faz mais sentido como publicação do que como r"},{"title":"Apollo-11","url":"/projects/apollo-11/","kind":"project","description":"Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar — referência histórica de engenharia de software embarcado."},{"title":"AutoMapper","url":"/projects/automapper/","kind":"project","description":"Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET — elimina boilerplate de transformação entre camadas."},{"title":"brumadinho_location","url":"/projects/brumadinho-location/","kind":"project","description":"Conjunto de ferramentas geoespaciais para apoiar o resgate e localização de vítimas do desastre de Brumadinho/MG, utilizando dados públicos e coordenadas de referência."},{"title":"Chess","url":"/projects/chess/","kind":"project","description":"Jogo de xadrez implementado em C# com foco em modelagem de domínio, validação de movimentos e representação do tabuleiro."},{"title":"claw-code","url":"/projects/claw-code/","kind":"project","description":"Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade."},{"title":"DeepSeek-V3","url":"/projects/deepseek-v3/","kind":"project","description":"Fork do DeepSeek-V3, modelo de linguagem com arquitetura Mixture-of-Experts (MoE) e Multi-head Latent Attention para inferência eficiente em larga escala."},{"title":"Financial","url":"/projects/financial/","kind":"project","description":"Aplicação monolítica de gestão financeira pessoal desenvolvida em C#/.NET, com foco em controle de despesas, categorização e relatórios."},{"title":"gaussian-splatting","url":"/projects/gaussian-splatting/","kind":"project","description":"Fork da implementação original de 3D Gaussian Splatting — técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real."},{"title":"gemini-cli","url":"/projects/gemini-cli/","kind":"project","description":"Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem."},{"title":"GIS Incident Lab","url":"/projects/gis-incident-lab/","kind":"project","description":"Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta."},{"title":"Java-Servlet-Pages","url":"/projects/java-servlet-pages/","kind":"project","description":"Projeto de estudo com Java Servlets e JSP, cobrindo ciclo de vida de requisições HTTP, sessões, filtros e padrão MVC no servidor."},{"title":"Leaflet","url":"/projects/leaflet/","kind":"project","description":"Fork do Leaflet, a biblioteca JavaScript mais popular para mapas interativos, utilizada como base nos projetos de GIS do ecossistema."},{"title":"macos","url":"/projects/macos/","kind":"project","description":"Fork do projeto Docker-OSX: virtualização de macOS dentro de containers Docker para testes de compatibilidade e desenvolvimento cross-platform."},{"title":"MapleBR","url":"/projects/maplebr/","kind":"project","description":"Projeto com ferramentas e configurações para servidores MapleStory, incluindo scripts de build e automação via Makefile."},{"title":"mermaid","url":"/projects/mermaid/","kind":"project","description":"Fork do Mermaid.js — ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual."},{"title":"mermaid-live-editor","url":"/projects/mermaid-live-editor/","kind":"project","description":"Fork do Mermaid Live Editor — aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação."},{"title":"nhmatsumoto.exception.middleware","url":"/projects/nhmatsumoto-exception-middleware/","kind":"project","description":"Middleware de tratamento global de exceções para ASP.NET Core, padronizando respostas de erro e logging em aplicações web."},{"title":"nhmatsumoto.github.io","url":"/projects/nhmatsumoto-github-io/","kind":"project","description":"Site pessoal e Technical Knowledge OS: engine de geração estática em Python, conteúdo em TOML, busca client-side, i18n e deploy via GitHub Pages."},{"title":"Playground-FE","url":"/projects/playground-fe/","kind":"project","description":"Projeto frontend em React e TypeScript com integração ao Keycloak para autenticação, servindo como base para futuros desenvolvimentos com controle de acesso."},{"title":"prog_lib","url":"/projects/prog-lib/","kind":"project","description":"Coleção de implementações de algoritmos e estruturas de dados clássicos, organizada como biblioteca de referência para estudo e consulta rápida."},{"title":"QuickReaderv1","url":"/projects/quickreaderv1/","kind":"project","description":"Aplicação de speed reading em TypeScript que apresenta texto em chunks otimizados para leitura rápida, com controle de velocidade e tracking de progresso."},{"title":"react-data-grid","url":"/projects/react-data-grid/","kind":"project","description":"Fork do react-data-grid — componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados."},{"title":"ResponseMiddleware","url":"/projects/responsemiddleware/","kind":"project","description":"Middleware ASP.NET Core para padronização de respostas HTTP, envolvendo resultados de controllers em um envelope consistente com metadados de sucesso/erro."},{"title":"Security.Jwt","url":"/projects/security-jwt/","kind":"project","description":"Biblioteca .NET para gerenciamento completo de JWT: rotação automática de chaves, endpoint JWKS, suporte a múltiplos algoritmos e armazenamento seguro de material criptográfico."},{"title":"SOS","url":"/projects/sos/","kind":"project","description":"Módulo auxiliar do ecossistema SOS Location com componentes compartilhados, utilitários e contratos de integração para os serviços de resposta a desastres."},{"title":"SOS Location","url":"/projects/sos-location/","kind":"project","description":"Plataforma para gestão de desastres que integra dados geoespaciais, clima e recursos humanitários em tempo real."},{"title":"SplitCost-Backend","url":"/projects/splitcost-backend/","kind":"project","description":"Backend do SplitCosts em .NET/C# com arquitetura multi-tenant, domain events, separação de contextos de leitura/escrita e projeções operacionais."},{"title":"SplitCosts","url":"/projects/splitcosts/","kind":"project","description":"Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional."},{"title":"SplitCosts-FE","url":"/projects/splitcosts-fe/","kind":"project","description":"Frontend do SplitCosts em React/TypeScript com Keycloak auth, visualização de despesas, saldos e reconciliação, consumindo o SplitCost-Backend via REST API."},{"title":"system-prompts-and-models-of-ai-tools","url":"/projects/system-prompts-and-models-of-ai-tools/","kind":"project","description":"Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros — referência para engenh"},{"title":"User-Auth","url":"/projects/user-auth/","kind":"project","description":"Serviço de autenticação e autorização em TypeScript/Node.js com gestão de usuários, sessões e integração com provedores de identidade como Keycloak."},{"title":"ADR 003 - Memória Versionada","url":"/documents/adr-versioned-memory/","kind":"document","description":"Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes."},{"title":"Superfície de Integração de Agentes","url":"/documents/agent-integration-surface/","kind":"document","description":"Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes."},{"title":"Visão Geral da Arquitetura do Ronaldinho","url":"/documents/ronaldinho-architecture-overview/","kind":"document","description":"Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime."},{"title":"Arquitetura do Sistema","url":"/documents/system-architecture/","kind":"document","description":"Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto."},{"title":"Technical Knowledge OS","url":"/documents/technical-knowledge-os/","kind":"document","description":"A definição operacional do blog como sistema vivo de documentação técnica."},{"title":"Posts e layout","url":"/daily/20260403-151038-posts-and-layout/","kind":"daily","description":"O dia reuniu 45 commits voltados a posts, layout, e conteúdo. As mudanças passaram por CSS global, interações do navbar, e pipeline estático e refinaram o caderno público de forma "},{"title":"Posts e conteúdo","url":"/daily/20260404-234431-posts-and-content/","kind":"daily","description":"O dia reuniu 35 commits voltados a posts, conteúdo, e layout. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma inc"},{"title":"Projetos e conteúdo","url":"/daily/20260405-161120-projects-and-content/","kind":"daily","description":"O dia reuniu 23 commits voltados a projetos, conteúdo, e posts. As mudanças passaram por interações do navbar e posts e refinaram o caderno público de forma incremental."},{"title":"Renderers e build estático","url":"/daily/20260406-102024-renderers-and-static-build/","kind":"daily","description":"O dia reuniu 17 commits voltados a renderers, build estático, e localização. As mudanças passaram por interações do navbar, renderers do site, e pipeline estático e refinaram o cad"},{"title":"Build estático e navegação","url":"/daily/20260413-025701-static-build-and-navigation/","kind":"daily","description":"O dia reuniu 1 commit voltado a build estático, navegação, e renderers. As mudanças passaram por interações do navbar, renderers do site, e pipeline estático e refinaram o caderno "},{"title":"Daily","url":"/daily/","kind":"daily","description":""},{"title":"Daily","url":"/daily/","kind":"daily","description":""},{"title":"Daily","url":"/daily/","kind":"daily","description":""},{"title":"Posts e conteúdo","url":"/daily/20260421-235101-posts-and-content/","kind":"daily","description":"O dia reuniu 15 commits voltados a posts, conteúdo, e projetos. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma i"},{"title":"Layout e posts","url":"/daily/20260422-232036-layout-and-posts/","kind":"daily","description":"O dia reuniu 16 commits voltados a layout, posts, e renderers. As mudanças passaram por CSS global, interações do navbar, e renderers do site e refinaram o caderno público de forma"},{"title":"Layout e renderers","url":"/daily/20260423-175300-layout-and-renderers/","kind":"daily","description":"O dia reuniu 9 commits voltados a layout, renderers, e perfil. As mudanças passaram por CSS global, renderers do site, e pipeline estático e refinaram o caderno público de forma in"},{"title":"Layout e renderers","url":"/daily/20260424-223436-layout-and-renderers/","kind":"daily","description":"O dia reuniu 21 commits voltados a layout, renderers, e build estático. As mudanças passaram por CSS global, interações do navbar, e renderers do site e refinaram o caderno público"},{"title":"Sobre — Hiro Matsumoto","url":"/about/","kind":"page","description":"um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção"},{"title":"Todas as publicações","url":"/posts/","kind":"page","description":"Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."},{"title":"Projetos","url":"/projects/","kind":"page","description":"Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."},{"title":"Documentos","url":"/documents/","kind":"page","description":"Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."},{"title":"Daily notes","url":"/daily/","kind":"page","description":"Linha do tempo de atividade de engenharia gerada a partir dos últimos 30 dias do repositório Git."},{"title":"Contato","url":"/contact/","kind":"page","description":"Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."}]
+[
+  {
+    "title": "Dapper vs EF Core: Quando a Performance Supera a Abstração",
+    "url": "/posts/2026-04-03-0800-dapper-vs-efcore-dapper-vs-efcore-performance/",
+    "kind": "post",
+    "description": "Uma análise comparativa sobre ORMs no ecossistema .NET, focando em ciclos de vida de objetos, rastreamento e overhead de consulta."
+  },
+  {
+    "title": "Clean Code &amp; SOLID: O Custo da Dívida Técnica",
+    "url": "/posts/2026-04-03-0810-clean-code-solid-boas-praticas-clean-code-solid/",
+    "kind": "post",
+    "description": "Uma análise sobre a manutenibilidade de longo prazo, de nomes de variáveis expressivos aos cinco princípios de arquitetura de classes."
+  },
+  {
+    "title": "Design Patterns: O que ainda é Relevante no C# Moderno?",
+    "url": "/posts/2026-04-03-0820-design-patterns-design-patterns-gang-of-four-moderno/",
+    "kind": "post",
+    "description": "Uma revisão crítica dos padrões GoF, analisando como o C# 12 e 13 tornaram alguns obsoletos através de registros e correspondência de padrões."
+  },
+  {
+    "title": "Engenharia Cognitiva: Como Agentes de IA &#x27;Pensam&#x27;",
+    "url": "/posts/2026-04-03-0830-engenharia-cognitiva-engenharia-cognitive-agentes-ia/",
+    "kind": "post",
+    "description": "Uma análise sobre a orquestração de pensamento em LLMs, do ciclo Percepção-Ação à estrutura de memória de curto e longo prazo (RAG)."
+  },
+  {
+    "title": "Flutter &amp; Dart: Arquitetura de Estados e Performance Mobile",
+    "url": "/posts/2026-04-03-0840-flutter-dart-flutter-arquitetura-dart/",
+    "kind": "post",
+    "description": "Uma análise técnica sobre a renderização do Skia/Impeller e como padrões como Riverpod e Bloc afetam o ciclo de vida do widget."
+  },
+  {
+    "title": "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória",
+    "url": "/posts/2026-04-03-0850-performance-dotnet-performance-dotnet-pre-compilacao/",
+    "kind": "post",
+    "description": "Uma análise profunda sobre o runtime do .NET, focando em Garbage Collector (GC), Just-In-Time compilation e Native AOT para microsserviços."
+  },
+  {
+    "title": "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
+    "url": "/posts/2026-04-03-0900-orquestrador-agentes-ddd/",
+    "kind": "post",
+    "description": "Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA."
+  },
+  {
+    "title": "Redes Neurais do Zero: Implementação Matemática em Python",
+    "url": "/posts/2026-04-03-0900-redes-neurais-redes-neurais-do-zero-python/",
+    "kind": "post",
+    "description": "Uma jornada do neurônio de McCulloch-Pitts ao Backpropagation, implementando uma rede neural densa usando apenas NumPy."
+  },
+  {
+    "title": "Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos",
+    "url": "/posts/2026-04-03-0910-sistemas-de-tipagem-sistemas-de-tipagem-estatico-vs-dinamico/",
+    "kind": "post",
+    "description": "Uma análise sobre a segurança de tempo de compilação versus a agilidade de tempo de execução, explorando tipagem forte, fraca e duck typing."
+  },
+  {
+    "title": "TDD: O Ciclo Red-Green-Refactor como Proteção de Domínio",
+    "url": "/posts/2026-04-03-0920-tdd-tdd-ciclo-vermelho-verde-refactor/",
+    "kind": "post",
+    "description": "Uma análise técnica sobre o Test-Driven Development, de como testes falhos garantem que o código realmente funciona ao refactor seguro."
+  },
+  {
+    "title": "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos",
+    "url": "/posts/2026-04-03-0930-typescript-avancado-typescript-tipagem-avancada/",
+    "kind": "post",
+    "description": "Uma análise profunda sobre o sistema de tipos Turing-complete do TypeScript, explorando tipos condicionais, inferência e utilitários de transformação."
+  },
+  {
+    "title": "Bill Gates e a Microsoft: Do Desktop à Ubiquidade",
+    "url": "/posts/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/",
+    "kind": "post",
+    "description": "Uma análise sobre a visão de Gates de &#x27;um computador em cada mesa&#x27; e como a Microsoft moldou a indústria do software moderno."
+  },
+  {
+    "title": "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua",
+    "url": "/posts/2026-04-03-1000-neuroplasticidade-agentes/",
+    "kind": "post",
+    "description": "Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada."
+  },
+  {
+    "title": "Alan Turing: O Código Enigma e o Nascimento da IA",
+    "url": "/posts/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/",
+    "kind": "post",
+    "description": "Uma homenagem ao pai da computação moderna, desde a quebra do Enigma à fundação teórica da Inteligência Artificial."
+  },
+  {
+    "title": "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)",
+    "url": "/posts/2026-04-03-1100-poc-minerando-logs/",
+    "kind": "post",
+    "description": "Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável."
+  },
+  {
+    "title": "A anatomia do pensamento em agentes: transformando intenção em execução",
+    "url": "/posts/2026-04-03-1200-fluxo-pensamento-agentes/",
+    "kind": "post",
+    "description": "Uma análise sobre como o &#x27;Chain of Thought&#x27; e a estruturação de planos permitem que agentes de IA resolvam tarefas complexas com precisão."
+  },
+  {
+    "title": "Richard Feynman: O Prazer de Descobrir e o Pensamento Quântico",
+    "url": "/posts/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/",
+    "kind": "post",
+    "description": "Uma homenagem ao gênio que ensinou o mundo a pensar a partir dos primeiros princípios, da física de partículas à nanotecnologia."
+  },
+  {
+    "title": "Segunda Guerra Mundial: O Motor da Inovação Tecnológica",
+    "url": "/posts/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/",
+    "kind": "post",
+    "description": "Uma análise sobre como o maior conflito da história forçou o nascimento do radar, computadores digitais e motores a jato."
+  },
+  {
+    "title": "Projeto Manhattan: A Ciência da Bomba",
+    "url": "/posts/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/",
+    "kind": "post",
+    "description": "Uma análise sobre o maior esforço científico-militar da história, de Einstein e Oppenheimer aos testes de Trinity."
+  },
+  {
+    "title": "Daniel Kahneman: Rápido e Devagar - A Economia Comportamental",
+    "url": "/posts/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/",
+    "kind": "post",
+    "description": "Uma homenagem ao psicólogo que ganhou o Nobel de Economia ao provar que o ser humano não é tão racional quanto gosta de acreditar."
+  },
+  {
+    "title": "Resiliência e Escala: Sistemas orientados a Filas de Mensageria",
+    "url": "/posts/2026-04-03-1600-sistemas-orientados-a-filas/",
+    "kind": "post",
+    "description": "Por que desacoplar sistemas com filas (RabbitMQ, Azure Service Bus) é o segredo para arquiteturas distribuídas inquebráveis."
+  },
+  {
+    "title": "Algoritmos e Big O: Entendendo a Eficiência do Código",
+    "url": "/posts/2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o/",
+    "kind": "post",
+    "description": "Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade."
+  },
+  {
+    "title": "Excelência em Dados: Pilhas, Filas e Árvores",
+    "url": "/posts/2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores/",
+    "kind": "post",
+    "description": "Por que a escolha da estrutura de dados correta é mais importante do que o próprio algoritmo para a performance de sistemas complexos."
+  },
+  {
+    "title": "Simulação de Partículas: O poder dos Métodos de Monte Carlo",
+    "url": "/posts/2026-04-03-2300-simulacao-fisica-particulas-monte-carlo/",
+    "kind": "post",
+    "description": "Explorando a simulação do universo e sistemas complexos usando estatística, caminhos aleatórios e leis da física codificadas."
+  },
+  {
+    "title": "O Universo Quântico: Além da Lógica Clássica",
+    "url": "/posts/2026-04-03-2400-introducao-intuitiva-fisica-quantica/",
+    "kind": "post",
+    "description": "Uma jornada intuitiva pela física quântica. Superposição, entrelaçamento e por que o observador muda a realidade."
+  },
+  {
+    "title": "Computação Quântica: O Poder Além dos Bits",
+    "url": "/posts/2026-04-03-2500-computacao-quantica-qbits-vs-bits/",
+    "kind": "post",
+    "description": "Uma visão clara sobre os Qubits, superposição e como o poder quântico pode resolver problemas impossíveis para computadores clássicos."
+  },
+  {
+    "title": "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
+    "url": "/posts/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/",
+    "kind": "post",
+    "description": "Como conceitos térmicos e de mecânica estatística moldam o treinamento de IAs modernas, de Hopfield Networks a Diffusion Models."
+  },
+  {
+    "title": "A Bio-matemática da Araucária: Modelagem e Simetria",
+    "url": "/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/",
+    "kind": "post",
+    "description": "Uma exploração sobre os padrões matemáticos que regem a estrutura da Araucaria angustifolia, de verticilos a séries exponenciais de crescimento."
+  },
+  {
+    "title": "Bem-vindo ao meu novo blog",
+    "url": "/posts/20260312-090000-primeiro-post/",
+    "kind": "post",
+    "description": "O ponto de partida do Technical Knowledge OS: um notebook de engenharia versionado, focado em arquitetura, sistemas distribuídos e documentação viva."
+  },
+  {
+    "title": "Limites de DDD para sistemas com agentes",
+    "url": "/posts/20260402-203000-ddd-boundaries-for-agent-systems/",
+    "kind": "post",
+    "description": "Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes."
+  },
+  {
+    "title": "Tecnologia de Pulso: Do HEMP ao Micro-ondas de Alta Potência",
+    "url": "/posts/20260404-artificial-pulse-tech-tecnologia-pulso-hemp-hpm/",
+    "kind": "post",
+    "description": "Uma análise técnica sobre a geração artificial de pulsos eletromagnéticos, do Efeito Compton ao Gerador de Compressão de Fluxo."
+  },
+  {
+    "title": "Sopros Estelares: De Supernovas a Space Weather",
+    "url": "/posts/20260404-astro-electromagnetics-sopros-estelares-astrofisica-impulso/",
+    "kind": "post",
+    "description": "Anatomia dos fenômenos astrofísicos que geram emissões eletromagnéticas extremas e seu impacto nos sistemas tecnológicos."
+  },
+  {
+    "title": "A Física dos Pulsos Dispersos: Além do EMP Convencional",
+    "url": "/posts/20260404-demp-physics-fisica-demp-pulsos-dispersos/",
+    "kind": "post",
+    "description": "Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos."
+  },
+  {
+    "title": "Engenharia de Resiliência Eletromagnética e Acoplamento",
+    "url": "/posts/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/",
+    "kind": "post",
+    "description": "Do ponto zero à ruptura de junções: como circuitos reais falham sob transientes de alta intensidade."
+  },
+  {
+    "title": "O Despertar do Technical Knowledge OS v2",
+    "url": "/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/",
+    "kind": "post",
+    "description": "Uma jornada pela modularização do motor de renderização e o conceito de um sistema operacional para o intelecto técnico."
+  },
+  {
+    "title": "Ronaldinho Agent: persona, memória curta e tool use sem virar produto separado",
+    "url": "/posts/20260406-093000-ronaldinho-agent-persona-tooling/",
+    "kind": "post",
+    "description": "Registro do ronaldinho-agent como experimento de engenharia de agentes: o que foi validado, quais trade-offs apareceram e por que ele faz mais sentido como publicação do que como r"
+  },
+  {
+    "title": "Apollo-11",
+    "url": "/projects/apollo-11/",
+    "kind": "project",
+    "description": "Código-fonte original do Apollo 11 Guidance Computer (AGC), incluindo os módulos de comando e lunar — referência histórica de engenharia de software embarcado."
+  },
+  {
+    "title": "AutoMapper",
+    "url": "/projects/automapper/",
+    "kind": "project",
+    "description": "Biblioteca de mapeamento objeto-objeto baseada em convenções para .NET — elimina boilerplate de transformação entre camadas."
+  },
+  {
+    "title": "brumadinho_location",
+    "url": "/projects/brumadinho-location/",
+    "kind": "project",
+    "description": "Conjunto de ferramentas geoespaciais para apoiar o resgate e localização de vítimas do desastre de Brumadinho/MG, utilizando dados públicos e coordenadas de referência."
+  },
+  {
+    "title": "Chess",
+    "url": "/projects/chess/",
+    "kind": "project",
+    "description": "Jogo de xadrez implementado em C# com foco em modelagem de domínio, validação de movimentos e representação do tabuleiro."
+  },
+  {
+    "title": "claw-code",
+    "url": "/projects/claw-code/",
+    "kind": "project",
+    "description": "Ferramentas de análise e experimentação com arquiteturas de agentes de código, com reescrita em andamento para Rust visando performance e portabilidade."
+  },
+  {
+    "title": "DeepSeek-V3",
+    "url": "/projects/deepseek-v3/",
+    "kind": "project",
+    "description": "Fork do DeepSeek-V3, modelo de linguagem com arquitetura Mixture-of-Experts (MoE) e Multi-head Latent Attention para inferência eficiente em larga escala."
+  },
+  {
+    "title": "Financial",
+    "url": "/projects/financial/",
+    "kind": "project",
+    "description": "Aplicação monolítica de gestão financeira pessoal desenvolvida em C#/.NET, com foco em controle de despesas, categorização e relatórios."
+  },
+  {
+    "title": "gaussian-splatting",
+    "url": "/projects/gaussian-splatting/",
+    "kind": "project",
+    "description": "Fork da implementação original de 3D Gaussian Splatting — técnica de renderização neural que representa cenas 3D como conjuntos de gaussianas para rendering em tempo real."
+  },
+  {
+    "title": "gemini-cli",
+    "url": "/projects/gemini-cli/",
+    "kind": "project",
+    "description": "Fork do Gemini CLI — agente de IA do Google que opera direto no terminal com acesso a ferramentas de sistema, edição de código e navegação no filesystem."
+  },
+  {
+    "title": "GIS Incident Lab",
+    "url": "/projects/gis-incident-lab/",
+    "kind": "project",
+    "description": "Laboratório aplicado a GIS, ingestão de dados geoespaciais e projeções operacionais para times de resposta."
+  },
+  {
+    "title": "Java-Servlet-Pages",
+    "url": "/projects/java-servlet-pages/",
+    "kind": "project",
+    "description": "Projeto de estudo com Java Servlets e JSP, cobrindo ciclo de vida de requisições HTTP, sessões, filtros e padrão MVC no servidor."
+  },
+  {
+    "title": "Leaflet",
+    "url": "/projects/leaflet/",
+    "kind": "project",
+    "description": "Fork do Leaflet, a biblioteca JavaScript mais popular para mapas interativos, utilizada como base nos projetos de GIS do ecossistema."
+  },
+  {
+    "title": "macos",
+    "url": "/projects/macos/",
+    "kind": "project",
+    "description": "Fork do projeto Docker-OSX: virtualização de macOS dentro de containers Docker para testes de compatibilidade e desenvolvimento cross-platform."
+  },
+  {
+    "title": "MapleBR",
+    "url": "/projects/maplebr/",
+    "kind": "project",
+    "description": "Projeto com ferramentas e configurações para servidores MapleStory, incluindo scripts de build e automação via Makefile."
+  },
+  {
+    "title": "mermaid",
+    "url": "/projects/mermaid/",
+    "kind": "project",
+    "description": "Fork do Mermaid.js — ferramenta de geração de diagramas a partir de texto que é usada extensivamente no Technical Knowledge OS para documentação visual."
+  },
+  {
+    "title": "mermaid-live-editor",
+    "url": "/projects/mermaid-live-editor/",
+    "kind": "project",
+    "description": "Fork do Mermaid Live Editor — aplicação web para edição em tempo real de diagramas Mermaid com preview instantâneo e exportação."
+  },
+  {
+    "title": "nhmatsumoto.exception.middleware",
+    "url": "/projects/nhmatsumoto-exception-middleware/",
+    "kind": "project",
+    "description": "Middleware de tratamento global de exceções para ASP.NET Core, padronizando respostas de erro e logging em aplicações web."
+  },
+  {
+    "title": "nhmatsumoto.github.io",
+    "url": "/projects/nhmatsumoto-github-io/",
+    "kind": "project",
+    "description": "Site pessoal e Technical Knowledge OS: engine de geração estática em Python, conteúdo em TOML, busca client-side, i18n e deploy via GitHub Pages."
+  },
+  {
+    "title": "Playground-FE",
+    "url": "/projects/playground-fe/",
+    "kind": "project",
+    "description": "Projeto frontend em React e TypeScript com integração ao Keycloak para autenticação, servindo como base para futuros desenvolvimentos com controle de acesso."
+  },
+  {
+    "title": "prog_lib",
+    "url": "/projects/prog-lib/",
+    "kind": "project",
+    "description": "Coleção de implementações de algoritmos e estruturas de dados clássicos, organizada como biblioteca de referência para estudo e consulta rápida."
+  },
+  {
+    "title": "QuickReaderv1",
+    "url": "/projects/quickreaderv1/",
+    "kind": "project",
+    "description": "Aplicação de speed reading em TypeScript que apresenta texto em chunks otimizados para leitura rápida, com controle de velocidade e tracking de progresso."
+  },
+  {
+    "title": "react-data-grid",
+    "url": "/projects/react-data-grid/",
+    "kind": "project",
+    "description": "Fork do react-data-grid — componente de tabela de dados para React com sorting, filtering, editing inline e virtualização para grandes volumes de dados."
+  },
+  {
+    "title": "ResponseMiddleware",
+    "url": "/projects/responsemiddleware/",
+    "kind": "project",
+    "description": "Middleware ASP.NET Core para padronização de respostas HTTP, envolvendo resultados de controllers em um envelope consistente com metadados de sucesso/erro."
+  },
+  {
+    "title": "Security.Jwt",
+    "url": "/projects/security-jwt/",
+    "kind": "project",
+    "description": "Biblioteca .NET para gerenciamento completo de JWT: rotação automática de chaves, endpoint JWKS, suporte a múltiplos algoritmos e armazenamento seguro de material criptográfico."
+  },
+  {
+    "title": "SOS",
+    "url": "/projects/sos/",
+    "kind": "project",
+    "description": "Módulo auxiliar do ecossistema SOS Location com componentes compartilhados, utilitários e contratos de integração para os serviços de resposta a desastres."
+  },
+  {
+    "title": "SplitCost-Backend",
+    "url": "/projects/splitcost-backend/",
+    "kind": "project",
+    "description": "Backend do SplitCosts em .NET/C# com arquitetura multi-tenant, domain events, separação de contextos de leitura/escrita e projeções operacionais."
+  },
+  {
+    "title": "SplitCosts",
+    "url": "/projects/splitcosts/",
+    "kind": "project",
+    "description": "Aplicação de gestão financeira doméstica com foco em multi-tenant, UX e consistência operacional."
+  },
+  {
+    "title": "SplitCosts-FE",
+    "url": "/projects/splitcosts-fe/",
+    "kind": "project",
+    "description": "Frontend do SplitCosts em React/TypeScript com Keycloak auth, visualização de despesas, saldos e reconciliação, consumindo o SplitCost-Backend via REST API."
+  },
+  {
+    "title": "system-prompts-and-models-of-ai-tools",
+    "url": "/projects/system-prompts-and-models-of-ai-tools/",
+    "kind": "project",
+    "description": "Fork da coleção completa de system prompts de ferramentas de IA: v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf, VSCode Agent e outros — referência para engenh"
+  },
+  {
+    "title": "User-Auth",
+    "url": "/projects/user-auth/",
+    "kind": "project",
+    "description": "Serviço de autenticação e autorização em TypeScript/Node.js com gestão de usuários, sessões e integração com provedores de identidade como Keycloak."
+  },
+  {
+    "title": "ADR 003 - Memória Versionada",
+    "url": "/documents/adr-versioned-memory/",
+    "kind": "document",
+    "description": "Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes."
+  },
+  {
+    "title": "Superfície de Integração de Agentes",
+    "url": "/documents/agent-integration-surface/",
+    "kind": "document",
+    "description": "Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes."
+  },
+  {
+    "title": "Visão Geral da Arquitetura do Ronaldinho",
+    "url": "/documents/ronaldinho-architecture-overview/",
+    "kind": "document",
+    "description": "Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime."
+  },
+  {
+    "title": "Arquitetura do Sistema",
+    "url": "/documents/system-architecture/",
+    "kind": "document",
+    "description": "Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto."
+  },
+  {
+    "title": "Technical Knowledge OS",
+    "url": "/documents/technical-knowledge-os/",
+    "kind": "document",
+    "description": "A definição operacional do blog como sistema vivo de documentação técnica."
+  },
+  {
+    "title": "Sobre — Hiro Matsumoto",
+    "url": "/about/",
+    "kind": "page",
+    "description": "um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção"
+  },
+  {
+    "title": "Todas as publicações",
+    "url": "/posts/",
+    "kind": "page",
+    "description": "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais."
+  },
+  {
+    "title": "Projetos",
+    "url": "/projects/",
+    "kind": "page",
+    "description": "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap."
+  },
+  {
+    "title": "Documentos",
+    "url": "/documents/",
+    "kind": "page",
+    "description": "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis."
+  },
+  {
+    "title": "Contato",
+    "url": "/contact/",
+    "kind": "page",
+    "description": "Canais principais para acompanhar trabalho, conversar e seguir a trilha pública do site."
+  },
+  {
+    "title": "Fundamentos e Padrões de Projeto",
+    "url": "/fundamentos/",
+    "kind": "page",
+    "description": "Base de engenharia de software: algoritmos, estruturas de dados, princípios de design, testes e padrões de projeto aplicados."
+  },
+  {
+    "title": "Inteligência Artificial",
+    "url": "/ia/",
+    "kind": "page",
+    "description": "Trilha de inteligência artificial do básico ao avançado: do perceptron e redes neurais até agentes e LLMs."
+  }
+]

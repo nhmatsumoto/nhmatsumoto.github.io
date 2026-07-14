@@ -7,7 +7,7 @@ Este branch contem o artefato final do site: HTML, CSS, JavaScript, sitemap, fee
 ## Estrutura atual
 
 - `index.html`: pagina inicial.
-- `posts/`, `publications/`, `projects/`, `documents/`, `daily/`, `about/`, `contact/`: rotas estaticas publicadas.
+- `posts/`, `publications/`, `fundamentos/`, `ia/`, `projects/`, `documents/`, `about/`, `contact/`: rotas estaticas publicadas.
 - `assets/styles.css`: estilos globais.
 - `assets/blog.js`: comportamento client-side, busca e internacionalizacao da interface.
 - `assets/search-index.json`: indice local consumido pela busca.
@@ -31,6 +31,5 @@ Depois, abra `http://127.0.0.1:8123/`.
 
 ## Observacoes
 
-- As referencias a `scripts/`, `content/` e outros caminhos antigos que aparecem dentro de daily notes fazem parte do historico editorial exibido pelo site.
 - Para evitar processamento do Jekyll no GitHub Pages, `.nojekyll` deve permanecer versionado.
 - Novas alteracoes de conteudo neste branch devem atualizar diretamente os arquivos estaticos correspondentes.

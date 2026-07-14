@@ -214,7 +214,6 @@
 
   const KIND_LABELS = {
     post: "publicação",
-    daily: "daily",
     project: "projeto",
     document: "documento",
     page: "página",
