@@ -88,17 +88,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1000-historia-bill-gates-bill-gates-microsoft-historia/</loc>
-    <lastmod>2026-04-03</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1000-neuroplasticidade-agentes/</loc>
-    <lastmod>2026-04-03</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1100-alan-turing-alan-turing-computacao-enigma/</loc>
     <lastmod>2026-04-03</lastmod>
     <priority>0.8</priority>
   </url>
@@ -109,26 +99,6 @@
   </url>
   <url>
     <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1200-fluxo-pensamento-agentes/</loc>
-    <lastmod>2026-04-03</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1200-richard-feynman-richard-feynman-prazer-descobrir/</loc>
-    <lastmod>2026-04-03</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1300-segunda-guerra-segunda-guerra-mundial-tecnologia/</loc>
-    <lastmod>2026-04-03</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1400-projeto-manhattan-projeto-manhattan-bomba-atomica/</loc>
-    <lastmod>2026-04-03</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-1500-daniel-kahneman-daniel-kahneman-raciocinio-economico/</loc>
     <lastmod>2026-04-03</lastmod>
     <priority>0.8</priority>
   </url>
@@ -153,16 +123,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-2400-introducao-intuitiva-fisica-quantica/</loc>
-    <lastmod>2026-04-03</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-03-2500-computacao-quantica-qbits-vs-bits/</loc>
-    <lastmod>2026-04-03</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://nhmatsumoto.github.io/posts/2026-04-03-2600-ia-inspirada-pela-fisica-redes-neurais/</loc>
     <lastmod>2026-04-03</lastmod>
     <priority>0.8</priority>
@@ -170,11 +130,6 @@
   <url>
     <loc>https://nhmatsumoto.github.io/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/</loc>
     <lastmod>2026-04-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/20260312-090000-primeiro-post/</loc>
-    <lastmod>2026-03-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -199,11 +154,6 @@
   </url>
   <url>
     <loc>https://nhmatsumoto.github.io/posts/20260404-electromagnetic-resilience-resiliencia-eletromagnetica-acoplamento/</loc>
-    <lastmod>2026-04-04</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/20260404-knowledge-os-v2-technical-knowledge-os-v2/</loc>
     <lastmod>2026-04-04</lastmod>
     <priority>0.8</priority>
   </url>
