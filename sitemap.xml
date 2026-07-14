@@ -169,48 +169,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-0900-sos-location-business-rules/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1000-sos-location-flow-architecture/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1100-sos-location-stack/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://nhmatsumoto.github.io/posts/20260312-090000-primeiro-post/</loc>
     <lastmod>2026-03-12</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/20260401-184500-gis-pipelines-with-event-driven-services/</loc>
-    <lastmod>2026-04-01</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -254,10 +214,6 @@
   </url>
   <url>
     <loc>https://nhmatsumoto.github.io/posts/page/3/</loc>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://nhmatsumoto.github.io/posts/page/4/</loc>
     <priority>0.3</priority>
   </url>
   <url>

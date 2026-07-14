@@ -13,55 +13,6 @@
       <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/20260406-093000-ronaldinho-agent-persona-tooling/</guid>
     </item>
     <item>
-      <title>SOS Location: Modelos neurais de risco com PyTorch e segmentação semântica</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/</link>
-      <description><![CDATA[O SOSLocation.ML usa PyTorch para predição de risco em zonas de desastre. Como treinamos modelos de segmentação semântica para identificar áreas críticas em imagens de satélite e dados GIS.]]></description>
-      <pubDate>Sun, 05 Apr 2026 15:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1500-sos-location-ml-risk-neural-models/</guid>
-    </item>
-    <item>
-      <title>SOS Location: PostGIS e inteligência espacial para resposta a desastres</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/</link>
-      <description><![CDATA[PostGIS transforma o PostgreSQL em um motor geoespacial. Como usamos GIST indexes, ST_DWithin e line-of-sight para decisões táticas em tempo real.]]></description>
-      <pubDate>Sun, 05 Apr 2026 14:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1400-sos-location-postgis-spatial-intelligence/</guid>
-    </item>
-    <item>
-      <title>SOS Location: Clean Architecture + CQRS em .NET 10</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/</link>
-      <description><![CDATA[Arquitetura limpa, CQRS com MediatR e domain events no backend do SOS Location. Como estruturamos o código para resiliência em cenários de crise.]]></description>
-      <pubDate>Sun, 05 Apr 2026 13:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1300-sos-location-clean-architecture-dotnet10/</guid>
-    </item>
-    <item>
-      <title>SOS Location: Motor WebGL 3D de visualização de cidades em tempo real</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/</link>
-      <description><![CDATA[Como construímos um motor WebGL 2.0 com Three.js para renderizar cidades completas com terreno, edificações 3D e camadas de desastre ao vivo.]]></description>
-      <pubDate>Sun, 05 Apr 2026 12:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1200-sos-location-webgl-3d-city-engine/</guid>
-    </item>
-    <item>
-      <title>SOS Location: Tecnologias, ferramentas e exemplos</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1100-sos-location-stack/</link>
-      <description><![CDATA[Visão completa da stack, dos conceitos-chave e dos exemplos de código do SOS Location.]]></description>
-      <pubDate>Sun, 05 Apr 2026 11:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1100-sos-location-stack/</guid>
-    </item>
-    <item>
-      <title>SOS Location: Fluxos, arquitetura e diagramas</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-1000-sos-location-flow-architecture/</link>
-      <description><![CDATA[Descrição dos pipelines do SOS Location, diagramas e exemplos de código.]]></description>
-      <pubDate>Sun, 05 Apr 2026 10:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-1000-sos-location-flow-architecture/</guid>
-    </item>
-    <item>
-      <title>SOS Location: Regras de negócio, contratos e operação</title>
-      <link>https://nhmatsumoto.github.io/posts/2026-04-05-0900-sos-location-business-rules/</link>
-      <description><![CDATA[Catálogo completo das regras de negócio que sustentam o SOS Location.]]></description>
-      <pubDate>Sun, 05 Apr 2026 09:00:00 +0900</pubDate>
-      <guid isPermaLink="true">https://nhmatsumoto.github.io/posts/2026-04-05-0900-sos-location-business-rules/</guid>
-    </item>
-    <item>
       <title>A Bio-matemática da Araucária: Modelagem e Simetria</title>
       <link>https://nhmatsumoto.github.io/posts/2026-04-05-0400-biomatematica-araucaria-biomatematica-araucaria-angustifolia/</link>
       <description><![CDATA[Uma exploração sobre os padrões matemáticos que regem a estrutura da Araucaria angustifolia, de verticilos a séries exponenciais de crescimento.]]></description>
