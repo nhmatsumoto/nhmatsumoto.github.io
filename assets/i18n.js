@@ -197,25 +197,42 @@
 
     // ---- about (fixed page content) ----
     "about.summary": [
-      "Software engineer brasileiro no Japão, com base forte em backend, arquitetura, produto e sistemas que precisam ser claros, úteis e sustentáveis.",
-      "Brazilian software engineer based in Japan, with a strong foundation in backend, architecture, product and systems that need to be clear, useful and sustainable.",
-      "日本在住のブラジル人ソフトウェアエンジニア。バックエンド、アーキテクチャ、プロダクト、そして明快で役立ち持続可能である必要のあるシステムに強みがあります。"
+      "Engenheiro de software brasileiro no Japão. Backend em .NET/C#, arquitetura e uma preferência teimosa por sistemas claros, bem documentados e que resolvem problemas de verdade.",
+      "Brazilian software engineer in Japan. Backend in .NET/C#, architecture and a stubborn preference for clear, well documented systems that solve real problems.",
+      "日本在住のブラジル人ソフトウェアエンジニア。.NET/C#のバックエンドと設計を軸に、明確でよく文書化された、本当に役に立つシステムにこだわっています。"
     ],
     "about.hero_kicker": ["perfil profissional", "professional profile", "プロフェッショナル・プロフィール"],
     "about.hero_title": [
-      "Construo software com foco em clareza, arquitetura e impacto real.",
-      "I build software focused on clarity, architecture and real impact.",
-      "明快さ、アーキテクチャ、そして実際のインパクトを重視してソフトウェアをつくっています。"
+      "Gosto de pegar problemas confusos e devolver sistemas que se explicam sozinhos.",
+      "I like taking messy problems and returning systems that explain themselves.",
+      "複雑な問題を、自ら語るような明快なシステムに変えるのが好きです。"
     ],
     "about.hero_lede": [
-      "Minha base está em backend, .NET/C#, SQL Server, arquitetura de sistemas e produto. Tenho experiência em consultoria, sistemas corporativos e projetos próprios, com interesse especial por agentes, GIS, documentação técnica e soluções que reduzem atrito operacional.",
-      "My foundation is backend, .NET/C#, SQL Server, systems architecture and product. I have experience in consulting, enterprise systems and my own projects, with a special interest in agents, GIS, technical documentation and solutions that reduce operational friction.",
-      "軸はバックエンド、.NET/C#、SQL Server、システムアーキテクチャ、そしてプロダクトです。コンサルティング、業務システム、個人プロジェクトの経験があり、特にエージェント、GIS、技術ドキュメント、運用の摩擦を減らすソリューションに関心があります。"
+      "Aprendi a programar em fóruns e documentação em inglês, trabalhei com consultoria e sistemas corporativos no Brasil e hoje vivo no Japão, onde a rotina de fábrica me ensinou uma disciplina que levo para o código. Escrevo aqui do jeito que penso: direto, com contexto e sem enfeite. Se algo não ajuda a entender ou operar um sistema, eu corto. Meus interesses atuais giram em torno de DDD, agentes de IA e a arte de documentar decisões antes que elas virem lenda.",
+      "I learned to code on forums and English documentation, worked in consulting and corporate systems in Brazil, and today I live in Japan, where factory routine taught me a discipline I carry into code. I write here the way I think: direct, with context, no ornament. If something does not help to understand or operate a system, I cut it. My current interests revolve around DDD, AI agents and the craft of documenting decisions before they turn into legend.",
+      "フォーラムと英語のドキュメントでプログラミングを学び、ブラジルではコンサルティングと企業システムに携わり、現在は日本で暮らしています。工場で身につけた規律を、そのままコードに持ち込んでいます。書き方も考え方と同じで、率直に、文脈を添えて、飾らずに。システムの理解や運用に役立たないものは削ります。今の関心はDDD、AIエージェント、そして意思決定が伝説になる前に文書化する技術です。"
     ],
     "about.meta_1": ["Brasil -> Japão", "Brazil -> Japan", "ブラジル → 日本"],
     "about.meta_2": ["Backend & arquitetura", "Backend & architecture", "バックエンドと設計"],
     "about.meta_3": ["Produto & documentação", "Product & documentation", "プロダクトとドキュメント"],
     "about.action_projects": ["Projetos", "Projects", "プロジェクト"],
+    "about.now_kicker": ["agora", "now", "現在"],
+    "about.now_title": ["No que estou de olho", "What I am up to", "いま取り組んでいること"],
+    "about.now_1": [
+      "Trilha de IA do site: do perceptron até LLMs, publicada em camadas.",
+      "The site's AI track: from the perceptron to LLMs, published in layers.",
+      "サイトのAIトラック:パーセプトロンからLLMまで段階的に公開中。"
+    ],
+    "about.now_2": [
+      "Fundamentos e padrões de projeto como acervo vivo, não como apostila.",
+      "Software fundamentals and design patterns as a living collection, not a handout.",
+      "基礎とデザインパターンを、配布資料ではなく生きたアーカイブとして。"
+    ],
+    "about.now_3": [
+      "Agentes de IA orquestrados com DDD, do vocabulário ao código.",
+      "AI agents orchestrated with DDD, from vocabulary to code.",
+      "DDDで編成するAIエージェント。ユビキタス言語からコードまで。"
+    ],
     "about.focus_kicker": ["atuação", "focus", "活動領域"],
     "about.focus_title": ["Onde eu gero valor", "Where I add value", "私が価値を生む場所"],
     "about.card1_title": ["Backend e arquitetura", "Backend and architecture", "バックエンドと設計"],
