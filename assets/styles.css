@@ -1310,7 +1310,6 @@ body[data-sidebar-open="true"] .sidebar-backdrop {
   margin-top: 0;
   padding: var(--space-2) var(--container-gutter);
   background: var(--bg);
-  border-top: 1px solid var(--border);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2540,7 +2539,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 
 .home-header {
   padding-block: var(--space-8);
-  border-bottom: 1px dashed var(--surface-dashed-border-soft);
 }
 
 .home-stack {
@@ -2771,7 +2769,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   text-transform: uppercase;
   color: var(--accent);
   padding-bottom: calc(var(--base_grid_unit) * 1.5);
-  border-bottom: 1px dashed var(--surface-dashed-border-soft);
 }
 
 .start-here-panel .entry-list,
@@ -2969,7 +2966,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   justify-content: space-between;
   gap: calc(var(--base_grid_unit) * 2);
   padding-bottom: calc(var(--base_grid_unit) * 2);
-  border-bottom: 1px dashed color-mix(in srgb, var(--accent) 34%, transparent);
 }
 
 .page-post .post-meta-hero {
@@ -3053,7 +3049,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 .page-post .post-body h2 {
   margin: calc(var(--base_grid_unit) * 6) 0 calc(var(--base_grid_unit) * 2);
   padding-top: calc(var(--base_grid_unit) * 2);
-  border-top: 1px dashed color-mix(in srgb, var(--accent) 30%, transparent);
   font-size: clamp(1.55rem, 1.2rem + 1vw, 2.05rem);
   line-height: var(--rhythm-line-heading);
   letter-spacing: 0;
@@ -3297,7 +3292,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   margin-top: calc(var(--base_grid_unit) * 4);
   padding: calc(var(--base_grid_unit) * 4) 0 0;
   border: 0;
-  border-top: 1px dashed color-mix(in srgb, var(--accent) 34%, transparent);
   border-radius: 0;
   background: transparent;
 }
@@ -3349,7 +3343,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 .page-post .post-sidebar-section + .post-sidebar-section {
   margin-top: calc(var(--base_grid_unit) * 3);
   padding-top: calc(var(--base_grid_unit) * 3);
-  border-top: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
 }
 
 .page-post .post-meta-panel .sidebar-header {
@@ -3441,7 +3434,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
 .prose h2 {
   margin: calc(var(--base_grid_unit) * 5) 0 calc(var(--base_grid_unit) * 2);
   padding-top: calc(var(--base_grid_unit) * 2);
-  border-top: 1px solid var(--border);
   font-size: var(--type-h2);
   line-height: var(--rhythm-line-heading);
 }
@@ -4599,7 +4591,6 @@ body[data-locale="ja-JP"] .nav-btn-locale {
   justify-content: space-between;
   gap: calc(var(--base_grid_unit) * 2);
   padding-bottom: calc(var(--base_grid_unit) * 2);
-  border-bottom: 1px dashed color-mix(in srgb, var(--accent) 34%, transparent);
 }
 
 .page-post .post-header h1,
@@ -5802,13 +5793,11 @@ body::after {
 
 .page-heading {
   padding-bottom: 1.5rem !important;
-  border-bottom: 1px solid var(--border) !important;
 }
 
 .section-panel:not(.notebook-hero),
 .related-content-panel {
   padding-top: 1.75rem !important;
-  border-top: 1px solid var(--border) !important;
 }
 
 .page-heading h1,
@@ -5860,7 +5849,6 @@ body::after {
 
 .home-header {
   padding-block: 1.5rem !important;
-  border-bottom: 1px solid var(--border) !important;
 }
 
 .home-content-grid {
@@ -5930,8 +5918,6 @@ body::after {
 
 .notebook-hero.section-panel {
   padding: 0 0 1.75rem !important;
-  border-top: 0 !important;
-  border-bottom: 1px solid var(--border) !important;
 }
 
 .notebook-hero-title {
@@ -5959,7 +5945,6 @@ body::after {
 
 .entry-list {
   gap: 0 !important;
-  border-top: 1px solid var(--border);
 }
 
 .entry-list > li.entry,
@@ -5967,7 +5952,6 @@ body::after {
 .entry-list > li.entry:last-child,
 .page-home .entry-list > li.entry {
   padding: 0 !important;
-  border-bottom: 1px solid var(--border);
 }
 
 .entry-card {
@@ -6081,7 +6065,6 @@ body::after {
 .page-project .post-header-meta,
 .page-document .post-header-meta {
   padding-bottom: 0.8rem !important;
-  border-bottom: 1px solid var(--border) !important;
 }
 
 .page-post .post-header h1,
@@ -6222,7 +6205,6 @@ body::after {
 .site-footer {
   margin-top: 3rem !important;
   padding-top: 1.5rem !important;
-  border-top: 1px solid var(--border) !important;
 }
 
 .site-footer-inner {
@@ -6404,7 +6386,6 @@ body::after {
   gap: 2rem;
   align-items: start;
   padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border);
 }
 
 
@@ -6495,7 +6476,6 @@ body::after {
   display: grid;
   gap: 1rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--border);
 }
 
 .about-section:first-of-type {
