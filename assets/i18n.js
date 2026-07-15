@@ -328,8 +328,208 @@
       "Repositórios, experimentos, engine do site e histórico público de implementação.",
       "Repositories, experiments, the site engine and a public implementation history.",
       "リポジトリ、実験、サイトのエンジン、そして公開された実装の履歴です。"
+    ],
+
+    // ---- entry status ----
+    "status.published": ["publicado", "published", "公開済み"],
+
+    // ---- home: certifications ----
+    "home.cert_neural": [
+      "Redes Neurais Artificiais em Python",
+      "Artificial Neural Networks in Python",
+      "Pythonによる人工ニューラルネットワーク"
+    ],
+    "home.cert_aspnet": [
+      "Dominando o ASP.NET MVC Core",
+      "Mastering ASP.NET Core MVC",
+      "ASP.NET Core MVCマスター講座"
+    ],
+    "home.cert_ads": [
+      "Análise e Desenvolvimento de Sistemas, UNINTER (2016)",
+      "Systems Analysis and Development, UNINTER (2016)",
+      "システム分析・開発、UNINTER（2016年）"
+    ],
+
+    // ---- about: toolkit chips ----
+    "about.chip_architecture": ["Arquitetura", "Architecture", "アーキテクチャ"],
+    "about.chip_agents": ["Agentes", "Agents", "エージェント"],
+    "about.chip_product": ["Produto", "Product", "プロダクト"],
+    "about.chip_documentation": ["Documentação", "Documentation", "ドキュメント"],
+
+    // ---- search palette ----
+    "search.title": ["Buscar no site", "Search the site", "サイト内検索"],
+    "search.hint": [
+      "Digite para filtrar. Setas navegam, Enter abre e Esc fecha.",
+      "Type to filter. Arrow keys navigate, Enter opens and Esc closes.",
+      "入力して絞り込みます。矢印キーで移動、Enterで開き、Escで閉じます。"
+    ],
+    "search.empty": [
+      "Nenhum resultado encontrado.",
+      "No results found.",
+      "検索結果がありません。"
+    ],
+    "search.placeholder": [
+      "Buscar publicações, projetos, documentos e notas",
+      "Search posts, projects, documents and notes",
+      "記事・プロジェクト・ドキュメント・ノートを検索"
+    ],
+    "search.aria_dialog": ["Busca", "Search", "検索"],
+    "search.aria_close": ["Fechar busca", "Close search", "検索を閉じる"],
+    // ---- project descriptions ----
+    "projects.lede_nhmatsumoto_github_io": [
+      "Technical Knowledge OS — blog e portfolio com engine de geração estática e navegação estruturada.",
+      "Technical Knowledge OS — a blog and portfolio with a static-generation engine and structured navigation.",
+      "Technical Knowledge OS — 静的生成エンジンと構造化ナビゲーションを備えたブログ兼ポートフォリオです。"
+    ],
+    "projects.lede_splitcosts": [
+      "Compartilhamento de despesas com foco em clareza, fronteiras de tenancy e simplicidade operacional.",
+      "Expense sharing focused on clarity, tenancy boundaries and operational simplicity.",
+      "明快さ、テナント境界、運用のシンプルさを重視した支出共有システムです。"
+    ],
+    "projects.lede_gis_incident_lab": [
+      "Mapeamento operacional para resposta a incidentes, análise de risco e pipelines espaciais.",
+      "Operational mapping for incident response, risk analysis and spatial pipelines.",
+      "インシデント対応、リスク分析、空間データパイプラインのための運用マッピングです。"
+    ],
+    "projects.lede_brumadinho_location": [
+      "Ferramentas para ajudar no resgate e localização das vítimas do rompimento da barragem de Brumadinho/MG.",
+      "Tools to support the rescue and location of victims of the Brumadinho dam collapse in Minas Gerais.",
+      "ミナスジェライス州ブルマジーニョのダム決壊事故で、被災者の救助と位置特定を支援するツールです。"
+    ],
+    "projects.lede_apollo_11": [
+      "Código-fonte original do Apollo 11 Guidance Computer (AGC) para os módulos de comando e lunar.",
+      "Original source code of the Apollo 11 Guidance Computer (AGC) for the command and lunar modules.",
+      "アポロ11号の司令船・月着陸船向け誘導コンピューター（AGC）のオリジナルソースコードです。"
+    ],
+    "projects.lede_automapper": [
+      "Mapeador objeto-para-objeto baseado em convenções para .NET.",
+      "A convention-based object-to-object mapper for .NET.",
+      "規約ベースの.NET向けオブジェクト間マッパーです。"
+    ],
+    "projects.lede_chess": [
+      "Implementação de xadrez em C# com modelagem de domínio orientada a regras.",
+      "A chess implementation in C# with rule-driven domain modeling.",
+      "ルール駆動のドメインモデリングによるC#のチェス実装です。"
+    ],
+    "projects.lede_claw_code": [
+      "Better Harness Tools — ferramentas para análise e experimentação com Claude Code, em reescrita para Rust.",
+      "Better Harness Tools: tooling for analysis and experimentation with Claude Code, being rewritten in Rust.",
+      "Better Harness Tools。Claude Codeの分析と実験のためのツール群で、Rustへ書き換え中です。"
+    ],
+    "projects.lede_deepseek_v3": [
+      "Referência de implementação do modelo DeepSeek-V3 — arquitetura Mixture-of-Experts para LLMs de larga escala.",
+      "Reference implementation of the DeepSeek-V3 model: a Mixture-of-Experts architecture for large-scale LLMs.",
+      "DeepSeek-V3モデルのリファレンス実装。大規模LLM向けのMixture-of-Expertsアーキテクチャです。"
+    ],
+    "projects.lede_financial": [
+      "Monolito para gestão financeira pessoal em C#/.NET.",
+      "A monolith for personal finance management in C#/.NET.",
+      "C#/.NETによる個人資産管理のモノリスです。"
+    ],
+    "projects.lede_gaussian_splatting": [
+      "Implementação de referência de 3D Gaussian Splatting para renderização de campos de radiância em tempo real.",
+      "Reference implementation of 3D Gaussian Splatting for real-time radiance field rendering.",
+      "リアルタイム放射輝度場レンダリングのための3D Gaussian Splattingのリファレンス実装です。"
+    ],
+    "projects.lede_gemini_cli": [
+      "Agente de IA open-source que traz o poder do Gemini direto para o terminal.",
+      "An open-source AI agent that brings the power of Gemini straight to the terminal.",
+      "Geminiの力をターミナルへ直接届けるオープンソースAIエージェントです。"
+    ],
+    "projects.lede_java_servlet_pages": [
+      "Aplicação web com Java Servlets e JSP — fundamentos de desenvolvimento web no ecossistema Java.",
+      "A web application built with Java Servlets and JSP: web development fundamentals in the Java ecosystem.",
+      "Java ServletsとJSPによるWebアプリケーション。JavaエコシステムにおけるWeb開発の基礎です。"
+    ],
+    "projects.lede_leaflet": [
+      "Biblioteca JavaScript para mapas interativos mobile-friendly — referência para projetos GIS.",
+      "A JavaScript library for mobile-friendly interactive maps and a reference for GIS projects.",
+      "モバイル対応のインタラクティブ地図のためのJavaScriptライブラリ。GISプロジェクトの定番です。"
+    ],
+    "projects.lede_macos": [
+      "macOS virtualizado dentro de um container Docker — experimentação com virtualização de sistemas operacionais.",
+      "Virtualized macOS inside a Docker container: experimenting with operating system virtualization.",
+      "Dockerコンテナ内で仮想化されたmacOS。OS仮想化の実験です。"
+    ],
+    "projects.lede_maplebr": [
+      "Projeto MapleBR — servidor e ferramentas para o ecossistema MapleStory.",
+      "The MapleBR project: server and tooling for the MapleStory ecosystem.",
+      "MapleBRプロジェクト。MapleStoryエコシステム向けのサーバーとツール群です。"
+    ],
+    "projects.lede_mermaid_live_editor": [
+      "Editor ao vivo para criação, preview e compartilhamento de diagramas Mermaid.",
+      "A live editor for creating, previewing and sharing Mermaid diagrams.",
+      "Mermaid図の作成、プレビュー、共有のためのライブエディタです。"
+    ],
+    "projects.lede_mermaid": [
+      "Geração de diagramas como fluxogramas e diagramas de sequência a partir de texto, similar a markdown.",
+      "Generates diagrams such as flowcharts and sequence diagrams from markdown-like text.",
+      "Markdownに似たテキストからフローチャートやシーケンス図などを生成します。"
+    ],
+    "projects.lede_nhmatsumoto_exception_middleware": [
+      "GlobalExceptionMiddleware para .NET Core — tratamento centralizado de exceções em APIs.",
+      "GlobalExceptionMiddleware for .NET Core: centralized exception handling for APIs.",
+      ".NET Core向けGlobalExceptionMiddleware。APIの例外を一元的に処理します。"
+    ],
+    "projects.lede_playground_fe": [
+      "Frontend React/TypeScript com integração Keycloak — base para aplicações com controle de acesso.",
+      "A React/TypeScript frontend with Keycloak integration: a base for applications with access control.",
+      "Keycloakと連携するReact/TypeScriptフロントエンド。アクセス制御を備えたアプリケーションの土台です。"
+    ],
+    "projects.lede_prog_lib": [
+      "Biblioteca de referência com algoritmos e estruturas de dados para estudo e consulta.",
+      "A reference library of algorithms and data structures for study and consultation.",
+      "学習と参照のためのアルゴリズムとデータ構造のリファレンスライブラリです。"
+    ],
+    "projects.lede_quickreaderv1": [
+      "Aplicação de leitura rápida em TypeScript — speed reading com chunking de texto.",
+      "A speed reading application in TypeScript with text chunking.",
+      "テキストのチャンク化による、TypeScript製の速読アプリです。"
+    ],
+    "projects.lede_react_data_grid": [
+      "Componente React de data grid com funcionalidades avançadas e alta customização.",
+      "A React data grid component with advanced features and deep customization.",
+      "高度な機能と高いカスタマイズ性を備えたReactのデータグリッドコンポーネントです。"
+    ],
+    "projects.lede_responsemiddleware": [
+      "Middleware de padronização de respostas HTTP para APIs .NET Core.",
+      "HTTP response standardization middleware for .NET Core APIs.",
+      ".NET Core APIのHTTPレスポンスを標準化するミドルウェアです。"
+    ],
+    "projects.lede_security_jwt": [
+      "JWT Manager para .NET — rotação automática de chaves, suporte a JWKS e armazenamento seguro de chaves criptográficas.",
+      "A JWT manager for .NET: automatic key rotation, JWKS support and secure storage of cryptographic keys.",
+      ".NET向けJWTマネージャー。鍵の自動ローテーション、JWKS対応、暗号鍵の安全な保管を備えます。"
+    ],
+    "projects.lede_sos": [
+      "Módulo auxiliar do ecossistema SOS Location — componentes compartilhados para resposta a desastres.",
+      "An auxiliary module of the SOS Location ecosystem: shared components for disaster response.",
+      "SOS Locationエコシステムの補助モジュール。災害対応のための共有コンポーネントです。"
+    ],
+    "projects.lede_splitcost_backend": [
+      "Backend do SplitCosts — API .NET com multi-tenant, domain events e projeções de leitura.",
+      "The SplitCosts backend: a .NET API with multi-tenancy, domain events and read projections.",
+      "SplitCostsのバックエンド。マルチテナント、ドメインイベント、読み取りプロジェクションを備えた.NET APIです。"
+    ],
+    "projects.lede_splitcosts_fe": [
+      "Frontend do SplitCosts — SPA React/TypeScript com UX focada em clareza operacional.",
+      "The SplitCosts frontend: a React/TypeScript SPA with UX focused on operational clarity.",
+      "SplitCostsのフロントエンド。運用の明快さを重視したUXのReact/TypeScript SPAです。"
+    ],
+    "projects.lede_system_prompts_and_models_of_ai_tools": [
+      "Coleção completa de system prompts, tools e modelos de AI tools como v0, Cursor, Devin, Replit e outros.",
+      "A complete collection of system prompts, tools and models of AI tools such as v0, Cursor, Devin and Replit.",
+      "v0、Cursor、Devin、ReplitなどのAIツールのシステムプロンプト、ツール、モデルの網羅的なコレクションです。"
+    ],
+    "projects.lede_user_auth": [
+      "Serviço de autenticação em TypeScript — gestão de usuários, sessões e integração com identity providers.",
+      "An authentication service in TypeScript: user management, sessions and identity provider integration.",
+      "TypeScript製の認証サービス。ユーザー管理、セッション、IDプロバイダー連携を担います。"
     ]
   };
+
+  // template per locale for [data-reading-time]; {n} is the minute count
+  const READING_TIME = ["{n} min de leitura", "{n} min read", "読了時間 {n}分"];
 
   const idx = (loc) => LOCALES.indexOf(loc);
 
@@ -356,6 +556,18 @@
       const row = D[el.getAttribute("data-i18n-aria-label")];
       if (row && typeof row[i] === "string") el.setAttribute("aria-label", row[i]);
     });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      const row = D[el.getAttribute("data-i18n-placeholder")];
+      if (row && typeof row[i] === "string") el.setAttribute("placeholder", row[i]);
+    });
+    document.querySelectorAll("[data-status-key]").forEach((el) => {
+      const row = D[el.getAttribute("data-status-key")];
+      if (row && typeof row[i] === "string") el.textContent = row[i];
+    });
+    document.querySelectorAll("[data-reading-time]").forEach((el) => {
+      const n = el.getAttribute("data-reading-time");
+      if (n) el.textContent = READING_TIME[i].replace("{n}", n);
+    });
     document.documentElement.setAttribute("lang", HTML_LANG[loc]);
     if (document.body) document.body.setAttribute("data-locale", loc);
     document.querySelectorAll("[data-locale-code]").forEach((el) => { el.textContent = SHORT[loc]; });
@@ -379,6 +591,9 @@
       btn.addEventListener("click", cycle);
     });
   };
+
+  // lets scripts that inject markup later (e.g. the search palette) re-apply
+  window.__i18nApply = () => apply(getLocale());
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

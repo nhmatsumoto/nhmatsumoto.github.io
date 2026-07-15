@@ -244,23 +244,24 @@
     overlay.hidden = true;
     overlay.innerHTML = [
       '<div class="search-palette-backdrop" data-search-close></div>',
-      '<div class="search-palette-dialog" role="dialog" aria-modal="true" aria-label="Busca">',
+      '<div class="search-palette-dialog" role="dialog" aria-modal="true" aria-label="Busca" data-i18n-aria-label="search.aria_dialog">',
       '  <div class="search-palette-head">',
-      '    <div class="search-palette-title-block"><h2>Buscar no site</h2></div>',
-      '    <button class="search-palette-close" type="button" data-search-close aria-label="Fechar busca">',
+      '    <div class="search-palette-title-block"><h2 data-i18n="search.title">Buscar no site</h2></div>',
+      '    <button class="search-palette-close" type="button" data-search-close aria-label="Fechar busca" data-i18n-aria-label="search.aria_close">',
       "      " + CLOSE_ICON,
       "    </button>",
       "  </div>",
       '  <div class="search-input-shell">',
       '    <span class="search-input-icon">' + SEARCH_ICON + "</span>",
-      '    <input type="search" placeholder="Buscar publicações, projetos, documentos e notas" autocomplete="off" spellcheck="false" aria-label="Buscar">',
+      '    <input type="search" placeholder="Buscar publicações, projetos, documentos e notas" autocomplete="off" spellcheck="false" aria-label="Buscar" data-i18n-aria-label="search.aria_dialog" data-i18n-placeholder="search.placeholder">',
       "  </div>",
-      '  <p class="search-palette-hint">Digite para filtrar. Setas navegam, Enter abre e Esc fecha.</p>',
+      '  <p class="search-palette-hint" data-i18n="search.hint">Digite para filtrar. Setas navegam, Enter abre e Esc fecha.</p>',
       '  <ul class="search-results" role="listbox"></ul>',
-      '  <p class="search-empty" hidden>Nenhum resultado encontrado.</p>',
+      '  <p class="search-empty" data-i18n="search.empty" hidden>Nenhum resultado encontrado.</p>',
       "</div>",
     ].join("\n");
     document.body.appendChild(overlay);
+    if (typeof window.__i18nApply === "function") window.__i18nApply();
 
     const input = overlay.querySelector("input[type=search]");
     const list = overlay.querySelector(".search-results");
