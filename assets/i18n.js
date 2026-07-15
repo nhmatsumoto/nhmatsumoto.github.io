@@ -89,7 +89,7 @@
     ],
     "sections.related_content": ["Continue explorando", "Keep exploring", "さらに見る"],
     "sections.related_content_copy": [
-      "Conteudos conectados por tags, projeto e documentacao.",
+      "Conteúdos conectados por tags, projeto e documentação.",
       "Content connected by tags, project and documentation.",
       "タグ・プロジェクト・ドキュメントでつながるコンテンツです。"
     ],
@@ -525,11 +525,349 @@
       "Serviço de autenticação em TypeScript — gestão de usuários, sessões e integração com identity providers.",
       "An authentication service in TypeScript: user management, sessions and identity provider integration.",
       "TypeScript製の認証サービス。ユーザー管理、セッション、IDプロバイダー連携を担います。"
+    ],
+    // ---- post and document titles/summaries ----
+    "documents.title_adr_versioned_memory": [
+      "ADR 003 - Memória Versionada",
+      "ADR 003 - Versioned Memory",
+      "ADR 003 - バージョン管理されたメモリ"
+    ],
+    "documents.lede_adr_versioned_memory": [
+      "Decisão arquitetural sobre snapshots de memória e persistência de contexto em workflows com agentes.",
+      "Architectural decision on memory snapshots and context persistence in agent workflows.",
+      "エージェントワークフローにおけるメモリスナップショットとコンテキスト永続化に関するアーキテクチャ決定です。"
+    ],
+    "documents.title_agent_integration_surface": [
+      "Superfície de Integração de Agentes",
+      "Agent Integration Surface",
+      "エージェント統合サーフェス"
+    ],
+    "documents.lede_agent_integration_surface": [
+      "Contratos mínimos para expor ferramentas e serviços a um runtime orientado a agentes.",
+      "Minimal contracts for exposing tools and services to an agent-oriented runtime.",
+      "エージェント指向ランタイムへツールやサービスを公開するための最小限の契約です。"
+    ],
+    "documents.title_ronaldinho_architecture_overview": [
+      "Visão Geral da Arquitetura do Ronaldinho",
+      "Ronaldinho Architecture Overview",
+      "Ronaldinhoアーキテクチャ概要"
+    ],
+    "documents.lede_ronaldinho_architecture_overview": [
+      "Resumo da arquitetura do Ronaldinho Agent e das escolhas de modularidade do runtime.",
+      "A summary of the Ronaldinho Agent architecture and the runtime modularity choices.",
+      "Ronaldinho Agentのアーキテクチャとランタイムのモジュール性に関する選択のまとめです。"
+    ],
+    "documents.title_system_architecture": [
+      "Arquitetura do Sistema",
+      "System Architecture",
+      "システムアーキテクチャ"
+    ],
+    "documents.lede_system_architecture": [
+      "Visão estrutural das fronteiras do sistema e do racional arquitetural do projeto.",
+      "A structural view of the system boundaries and the project's architectural rationale.",
+      "システム境界とプロジェクトのアーキテクチャ上の根拠を構造的に示します。"
+    ],
+    "documents.title_technical_knowledge_os": [
+      "Technical Knowledge OS",
+      "Technical Knowledge OS",
+      "Technical Knowledge OS"
+    ],
+    "documents.lede_technical_knowledge_os": [
+      "A definição operacional do blog como sistema vivo de documentação técnica.",
+      "The operational definition of the blog as a living technical documentation system.",
+      "生きた技術ドキュメントシステムとしてのブログの運用上の定義です。"
+    ],
+    "posts.title_2026_04_03_0800_dapper_vs_efcore_dapper_vs_efcore_performance": [
+      "Dapper vs EF Core: Quando a Performance Supera a Abstração",
+      "Dapper vs EF Core: When Performance Outweighs Abstraction",
+      "Dapper vs EF Core：パフォーマンスが抽象化を上回るとき"
+    ],
+    "posts.lede_2026_04_03_0800_dapper_vs_efcore_dapper_vs_efcore_performance": [
+      "Uma análise comparativa sobre ORMs no ecossistema .NET, focando em ciclos de vida de objetos, rastreamento e overhead de consulta.",
+      "A comparative analysis of ORMs in the .NET ecosystem, focusing on object lifecycles, change tracking and query overhead.",
+      ".NETエコシステムのORMを比較分析し、オブジェクトのライフサイクル、変更追跡、クエリのオーバーヘッドに注目します。"
+    ],
+    "posts.title_2026_04_03_0810_clean_code_solid_boas_praticas_clean_code_solid": [
+      "Clean Code & SOLID: O Custo da Dívida Técnica",
+      "Clean Code & SOLID: The Cost of Technical Debt",
+      "Clean Code & SOLID：技術的負債のコスト"
+    ],
+    "posts.lede_2026_04_03_0810_clean_code_solid_boas_praticas_clean_code_solid": [
+      "Uma análise sobre a manutenibilidade de longo prazo, de nomes de variáveis expressivos aos cinco princípios de arquitetura de classes.",
+      "A look at long-term maintainability, from expressive variable names to the five principles of class architecture.",
+      "表現力のある変数名からクラス設計の5原則まで、長期的な保守性を考察します。"
+    ],
+    "posts.title_2026_04_03_0820_design_patterns_design_patterns_gang_of_four_moderno": [
+      "Design Patterns: O que ainda é Relevante no C# Moderno?",
+      "Design Patterns: What Still Matters in Modern C#?",
+      "デザインパターン：モダンC#で今も有効なものは？"
+    ],
+    "posts.lede_2026_04_03_0820_design_patterns_design_patterns_gang_of_four_moderno": [
+      "Uma revisão crítica dos padrões GoF, analisando como o C# 12 e 13 tornaram alguns obsoletos através de registros e correspondência de padrões.",
+      "A critical review of the GoF patterns, examining how C# 12 and 13 made some of them obsolete through records and pattern matching.",
+      "GoFパターンを批判的に見直し、C# 12と13のレコードやパターンマッチングによって一部が不要になった経緯を検証します。"
+    ],
+    "posts.title_2026_04_03_0830_engenharia_cognitiva_engenharia_cognitive_agentes_ia": [
+      "Engenharia Cognitiva: Como Agentes de IA 'Pensam'",
+      "Cognitive Engineering: How AI Agents 'Think'",
+      "認知エンジニアリング：AIエージェントはどう「考える」のか"
+    ],
+    "posts.lede_2026_04_03_0830_engenharia_cognitiva_engenharia_cognitive_agentes_ia": [
+      "Uma análise sobre a orquestração de pensamento em LLMs, do ciclo Percepção-Ação à estrutura de memória de curto e longo prazo (RAG).",
+      "An analysis of thought orchestration in LLMs, from the perception-action loop to short and long-term memory structures (RAG).",
+      "知覚と行動のループから短期・長期記憶の構造（RAG）まで、LLMにおける思考のオーケストレーションを分析します。"
+    ],
+    "posts.title_2026_04_03_0840_flutter_dart_flutter_arquitetura_dart": [
+      "Flutter & Dart: Arquitetura de Estados e Performance Mobile",
+      "Flutter & Dart: State Architecture and Mobile Performance",
+      "Flutter & Dart：状態管理アーキテクチャとモバイルパフォーマンス"
+    ],
+    "posts.lede_2026_04_03_0840_flutter_dart_flutter_arquitetura_dart": [
+      "Uma análise técnica sobre a renderização do Skia/Impeller e como padrões como Riverpod e Bloc afetam o ciclo de vida do widget.",
+      "A technical look at Skia/Impeller rendering and how patterns like Riverpod and Bloc affect the widget lifecycle.",
+      "Skia/Impellerのレンダリングと、RiverpodやBlocのようなパターンがウィジェットのライフサイクルへ与える影響を技術的に解説します。"
+    ],
+    "posts.title_2026_04_03_0850_performance_dotnet_performance_dotnet_pre_compilacao": [
+      "Performance no .NET: JIT, AOT e o Custo da Alocação de Memória",
+      ".NET Performance: JIT, AOT and the Cost of Memory Allocation",
+      ".NETパフォーマンス：JIT、AOT、メモリ割り当てのコスト"
+    ],
+    "posts.lede_2026_04_03_0850_performance_dotnet_performance_dotnet_pre_compilacao": [
+      "Uma análise profunda sobre o runtime do .NET, focando em Garbage Collector (GC), Just-In-Time compilation e Native AOT para microsserviços.",
+      "A deep dive into the .NET runtime, focusing on the Garbage Collector (GC), Just-In-Time compilation and Native AOT for microservices.",
+      "ガベージコレクター（GC）、Just-In-Timeコンパイル、マイクロサービス向けNative AOTに注目した.NETランタイムの詳細な分析です。"
+    ],
+    "posts.title_2026_04_03_0900_orquestrador_agentes_ddd": [
+      "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua",
+      "Agent orchestration with DDD: translating natural language into Ubiquitous Language",
+      "DDDによるエージェントオーケストレーション：自然言語をユビキタス言語へ変換する"
+    ],
+    "posts.lede_2026_04_03_0900_orquestrador_agentes_ddd": [
+      "Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA.",
+      "A technical document on converting natural language into DDD artifacts using multi-agent AI orchestration.",
+      "複数のAIエージェントによるオーケストレーションで、自然言語をDDDの成果物へ変換する方法を扱う技術ドキュメントです。"
+    ],
+    "posts.title_2026_04_03_0900_redes_neurais_redes_neurais_do_zero_python": [
+      "Redes Neurais do Zero: Implementação Matemática em Python",
+      "Neural Networks from Scratch: A Mathematical Implementation in Python",
+      "ゼロから作るニューラルネットワーク：Pythonによる数学的実装"
+    ],
+    "posts.lede_2026_04_03_0900_redes_neurais_redes_neurais_do_zero_python": [
+      "Uma jornada do neurônio de McCulloch-Pitts ao Backpropagation, implementando uma rede neural densa usando apenas NumPy.",
+      "A journey from the McCulloch-Pitts neuron to backpropagation, implementing a dense neural network using only NumPy.",
+      "McCulloch-Pittsニューロンからバックプロパゲーションまで、NumPyだけで全結合ニューラルネットワークを実装する旅です。"
+    ],
+    "posts.title_2026_04_03_0910_sistemas_de_tipagem_sistemas_de_tipagem_estatico_vs_dinamico": [
+      "Sistemas de Tipagem: Estático vs Dinâmico - Tradeoffs Semânticos",
+      "Type Systems: Static vs Dynamic - Semantic Tradeoffs",
+      "型システム：静的 vs 動的 - セマンティクスのトレードオフ"
+    ],
+    "posts.lede_2026_04_03_0910_sistemas_de_tipagem_sistemas_de_tipagem_estatico_vs_dinamico": [
+      "Uma análise sobre a segurança de tempo de compilação versus a agilidade de tempo de execução, explorando tipagem forte, fraca e duck typing.",
+      "An analysis of compile-time safety versus runtime agility, exploring strong and weak typing and duck typing.",
+      "コンパイル時の安全性と実行時の柔軟性を比較し、強い型付け、弱い型付け、ダックタイピングを探ります。"
+    ],
+    "posts.title_2026_04_03_0920_tdd_tdd_ciclo_vermelho_verde_refactor": [
+      "TDD: O Ciclo Red-Green-Refactor como Proteção de Domínio",
+      "TDD: The Red-Green-Refactor Cycle as Domain Protection",
+      "TDD：ドメインを守るRed-Green-Refactorサイクル"
+    ],
+    "posts.lede_2026_04_03_0920_tdd_tdd_ciclo_vermelho_verde_refactor": [
+      "Uma análise técnica sobre o Test-Driven Development, de como testes falhos garantem que o código realmente funciona ao refactor seguro.",
+      "A technical look at Test-Driven Development, from how failing tests prove the code really works to safe refactoring.",
+      "失敗するテストがコードの正しさを保証する仕組みから安全なリファクタリングまで、テスト駆動開発を技術的に解説します。"
+    ],
+    "posts.title_2026_04_03_0930_typescript_avancado_typescript_tipagem_avancada": [
+      "TypeScript Avançado: Mapeamento de Tipos e Generics Complexos",
+      "Advanced TypeScript: Mapped Types and Complex Generics",
+      "上級TypeScript：マップ型と複雑なジェネリクス"
+    ],
+    "posts.lede_2026_04_03_0930_typescript_avancado_typescript_tipagem_avancada": [
+      "Uma análise profunda sobre o sistema de tipos Turing-complete do TypeScript, explorando tipos condicionais, inferência e utilitários de transformação.",
+      "A deep dive into TypeScript's Turing-complete type system, exploring conditional types, inference and transformation utilities.",
+      "条件型、型推論、変換ユーティリティを探りながら、チューリング完全なTypeScriptの型システムを深く掘り下げます。"
+    ],
+    "posts.title_2026_04_03_1000_neuroplasticidade_agentes": [
+      "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua",
+      "“Neuroplasticity” in agent systems: feedback, memory and continuous improvement",
+      "エージェントシステムにおける「神経可塑性」：フィードバック、メモリ、継続的改善"
+    ],
+    "posts.lede_2026_04_03_1000_neuroplasticidade_agentes": [
+      "Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada.",
+      "A proposed architecture for AI agents that learn and evolve through feedback loops and curated memory.",
+      "フィードバックループとキュレーションされたメモリを通じて学習し進化するAIエージェントのアーキテクチャ提案です。"
+    ],
+    "posts.title_2026_04_03_1100_poc_minerando_logs": [
+      "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)",
+      "PoC: mining conversation logs to generate posts with traceability and privacy (LGPD)",
+      "PoC：会話ログをマイニングし、追跡可能性とプライバシー（LGPD）を備えた記事を生成する"
+    ],
+    "posts.lede_2026_04_03_1100_poc_minerando_logs": [
+      "Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável.",
+      "A conceptual document on extracting technical knowledge from anonymized chat logs and turning it into publishable content.",
+      "匿名化されたチャットログから技術的知見を抽出し、公開可能なコンテンツへ変換する方法の概念ドキュメントです。"
+    ],
+    "posts.title_2026_04_03_1200_fluxo_pensamento_agentes": [
+      "A anatomia do pensamento em agentes: transformando intenção em execução",
+      "The anatomy of agent thinking: turning intention into execution",
+      "エージェント思考の解剖学：意図を実行へ変える"
+    ],
+    "posts.lede_2026_04_03_1200_fluxo_pensamento_agentes": [
+      "Uma análise sobre como o 'Chain of Thought' e a estruturação de planos permitem que agentes de IA resolvam tarefas complexas com precisão.",
+      "An analysis of how Chain of Thought and structured planning let AI agents solve complex tasks with precision.",
+      "Chain of Thoughtと構造化されたプランニングによって、AIエージェントが複雑なタスクを正確に解決する仕組みを分析します。"
+    ],
+    "posts.title_2026_04_03_1600_sistemas_orientados_a_filas": [
+      "Resiliência e Escala: Sistemas orientados a Filas de Mensageria",
+      "Resilience and Scale: Message Queue-Oriented Systems",
+      "レジリエンスとスケール：メッセージキュー指向システム"
+    ],
+    "posts.lede_2026_04_03_1600_sistemas_orientados_a_filas": [
+      "Por que desacoplar sistemas com filas (RabbitMQ, Azure Service Bus) é o segredo para arquiteturas distribuídas inquebráveis.",
+      "Why decoupling systems with queues (RabbitMQ, Azure Service Bus) is the secret to unbreakable distributed architectures.",
+      "キュー（RabbitMQ、Azure Service Bus）によるシステムの疎結合化が、壊れない分散アーキテクチャの鍵である理由です。"
+    ],
+    "posts.title_2026_04_03_2000_algoritmos_busca_ordenacao_com_big_o": [
+      "Algoritmos e Big O: Entendendo a Eficiência do Código",
+      "Algorithms and Big O: Understanding Code Efficiency",
+      "アルゴリズムとBig O：コードの効率を理解する"
+    ],
+    "posts.lede_2026_04_03_2000_algoritmos_busca_ordenacao_com_big_o": [
+      "Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade.",
+      "An intuitive introduction to algorithm complexity (time and space) and why Big O is the definitive metric for scalability.",
+      "アルゴリズムの計算量（時間と空間）を直感的に紹介し、Big Oがスケーラビリティの決定的な指標である理由を説明します。"
+    ],
+    "posts.title_2026_04_03_2100_estruturas_de_dados_pilha_fila_arvores": [
+      "Excelência em Dados: Pilhas, Filas e Árvores",
+      "Excellence in Data: Stacks, Queues and Trees",
+      "データの卓越性：スタック、キュー、木構造"
+    ],
+    "posts.lede_2026_04_03_2100_estruturas_de_dados_pilha_fila_arvores": [
+      "Por que a escolha da estrutura de dados correta é mais importante do que o próprio algoritmo para a performance de sistemas complexos.",
+      "Why choosing the right data structure matters more than the algorithm itself for the performance of complex systems.",
+      "複雑なシステムのパフォーマンスにおいて、適切なデータ構造の選択がアルゴリズムそのものより重要である理由です。"
+    ],
+    "posts.title_2026_04_03_2300_simulacao_fisica_particulas_monte_carlo": [
+      "Simulação de Partículas: O poder dos Métodos de Monte Carlo",
+      "Particle Simulation: The Power of Monte Carlo Methods",
+      "粒子シミュレーション：モンテカルロ法の力"
+    ],
+    "posts.lede_2026_04_03_2300_simulacao_fisica_particulas_monte_carlo": [
+      "Explorando a simulação do universo e sistemas complexos usando estatística, caminhos aleatórios e leis da física codificadas.",
+      "Exploring the simulation of the universe and complex systems using statistics, random walks and encoded laws of physics.",
+      "統計、ランダムウォーク、コード化された物理法則を使って、宇宙と複雑系のシミュレーションを探ります。"
+    ],
+    "posts.title_2026_04_03_2600_ia_inspirada_pela_fisica_redes_neurais": [
+      "IA Inspirada pela Física: Entropia e Energia nas Redes Neurais",
+      "Physics-Inspired AI: Entropy and Energy in Neural Networks",
+      "物理に着想を得たAI：ニューラルネットワークにおけるエントロピーとエネルギー"
+    ],
+    "posts.lede_2026_04_03_2600_ia_inspirada_pela_fisica_redes_neurais": [
+      "Como conceitos térmicos e de mecânica estatística moldam o treinamento de IAs modernas, de Hopfield Networks a Diffusion Models.",
+      "How thermal and statistical mechanics concepts shape the training of modern AIs, from Hopfield Networks to Diffusion Models.",
+      "Hopfield NetworksからDiffusion Modelsまで、熱力学と統計力学の概念が現代のAI学習をどう形づくるかを解説します。"
+    ],
+    "posts.title_2026_04_05_0400_biomatematica_araucaria_biomatematica_araucaria_angustifolia": [
+      "A Bio-matemática da Araucária: Modelagem e Simetria",
+      "The Biomathematics of the Araucaria: Modeling and Symmetry",
+      "アラウカリアのバイオ数学：モデリングと対称性"
+    ],
+    "posts.lede_2026_04_05_0400_biomatematica_araucaria_biomatematica_araucaria_angustifolia": [
+      "Uma exploração sobre os padrões matemáticos que regem a estrutura da Araucaria angustifolia, de verticilos a séries exponenciais de crescimento.",
+      "An exploration of the mathematical patterns behind the structure of Araucaria angustifolia, from whorls to exponential growth series.",
+      "輪生から指数的な成長系列まで、Araucaria angustifoliaの構造を支配する数学的パターンを探ります。"
+    ],
+    "posts.title_20260402_203000_ddd_boundaries_for_agent_systems": [
+      "Limites de DDD para sistemas com agentes",
+      "DDD boundaries for agent systems",
+      "エージェントシステムのためのDDD境界"
+    ],
+    "posts.lede_20260402_203000_ddd_boundaries_for_agent_systems": [
+      "Notas práticas sobre como separar domínio, execução de tools e políticas de coordenação em sistemas com agentes.",
+      "Practical notes on separating domain, tool execution and coordination policies in agent systems.",
+      "エージェントシステムにおいて、ドメイン、ツール実行、調整ポリシーを分離するための実践ノートです。"
+    ],
+    "posts.title_20260404_artificial_pulse_tech_tecnologia_pulso_hemp_hpm": [
+      "Tecnologia de Pulso: Do HEMP ao Micro-ondas de Alta Potência",
+      "Pulse Technology: From HEMP to High-Power Microwaves",
+      "パルス技術：HEMPから高出力マイクロ波まで"
+    ],
+    "posts.lede_20260404_artificial_pulse_tech_tecnologia_pulso_hemp_hpm": [
+      "Uma análise técnica sobre a geração artificial de pulsos eletromagnéticos, do Efeito Compton ao Gerador de Compressão de Fluxo.",
+      "A technical analysis of artificial electromagnetic pulse generation, from the Compton Effect to the Flux Compression Generator.",
+      "コンプトン効果から磁束圧縮発生器まで、人工的な電磁パルス生成の技術的分析です。"
+    ],
+    "posts.title_20260404_astro_electromagnetics_sopros_estelares_astrofisica_impulso": [
+      "Sopros Estelares: De Supernovas a Space Weather",
+      "Stellar Bursts: From Supernovae to Space Weather",
+      "星々の息吹：超新星から宇宙天気まで"
+    ],
+    "posts.lede_20260404_astro_electromagnetics_sopros_estelares_astrofisica_impulso": [
+      "Anatomia dos fenômenos astrofísicos que geram emissões eletromagnéticas extremas e seu impacto nos sistemas tecnológicos.",
+      "The anatomy of astrophysical phenomena that produce extreme electromagnetic emissions and their impact on technological systems.",
+      "極端な電磁放射を生む天体物理現象の構造と、それが技術システムへ与える影響です。"
+    ],
+    "posts.title_20260404_demp_physics_fisica_demp_pulsos_dispersos": [
+      "A Física dos Pulsos Dispersos: Além do EMP Convencional",
+      "The Physics of Dispersed Pulses: Beyond Conventional EMP",
+      "分散パルスの物理学：従来のEMPを超えて"
+    ],
+    "posts.lede_20260404_demp_physics_fisica_demp_pulsos_dispersos": [
+      "Uma exploração profunda sobre os fenômenos de DEMP, GRBs e a dissipação de pulsos eletromagnéticos em meios dispersivos.",
+      "A deep exploration of DEMP phenomena, GRBs and the dissipation of electromagnetic pulses in dispersive media.",
+      "DEMP現象、ガンマ線バースト、分散性媒質における電磁パルスの減衰を深く探ります。"
+    ],
+    "posts.title_20260404_electromagnetic_resilience_resiliencia_eletromagnetica_acoplamento": [
+      "Engenharia de Resiliência Eletromagnética e Acoplamento",
+      "Electromagnetic Resilience Engineering and Coupling",
+      "電磁レジリエンス工学とカップリング"
+    ],
+    "posts.lede_20260404_electromagnetic_resilience_resiliencia_eletromagnetica_acoplamento": [
+      "Do ponto zero à ruptura de junções: como circuitos reais falham sob transientes de alta intensidade.",
+      "From ground zero to junction breakdown: how real circuits fail under high-intensity transients.",
+      "爆心地から接合部の破壊まで、実際の回路が高強度トランジェントの下でどう故障するかを解説します。"
+    ],
+    "posts.title_20260406_093000_ronaldinho_agent_persona_tooling": [
+      "Ronaldinho Agent: persona, memória curta e tool use sem virar produto separado",
+      "Ronaldinho Agent: persona, short-term memory and tool use without becoming a separate product",
+      "Ronaldinho Agent：ペルソナ、短期記憶、ツール使用を別プロダクト化せずに実現する"
+    ],
+    "posts.lede_20260406_093000_ronaldinho_agent_persona_tooling": [
+      "Registro do ronaldinho-agent como experimento de engenharia de agentes: o que foi validado, quais trade-offs apareceram e por que ele faz mais sentido como publicação do que como rota principal do site.",
+      "A record of the ronaldinho-agent as an agent engineering experiment: what was validated, which trade-offs emerged and why it makes more sense as a publication than as the site's main route.",
+      "エージェントエンジニアリングの実験としてのronaldinho-agentの記録。何が検証され、どんなトレードオフが現れ、なぜサイトのメインルートではなく記事として残すのが妥当なのかをまとめます。"
     ]
   };
 
   // template per locale for [data-reading-time]; {n} is the minute count
   const READING_TIME = ["{n} min de leitura", "{n} min read", "読了時間 {n}分"];
+
+  // month names per locale for [data-localize-date]
+  const MONTHS_SHORT = {
+    "pt-BR": ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"],
+    en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  };
+  const MONTHS_LONG = {
+    "pt-BR": ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"],
+    en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  };
+
+  const formatDate = (iso, variant, loc) => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
+    if (!m) return null;
+    const [, y, mo, d] = m;
+    const mi = parseInt(mo, 10) - 1;
+    const day = parseInt(d, 10);
+    if (loc === "ja") return `${y}年${mi + 1}月${day}日`;
+    if (loc === "en") {
+      return variant === "long"
+        ? `${MONTHS_LONG.en[mi]} ${day}, ${y}`
+        : `${MONTHS_SHORT.en[mi]} ${day}, ${y}`;
+    }
+    return variant === "long"
+      ? `${day} de ${MONTHS_LONG["pt-BR"][mi]} de ${y}`
+      : `${d} ${MONTHS_SHORT["pt-BR"][mi]} ${y}`;
+  };
 
   const idx = (loc) => LOCALES.indexOf(loc);
 
@@ -567,6 +905,10 @@
     document.querySelectorAll("[data-reading-time]").forEach((el) => {
       const n = el.getAttribute("data-reading-time");
       if (n) el.textContent = READING_TIME[i].replace("{n}", n);
+    });
+    document.querySelectorAll("[data-localize-date]").forEach((el) => {
+      const out = formatDate(el.getAttribute("datetime"), el.getAttribute("data-localize-date"), loc);
+      if (out) el.textContent = out;
     });
     document.documentElement.setAttribute("lang", HTML_LANG[loc]);
     if (document.body) document.body.setAttribute("data-locale", loc);
