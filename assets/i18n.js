@@ -153,9 +153,9 @@
 
     // ---- home: profile / notebook (fixed page content) ----
     "home.profile_bio": [
-      "Software engineer brasileiro no Japão. Trabalho com backend, arquitetura e APIs em .NET/C#, construindo sistemas claros, úteis e sustentáveis.",
-      "Brazilian software engineer based in Japan. I work with backend, architecture and APIs in .NET/C#, building systems that are clear, useful and sustainable.",
-      "日本在住のブラジル人ソフトウェアエンジニア。.NET/C#でのバックエンド・アーキテクチャ・API開発を中心に、明快で役立つ、持続可能なシステムをつくっています。"
+      "Arquiteto de sistemas com foco em .NET Core e C#. Domínio, APIs e decisões de arquitetura documentadas de um jeito que sobrevive à saída de quem as tomou.",
+      "Systems architect focused on .NET Core and C#. Domain, APIs and architecture decisions documented in a way that survives the person who made them leaving.",
+      ".NET CoreとC#を軸にしたシステムアーキテクト。ドメイン、API、そしてアーキテクチャ上の意思決定を、決定した本人がいなくなっても残る形で文書化します。"
     ],
     "home.intro_p1": [
       "Caderno técnico onde registro projetos, decisões de arquitetura e estudos sobre software e engenharia. Cada publicação documenta algo que construí, testei ou aprendi.",
@@ -169,11 +169,11 @@
     ],
     "home.stack_kicker": ["stack principal", "main stack", "主なスタック"],
     "home.profile_kicker": ["perfil profissional", "professional profile", "プロフェッショナル・プロフィール"],
-    "home.profile_title": ["Senior Software Engineer", "Senior Software Engineer", "シニア・ソフトウェアエンジニア"],
+    "home.profile_title": ["Arquiteto de Sistemas .NET/C#", ".NET/C# Systems Architect", ".NET/C# システムアーキテクト"],
     "home.profile_copy": [
-      ".NET, C#, React e TypeScript aplicados a sistemas distribuídos e arquiteturas de alta performance. Mais recentemente, orquestração de agentes e avaliação de LLMs.",
-      ".NET, C#, React and TypeScript applied to distributed systems and high-performance architectures. More recently, agent orchestration and LLM evaluation.",
-      ".NET・C#・React・TypeScriptを、分散システムと高性能アーキテクチャに応用しています。近年はエージェントのオーケストレーションとLLMの評価にも取り組んでいます。"
+      ".NET Core, C# e SQL Server como base, com Clean Architecture, DDD e CQRS aplicados a domínios reais. Front-end em React/TypeScript e, mais recentemente, orquestração de agentes de IA.",
+      ".NET Core, C# and SQL Server as a base, with Clean Architecture, DDD and CQRS applied to real domains. Front-end in React/TypeScript and, more recently, AI agent orchestration.",
+      ".NET Core、C#、SQL Serverを基盤に、Clean Architecture、DDD、CQRSを実際のドメインに適用しています。フロントエンドはReact/TypeScript、近年はAIエージェントのオーケストレーションにも取り組んでいます。"
     ],
     "home.profile_body": [
       "Desenvolvedor de software desde 2016, com atuação em tecnologia, manufatura, finanças, telecomunicações, educação e mobilidade urbana. Contribuí em sistemas de pagamento, plataformas de gestão escolar, soluções de telecom e aplicações de mobilidade urbana, sempre defendendo boas práticas de arquitetura como SOLID, DDD e Clean Architecture para escrever código limpo, sustentável e escalável.",
@@ -197,9 +197,9 @@
 
     // ---- about (fixed page content) ----
     "about.summary": [
-      "Engenheiro de software brasileiro no Japão. Backend em .NET/C#, arquitetura e uma preferência teimosa por sistemas claros, bem documentados e que resolvem problemas de verdade.",
-      "Brazilian software engineer in Japan. Backend in .NET/C#, architecture and a stubborn preference for clear, well documented systems that solve real problems.",
-      "日本在住のブラジル人ソフトウェアエンジニア。.NET/C#のバックエンドと設計を軸に、明確でよく文書化された、本当に役に立つシステムにこだわっています。"
+      "Arquiteto de sistemas com foco em .NET Core e C#. Domínio, APIs e decisões de arquitetura documentadas do jeito que sobrevive à saída de quem as tomou.",
+      "Systems architect focused on .NET Core and C#. Domain, APIs and architecture decisions documented in a way that survives the person who made them leaving.",
+      ".NET CoreとC#を軸にしたシステムアーキテクト。ドメイン、API、そしてアーキテクチャ上の意思決定を、決定した本人がいなくなっても残る形で文書化します。"
     ],
     "about.hero_kicker": ["perfil profissional", "professional profile", "プロフェッショナル・プロフィール"],
     "about.hero_title": [
@@ -208,13 +208,13 @@
       "複雑な問題を、自ら語るような明快なシステムに変えるのが好きです。"
     ],
     "about.hero_lede": [
-      "Aprendi a programar em fóruns e documentação em inglês, trabalhei com consultoria e sistemas corporativos no Brasil e hoje vivo no Japão, onde a rotina de fábrica me ensinou uma disciplina que levo para o código. Escrevo aqui do jeito que penso: direto, com contexto e sem enfeite. Se algo não ajuda a entender ou operar um sistema, eu corto. Meus interesses atuais giram em torno de DDD, agentes de IA e a arte de documentar decisões antes que elas virem lenda.",
-      "I learned to code on forums and English documentation, worked in consulting and corporate systems in Brazil, and today I live in Japan, where factory routine taught me a discipline I carry into code. I write here the way I think: direct, with context, no ornament. If something does not help to understand or operate a system, I cut it. My current interests revolve around DDD, AI agents and the craft of documenting decisions before they turn into legend.",
-      "フォーラムと英語のドキュメントでプログラミングを学び、ブラジルではコンサルティングと企業システムに携わり、現在は日本で暮らしています。工場で身につけた規律を、そのままコードに持ち込んでいます。書き方も考え方と同じで、率直に、文脈を添えて、飾らずに。システムの理解や運用に役立たないものは削ります。今の関心はDDD、AIエージェント、そして意思決定が伝説になる前に文書化する技術です。"
+      "Construo backends e APIs em .NET Core e C#, com modelagem de domínio (DDD), Clean Architecture e CQRS quando o problema justifica a complexidade. Escrevo aqui do jeito que penso: direto, com contexto e sem enfeite. Se algo não ajuda a entender ou operar um sistema, eu corto. Documento decisões de arquitetura como parte do entregável, não como extra.",
+      "I build backends and APIs in .NET Core and C#, with domain modeling (DDD), Clean Architecture and CQRS when the problem justifies the complexity. I write here the way I think: direct, with context, no ornament. If something does not help to understand or operate a system, I cut it. I document architecture decisions as part of the deliverable, not as an extra.",
+      ".NET CoreとC#でバックエンドとAPIを構築し、問題の複雑さに見合う場合はドメインモデリング(DDD)、Clean Architecture、CQRSを用います。書き方も考え方と同じで、率直に、文脈を添えて、飾らずに。システムの理解や運用に役立たないものは削ります。アーキテクチャの意思決定は、おまけではなく成果物の一部として文書化します。"
     ],
-    "about.meta_1": ["Brasil -> Japão", "Brazil -> Japan", "ブラジル → 日本"],
-    "about.meta_2": ["Backend & arquitetura", "Backend & architecture", "バックエンドと設計"],
-    "about.meta_3": ["Produto & documentação", "Product & documentation", "プロダクトとドキュメント"],
+    "about.meta_1": ["Arquitetura de sistemas", "Systems architecture", "システムアーキテクチャ"],
+    "about.meta_2": [".NET Core & C#", ".NET Core & C#", ".NET Core & C#"],
+    "about.meta_3": ["DDD & documentação", "DDD & documentation", "DDDとドキュメント"],
     "about.action_projects": ["Projetos", "Projects", "プロジェクト"],
     "about.now_kicker": ["agora", "now", "現在"],
     "about.now_title": ["No que estou de olho", "What I am up to", "いま取り組んでいること"],
@@ -235,11 +235,11 @@
     ],
     "about.focus_kicker": ["atuação", "focus", "活動領域"],
     "about.focus_title": ["Onde eu gero valor", "Where I add value", "私が価値を生む場所"],
-    "about.card1_title": ["Backend e arquitetura", "Backend and architecture", "バックエンドと設計"],
+    "about.card1_title": ["Arquitetura de sistemas .NET", "NET systems architecture", ".NETシステムアーキテクチャ"],
     "about.card1_body": [
-      "Sistemas em .NET/C#, APIs, SQL Server, modelagem de domínio e decisões que mantêm o software compreensível.",
-      "Systems in .NET/C#, APIs, SQL Server, domain modeling and decisions that keep software understandable.",
-      ".NET/C#によるシステム、API、SQL Server、ドメインモデリング、そしてソフトウェアを理解しやすく保つための意思決定。"
+      "Design de APIs, domínio e integrações em .NET Core/C#, com Clean Architecture, CQRS e SQL Server como base recorrente.",
+      "API, domain and integration design in .NET Core/C#, with Clean Architecture, CQRS and SQL Server as a recurring base.",
+      ".NET Core/C#でのAPI、ドメイン、統合の設計。Clean Architecture、CQRS、SQL Serverを基盤として繰り返し用いています。"
     ],
     "about.card2_title": ["Produto e contexto", "Product and context", "プロダクトと文脈"],
     "about.card2_body": [
@@ -253,59 +253,39 @@
       "Documentation, articles, architectural decisions and records that make knowledge reusable.",
       "ドキュメント、記事、アーキテクチャ上の意思決定、そして知識を再利用可能にする記録。"
     ],
-    "about.exp_kicker": ["trajetória", "experience", "これまでの歩み"],
-    "about.exp_title": ["Experiência em resumo", "Experience in brief", "経歴の概要"],
-    "about.exp1_label": ["Brasil", "Brazil", "ブラジル"],
-    "about.exp1_title": [
-      "Software em consultoria, produto e sistemas corporativos",
-      "Software in consulting, product and enterprise systems",
-      "コンサルティング、プロダクト、業務システムでのソフトウェア開発"
-    ],
-    "about.exp1_body": [
-      "Atuação em domínios como pagamentos, mobilidade, recuperação financeira, telecom, educação, ERP e sistemas internos.",
-      "Work across domains such as payments, mobility, financial recovery, telecom, education, ERP and internal systems.",
-      "決済、モビリティ、債権回収、通信、教育、ERP、社内システムなど、さまざまなドメインでの実務。"
-    ],
-    "about.exp2_label": ["Base técnica", "Technical base", "技術的な軸"],
-    "about.exp2_title": [
-      "Backend, dados e arquitetura compreensível",
-      "Backend, data and understandable architecture",
-      "バックエンド、データ、そして理解しやすいアーキテクチャ"
-    ],
-    "about.exp2_body": [
-      "Consolidação em .NET/C#, SQL Server, APIs, modelagem e soluções orientadas a regras de negócio.",
-      "Consolidation in .NET/C#, SQL Server, APIs, modeling and business-rule-driven solutions.",
-      ".NET/C#、SQL Server、API、モデリング、そしてビジネスルール駆動のソリューションでの積み重ね。"
-    ],
-    "about.exp3_label": ["Japão", "Japan", "日本"],
-    "about.exp3_title": [
-      "Disciplina operacional e visão de manufatura",
-      "Operational discipline and a manufacturing perspective",
-      "運用の規律と製造現場の視点"
-    ],
-    "about.exp3_body": [
-      "Vivência em fábricas como Murata e NGK, na manufatura de componentes eletrônicos essenciais, sem abandonar o estudo e a construção em software.",
-      "Experience in factories such as Murata and NGK, manufacturing essential electronic components, without ever setting aside studying and building software.",
-      "村田製作所やNGKなどの工場で、重要な電子部品の製造に携わりました。その間もソフトウェアの学習と開発を続けています。"
+    "about.exp_kicker": ["setores", "sectors", "分野"],
+    "about.exp_title": ["Setores de atuação", "Sectors of experience", "活動分野"],
+    "about.exp_intro": [
+      "Arquitetura e backend .NET/C# aplicados a estes contextos de negócio, desde 2016:",
+      ".NET/C# architecture and backend applied to these business contexts, since 2016:",
+      "2016年以降、.NET/C#によるアーキテクチャとバックエンドを以下の業務領域に適用してきました。"
     ],
     "about.toolkit_kicker": ["stack e interesses", "stack and interests", "スタックと関心領域"],
     "about.toolkit_title": ["Tecnologias e temas", "Technologies and topics", "技術とテーマ"],
-    "about.story_kicker": ["contexto", "context", "背景"],
-    "about.story_title": ["A história por trás do trabalho", "The story behind the work", "仕事の背景にある物語"],
-    "about.story_p1": [
-      "Venho de uma criação humilde no Brasil, filho de agricultores e estudante de escola pública. Comecei cedo na tecnologia, aprendendo HTML, CSS e JavaScript por fóruns, blogs, grupos, Stack Overflow e muita documentação em inglês.",
-      "I come from a humble upbringing in Brazil, the son of farmers and a public-school student. I started early in technology, learning HTML, CSS and JavaScript through forums, blogs, groups, Stack Overflow and a lot of English documentation.",
-      "ブラジルの農家に生まれ、公立学校で学んだ質素な生い立ちです。早くから技術に触れ、フォーラムやブログ、コミュニティ、Stack Overflow、そして多くの英語ドキュメントを通じてHTML・CSS・JavaScriptを学びました。"
+    "about.references_kicker": ["referências", "references", "参照"],
+    "about.references_title": ["Onde verificar", "Where to check", "確認先"],
+    "about.references_intro": [
+      "Código, decisões de arquitetura e histórico de commits, para quem quiser conferir antes de conversar.",
+      "Code, architecture decisions and commit history, for anyone who wants to check before talking.",
+      "コード、アーキテクチャ上の意思決定、コミット履歴。お話しする前にご確認いただけます。"
     ],
-    "about.story_p2": [
-      "Minha entrada profissional em TI veio depois de uma decisão difícil: interromper um tecnólogo em ADS para focar no que podia mudar minha vida de forma mais direta naquele momento. Não foi uma saída da área, foi uma escolha prática para entrar nela.",
-      "My professional start in IT came after a hard decision: pausing a Systems Development degree to focus on what could change my life more directly at that moment. It was not leaving the field, but a practical choice to enter it.",
-      "IT業界でのキャリアは、難しい決断のあとに始まりました。当時、より直接的に人生を変えられることに集中するため、システム開発の学位課程を中断したのです。それは業界から離れることではなく、業界に入るための現実的な選択でした。"
+    "about.ref_type_repo": ["repositório", "repository", "リポジトリ"],
+    "about.ref_sos_body": [
+      "Backend .NET, frontend React/TypeScript, PostGIS, Keycloak e SignalR em um projeto de geolocalização de ponta a ponta.",
+      ".NET backend, React/TypeScript frontend, PostGIS, Keycloak and SignalR in an end-to-end geolocation project.",
+      ".NETバックエンド、React/TypeScriptフロントエンド、PostGIS、Keycloak、SignalRによるエンドツーエンドの位置情報プロジェクト。"
     ],
-    "about.story_p3": [
-      "Hoje vivo no Japão e sigo com a mesma direção: voltar ao mercado de tecnologia para construir soluções úteis, humanas e bem pensadas. Este site é parte desse movimento, reunindo projetos, estudos e escrita técnica em um lugar público.",
-      "Today I live in Japan and I keep the same direction: returning to the tech industry to build useful, human and well-thought-out solutions. This site is part of that move, gathering projects, studies and technical writing in one public place.",
-      "現在は日本で暮らし、同じ方向を目指し続けています。役に立ち、人間的で、よく考えられたソリューションをつくるために、テクノロジー業界へ戻ること。このサイトはその一歩であり、プロジェクト・学び・技術的な文章を公開の場に集めています。"
+    "about.ref_type_project": ["projeto", "project", "プロジェクト"],
+    "about.ref_splitcosts_body": [
+      "Domínio com multi-tenancy, projeções e fronteiras explícitas, documentado com ADRs.",
+      "Domain with multi-tenancy, projections and explicit boundaries, documented with ADRs.",
+      "マルチテナンシー、プロジェクション、明示的な境界を持つドメイン。ADRで文書化。"
+    ],
+    "about.ref_type_docs": ["documentação", "documentation", "ドキュメント"],
+    "about.ref_docs_body": [
+      "Decisões de arquitetura registradas, com contexto e trade-offs, não só o resultado final.",
+      "Architecture decisions on record, with context and trade-offs, not just the final result.",
+      "アーキテクチャの意思決定を、結果だけでなく文脈とトレードオフとともに記録。"
     ],
 
     // ---- contact cards ----
@@ -353,7 +333,6 @@
     // ---- about: toolkit chips ----
     "about.chip_architecture": ["Arquitetura", "Architecture", "アーキテクチャ"],
     "about.chip_agents": ["Agentes", "Agents", "エージェント"],
-    "about.chip_product": ["Produto", "Product", "プロダクト"],
     "about.chip_documentation": ["Documentação", "Documentation", "ドキュメント"],
 
     // ---- search palette ----

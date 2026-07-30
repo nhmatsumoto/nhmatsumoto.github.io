@@ -6510,8 +6510,7 @@ body::after {
   gap: 1rem;
 }
 
-.about-skill-card,
-.about-experience-item {
+.about-skill-card {
   display: grid;
   align-content: start;
   gap: 0.65rem;
@@ -6527,45 +6526,18 @@ body::after {
   color: var(--accent);
 }
 
-.about-skill-card h3,
-.about-experience-item h3 {
+.about-skill-card h3 {
   margin: 0 !important;
   font-size: 1rem !important;
   line-height: 1.35;
   letter-spacing: 0 !important;
 }
 
-.about-skill-card p,
-.about-experience-item p,
-.about-story-body p {
+.about-skill-card p {
   margin: 0 !important;
   color: color-mix(in srgb, var(--text) 78%, var(--muted));
   font-size: 0.96rem !important;
   line-height: 1.65 !important;
-}
-
-.about-two-column {
-  grid-template-columns: minmax(14rem, 0.8fr) minmax(0, 1.7fr);
-  align-items: start;
-  gap: 2rem;
-}
-
-.about-two-column .about-section-head {
-  position: sticky;
-  top: calc(var(--navbar-safe-height) + 1rem);
-}
-
-.about-experience-list {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.about-experience-label {
-  color: var(--accent) !important;
-  font-family: var(--font-code);
-  font-size: 0.75rem !important;
-  font-weight: 700;
-  letter-spacing: 0;
 }
 
 .about-chip-list {
@@ -6573,26 +6545,9 @@ body::after {
   list-style: none;
 }
 
-.about-story {
-  grid-template-columns: minmax(14rem, 0.8fr) minmax(0, 1.7fr);
-  gap: 2rem;
-}
-
-.about-story-body {
-  display: grid;
-  gap: 1rem;
-  max-width: 45rem;
-}
-
 @media (max-width: 900px) {
-  .about-professional-hero,
-  .about-two-column,
-  .about-story {
+  .about-professional-hero {
     grid-template-columns: 1fr;
-  }
-
-  .about-two-column .about-section-head {
-    position: static;
   }
 
   .about-card-grid {
