@@ -1,0 +1,29 @@
+<!doctype html><html lang="pt-BR" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catálogo de padrões de projeto em C# | nhmatsumoto.github.io</title>
+<meta name="description" content="Catálogo completo dos 22 padrões GoF com explicações, exemplos em C# e diagramas Mermaid.">
+<link rel="canonical" href="https://nhmatsumoto.github.io/posts/design-patterns-csharp/">
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+.dp-nav{display:flex;gap:1rem;align-items:center;padding:1rem max(1rem,calc((100vw - 1100px)/2));border-bottom:1px solid var(--border-color,#ddd)}
+.dp-nav a:first-child{font-weight:700;margin-right:auto}.dp-wrap{max-width:1000px;margin:0 auto;padding:2rem 1rem 5rem}
+.dp-hero{margin-bottom:2rem}.dp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.dp-card,.pattern{border:1px solid var(--border-color,#ddd);border-radius:12px;padding:1.25rem;margin:1rem 0;background:var(--surface-color,transparent)}
+.pattern h2{margin-top:0}.pattern h3{margin-top:1.5rem}.intent{font-size:1.08rem}
+pre{overflow:auto;padding:1rem;border-radius:8px;background:#111827;color:#f9fafb;font-size:.9rem}
+.mermaid{background:transparent;color:inherit;text-align:center}footer{max-width:1000px;margin:0 auto;padding:2rem 1rem}
+.toc{columns:2;column-gap:2rem}.toc li{break-inside:avoid;margin:.35rem 0}
+@media(max-width:700px){.toc{columns:1}}
+</style>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,securityLevel:'strict',theme:'neutral'});
+</script>
+</head><body><nav class="dp-nav"><a href="/">NHMATSUMOTO</a><a href="/posts/">publicações</a><a href="/posts/design-patterns-csharp/">catálogo</a></nav>
+<main class="dp-wrap"><header class="dp-hero"><p>Design Patterns · C# · .NET</p><h1>Catálogo de padrões de projeto em C#</h1>
+<p>Uma série prática sobre os 22 padrões GoF. Cada publicação explica intenção, contexto, benefícios, custos, exemplo executável em C# e estrutura em Mermaid.</p>
+<p>Padrões não são metas arquiteturais. Use-os apenas quando o problema, as forças e os trade-offs estiverem presentes. Uma abstração sem pressão real é apenas complexidade antecipada.</p></header>
+<section class="dp-grid"><article class="dp-card"><h2><a href="/posts/design-patterns-csharp/criacionais/">Padrões criacionais em C#</a></h2><p>Cinco padrões para controlar como objetos e famílias de objetos são construídos.</p><p>5 padrões</p></article><article class="dp-card"><h2><a href="/posts/design-patterns-csharp/estruturais/">Padrões estruturais em C#</a></h2><p>Sete padrões para compor classes e objetos sem criar acoplamento rígido.</p><p>7 padrões</p></article><article class="dp-card"><h2><a href="/posts/design-patterns-csharp/comportamentais/">Padrões comportamentais em C#</a></h2><p>Dez padrões para distribuir responsabilidades, comunicação e algoritmos.</p><p>10 padrões</p></article></section><section><h2>Como escolher</h2>
+<ul><li><strong>Problemas de criação:</strong> consulte os padrões criacionais.</li><li><strong>Problemas de composição:</strong> consulte os estruturais.</li><li><strong>Problemas de colaboração e variação de comportamento:</strong> consulte os comportamentais.</li></ul>
+</section><section><h2>Catálogo completo</h2><h2>Padrões criacionais em C#</h2><ul><li><a href="/posts/design-patterns-csharp/criacionais/#factory-method">Factory Method</a></li><li><a href="/posts/design-patterns-csharp/criacionais/#abstract-factory">Abstract Factory</a></li><li><a href="/posts/design-patterns-csharp/criacionais/#builder">Builder</a></li><li><a href="/posts/design-patterns-csharp/criacionais/#prototype">Prototype</a></li><li><a href="/posts/design-patterns-csharp/criacionais/#singleton">Singleton</a></li></ul><h2>Padrões estruturais em C#</h2><ul><li><a href="/posts/design-patterns-csharp/estruturais/#adapter">Adapter</a></li><li><a href="/posts/design-patterns-csharp/estruturais/#bridge">Bridge</a></li><li><a href="/posts/design-patterns-csharp/estruturais/#composite">Composite</a></li><li><a href="/posts/design-patterns-csharp/estruturais/#decorator">Decorator</a></li><li><a href="/posts/design-patterns-csharp/estruturais/#facade">Facade</a></li><li><a href="/posts/design-patterns-csharp/estruturais/#flyweight">Flyweight</a></li><li><a href="/posts/design-patterns-csharp/estruturais/#proxy">Proxy</a></li></ul><h2>Padrões comportamentais em C#</h2><ul><li><a href="/posts/design-patterns-csharp/comportamentais/#chain-of-responsibility">Chain of Responsibility</a></li><li><a href="/posts/design-patterns-csharp/comportamentais/#command">Command</a></li><li><a href="/posts/design-patterns-csharp/comportamentais/#iterator">Iterator</a></li><li><a href="/posts/design-patterns-csharp/comportamentais/#mediator">Mediator</a></li><li><a href="/posts/design-patterns-csharp/comportamentais/#memento">Memento</a></li><li><a href="/posts/design-patterns-csharp/comportamentais/#observer">Observer</a></li><li><a href="/posts/design-patterns-csharp/comportamentais/#state">State</a></li><li><a href="/posts/design-patterns-csharp/comportamentais/#strategy">Strategy</a></li><li><a href="/posts/design-patterns-csharp/comportamentais/#template-method">Template Method</a></li><li><a href="/posts/design-patterns-csharp/comportamentais/#visitor">Visitor</a></li></ul></section>
+<section><h2>Critérios de uso responsável</h2><p>Antes de aplicar um padrão, descreva o problema sem citar o nome do padrão, identifique o acoplamento atual, escreva um teste que represente a variação necessária e compare a solução com uma alternativa mais simples. O padrão deve reduzir o custo total da mudança, não apenas tornar o diagrama mais elegante.</p></section>
+</main><footer><p>Conteúdo original em C#, inspirado no catálogo clássico GoF e adaptado à prática moderna de .NET.</p></footer></body></html>
