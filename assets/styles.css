@@ -576,6 +576,15 @@ button, input, select {
   transition: opacity 0.4s var(--ease-out), visibility 0.4s;
 }
 
+.nav-drawer[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-drawer[aria-hidden="false"] .drawer-content {
+  transform: scale(1) translateY(0);
+}
+
 
 .drawer-backdrop {
   position: absolute;
