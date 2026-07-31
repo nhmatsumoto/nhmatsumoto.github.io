@@ -1,0 +1,55 @@
+---
+title: "Dapper vs EF Core: Quando a Performance Supera a Abstração"
+description: "Uma análise comparativa sobre ORMs no ecossistema .NET, focando em ciclos de vida de objetos, rastreamento e overhead de consulta."
+date: "2026-04-03T08:00:00+09:00"
+readingTime: 1
+hasMath: true
+tags: 
+  - "dotnet"
+  - "performance"
+  - "orm"
+  - "banco-de-dados"
+badges: 
+  - "performance"
+  - "dotnet"
+  - "arquitetura"
+tradeoffs: 
+  - "Dapper exige SQL explícito — mais controle, mas maior superfície de manutenção em queries complexas"
+  - "Change tracking do EF Core é essencial para operações de escrita com grafos de entidades — remover isso é risco"
+  - "CQRS parcial aumenta complexidade de onboarding, mas reduz acoplamento entre leitura e escrita"
+lessons: 
+  - "Benchmark antes de migrar: nem toda query é gargalo — profiling mostrou que só 12% das queries justificavam Dapper"
+  - "O custo real do EF Core não é o SQL gerado, é o tracking — desabilitar AsNoTracking resolve 70% dos casos de leitura"
+  - "Em produção, a escolha ORM é menos sobre framework e mais sobre ownership de SQL pelo time"
+---
+
+No ecossistema .NET, a escolha entre **Entity Framework Core (EF Core)** e **Dapper** é frequentemente reduzida a "facilidade vs velocidade", mas a realidade arquitetural é mais profunda.
+
+### EF Core: A Abstração de Domínio
+
+O EF Core é um ORM completo que gerencia o estado das entidades (Change Tracking). Ele é ideal para operações de escrita complexas onde a integridade do grafo de objetos é fundamental.
+
+### Dapper: O Micro-ORM de Alta Performance
+
+Dapper não tenta ser um gestor de estado. Ele é um mapeador de objetos que estende `IDbConnection`, focado em transformar resultados de SQL puro em POCOs da forma mais rápida possível.
+
+#### Comparativo de Overhead (\(T\))
+
+Podemos modelar o tempo total de execução (\(T\)) como:
+
+$$T_{total} = T_{sql} + T_{mapping} + T_{tracking}$$
+
+No Dapper, \(T_{tracking} \\approx 0\), o que o torna imbatível para operações de leitura intensiva.
+
+### Quando usar qual?
+
+```mermaid
+graph TD
+    A[Nova Funcionalidade] --> B{Complexidade de Escrita?}
+    B -- Alta --> C[EF Core]
+    B -- Baixa --> D{Volume de Leitura?}
+    D -- Crítico --> E[Dapper]
+    D -- Padrão --> C
+```
+
+> **Heurística Operacional**: Use EF Core para comandos (escrita) e Dapper para consultas (leitura) em uma arquitetura de estilo **CQRS**.

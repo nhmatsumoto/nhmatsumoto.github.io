@@ -4,6 +4,7 @@ import { MobileDrawer } from "../components/site-shell/mobile-drawer";
 import { Footer } from "../components/site-shell/footer";
 import { MermaidRenderer } from "../components/mermaid-renderer/mermaid-renderer";
 import { CodeCopyHandler } from "../components/code-copy-handler/code-copy-handler";
+import { MathJaxLoader } from "../components/mathjax-loader/mathjax-loader";
 import { LocaleContext } from "../lib/i18n/context";
 import { translate } from "../lib/i18n/translate";
 
@@ -31,6 +32,7 @@ export default component$(() => {
 
       <MermaidRenderer />
       <CodeCopyHandler />
+      <MathJaxLoader />
     </>
   );
 });

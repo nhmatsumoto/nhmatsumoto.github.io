@@ -1,0 +1,90 @@
+---
+title: "Orquestrador de agentes com DDD: traduzindo linguagem natural em Linguagem Ubíqua"
+description: "Documento técnico sobre como converter linguagem natural em artefatos de DDD usando orquestração de múltiplos agentes de IA."
+date: "2026-04-02T21:00:00+09:00"
+readingTime: 2
+hasMath: false
+tags: 
+  - "ddd"
+  - "arquitetura"
+  - "agentes-ia"
+  - "inteligência-artificial"
+badges: 
+  - "arquitetura"
+  - "ddd"
+  - "ai-agents"
+---
+
+Traduzir requisitos em “texto livre” para uma **Linguagem Ubíqua** consistente é um dos gargalos mais caros em produtos com domínio complexo. Este post descreve uma arquitetura de orquestração de agentes que converte linguagem natural em artefatos de DDD (glossário, comandos/eventos, invariantes e limites de contexto) e distribui tarefas para agentes especializados.
+
+### Contexto e motivação
+
+Documentação, código e conversas frequentemente usam termos diferentes para o mesmo conceito (“cliente”, “comprador”, “titular”, “account”), criando ambiguidade e bugs semânticos. Em DDD, a Linguagem Ubíqua é justamente a prática de construir um idioma comum e rigoroso entre pessoas de negócio e desenvolvedores, baseado no modelo de domínio.
+
+Além disso, DDD trata problemas por domínios e delimita áreas independentes como *Bounded Contexts* — muitas vezes alinháveis a serviços/microserviços na prática de arquitetura moderna.
+
+### A Arquitetura do Orquestrador
+
+A ideia é um **orquestrador** que recebe uma solicitação em linguagem natural e produz dois resultados acoplados:
+
+1.  **Artefatos de linguagem e domínio**: glossário do contexto, sinônimos proibidos, definições canônicas, comandos/eventos e regras/invariantes.
+2.  **Plano de execução multiagente**: tarefas para agentes especializados (modelagem, API, persistência, testes, segurança), com retorno estruturado e rastreável.
+
+```mermaid
+flowchart TD
+  A[Entrada em linguagem natural] --> B[Detecção de intenção e contexto]
+  B --> C[Tradutor DDD: Linguagem Ubíqua]
+  C --> D{Roteador de tarefas}
+  D --> E[Agente: Modelagem de domínio]
+  D --> F[Agente: Implementação/API]
+  D --> G[Agente: Testes e invariantes]
+  D --> H[Agente: Segurança e privacidade]
+  E --> I[Memória de feedback e decisões]
+  F --> I
+  G --> I
+  H --> I
+  I --> C
+```
+
+### Passos de implementação
+
+A forma mais robusta de manter rastreabilidade é exigir **saídas estruturadas**. Em APIs modernas de LLMs, isso costuma ser feito com JSON Schema.
+
+1) **Defina o contrato do “Tradutor DDD”** (JSON Schema). Ele deve retornar: `boundedContext`, `glossario`, `entidades`, `comandos`, `eventos`, `regras` e `termosProibidos`.
+
+```json
+{
+  "type": "object",
+  "required": ["boundedContext", "glossario", "eventos", "regras"],
+  "properties": {
+    "boundedContext": { "type": "string" },
+    "glossario": {
+      "type": "array",
+      "items": { "type": "object", "required": ["termo", "definicao"], "properties": { ... } }
+    },
+    ...
+  }
+}
+```
+
+2) **Roteie para agentes especializados**: cada agente consome a Linguagem Ubíqua e retorna uma entrega.
+
+3) **Imponha consistência na modelagem**: entidades e agregados devem preservar invariantes e expor métodos expressivos na linguagem do domínio.
+
+### O Ciclo de Vida de um Contexto Delimitado
+
+Em sistemas multiagente, o **Bounded Context** não é apenas uma divisória lógica no código; é o ambiente de execução de um subagente especializado. O ciclo de vida desse contexto segue três fases críticas:
+
+1.  **Descoberta e Isolamento**: O orquestrador identifica quais domínios são afetados por uma mudança e isola as ferramentas e o histórico necessários para o agente desse domínio.
+2.  **Sincronização Semântica**: Antes de qualquer escrita, o agente deve validar se o termo que planeja usar (ex: `OrderAmount`) já existe no glossário ou se conflita com um termo de outro contexto (ex: `TransactionTotal` em Financeiro).
+3.  **Consolidação de Invariantes**: O agente de domínio garante que as regras de negócio em nível de aplicação (ex: "um pedido não pode ter valor negativo") sejam respeitadas em cada comando gerado.
+
+### Resolução de Conflitos e Linguagem Ubíqua
+
+Quando dois agentes propõem nomes diferentes para o mesmo conceito, o Orquestrador atua como um **Mediador de Domínio**. Ele utiliza uma base de conhecimento centralizada (Memória Curada) para forçar a convergência.
+
+*   **Exemplo**: Se o agente de API propõe `userId` e o agente de Domínio propõe `CustomerIdentifier`, o Orquestrador consulta o glossário canônico do projeto e impõe o termo definido na Linguagem Ubíqua acordada com o humano.
+
+### Conclusão
+
+Essa arquitetura não apenas automatiza a tradução de requisitos, mas garante que a **Linguagem Ubíqua** seja o fio condutor de toda a engenharia, reduzindo drasticamente o retrabalho e as falhas de comunicação entre humanos e máquinas.

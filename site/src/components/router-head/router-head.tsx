@@ -8,11 +8,16 @@ export const RouterHead = component$(() => {
   const head = useDocumentHead();
   const loc = useLocation();
 
+  // Routes needing a non-self canonical (the /publications/ redirect stubs
+  // point at their /posts/ counterpart) set one in their own `head.links`;
+  // only fall back to the current URL when they haven't.
+  const hasCustomCanonical = head.links.some((l) => l.rel === "canonical");
+
   return (
     <>
       <title>{head.title}</title>
 
-      <link rel="canonical" href={loc.url.href} />
+      {!hasCustomCanonical && <link rel="canonical" href={loc.url.href} />}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 

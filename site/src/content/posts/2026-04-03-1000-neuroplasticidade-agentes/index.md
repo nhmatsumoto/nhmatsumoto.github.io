@@ -1,0 +1,56 @@
+---
+title: "“Neuroplasticidade” em sistemas de agentes: feedback, memória e melhoria contínua"
+description: "Uma proposta de arquitetura para agentes de IA que aprendem e evoluem através de ciclos de feedback e memória curada."
+date: "2026-04-02T22:00:00+09:00"
+readingTime: 1
+hasMath: false
+tags: 
+  - "ia"
+  - "agentes"
+  - "feedback"
+  - "neuroplasticidade"
+badges: 
+  - "agentes"
+  - "evelução"
+  - "feedback-loop"
+---
+
+Quando alguém pede que um sistema “aprenda com correções repetidas”, o requisito real costuma ser: capturar feedback, transformá-lo em regra operacional e impedir regressões. Este post propõe um desenho de **neuroplasticidade** para sistemas de agentes.
+
+### O problema da memória em agentes
+
+Na prática, sistemas de agentes falham por três motivos: (1) não lembram decisões anteriores, (2) lembram “qualquer coisa” sem curadoria, ou (3) incorporam feedback sem avaliação e pioram outras tarefas.
+
+A abordagem **ReAct** descreve um padrão em que o modelo intercala raciocínio e ações, melhorando rastreabilidade e correção ao consultar fontes externas em vez de “inventar” resposta.
+
+### Mecanismos de Neuroplasticidade
+
+Aqui, “neuroplasticidade” é uma metáfora útil para três mecanismos concretos:
+
+1.  **Memória declarativa curada**: um repositório versionado de decisões (glossário, preferências de estilo, restrições).
+2.  **Memória episódica com retenção mínima**: logs de execução e justificativas para depurar e auditar.
+3.  **Ciclo de avaliação e anti-regressão**: a cada correção relevante, cria-se um teste para garantir que a falha não volte.
+
+```mermaid
+flowchart LR
+  A[Saída do agente] --> B[Revisão humana / feedback]
+  B --> C{Classificar feedback}
+  C -->|Correção factual| D[Atualizar base de conhecimento]
+  C -->|Correção de formato| E[Atualizar esquema/regras]
+  C -->|Correção de política| F[Atualizar guardrails]
+  D --> G[Suíte de testes de comportamento]
+  E --> G
+  F --> G
+  G --> H[Deploy de regras/memória]
+  H --> A
+```
+
+### Implementação Prática
+
+1.  **Categorias de feedback**: classifique se a correção é factual, de formato, de segurança ou de escopo.
+2.  **Ciclo de artefatos**: converta feedback em regras concretas no sistema (ex: novo termo no glossário).
+3.  **Tool calling para ações verificáveis**: use function calling para realizar tarefas tangíveis e mensuráveis.
+
+### Conclusão
+
+Implementar "neuroplasticidade" não é deixar a IA livre para aprender qualquer coisa, mas sim criar um **sistema de governança** que captura o aprendizado humano e o transforma em diretrizes operacionais robustas para o agente.

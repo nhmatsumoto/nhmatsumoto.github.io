@@ -1,0 +1,65 @@
+---
+title: "Redes Neurais do Zero: Implementação Matemática em Python"
+description: "Uma jornada do neurônio de McCulloch-Pitts ao Backpropagation, implementando uma rede neural densa usando apenas NumPy."
+date: "2026-04-03T09:00:00+09:00"
+readingTime: 1
+hasMath: true
+tags: 
+  - "ia"
+  - "matemática"
+  - "python"
+  - "machine-learning"
+badges: 
+  - "ia"
+  - "ciência"
+  - "deep-learning"
+---
+
+Entender redes neurais através de bibliotecas como PyTorch ou TensorFlow é útil, mas entender a **matemática fundamental** por trás de um neurônio é o que separa o "usuário" do "engenheiro de IA".
+
+### O Neurônio Artificial
+
+Um neurônio é uma função matemática que recebe entradas (\(x\)), aplica pesos (\(w\)), soma-os com um viés (\(b\)) e passa o resultado por uma função de ativação (\(f\)):
+
+$$y = f(\sum_{i=1}^n w_i x_i + b)$$
+
+### O Ciclo da Aprendizagem:
+
+1.  **Forward Propagation**: Os dados fluem da entrada para a saída.
+2.  **Loss Function**: Calculamos o erro (ex: *Mean Squared Error*).
+3.  **Backpropagation**: Usamos a **Regra da Cadeia** do Cálculo para descobrir como cada peso contribuiu para o erro.
+4.  **Gradient Descent**: Ajustamos os pesos na direção oposta ao gradiente.
+
+#### O Gradiente do Erro (\(\nabla E\))
+
+A atualização dos pesos (\(w\)) com uma taxa de aprendizado (\(\eta\)) é:
+
+$$w_{new} = w_{old} - \eta \cdot \nabla E$$
+
+### Implementação Conceitual (Python/NumPy):
+
+```python
+import numpy as np
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+# Ativação do neurônio
+inputs = np.array([0.5, 0.3])
+weights = np.array([0.4, 0.7])
+bias = -0.1
+
+output = sigmoid(np.dot(inputs, weights) + bias)
+print(f"Predição: {output}")
+```
+
+```mermaid
+graph LR
+    X1((X1)) --> W1[W1]
+    X2((X2)) --> W2[W2]
+    W1 & W2 --> SUM[Σ + bias]
+    SUM --> ACT[Sigmoid]
+    ACT --> OUT((Saída))
+```
+
+> **Heurística Operacional**: Se o seu gradiente está "explodindo" (valores infinitos), revise a inicialização dos pesos e considere usar normalização de lote (Batch Norm).

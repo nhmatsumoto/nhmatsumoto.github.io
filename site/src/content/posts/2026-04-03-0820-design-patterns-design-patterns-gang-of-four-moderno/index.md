@@ -1,0 +1,63 @@
+---
+title: "Design Patterns: O que ainda é Relevante no C# Moderno?"
+description: "Uma revisão crítica dos padrões GoF, analisando como o C# 12 e 13 tornaram alguns obsoletos através de registros e correspondência de padrões."
+date: "2026-04-03T08:20:00+09:00"
+readingTime: 1
+hasMath: true
+tags: 
+  - "arquitetura"
+  - "dotnet"
+  - "design-patterns"
+  - "engenharia"
+badges: 
+  - "arquitetura"
+  - "dotnet"
+  - "design"
+tradeoffs: 
+  - "Records + pattern matching substituem vários patterns GoF, mas exigem time familiarizado com C# moderno"
+  - "Eliminar patterns clássicos melhora legibilidade, mas pode confundir devs vindos de Java/C# legado"
+lessons: 
+  - "GoF continua relevante como vocabulário compartilhado — mesmo quando a implementação muda, o conceito comunica"
+  - "O melhor pattern é o que o time inteiro entende — sofisticação sem consenso é dívida técnica disfarçada"
+---
+
+Os **Design Patterns** (GoF) foram escritos em uma era de C++ e Smalltalk primitivos. Com a evolução das linguagens modernas, muitos desses padrões tornaram-se nativos da plataforma.
+
+### Padrões Sobreviventes:
+
+*   **Strategy**: Ainda fundamental para desacoplar algoritmos de contextos.
+*   **Observer/Mediator**: Essencial para sistemas orientados a eventos (usando **MediatR** no .NET).
+*   **Decorator**: A base para middlewares e interceptadores de Cross-Cutting Concerns.
+
+### Padrões que o C# "Matou":
+
+*   **Singleton**: Injetores de Dependência (DI) nativos cuidam disso agora.
+*   **Iterator**: `IEnumerable` e `yield return` embutiram isso diretamente no `foreach`.
+*   **Visitor**: Substituído pela superioridade do **Pattern Matching** moderno.
+
+#### Exemplo: Pattern Matching vs Visitor (\(S\))
+
+A satisfação semântica (\(S\)) em C# moderno é muito maior com padrões funcionais:
+
+```csharp
+// Pattern Matching (Modo Moderno)
+public static decimal CalculateArea(Shape shape) => shape switch
+{
+    Circle c => Math.PI * c.Radius * c.Radius,
+    Rectangle r => r.Width * r.Height,
+    _ => throw new ArgumentException("Unknown shape")
+};
+```
+
+### Evolução Arquitetural
+
+Os padrões GoF migraram de "como estruturar classes" para "como estruturar microsserviços".
+
+```mermaid
+graph TD
+    A[GoF Patterns] --> B[Enterprise Patterns]
+    B --> C[Microservices Patterns]
+    C --> D[Cloud Native Patterns]
+```
+
+> **Heurística Operacional**: Se o seu diagrama de classes parece um labirinto, você está aplicando padrões demais por excesso de engenharia. Padrões devem simplificar, não complicar.
