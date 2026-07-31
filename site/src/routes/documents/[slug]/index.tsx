@@ -4,7 +4,7 @@ import {
   type DocumentHead,
   type StaticGenerateHandler,
 } from "@builder.io/qwik-city";
-import { getAllDocuments, getDocumentBySlug } from "../../../lib/content/documents";
+import { getAllDocumentSlugs, getDocumentBySlug } from "../../../lib/content/documents";
 import { LocaleContext } from "../../../lib/i18n/context";
 import { translate } from "../../../lib/i18n/translate";
 import { Breadcrumbs } from "../../../components/breadcrumbs/breadcrumbs";
@@ -12,8 +12,8 @@ import { Icon } from "../../../components/icon/icon";
 import { ICON_FILE_TEXT, ICON_FOLDER, ICON_GIT_BRANCH } from "../../../lib/icons";
 import { SITE_ORIGIN } from "../../../lib/site-config";
 
-export const useDocument = routeLoader$(({ params, status }) => {
-  const doc = getDocumentBySlug(params.slug);
+export const useDocument = routeLoader$(async ({ params, status }) => {
+  const doc = await getDocumentBySlug(params.slug);
   if (!doc) {
     status(404);
     throw new Error(`Document not found: ${params.slug}`);
@@ -23,7 +23,7 @@ export const useDocument = routeLoader$(({ params, status }) => {
 
 export const onStaticGenerate: StaticGenerateHandler = () => {
   return {
-    params: getAllDocuments().map((doc) => ({ slug: doc.slug })),
+    params: getAllDocumentSlugs().map((slug) => ({ slug })),
   };
 };
 

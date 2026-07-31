@@ -2,6 +2,8 @@ import { component$, Slot, useContext, useSignal } from "@builder.io/qwik";
 import { Navbar } from "../components/site-shell/navbar";
 import { MobileDrawer } from "../components/site-shell/mobile-drawer";
 import { Footer } from "../components/site-shell/footer";
+import { MermaidRenderer } from "../components/mermaid-renderer/mermaid-renderer";
+import { CodeCopyHandler } from "../components/code-copy-handler/code-copy-handler";
 import { LocaleContext } from "../lib/i18n/context";
 import { translate } from "../lib/i18n/translate";
 
@@ -26,6 +28,9 @@ export default component$(() => {
 
         <Footer />
       </div>
+
+      <MermaidRenderer />
+      <CodeCopyHandler />
     </>
   );
 });

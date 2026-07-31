@@ -41,11 +41,16 @@
     "vite-tsconfig-paths": "^4.2.1"
   },
   "dependencies": {
+    "@shikijs/rehype": "^4.4.1",
     "gray-matter": "^4.0.3",
+    "mdast-util-to-string": "^4.0.0",
+    "mermaid": "^11.16.0",
     "rehype-stringify": "^10.0.1",
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
-    "unified": "^11.0.5"
+    "shiki": "^4.4.1",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.1.0"
   }
 }
