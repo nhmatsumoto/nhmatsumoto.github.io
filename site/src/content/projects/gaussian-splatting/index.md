@@ -1,0 +1,43 @@
+---
+title: "gaussian-splatting"
+description: "Implementação de referência de 3D Gaussian Splatting para renderização de campos de radiância em tempo real."
+status: "publicado"
+stack: 
+  - "Python"
+  - "CUDA"
+  - "PyTorch"
+  - "Computer Vision"
+tags: 
+  - "fork"
+repoUrl: "https://github.com/nhmatsumoto/gaussian-splatting"
+---
+
+Fork da implementação de referência do paper "3D Gaussian Splatting for Real-Time Radiance Field Rendering" (SIGGRAPH 2023).
+
+### O que é Gaussian Splatting
+
+Diferente de NeRFs (Neural Radiance Fields) que usam redes neurais para representar cenas, Gaussian Splatting representa a cena como milhões de gaussianas 3D semi-transparentes. Cada gaussiana tem:
+
+*   **Posição** (xyz) no espaço 3D
+*   **Covariância** (3x3) que define forma e orientação
+*   **Opacidade** (alpha)
+*   **Cor** representada em spherical harmonics
+
+### Vantagens sobre NeRFs
+
+*   **Renderização em tempo real** (>100 FPS) vs. segundos por frame em NeRFs
+*   **Rasterização diferenciável** permite otimização por gradiente
+*   **Sem rede neural** na etapa de inferência — apenas projeção e alpha compositing
+*   **Qualidade visual** comparável ou superior a NeRFs estado-da-arte
+
+### Relevância
+
+O estudo de técnicas de renderização neural é relevante para aplicações de visualização 3D, realidade aumentada e reconstrução de cenas a partir de fotografias.
+
+### Problema e solução
+
+NeRFs produzem resultados visuais impressionantes mas são lentos demais para aplicações em tempo real. Gaussian Splatting resolve isso substituindo a rede neural por primitivas geométricas explícitas que podem ser rasterizadas eficientemente em GPU.
+
+### Arquitetura
+
+Pipeline de treinamento: inicialização via Structure-from-Motion (COLMAP) → otimização iterativa das gaussianas via gradiente → adaptive density control (split/clone/prune). Renderização via tile-based rasterizer customizado em CUDA.

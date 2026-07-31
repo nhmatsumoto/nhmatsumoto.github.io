@@ -29,3 +29,20 @@ export interface PostEntry {
   frontmatter: PostFrontmatter;
   html: string;
 }
+
+export interface ProjectFrontmatter {
+  title: string;
+  description: string;
+  status: string;
+  stack: string[];
+  tags: string[];
+  repoUrl?: string;
+  tradeoffs?: string[];
+  lessons?: string[];
+}
+
+export interface ProjectEntry {
+  slug: string;
+  frontmatter: ProjectFrontmatter;
+  html: string;
+}
