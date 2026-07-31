@@ -14,6 +14,11 @@ export const FUNDAMENTOS_SLUGS = [
   "2026-04-03-1600-sistemas-orientados-a-filas",
   "2026-04-03-2000-algoritmos-busca-ordenacao-com-big-o",
   "2026-04-03-2100-estruturas-de-dados-pilha-fila-arvores",
+  // Catálogo completo de GoF em C# (Fase 6) — órfão no site legado, nunca
+  // linkado de lugar nenhum; migrado e ligado aqui por decisão do usuário.
+  "design-patterns-csharp-criacionais",
+  "design-patterns-csharp-estruturais",
+  "design-patterns-csharp-comportamentais",
 ];
 
 export const IA_SLUGS = [
