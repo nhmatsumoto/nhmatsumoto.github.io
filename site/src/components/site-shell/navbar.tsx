@@ -3,6 +3,7 @@ import { useLocation } from "@builder.io/qwik-city";
 import { Icon } from "../icon/icon";
 import { ThemeToggle } from "../theme-toggle/theme-toggle";
 import { LocaleToggle } from "../locale-toggle/locale-toggle";
+import { SearchPalette } from "../search-palette/search-palette";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
 import { NAV_LINKS } from "../../lib/nav-links";
@@ -71,11 +72,13 @@ export const Navbar = component$<NavbarProps>(({ drawerOpen }) => {
 
         <div class="nav-actions navbar-right">
           <div class="nav-group nav-group-mobile mobile-only">
+            <SearchPalette />
             <LocaleToggle />
             <ThemeToggle class="nav-btn-theme-mobile" />
           </div>
 
           <div class="nav-group desktop-only">
+            <SearchPalette />
             <LocaleToggle />
             <ThemeToggle />
           </div>

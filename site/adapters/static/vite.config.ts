@@ -19,6 +19,10 @@ export default extendConfig(baseConfig, () => {
     plugins: [
       staticAdapter({
         origin: "https://nhmatsumoto.github.io",
+        // The built-in generator can't exclude the /publications/ noindex
+        // redirect stubs, so it's replaced by a hand-rolled endpoint route
+        // (src/routes/sitemap.xml) with full control over what's listed.
+        sitemapOutFile: null,
       }),
     ],
   };
