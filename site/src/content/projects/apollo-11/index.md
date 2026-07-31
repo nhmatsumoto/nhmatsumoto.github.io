@@ -1,0 +1,37 @@
+---
+title: "Apollo-11"
+description: "Código-fonte original do Apollo 11 Guidance Computer (AGC) para os módulos de comando e lunar."
+status: "publicado"
+stack: 
+  - "Assembly"
+  - "AGC"
+  - "Embedded Systems"
+tags: 
+  - "fork"
+repoUrl: "https://github.com/nhmatsumoto/Apollo-11"
+---
+
+Fork do código-fonte original do Apollo 11 Guidance Computer (AGC), escrito em assembly para o computador de bordo que levou a humanidade à Lua em 1969.
+
+O AGC foi um dos primeiros sistemas de computação embarcada a operar em tempo real com restrições extremas de memória e processamento. O código é dividido entre o módulo de comando (Comanche055) e o módulo lunar (Luminary099).
+
+### Relevância técnica
+
+Este repositório serve como referência histórica para estudo de:
+
+*   **Arquitetura de software embarcado** sob restrições severas de hardware
+*   **Sistemas de tempo real** com prioridade de tarefas e preempção
+*   **Tolerância a falhas** — o famoso alarme 1202 durante o pouso é um exemplo clássico de design resiliente
+*   **Engenharia de missão crítica** onde bugs podem ter consequências irreversíveis
+
+### Contexto
+
+O AGC tinha apenas 74KB de memória ROM e 4KB de RAM. Todo o software de navegação, controle de atitude e interface com astronautas cabia nesse espaço. A arquitetura de prioridades do AGC influenciou gerações de sistemas operacionais de tempo real.
+
+### Problema e solução
+
+O código original estava disperso em documentos históricos e microfilmes. A digitalização e publicação no GitHub permitiu que engenheiros modernos estudassem as decisões de design que tornaram possível a navegação lunar com hardware extremamente limitado.
+
+### Arquitetura
+
+O AGC utiliza uma arquitetura de execução baseada em jobs com prioridades, onde tarefas críticas (como controle de atitude) podem interromper tarefas de menor prioridade. O sistema operacional embarcado gerencia filas de execução, I/O com sensores inerciais e interface DSKY (Display & Keyboard).

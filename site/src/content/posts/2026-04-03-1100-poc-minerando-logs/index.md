@@ -1,0 +1,61 @@
+---
+title: "PoC: minerando logs de conversas para gerar posts com rastreabilidade e privacidade (LGPD)"
+description: "Documento conceitual sobre como extrair conhecimento técnico de logs de chat anonimizados e transformá-los em conteúdo publicável."
+date: "2026-04-02T23:00:00+09:00"
+readingTime: 1
+hasMath: false
+tags: 
+  - "ia"
+  - "log-mining"
+  - "privacidade"
+  - "lgpd"
+  - "embeddings"
+badges: 
+  - "knowledge-mining"
+  - "compliance"
+  - "poc"
+---
+
+Transformar conversas em conteúdo publicável é uma automação tentadora, mas exige método: extração, clusterização por temas, rastreabilidade de fontes e revisão humana. Este post descreve uma PoC que processa logs de chat e identifica conceitos/PoCs.
+
+### Contexto e motivação
+
+Conversas técnicas acumulam decisões, argumentos, pequenas PoCs e “microaprendizados” que raramente viram documentação. Embeddings são um mecanismo consagrado para medir similaridade textual e permitir clusterização e busca semântica em grandes volumes de texto.
+
+O risco: logs podem conter dados pessoais, segredos ou identificadores. A LGPD regula tratamento de dados pessoais e requer medidas de segurança e boas práticas proporcionais.
+
+### Pipeline: Do Log ao Post
+
+A PoC propõe um pipeline com três trilhas paralelas: editorial, rastreabilidade e privacidade.
+
+```mermaid
+sequenceDiagram
+  participant U as Usuário
+  participant I as Ingestão
+  participant R as Redação/Anonimização
+  participant E as Indexação (Embeddings)
+  participant C as Clusterização por tema
+  participant G as Gerador de posts
+  participant V as Revisão humana
+  participant P as Publicação
+
+  U->>I: Exporta logs (JSON/HTML/texto)
+  I->>R: Normaliza + remove PII/segredos
+  R->>E: Cria embeddings por trecho
+  E->>C: Agrupa por similaridade
+  C->>G: Extrai itens (conceitos/PoCs) + estrutura
+  G->>V: Entrega rascunhos com fontes/assunções
+  V->>P: Aprova e publica
+```
+
+### Passos de implementação
+
+1.  **Ingestão e segmentação**: parse do export do chat (normalmente JSON/HTML) e quebra em mensagens/trechos.
+2.  **Redação (Privacy by Design)**: aplicar filtros (regex + detectores) para tokens sensíveis antes da indexação.
+3.  **Embeddings e Clusterização**: gerar embedding por trecho e agrupar por similaridade.
+4.  **Geração Estruturada**: para cada cluster, extrair o conceito e os trade-offs debatidos.
+5.  **Rastreabilidade de Fontes**: anexar, a cada afirmação factual, a referência documental.
+
+### Conclusão
+
+Essa abordagem permite que o conhecimento gerado em sessões de brainstorming não se perca, transformando-se em **ativos digitais estruturados** e respeitando os limites da privacidade e conformidade de dados.

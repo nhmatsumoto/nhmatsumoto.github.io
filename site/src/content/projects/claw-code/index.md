@@ -1,0 +1,38 @@
+---
+title: "claw-code"
+description: "Better Harness Tools — ferramentas para análise e experimentação com Claude Code, em reescrita para Rust."
+status: "publicado"
+stack: 
+  - "Rust"
+  - "CLI"
+  - "AI Agents"
+tags: 
+  - "fork"
+repoUrl: "https://github.com/nhmatsumoto/claw-code"
+---
+
+Fork do projeto Claw Code, focado em criar ferramentas úteis para análise e experimentação com a arquitetura de agentes de código como Claude Code.
+
+### Motivação
+
+Entender como agentes de código funcionam internamente — seus system prompts, tool loops, decisão de contexto — é fundamental para quem trabalha com automação de engenharia. Este projeto vai além do arquivo: transforma referência em ferramenta.
+
+### Reescrita em Rust
+
+A versão atual está sendo reescrita em Rust para:
+
+*   **Performance** — parsing e análise de prompts grandes sem overhead de runtime
+*   **Portabilidade** — binário único sem dependências
+*   **CLI ergonômico** — interface de terminal com output formatado
+
+### Relação com o ecossistema
+
+Complementa o repositório **system-prompts-and-models-of-ai-tools** como referência de engenharia de prompts e arquitetura de agentes.
+
+### Problema e solução
+
+Agentes de código são caixas-pretas poderosas, mas entender sua arquitetura interna permite usá-los de forma mais eficiente. Este projeto constrói ferramentas para inspecionar, comparar e experimentar com essas arquiteturas.
+
+### Arquitetura
+
+CLI em Rust com subcomandos para parsing de prompts, comparação entre versões e análise de tool definitions. Estruturado como workspace Cargo com crates separados para parsing, rendering e CLI.
