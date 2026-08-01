@@ -18,6 +18,7 @@ import {
   ICON_LAYERS,
   ICON_NETWORK,
   ICON_NEWSPAPER,
+  ICON_RSS,
   ICON_USER_ROUND,
 } from "../lib/icons";
 import { SITE_ORIGIN } from "../lib/site-config";
@@ -31,7 +32,7 @@ const CONTACT_LINKS = [
   { href: "https://github.com/nhmatsumoto", label: "GitHub", icon: ICON_GIT_BRANCH },
   { href: "https://www.linkedin.com/in/hiroyukims/", label: "LinkedIn", icon: ICON_NETWORK },
   { href: "https://nhmatsumoto.github.io", label: "Site / Blog", icon: ICON_NEWSPAPER },
-  { href: "/feed.xml", label: "RSS", icon: ICON_FILE_TEXT },
+  { href: "/feed.xml", label: "RSS", icon: ICON_RSS },
 ];
 
 const SECTORS = [
@@ -83,7 +84,7 @@ export default component$(() => {
                 {CONTACT_LINKS.map((link) => (
                   <li class="profile-contact-item" key={link.label}>
                     <a class="profile-contact-link" href={link.href} target="_blank" rel="noopener noreferrer">
-                      <Icon paths={link.icon} />
+                      <Icon paths={link.icon} class="profile-contact-icon" />
                       <span class="profile-contact-link-copy">
                         <span class="profile-contact-label">{link.label}</span>
                       </span>
