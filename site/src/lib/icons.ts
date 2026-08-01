@@ -68,3 +68,9 @@ export const ICON_NETWORK =
 
 export const ICON_LIGHTBULB =
   '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" />';
+
+export const ICON_RSS =
+  '<path d="M4 11a9 9 0 0 1 9 9" /><path d="M4 4a16 16 0 0 1 16 16" /><circle cx="5" cy="19" r="1" />';
+
+export const ICON_SEARCH =
+  '<circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />';

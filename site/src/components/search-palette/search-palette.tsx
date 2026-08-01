@@ -8,6 +8,8 @@ import {
 } from "@builder.io/qwik";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
+import { Icon } from "../icon/icon";
+import { ICON_SEARCH } from "../../lib/icons";
 
 interface SearchEntry {
   title: string;
@@ -83,7 +85,7 @@ export const SearchPalette = component$(() => {
         onClick$={open}
         aria-label={t("search.title")}
       >
-        {t("search.title")}
+        <Icon paths={ICON_SEARCH} />
       </button>
 
       {isOpen.value && (

@@ -32,36 +32,10 @@ Desenvolvidos para fins táticos e de segurança, não dependem de radiação nu
 
 #### Matriz de Impacto e Alcance
 
-Tecnologia
-
-Origem
-
-Abrangência
-
-Vetor de Dano
-
-**HEMP**
-
-Detonação Nuclear
-
-Continente/País
-
-Raios Gama + Efeito Compton
-
-**FCG**
-
-Compressão de Fluxo
-
-Local/Tático
-
-Pulsos Magnéticos de Corrente
-
-**HPM**
-
-Micro-ondas Focadas
-
-Alvo Direcional
-
-Saturação Térmica/Dielétrica
+| Tecnologia | Origem | Abrangência | Vetor de Dano |
+| --- | --- | --- | --- |
+| **HEMP** | Detonação Nuclear | Continente/País | Raios Gama + Efeito Compton |
+| **FCG** | Compressão de Fluxo | Local/Tático | Pulsos Magnéticos de Corrente |
+| **HPM** | Micro-ondas Focadas | Alvo Direcional | Saturação Térmica/Dielétrica |
 
 No final, a tecnologia de pulso artificial não é sobre "explosão", mas sobre o controle preciso de campos elétricos e magnéticos para induzir transientes fatais em circuitos semicondutores.

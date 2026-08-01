@@ -22,9 +22,11 @@ Dados espaciais costumam chegar incompletos, ruidosos e caros de processar. A so
 O desenho privilegia rastreabilidade e projeções operacionais. Serviços de ingestão e enriquecimento escrevem eventos; a camada de leitura consolida visualizações e sinais para equipes de resposta.
 
 ```mermaid
-ingest -> normalize -> geocode
-   |         |          |
-events -> risk map -> ops view
+flowchart LR
+    ingest[ingest] --> normalize[normalize] --> geocode[geocode]
+    ingest --> events[events]
+    normalize --> riskmap[risk map]
+    geocode --> opsview[ops view]
 ```
 
 ### Stack & Tecnologias
