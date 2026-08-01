@@ -24,35 +24,12 @@ $$ Dano = Fonte \times Propaga\c{c}ão \times Acoplamento \times Vulnerabilidade
 
 Dessa forma, dois equipamentos à mesma distância do ponto zero terão resultados totalmente diferentes:
 
-Componente
-
-Descrição
-
-Fator de Impacto
-
-**Fonte**
-
-Intensidade e duração do pulso original
-
-Alto (E1/E2/E3)
-
-**Propagação**
-
-Perdas no meio e distância
-
-Inverso do Quadrado
-
-**Acoplamento**
-
-Eficiência da "antena" (cabos, trilhas)
-
-Geometria do Alvo
-
-**Vulnerabilidade**
-
-Resistência do silício (MOSFETs, ICs)
-
-Limiar Térmico
+| Componente | Descrição | Fator de Impacto |
+| --- | --- | --- |
+| **Fonte** | Intensidade e duração do pulso original | Alto (E1/E2/E3) |
+| **Propagação** | Perdas no meio e distância | Inverso do Quadrado |
+| **Acoplamento** | Eficiência da "antena" (cabos, trilhas) | Geometria do Alvo |
+| **Vulnerabilidade** | Resistência do silício (MOSFETs, ICs) | Limiar Térmico |
 
 1.  Um **aparelho pequeno**, desconectado e sem cabos longos, pode sobreviver.
 2.  Um **sistema ligado à rede**, com cabeamento extenso ou antenas, sofrerá muito mais acoplamento e dano.

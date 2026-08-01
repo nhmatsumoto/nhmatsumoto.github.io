@@ -32,45 +32,11 @@ O GRB é o análogo cosmológico mais próximo de um pulso eletromagnético extr
 
 No nosso quintal solar, a distinção é vital para a resiliência:
 
-Fenômeno
-
-Origem
-
-Alvo Principal
-
-Duração
-
-Impacto
-
-**Flare Solar**
-
-Reconexão Magnética
-
-Ionosfera (Rádio/GPS)
-
-Minutos
-
-Blackout de Rádio
-
-**CME**
-
-Plasma Magnetizado
-
-Redes de Alta Tensão
-
-Horas/Dias
-
-Correntes Induzidas (GIC)
-
-**GRB**
-
-Jatos Relativísticos
-
-Camada de Ozônio
-
-Milissegundos
-
-Extinção Atmosférica
+| Fenômeno | Origem | Alvo Principal | Duração | Impacto |
+| --- | --- | --- | --- | --- |
+| **Flare Solar** | Reconexão Magnética | Ionosfera (Rádio/GPS) | Minutos | Blackout de Rádio |
+| **CME** | Plasma Magnetizado | Redes de Alta Tensão | Horas/Dias | Correntes Induzidas (GIC) |
+| **GRB** | Jatos Relativísticos | Camada de Ozônio | Milissegundos | Extinção Atmosférica |
 
 #### Conclusão
 

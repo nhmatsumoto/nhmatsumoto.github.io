@@ -1,5 +1,6 @@
 import { JSDOM } from "jsdom";
 import TurndownService from "turndown";
+import { gfm } from "turndown-plugin-gfm";
 
 export function yamlString(value: string): string {
   return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
@@ -17,6 +18,11 @@ export function buildTurndown(): TurndownService {
     emDelimiter: "*",
   });
   td.escape = (text: string) => text;
+  // Plain turndown has no opinion on <table> — it just flattens cell text
+  // into loose lines, losing structure entirely. The GFM plugin adds a
+  // proper `| a | b |` table rule (remark-gfm on the render side already
+  // expects GFM tables, so this is the matching half of that pipe).
+  td.use(gfm);
 
   td.addRule("codeShell", {
     filter: (node) =>

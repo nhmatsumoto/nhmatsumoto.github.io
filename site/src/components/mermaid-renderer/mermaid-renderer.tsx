@@ -29,7 +29,16 @@ export const MermaidRenderer = component$(() => {
       el.innerHTML = original;
     }
 
-    await mermaid.run({ nodes: Array.from(diagrams) });
+    try {
+      // suppressErrors: a single malformed diagram (bad content, not a code
+      // bug) throwing here would otherwise reject this whole task and skip
+      // every other diagram on the page — mermaid.run already renders an
+      // inline error placeholder per failed node, so this only guards the
+      // rare case where the rejection propagates past that.
+      await mermaid.run({ nodes: Array.from(diagrams), suppressErrors: true });
+    } catch (err) {
+      console.error("Mermaid render failed:", err);
+    }
   }, { strategy: "document-ready" });
   // Explicit strategy: this component renders no DOM element of its own
   // (see below), so the default intersection-observer strategy would have

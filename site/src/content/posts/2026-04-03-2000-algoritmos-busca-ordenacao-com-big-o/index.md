@@ -2,7 +2,7 @@
 title: "Algoritmos e Big O: Entendendo a Eficiência do Código"
 description: "Uma introdução intuitiva à complexidade de algoritmos (Tempo e Espaço) e por que o Big O é a métrica definitiva para escalabilidade."
 date: "2026-04-03T17:00:00+09:00"
-readingTime: 3
+readingTime: 5
 hasMath: true
 tags: 
   - "algoritmos"
@@ -62,6 +62,21 @@ public static int BuscaLinear(int[] dados, int alvo)
 }
 ```
 
+O mesmo algoritmo em C, sem o runtime gerenciado do .NET por trás: o tamanho do array não viaja com o ponteiro, então precisa ser passado à parte.
+
+```c
+/* Busca Linear - O(n) */
+int busca_linear(const int *dados, int tamanho, int alvo)
+{
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (dados[i] == alvo)
+            return i;
+    }
+    return -1;
+}
+```
+
 #### Busca Binária: a Mágica do Logaritmo
 
 Imagine procurar um nome em uma lista telefônica de 1 milhão de páginas. Uma busca linear (página por página) levaria até 1 milhão de passos. Uma **Busca Binária** (dividindo ao meio) levaria apenas **20 passos**.
@@ -74,6 +89,32 @@ public static int BuscaBinaria(int[] dados, int alvo)
 {
     int baixo = 0;
     int alto = dados.Length - 1;
+
+    while (baixo <= alto)
+    {
+        int meio = baixo + (alto - baixo) / 2;
+
+        if (dados[meio] == alvo)
+            return meio;
+
+        if (dados[meio] < alvo)
+            baixo = meio + 1;
+        else
+            alto = meio - 1;
+    }
+
+    return -1;
+}
+```
+
+Em C, a mesma lógica — a única armadilha clássica é `(baixo + alto) / 2` poder estourar o `int` em arrays gigantes; por isso `baixo + (alto - baixo) / 2`.
+
+```c
+/* Busca Binaria - O(log n) - requer array ordenado */
+int busca_binaria(const int *dados, int tamanho, int alvo)
+{
+    int baixo = 0;
+    int alto = tamanho - 1;
 
     while (baixo <= alto)
     {
@@ -133,6 +174,27 @@ public static void BubbleSort(int[] dados)
 }
 ```
 
+Em C não existe tupla para trocar dois valores de uma vez; a troca precisa de uma variável temporária explícita.
+
+```c
+/* Bubble Sort - O(n^2) - didatico, evite em producao */
+void bubble_sort(int *dados, int tamanho)
+{
+    for (int i = 0; i < tamanho - 1; i++)
+    {
+        for (int j = 0; j < tamanho - i - 1; j++)
+        {
+            if (dados[j] > dados[j + 1])
+            {
+                int temp = dados[j];
+                dados[j] = dados[j + 1];
+                dados[j + 1] = temp;
+            }
+        }
+    }
+}
+```
+
 Já o **Merge Sort** divide o array recursivamente pela metade e combina os resultados ordenados, alcançando O(n log n). É a mesma ideia por trás do `Array.Sort` no .NET, um Introsort que combina Quicksort, Heapsort e Insertion Sort conforme o tamanho da entrada.
 
 ```csharp
@@ -161,6 +223,41 @@ private static int[] Merge(int[] esquerda, int[] direita)
     while (j < direita.Length) resultado[k++] = direita[j++];
 
     return resultado;
+}
+```
+
+Em C não existe garbage collector: cada `malloc` precisa do `free` correspondente, e o buffer auxiliar do merge é responsabilidade de quem chamou a função.
+
+```c
+#include <stdlib.h>
+#include <string.h>
+
+/* Merge Sort - O(n log n) - dividir para conquistar.
+   Ordena in-place; "buffer" precisa ter pelo menos "tamanho" posicoes. */
+void merge_sort(int *dados, int tamanho, int *buffer)
+{
+    if (tamanho <= 1)
+        return;
+
+    int meio = tamanho / 2;
+    merge_sort(dados, meio, buffer);
+    merge_sort(dados + meio, tamanho - meio, buffer);
+
+    int i = 0, j = meio, k = 0;
+    while (i < meio && j < tamanho)
+        buffer[k++] = (dados[i] <= dados[j]) ? dados[i++] : dados[j++];
+    while (i < meio) buffer[k++] = dados[i++];
+    while (j < tamanho) buffer[k++] = dados[j++];
+
+    memcpy(dados, buffer, tamanho * sizeof(int));
+}
+
+/* Uso: aloca o buffer auxiliar uma unica vez, fora da recursao. */
+void ordenar(int *dados, int tamanho)
+{
+    int *buffer = malloc(tamanho * sizeof(int));
+    merge_sort(dados, tamanho, buffer);
+    free(buffer);
 }
 ```
 

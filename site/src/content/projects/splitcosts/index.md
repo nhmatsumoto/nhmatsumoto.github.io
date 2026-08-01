@@ -22,9 +22,11 @@ O desafio não era apenas registrar gastos. Era manter legibilidade do domínio,
 A solução segue uma linha mais pragmática: fronteiras explícitas no domínio, projeções simples para leitura e um backend pensado para crescer por contexto, não por páginas.
 
 ```mermaid
-api -> domain -> projections
- |       |          |
-ui <-- tenancy --> db
+flowchart TD
+    api[api] --> domain[domain] --> projections[projections]
+    api --> ui[ui]
+    domain --> tenancy[tenancy]
+    projections --> db[(db)]
 ```
 
 ### Stack & Tecnologias
