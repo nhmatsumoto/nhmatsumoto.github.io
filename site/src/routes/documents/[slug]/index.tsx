@@ -44,7 +44,7 @@ export default component$(() => {
       </header>
       <div class="page-two-column document-page-layout">
         <aside class="page-sidebar">
-          <section class="document-page-meta" aria-label="Metadados do documento">
+          <section class="document-page-meta" aria-label={t("pages.document.meta")}>
             <p class="document-page-meta-label">{t("pages.document.meta")}</p>
             <div class="document-page-meta-row">
               <p class="doc-version">

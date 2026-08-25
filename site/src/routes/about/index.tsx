@@ -158,7 +158,7 @@ export default component$(() => {
             <article class="resource-card contact-card">
               <p class="card-type">{t("about.ref_type_docs")}</p>
               <h3>
-                <a href="/documents/">Documentos e ADRs</a>
+                <a href="/documents/">{t("about.ref_docs_title")}</a>
               </h3>
               <p class="card-summary">{t("about.ref_docs_body")}</p>
             </article>

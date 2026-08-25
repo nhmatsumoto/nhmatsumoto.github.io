@@ -57,7 +57,10 @@ export default component$(() => {
                 </span>
                 <span class="metric">
                   <Icon paths={ICON_CLOCK_3} class="meta-icon" />
-                  <span>{post.value.frontmatter.readingTime} min de leitura</span>
+                  <span>
+                    {post.value.frontmatter.readingTime}
+                    {t("post.reading_time_unit")}
+                  </span>
                 </span>
               </div>
             </div>
@@ -98,7 +101,10 @@ export default component$(() => {
                   </span>
                   <span class="post-meta-item">
                     <Icon paths={ICON_CLOCK_3} class="meta-icon" />
-                    <span>{post.value.frontmatter.readingTime} min de leitura</span>
+                    <span>
+                    {post.value.frontmatter.readingTime}
+                    {t("post.reading_time_unit")}
+                  </span>
                   </span>
                 </div>
               </div>

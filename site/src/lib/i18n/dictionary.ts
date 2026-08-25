@@ -291,6 +291,7 @@ export const dictionary: Record<string, DictionaryEntry> = {
       "マルチテナンシー、プロジェクション、明示的な境界を持つドメイン。ADRで文書化。"
     ],
     "about.ref_type_docs": ["documentação", "documentation", "ドキュメント"],
+    "about.ref_docs_title": ["Documentos e ADRs", "Documents & ADRs", "ドキュメントとADR"],
     "about.ref_docs_body": [
       "Decisões de arquitetura registradas, com contexto e trade-offs, não só o resultado final.",
       "Architecture decisions on record, with context and trade-offs, not just the final result.",
@@ -321,6 +322,9 @@ export const dictionary: Record<string, DictionaryEntry> = {
 
     // ---- entry status ----
     "status.published": ["publicado", "published", "公開済み"],
+
+    // ---- reading time (appended directly after the number, no space in ja) ----
+    "post.reading_time_unit": [" min de leitura", " min read", "分で読了"],
 
     // ---- home: certifications ----
     "home.cert_neural": [

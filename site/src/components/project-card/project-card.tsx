@@ -30,7 +30,9 @@ export const ProjectCard = component$<ProjectCardProps>(({ project }) => {
             ·
           </span>
           <span class="entry-status entry-status-published">
-            {project.frontmatter.status}
+            {project.frontmatter.status === "publicado"
+              ? t("status.published")
+              : project.frontmatter.status}
           </span>
         </p>
         <h3 class="entry-title">

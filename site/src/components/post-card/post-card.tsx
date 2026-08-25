@@ -35,7 +35,10 @@ export const PostCard = component$<PostCardProps>(({ post }) => {
           </span>
           <span class="entry-meta">
             <Icon paths={ICON_CLOCK_3} class="entry-icon" />
-            <span>{post.frontmatter.readingTime} min de leitura</span>
+            <span>
+              {post.frontmatter.readingTime}
+              {t("post.reading_time_unit")}
+            </span>
           </span>
         </p>
         <h3 class="entry-title">

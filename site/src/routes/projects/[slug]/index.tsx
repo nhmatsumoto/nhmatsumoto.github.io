@@ -49,7 +49,9 @@ export default component$(() => {
             </div>
             <p>
               <span class="status-chip status-published">
-                {project.value.frontmatter.status}
+                {project.value.frontmatter.status === "publicado"
+                  ? t("status.published")
+                  : project.value.frontmatter.status}
               </span>
             </p>
             <h3>{t("pages.project.stack")}</h3>
