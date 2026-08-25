@@ -50,8 +50,8 @@ export const Navbar = component$<NavbarProps>(({ drawerOpen }) => {
 
         <div class="navbar-center">
           <div class="nav-brand navbar-brand-mobile mobile-only">
-            <a class="nav-title" href="/">
-              <span class="brand-accent">NHM</span>ATSUMOTO
+            <a class="nav-title" href="/" aria-label="NHMATSUMOTO">
+              <span class="brand-accent">NHM</span>
             </a>
           </div>
 

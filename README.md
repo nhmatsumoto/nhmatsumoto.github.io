@@ -1,35 +1,43 @@
 # nhmatsumoto.github.io
 
-Repositorio estatico publicado em `https://nhmatsumoto.github.io/`.
+Site publicado em `https://nhmatsumoto.github.io/`.
 
-Este branch contem o artefato final do site: HTML, CSS, JavaScript, sitemap, feed e arquivos auxiliares prontos para o GitHub Pages servir a partir da raiz do repositorio.
+## Estrutura
 
-## Estrutura atual
+- `site/`: código-fonte do site — projeto [Qwik City](https://qwik.dev/qwikcity/overview/) com adapter estático (SSG). Todo o conteúdo (posts, projetos, documentos), componentes, estilos e rotas vivem aqui. Veja `site/README.md` para detalhes do projeto Qwik em si.
+- `.github/workflows/deploy-pages.yml`: workflow que builda `site/` e publica `site/dist/` no GitHub Pages.
+- `LICENSE`, `resume.md`: arquivos auxiliares do repositório, fora do conteúdo publicado.
 
-- `index.html`: pagina inicial.
-- `posts/`, `publications/`, `fundamentos/`, `ia/`, `projects/`, `documents/`, `about/`, `contact/`: rotas estaticas publicadas.
-- `assets/styles.css`: estilos globais.
-- `assets/blog.js`: comportamento client-side, busca e internacionalizacao da interface.
-- `assets/search-index.json`: indice local consumido pela busca.
-- `feed.xml`, `sitemap.xml`, `robots.txt`, `.nojekyll`: arquivos de publicacao.
-- `.github/workflows/deploy-pages.yml`: workflow que envia a raiz do repositorio para o GitHub Pages.
+## Publicação
 
-## Publicacao
+O deploy roda automaticamente em push para `master`:
 
-O deploy roda automaticamente em push para `master`.
+1. `npm ci` em `site/`.
+2. `npm run build.client` e `npm run build.server` (gera `site/dist/`, incluindo HTML estático de todas as rotas, `sitemap.xml`, `feed.xml` e `robots.txt`).
+3. `site/dist/` é publicado no GitHub Pages via Actions.
 
-O workflow nao executa build neste branch. Ele faz checkout, configura GitHub Pages, empacota `.` e publica o conteudo estatico diretamente.
+`site/dist/` não é versionado — é gerado a cada deploy.
 
-## Validacao local
+## Desenvolvimento local
 
 ```bash
-node --check assets/blog.js
-python3 -m http.server 8123
+cd site
+npm install
+npm run start        # dev server com SSR (vite --mode ssr)
 ```
 
-Depois, abra `http://127.0.0.1:8123/`.
+Para validar um build de produção localmente:
 
-## Observacoes
+```bash
+cd site
+npm run build.client
+npm run build.server
+npx vite preview --outDir dist
+```
 
-- Para evitar processamento do Jekyll no GitHub Pages, `.nojekyll` deve permanecer versionado.
-- Novas alteracoes de conteudo neste branch devem atualizar diretamente os arquivos estaticos correspondentes.
+> `npm run build` (o orquestrador `qwik build`, que roda type-check + lint + build) tem um bug conhecido de compatibilidade com npm ≥ 9: o CLI do Qwik injeta a flag `--pretty` sem o separador `--` ao chamar `npm run build.types`, e o npm passa a rejeitá-la como flag desconhecida (`EUNKNOWNCONFIG`). Rode `npm run build.types`, `npm run lint`, `npm run build.client` e `npm run build.server` separadamente como contorno — é exatamente o que o workflow de deploy faz.
+
+## Observações
+
+- Novas alterações de conteúdo (posts, projetos, documentos) entram em `site/src/content/`.
+- Este repositório já teve uma versão anterior do site (HTML/CSS/JS estático publicado direto da raiz). Ela foi removida após a migração para Qwik; o histórico do git preserva esses arquivos caso sejam necessários para referência.

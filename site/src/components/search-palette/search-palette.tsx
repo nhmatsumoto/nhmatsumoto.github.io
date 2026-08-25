@@ -123,8 +123,11 @@ export const SearchPalette = component$(() => {
             ) : (
               <ul class="search-results">
                 {results.slice(0, 20).map((entry, i) => (
-                  <li key={entry.url} class={i === activeIndex.value ? "is-active" : ""}>
-                    <a href={entry.url}>
+                  <li
+                    key={entry.url}
+                    class={`search-result${i === activeIndex.value ? " is-active" : ""}`}
+                  >
+                    <a href={entry.url} class="search-result-link">
                       <span class="search-result-title">{entry.title}</span>
                       <span class="search-result-desc">{entry.description}</span>
                     </a>
