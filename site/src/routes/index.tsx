@@ -7,6 +7,7 @@ import { PostCard } from "../components/post-card/post-card";
 import { ProjectCard } from "../components/project-card/project-card";
 import { DocumentCard } from "../components/document-card/document-card";
 import { Icon } from "../components/icon/icon";
+import { TechIcon } from "../components/tech-icon/tech-icon";
 import { LocaleContext } from "../lib/i18n/context";
 import { translate } from "../lib/i18n/translate";
 import {
@@ -21,11 +22,40 @@ import {
   ICON_RSS,
   ICON_USER_ROUND,
 } from "../lib/icons";
+import {
+  TECH_ICON_AZURE,
+  TECH_ICON_CSHARP,
+  TECH_ICON_CSS3,
+  TECH_ICON_DOTNET,
+  TECH_ICON_EFCORE,
+  TECH_ICON_GIT,
+  TECH_ICON_HTML5,
+  TECH_ICON_JAVASCRIPT,
+  TECH_ICON_JQUERY,
+  TECH_ICON_MYSQL,
+  TECH_ICON_REACT,
+  TECH_ICON_SQLSERVER,
+  TECH_ICON_TYPESCRIPT,
+} from "../lib/tech-icons";
 import { SITE_ORIGIN } from "../lib/site-config";
 
-const TECH_STACK = [
-  ".NET Core", "C#", "ASP.NET MVC", "EF Core", "SQL Server", "MySQL",
-  "TypeScript", "JavaScript", "React", "HTML5", "CSS", "jQuery", "Azure", "Git",
+// [label, icon markup] — ASP.NET MVC has no dedicated devicon mark, so it
+// reuses the .NET logo (same ecosystem); every other entry has its own.
+const TECH_STACK: [string, string][] = [
+  [".NET Core", TECH_ICON_DOTNET],
+  ["C#", TECH_ICON_CSHARP],
+  ["ASP.NET MVC", TECH_ICON_DOTNET],
+  ["EF Core", TECH_ICON_EFCORE],
+  ["SQL Server", TECH_ICON_SQLSERVER],
+  ["MySQL", TECH_ICON_MYSQL],
+  ["TypeScript", TECH_ICON_TYPESCRIPT],
+  ["JavaScript", TECH_ICON_JAVASCRIPT],
+  ["React", TECH_ICON_REACT],
+  ["HTML5", TECH_ICON_HTML5],
+  ["CSS", TECH_ICON_CSS3],
+  ["jQuery", TECH_ICON_JQUERY],
+  ["Azure", TECH_ICON_AZURE],
+  ["Git", TECH_ICON_GIT],
 ];
 
 const CONTACT_LINKS = [
@@ -110,8 +140,9 @@ export default component$(() => {
             <div class="notebook-stack">
               <p class="section-kicker" aria-hidden="true">{t("home.stack_kicker")}</p>
               <ul class="tech-chip-list notebook-stack-list">
-                {TECH_STACK.map((tech) => (
+                {TECH_STACK.map(([tech, icon]) => (
                   <li class="tech-chip" key={tech}>
+                    <TechIcon markup={icon} class="tech-chip-icon" />
                     <span>{tech}</span>
                   </li>
                 ))}

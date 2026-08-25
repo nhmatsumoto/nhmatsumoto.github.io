@@ -26,7 +26,12 @@ export const MermaidRenderer = component$(() => {
       const original = el.getAttribute("data-mermaid-source") ?? el.textContent ?? "";
       el.setAttribute("data-mermaid-source", original);
       el.removeAttribute("data-processed");
-      el.innerHTML = original;
+      // textContent, not innerHTML: `original` is raw mermaid source, not
+      // markup. Diagrams using `<<interface>>`/`<<abstract>>` stereotypes
+      // (`<` followed by a letter reads as a tag open to the HTML parser)
+      // were getting silently mangled — mermaid then either failed outright
+      // ("Syntax error in text") or rendered with the stereotype dropped.
+      el.textContent = original;
     }
 
     try {

@@ -31,7 +31,7 @@ Não é apenas uma questão estética. É sobre **redutibilidade cognitiva**. Se
 
 *   **S (Single Responsibility)**: Uma classe deve ter uma única razão para mudar.
 *   **O (Open/Closed)**: Aberto para extensão, fechado para modificação.
-*   **L (Liskov Substitution)**: Subclasses devem ser substituíveis por suas superclasses.
+*   **L (Liskov Substitution)**: Uma subclasse deve poder substituir sua superclasse sem quebrar o comportamento esperado.
 *   **I (Interface Segregation)**: Muitas interfaces específicas são melhores que uma geral.
 *   **D (Dependency Inversion)**: Dependa de abstrações, não de implementações.
 

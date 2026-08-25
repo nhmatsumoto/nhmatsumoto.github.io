@@ -109,7 +109,7 @@ graph TD
     R1 --> RR1[Sub-direita]
 ```
 
-Uma Árvore Binária de Busca mantém a invariante "esquerda menor, direita maior" em cada nó — é essa invariante que torna a busca O(log n) em vez de O(n):
+Uma Árvore Binária de Busca mantém a invariante "esquerda menor, direita maior" em cada nó — é essa invariante que permite descartar metade da árvore a cada comparação. Isso só rende O(log n) quando a árvore está balanceada: inserida em ordem crescente, ela degenera numa lista ligada e a busca cai para O(n) (daí variantes auto-balanceadas como AVL e Red-Black):
 
 ```c
 #include <stdlib.h>

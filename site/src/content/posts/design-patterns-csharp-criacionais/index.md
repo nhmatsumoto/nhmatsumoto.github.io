@@ -258,5 +258,5 @@ public sealed class SystemClock : IClock {
     public DateTimeOffset UtcNow => DateTimeOffset.UtcNow;
 }
 public interface IClock { DateTimeOffset UtcNow { get; } }
-// Em ASP.NET Core: services.AddSingleton<IClock, SystemClockAdapter>();
+// Em ASP.NET Core: services.AddSingleton<IClock, SystemClock>();
 ```

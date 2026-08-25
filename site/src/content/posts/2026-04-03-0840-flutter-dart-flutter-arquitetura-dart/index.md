@@ -35,7 +35,7 @@ $$E \propto \frac{I}{D}$$
 
 *   **const Widgets**: Use widgets constantes para evitar reconstruções desnecessárias.
 *   **Repaint Boundary**: Isole partes da UI que mudam frequentemente para não forçar o redesenho de toda a tela.
-*   **Isolates**: Use Threads (Isolates) em Dart para processamento pesado fora da UI Thread.
+*   **Isolates**: Use Isolates em Dart para processamento pesado fora da UI Thread — diferente de threads tradicionais, isolates não compartilham memória entre si, o que evita condições de corrida.
 
 ```mermaid
 graph TD

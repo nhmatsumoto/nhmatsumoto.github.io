@@ -27,7 +27,7 @@ Este é o método de maior abrangência. Detonado acima de 30 km, ele utiliza a 
 
 Desenvolvidos para fins táticos e de segurança, não dependem de radiação nuclear para agir:
 
-*   **Gerador de Compressão de Fluxo (FCG)**: Utiliza explosivos convencionais para comprimir subitamente um campo magnético dentro de uma bobina. Essa compressão súbita cria um pico de energia de potência altíssima em milissegundos.
+*   **Gerador de Compressão de Fluxo (FCG)**: Utiliza explosivos convencionais para comprimir subitamente um campo magnético dentro de uma bobina. Essa compressão súbita cria um pico de energia de potência altíssima em microssegundos.
 *   **Micro-ondas de Alta Potência (HPM)**: Antenas focais que direcionam feixes de micro-ondas para sobrecarregar fisicamente os componentes eletrônicos de alvos específicos (como servidores ou infraestrutura de rede).
 
 #### Matriz de Impacto e Alcance

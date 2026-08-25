@@ -41,7 +41,8 @@ graph TD
     classDef ruim fill:#da3633,stroke:#f85149,color:#fff
 
     class A,B excelente
-    class C,D bom
+    class C bom
+    class D aceitavel
     class E,F ruim
 ```
 
@@ -233,7 +234,9 @@ Em C não existe garbage collector: cada `malloc` precisa do `free` corresponden
 #include <string.h>
 
 /* Merge Sort - O(n log n) - dividir para conquistar.
-   Ordena in-place; "buffer" precisa ter pelo menos "tamanho" posicoes. */
+   Escreve direto no array original (nao aloca por chamada recursiva), mas
+   nao e in-place no sentido estrito: depende de um "buffer" auxiliar de
+   O(n), que precisa ter pelo menos "tamanho" posicoes. */
 void merge_sort(int *dados, int tamanho, int *buffer)
 {
     if (tamanho <= 1)

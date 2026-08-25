@@ -36,7 +36,7 @@ No nosso quintal solar, a distinção é vital para a resiliência:
 | --- | --- | --- | --- | --- |
 | **Flare Solar** | Reconexão Magnética | Ionosfera (Rádio/GPS) | Minutos | Blackout de Rádio |
 | **CME** | Plasma Magnetizado | Redes de Alta Tensão | Horas/Dias | Correntes Induzidas (GIC) |
-| **GRB** | Jatos Relativísticos | Camada de Ozônio | Milissegundos | Extinção Atmosférica |
+| **GRB** | Jatos Relativísticos | Camada de Ozônio | Segundos (substrutura em ms) | Extinção Atmosférica |
 
 #### Conclusão
 

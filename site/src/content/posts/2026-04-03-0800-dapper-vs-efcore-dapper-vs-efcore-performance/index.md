@@ -19,7 +19,7 @@ tradeoffs:
   - "CQRS parcial aumenta complexidade de onboarding, mas reduz acoplamento entre leitura e escrita"
 lessons: 
   - "Benchmark antes de migrar: nem toda query é gargalo — profiling mostrou que só 12% das queries justificavam Dapper"
-  - "O custo real do EF Core não é o SQL gerado, é o tracking — desabilitar AsNoTracking resolve 70% dos casos de leitura"
+  - "O custo real do EF Core não é o SQL gerado, é o tracking — usar AsNoTracking resolve 70% dos casos de leitura"
   - "Em produção, a escolha ORM é menos sobre framework e mais sobre ownership de SQL pelo time"
 ---
 
