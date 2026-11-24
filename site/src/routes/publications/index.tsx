@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { SITE_ORIGIN } from "../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
 export default component$(() => {
   return (
@@ -11,7 +11,7 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Redirecionando… | nhmatsumoto.github.io",
+  title: `Redirecionando… | ${SITE_NAME}`,
   meta: [
     { name: "robots", content: "noindex" },
     { httpEquiv: "refresh", content: `0; url=${SITE_ORIGIN}/posts/` },

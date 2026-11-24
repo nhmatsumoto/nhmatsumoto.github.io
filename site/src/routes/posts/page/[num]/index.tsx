@@ -6,7 +6,7 @@ import {
 } from "@builder.io/qwik-city";
 import { getAllPosts, POSTS_PER_PAGE, getPostPageCount } from "../../../../lib/content/posts";
 import { PostListing } from "../../../../components/post-listing/post-listing";
-import { SITE_ORIGIN } from "../../../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../../../lib/site-config";
 
 export const usePosts = routeLoader$(async ({ params, status }) => {
   const pageNum = Number(params.num);
@@ -45,13 +45,8 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue }) => {
   const data = resolveValue(usePosts);
   return {
-    title: `Publicações — página ${data.pageNum} | nhmatsumoto.github.io`,
+    title: `Publicações — página ${data.pageNum} | ${SITE_NAME}`,
     meta: [
-      {
-        name: "description",
-        content:
-          "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais.",
-      },
       { property: "og:url", content: `${SITE_ORIGIN}/posts/page/${data.pageNum}/` },
       { property: "og:type", content: "website" },
       { name: "x-body-class", content: "page-archive" },

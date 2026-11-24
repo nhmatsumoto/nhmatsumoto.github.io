@@ -2,7 +2,7 @@ import { component$ } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
 import { getAllPosts, POSTS_PER_PAGE, getPostPageCount } from "../../lib/content/posts";
 import { PostListing } from "../../components/post-listing/post-listing";
-import { SITE_ORIGIN } from "../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
 export const usePosts = routeLoader$(async () => {
   const posts = await getAllPosts();
@@ -20,13 +20,8 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Publicações | nhmatsumoto.github.io",
+  title: `Publicações | ${SITE_NAME}`,
   meta: [
-    {
-      name: "description",
-      content:
-        "Fluxo de escrita sobre arquitetura, experimentos, modelagem de domínio e heurísticas operacionais.",
-    },
     { property: "og:url", content: `${SITE_ORIGIN}/posts/` },
     { property: "og:type", content: "website" },
     { name: "x-body-class", content: "page-archive" },

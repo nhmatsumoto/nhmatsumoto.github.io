@@ -5,7 +5,7 @@ import { FUNDAMENTOS_SLUGS } from "../../lib/content/curated-lists";
 import { PostCard } from "../../components/post-card/post-card";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
-import { SITE_ORIGIN } from "../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
 export const useFundamentosPosts = routeLoader$(async () => {
   const all = await getAllPosts();
@@ -35,16 +35,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Fundamentos e Padrões de Projeto | nhmatsumoto.github.io",
+  title: `Fundamentos | ${SITE_NAME}`,
   meta: [
-    {
-      name: "description",
-      content:
-        "Base de engenharia de software: algoritmos, estruturas de dados, princípios de design, testes e padrões de projeto aplicados.",
-    },
     { property: "og:url", content: `${SITE_ORIGIN}/fundamentos/` },
     { property: "og:type", content: "website" },
     { name: "x-body-class", content: "page-archive" },
-    { name: "x-has-math", content: "true" },
+    { name: "x-has-math", content: "false" },
   ],
 };

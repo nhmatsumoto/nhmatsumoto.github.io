@@ -2,7 +2,7 @@ import { component$ } from "@builder.io/qwik";
 import type { DocumentHead, StaticGenerateHandler } from "@builder.io/qwik-city";
 import { useLocation } from "@builder.io/qwik-city";
 import { getAllPostSlugs } from "../../../lib/content/posts";
-import { SITE_ORIGIN } from "../../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../../lib/site-config";
 
 export const onStaticGenerate: StaticGenerateHandler = () => {
   return {
@@ -29,7 +29,7 @@ export default component$(() => {
 export const head: DocumentHead = ({ params }) => {
   const target = `${SITE_ORIGIN}/posts/${params.slug}/`;
   return {
-    title: "Redirecionando… | nhmatsumoto.github.io",
+    title: `Redirecionando… | ${SITE_NAME}`,
     meta: [
       { name: "robots", content: "noindex" },
       { httpEquiv: "refresh", content: `0; url=${target}` },

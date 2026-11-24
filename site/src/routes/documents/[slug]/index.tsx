@@ -10,7 +10,7 @@ import { translate } from "../../../lib/i18n/translate";
 import { Breadcrumbs } from "../../../components/breadcrumbs/breadcrumbs";
 import { Icon } from "../../../components/icon/icon";
 import { ICON_FILE_TEXT, ICON_FOLDER, ICON_GIT_BRANCH } from "../../../lib/icons";
-import { SITE_ORIGIN } from "../../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../../lib/site-config";
 
 export const useDocument = routeLoader$(async ({ params, status }) => {
   const doc = await getDocumentBySlug(params.slug);
@@ -90,7 +90,7 @@ export const head: DocumentHead = ({ resolveValue }) => {
   const doc = resolveValue(useDocument);
   const canonical = `${SITE_ORIGIN}/documents/${doc.slug}/`;
   return {
-    title: `${doc.frontmatter.title} | nhmatsumoto.github.io`,
+    title: `${doc.frontmatter.title} | ${SITE_NAME}`,
     meta: [
       { name: "description", content: doc.frontmatter.description },
       { property: "og:title", content: doc.frontmatter.title },
@@ -107,7 +107,7 @@ export const head: DocumentHead = ({ resolveValue }) => {
       {
         rel: "alternate",
         type: "application/rss+xml",
-        title: "nhmatsumoto.github.io RSS",
+        title: `${SITE_NAME} RSS`,
         href: `${SITE_ORIGIN}/feed.xml`,
       },
     ],

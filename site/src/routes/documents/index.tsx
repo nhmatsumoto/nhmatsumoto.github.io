@@ -4,7 +4,7 @@ import { getAllDocuments } from "../../lib/content/documents";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
 import { DocumentCard } from "../../components/document-card/document-card";
-import { SITE_ORIGIN } from "../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
 export const useDocuments = routeLoader$(() => getAllDocuments());
 
@@ -30,13 +30,8 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Documentos | nhmatsumoto.github.io",
+  title: `Documentos | ${SITE_NAME}`,
   meta: [
-    {
-      name: "description",
-      content:
-        "Documentos agrupados por domínio, arquitetura, agentes e APIs para manter decisões acessíveis.",
-    },
     { property: "og:url", content: `${SITE_ORIGIN}/documents/` },
     { property: "og:type", content: "website" },
     { name: "x-body-class", content: "page-documents" },

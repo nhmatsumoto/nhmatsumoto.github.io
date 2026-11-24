@@ -5,7 +5,7 @@ import { IA_SLUGS } from "../../lib/content/curated-lists";
 import { PostCard } from "../../components/post-card/post-card";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
-import { SITE_ORIGIN } from "../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
 export const useIaPosts = routeLoader$(async () => {
   const all = await getAllPosts();
@@ -35,16 +35,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Inteligência Artificial | nhmatsumoto.github.io",
+  title: `IA | ${SITE_NAME}`,
   meta: [
-    {
-      name: "description",
-      content:
-        "Trilha de inteligência artificial do básico ao avançado: do perceptron e redes neurais até agentes e LLMs.",
-    },
     { property: "og:url", content: `${SITE_ORIGIN}/ia/` },
     { property: "og:type", content: "website" },
     { name: "x-body-class", content: "page-archive" },
-    { name: "x-has-math", content: "true" },
+    { name: "x-has-math", content: "false" },
   ],
 };

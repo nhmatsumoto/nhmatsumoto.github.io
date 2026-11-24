@@ -12,7 +12,7 @@ import { Breadcrumbs } from "../../../components/breadcrumbs/breadcrumbs";
 import { EvidenceBlock } from "../../../components/evidence-block/evidence-block";
 import { Icon } from "../../../components/icon/icon";
 import { ICON_CALENDAR_DAYS, ICON_CLOCK_3, ICON_NEWSPAPER } from "../../../lib/icons";
-import { SITE_ORIGIN } from "../../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../../lib/site-config";
 
 export const usePost = routeLoader$(async ({ params, status }) => {
   const post = await getPostBySlug(params.slug);
@@ -127,7 +127,7 @@ export const head: DocumentHead = ({ resolveValue }) => {
   const post = resolveValue(usePost);
   const canonical = `${SITE_ORIGIN}/posts/${post.slug}/`;
   return {
-    title: `${post.frontmatter.title} | nhmatsumoto.github.io`,
+    title: `${post.frontmatter.title} | ${SITE_NAME}`,
     meta: [
       { name: "description", content: post.frontmatter.description },
       { property: "og:title", content: post.frontmatter.title },
@@ -144,7 +144,7 @@ export const head: DocumentHead = ({ resolveValue }) => {
       {
         rel: "alternate",
         type: "application/rss+xml",
-        title: "nhmatsumoto.github.io RSS",
+        title: `${SITE_NAME} RSS`,
         href: `${SITE_ORIGIN}/feed.xml`,
       },
     ],

@@ -11,7 +11,6 @@ import { RouterHead } from "./components/router-head/router-head";
 import { ThemeContext, type Theme } from "./lib/theme/context";
 import { LocaleContext, LOCALE_STORAGE_KEY } from "./lib/i18n/context";
 import { LOCALES, type Locale } from "./lib/i18n/dictionary";
-import { GTM_ALLOWED_HOSTNAME, GTM_ID } from "./lib/site-config";
 
 import "./global.css";
 
@@ -40,21 +39,6 @@ export default component$(() => {
           rel="stylesheet"
         />
 
-        <script
-          dangerouslySetInnerHTML={`(function (w, d, s, l, i, allowedHostnames) {
-  var hostname = w.location.hostname;
-  if (allowedHostnames.length && allowedHostnames.indexOf(hostname) === -1) { return; }
-  w[l] = w[l] || [];
-  w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-  var f = d.getElementsByTagName(s)[0];
-  var j = d.createElement(s);
-  var dl = l != 'dataLayer' ? '&l=' + l : '';
-  j.async = true;
-  j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-  f.parentNode.insertBefore(j, f);
-})(window, document, 'script', 'dataLayer', ${JSON.stringify(GTM_ID)}, ${JSON.stringify([GTM_ALLOWED_HOSTNAME])});`}
-        />
-
         {/* Blocking, inline on purpose: must run before first paint to avoid a
             flash of the wrong theme. See ThemeToggle/ThemeContext for the
             client-side signal sync that runs after resume. */}
@@ -66,7 +50,7 @@ export default component$(() => {
 
         <RouterHead />
       </head>
-      <AppBody gtmId={GTM_ID} />
+      <AppBody />
     </QwikCityProvider>
   );
 });
@@ -77,7 +61,7 @@ export default component$(() => {
  * set a "x-body-class" meta entry to control the page-{kind} class that
  * styles.css keys off of (page-document, page-post, page-project, ...).
  */
-const AppBody = component$<{ gtmId: string }>(({ gtmId }) => {
+const AppBody = component$(() => {
   const head = useDocumentHead();
   const bodyClass =
     head.meta.find((m) => m.name === "x-body-class")?.content ?? "";
@@ -116,9 +100,6 @@ const AppBody = component$<{ gtmId: string }>(({ gtmId }) => {
 
   return (
     <body class={bodyClass} data-has-math={hasMath ? "true" : "false"}>
-      <noscript
-        dangerouslySetInnerHTML={`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`}
-      />
       <RouterOutlet />
     </body>
   );

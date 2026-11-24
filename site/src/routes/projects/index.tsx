@@ -4,7 +4,7 @@ import { getAllProjects } from "../../lib/content/projects";
 import { ProjectCard } from "../../components/project-card/project-card";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
-import { SITE_ORIGIN } from "../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
 export const useProjects = routeLoader$(() => getAllProjects());
 
@@ -30,13 +30,8 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Projetos | nhmatsumoto.github.io",
+  title: `Projetos | ${SITE_NAME}`,
   meta: [
-    {
-      name: "description",
-      content:
-        "Projetos apresentados como sistemas: problema, solução, arquitetura, stack, ADRs e roadmap.",
-    },
     { property: "og:url", content: `${SITE_ORIGIN}/projects/` },
     { property: "og:type", content: "website" },
     { name: "x-body-class", content: "page-projects" },

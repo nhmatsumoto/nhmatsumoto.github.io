@@ -11,7 +11,7 @@ import { Breadcrumbs } from "../../../components/breadcrumbs/breadcrumbs";
 import { EvidenceBlock } from "../../../components/evidence-block/evidence-block";
 import { Icon } from "../../../components/icon/icon";
 import { ICON_ARROW_UP_RIGHT, ICON_CODE_2, ICON_FOLDER_KANBAN } from "../../../lib/icons";
-import { SITE_ORIGIN } from "../../../lib/site-config";
+import { SITE_NAME, SITE_ORIGIN } from "../../../lib/site-config";
 
 export const useProject = routeLoader$(async ({ params, status }) => {
   const project = await getProjectBySlug(params.slug);
@@ -111,7 +111,7 @@ export const head: DocumentHead = ({ resolveValue }) => {
   const project = resolveValue(useProject);
   const canonical = `${SITE_ORIGIN}/projects/${project.slug}/`;
   return {
-    title: `${project.frontmatter.title} | nhmatsumoto.github.io`,
+    title: `${project.frontmatter.title} | ${SITE_NAME}`,
     meta: [
       { name: "description", content: project.frontmatter.description },
       { property: "og:title", content: project.frontmatter.title },
@@ -128,7 +128,7 @@ export const head: DocumentHead = ({ resolveValue }) => {
       {
         rel: "alternate",
         type: "application/rss+xml",
-        title: "nhmatsumoto.github.io RSS",
+        title: `${SITE_NAME} RSS`,
         href: `${SITE_ORIGIN}/feed.xml`,
       },
     ],

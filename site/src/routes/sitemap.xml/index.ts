@@ -1,5 +1,5 @@
 import type { RequestHandler } from "@builder.io/qwik-city";
-import { getAllPostSlugs } from "../../lib/content/posts";
+import { getAllPostSlugs, getPostPageCount } from "../../lib/content/posts";
 import { getAllProjectSlugs } from "../../lib/content/projects";
 import { getAllDocumentSlugs } from "../../lib/content/documents";
 import { SITE_ORIGIN } from "../../lib/site-config";
@@ -11,8 +11,6 @@ export const onGet: RequestHandler = async ({ send }) => {
   const staticPaths = [
     "/",
     "/posts/",
-    "/posts/page/2/",
-    "/posts/page/3/",
     "/projects/",
     "/documents/",
     "/fundamentos/",
@@ -20,6 +18,9 @@ export const onGet: RequestHandler = async ({ send }) => {
     "/about/",
     "/contact/",
   ];
+  for (let page = 2; page <= getPostPageCount(); page++) {
+    staticPaths.push(`/posts/page/${page}/`);
+  }
 
   const postUrls = getAllPostSlugs().map((slug) => `/posts/${slug}/`);
   const projectUrls = getAllProjectSlugs().map((slug) => `/projects/${slug}/`);

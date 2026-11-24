@@ -48,7 +48,7 @@ export const onGet: RequestHandler = async ({ send }) => {
     "  <channel>\n" +
     `    <title>${SITE_NAME}</title>\n` +
     `    <link>${SITE_ORIGIN}/</link>\n` +
-    "    <description>um caderno vivo sobre software, produto, cultura, cotidiano e ideias em construção</description>\n" +
+    "    <description></description>\n" +
     `    <atom:link href="${SITE_ORIGIN}/feed.xml" rel="self" type="application/rss+xml"/>\n` +
     `${items}\n` +
     "  </channel>\n" +
