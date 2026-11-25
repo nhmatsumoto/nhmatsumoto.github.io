@@ -55,6 +55,52 @@
   margin-top: 1.75rem;
 }
 
+.profile-overview {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.7fr) minmax(0, 1.3fr);
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-block: 1.5rem;
+  border-block: 1px solid var(--border);
+}
+
+.profile-overview-heading h2 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.profile-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+}
+
+.profile-facts > div {
+  min-width: 0;
+  padding-inline: 1rem;
+  border-left: 1px solid var(--border);
+}
+
+.profile-facts dt {
+  color: var(--muted);
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.profile-facts dd {
+  margin: 0.6rem 0 0;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
 .systems-action-primary,
 .systems-action-secondary {
   display: inline-flex;
@@ -667,6 +713,10 @@
   .reference-hub-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .profile-overview {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 720px) {
@@ -717,6 +767,15 @@
 
   .reference-hub-grid {
     grid-template-columns: 1fr;
+  }
+
+  .profile-facts {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  .profile-facts > div {
+    padding: 0 0 0 0.85rem;
   }
 
   .collection-header {

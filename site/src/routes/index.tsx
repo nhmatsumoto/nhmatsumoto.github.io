@@ -62,6 +62,29 @@ export default component$(() => {
         </aside>
       </section>
 
+      <section class="profile-overview" aria-label={t("home.profile_title")}>
+        <header class="profile-overview-heading">
+          <p class="section-kicker systems-kicker">
+            {t("home.profile_kicker")}
+          </p>
+          <h2>{t("home.profile_title")}</h2>
+        </header>
+        <dl class="profile-facts">
+          <div>
+            <dt>{t("home.profile_role_label")}</dt>
+            <dd>{t("home.profile_role")}</dd>
+          </div>
+          <div>
+            <dt>{t("home.profile_base_label")}</dt>
+            <dd>{t("home.profile_base")}</dd>
+          </div>
+          <div>
+            <dt>{t("home.profile_focus_label")}</dt>
+            <dd>{t("home.profile_focus")}</dd>
+          </div>
+        </dl>
+      </section>
+
       <section class="systems-section domain-overview">
         <header class="systems-section-header">
           <p class="section-kicker systems-kicker">
@@ -145,7 +168,7 @@ export const head: DocumentHead = {
     {
       name: "description",
       content:
-        ".NET e C# no centro de uma referência prática sobre arquitetura, dados, infraestrutura, segurança, outras stacks e avaliação de IA.",
+        "Desenvolvedor e arquiteto de sistemas. Referência com foco em .NET e C#, em transição para IA, infraestrutura, segurança e outras stacks.",
     },
     { property: "og:url", content: `${SITE_ORIGIN}/` },
     { property: "og:type", content: "website" },
