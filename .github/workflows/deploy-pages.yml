@@ -53,6 +53,10 @@ jobs:
         with:
           path: site/dist
 
+      # GitHub's artifact index can lag behind a successful Pages upload.
+      - name: Wait for artifact indexing
+        run: sleep 10
+
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
