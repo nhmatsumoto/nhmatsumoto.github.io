@@ -42,13 +42,23 @@ export const DomainPage = component$<DomainPageProps>(({ domain, posts }) => {
           {hub.groups.map((group) => (
             <article class="reference-hub-card" key={group.titleKey}>
               <h3>{t(group.titleKey)}</h3>
-              <ul class="reference-topic-list">
-                {group.topics.map((topic) => (
-                  <li id={`topic-${topicSlug(topic)}`} key={topic}>
-                    {topic}
-                  </li>
-                ))}
-              </ul>
+              {"ordered" in group && group.ordered ? (
+                <ol class="reference-topic-list reference-topic-list-ordered">
+                  {group.topics.map((topic) => (
+                    <li id={`topic-${topicSlug(topic)}`} key={topic}>
+                      {topic}
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <ul class="reference-topic-list">
+                  {group.topics.map((topic) => (
+                    <li id={`topic-${topicSlug(topic)}`} key={topic}>
+                      {topic}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </article>
           ))}
           {"related" in hub &&

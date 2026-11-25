@@ -2,14 +2,38 @@ import { component$, useContext } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
 import { PostCard } from "../components/post-card/post-card";
 import { Icon } from "../components/icon/icon";
+import { TechIcon } from "../components/tech-icon/tech-icon";
 import { getAllPosts } from "../lib/content/posts";
 import {
   ARTICLE_STAGES,
-  PRIMARY_KNOWLEDGE_DOMAINS,
+  HOME_KNOWLEDGE_DOMAINS,
 } from "../lib/content/knowledge";
 import { LocaleContext } from "../lib/i18n/context";
 import { translate } from "../lib/i18n/translate";
 import { SITE_NAME, SITE_ORIGIN } from "../lib/site-config";
+import {
+  TECH_ICON_CSS3,
+  TECH_ICON_CSHARP,
+  TECH_ICON_DOTNET,
+  TECH_ICON_HTML5,
+  TECH_ICON_JAVASCRIPT,
+  TECH_ICON_MYSQL,
+  TECH_ICON_REACT,
+  TECH_ICON_SQLSERVER,
+  TECH_ICON_TYPESCRIPT,
+} from "../lib/tech-icons";
+
+const PROFILE_TECHNOLOGIES = [
+  { name: ".NET", markup: TECH_ICON_DOTNET },
+  { name: "C#", markup: TECH_ICON_CSHARP },
+  { name: "React", markup: TECH_ICON_REACT },
+  { name: "TypeScript", markup: TECH_ICON_TYPESCRIPT },
+  { name: "JavaScript", markup: TECH_ICON_JAVASCRIPT },
+  { name: "SQL Server", markup: TECH_ICON_SQLSERVER },
+  { name: "MySQL", markup: TECH_ICON_MYSQL },
+  { name: "HTML", markup: TECH_ICON_HTML5 },
+  { name: "CSS", markup: TECH_ICON_CSS3 },
+];
 
 export const useHomePosts = routeLoader$(async () => {
   const posts = await getAllPosts();
@@ -51,7 +75,7 @@ export default component$(() => {
             <small>{t("home.system_boundary")}</small>
           </div>
           <div class="systems-map-domains">
-            {PRIMARY_KNOWLEDGE_DOMAINS.map((domain) => (
+            {HOME_KNOWLEDGE_DOMAINS.map((domain) => (
               <a class="systems-map-node" href={domain.route} key={domain.slug}>
                 <Icon paths={domain.icon} />
                 <span>{t(domain.titleKey)}</span>
@@ -68,6 +92,7 @@ export default component$(() => {
             {t("home.profile_kicker")}
           </p>
           <h2>{t("home.profile_title")}</h2>
+          <p>{t("home.profile_description")}</p>
         </header>
         <dl class="profile-facts">
           <div>
@@ -83,6 +108,18 @@ export default component$(() => {
             <dd>{t("home.profile_focus")}</dd>
           </div>
         </dl>
+        <div class="profile-tech-stack">
+          <h3>{t("home.profile_stack_label")}</h3>
+          <ul class="profile-tech-list">
+            {PROFILE_TECHNOLOGIES.map((technology) => (
+              <li key={technology.name}>
+                <TechIcon markup={technology.markup} />
+                <span>{technology.name}</span>
+              </li>
+            ))}
+          </ul>
+          <p>{t("home.profile_stack_more")}</p>
+        </div>
       </section>
 
       <section class="systems-section domain-overview">
@@ -94,7 +131,7 @@ export default component$(() => {
           <p>{t("home.domains_description")}</p>
         </header>
         <div class="domain-card-grid">
-          {PRIMARY_KNOWLEDGE_DOMAINS.map((domain) => (
+          {HOME_KNOWLEDGE_DOMAINS.map((domain) => (
             <a class="domain-card" href={domain.route} key={domain.slug}>
               <Icon paths={domain.icon} class="domain-card-icon" />
               <h3>{t(domain.titleKey)}</h3>
@@ -168,7 +205,7 @@ export const head: DocumentHead = {
     {
       name: "description",
       content:
-        "Referências de desenvolvimento e arquitetura de sistemas, com foco em .NET e C# e anotações sobre a transição para IA, infraestrutura e segurança.",
+        "Senior Full Stack Developer com foco em .NET e C#, arquitetura, dados e aplicações web. Referências sobre IA Evaluation, infraestrutura e segurança.",
     },
     { property: "og:url", content: `${SITE_ORIGIN}/` },
     { property: "og:type", content: "website" },

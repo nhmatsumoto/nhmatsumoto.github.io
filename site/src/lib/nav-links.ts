@@ -5,6 +5,7 @@ import {
   ICON_LAYERS,
   ICON_LANGUAGES,
   ICON_NETWORK,
+  ICON_SQUARE_TERMINAL,
 } from "./icons";
 
 export interface NavLinkDef {
@@ -16,6 +17,7 @@ export interface NavLinkDef {
 
 export const NAV_LINKS: NavLinkDef[] = [
   { href: "/dotnet/", i18nKey: "nav.dotnet", icon: ICON_CODE_2 },
+  { href: "/algorithms/", i18nKey: "nav.algorithms", icon: ICON_SQUARE_TERMINAL },
   { href: "/architecture/", i18nKey: "nav.architecture", icon: ICON_LAYERS },
   { href: "/data/", i18nKey: "nav.data", icon: ICON_DATABASE },
   {

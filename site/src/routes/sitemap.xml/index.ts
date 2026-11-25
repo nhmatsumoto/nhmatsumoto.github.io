@@ -12,6 +12,7 @@ export const onGet: RequestHandler = async ({ send }) => {
     "/",
     "/posts/",
     "/dotnet/",
+    "/algorithms/",
     "/architecture/",
     "/data/",
     "/ia/",

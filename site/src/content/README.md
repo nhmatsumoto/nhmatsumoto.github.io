@@ -7,8 +7,8 @@ its structure and evidence are complete.
 
 ## Knowledge entries
 
-Every published post needs a domain (`dotnet`, `architecture`, `data`,
-`infrastructure`, `stacks`, `ai`, or `security`), a kind (`article`,
+Every published post needs a domain (`dotnet`, `algorithms`, `architecture`,
+`data`, `infrastructure`, `stacks`, `ai`, or `security`), a kind (`article`,
 `decision`, `experiment`, or `runbook`), and these H2 sections in order:
 
 1. Contexto e problema

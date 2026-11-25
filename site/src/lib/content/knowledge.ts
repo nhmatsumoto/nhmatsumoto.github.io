@@ -6,6 +6,7 @@ import {
   ICON_LAYERS,
   ICON_NETWORK,
   ICON_SHIELD_CHECK,
+  ICON_SQUARE_TERMINAL,
 } from "../icons";
 
 export const KNOWLEDGE_DOMAINS = [
@@ -15,6 +16,13 @@ export const KNOWLEDGE_DOMAINS = [
     titleKey: "domain.dotnet.title",
     descriptionKey: "domain.dotnet.description",
     icon: ICON_CODE_2,
+  },
+  {
+    slug: "algorithms",
+    route: "/algorithms/",
+    titleKey: "domain.algorithms.title",
+    descriptionKey: "domain.algorithms.description",
+    icon: ICON_SQUARE_TERMINAL,
   },
   {
     slug: "architecture",
@@ -62,7 +70,7 @@ export const KNOWLEDGE_DOMAINS = [
 
 export type KnowledgeDomain = (typeof KNOWLEDGE_DOMAINS)[number]["slug"];
 
-export const PRIMARY_KNOWLEDGE_DOMAINS = KNOWLEDGE_DOMAINS.slice(0, 6);
+export const HOME_KNOWLEDGE_DOMAINS = KNOWLEDGE_DOMAINS;
 
 export function topicSlug(topic: string): string {
   return topic
@@ -78,6 +86,39 @@ export const KNOWLEDGE_HUBS = {
     groups: [
       { titleKey: "hub.dotnet.runtime", topics: [".NET", "C#"] },
       { titleKey: "hub.dotnet.libraries", topics: ["Dapper", "FluentValidation"] },
+    ],
+  },
+  algorithms: {
+    groups: [
+      {
+        titleKey: "hub.algorithms.list",
+        ordered: true,
+        topics: [
+          "Arrays",
+          "Strings",
+          "Hash maps",
+          "Two pointers",
+          "Sliding window",
+          "Stacks",
+          "Queues",
+          "Binary search",
+          "Linked lists",
+          "Recursion",
+          "Binary trees",
+          "Heaps",
+          "Priority queues",
+          "Sorting algorithms",
+          "BFS",
+          "DFS",
+          "Backtracking",
+          "DP",
+          "Greedy algorithm",
+          "Union-find",
+          "Tries",
+          "Topological sort",
+          "Dijkstra's",
+        ],
+      },
     ],
   },
   architecture: {
@@ -118,7 +159,7 @@ export const KNOWLEDGE_HUBS = {
     related: [{ href: "/infrastructure/", titleKey: "hub.infrastructure_link" }],
   },
 } as const satisfies Record<KnowledgeDomain, {
-  groups: readonly { titleKey: string; topics: readonly string[] }[];
+  groups: readonly { titleKey: string; topics: readonly string[]; ordered?: boolean }[];
   related?: readonly { href: string; titleKey: string }[];
 }>;
 
