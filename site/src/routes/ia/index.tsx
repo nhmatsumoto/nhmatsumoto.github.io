@@ -12,9 +12,13 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: `IA | ${SITE_NAME}`,
+  title: `IA e avaliação | ${SITE_NAME}`,
   meta: [
-    { name: "description", content: "Modelos, agentes, avaliação e integração com produtos e sistemas." },
+    {
+      name: "description",
+      content:
+        "Referências sobre AI Evaluation, critérios de qualidade e evidências.",
+    },
     { property: "og:url", content: `${SITE_ORIGIN}/ia/` },
     { property: "og:type", content: "website" },
     { name: "x-body-class", content: "page-domain" },

@@ -11,9 +11,12 @@ export const onGet: RequestHandler = async ({ send }) => {
   const staticPaths = [
     "/",
     "/posts/",
+    "/dotnet/",
     "/architecture/",
+    "/data/",
     "/ia/",
     "/infrastructure/",
+    "/stacks/",
     "/security/",
     "/method/",
     "/projects/",
@@ -25,14 +28,18 @@ export const onGet: RequestHandler = async ({ send }) => {
 
   const postUrls = getAllPostSlugs().map((slug) => `/posts/${slug}/`);
   const projectUrls = getAllProjectSlugs().map((slug) => `/projects/${slug}/`);
-  const documentUrls = getAllDocumentSlugs().map((slug) => `/documents/${slug}/`);
+  const documentUrls = getAllDocumentSlugs().map(
+    (slug) => `/documents/${slug}/`,
+  );
 
   const urls = [...staticPaths, ...postUrls, ...projectUrls, ...documentUrls];
 
   const body =
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    urls.map((path) => `<url><loc>${SITE_ORIGIN}${path}</loc></url>`).join("\n") +
+    urls
+      .map((path) => `<url><loc>${SITE_ORIGIN}${path}</loc></url>`)
+      .join("\n") +
     "\n</urlset>\n";
 
   send(

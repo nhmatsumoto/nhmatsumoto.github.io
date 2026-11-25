@@ -1,11 +1,21 @@
 import {
   ICON_BOT,
+  ICON_CODE_2,
+  ICON_DATABASE,
+  ICON_LANGUAGES,
   ICON_LAYERS,
   ICON_NETWORK,
   ICON_SHIELD_CHECK,
 } from "../icons";
 
 export const KNOWLEDGE_DOMAINS = [
+  {
+    slug: "dotnet",
+    route: "/dotnet/",
+    titleKey: "domain.dotnet.title",
+    descriptionKey: "domain.dotnet.description",
+    icon: ICON_CODE_2,
+  },
   {
     slug: "architecture",
     route: "/architecture/",
@@ -14,11 +24,11 @@ export const KNOWLEDGE_DOMAINS = [
     icon: ICON_LAYERS,
   },
   {
-    slug: "ai",
-    route: "/ia/",
-    titleKey: "domain.ai.title",
-    descriptionKey: "domain.ai.description",
-    icon: ICON_BOT,
+    slug: "data",
+    route: "/data/",
+    titleKey: "domain.data.title",
+    descriptionKey: "domain.data.description",
+    icon: ICON_DATABASE,
   },
   {
     slug: "infrastructure",
@@ -26,6 +36,20 @@ export const KNOWLEDGE_DOMAINS = [
     titleKey: "domain.infrastructure.title",
     descriptionKey: "domain.infrastructure.description",
     icon: ICON_NETWORK,
+  },
+  {
+    slug: "stacks",
+    route: "/stacks/",
+    titleKey: "domain.stacks.title",
+    descriptionKey: "domain.stacks.description",
+    icon: ICON_LANGUAGES,
+  },
+  {
+    slug: "ai",
+    route: "/ia/",
+    titleKey: "domain.ai.title",
+    descriptionKey: "domain.ai.description",
+    icon: ICON_BOT,
   },
   {
     slug: "security",
@@ -37,6 +61,66 @@ export const KNOWLEDGE_DOMAINS = [
 ] as const;
 
 export type KnowledgeDomain = (typeof KNOWLEDGE_DOMAINS)[number]["slug"];
+
+export const PRIMARY_KNOWLEDGE_DOMAINS = KNOWLEDGE_DOMAINS.slice(0, 6);
+
+export function topicSlug(topic: string): string {
+  return topic
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+export const KNOWLEDGE_HUBS = {
+  dotnet: {
+    groups: [
+      { titleKey: "hub.dotnet.runtime", topics: [".NET", "C#"] },
+      { titleKey: "hub.dotnet.libraries", topics: ["Dapper", "FluentValidation"] },
+    ],
+  },
+  architecture: {
+    groups: [
+      { titleKey: "hub.architecture.design", topics: ["DDD", "Microserviços"] },
+      { titleKey: "hub.architecture.integration", topics: ["RabbitMQ", "Ocelot Gateway"] },
+      { titleKey: "hub.architecture.jobs", topics: ["Hangfire"] },
+    ],
+  },
+  data: {
+    groups: [
+      { titleKey: "hub.data.relational", topics: ["SQL", "SQL Server", "MySQL", "MariaDB"] },
+      { titleKey: "hub.data.document", topics: ["MongoDB", "Dapper"] },
+    ],
+  },
+  infrastructure: {
+    groups: [
+      { titleKey: "hub.infrastructure.containers", topics: ["Docker", "Podman"] },
+    ],
+    related: [{ href: "/security/", titleKey: "hub.security_link" }],
+  },
+  stacks: {
+    groups: [
+      { titleKey: "hub.stacks.web", topics: ["React", "JavaScript", "TypeScript", "CSS", "HTML"] },
+      { titleKey: "hub.stacks.languages", topics: ["Python", "Java"] },
+    ],
+  },
+  ai: {
+    groups: [
+      { titleKey: "hub.ai.evaluation", topics: ["AI Evaluation"] },
+    ],
+  },
+  security: {
+    groups: [
+      { titleKey: "hub.security.application", topics: ["Segurança de aplicações", "Identidade e acesso"] },
+      { titleKey: "hub.security.platform", topics: ["Containers", "Sistemas distribuídos"] },
+    ],
+    related: [{ href: "/infrastructure/", titleKey: "hub.infrastructure_link" }],
+  },
+} as const satisfies Record<KnowledgeDomain, {
+  groups: readonly { titleKey: string; topics: readonly string[] }[];
+  related?: readonly { href: string; titleKey: string }[];
+}>;
 
 export const POST_KINDS = ["article", "decision", "experiment", "runbook"] as const;
 export type PostKind = (typeof POST_KINDS)[number];

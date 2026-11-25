@@ -7,9 +7,9 @@ its structure and evidence are complete.
 
 ## Knowledge entries
 
-Every published post needs a domain (`architecture`, `ai`, `infrastructure`,
-or `security`), a kind (`article`, `decision`, `experiment`, or `runbook`),
-and these H2 sections in order:
+Every published post needs a domain (`dotnet`, `architecture`, `data`,
+`infrastructure`, `stacks`, `ai`, or `security`), a kind (`article`,
+`decision`, `experiment`, or `runbook`), and these H2 sections in order:
 
 1. Contexto e problema
 2. Objetivo e restrições
@@ -21,6 +21,10 @@ and these H2 sections in order:
 Use `../../content-templates/knowledge-entry.md` as the general outline or
 `../../content-templates/architecture-decision.md` for an ADR. The content loader
 checks the metadata and section order before generating any published entry.
+
+Use the domain that best describes the main subject. Add technology names as
+tags (for example `RabbitMQ`, `Dapper`, or `React`) so the editorial domain
+stays stable as the reference grows across stacks.
 
 ## Systems and artifacts
 

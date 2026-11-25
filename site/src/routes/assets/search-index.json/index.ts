@@ -2,7 +2,11 @@ import type { RequestHandler } from "@builder.io/qwik-city";
 import { getAllPosts } from "../../../lib/content/posts";
 import { getAllProjects } from "../../../lib/content/projects";
 import { getAllDocuments } from "../../../lib/content/documents";
-import { KNOWLEDGE_DOMAINS } from "../../../lib/content/knowledge";
+import {
+  KNOWLEDGE_DOMAINS,
+  KNOWLEDGE_HUBS,
+  topicSlug,
+} from "../../../lib/content/knowledge";
 import { translate } from "../../../lib/i18n/translate";
 
 interface SearchEntry {
@@ -48,10 +52,25 @@ export const onGet: RequestHandler = async ({ send }) => {
       kind: "domain",
       description: translate(domain.descriptionKey, "pt-BR"),
     })),
+    ...KNOWLEDGE_DOMAINS.flatMap((domain) =>
+      KNOWLEDGE_HUBS[domain.slug].groups.flatMap((group) =>
+        group.topics.map((topic) => ({
+          title: topic,
+          url: `${domain.route}#topic-${topicSlug(topic)}`,
+          kind: "topic",
+          description: `${translate(domain.titleKey, "pt-BR")} · ${translate(group.titleKey, "pt-BR")}`,
+        })),
+      ),
+    ),
     { title: "Conhecimento", url: "/posts/", kind: "posts", description: "" },
     { title: "Método", url: "/method/", kind: "method", description: "" },
     { title: "Sistemas", url: "/projects/", kind: "projects", description: "" },
-    { title: "Artefatos técnicos", url: "/documents/", kind: "documents", description: "" },
+    {
+      title: "Artefatos técnicos",
+      url: "/documents/",
+      kind: "documents",
+      description: "",
+    },
   ];
 
   send(

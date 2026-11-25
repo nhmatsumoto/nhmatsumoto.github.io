@@ -5026,7 +5026,7 @@ body::after {
   border: 0 !important;
   border-radius: var(--radius-md);
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0 !important;
   text-transform: none !important;

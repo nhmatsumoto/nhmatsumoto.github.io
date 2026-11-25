@@ -14,32 +14,34 @@ export const MobileDrawer = component$<MobileDrawerProps>(({ drawerOpen }) => {
   const t = (key: string) => translate(key, localeSignal.value);
   const loc = useLocation();
   const pathname = loc.url.pathname;
+  const isLinkActive = (href: string, activePaths?: string[]) =>
+    pathname.startsWith(href) ||
+    (activePaths ?? []).some((path) => pathname.startsWith(path));
 
   const onClose = $(() => {
     drawerOpen.value = false;
   });
 
   return (
-    <div
-      class="nav-drawer"
-      id="mobile-drawer"
-      aria-hidden={!drawerOpen.value}
-    >
+    <div class="nav-drawer" id="mobile-drawer" aria-hidden={!drawerOpen.value}>
       <div class="drawer-backdrop" onClick$={onClose}></div>
       <div class="drawer-content">
         <div class="drawer-links">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              class={`nav-link${pathname.startsWith(link.href) ? " is-active" : ""}`}
-              aria-current={pathname.startsWith(link.href) ? "page" : undefined}
-              href={link.href}
-              onClick$={onClose}
-            >
-              <Icon paths={link.icon} class="nav-link-icon" />
-              <span class="icon-label">{t(link.i18nKey)}</span>
-            </a>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const active = isLinkActive(link.href, link.activePaths);
+            return (
+              <a
+                key={link.href}
+                class={`nav-link${active ? " is-active" : ""}`}
+                aria-current={active ? "page" : undefined}
+                href={link.href}
+                onClick$={onClose}
+              >
+                <Icon paths={link.icon} class="nav-link-icon" />
+                <span class="icon-label">{t(link.i18nKey)}</span>
+              </a>
+            );
+          })}
         </div>
       </div>
     </div>

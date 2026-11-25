@@ -14,8 +14,9 @@ Static website built with Qwik City and Vite.
 
 ## Knowledge structure
 
-Knowledge is grouped into architecture, AI, infrastructure, and security.
-Published entries require a domain, kind, and a fixed sequence of sections:
+Knowledge is organized around .NET and C#, with areas for architecture, data,
+infrastructure, other stacks, AI evaluation, and security. Published entries
+require a domain, kind, and a fixed sequence of sections:
 context and problem, objective and constraints, architecture and decisions,
 implementation and evidence, operation and risks, then results and next steps.
 Entries marked `draft` stay out of the site. See

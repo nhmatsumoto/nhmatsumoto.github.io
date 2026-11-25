@@ -4,7 +4,9 @@ import { DomainPage } from "../../components/domain-page/domain-page";
 import { getPostsByDomain } from "../../lib/content/posts";
 import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
-export const useInfrastructurePosts = routeLoader$(() => getPostsByDomain("infrastructure"));
+export const useInfrastructurePosts = routeLoader$(() =>
+  getPostsByDomain("infrastructure"),
+);
 
 export default component$(() => {
   const posts = useInfrastructurePosts();
@@ -12,9 +14,12 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: `Infraestrutura | ${SITE_NAME}`,
+  title: `Infraestrutura e segurança | ${SITE_NAME}`,
   meta: [
-    { name: "description", content: "Entrega, nuvem, observabilidade, confiabilidade e custo." },
+    {
+      name: "description",
+      content: "Docker, Podman e práticas de infraestrutura segura e operável.",
+    },
     { property: "og:url", content: `${SITE_ORIGIN}/infrastructure/` },
     { property: "og:type", content: "website" },
     { name: "x-body-class", content: "page-domain" },

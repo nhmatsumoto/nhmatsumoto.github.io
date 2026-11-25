@@ -18,6 +18,9 @@ export const Navbar = component$<NavbarProps>(({ drawerOpen }) => {
   const t = (key: string) => translate(key, localeSignal.value);
   const loc = useLocation();
   const pathname = loc.url.pathname;
+  const isLinkActive = (href: string, activePaths?: string[]) =>
+    pathname.startsWith(href) ||
+    (activePaths ?? []).some((path) => pathname.startsWith(path));
 
   const onToggleDrawer = $(() => {
     drawerOpen.value = !drawerOpen.value;
@@ -56,17 +59,20 @@ export const Navbar = component$<NavbarProps>(({ drawerOpen }) => {
           </div>
 
           <div class="nav-primary-links desktop-only">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                class={`nav-link${pathname.startsWith(link.href) ? " is-active" : ""}`}
-                aria-current={pathname.startsWith(link.href) ? "page" : undefined}
-                href={link.href}
-              >
-                <Icon paths={link.icon} class="nav-link-icon" />
-                <span class="icon-label">{t(link.i18nKey)}</span>
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const active = isLinkActive(link.href, link.activePaths);
+              return (
+                <a
+                  key={link.href}
+                  class={`nav-link${active ? " is-active" : ""}`}
+                  aria-current={active ? "page" : undefined}
+                  href={link.href}
+                >
+                  <Icon paths={link.icon} class="nav-link-icon" />
+                  <span class="icon-label">{t(link.i18nKey)}</span>
+                </a>
+              );
+            })}
           </div>
         </div>
 
