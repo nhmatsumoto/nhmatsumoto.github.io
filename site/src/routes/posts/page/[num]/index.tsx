@@ -45,7 +45,7 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue }) => {
   const data = resolveValue(usePosts);
   return {
-    title: `Publicações — página ${data.pageNum} | ${SITE_NAME}`,
+    title: `Conhecimento — página ${data.pageNum} | ${SITE_NAME}`,
     meta: [
       { property: "og:url", content: `${SITE_ORIGIN}/posts/page/${data.pageNum}/` },
       { property: "og:type", content: "website" },

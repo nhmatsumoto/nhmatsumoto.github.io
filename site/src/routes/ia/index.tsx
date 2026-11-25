@@ -1,45 +1,23 @@
-import { component$, useContext } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
-import { getAllPosts } from "../../lib/content/posts";
-import { IA_SLUGS } from "../../lib/content/curated-lists";
-import { PostCard } from "../../components/post-card/post-card";
-import { LocaleContext } from "../../lib/i18n/context";
-import { translate } from "../../lib/i18n/translate";
+import { DomainPage } from "../../components/domain-page/domain-page";
+import { getPostsByDomain } from "../../lib/content/posts";
 import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
-export const useIaPosts = routeLoader$(async () => {
-  const all = await getAllPosts();
-  const bySlug = new Map(all.map((p) => [p.slug, p]));
-  return IA_SLUGS.map((slug) => bySlug.get(slug)).filter((p): p is NonNullable<typeof p> => p !== undefined);
-});
+export const useAiPosts = routeLoader$(() => getPostsByDomain("ai"));
 
 export default component$(() => {
-  const posts = useIaPosts();
-  const localeSignal = useContext(LocaleContext);
-  const t = (key: string) => translate(key, localeSignal.value);
-
-  return (
-    <div class="layout-container">
-      <header class="page-header">
-        <h1>{t("pages.ai.title")}</h1>
-        <p class="section-copy">{t("pages.ai.description")}</p>
-      </header>
-
-      <ol class="entry-list">
-        {posts.value.map((post) => (
-          <PostCard post={post} key={post.slug} />
-        ))}
-      </ol>
-    </div>
-  );
+  const posts = useAiPosts();
+  return <DomainPage domain="ai" posts={posts.value} />;
 });
 
 export const head: DocumentHead = {
   title: `IA | ${SITE_NAME}`,
   meta: [
+    { name: "description", content: "Modelos, agentes, avaliação e integração com produtos e sistemas." },
     { property: "og:url", content: `${SITE_ORIGIN}/ia/` },
     { property: "og:type", content: "website" },
-    { name: "x-body-class", content: "page-archive" },
+    { name: "x-body-class", content: "page-domain" },
     { name: "x-has-math", content: "false" },
   ],
 };

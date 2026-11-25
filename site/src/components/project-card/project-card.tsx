@@ -24,15 +24,13 @@ export const ProjectCard = component$<ProjectCardProps>(({ project }) => {
         <p class="entry-eyebrow">
           <span class="entry-kind">
             <Icon paths={ICON_FOLDER_KANBAN} class="entry-icon" />
-            <span class="icon-label">{t("kinds.project")}</span>
+            <span class="icon-label">{t(`domain.${project.frontmatter.domain}.title`)}</span>
           </span>
           <span class="entry-eyebrow-dot" aria-hidden="true">
             ·
           </span>
           <span class="entry-status entry-status-published">
-            {project.frontmatter.status === "publicado"
-              ? t("status.published")
-              : project.frontmatter.status}
+            {t(`project.status.${project.frontmatter.status}`)}
           </span>
         </p>
         <h3 class="entry-title">

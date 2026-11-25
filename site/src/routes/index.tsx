@@ -1,129 +1,136 @@
 import { component$, useContext } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
-import { getAllPosts } from "../lib/content/posts";
-import { getAllProjects } from "../lib/content/projects";
-import { getAllDocuments } from "../lib/content/documents";
 import { PostCard } from "../components/post-card/post-card";
-import { ProjectCard } from "../components/project-card/project-card";
-import { DocumentCard } from "../components/document-card/document-card";
 import { Icon } from "../components/icon/icon";
+import { getAllPosts } from "../lib/content/posts";
+import { ARTICLE_STAGES, KNOWLEDGE_DOMAINS } from "../lib/content/knowledge";
 import { LocaleContext } from "../lib/i18n/context";
 import { translate } from "../lib/i18n/translate";
-import {
-  ICON_BOT,
-  ICON_FILE_TEXT,
-  ICON_FOLDER_KANBAN,
-  ICON_LAYERS,
-  ICON_NEWSPAPER,
-  ICON_USER_ROUND,
-} from "../lib/icons";
 import { SITE_NAME, SITE_ORIGIN } from "../lib/site-config";
 
-const NAV_GRID = [
-  { href: "/about/", icon: ICON_USER_ROUND, key: "nav.about" },
-  { href: "/posts/", icon: ICON_NEWSPAPER, key: "nav.posts" },
-  { href: "/fundamentos/", icon: ICON_LAYERS, key: "nav.fundamentals" },
-  { href: "/ia/", icon: ICON_BOT, key: "nav.ai" },
-  { href: "/projects/", icon: ICON_FOLDER_KANBAN, key: "nav.projects" },
-  { href: "/documents/", icon: ICON_FILE_TEXT, key: "nav.documents" },
-];
-
-export const useHomeData = routeLoader$(async () => {
-  const [posts, projects, documents] = await Promise.all([
-    getAllPosts(),
-    getAllProjects(),
-    getAllDocuments(),
-  ]);
-  return {
-    posts: posts.slice(0, 3),
-    projects: projects.slice(0, 3),
-    documents: documents.slice(0, 3),
-  };
+export const useHomePosts = routeLoader$(async () => {
+  const posts = await getAllPosts();
+  return posts.slice(0, 3);
 });
 
 export default component$(() => {
-  const data = useHomeData();
+  const posts = useHomePosts();
   const localeSignal = useContext(LocaleContext);
   const t = (key: string) => translate(key, localeSignal.value);
 
   return (
-    <div class="layout-container home-shell">
-      <section class="notebook-hero section-panel">
-        <div class="notebook-hero-copy">
-          <p class="section-kicker">{SITE_NAME}</p>
-          <h1 class="notebook-hero-title">{SITE_NAME}</h1>
-          <div class="notebook-link-row">
-            {NAV_GRID.map((link) => (
-              <a class="notebook-link-chip" href={link.href} key={link.href}>
-                {t(link.key)}
+    <div class="layout-container systems-home">
+      <section class="systems-hero">
+        <div class="systems-hero-copy">
+          <p class="section-kicker systems-kicker">{t("home.hero_kicker")}</p>
+          <h1>{t("home.hero_title")}</h1>
+          <p class="systems-hero-description">{t("home.hero_description")}</p>
+          <div class="systems-hero-actions">
+            <a class="systems-action-primary" href="/posts/">
+              {t("home.view_knowledge")}
+            </a>
+            <a class="systems-action-secondary" href="/method/">
+              {t("home.view_method")}
+            </a>
+          </div>
+        </div>
+
+        <aside class="systems-map" aria-label={t("home.domains_title")}>
+          <header class="systems-map-header">
+            <span>SYS / 00</span>
+            <span>{t("sections.navigation_kicker")}</span>
+          </header>
+          <div class="systems-map-core">
+            <span class="systems-map-core-mark" aria-hidden="true">S</span>
+            <span>{SITE_NAME}</span>
+            <small>{t("home.system_boundary")}</small>
+          </div>
+          <div class="systems-map-domains">
+            {KNOWLEDGE_DOMAINS.map((domain, index) => (
+              <a class="systems-map-node" href={domain.route} key={domain.slug}>
+                <span class="systems-map-node-index">0{index + 1}</span>
+                <Icon paths={domain.icon} />
+                <span>{t(domain.titleKey)}</span>
               </a>
             ))}
           </div>
+          <p class="systems-map-caption">{t("home.system_map_caption")}</p>
+        </aside>
+      </section>
+
+      <section class="systems-section domain-overview">
+        <header class="systems-section-header">
+          <p class="section-kicker systems-kicker">{t("home.domains_kicker")}</p>
+          <h2>{t("home.domains_title")}</h2>
+          <p>{t("home.domains_description")}</p>
+        </header>
+        <div class="domain-card-grid">
+          {KNOWLEDGE_DOMAINS.map((domain, index) => (
+            <a
+              class="domain-card"
+              href={domain.route}
+              key={domain.slug}
+            >
+              <span class="domain-card-index">DOMAIN / 0{index + 1}</span>
+              <Icon paths={domain.icon} class="domain-card-icon" />
+              <h3>{t(domain.titleKey)}</h3>
+              <p>{t(domain.descriptionKey)}</p>
+              <span class="domain-card-arrow" aria-hidden="true">↗</span>
+            </a>
+          ))}
         </div>
       </section>
 
-      <div class="home-stack">
-        <section class="section-panel">
-          <header class="section-header">
-            <div>
-              <p class="section-kicker">{t("nav.posts")}</p>
-              <h2>{t("sections.posts_title")}</h2>
-            </div>
-          </header>
+      <section class="systems-section editorial-cycle">
+        <header class="systems-section-header editorial-cycle-header">
+          <p class="section-kicker systems-kicker">{t("home.structure_kicker")}</p>
+          <h2>{t("home.structure_title")}</h2>
+          <p>{t("home.structure_description")}</p>
+        </header>
+        <ol class="editorial-stage-list">
+          {ARTICLE_STAGES.map((stage) => (
+            <li class="editorial-stage" key={stage.number}>
+              <span class="editorial-stage-number">{stage.number}</span>
+              <div>
+                <h3>{t(stage.titleKey)}</h3>
+                <p>{t(stage.descriptionKey)}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <a class="systems-inline-link" href="/method/">
+          {t("home.view_method")}
+          <span aria-hidden="true">→</span>
+        </a>
+      </section>
+
+      <section class="systems-section knowledge-collection">
+        <header class="systems-section-header collection-header">
+          <div>
+            <p class="section-kicker systems-kicker">{t("home.collection_kicker")}</p>
+            <h2>{t("home.collection_title")}</h2>
+          </div>
+          <a class="systems-inline-link" href="/posts/">
+            {t("home.view_knowledge")}
+            <span aria-hidden="true">→</span>
+          </a>
+        </header>
+        {posts.value.length > 0 ? (
           <ol class="entry-list">
-            {data.value.posts.map((post) => (
+            {posts.value.map((post) => (
               <PostCard post={post} key={post.slug} />
             ))}
           </ol>
-        </section>
-
-        <section class="section-panel">
-          <header class="section-header">
+        ) : (
+          <div class="collection-empty-state">
+            <span class="collection-empty-mark" aria-hidden="true">∅</span>
             <div>
-              <p class="section-kicker">{t("nav.projects")}</p>
-              <h2>{t("sections.projects_title")}</h2>
+              <h3>{t("home.empty_title")}</h3>
+              <p>{t("home.empty_description")}</p>
             </div>
-          </header>
-          <ol class="entry-list">
-            {data.value.projects.map((project) => (
-              <ProjectCard project={project} key={project.slug} />
-            ))}
-          </ol>
-        </section>
-
-        <section class="section-panel">
-          <header class="section-header">
-            <div>
-              <p class="section-kicker">{t("nav.documents")}</p>
-              <h2>{t("sections.documents_title")}</h2>
-            </div>
-          </header>
-          <div class="documents-panel-body">
-            <ol class="entry-list document-list">
-              {data.value.documents.map((doc) => (
-                <DocumentCard doc={doc} key={doc.slug} />
-              ))}
-            </ol>
           </div>
-        </section>
-
-        <section class="section-panel navigation-grid">
-          <header class="section-header">
-            <div>
-              <p class="section-kicker">{t("sections.navigation_kicker")}</p>
-              <h2>{t("sections.navigation_title")}</h2>
-            </div>
-          </header>
-          <div class="navigation-grid-links">
-            {NAV_GRID.map((link) => (
-              <a class="nav-link" href={link.href} key={link.href}>
-                <Icon paths={link.icon} />
-                <span class="icon-label">{t(link.key)}</span>
-              </a>
-            ))}
-          </div>
-        </section>
-      </div>
+        )}
+      </section>
     </div>
   );
 });
@@ -131,6 +138,11 @@ export default component$(() => {
 export const head: DocumentHead = {
   title: SITE_NAME,
   meta: [
+    {
+      name: "description",
+      content:
+        "Arquitetura de sistemas, inteligência artificial, infraestrutura e segurança organizadas como conhecimento técnico rastreável.",
+    },
     { property: "og:url", content: `${SITE_ORIGIN}/` },
     { property: "og:type", content: "website" },
     { name: "x-body-class", content: "page-home" },

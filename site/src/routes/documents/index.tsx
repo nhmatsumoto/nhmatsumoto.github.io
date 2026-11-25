@@ -4,6 +4,7 @@ import { getAllDocuments } from "../../lib/content/documents";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
 import { DocumentCard } from "../../components/document-card/document-card";
+import { CollectionEmptyState } from "../../components/collection-empty-state/collection-empty-state";
 import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
 export const useDocuments = routeLoader$(() => getAllDocuments());
@@ -20,17 +21,21 @@ export default component$(() => {
         <p class="section-copy">{t("pages.documents.description")}</p>
       </header>
 
-      <ol class="entry-list">
-        {documents.value.map((doc) => (
-          <DocumentCard doc={doc} key={doc.slug} />
-        ))}
-      </ol>
+      {documents.value.length > 0 ? (
+        <ol class="entry-list">
+          {documents.value.map((doc) => (
+            <DocumentCard doc={doc} key={doc.slug} />
+          ))}
+        </ol>
+      ) : (
+        <CollectionEmptyState />
+      )}
     </div>
   );
 });
 
 export const head: DocumentHead = {
-  title: `Documentos | ${SITE_NAME}`,
+  title: `Artefatos técnicos | ${SITE_NAME}`,
   meta: [
     { property: "og:url", content: `${SITE_ORIGIN}/documents/` },
     { property: "og:type", content: "website" },

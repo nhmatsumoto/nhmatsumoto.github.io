@@ -53,7 +53,7 @@ export default component$(() => {
               </p>
               <p class="doc-category">
                 <Icon paths={ICON_FOLDER} class="meta-icon" />
-                {doc.value.frontmatter.category}
+                {t(`domain.${doc.value.frontmatter.domain}.title`)}
               </p>
             </div>
             <div class="tag-list document-page-meta-tags">
@@ -70,7 +70,9 @@ export default component$(() => {
           <article class="document-shell prose post-reading-article">
             <header class="post-header post-reading-header">
               <div class="post-header-meta">
-                <p class="section-kicker">{t("pages.document.kicker")}</p>
+                <p class="section-kicker">
+                  {t(`document.kind.${doc.value.frontmatter.kind}`)}
+                </p>
               </div>
               <h1>{doc.value.frontmatter.title}</h1>
               <p class="post-summary post-deck">{doc.value.frontmatter.description}</p>

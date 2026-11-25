@@ -1,8 +1,18 @@
+import type {
+  ContentVisibility,
+  DocumentKind,
+  KnowledgeDomain,
+  PostKind,
+  ProjectStatus,
+} from "./knowledge";
+
 export interface DocumentFrontmatter {
   title: string;
   description: string;
   version: string;
-  category: string;
+  domain: KnowledgeDomain;
+  kind: DocumentKind;
+  visibility: ContentVisibility;
   tags: string[];
 }
 
@@ -15,6 +25,9 @@ export interface DocumentEntry {
 export interface PostFrontmatter {
   title: string;
   description: string;
+  domain: KnowledgeDomain;
+  kind: PostKind;
+  status: ContentVisibility;
   date: string;
   readingTime: number;
   hasMath: boolean;
@@ -33,7 +46,9 @@ export interface PostEntry {
 export interface ProjectFrontmatter {
   title: string;
   description: string;
-  status: string;
+  domain: KnowledgeDomain;
+  visibility: ContentVisibility;
+  status: ProjectStatus;
   stack: string[];
   tags: string[];
   repoUrl?: string;

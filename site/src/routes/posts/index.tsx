@@ -20,7 +20,7 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: `Publicações | ${SITE_NAME}`,
+  title: `Conhecimento | ${SITE_NAME}`,
   meta: [
     { property: "og:url", content: `${SITE_ORIGIN}/posts/` },
     { property: "og:type", content: "website" },

@@ -3,7 +3,7 @@ import { Icon } from "../icon/icon";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
 import { formatDateShort } from "../../lib/format-date";
-import { ICON_ARROW_RIGHT, ICON_CALENDAR_DAYS, ICON_CLOCK_3, ICON_NEWSPAPER } from "../../lib/icons";
+import { ICON_ARROW_RIGHT, ICON_CALENDAR_DAYS, ICON_CLOCK_3 } from "../../lib/icons";
 import type { PostEntry } from "../../lib/content/schema";
 
 interface PostCardProps {
@@ -14,14 +14,21 @@ export const PostCard = component$<PostCardProps>(({ post }) => {
   const localeSignal = useContext(LocaleContext);
   const t = (key: string) => translate(key, localeSignal.value);
   const dateText = formatDateShort(post.frontmatter.date, localeSignal.value);
+  const domainKey = `domain.${post.frontmatter.domain}.title`;
+  const kindKey = `post.kind.${post.frontmatter.kind}`;
 
   return (
     <li class="entry">
       <article class="entry-card entry-card-post">
         <p class="entry-eyebrow">
           <span class="entry-kind">
-            <Icon paths={ICON_NEWSPAPER} class="entry-icon" />
-            <span class="icon-label">{t("kinds.post")}</span>
+            <span class="icon-label">{t(domainKey)}</span>
+          </span>
+          <span class="entry-eyebrow-dot" aria-hidden="true">
+            ·
+          </span>
+          <span class="entry-status entry-status-published">
+            {t(kindKey)}
           </span>
           <span class="entry-eyebrow-dot" aria-hidden="true">
             ·

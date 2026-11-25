@@ -2,6 +2,7 @@ import { component$, useContext } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
 import { getAllProjects } from "../../lib/content/projects";
 import { ProjectCard } from "../../components/project-card/project-card";
+import { CollectionEmptyState } from "../../components/collection-empty-state/collection-empty-state";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
 import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
@@ -20,17 +21,21 @@ export default component$(() => {
         <p class="section-copy">{t("pages.projects.description")}</p>
       </header>
 
-      <ol class="entry-list">
-        {projects.value.map((project) => (
-          <ProjectCard project={project} key={project.slug} />
-        ))}
-      </ol>
+      {projects.value.length > 0 ? (
+        <ol class="entry-list">
+          {projects.value.map((project) => (
+            <ProjectCard project={project} key={project.slug} />
+          ))}
+        </ol>
+      ) : (
+        <CollectionEmptyState />
+      )}
     </div>
   );
 });
 
 export const head: DocumentHead = {
-  title: `Projetos | ${SITE_NAME}`,
+  title: `Sistemas | ${SITE_NAME}`,
   meta: [
     { property: "og:url", content: `${SITE_ORIGIN}/projects/` },
     { property: "og:type", content: "website" },

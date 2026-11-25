@@ -13,6 +13,7 @@ import { LocaleContext, LOCALE_STORAGE_KEY } from "./lib/i18n/context";
 import { LOCALES, type Locale } from "./lib/i18n/dictionary";
 
 import "./global.css";
+import "./architecture.css";
 
 export default component$(() => {
   const themeSignal = useSignal<"light" | "dark">("light");

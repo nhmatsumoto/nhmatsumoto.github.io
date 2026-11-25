@@ -49,9 +49,7 @@ export default component$(() => {
             </div>
             <p>
               <span class="status-chip status-published">
-                {project.value.frontmatter.status === "publicado"
-                  ? t("status.published")
-                  : project.value.frontmatter.status}
+                {t(`project.status.${project.value.frontmatter.status}`)}
               </span>
             </p>
             <h3>{t("pages.project.stack")}</h3>
@@ -90,7 +88,9 @@ export default component$(() => {
           <article class="project-shell prose post-reading-article">
             <header class="post-header post-reading-header">
               <div class="post-header-meta">
-                <p class="section-kicker">{t("pages.project.kicker")}</p>
+                <p class="section-kicker">
+                  {t(`domain.${project.value.frontmatter.domain}.title`)}
+                </p>
               </div>
               <h1>{project.value.frontmatter.title}</h1>
               <p class="post-summary post-deck">{project.value.frontmatter.description}</p>

@@ -1,6 +1,7 @@
 import matter from "gray-matter";
 import { renderMarkdown } from "../markdown/pipeline";
 import type { DocumentEntry, DocumentFrontmatter } from "./schema";
+import { isContentVisibility, isDocumentKind, isKnowledgeDomain } from "./knowledge";
 
 const rawFiles = import.meta.glob("/src/content/documents/*/index.md", {
   eager: true,
@@ -20,13 +21,30 @@ interface ParsedDocument {
   body: string;
 }
 
-const parsed: ParsedDocument[] = Object.entries(rawFiles).map(([path, raw]) => {
+const parsed: ParsedDocument[] = Object.entries(rawFiles).flatMap(([path, raw]) => {
   const { data, content } = matter(raw);
-  return {
-    slug: slugFromPath(path),
+  const slug = slugFromPath(path);
+  if (!isContentVisibility(data.visibility)) {
+    throw new Error(`Document "${slug}" must set visibility to "draft" or "published".`);
+  }
+  if (data.visibility === "draft") return [];
+  if (typeof data.title !== "string" || !data.title.trim()) {
+    throw new Error(`Published document "${slug}" must have a title.`);
+  }
+  if (typeof data.description !== "string" || !data.description.trim()) {
+    throw new Error(`Published document "${slug}" must have a description.`);
+  }
+  if (!isKnowledgeDomain(data.domain) || !isDocumentKind(data.kind)) {
+    throw new Error(`Published document "${slug}" must define a recognized domain and kind.`);
+  }
+  if (typeof data.version !== "string" || !Array.isArray(data.tags)) {
+    throw new Error(`Published document "${slug}" must define a version and tags array.`);
+  }
+  return [{
+    slug,
     frontmatter: data as DocumentFrontmatter,
     body: content,
-  };
+  }];
 });
 
 let renderedCache: Promise<DocumentEntry[]> | null = null;
@@ -34,8 +52,8 @@ let renderedCache: Promise<DocumentEntry[]> | null = null;
 // Rendering (Shiki/mermaid) is async, so this can't be eager module-level
 // work like the frontmatter parse above — it's memoized because SSG calls
 // getAllDocuments()/getDocumentBySlug() once per route, and re-running the
-// Shiki highlighter for every page would be wasteful for a 5-document set
-// that never changes within a single build.
+// Shiki highlighter for every page would be wasteful for a collection that
+// never changes within a single build.
 function getAllRendered(): Promise<DocumentEntry[]> {
   if (!renderedCache) {
     renderedCache = Promise.all(

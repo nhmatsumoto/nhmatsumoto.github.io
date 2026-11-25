@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "Site",
-  "short_name": "Site",
+  "name": "Caderno de Sistemas",
+  "short_name": "Caderno",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#fff",

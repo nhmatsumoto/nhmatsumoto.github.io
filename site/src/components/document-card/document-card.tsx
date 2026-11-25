@@ -5,8 +5,6 @@ import { translate } from "../../lib/i18n/translate";
 import {
   ICON_ARROW_RIGHT,
   ICON_FILE_TEXT,
-  ICON_FOLDER,
-  ICON_GIT_BRANCH,
 } from "../../lib/icons";
 import type { DocumentEntry } from "../../lib/content/schema";
 
@@ -24,21 +22,13 @@ export const DocumentCard = component$<DocumentCardProps>(({ doc }) => {
         <p class="entry-eyebrow document-meta">
           <span class="entry-kind">
             <Icon paths={ICON_FILE_TEXT} class="entry-icon" />
-            <span class="icon-label">{t("kinds.document")}</span>
+            <span class="icon-label">{t(`document.kind.${doc.frontmatter.kind}`)}</span>
           </span>
-          <span class="entry-eyebrow-dot" aria-hidden="true">
-            ·
-          </span>
-          <span class="entry-meta">
-            <Icon paths={ICON_FOLDER} class="entry-icon" />
-            {doc.frontmatter.category}
-          </span>
-          <span class="entry-eyebrow-dot" aria-hidden="true">
-            ·
-          </span>
-          <span class="entry-meta entry-version">
-            <Icon paths={ICON_GIT_BRANCH} class="entry-icon" />
-            {doc.frontmatter.version}
+          <span class="entry-eyebrow-dot" aria-hidden="true">·</span>
+          <span class="entry-meta">{t(`domain.${doc.frontmatter.domain}.title`)}</span>
+          <span class="entry-eyebrow-dot" aria-hidden="true">·</span>
+          <span class="entry-status entry-status-published">
+            {t(`document.visibility.${doc.frontmatter.visibility}`)}
           </span>
         </p>
         <h3 class="entry-title document-title">

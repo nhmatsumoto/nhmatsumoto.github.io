@@ -11,12 +11,13 @@ export const onGet: RequestHandler = async ({ send }) => {
   const staticPaths = [
     "/",
     "/posts/",
+    "/architecture/",
+    "/ia/",
+    "/infrastructure/",
+    "/security/",
+    "/method/",
     "/projects/",
     "/documents/",
-    "/fundamentos/",
-    "/ia/",
-    "/about/",
-    "/contact/",
   ];
   for (let page = 2; page <= getPostPageCount(); page++) {
     staticPaths.push(`/posts/page/${page}/`);

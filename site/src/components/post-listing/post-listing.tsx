@@ -1,5 +1,6 @@
 import { component$, useContext } from "@builder.io/qwik";
 import { PostCard } from "../post-card/post-card";
+import { CollectionEmptyState } from "../collection-empty-state/collection-empty-state";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
 import type { PostEntry } from "../../lib/content/schema";
@@ -25,11 +26,15 @@ export const PostListing = component$<PostListingProps>(
           <p class="section-copy">{t("pages.archive.description")}</p>
         </header>
 
-        <ol class="entry-list">
-          {posts.map((post) => (
-            <PostCard post={post} key={post.slug} />
-          ))}
-        </ol>
+        {posts.length > 0 ? (
+          <ol class="entry-list">
+            {posts.map((post) => (
+              <PostCard post={post} key={post.slug} />
+            ))}
+          </ol>
+        ) : (
+          <CollectionEmptyState />
+        )}
 
         {pageCount > 1 && (
           <nav class="pagination" aria-label={t("accessibility.pagination")}>

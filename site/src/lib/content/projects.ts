@@ -1,6 +1,7 @@
 import matter from "gray-matter";
 import { renderMarkdown } from "../markdown/pipeline";
 import type { ProjectEntry, ProjectFrontmatter } from "./schema";
+import { isContentVisibility, isKnowledgeDomain, isProjectStatus } from "./knowledge";
 
 const rawFiles = import.meta.glob("/src/content/projects/*/index.md", {
   eager: true,
@@ -21,10 +22,30 @@ interface ParsedProject {
 }
 
 const parsed: ParsedProject[] = Object.entries(rawFiles)
-  .map(([path, raw]) => {
+  .flatMap(([path, raw]) => {
     const { data, content } = matter(raw);
+    const slug = slugFromPath(path);
+    if (!isContentVisibility(data.visibility)) {
+      throw new Error(`Project "${slug}" must set visibility to "draft" or "published".`);
+    }
+    if (data.visibility === "draft") return [];
+    if (typeof data.title !== "string" || !data.title.trim()) {
+      throw new Error(`Published project "${slug}" must have a title.`);
+    }
+    if (typeof data.description !== "string" || !data.description.trim()) {
+      throw new Error(`Published project "${slug}" must have a description.`);
+    }
+    if (!isKnowledgeDomain(data.domain)) {
+      throw new Error(`Published project "${slug}" must use a recognized knowledge domain.`);
+    }
+    if (!isProjectStatus(data.status)) {
+      throw new Error(`Published project "${slug}" must use a recognized lifecycle status.`);
+    }
+    if (!Array.isArray(data.stack) || !Array.isArray(data.tags)) {
+      throw new Error(`Published project "${slug}" must define stack and tags arrays.`);
+    }
     return {
-      slug: slugFromPath(path),
+      slug,
       frontmatter: data as ProjectFrontmatter,
       body: content,
     };

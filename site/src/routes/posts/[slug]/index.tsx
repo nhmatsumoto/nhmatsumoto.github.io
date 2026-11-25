@@ -93,7 +93,12 @@ export default component$(() => {
           <article class="post-shell prose post-reading-article">
             <header class="post-header post-reading-header">
               <div class="post-header-meta">
-                <p class="section-kicker">{t("pages.post.kicker")}</p>
+                <p class="section-kicker">
+                  {t(`domain.${post.value.frontmatter.domain}.title`)}
+                  <span class="post-kind-label">
+                    {t(`post.kind.${post.value.frontmatter.kind}`)}
+                  </span>
+                </p>
                 <div class="post-meta post-meta-hero">
                   <span class="post-meta-item">
                     <Icon paths={ICON_CALENDAR_DAYS} class="meta-icon" />
