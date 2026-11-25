@@ -6078,3 +6078,81 @@ body::after {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.navbar .navbar-center {
+  overflow: visible;
+}
+
+.nav-categories {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav-category {
+  position: relative;
+}
+
+.nav-category > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.nav-category > summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-category > summary::after {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-0.1rem) rotate(45deg);
+}
+
+.nav-category[open] > summary::after {
+  transform: translateY(0.1rem) rotate(225deg);
+}
+
+.nav-category-links {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.4rem;
+}
+
+.nav-primary-links .nav-category-links {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: max-content;
+  min-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+}
+
+.nav-category-links .nav-link,
+.drawer-links .nav-category > summary {
+  justify-content: flex-start;
+}
+
+.drawer-links .nav-categories {
+  flex-direction: column;
+}
+
+.drawer-links .nav-category > summary {
+  width: 100%;
+}
+
+.drawer-content {
+  max-height: 90dvh;
+  overflow-y: auto;
+}
+
+.algorithms-guide { margin-block: 3rem; }
+.algorithms-diagrams, .algorithms-lessons { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; }
+.algorithms-diagrams article, .algorithms-lesson { min-width: 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); }
+.algorithms-diagrams pre.mermaid { overflow-x: auto; text-align: center; }
+.algorithms-lesson h3, .algorithms-diagrams h3 { margin-top: 0; }
+.algorithms-lesson p { line-height: 1.65; }
+.algorithms-lessons { margin-top: 1.25rem; }

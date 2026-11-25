@@ -15,17 +15,27 @@ export interface NavLinkDef {
   activePaths?: string[];
 }
 
-export const NAV_LINKS: NavLinkDef[] = [
-  { href: "/dotnet/", i18nKey: "nav.dotnet", icon: ICON_CODE_2 },
-  { href: "/algorithms/", i18nKey: "nav.algorithms", icon: ICON_SQUARE_TERMINAL },
-  { href: "/architecture/", i18nKey: "nav.architecture", icon: ICON_LAYERS },
-  { href: "/data/", i18nKey: "nav.data", icon: ICON_DATABASE },
+export const NAV_GROUPS: { label: string; links: NavLinkDef[] }[] = [
   {
-    href: "/infrastructure/",
-    i18nKey: "nav.infrastructure_security",
-    icon: ICON_NETWORK,
-    activePaths: ["/security/"],
+    label: "nav.group_development",
+    links: [
+      { href: "/dotnet/", i18nKey: "nav.dotnet", icon: ICON_CODE_2 },
+      { href: "/algorithms/", i18nKey: "nav.algorithms", icon: ICON_SQUARE_TERMINAL },
+      { href: "/stacks/", i18nKey: "nav.stacks", icon: ICON_LANGUAGES },
+    ],
   },
-  { href: "/stacks/", i18nKey: "nav.stacks", icon: ICON_LANGUAGES },
-  { href: "/ia/", i18nKey: "nav.ai", icon: ICON_BOT },
+  {
+    label: "nav.group_systems",
+    links: [
+      { href: "/architecture/", i18nKey: "nav.architecture", icon: ICON_LAYERS },
+      { href: "/infrastructure/", i18nKey: "nav.infrastructure_security", icon: ICON_NETWORK, activePaths: ["/security/"] },
+    ],
+  },
+  {
+    label: "nav.group_data_ai",
+    links: [
+      { href: "/data/", i18nKey: "nav.data", icon: ICON_DATABASE },
+      { href: "/ia/", i18nKey: "nav.ai", icon: ICON_BOT },
+    ],
+  },
 ];

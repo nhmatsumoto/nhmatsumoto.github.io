@@ -1,12 +1,11 @@
+import { NavCategories } from "./nav-categories";
 import { $, component$, useContext, type Signal } from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city";
 import { Icon } from "../icon/icon";
 import { ThemeToggle } from "../theme-toggle/theme-toggle";
 import { LocaleToggle } from "../locale-toggle/locale-toggle";
 import { SearchPalette } from "../search-palette/search-palette";
 import { LocaleContext } from "../../lib/i18n/context";
 import { translate } from "../../lib/i18n/translate";
-import { NAV_LINKS } from "../../lib/nav-links";
 import { ICON_MENU, ICON_X } from "../../lib/icons";
 
 interface NavbarProps {
@@ -16,12 +15,6 @@ interface NavbarProps {
 export const Navbar = component$<NavbarProps>(({ drawerOpen }) => {
   const localeSignal = useContext(LocaleContext);
   const t = (key: string) => translate(key, localeSignal.value);
-  const loc = useLocation();
-  const pathname = loc.url.pathname;
-  const isLinkActive = (href: string, activePaths?: string[]) =>
-    pathname.startsWith(href) ||
-    (activePaths ?? []).some((path) => pathname.startsWith(path));
-
   const onToggleDrawer = $(() => {
     drawerOpen.value = !drawerOpen.value;
   });
@@ -59,20 +52,7 @@ export const Navbar = component$<NavbarProps>(({ drawerOpen }) => {
           </div>
 
           <div class="nav-primary-links desktop-only">
-            {NAV_LINKS.map((link) => {
-              const active = isLinkActive(link.href, link.activePaths);
-              return (
-                <a
-                  key={link.href}
-                  class={`nav-link${active ? " is-active" : ""}`}
-                  aria-current={active ? "page" : undefined}
-                  href={link.href}
-                >
-                  <Icon paths={link.icon} class="nav-link-icon" />
-                  <span class="icon-label">{t(link.i18nKey)}</span>
-                </a>
-              );
-            })}
+            <NavCategories />
           </div>
         </div>
 
