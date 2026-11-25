@@ -6172,3 +6172,10 @@ body::after {
   .algorithms-guide { padding: 1rem; }
   .algorithms-diagrams { grid-template-columns: 1fr; }
 }
+
+.algorithms-foundations { margin-bottom: 2rem; }
+.algorithms-foundation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 1rem; }
+.algorithms-foundation-grid article { padding: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); }
+.algorithms-foundation-grid h3 { margin-top: 0; }
+.algorithms-lesson-diagram { display: grid; width: 100%; min-height: 9rem; margin: 1rem 0 0; padding: .5rem; place-items: center; overflow: auto; border-top: 1px solid var(--border); }
+.algorithms-lesson-diagram svg { max-width: 100%; height: auto; }
