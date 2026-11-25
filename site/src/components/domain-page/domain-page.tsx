@@ -1,5 +1,6 @@
 import { component$, useContext } from "@builder.io/qwik";
 import { PostCard } from "../post-card/post-card";
+import { AlgorithmsGuide } from "./algorithms-guide";
 import { Icon } from "../icon/icon";
 import {
   KNOWLEDGE_DOMAINS,
@@ -33,6 +34,8 @@ export const DomainPage = component$<DomainPageProps>(({ domain, posts }) => {
         <p class="domain-page-description">{t(domainInfo.descriptionKey)}</p>
       </header>
 
+      {domain === "algorithms" && <AlgorithmsGuide />}
+
       <section class="reference-hub-map" aria-label={t("hub.map_title")}>
         <header class="systems-section-header">
           <p class="section-kicker systems-kicker">{t("hub.map_kicker")}</p>
@@ -46,7 +49,7 @@ export const DomainPage = component$<DomainPageProps>(({ domain, posts }) => {
                 <ol class="reference-topic-list reference-topic-list-ordered">
                   {group.topics.map((topic) => (
                     <li id={`topic-${topicSlug(topic)}`} key={topic}>
-                      {topic}
+                      <a href={`#lesson-${topicSlug(topic)}`}>{topic}</a>
                     </li>
                   ))}
                 </ol>
@@ -54,7 +57,7 @@ export const DomainPage = component$<DomainPageProps>(({ domain, posts }) => {
                 <ul class="reference-topic-list">
                   {group.topics.map((topic) => (
                     <li id={`topic-${topicSlug(topic)}`} key={topic}>
-                      {topic}
+                      <a href={`#lesson-${topicSlug(topic)}`}>{topic}</a>
                     </li>
                   ))}
                 </ul>

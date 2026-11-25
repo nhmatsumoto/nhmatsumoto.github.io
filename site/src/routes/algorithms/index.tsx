@@ -1,7 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
 import { DomainPage } from "../../components/domain-page/domain-page";
-import { AlgorithmsGuide } from "../../components/domain-page/algorithms-guide";
 import { getPostsByDomain } from "../../lib/content/posts";
 import { SITE_NAME, SITE_ORIGIN } from "../../lib/site-config";
 
@@ -11,10 +10,7 @@ export const useAlgorithmsPosts = routeLoader$(() =>
 
 export default component$(() => {
   const posts = useAlgorithmsPosts();
-  return <>
-      <DomainPage domain="algorithms" posts={posts.value} />
-      <div class="layout-container"><AlgorithmsGuide /></div>
-    </>;
+  return <DomainPage domain="algorithms" posts={posts.value} />;
 });
 
 export const head: DocumentHead = {

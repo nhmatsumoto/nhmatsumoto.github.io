@@ -1,10 +1,11 @@
 import { component$ } from "@builder.io/qwik";
+import { topicSlug } from "../../lib/content/knowledge";
 
 const lessons = [
   ["Arrays", "Elementos do mesmo tipo em posições contíguas, acessados por índice. Ler uma posição custa O(1); inserir no meio exige deslocar os seguintes.", "Para [4, 8, 2], o índice 1 contém 8."],
   ["Strings", "Sequências de caracteres. Em muitas linguagens são imutáveis, então concatenar repetidamente pode copiar o conteúdo.", "Para inverter 'sol', percorra os caracteres do fim ao início: 'los'."],
   ["Hash maps", "Associam uma chave a um valor usando uma função hash. Busca e inserção são O(1) em média, com colisões possíveis.", "mapa['ana'] = 3 registra que Ana apareceu três vezes."],
-  ["Two pointers", "Dois índices percorrem uma sequência, muitas vezes de extremidades opostas, evitando buscas aninhadas.", "Em [1, 2, 4, 7], procure soma 6: ponteiros em 1 e 7, depois 1 e 4, encontrou."],
+  ["Two pointers", "Dois índices percorrem uma sequência, muitas vezes de extremidades opostas, evitando buscas aninhadas.", "Em [1, 2, 4, 7], procure soma 6: ponteiros em 1 e 7 (soma 8), depois 1 e 4 (soma 5), depois 2 e 4 (soma 6)."],
   ["Sliding window", "Uma janela contígua cresce e encolhe enquanto mantém um estado, útil para subarrays e substrings.", "Maior soma de 3 itens em [2, 1, 5, 1]: janela [2,1,5] soma 8."],
   ["Stacks", "Pilha LIFO: o último elemento inserido é o primeiro removido. Push e pop são O(1).", "Empilhe A, depois B. O próximo pop retorna B."],
   ["Queues", "Fila FIFO: o primeiro elemento inserido é o primeiro removido. Usada em processamento por ordem de chegada.", "Enfileire A e B. O próximo dequeue retorna A."],
@@ -30,8 +31,8 @@ export const AlgorithmsGuide = component$(() => (
   <section class="algorithms-guide" aria-labelledby="algorithms-guide-title">
     <header class="systems-section-header">
       <p class="section-kicker">GUIA DE ESTUDO</p>
-      <h2 id="algorithms-guide-title">Conceitos, exemplos e visualizações</h2>
-      <p>Uma referência rápida para entender quando cada estrutura ou técnica é útil.</p>
+      <h2 id="algorithms-guide-title">Como funcionam, com exemplos visuais</h2>
+      <p>Leia cada conceito, acompanhe o exemplo e use o índice acima para localizar o tema. As ilustrações mostram passos e relações entre elementos.</p>
     </header>
     <div class="algorithms-diagrams">
       <article><h3>Pilha e fila</h3><pre class="mermaid">{`flowchart LR
@@ -53,14 +54,16 @@ export const AlgorithmsGuide = component$(() => (
   B --- D((D))
   C --- E((E))
   classDef visit fill:#b8e3d0,stroke:#176b50
-  class A,B,C,D,E visit`}</pre></article>
+  class A,B,C,D,E visit
+  linkStyle 0,1,2,3 stroke:#176b50,stroke-width:2px`}</pre></article>
     </div>
     <div class="algorithms-lessons">
       {lessons.map(([title, explanation, example]) => (
-        <article class="algorithms-lesson" key={title}>
+        <article class="algorithms-lesson" id={`lesson-${topicSlug(title)}`} key={title}>
           <h3>{title}</h3>
           <p>{explanation}</p>
           <p><strong>Exemplo.</strong> {example}</p>
+          <a class="algorithms-topic-link" href={`#topic-${topicSlug(title)}`}>Voltar ao índice</a>
         </article>
       ))}
     </div>
