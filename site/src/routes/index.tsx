@@ -168,7 +168,7 @@ export const head: DocumentHead = {
     {
       name: "description",
       content:
-        "Desenvolvedor e arquiteto de sistemas. Referência com foco em .NET e C#, em transição para IA, infraestrutura, segurança e outras stacks.",
+        "Referências de desenvolvimento e arquitetura de sistemas, com foco em .NET e C# e anotações sobre a transição para IA, infraestrutura e segurança.",
     },
     { property: "og:url", content: `${SITE_ORIGIN}/` },
     { property: "og:type", content: "website" },
